@@ -158,77 +158,97 @@ function HomePage() {
           <SearchBox size="lg" placeholder="Describe the task, or type a command…" />
         </div>
         <p className="mt-2 text-xs text-muted-foreground">
-          {VERIFIED_TOTAL.toLocaleString()} commands · press{" "}
+          {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · press{" "}
           <kbd className="rounded border border-border bg-muted px-1 font-mono">/</kbd> anywhere to
           search
         </p>
       </section>
 
-      <div
-        role="tablist"
-        aria-label="Home layout"
-        className="mt-5 inline-flex rounded-xl border border-border bg-surface p-1"
-      >
-        {(
-          [
-            { id: "calm", label: "Calm", icon: LayoutList },
-            { id: "feed", label: "Feed", icon: Rows3 },
-          ] as const
-        ).map((m) => (
-          <button
-            key={m.id}
-            type="button"
-            role="tab"
-            aria-selected={settings.homeMode === m.id}
-            onClick={() => updateSettings({ homeMode: m.id })}
-            className={cn(
-              "flex min-h-9 items-center gap-1.5 rounded-lg px-3.5 text-sm font-medium transition-colors",
-              settings.homeMode === m.id
-                ? "bg-accent text-foreground"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            <m.icon className="size-4" aria-hidden /> {m.label}
-          </button>
-        ))}
+      <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+        <Link
+          to="/whats-new"
+          className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
+        >
+          <Sparkles className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">What&apos;s new</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              This week&apos;s free finds
+            </span>
+          </span>
+        </Link>
+        <Link
+          to="/radar"
+          className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
+        >
+          <RadarIcon className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Free Radar</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Offers with the conditions stated
+            </span>
+          </span>
+        </Link>
+        <Link
+          to="/discover"
+          className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
+        >
+          <Compass className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Discover</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Tools, GitHub, learning
+            </span>
+          </span>
+        </Link>
       </div>
 
-      {feed && (
-        <div className="mt-3">
-          <HomeFeed />
+      <>
+        <div className="mt-6 flex flex-wrap gap-2">
+          {quickCategories.map((c) => {
+            const Icon = categoryIcon(c.icon);
+            return (
+              <Link
+                key={c.category}
+                to="/explore/$category"
+                params={{ category: c.category }}
+                className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+              >
+                <Icon className="size-4 shrink-0 text-primary" aria-hidden />
+                <span className="truncate">{c.category}</span>
+              </Link>
+            );
+          })}
+          <Link
+            to="/explore"
+            className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
+          >
+            All categories <ArrowRight className="size-4" aria-hidden />
+          </Link>
         </div>
-      )}
-      {!feed && (
-        <>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {quickCategories.map((c) => {
-              const Icon = categoryIcon(c.icon);
-              return (
-                <Link
-                  key={c.category}
-                  to="/explore/$category"
-                  params={{ category: c.category }}
-                  className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-                >
-                  <Icon className="size-4 shrink-0 text-primary" aria-hidden />
-                  <span className="truncate">{c.category}</span>
-                </Link>
-              );
-            })}
-            <Link
-              to="/explore"
-              className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
-            >
-              All categories <ArrowRight className="size-4" aria-hidden />
-            </Link>
-          </div>
 
           <Section
-            title="Discover"
+            title="Command of the day"
             hint="One fresh pick a day, plus a reroll whenever you want one."
           >
             <Discover />
           </Section>
+
+          <Section
+            title="This week's free finds"
+            hint="Hand-picked, with a last-checked date on every entry."
+            action={
+              <Link
+                to="/whats-new"
+                className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+              >
+                All <ArrowRight className="size-4" aria-hidden />
+              </Link>
+            }
+          >
+            <ResourceGrid resources={weeklyFinds} />
+          </Section>
+
 
           {recentCommands.length > 0 && (
             <Section
