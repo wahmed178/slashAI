@@ -140,10 +140,14 @@ function HomePage() {
     [hydrated, settings.interests, recents, favorites],
   );
 
-  const { updateSettings, streak } = useLibrary();
+  const { streak } = useLibrary();
   const showOnboarding = hydrated && !settings.onboarded;
   const name = personaGreetingName(settings.persona);
-  const feed = settings.homeMode === "feed";
+  const weeklyFinds = useMemo(() => {
+    const weekly = DROPS.find((d) => d.cadence === "Weekly");
+    return weekly ? dropItems(weekly).slice(0, 6) : [];
+  }, []);
+
 
   return (
     <AppShell hideHeaderSearch title="SlashAI">
