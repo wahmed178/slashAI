@@ -68,7 +68,9 @@ const BOILERPLATE = [
   /use this command to/i,
   /lorem ipsum/i,
   /^todo/i,
-  /placeholder/i,
+  /placeholder text/i,
+  /<placeholder>/i,
+  /\btbd\b/i,
   /provide .* plus any constraints/i,
 ];
 

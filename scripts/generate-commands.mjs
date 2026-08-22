@@ -175,7 +175,8 @@ for (const cat of CATEGORIES) {
         const command = `/${verb}${objName}`;
         const h = hash(command);
         const title = `${verb.replace(/([a-z])([A-Z0-9])/g, "$1 $2")} ${objName}`;
-        const description = `${capitalize(phrase)} ${objPhrase}.`;
+        const shortSample = sample.split(/\s+/).slice(0, 9).join(" ").replace(/[.,;:]$/, "");
+        const description = `${capitalize(phrase)} ${objPhrase} — e.g. ${shortSample}.`;
 
         const howToUse = [
           `${ask} Bring ${objPhrase} — for example ${sample}. You get back ${deliverable}.`,
@@ -223,11 +224,15 @@ commands.forEach((c, i) => {
 mkdirSync("src/data", { recursive: true });
 writeFileSync("src/data/commands.json", JSON.stringify(commands, null, 0));
 
+// subcategory lists come from the generated data so curated entries stay registered
+const subsByCategory = {};
+for (const c of commands) (subsByCategory[c.category] ??= new Set()).add(c.subcategory);
+
 const meta = CATEGORIES.map((c) => ({
   category: c.category,
   icon: c.icon,
   type: c.type,
-  subcategories: dedupe(c.groups.flatMap((g) => g.verbs.map((v) => v[1]))).sort(),
+  subcategories: [...(subsByCategory[c.category] ?? [])].sort(),
 }));
 writeFileSync("src/data/categories.json", JSON.stringify(meta, null, 2));
 
