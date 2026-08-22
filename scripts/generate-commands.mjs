@@ -17,7 +17,7 @@ const CATEGORIES = [
       ["Upscale", "upscale", "increase resolution and recover fine detail in"],
       ["Enhance", "enhance", "sharpen, denoise and improve overall quality of"],
       ["Restore", "restore", "repair damage, scratches and compression artifacts in"],
-      ["Colorize", "colorize", "add realistic, historically plausible color to"],
+      ["Colorize", "colorize", "add natural, believable color to"],
       ["RemoveBg", "background removal", "cut out the subject and remove the background from"],
       ["Relight", "relighting", "re-light the scene with soft, controllable studio lighting for"],
       ["Retouch", "retouch", "apply natural, non-plastic retouching to"],
