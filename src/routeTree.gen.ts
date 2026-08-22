@@ -23,6 +23,7 @@ import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
 import { Route as DiscoverIndexRouteImport } from './routes/discover.index'
 import { Route as DiscoverSectionRouteImport } from './routes/discover.$section'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
+import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 
@@ -96,6 +97,11 @@ const ExploreIndexRoute = ExploreIndexRouteImport.update({
   path: '/explore/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RIdRoute = RIdRouteImport.update({
+  id: '/r/$id',
+  path: '/r/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreCategoryIndexRoute = ExploreCategoryIndexRouteImport.update({
   id: '/explore/$category/',
   path: '/explore/$category/',
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/r/$id': typeof RIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
@@ -138,6 +145,7 @@ export interface FileRoutesByTo {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/r/$id': typeof RIdRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/r/$id': typeof RIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/r/$id'
     | '/collections/'
     | '/discover/'
     | '/explore/'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/r/$id'
     | '/collections'
     | '/discover'
     | '/explore'
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/r/$id'
     | '/collections/'
     | '/discover/'
     | '/explore/'
@@ -232,6 +244,7 @@ export interface RootRouteChildren {
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   DiscoverSectionRoute: typeof DiscoverSectionRoute
+  RIdRoute: typeof RIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
@@ -339,6 +352,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/r/$id': {
+      id: '/r/$id'
+      path: '/r/$id'
+      fullPath: '/r/$id'
+      preLoaderRoute: typeof RIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore/$category/': {
       id: '/explore/$category/'
       path: '/explore/$category'
@@ -368,6 +388,7 @@ const rootRouteChildren: RootRouteChildren = {
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   DiscoverSectionRoute: DiscoverSectionRoute,
+  RIdRoute: RIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
