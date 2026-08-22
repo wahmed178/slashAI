@@ -94,6 +94,12 @@ jobs:
           fi
           echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/android.keystore
 
+      - name: Initialize TWA project
+        env:
+          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: npx --yes @bubblewrap/cli init --manifest=android/twa-manifest.json --directory=android/project --skipPwaValidation
+
       - name: Build Android release (APK + AAB)
         env:
           BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
