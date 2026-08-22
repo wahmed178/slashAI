@@ -65,10 +65,13 @@ jobs:
           PUBLISHED_DOMAIN: ${{ vars.PUBLISHED_DOMAIN }}
         run: |
           if [ -z "$PUBLISHED_DOMAIN" ]; then
-            echo "::error::Repository variable PUBLISHED_DOMAIN is not set (e.g. slashai.lovable.app)."
+            echo "::error::Repository variable PUBLISHED_DOMAIN is not set (e.g. slash-command-vault.lovable.app)."
             exit 1
           fi
-          sed -i "s/REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/$PUBLISHED_DOMAIN/g" android/twa-manifest.json
+          sed -i "s|REPLACE_WITH_YOUR_PUBLISHED_DOMAIN|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
+          sed -i "s|slash-command-vault.lovable.app|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
+          sed -i "s|REPLACE_WITH_YOUR_PUBLISHED_DOMAIN|$PUBLISHED_DOMAIN|g" public/.well-known/assetlinks.json
+          sed -i "s|slash-command-vault.lovable.app|$PUBLISHED_DOMAIN|g" public/.well-known/assetlinks.json
 
       - name: Set version from tag
         run: |

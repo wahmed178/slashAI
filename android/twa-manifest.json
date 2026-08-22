@@ -1,6 +1,6 @@
 {
-  "packageId": "com.slashai.app",
-  "host": "REPLACE_WITH_YOUR_PUBLISHED_DOMAIN",
+  "packageId": "dev.lovable.slashcommandvault",
+  "host": "slash-command-vault.lovable.app",
   "name": "SlashAI Command Library",
   "launcherName": "SlashAI",
   "display": "standalone",
@@ -12,9 +12,9 @@
   "backgroundColor": "#12161c",
   "enableNotifications": true,
   "startUrl": "/",
-  "iconUrl": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-512.png",
-  "maskableIconUrl": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-maskable-512.png",
-  "monochromeIconUrl": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/android-adaptive-fg.png",
+  "iconUrl": "https://slash-command-vault.lovable.app/icons/icon-512.png",
+  "maskableIconUrl": "https://slash-command-vault.lovable.app/icons/icon-maskable-512.png",
+  "monochromeIconUrl": "https://slash-command-vault.lovable.app/icons/android-adaptive-fg.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "android.keystore",
@@ -26,14 +26,14 @@
     {
       "name": "Favorites",
       "short_name": "Favorites",
-      "url": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/?fav=true",
-      "icon": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-192.png"
+      "url": "https://slash-command-vault.lovable.app/?fav=true",
+      "icon": "https://slash-command-vault.lovable.app/icons/icon-192.png"
     },
     {
       "name": "Daily Command",
       "short_name": "Daily",
-      "url": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/?cmd=daily",
-      "icon": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-192.png"
+      "url": "https://slash-command-vault.lovable.app/?cmd=daily",
+      "icon": "https://slash-command-vault.lovable.app/icons/icon-192.png"
     }
   ],
   "generatorApp": "bubblewrap"
