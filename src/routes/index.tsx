@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, History, Check } from "lucide-react";
+import { ArrowRight, Sparkles, Star, History, Check, Flame, LayoutList, Rows3 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/library/AppShell";
 import { SearchBox } from "@/components/library/SearchBox";
 import { Discover } from "@/components/library/Discover";
+import { Onboarding } from "@/components/library/Onboarding";
+import { HomeFeed } from "@/components/library/HomeFeed";
 import { categoryIcon } from "@/components/library/icons";
 import { useLibrary } from "@/hooks/use-library";
 import {
@@ -16,6 +18,7 @@ import {
   type SlashCommand,
 } from "@/lib/commands";
 import { COLLECTIONS, INTERESTS, recommendedCommands } from "@/lib/collections";
+import { personaGreetingName } from "@/lib/personas";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
