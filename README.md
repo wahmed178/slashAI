@@ -20,7 +20,7 @@ Important: do not merely create a mockup with 20 commands. Populate the actual c
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://slash-command-vault.lovable.app
+**Live app**: https://slashprompt.lovable.app
 
 ## Build with Lovable
 
