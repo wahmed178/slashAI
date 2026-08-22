@@ -2,106 +2,358 @@
   {
     "category": "Image & Vision",
     "icon": "Image",
-    "type": "image"
+    "type": "image",
+    "subcategories": [
+      "Accessibility",
+      "Background Removal",
+      "Captioning",
+      "Colorize",
+      "Diagrams",
+      "Enhance",
+      "Relighting",
+      "Restoration",
+      "Restore",
+      "Retouch",
+      "Style Transfer",
+      "Upscaling",
+      "Variations"
+    ]
   },
   {
     "category": "Documents & OCR",
     "icon": "FileText",
-    "type": "document"
+    "type": "document",
+    "subcategories": [
+      "Classification",
+      "Diffing",
+      "Extraction",
+      "Handwriting",
+      "OCR",
+      "Outlines",
+      "Question Answering",
+      "Redaction",
+      "Summaries",
+      "Tables",
+      "Translation"
+    ]
   },
   {
-    "category": "Writing",
+    "category": "Writing & Communication",
     "icon": "PenLine",
-    "type": "text"
+    "type": "text",
+    "subcategories": [
+      "Clarity",
+      "Drafting",
+      "Editing",
+      "Headlines",
+      "Hooks",
+      "Polish",
+      "Proofreading",
+      "Rewriting",
+      "Summaries",
+      "Tone"
+    ]
   },
   {
-    "category": "Research",
+    "category": "Research & Knowledge",
     "icon": "Search",
-    "type": "research"
+    "type": "research",
+    "subcategories": [
+      "Briefings",
+      "Comparison",
+      "Deep Research",
+      "Gap Analysis",
+      "Glossaries",
+      "Literature",
+      "Perspectives",
+      "Sourcing",
+      "Timelines",
+      "Verification"
+    ]
   },
   {
-    "category": "Analysis",
-    "icon": "Sparkles",
-    "type": "text"
-  },
-  {
-    "category": "Data",
+    "category": "Data & Analytics",
     "icon": "Database",
-    "type": "data"
+    "type": "data",
+    "subcategories": [
+      "Analysis",
+      "Anomalies",
+      "Assumptions",
+      "Cleaning",
+      "Comparison",
+      "Critique",
+      "Decisions",
+      "Explanation",
+      "Forecasting",
+      "Frameworks",
+      "Joining",
+      "Profiling",
+      "Reshaping",
+      "Risk",
+      "Root Cause",
+      "SQL",
+      "Schema",
+      "Scoring",
+      "Sentiment",
+      "Themes",
+      "Validation",
+      "Visualization"
+    ]
   },
   {
-    "category": "Coding",
+    "category": "Coding & Development",
     "icon": "Code2",
-    "type": "coding"
+    "type": "coding",
+    "subcategories": [
+      "Code Review",
+      "Debugging",
+      "Documentation",
+      "Explanation",
+      "Migration",
+      "Performance",
+      "Refactoring",
+      "Regex",
+      "Security",
+      "Testing",
+      "Typing"
+    ]
   },
   {
     "category": "Productivity",
     "icon": "Zap",
-    "type": "productivity"
+    "type": "productivity",
+    "subcategories": [
+      "Checklists",
+      "Delegation",
+      "Estimation",
+      "Focus",
+      "Follow-ups",
+      "Planning",
+      "Prioritization",
+      "Recaps",
+      "Templates",
+      "Unblocking"
+    ]
   },
   {
-    "category": "Business",
+    "category": "Business & Management",
     "icon": "Briefcase",
-    "type": "business"
+    "type": "business",
+    "subcategories": [
+      "Competition",
+      "Metrics",
+      "Modeling",
+      "Negotiation",
+      "One-pagers",
+      "Personas",
+      "Positioning",
+      "Pricing",
+      "Proposals",
+      "Roadmaps"
+    ]
   },
   {
     "category": "Quality & Performance",
     "icon": "Gauge",
-    "type": "general"
+    "type": "general",
+    "subcategories": [
+      "Accessibility",
+      "Audits",
+      "Benchmarks",
+      "Consistency",
+      "Cost",
+      "Improvement",
+      "Latency",
+      "Regressions",
+      "Rubrics",
+      "Stress Testing"
+    ]
   },
   {
-    "category": "Learning",
+    "category": "Learning & Education",
     "icon": "GraduationCap",
-    "type": "learning"
+    "type": "learning",
+    "subcategories": [
+      "Analogies",
+      "Curricula",
+      "Explainers",
+      "Flashcards",
+      "Pitfalls",
+      "Practice",
+      "Quizzes",
+      "Retrieval",
+      "Teaching",
+      "Technique"
+    ]
   },
   {
-    "category": "Audio",
+    "category": "Design & Creative",
+    "icon": "Palette",
+    "type": "image",
+    "subcategories": [
+      "Color",
+      "Critique",
+      "Iconography",
+      "Layout",
+      "Moodboards",
+      "Motion",
+      "Systems",
+      "Theming",
+      "Type",
+      "Wireframes"
+    ]
+  },
+  {
+    "category": "Audio & Speech",
     "icon": "AudioLines",
-    "type": "audio"
+    "type": "audio",
+    "subcategories": [
+      "Chapters",
+      "Cleanup",
+      "Editing",
+      "Highlights",
+      "Mastering",
+      "Scripting",
+      "Show Notes",
+      "Summaries",
+      "Transcription",
+      "Translation"
+    ]
   },
   {
     "category": "Video",
     "icon": "Clapperboard",
-    "type": "video"
+    "type": "video",
+    "subcategories": [
+      "Captions",
+      "Editing",
+      "Hooks",
+      "Metadata",
+      "Pacing",
+      "Production",
+      "Repurposing",
+      "Scripting",
+      "Storyboards",
+      "Thumbnails"
+    ]
   },
   {
-    "category": "Marketing",
+    "category": "Marketing & SEO",
     "icon": "Megaphone",
-    "type": "business"
+    "type": "business",
+    "subcategories": [
+      "Advertising",
+      "Campaigns",
+      "Copywriting",
+      "Email Marketing",
+      "Experiments",
+      "Funnels",
+      "Launches",
+      "Planning",
+      "SEO",
+      "Social Proof"
+    ]
   },
   {
-    "category": "Design",
-    "icon": "Palette",
-    "type": "image"
-  },
-  {
-    "category": "Automation",
+    "category": "Automation & Workflows",
     "icon": "Workflow",
-    "type": "productivity"
+    "type": "productivity",
+    "subcategories": [
+      "Audit",
+      "Automation",
+      "Batching",
+      "Integration",
+      "Mapping",
+      "Notifications",
+      "Recipes",
+      "Reliability",
+      "Syncing",
+      "Triggers"
+    ]
   },
   {
-    "category": "Security & Privacy",
-    "icon": "ShieldCheck",
-    "type": "general"
-  },
-  {
-    "category": "Translation",
+    "category": "Translation & Languages",
     "icon": "Languages",
-    "type": "text"
+    "type": "text",
+    "subcategories": [
+      "Clarity",
+      "Culture",
+      "Localization",
+      "Quality",
+      "Register",
+      "Scripts",
+      "Side-by-side",
+      "Subtitles",
+      "Terminology",
+      "Translation"
+    ]
   },
   {
     "category": "Math & Science",
     "icon": "Sigma",
-    "type": "general"
+    "type": "general",
+    "subcategories": [
+      "Derivations",
+      "Estimation",
+      "Interpretation",
+      "Modeling",
+      "Proofs",
+      "Simulation",
+      "Solving",
+      "Units",
+      "Verification",
+      "Visualization"
+    ]
   },
   {
     "category": "Career",
     "icon": "UserRound",
-    "type": "productivity"
+    "type": "productivity",
+    "subcategories": [
+      "Growth",
+      "Interviews",
+      "Networking",
+      "Offers",
+      "Onboarding",
+      "Personal Brand",
+      "Questions",
+      "Review",
+      "Storytelling",
+      "Tailoring"
+    ]
+  },
+  {
+    "category": "Security & Privacy",
+    "icon": "ShieldCheck",
+    "type": "general",
+    "subcategories": [
+      "Access Control",
+      "Awareness",
+      "Checklists",
+      "Consent",
+      "Data Retention",
+      "Hardening",
+      "Incident Response",
+      "Policy",
+      "Privacy",
+      "Threat Modeling"
+    ]
   },
   {
     "category": "General AI",
     "icon": "Bot",
-    "type": "general"
+    "type": "general",
+    "subcategories": [
+      "Efficiency",
+      "Evaluation",
+      "Examples",
+      "Formatting",
+      "Guardrails",
+      "Personas",
+      "Prompting",
+      "Self-review",
+      "Troubleshooting",
+      "Workflows"
+    ]
   }
 ]

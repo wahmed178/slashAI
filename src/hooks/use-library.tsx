@@ -28,6 +28,7 @@ const DEFAULT_SETTINGS: Settings = {
 const KEYS = {
   favorites: "slashai.favorites",
   recents: "slashai.recents",
+  searches: "slashai.searches",
   settings: "slashai.settings",
 };
 
@@ -35,11 +36,14 @@ interface LibraryValue {
   hydrated: boolean;
   favorites: string[];
   recents: string[];
+  recentSearches: string[];
   settings: Settings;
   isFavorite: (id: string) => boolean;
   toggleFavorite: (id: string) => void;
   recordUse: (id: string) => void;
+  recordSearch: (q: string) => void;
   clearRecents: () => void;
+  clearSearches: () => void;
   updateSettings: (patch: Partial<Settings>) => void;
 }
 
@@ -68,11 +72,13 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [recents, setRecents] = useState<string[]>([]);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
     setFavorites(readArray(KEYS.favorites));
     setRecents(readArray(KEYS.recents));
+    setRecentSearches(readArray(KEYS.searches));
     setSettings(read<Settings>(KEYS.settings, DEFAULT_SETTINGS));
     setHydrated(true);
   }, []);
@@ -101,9 +107,27 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const recordSearch = useCallback((q: string) => {
+    const term = q.trim();
+    if (term.length < 2) return;
+    setRecentSearches((prev) => {
+      const next = [term, ...prev.filter((x) => x.toLowerCase() !== term.toLowerCase())].slice(
+        0,
+        8,
+      );
+      localStorage.setItem(KEYS.searches, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const clearRecents = useCallback(() => {
     setRecents([]);
     localStorage.setItem(KEYS.recents, "[]");
+  }, []);
+
+  const clearSearches = useCallback(() => {
+    setRecentSearches([]);
+    localStorage.setItem(KEYS.searches, "[]");
   }, []);
 
   const updateSettings = useCallback((patch: Partial<Settings>) => {
@@ -115,21 +139,27 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       hydrated,
       favorites,
       recents,
+      recentSearches,
       settings,
       isFavorite: (id) => favorites.includes(id),
       toggleFavorite,
       recordUse,
+      recordSearch,
       clearRecents,
+      clearSearches,
       updateSettings,
     }),
     [
       hydrated,
       favorites,
       recents,
+      recentSearches,
       settings,
       toggleFavorite,
       recordUse,
+      recordSearch,
       clearRecents,
+      clearSearches,
       updateSettings,
     ],
   );
