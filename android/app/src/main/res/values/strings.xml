@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SlashAI</string>
+    <string name="title_activity_main">SlashAI</string>
+    <string name="package_name">dev.lovable.slashprompt</string>
+    <string name="custom_url_scheme">dev.lovable.slashprompt</string>
+</resources>

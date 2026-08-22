@@ -13,14 +13,16 @@
     "catalog:build": "bun scripts/generate-commands.mjs",
     "catalog:validate": "bun scripts/validate-catalog.mjs",
     "android:build": "bash android/build-android.sh",
-    "android:validate": "bun scripts/validate-android-association.mjs",
-    "android:init": "npx @bubblewrap/cli init --manifest=android/twa-manifest.json --directory=android/project",
+    "android:sync": "npm run build && npx cap sync android",
+    "android:open": "npx cap open android",
     "android:keystore": "bash android/generate-keystore.sh"
   },
   "overrides": {
     "rolldown": "1.2.1"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -75,7 +77,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@bubblewrap/core": "^1.25.0",
+    "@capacitor/cli": "^8.5.0",
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "^2.15.0",
     "@types/node": "^22.16.5",

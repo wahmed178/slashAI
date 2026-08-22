@@ -20,48 +20,11 @@ jobs:
         with:
           bun-version: latest
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Lint
         run: bun run lint
-
-      - name: Restore signing keystore
-        env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-        run: |
-          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
-            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/android.keystore
-          else
-            echo "No ANDROID_KEYSTORE_BASE64 secret; assetlinks.json will keep the repo fingerprint."
-          fi
-
-      - name: Inject published domain and SHA-256 fingerprint
-        env:
-          PUBLISHED_DOMAIN: ${{ vars.PUBLISHED_DOMAIN }}
-        run: |
-          if [ -z "$PUBLISHED_DOMAIN" ]; then
-            echo "::error::Repository variable PUBLISHED_DOMAIN is not set (e.g. slash-command-vault.lovable.app)."
-            exit 1
-          fi
-          sed -i "s|REPLACE_WITH_YOUR_PUBLISHED_DOMAIN|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
-          sed -i "s|slash-command-vault.lovable.app|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
-          sed -i "s|REPLACE_WITH_YOUR_PUBLISHED_DOMAIN|$PUBLISHED_DOMAIN|g" public/.well-known/assetlinks.json
-          sed -i "s|slash-command-vault.lovable.app|$PUBLISHED_DOMAIN|g" public/.well-known/assetlinks.json
-
-          if [ -f android/android.keystore ]; then
-            FINGERPRINT=$(keytool -list -v -keystore android/android.keystore -alias slashai -storepass "${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" | grep "SHA256:" | sed 's/^.*SHA256: //')
-            if [ -n "$FINGERPRINT" ]; then
-              sed -i "s|REPLACE_WITH_YOUR_SHA256_FINGERPRINT|$FINGERPRINT|g" public/.well-known/assetlinks.json
-              echo "Injected SHA-256 fingerprint: $FINGERPRINT"
-            fi
-            rm -f android/android.keystore
-          fi
 
       - name: Build
         run: bun run build
@@ -75,7 +38,7 @@ jobs:
 
 
   android:
-    name: Android release build (TWA)
+    name: Android release build (Capacitor)
     runs-on: ubuntu-latest
     needs: web
     env:
@@ -90,7 +53,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Set up Android SDK and accept licenses
         run: |
@@ -98,7 +61,6 @@ jobs:
           mkdir -p "$ANDROID_HOME/licenses"
           yes | sdkmanager --licenses || true
           sdkmanager --install "platform-tools" "platforms;android-36" "build-tools;36.1.0"
-          # Bubblewrap's SDK path validation expects a root 'bin' or 'tools' directory.
           mkdir -p "$ANDROID_HOME/bin"
           if [ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ]; then
             ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/bin"
@@ -110,19 +72,6 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Set version from tag
-        run: |
-          export VERSION="${GITHUB_REF_NAME#v}"
-          node -e "
-            const fs = require('fs');
-            const p = 'android/twa-manifest.json';
-            const m = JSON.parse(fs.readFileSync(p, 'utf8'));
-            m.appVersion = process.env.VERSION;
-            m.appVersionCode = Number(process.env.GITHUB_RUN_NUMBER);
-            fs.writeFileSync(p, JSON.stringify(m, null, 2));
-          "
-
-
       - name: Restore signing keystore
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -133,69 +82,33 @@ jobs:
           fi
           echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$GITHUB_WORKSPACE/android/android.keystore"
 
-      - name: Validate Digital Asset Links association
+      - name: Build Android release APK
         env:
-          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          TWA_KEYSTORE_PATH: ${{ github.workspace }}/android/android.keystore
-          PUBLISHED_DOMAIN: ${{ vars.PUBLISHED_DOMAIN }}
-        run: |
-          if [ -n "$PUBLISHED_DOMAIN" ]; then
-            sed -i "s|slashprompt.lovable.app|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
-          fi
-          bun run scripts/validate-android-association.mjs "$TWA_KEYSTORE_PATH"
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/android/android.keystore
+        run: bun run android:build
 
-      - name: Build Android release (APK + AAB)
-        env:
-          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          TWA_KEYSTORE_PATH: ${{ github.workspace }}/android/android.keystore
-        run: |
-          bun run android:validate -- android/android.keystore
-          bun run scripts/bubblewrap-build.mjs android/twa-manifest.json android/project
+      - name: Upload Android artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release
+          path: |
+            android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
 
       - name: Prepare downloadable release files
         run: |
-          mkdir -p dist-android
-          cp android/project/app/build/outputs/apk/release/app-release-signed.apk dist-android/SlashAI.apk
-          cp android/project/app/build/outputs/bundle/release/app-release-signed.aab dist-android/SlashAI.aab
-          cp dist-android/SlashAI.apk slash-command-vault.apk
-          cp dist-android/SlashAI.aab slash-command-vault.aab
-          # Sanity check: a real APK must contain a binary AndroidManifest.xml + classes.dex
-          unzip -l dist-android/SlashAI.apk | grep -q "AndroidManifest.xml" || {
-            echo "::error::Built APK is missing AndroidManifest.xml"; exit 1; }
-          unzip -l dist-android/SlashAI.apk | grep -q "classes.dex" || {
-            echo "::error::Built APK is missing classes.dex"; exit 1; }
-          ls -lh dist-android
-
-      # NOTE: GitHub always wraps upload-artifact downloads in a .zip.
-      # The APK/AAB inside are intact — unzip once and install SlashAI.apk.
-      # For a direct (non-zipped) download, use the GitHub Release assets below.
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SlashAI-apk
-          path: dist-android/SlashAI.apk
-          if-no-files-found: error
-
-      - name: Upload AAB artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: SlashAI-aab
-          path: dist-android/SlashAI.aab
-          if-no-files-found: error
-
+          cp android/app/build/outputs/apk/release/app-release.apk slash-command-vault.apk
 
       - name: Publish GitHub release assets
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
-
         with:
           tag_name: ${{ github.ref_name }}
           name: SlashAI ${{ github.ref_name }}
           generate_release_notes: true
           files: |
             slash-command-vault.apk
-            slash-command-vault.aab
 
       - name: Remove keystore
         if: always()
