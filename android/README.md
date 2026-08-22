@@ -76,6 +76,32 @@ keytool -list -v -keystore android/android.keystore -alias slashai
 
 Copy the SHA-256 value into `public/.well-known/assetlinks.json`.
 
+### 4b. Verify the certificate association (important)
+
+A TWA only hides the browser address bar when the SHA-256 fingerprint of the signing
+certificate is listed in the live `/.well-known/assetlinks.json`. Check it before building:
+
+```bash
+BUBBLEWRAP_KEYSTORE_PASSWORD='your-password' \
+  bun run android:validate -- android/android.keystore
+```
+
+The check also runs automatically inside `bun run android:build` and in GitHub Actions,
+and it fails the build on a mismatch. To validate only the JSON wiring (no keystore
+needed), run `SKIP_KEYSTORE_CHECK=1 bun run android:validate`.
+
+After changing `assetlinks.json`, **redeploy the Lovable web app** and reinstall the APK —
+Android caches the association at install time.
+
+#### Google Play App Signing
+
+If you enroll in Play App Signing, Google re-signs your app with its own key, so the
+upload-key fingerprint is no longer what the device sees. Copy the **App signing key
+certificate** SHA-256 from Play Console → Setup → App integrity and add it as a second
+entry in `sha256_cert_fingerprints`, alongside your upload key fingerprint. Both may be
+listed; keeping both means locally-installed APKs and Play-installed builds both verify.
+
+
 ### 5. Build the Android project
 
 ```bash

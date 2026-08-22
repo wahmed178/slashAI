@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -131,6 +132,17 @@ jobs:
             exit 1
           fi
           echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$GITHUB_WORKSPACE/android/android.keystore"
+
+      - name: Validate Digital Asset Links association
+        env:
+          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          TWA_KEYSTORE_PATH: ${{ github.workspace }}/android/android.keystore
+          PUBLISHED_DOMAIN: ${{ vars.PUBLISHED_DOMAIN }}
+        run: |
+          if [ -n "$PUBLISHED_DOMAIN" ]; then
+            sed -i "s|slashprompt.lovable.app|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
+          fi
+          bun run scripts/validate-android-association.mjs "$TWA_KEYSTORE_PATH"
 
       - name: Build Android release (APK + AAB)
         env:
