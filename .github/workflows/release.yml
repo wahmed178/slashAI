@@ -110,7 +110,7 @@ jobs:
 
       - name: Set version from tag
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          export VERSION="${GITHUB_REF_NAME#v}"
           node -e "
             const fs = require('fs');
             const p = 'android/twa-manifest.json';
@@ -119,8 +119,7 @@ jobs:
             m.appVersionCode = Number(process.env.GITHUB_RUN_NUMBER);
             fs.writeFileSync(p, JSON.stringify(m, null, 2));
           "
-        env:
-          VERSION: ${{ github.ref_name }}
+
 
       - name: Restore signing keystore
         env:
