@@ -11,13 +11,7 @@
  */
 
 export type ResourceSection =
-  | "ai"
-  | "free-tools"
-  | "github"
-  | "learn"
-  | "resources"
-  | "youtube"
-  | "tips";
+  "ai" | "free-tools" | "github" | "learn" | "resources" | "youtube" | "tips";
 
 export type Pricing =
   | "Completely Free"
@@ -213,8 +207,10 @@ export const SECTIONS: SectionDef[] = [
 const D = "2026-08-22";
 
 /** helper keeps the list readable; every record still carries explicit dates */
-const r = (x: Omit<Resource, "addedDate" | "lastUpdated" | "lastVerified" | "status"> &
-  Partial<Pick<Resource, "addedDate" | "lastUpdated" | "lastVerified" | "status">>): Resource => ({
+const r = (
+  x: Omit<Resource, "addedDate" | "lastUpdated" | "lastVerified" | "status"> &
+    Partial<Pick<Resource, "addedDate" | "lastUpdated" | "lastVerified" | "status">>,
+): Resource => ({
   addedDate: D,
   lastUpdated: D,
   lastVerified: D,

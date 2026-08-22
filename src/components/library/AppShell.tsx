@@ -54,7 +54,6 @@ const DISCOVER_CHILDREN = [
   { section: "tips", label: "Tips & Tricks", icon: Lightbulb },
 ] as const;
 
-
 const SECONDARY = [
   { to: "/explore", label: "Commands", icon: Terminal },
   { to: "/collections", label: "Collections", icon: Layers },
@@ -63,7 +62,6 @@ const SECONDARY = [
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
 ] as const;
-
 
 interface Props {
   children: ReactNode;
@@ -153,7 +151,6 @@ function NavList({
                 <Radar className="size-4 shrink-0" aria-hidden />
                 Free Radar
               </Link>
-
             </div>
           )}
         </div>
@@ -183,7 +180,6 @@ function NavList({
   );
 }
 
-
 export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -206,7 +202,6 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             <span className="block truncate text-xs text-muted-foreground">
               Curated AI & free finds
             </span>
-
           </span>
         </Link>
         <div className="flex-1 overflow-y-auto px-2 pb-4">

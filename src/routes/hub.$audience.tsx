@@ -6,44 +6,46 @@ import { ResourceGrid } from "@/components/library/ResourceCard";
 import { Button } from "@/components/ui/button";
 import { audienceResources, type Audience } from "@/lib/resources";
 
-const HUBS: Record<string, { audience: Audience; title: string; blurb: string; collection?: string }> =
-  {
-    students: {
-      audience: "Students",
-      title: "Student Hub",
-      blurb:
-        "Free software, study tools, courses and student offers. Eligibility is shown wherever an offer is conditional.",
-      collection: "for-students",
-    },
-    professionals: {
-      audience: "Professionals",
-      title: "Professional Hub",
-      blurb:
-        "Productivity, writing, research, planning and presentation tools for everyday desk work.",
-      collection: "for-professionals",
-    },
-    developers: {
-      audience: "Developers",
-      title: "Developer Hub",
-      blurb: "Editors, APIs, open-source projects and references worth keeping bookmarked.",
-    },
-    creators: {
-      audience: "Creators",
-      title: "Creator Hub",
-      blurb: "Editing, capture, design and asset tools that do not watermark your work.",
-      collection: "for-creators",
-    },
-    researchers: {
-      audience: "Researchers",
-      title: "Researcher Hub",
-      blurb: "Literature search, citation management and writing tools.",
-    },
-    "job-seekers": {
-      audience: "Job Seekers",
-      title: "Job Seeker Hub",
-      blurb: "Resume building, salary research and interview preparation.",
-    },
-  };
+const HUBS: Record<
+  string,
+  { audience: Audience; title: string; blurb: string; collection?: string }
+> = {
+  students: {
+    audience: "Students",
+    title: "Student Hub",
+    blurb:
+      "Free software, study tools, courses and student offers. Eligibility is shown wherever an offer is conditional.",
+    collection: "for-students",
+  },
+  professionals: {
+    audience: "Professionals",
+    title: "Professional Hub",
+    blurb:
+      "Productivity, writing, research, planning and presentation tools for everyday desk work.",
+    collection: "for-professionals",
+  },
+  developers: {
+    audience: "Developers",
+    title: "Developer Hub",
+    blurb: "Editors, APIs, open-source projects and references worth keeping bookmarked.",
+  },
+  creators: {
+    audience: "Creators",
+    title: "Creator Hub",
+    blurb: "Editing, capture, design and asset tools that do not watermark your work.",
+    collection: "for-creators",
+  },
+  researchers: {
+    audience: "Researchers",
+    title: "Researcher Hub",
+    blurb: "Literature search, citation management and writing tools.",
+  },
+  "job-seekers": {
+    audience: "Job Seekers",
+    title: "Job Seeker Hub",
+    blurb: "Resume building, salary research and interview preparation.",
+  },
+};
 
 export const Route = createFileRoute("/hub/$audience")({
   loader: ({ params }) => {

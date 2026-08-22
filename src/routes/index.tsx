@@ -28,7 +28,6 @@ import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
 import { personaGreetingName } from "@/lib/personas";
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -148,7 +147,6 @@ function HomePage() {
     return weekly ? dropItems(weekly).slice(0, 6) : [];
   }, []);
 
-
   return (
     <AppShell hideHeaderSearch title="SlashAI">
       {showOnboarding && <Onboarding />}
@@ -239,135 +237,130 @@ function HomePage() {
           </Link>
         </div>
 
-          <Section
-            title="Command of the day"
-            hint="One fresh pick a day, plus a reroll whenever you want one."
-          >
-            <Discover />
-          </Section>
+        <Section
+          title="Command of the day"
+          hint="One fresh pick a day, plus a reroll whenever you want one."
+        >
+          <Discover />
+        </Section>
 
+        <Section
+          title="This week's free finds"
+          hint="Hand-picked, with a last-checked date on every entry."
+          action={
+            <Link
+              to="/whats-new"
+              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              All <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          }
+        >
+          <ResourceGrid resources={weeklyFinds} />
+        </Section>
+
+        {recentCommands.length > 0 && (
           <Section
-            title="This week's free finds"
-            hint="Hand-picked, with a last-checked date on every entry."
+            title="Continue where you left off"
             action={
               <Link
-                to="/whats-new"
+                to="/recent"
                 className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
               >
-                All <ArrowRight className="size-4" aria-hidden />
+                <History className="size-4" aria-hidden /> All
               </Link>
             }
           >
-            <ResourceGrid resources={weeklyFinds} />
+            <CommandRow commands={recentCommands} />
           </Section>
+        )}
 
-
-          {recentCommands.length > 0 && (
-            <Section
-              title="Continue where you left off"
-              action={
-                <Link
-                  to="/recent"
-                  className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                >
-                  <History className="size-4" aria-hidden /> All
-                </Link>
-              }
-            >
-              <CommandRow commands={recentCommands} />
-            </Section>
-          )}
-
-          {favoriteCommands.length > 0 && (
-            <Section
-              title="Your favorites"
-              action={
-                <Link
-                  to="/favorites"
-                  className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                >
-                  <Star className="size-4" aria-hidden /> All
-                </Link>
-              }
-            >
-              <CommandRow commands={favoriteCommands} />
-            </Section>
-          )}
-
-          {forYou.length > 0 && (
-            <Section title="For you" hint="Based on what you saved and opened on this device.">
-              <CommandRow commands={forYou} />
-            </Section>
-          )}
-
+        {favoriteCommands.length > 0 && (
           <Section
-            title="Collections"
-            hint="Curated starting points — every collection is open to everyone."
+            title="Your favorites"
             action={
               <Link
-                to="/collections"
+                to="/favorites"
                 className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
               >
-                All <ArrowRight className="size-4" aria-hidden />
+                <Star className="size-4" aria-hidden /> All
               </Link>
             }
           >
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {COLLECTIONS.slice(0, 6).map((c) => {
-                const Icon = categoryIcon(c.icon);
-                return (
-                  <Link
-                    key={c.id}
-                    to="/collections/$id"
-                    params={{ id: c.id }}
-                    className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
-                  >
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-                      <Icon className="size-4.5" aria-hidden />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm font-semibold text-foreground">
-                        {c.title}
-                      </span>
-                      <span className="block truncate text-xs text-muted-foreground">
-                        {c.count} commands
-                      </span>
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
+            <CommandRow commands={favoriteCommands} />
           </Section>
+        )}
 
-          <Section
-            title="Hubs"
-            hint="Everything gathered for one kind of person."
-          >
-            <div className="grid gap-2 sm:grid-cols-2">
-              {[
-                ["students", "Student Hub", "Free software, study tools and student offers"],
-                ["professionals", "Professional Hub", "Work, writing, planning and research"],
-                ["developers", "Developer Hub", "APIs, editors and open-source picks"],
-                ["creators", "Creator Hub", "Capture, edit and design without watermarks"],
-              ].map(([id, title, blurb]) => (
+        {forYou.length > 0 && (
+          <Section title="For you" hint="Based on what you saved and opened on this device.">
+            <CommandRow commands={forYou} />
+          </Section>
+        )}
+
+        <Section
+          title="Collections"
+          hint="Curated starting points — every collection is open to everyone."
+          action={
+            <Link
+              to="/collections"
+              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              All <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          }
+        >
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {COLLECTIONS.slice(0, 6).map((c) => {
+              const Icon = categoryIcon(c.icon);
+              return (
                 <Link
-                  key={id}
-                  to="/hub/$audience"
-                  params={{ audience: id! }}
+                  key={c.id}
+                  to="/collections/$id"
+                  params={{ id: c.id }}
                   className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
                 >
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
+                    <Icon className="size-4.5" aria-hidden />
+                  </span>
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-semibold text-foreground">
-                      {title}
+                      {c.title}
                     </span>
-                    <span className="block truncate text-xs text-muted-foreground">{blurb}</span>
+                    <span className="block truncate text-xs text-muted-foreground">
+                      {c.count} commands
+                    </span>
                   </span>
                 </Link>
-              ))}
-            </div>
-          </Section>
-      </>
+              );
+            })}
+          </div>
+        </Section>
 
+        <Section title="Hubs" hint="Everything gathered for one kind of person.">
+          <div className="grid gap-2 sm:grid-cols-2">
+            {[
+              ["students", "Student Hub", "Free software, study tools and student offers"],
+              ["professionals", "Professional Hub", "Work, writing, planning and research"],
+              ["developers", "Developer Hub", "APIs, editors and open-source picks"],
+              ["creators", "Creator Hub", "Capture, edit and design without watermarks"],
+            ].map(([id, title, blurb]) => (
+              <Link
+                key={id}
+                to="/hub/$audience"
+                params={{ audience: id! }}
+                className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+              >
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-semibold text-foreground">
+                    {title}
+                  </span>
+                  <span className="block truncate text-xs text-muted-foreground">{blurb}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      </>
 
       <p className="mt-10 flex items-center gap-1.5 text-xs text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden /> Everything is stored on this device — no

@@ -28,7 +28,12 @@ export const Route = createFileRoute("/radar")({
 
 function RadarPage() {
   return (
-    <AppShell wide hideHeaderSearch title="Free Radar" back={{ to: "/discover", label: "Discover" }}>
+    <AppShell
+      wide
+      hideHeaderSearch
+      title="Free Radar"
+      back={{ to: "/discover", label: "Discover" }}
+    >
       <header className="pt-2">
         <h1 className="flex items-center gap-2 text-2xl font-black tracking-tight text-foreground">
           <RadarIcon className="size-6 text-primary" aria-hidden /> Free Radar

@@ -33,7 +33,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-
 const MAP: Record<string, LucideIcon> = {
   Image,
   FileText,
@@ -67,7 +66,6 @@ const MAP: Record<string, LucideIcon> = {
   Lightbulb,
   Wrench,
 };
-
 
 export function categoryIcon(name: string | undefined): LucideIcon {
   return (name && MAP[name]) || Sparkles;

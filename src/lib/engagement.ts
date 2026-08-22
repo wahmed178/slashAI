@@ -53,11 +53,7 @@ export const NEWEST_COMMANDS: SlashCommand[] = [...COMMANDS]
   .slice(0, 40);
 
 /** Commands in the user's interests that they have never opened. */
-export function newToYou(
-  personaCategories: string[],
-  seen: string[],
-  limit = 6,
-): SlashCommand[] {
+export function newToYou(personaCategories: string[], seen: string[], limit = 6): SlashCommand[] {
   const seenSet = new Set(seen);
   const cats = new Set(personaCategories);
   const pool = cats.size > 0 ? COMMANDS.filter((c) => cats.has(c.category)) : COMMANDS;

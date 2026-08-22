@@ -43,7 +43,11 @@ function CommandPage() {
   const open = (cmd: SlashCommand) => void navigate({ to: "/c/$slug", params: { slug: cmd.id } });
 
   return (
-    <AppShell hideHeaderSearch title={command?.command ?? "Command"} back={{ to: "/explore", label: "Back" }}>
+    <AppShell
+      hideHeaderSearch
+      title={command?.command ?? "Command"}
+      back={{ to: "/explore", label: "Back" }}
+    >
       {command ? (
         <>
           <p className="text-xs text-muted-foreground">

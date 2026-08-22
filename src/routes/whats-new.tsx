@@ -31,7 +31,12 @@ const CADENCE_ORDER = ["Weekly", "Monthly", "Special", "Yearly"] as const;
 
 function WhatsNewPage() {
   return (
-    <AppShell wide hideHeaderSearch title="What's new" back={{ to: "/discover", label: "Discover" }}>
+    <AppShell
+      wide
+      hideHeaderSearch
+      title="What's new"
+      back={{ to: "/discover", label: "Discover" }}
+    >
       <header className="pt-2">
         <h1 className="flex items-center gap-2 text-2xl font-black tracking-tight text-foreground">
           <Sparkles className="size-6 text-primary" aria-hidden /> What&apos;s new

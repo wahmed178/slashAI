@@ -119,7 +119,11 @@ function SectionPage() {
           All ({all.length})
         </Chip>
         {cats.map((c) => (
-          <Chip key={c.category} active={cat === c.category} onClick={() => set({ cat: c.category })}>
+          <Chip
+            key={c.category}
+            active={cat === c.category}
+            onClick={() => set({ cat: c.category })}
+          >
             {c.category} ({c.count})
           </Chip>
         ))}

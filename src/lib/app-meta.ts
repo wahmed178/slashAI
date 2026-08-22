@@ -27,7 +27,6 @@ export const CHANGELOG: ReleaseNote[] = [
     ],
   },
   {
-
     version: "1.1.0",
     date: "2026-08-22",
     title: "Cleaner, faster, more yours",

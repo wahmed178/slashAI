@@ -174,7 +174,11 @@ function SearchPage() {
             All of {cat}
           </Chip>
           {subcategories.map((s) => (
-            <Chip key={s.subcategory} active={sub === s.subcategory} onClick={() => set({ sub: s.subcategory })}>
+            <Chip
+              key={s.subcategory}
+              active={sub === s.subcategory}
+              onClick={() => set({ sub: s.subcategory })}
+            >
               {s.subcategory}
             </Chip>
           ))}
@@ -191,7 +195,6 @@ function SearchPage() {
       )}
 
       <div className="mt-5">
-
         {visible.length > 0 ? (
           <CommandGrid commands={visible} query={q} />
         ) : (
@@ -204,7 +207,15 @@ function SearchPage() {
                 className="gap-1.5"
                 onClick={() =>
                   void navigate({
-                    search: { q: "", cat: "all", sub: "all", type: "all", diff: "all", sort: "relevance", page: 1 },
+                    search: {
+                      q: "",
+                      cat: "all",
+                      sub: "all",
+                      type: "all",
+                      diff: "all",
+                      sort: "relevance",
+                      page: 1,
+                    },
                   })
                 }
               >
@@ -252,7 +263,11 @@ function SearchPage() {
               </p>
               <div className="flex flex-wrap gap-2">
                 {SORTS.map((s) => (
-                  <Chip key={s} active={(search.sort ?? "relevance") === s} onClick={() => set({ sort: s })}>
+                  <Chip
+                    key={s}
+                    active={(search.sort ?? "relevance") === s}
+                    onClick={() => set({ sort: s })}
+                  >
                     {s}
                   </Chip>
                 ))}
@@ -264,7 +279,10 @@ function SearchPage() {
                 Type
               </p>
               <div className="flex flex-wrap gap-2">
-                <Chip active={(search.type ?? "all") === "all"} onClick={() => set({ type: "all" })}>
+                <Chip
+                  active={(search.type ?? "all") === "all"}
+                  onClick={() => set({ type: "all" })}
+                >
                   Any
                 </Chip>
                 {TYPES.map((t) => (

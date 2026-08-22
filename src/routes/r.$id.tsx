@@ -66,7 +66,8 @@ function ResourcePage() {
   const def = sectionDef(resource.section);
 
   const related = RESOURCES.filter(
-    (x) => x.id !== resource.id && (x.category === resource.category || x.section === resource.section),
+    (x) =>
+      x.id !== resource.id && (x.category === resource.category || x.section === resource.section),
   ).slice(0, 6);
 
   const reportUrl = `mailto:?subject=${encodeURIComponent(
