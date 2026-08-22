@@ -1,94 +1,35 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  Search,
-  Menu,
-  Shuffle,
-  Star,
-  History,
-  Settings as SettingsIcon,
-  LayoutGrid,
-  List,
-  X,
-  Command as CommandIcon,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  SlidersHorizontal,
-} from "lucide-react";
+import { useMemo, useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Sparkles, Star, History, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import { useLibrary } from "@/hooks/use-library";
-import { useCommandActions } from "@/hooks/use-command-actions";
-import { SidebarContents } from "@/components/library/AppSidebar";
-import { CommandCard } from "@/components/library/CommandCard";
-import { CommandDetail } from "@/components/library/CommandDetail";
-import { DashboardWidgets } from "@/components/library/DashboardWidgets";
-import { OfflineBadge } from "@/components/library/OfflineBadge";
-import { SettingsPanel } from "@/components/library/SettingsPanel";
-import { Highlight } from "@/components/library/Highlight";
+import { AppShell } from "@/components/library/AppShell";
+import { SearchBox } from "@/components/library/SearchBox";
+import { Discover } from "@/components/library/Discover";
 import { categoryIcon } from "@/components/library/icons";
+import { useLibrary } from "@/hooks/use-library";
 import {
   CATEGORY_ICONS,
   CATEGORY_TREE,
-  SUBCATEGORY_TOTAL,
-  TYPES,
   VERIFIED_TOTAL,
-  filterCommands,
   getCommand,
-  getRandomCommand,
-  suggestions,
   type SlashCommand,
-  type SortKey,
 } from "@/lib/commands";
-
-interface LibrarySearch {
-  q: string;
-  cat: string;
-  sub: string;
-  type: string;
-  diff: string;
-  sort: SortKey;
-  fav: boolean;
-  page: number;
-  cmd: string | undefined;
-}
-
-const SORTS: SortKey[] = ["relevance", "name", "category", "popularity", "newest"];
-const str = (v: unknown, fallback: string) => (typeof v === "string" && v ? v : fallback);
+import { COLLECTIONS, INTERESTS, recommendedCommands } from "@/lib/collections";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
-  validateSearch: (search: Record<string, unknown>): LibrarySearch => ({
-    q: str(search["q"], ""),
-    cat: str(search["cat"], "all"),
-    sub: str(search["sub"], "all"),
-    type: str(search["type"], "all"),
-    diff: str(search["diff"], "all"),
-    sort: (SORTS.includes(search["sort"] as SortKey) ? search["sort"] : "relevance") as SortKey,
-    fav: search["fav"] === true || search["fav"] === "true",
-    page: Math.max(1, Number(search["page"]) || 1),
-    cmd: typeof search["cmd"] === "string" && search["cmd"] ? (search["cmd"] as string) : undefined,
-  }),
   head: () => ({
     meta: [
-      { title: `SlashAI — ${VERIFIED_TOTAL} AI slash commands` },
+      { title: `SlashAI — find the right AI command in seconds` },
       {
         name: "description",
-        content: `Search ${VERIFIED_TOTAL} verified AI slash commands for images, documents, writing, code, data and research. Copy-ready prompts, favorites and offline access.`,
+        content: `A calm, searchable library of ${VERIFIED_TOTAL} AI slash commands. Search by what you want to accomplish, save favourites and work offline.`,
       },
-      { property: "og:title", content: "SlashAI" },
+      { property: "og:title", content: "SlashAI — AI slash command library" },
       {
         property: "og:description",
-        content: `A searchable dashboard of ${VERIFIED_TOTAL} AI slash commands with copy-ready prompt templates.`,
+        content: `Search ${VERIFIED_TOTAL} copy-ready AI slash commands by task, category or collection.`,
       },
       { name: "theme-color", content: "#12161c" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -97,762 +38,274 @@ export const Route = createFileRoute("/")({
     ],
     links: [{ rel: "manifest", href: "/manifest.webmanifest" }],
   }),
-  component: LibraryPage,
+  component: HomePage,
 });
 
-function LibraryPage() {
-  const search = Route.useSearch();
-  const navigate = useNavigate({ from: "/" });
-  const {
-    hydrated,
-    favorites,
-    recents,
-    recentSearches,
-    settings,
-    isFavorite,
-    toggleFavorite,
-    recordSearch,
-    clearRecents,
-    updateSettings,
-  } = useLibrary();
-  const { copyCommand } = useCommandActions();
-
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(false);
-  const [recentsOpen, setRecentsOpen] = useState(false);
-  const [suggestOpen, setSuggestOpen] = useState(false);
-  const [draft, setDraft] = useState(search.q);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => setDraft(search.q), [search.q]);
-
-  const setSearch = useCallback(
-    (patch: Partial<LibrarySearch>) => {
-      void navigate({ search: (prev) => ({ ...prev, page: 1, ...patch }), replace: true });
-    },
-    [navigate],
+function Section({
+  title,
+  hint,
+  action,
+  children,
+}: {
+  title: string;
+  hint?: string;
+  action?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="mt-9">
+      <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
+        <div className="min-w-0">
+          <h2 className="truncate text-lg font-bold tracking-tight text-foreground">{title}</h2>
+          {hint && <p className="mt-0.5 truncate text-xs text-muted-foreground">{hint}</p>}
+        </div>
+        {action}
+      </div>
+      {children}
+    </section>
   );
+}
 
-  // debounce the search box into the URL
-  useEffect(() => {
-    if (draft === search.q) return;
-    const t = setTimeout(() => setSearch({ q: draft }), 160);
-    return () => clearTimeout(t);
-  }, [draft, search.q, setSearch]);
+function greeting() {
+  const hour = new Date().getHours();
+  if (hour < 5) return "Working late";
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+}
 
-  const results = useMemo(
-    () =>
-      filterCommands({
-        q: search.q,
-        category: search.cat,
-        subcategory: search.sub,
-        type: search.type,
-        difficulty: search.diff,
-        sort: search.sort,
-        onlyFavorites: search.fav,
-        favorites,
-      }),
-    [
-      search.q,
-      search.cat,
-      search.sub,
-      search.type,
-      search.diff,
-      search.sort,
-      search.fav,
-      favorites,
-    ],
-  );
+function InterestsPrompt() {
+  const { settings, updateSettings } = useLibrary();
+  const [picked, setPicked] = useState<string[]>(settings.interests);
 
-  const pageSize = settings.pageSize;
-  const pageCount = Math.max(1, Math.ceil(results.length / pageSize));
-  const page = Math.min(search.page, pageCount);
-  const pageItems = results.slice((page - 1) * pageSize, page * pageSize);
-
-  const selected = getCommand(search.cmd);
-  const sugg = useMemo(() => (suggestOpen ? suggestions(draft) : []), [draft, suggestOpen]);
-  const activeCategory = CATEGORY_TREE.find((c) => c.category === search.cat);
-
-  const openCommand = useCallback(
-    (cmd: SlashCommand) => void navigate({ search: (prev) => ({ ...prev, cmd: cmd.id }) }),
-    [navigate],
-  );
-  const closeCommand = useCallback(
-    () => void navigate({ search: (prev) => ({ ...prev, cmd: undefined }) }),
-    [navigate],
-  );
-
-  // keyboard shortcuts
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null;
-      const typing = target && /^(INPUT|TEXTAREA)$/.test(target.tagName);
-      if ((e.key === "/" && !typing) || (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey))) {
-        e.preventDefault();
-        inputRef.current?.focus();
-        inputRef.current?.select();
-      } else if (e.key === "Escape" && typing) {
-        setDraft("");
-        setSuggestOpen(false);
-      } else if (e.key.toLowerCase() === "r" && !typing && !e.metaKey && !e.ctrlKey) {
-        openCommand(getRandomCommand());
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [openCommand]);
-
-  const activeFilters =
-    (search.cat !== "all" ? 1 : 0) +
-    (search.sub !== "all" ? 1 : 0) +
-    (search.type !== "all" ? 1 : 0) +
-    (search.diff !== "all" ? 1 : 0) +
-    (search.fav ? 1 : 0);
-
-  const isHome = !search.q && search.cat === "all" && !search.fav;
-
-  const sidebar = (
-    <SidebarContents
-      category={search.cat}
-      onCategory={(c) => {
-        setSearch({ cat: c, sub: "all", fav: false });
-        setMenuOpen(false);
-      }}
-      onlyFavorites={search.fav}
-      onToggleFavorites={() => {
-        setSearch({ fav: !search.fav });
-        setMenuOpen(false);
-      }}
-      favoritesCount={favorites.length}
-      recentsCount={recents.length}
-      onOpenRecents={() => {
-        setRecentsOpen(true);
-        setMenuOpen(false);
-      }}
-      onOpenSettings={() => {
-        setSettingsOpen(true);
-        setMenuOpen(false);
-      }}
-      onClose={menuOpen ? () => setMenuOpen(false) : undefined}
-    />
-  );
+  const toggle = (id: string) =>
+    setPicked((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
 
   return (
-    <div className="flex min-h-screen w-full bg-background">
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-sidebar-border lg:block">
-        {sidebar}
-      </aside>
-
-      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-        <SheetContent side="left" className="w-[85vw] max-w-xs p-0 sm:max-w-sm">
-          <SheetHeader className="sr-only">
-            <SheetTitle>Navigation</SheetTitle>
-            <SheetDescription>Categories and library shortcuts</SheetDescription>
-          </SheetHeader>
-          {sidebar}
-        </SheetContent>
-      </Sheet>
-
-      <main className="min-w-0 flex-1 pb-20 lg:pb-0">
-        <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur-md">
-          <div className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              aria-label="Open menu"
-              onClick={() => setMenuOpen(true)}
-            >
-              <Menu className="size-5" />
-            </Button>
-
-            <div className="relative min-w-0 flex-1">
-              <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-              <input
-                ref={inputRef}
-                value={draft}
-                onChange={(e) => {
-                  setDraft(e.target.value);
-                  setSuggestOpen(true);
-                }}
-                onFocus={() => setSuggestOpen(true)}
-                onBlur={() => {
-                  window.setTimeout(() => setSuggestOpen(false), 120);
-                  recordSearch(draft);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && sugg[0]) {
-                    setSuggestOpen(false);
-                    recordSearch(draft);
-                    openCommand(sugg[0]);
-                  }
-                }}
-                type="search"
-                role="searchbox"
-                aria-label="Search commands"
-                placeholder={`Search ${VERIFIED_TOTAL.toLocaleString()} commands, tags or descriptions…`}
-                className="h-11 w-full rounded-xl border border-border bg-surface pr-20 pl-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40 focus:outline-none"
-              />
-              {draft ? (
-                <button
-                  type="button"
-                  aria-label="Clear search"
-                  onClick={() => setDraft("")}
-                  className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-muted-foreground hover:text-foreground"
-                >
-                  <X className="size-4" />
-                </button>
-              ) : (
-                <kbd className="absolute top-1/2 right-3 hidden -translate-y-1/2 rounded-md border border-border bg-muted px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground sm:block">
-                  /
-                </kbd>
-              )}
-
-              {suggestOpen && (sugg.length > 0 || (!draft && recentSearches.length > 0)) && (
-                <div className="panel absolute top-[calc(100%+6px)] left-0 z-30 w-full overflow-hidden rounded-xl py-1">
-                  {!draft &&
-                    recentSearches.map((term) => (
-                      <button
-                        key={term}
-                        type="button"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => {
-                          setDraft(term);
-                          setSuggestOpen(false);
-                        }}
-                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
-                      >
-                        <Clock className="size-3.5 shrink-0 text-muted-foreground" />
-                        <span className="truncate text-xs text-muted-foreground">{term}</span>
-                      </button>
-                    ))}
-                  {sugg.map((s) => (
-                    <button
-                      key={s.id}
-                      type="button"
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => {
-                        setSuggestOpen(false);
-                        recordSearch(draft);
-                        openCommand(s);
-                      }}
-                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
-                    >
-                      <CommandIcon className="size-3.5 shrink-0 text-primary" />
-                      <span className="font-mono text-xs">
-                        <Highlight text={s.command} query={draft} />
-                      </span>
-                      <span className="truncate text-xs text-muted-foreground">{s.title}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Random command"
-              onClick={() => openCommand(getRandomCommand())}
-            >
-              <Shuffle className="size-5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hidden sm:inline-flex"
-              aria-label="Settings"
-              onClick={() => setSettingsOpen(true)}
-            >
-              <SettingsIcon className="size-5" />
-            </Button>
-          </div>
-        </header>
-
-        <div className="mx-auto max-w-6xl px-4 py-6">
-          {isHome && (
-            <section className="mb-8">
-              <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Find the right AI command
-              </h1>
-              <p className="mt-1.5 text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">
-                  {VERIFIED_TOTAL.toLocaleString()}
-                </span>{" "}
-                commands · {CATEGORY_TREE.length} categories · tap to copy
-                <span className="hidden sm:inline"> · {SUBCATEGORY_TOTAL} subcategories</span>
-              </p>
-
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted-foreground">
-                  {favorites.length} favorite{favorites.length === 1 ? "" : "s"}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setRecentsOpen(true)}
-                  className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-                >
-                  {recents.length} recently used
-                </button>
-                <OfflineBadge />
-              </div>
-
-              <div className="mt-5">
-                <DashboardWidgets
-                  isFavorite={isFavorite}
-                  onToggleFavorite={toggleFavorite}
-                  onOpen={openCommand}
-                />
-              </div>
-
-              {recents.length > 0 && (
-                <div className="mt-4">
-                  <p className="mb-2 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
-                    Recently used
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {recents.slice(0, 10).map((id) => {
-                      const c = getCommand(id);
-                      if (!c) return null;
-                      return (
-                        <button
-                          key={id}
-                          type="button"
-                          onClick={() => openCommand(c)}
-                          className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-                        >
-                          {c.command}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
-                {CATEGORY_TREE.map((c) => {
-                  const Icon = categoryIcon(c.icon);
-                  return (
-                    <button
-                      key={c.category}
-                      type="button"
-                      onClick={() => setSearch({ cat: c.category, sub: "all" })}
-                      className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-                    >
-                      <Icon className="size-3.5" /> {c.category}
-                      <span className="text-muted-foreground/70">{c.count}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-          )}
-
-          {/* subcategory explorer */}
-          {activeCategory && (
-            <div className="mb-4 flex flex-wrap gap-1.5">
-              <button
-                type="button"
-                onClick={() => setSearch({ sub: "all" })}
-                className={cn(
-                  "rounded-full border px-2.5 py-1 text-xs transition-colors",
-                  search.sub === "all"
-                    ? "border-primary/60 bg-accent text-foreground"
-                    : "border-border bg-surface text-muted-foreground hover:text-foreground",
-                )}
-              >
-                All {activeCategory.category} ({activeCategory.count})
-              </button>
-              {activeCategory.subcategories.map((s) => (
-                <button
-                  key={s.subcategory}
-                  type="button"
-                  onClick={() => setSearch({ sub: s.subcategory })}
-                  className={cn(
-                    "rounded-full border px-2.5 py-1 text-xs transition-colors",
-                    search.sub === s.subcategory
-                      ? "border-primary/60 bg-accent text-foreground"
-                      : "border-border bg-surface text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  {s.subcategory} <span className="text-muted-foreground/70">{s.count}</span>
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* toolbar */}
-          <div className="mb-4 flex flex-wrap items-center gap-2">
-            <p className="text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">
-                {results.length.toLocaleString()}
-              </span>{" "}
-              command
-              {results.length === 1 ? "" : "s"}
-              {search.fav && " in favorites"}
-              {search.cat !== "all" && ` in ${search.cat}`}
-              {search.sub !== "all" && ` / ${search.sub}`}
-            </p>
-
-            <div className="ml-auto flex flex-wrap items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-1.5 md:hidden"
-                onClick={() => setFiltersOpen(true)}
-              >
-                <SlidersHorizontal className="size-4" /> Filters
-                {activeFilters > 0 && (
-                  <span className="rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
-                    {activeFilters}
-                  </span>
-                )}
-              </Button>
-
-              <div className="hidden flex-wrap items-center gap-2 md:flex">
-                <select
-                  aria-label="Filter by type"
-                  value={search.type}
-                  onChange={(e) => setSearch({ type: e.target.value })}
-                  className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
-                >
-                  <option value="all">All types</option>
-                  {TYPES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  aria-label="Filter by difficulty"
-                  value={search.diff}
-                  onChange={(e) => setSearch({ diff: e.target.value })}
-                  className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
-                >
-                  <option value="all">Any level</option>
-                  <option value="easy">Easy</option>
-                  <option value="medium">Medium</option>
-                  <option value="advanced">Advanced</option>
-                </select>
-                <select
-                  aria-label="Sort commands"
-                  value={search.sort}
-                  onChange={(e) => setSearch({ sort: e.target.value as SortKey })}
-                  className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
-                >
-                  {SORTS.map((s) => (
-                    <option key={s} value={s}>
-                      Sort: {s}
-                    </option>
-                  ))}
-                </select>
-                <div className="flex rounded-lg border border-border bg-surface p-0.5">
-                  <button
-                    type="button"
-                    aria-label="Grid view"
-                    aria-pressed={settings.view === "grid"}
-                    onClick={() => updateSettings({ view: "grid" })}
-                    className={cn(
-                      "rounded-md p-1.5",
-                      settings.view === "grid"
-                        ? "bg-accent text-foreground"
-                        : "text-muted-foreground",
-                    )}
-                  >
-                    <LayoutGrid className="size-4" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="List view"
-                    aria-pressed={settings.view === "list"}
-                    onClick={() => updateSettings({ view: "list" })}
-                    className={cn(
-                      "rounded-md p-1.5",
-                      settings.view === "list"
-                        ? "bg-accent text-foreground"
-                        : "text-muted-foreground",
-                    )}
-                  >
-                    <List className="size-4" />
-                  </button>
-                </div>
-                {activeFilters > 0 && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() =>
-                      setSearch({ cat: "all", sub: "all", type: "all", diff: "all", fav: false })
-                    }
-                  >
-                    Clear filters
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* mobile filters */}
-          <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
-            <SheetContent side="bottom" className="gap-0 md:hidden">
-              <SheetHeader>
-                <SheetTitle>Filters & sort</SheetTitle>
-                <SheetDescription>
-                  {results.length.toLocaleString()} command{results.length === 1 ? "" : "s"} match
-                </SheetDescription>
-              </SheetHeader>
-              <div className="space-y-4 px-4 pb-8">
-                <div>
-                  <p className="mb-1.5 text-xs font-semibold text-muted-foreground uppercase">
-                    Type
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {["all", ...TYPES].map((t) => (
-                      <button
-                        key={t}
-                        type="button"
-                        onClick={() => setSearch({ type: t })}
-                        className={cn(
-                          "rounded-full border px-3 py-1.5 text-xs capitalize transition-colors",
-                          search.type === t
-                            ? "border-primary/60 bg-accent text-foreground"
-                            : "border-border bg-surface text-muted-foreground",
-                        )}
-                      >
-                        {t === "all" ? "All types" : t}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="mb-1.5 text-xs font-semibold text-muted-foreground uppercase">
-                    Level
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {["all", "easy", "medium", "advanced"].map((d) => (
-                      <button
-                        key={d}
-                        type="button"
-                        onClick={() => setSearch({ diff: d })}
-                        className={cn(
-                          "rounded-full border px-3 py-1.5 text-xs capitalize transition-colors",
-                          search.diff === d
-                            ? "border-primary/60 bg-accent text-foreground"
-                            : "border-border bg-surface text-muted-foreground",
-                        )}
-                      >
-                        {d === "all" ? "Any level" : d}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="mb-1.5 text-xs font-semibold text-muted-foreground uppercase">
-                    Sort
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {SORTS.map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => setSearch({ sort: s })}
-                        className={cn(
-                          "rounded-full border px-3 py-1.5 text-xs capitalize transition-colors",
-                          search.sort === s
-                            ? "border-primary/60 bg-accent text-foreground"
-                            : "border-border bg-surface text-muted-foreground",
-                        )}
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() =>
-                      setSearch({ cat: "all", sub: "all", type: "all", diff: "all", fav: false })
-                    }
-                  >
-                    Clear all
-                  </Button>
-                  <Button className="flex-1" onClick={() => setFiltersOpen(false)}>
-                    Show results
-                  </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-
-          {/* results */}
-          {!hydrated && results.length === 0 ? (
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton key={i} className="h-28 rounded-xl" />
-              ))}
-            </div>
-          ) : results.length === 0 ? (
-            <div className="panel flex flex-col items-center rounded-xl px-6 py-16 text-center">
-              <Search className="size-6 text-muted-foreground" />
-              <p className="mt-3 text-sm font-medium text-foreground">
-                {search.fav ? "No favorites yet" : "No commands match that search"}
-              </p>
-              <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-                {search.fav
-                  ? "Tap the star on any command to keep it here — favorites are stored on this device."
-                  : "Try a shorter keyword, clear the filters, or explore a category from the sidebar."}
-              </p>
-              <Button
-                variant="secondary"
-                className="mt-4"
-                onClick={() => {
-                  setDraft("");
-                  setSearch({
-                    q: "",
-                    cat: "all",
-                    sub: "all",
-                    type: "all",
-                    diff: "all",
-                    fav: false,
-                  });
-                }}
-              >
-                Reset search
-              </Button>
-            </div>
-          ) : (
-            <div
+    <section className="panel mt-8 rounded-2xl p-4">
+      <h2 className="text-base font-bold text-foreground">What are you interested in?</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Optional, stored only on this device. It shapes what shows up under “For you”.
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {INTERESTS.map((i) => {
+          const on = picked.includes(i.id);
+          return (
+            <button
+              key={i.id}
+              type="button"
+              aria-pressed={on}
+              onClick={() => toggle(i.id)}
               className={cn(
-                "grid gap-3",
-                settings.view === "grid" && "sm:grid-cols-2 xl:grid-cols-3",
-                settings.density === "compact" && "gap-2",
+                "flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 text-sm transition-colors",
+                on
+                  ? "border-primary bg-accent text-foreground"
+                  : "border-border bg-surface text-muted-foreground hover:text-foreground",
               )}
             >
-              {pageItems.map((c) => (
-                <CommandCard
-                  key={c.id}
-                  command={c}
-                  query={search.q}
-                  view={settings.view}
-                  compact={settings.density === "compact"}
-                  favorite={isFavorite(c.id)}
-                  onOpen={openCommand}
-                  onToggleFavorite={toggleFavorite}
-                  onCopy={copyCommand}
-                />
-              ))}
-            </div>
-          )}
+              {on && <Check className="size-3.5" aria-hidden />}
+              {i.label}
+            </button>
+          );
+        })}
+      </div>
+      <div className="mt-4 flex gap-2">
+        <Button onClick={() => updateSettings({ interests: picked, onboarded: true })}>
+          Save
+        </Button>
+        <Button variant="ghost" onClick={() => updateSettings({ onboarded: true })}>
+          Skip
+        </Button>
+      </div>
+    </section>
+  );
+}
 
-          {pageCount > 1 && (
-            <nav className="mt-6 flex items-center justify-center gap-2" aria-label="Pagination">
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page <= 1}
-                onClick={() => void navigate({ search: (p) => ({ ...p, page: page - 1 }) })}
-              >
-                <ChevronLeft className="size-4" /> Prev
-              </Button>
-              <span className="text-xs text-muted-foreground">
-                Page {page} of {pageCount}
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                disabled={page >= pageCount}
-                onClick={() => void navigate({ search: (p) => ({ ...p, page: page + 1 }) })}
-              >
-                Next <ChevronRight className="size-4" />
-              </Button>
-            </nav>
-          )}
-        </div>
-      </main>
-
-      {/* mobile bottom nav */}
-      <nav className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-around border-t border-border bg-surface/95 backdrop-blur-md lg:hidden">
-        {[
-          {
-            label: "Browse",
-            icon: LayoutGrid,
-            action: () => setSearch({ cat: "all", sub: "all", fav: false }),
-          },
-          { label: "Search", icon: Search, action: () => inputRef.current?.focus() },
-          { label: "Favorites", icon: Star, action: () => setSearch({ fav: true }) },
-          { label: "Recent", icon: History, action: () => setRecentsOpen(true) },
-          { label: "Settings", icon: SettingsIcon, action: () => setSettingsOpen(true) },
-        ].map((item) => (
-          <button
-            key={item.label}
-            type="button"
-            onClick={item.action}
-            className="flex min-h-12 flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] text-muted-foreground active:text-foreground"
+function CommandRow({ commands }: { commands: SlashCommand[] }) {
+  return (
+    <div className="grid gap-2 sm:grid-cols-2">
+      {commands.map((c) => {
+        const Icon = categoryIcon(CATEGORY_ICONS[c.category]);
+        return (
+          <Link
+            key={c.id}
+            to="/c/$slug"
+            params={{ slug: c.id }}
+            className="flex min-h-14 items-center gap-3 rounded-xl border border-border bg-surface px-3 transition-colors hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
-            <item.icon className="size-5" />
-            {item.label}
-          </button>
-        ))}
-      </nav>
-
-      <Sheet open={recentsOpen} onOpenChange={setRecentsOpen}>
-        <SheetContent side="right" className="w-full sm:max-w-sm">
-          <SheetHeader>
-            <SheetTitle>Recently used</SheetTitle>
-            <SheetDescription>The last commands you copied on this device.</SheetDescription>
-          </SheetHeader>
-          <div className="space-y-1.5 px-4 pb-6">
-            {recents.length === 0 && (
-              <p className="text-sm text-muted-foreground">
-                Nothing here yet — copy or use a command and it will show up.
-              </p>
-            )}
-            {recents.map((id) => {
-              const c = getCommand(id);
-              if (!c) return null;
-              const Icon = categoryIcon(CATEGORY_ICONS[c.category]);
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => {
-                    setRecentsOpen(false);
-                    openCommand(c);
-                  }}
-                  className="flex w-full items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-left hover:border-primary/50"
-                >
-                  <Icon className="size-4 shrink-0 text-primary" />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate font-mono text-xs">{c.command}</span>
-                    <span className="block truncate text-xs text-muted-foreground">{c.title}</span>
-                  </span>
-                </button>
-              );
-            })}
-            {recents.length > 0 && (
-              <Button variant="ghost" size="sm" className="mt-2" onClick={clearRecents}>
-                Clear history
-              </Button>
-            )}
-          </div>
-        </SheetContent>
-      </Sheet>
-
-      <SettingsPanel open={settingsOpen} onOpenChange={setSettingsOpen} />
-
-      <CommandDetail
-        command={selected}
-        open={Boolean(selected)}
-        favorite={selected ? isFavorite(selected.id) : false}
-        onOpenChange={(o) => !o && closeCommand()}
-        onToggleFavorite={toggleFavorite}
-        onSelectRelated={openCommand}
-      />
+            <Icon className="size-4.5 shrink-0 text-primary" aria-hidden />
+            <span className="min-w-0 flex-1">
+              <span className="block truncate font-mono text-sm text-foreground">{c.command}</span>
+              <span className="block truncate text-xs text-muted-foreground">{c.title}</span>
+            </span>
+          </Link>
+        );
+      })}
     </div>
+  );
+}
+
+function HomePage() {
+  const { hydrated, favorites, recents, settings } = useLibrary();
+
+  const quickCategories = useMemo(
+    () => [...CATEGORY_TREE].sort((a, b) => b.count - a.count).slice(0, 6),
+    [],
+  );
+
+  const recentCommands = useMemo(
+    () =>
+      recents
+        .slice(0, 4)
+        .map((id) => getCommand(id))
+        .filter((c): c is SlashCommand => Boolean(c)),
+    [recents],
+  );
+
+  const favoriteCommands = useMemo(
+    () =>
+      favorites
+        .slice(0, 4)
+        .map((id) => getCommand(id))
+        .filter((c): c is SlashCommand => Boolean(c)),
+    [favorites],
+  );
+
+  const forYou = useMemo(
+    () =>
+      hydrated ? recommendedCommands(settings.interests, recents, favorites, 4) : [],
+    [hydrated, settings.interests, recents, favorites],
+  );
+
+  const showOnboarding = hydrated && !settings.onboarded;
+
+  return (
+    <AppShell hideHeaderSearch title="SlashAI">
+      <section className="pt-3 pb-1">
+        <p className="text-sm text-muted-foreground">{greeting()}</p>
+        <h1 className="mt-1 text-2xl font-black tracking-tight text-foreground sm:text-3xl">
+          What are you working on?
+        </h1>
+        <div className="mt-4 flex">
+          <SearchBox size="lg" placeholder="Describe the task, or type a command…" />
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          {VERIFIED_TOTAL.toLocaleString()} commands · press{" "}
+          <kbd className="rounded border border-border bg-muted px-1 font-mono">/</kbd> anywhere to
+          search
+        </p>
+      </section>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        {quickCategories.map((c) => {
+          const Icon = categoryIcon(c.icon);
+          return (
+            <Link
+              key={c.category}
+              to="/explore/$category"
+              params={{ category: c.category }}
+              className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+            >
+              <Icon className="size-4 shrink-0 text-primary" aria-hidden />
+              <span className="truncate">{c.category}</span>
+            </Link>
+          );
+        })}
+        <Link
+          to="/explore"
+          className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
+        >
+          All categories <ArrowRight className="size-4" aria-hidden />
+        </Link>
+      </div>
+
+      {showOnboarding && <InterestsPrompt />}
+
+      <Section title="Discover" hint="One fresh pick a day, plus a reroll whenever you want one.">
+        <Discover />
+      </Section>
+
+      {recentCommands.length > 0 && (
+        <Section
+          title="Continue where you left off"
+          action={
+            <Link
+              to="/recent"
+              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              <History className="size-4" aria-hidden /> All
+            </Link>
+          }
+        >
+          <CommandRow commands={recentCommands} />
+        </Section>
+      )}
+
+      {favoriteCommands.length > 0 && (
+        <Section
+          title="Your favorites"
+          action={
+            <Link
+              to="/favorites"
+              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              <Star className="size-4" aria-hidden /> All
+            </Link>
+          }
+        >
+          <CommandRow commands={favoriteCommands} />
+        </Section>
+      )}
+
+      {forYou.length > 0 && (
+        <Section title="For you" hint="Based on what you saved and opened on this device.">
+          <CommandRow commands={forYou} />
+        </Section>
+      )}
+
+      <Section
+        title="Collections"
+        hint="Curated starting points — every collection is open to everyone."
+        action={
+          <Link
+            to="/collections"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            All <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
+      >
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {COLLECTIONS.slice(0, 6).map((c) => {
+            const Icon = categoryIcon(c.icon);
+            return (
+              <Link
+                key={c.id}
+                to="/collections/$id"
+                params={{ id: c.id }}
+                className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+              >
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
+                  <Icon className="size-4.5" aria-hidden />
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-semibold text-foreground">
+                    {c.title}
+                  </span>
+                  <span className="block truncate text-xs text-muted-foreground">
+                    {c.count} commands
+                  </span>
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </Section>
+
+      <p className="mt-10 flex items-center gap-1.5 text-xs text-muted-foreground">
+        <Sparkles className="size-3.5" aria-hidden /> Everything is stored on this device — no
+        account, works offline.
+      </p>
+    </AppShell>
   );
 }
