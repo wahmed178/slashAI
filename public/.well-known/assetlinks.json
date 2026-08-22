@@ -1,14 +1,14 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "dev.lovable.slashcommandvault",
       "sha256_cert_fingerprints": [
-        "REPLACE_WITH_YOUR_SHA256_FINGERPRINT"
+        "59:78:6A:03:3B:0B:4A:C1:41:E8:59:BC:EE:91:F0:17:0D:4C:51:73:9E:35:17:B1:97:07:8A:1A:45:70:63:2D"
       ]
     }
   }
 ]
-
-
