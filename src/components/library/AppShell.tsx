@@ -13,6 +13,13 @@ import {
   Layers,
   Wrench,
   UserRound,
+  Search as SearchIcon,
+  Sparkles,
+  Github,
+  GraduationCap,
+  Youtube,
+  Lightbulb,
+  Radar,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -28,20 +35,35 @@ import { cn } from "@/lib/utils";
 import { SearchBox } from "./SearchBox";
 import { OfflineBadge } from "./OfflineBadge";
 
+/** mobile bottom bar — four essentials only */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/explore", label: "Explore", icon: Compass, exact: false },
-  { to: "/tools", label: "Tools", icon: Wrench, exact: false },
+  { to: "/discover", label: "Discover", icon: Compass, exact: false },
   { to: "/favorites", label: "Saved", icon: Heart, exact: false },
-  { to: "/me", label: "Me", icon: UserRound, exact: false },
+  { to: "/search", label: "Search", icon: SearchIcon, exact: false },
+] as const;
+
+/** nested under Discover in the sidebar and the drawer */
+const DISCOVER_CHILDREN = [
+  { to: "/discover/ai", label: "AI", icon: Sparkles },
+  { to: "/discover/free-tools", label: "Free Tools", icon: Wrench },
+  { to: "/discover/github", label: "GitHub", icon: Github },
+  { to: "/discover/learn", label: "Learn", icon: GraduationCap },
+  { to: "/discover/resources", label: "Resources", icon: Layers },
+  { to: "/discover/youtube", label: "YouTube", icon: Youtube },
+  { to: "/discover/tips", label: "Tips & Tricks", icon: Lightbulb },
+  { to: "/radar", label: "Free Radar", icon: Radar },
 ] as const;
 
 const SECONDARY = [
+  { to: "/explore", label: "Commands", icon: Terminal },
   { to: "/collections", label: "Collections", icon: Layers },
   { to: "/recent", label: "Recent", icon: History },
+  { to: "/me", label: "Me", icon: UserRound },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
 ] as const;
+
 
 interface Props {
   children: ReactNode;

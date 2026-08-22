@@ -26,6 +26,7 @@ import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
 import { Route as DiscoverIndexRouteImport } from './routes/discover.index'
 import { Route as DiscoverSectionRouteImport } from './routes/discover.$section'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
+import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -115,6 +116,11 @@ const ExploreIndexRoute = ExploreIndexRouteImport.update({
   path: '/explore/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HubAudienceRoute = HubAudienceRouteImport.update({
+  id: '/hub/$audience',
+  path: '/hub/$audience',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RIdRoute = RIdRouteImport.update({
   id: '/r/$id',
   path: '/r/$id',
@@ -147,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
@@ -216,6 +225,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/hub/$audience'
     | '/r/$id'
     | '/collections/'
     | '/discover/'
@@ -238,6 +248,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/hub/$audience'
     | '/r/$id'
     | '/collections'
     | '/discover'
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/hub/$audience'
     | '/r/$id'
     | '/collections/'
     | '/discover/'
@@ -283,6 +295,7 @@ export interface RootRouteChildren {
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   DiscoverSectionRoute: typeof DiscoverSectionRoute
+  HubAudienceRoute: typeof HubAudienceRoute
   RIdRoute: typeof RIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
@@ -412,6 +425,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hub/$audience': {
+      id: '/hub/$audience'
+      path: '/hub/$audience'
+      fullPath: '/hub/$audience'
+      preLoaderRoute: typeof HubAudienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/r/$id': {
       id: '/r/$id'
       path: '/r/$id'
@@ -451,6 +471,7 @@ const rootRouteChildren: RootRouteChildren = {
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   DiscoverSectionRoute: DiscoverSectionRoute,
+  HubAudienceRoute: HubAudienceRoute,
   RIdRoute: RIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
