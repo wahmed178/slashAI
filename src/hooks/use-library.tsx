@@ -10,7 +10,7 @@ import {
 
 import { APP_VERSION } from "@/lib/app-meta";
 
-export type Theme = "dark" | "light";
+export type Theme = "dark" | "light" | "amoled";
 export type Density = "comfortable" | "compact";
 export type Accent = "teal" | "violet" | "amber" | "rose" | "blue" | "lime";
 
@@ -126,9 +126,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     if (!hydrated) return;
     const root = document.documentElement;
     root.classList.toggle("light", settings.theme === "light");
+    root.classList.toggle("amoled", settings.theme === "amoled");
     root.dataset["accent"] = settings.accent;
     root.dataset["motion"] = settings.reducedMotion ? "reduced" : "full";
-    root.style.colorScheme = settings.theme;
+    root.style.colorScheme = settings.theme === "light" ? "light" : "dark";
     localStorage.setItem(KEYS.settings, JSON.stringify(settings));
   }, [settings, hydrated]);
 
