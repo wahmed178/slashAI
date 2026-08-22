@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, History, Check, Flame, LayoutList, Rows3 } from "lucide-react";
+import { ArrowRight, Sparkles, Star, History, Flame, LayoutList, Rows3 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/library/AppShell";
@@ -17,7 +17,7 @@ import {
   getCommand,
   type SlashCommand,
 } from "@/lib/commands";
-import { COLLECTIONS, INTERESTS, recommendedCommands } from "@/lib/collections";
+import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { personaGreetingName } from "@/lib/personas";
 import { cn } from "@/lib/utils";
 
@@ -77,52 +77,6 @@ function greeting() {
   return "Good evening";
 }
 
-function InterestsPrompt() {
-  const { settings, updateSettings } = useLibrary();
-  const [picked, setPicked] = useState<string[]>(settings.interests);
-
-  const toggle = (id: string) =>
-    setPicked((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
-
-  return (
-    <section className="panel mt-8 rounded-2xl p-4">
-      <h2 className="text-base font-bold text-foreground">What are you interested in?</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Optional, stored only on this device. It shapes what shows up under “For you”.
-      </p>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {INTERESTS.map((i) => {
-          const on = picked.includes(i.id);
-          return (
-            <button
-              key={i.id}
-              type="button"
-              aria-pressed={on}
-              onClick={() => toggle(i.id)}
-              className={cn(
-                "flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 text-sm transition-colors",
-                on
-                  ? "border-primary bg-accent text-foreground"
-                  : "border-border bg-surface text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {on && <Check className="size-3.5" aria-hidden />}
-              {i.label}
-            </button>
-          );
-        })}
-      </div>
-      <div className="mt-4 flex gap-2">
-        <Button onClick={() => updateSettings({ interests: picked, onboarded: true })}>
-          Save
-        </Button>
-        <Button variant="ghost" onClick={() => updateSettings({ onboarded: true })}>
-          Skip
-        </Button>
-      </div>
-    </section>
-  );
-}
 
 function CommandRow({ commands }: { commands: SlashCommand[] }) {
   return (
