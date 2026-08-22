@@ -22,6 +22,10 @@ This project was built with [Lovable](https://lovable.dev).
 
 **Live app**: https://slashprompt.lovable.app
 
+**Android APK**: https://github.com/wahmed178/slashAI/releases/latest/download/slash-command-vault.apk
+
+To publish a new APK, configure the Android secrets and `PUBLISHED_DOMAIN` repository variable described in [android/README.md](android/README.md), then push a tag such as `v1.0.0`. GitHub Actions will build the APK and AAB and attach them to a GitHub Release.
+
 ## Build with Lovable
 
 Continue developing this project in the [Lovable editor](https://lovable.dev/projects/7a5be5ac-220c-4f10-9f55-0a591e7f0b40).

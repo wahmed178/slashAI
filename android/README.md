@@ -127,6 +127,15 @@ adb install android/project/app/build/outputs/apk/release/app-release.apk
 
 Make sure the production URL is live and `/.well-known/assetlinks.json` is reachable — otherwise the address bar will remain visible.
 
+Before building locally, verify that the keystore used to sign the APK is the same certificate listed by the published site:
+
+```bash
+BUBBLEWRAP_KEYSTORE_PASSWORD='your-keystore-password' \
+	bun run android:validate -- android/android.keystore
+```
+
+The command must succeed. If it reports a fingerprint mismatch, update `public/.well-known/assetlinks.json`, redeploy the web app in Lovable, and run the check again. For a Google Play installation, also add the SHA-256 fingerprint of the **Google Play App Signing key** to that file; Play re-signs the downloaded APK with that key.
+
 ### 7. Upload to Google Play
 
 1. Create a Google Play Developer account ($25 one-time)
@@ -178,6 +187,12 @@ The workflow will:
 
 You can then download the APK/AAB from **Actions → Release → Artifacts** and upload the AAB to the Play Console.
 
+The workflow also publishes both files on the tag's GitHub Release. Share this stable APK link with Android users:
+
+**https://github.com/wahmed178/slashAI/releases/latest/download/slash-command-vault.apk**
+
+Opening that link on an Android phone downloads the latest APK. Android may ask the user to allow installation from the browser; Google Play is recommended for public distribution because it handles updates and trust automatically.
+
 > **Note:** Because the workflow injects the SHA-256 fingerprint at build time, the published web app must be redeployed after the tag push so the live `/.well-known/assetlinks.json` contains the correct fingerprint. The app will still build without this, but the browser address bar will remain visible until the correct `assetlinks.json` is live.
 
 ## Updating the Android app
@@ -204,7 +219,7 @@ If you later need native Android features (camera, background sync, push notific
 ## Troubleshooting
 
 - **Address bar still shows**: `assetlinks.json` is missing, the SHA-256 fingerprint is wrong, or the file is not served from the exact production domain.
-- **App opens in browser instead of standalone**: TWA verification failed. Check the Android logcat for `TokenVerifier` errors.
+- **App opens in browser instead of standalone**: TWA verification failed. Run `bun run android:validate -- android/android.keystore`, confirm that the deployed `https://slashprompt.lovable.app/.well-known/assetlinks.json` contains the signing certificate, and reinstall the newly built APK. For Google Play, use the Play App Signing fingerprint as well as the local upload-key fingerprint.
 - **Offline mode not working**: The web app service worker must be registered on the production domain. Test it in Chrome first.
 - **Build fails with JDK errors**: Make sure `JAVA_HOME` points to JDK 11+ and not a JRE.
 

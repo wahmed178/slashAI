@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   web:
@@ -149,7 +149,9 @@ jobs:
           BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
           TWA_KEYSTORE_PATH: ${{ github.workspace }}/android/android.keystore
-        run: bun run scripts/bubblewrap-build.mjs android/twa-manifest.json android/project
+        run: |
+          bun run android:validate -- android/android.keystore
+          bun run scripts/bubblewrap-build.mjs android/twa-manifest.json android/project
 
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
@@ -159,6 +161,21 @@ jobs:
             android/project/app/build/outputs/apk/release/app-release-signed.apk
             android/project/app/build/outputs/bundle/release/app-release-signed.aab
           if-no-files-found: error
+
+      - name: Prepare downloadable release files
+        run: |
+          cp android/project/app/build/outputs/apk/release/app-release-signed.apk slash-command-vault.apk
+          cp android/project/app/build/outputs/bundle/release/app-release-signed.aab slash-command-vault.aab
+
+      - name: Publish GitHub release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: SlashAI ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            slash-command-vault.apk
+            slash-command-vault.aab
 
       - name: Remove keystore
         if: always()
