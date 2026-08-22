@@ -74,6 +74,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@bubblewrap/core": "^1.25.0",
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "^2.15.0",
     "@types/node": "^22.16.5",
