@@ -20,7 +20,7 @@ Important: do not merely create a mockup with 20 commands. Populate the actual c
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://slashprompt.lovable.app
+**Live app**: https://slashai.lovable.app
 
 **Android APK**: https://github.com/wahmed178/slashAI/releases/latest/download/slash-command-vault.apk
 
