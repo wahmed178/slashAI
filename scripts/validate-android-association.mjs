@@ -47,9 +47,7 @@ function readJson(path, label) {
 }
 
 function keytoolFingerprint(keystorePath, alias, storePassword) {
-  const keytool = process.env.JAVA_HOME
-    ? resolve(process.env.JAVA_HOME, "bin/keytool")
-    : "keytool";
+  const keytool = process.env.JAVA_HOME ? resolve(process.env.JAVA_HOME, "bin/keytool") : "keytool";
   let output;
   try {
     output = execFileSync(
