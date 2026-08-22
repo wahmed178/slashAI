@@ -3,7 +3,7 @@ import { Link, useNavigate, useRouter, useRouterState } from "@tanstack/react-ro
 import {
   Home,
   Compass,
-  Star,
+  Heart,
   History,
   Settings as SettingsIcon,
   Info,
@@ -11,6 +11,8 @@ import {
   ChevronLeft,
   Terminal,
   Layers,
+  Wrench,
+  UserRound,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -29,12 +31,14 @@ import { OfflineBadge } from "./OfflineBadge";
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Explore", icon: Compass, exact: false },
-  { to: "/favorites", label: "Favorites", icon: Star, exact: false },
-  { to: "/recent", label: "Recent", icon: History, exact: false },
+  { to: "/tools", label: "Tools", icon: Wrench, exact: false },
+  { to: "/favorites", label: "Saved", icon: Heart, exact: false },
+  { to: "/me", label: "Me", icon: UserRound, exact: false },
 ] as const;
 
 const SECONDARY = [
   { to: "/collections", label: "Collections", icon: Layers },
+  { to: "/recent", label: "Recent", icon: History },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
 ] as const;
