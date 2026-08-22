@@ -5,9 +5,9 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "dev.lovable.slashcommandvault",
+      "package_name": "dev.lovable.slashprompt",
       "sha256_cert_fingerprints": [
-        "59:78:6A:03:3B:0B:4A:C1:41:E8:59:BC:EE:91:F0:17:0D:4C:51:73:9E:35:17:B1:97:07:8A:1A:45:70:63:2D"
+        "A1:93:5F:4C:13:3F:6F:7E:F6:C1:A3:A7:0E:8E:EB:8D:B2:0A:F9:3A:9E:4E:E8:7E:8B:D3:E9:42:45:73:08:64"
       ]
     }
   }
