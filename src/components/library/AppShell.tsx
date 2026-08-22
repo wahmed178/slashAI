@@ -114,21 +114,38 @@ function NavList({
 
   return (
     <nav className="space-y-1" aria-label="Primary">
-      {PRIMARY.map((item) => (
-        <Link
-          key={item.to}
-          to={item.to}
-          activeOptions={{ exact: item.exact, includeSearch: false }}
-          activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-          onClick={onNavigate}
-          className={cls}
-        >
-          <item.icon className="size-4.5 shrink-0" aria-hidden />
-          {item.label}
-          {counts[item.to] ? (
-            <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
-          ) : null}
-        </Link>
+      {PRIMARY.filter((item) => item.to !== "/search").map((item) => (
+        <div key={item.to}>
+          <Link
+            to={item.to}
+            activeOptions={{ exact: item.exact, includeSearch: false }}
+            activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
+            onClick={onNavigate}
+            className={cls}
+          >
+            <item.icon className="size-4.5 shrink-0" aria-hidden />
+            {item.label}
+            {counts[item.to] ? (
+              <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
+            ) : null}
+          </Link>
+          {item.to === "/discover" && (
+            <div className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
+              {DISCOVER_CHILDREN.map((child) => (
+                <Link
+                  key={child.to}
+                  to={child.to}
+                  activeProps={{ className: "text-sidebar-accent-foreground" }}
+                  onClick={onNavigate}
+                  className="flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                >
+                  <child.icon className="size-4 shrink-0" aria-hidden />
+                  {child.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       ))}
 
       {showSecondary && (
@@ -144,6 +161,9 @@ function NavList({
             >
               <item.icon className="size-4.5 shrink-0" aria-hidden />
               {item.label}
+              {counts[item.to] ? (
+                <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
+              ) : null}
             </Link>
           ))}
         </>
@@ -151,6 +171,7 @@ function NavList({
     </nav>
   );
 }
+
 
 export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
