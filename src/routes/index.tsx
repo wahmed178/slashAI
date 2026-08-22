@@ -269,7 +269,7 @@ function HomePage() {
         </Link>
       </div>
 
-      {showOnboarding && <InterestsPrompt />}
+      
 
       <Section title="Discover" hint="One fresh pick a day, plus a reroll whenever you want one.">
         <Discover />
