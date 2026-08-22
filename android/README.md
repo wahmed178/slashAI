@@ -23,6 +23,8 @@ The signed APK is created at `android/app/build/outputs/apk/release/app-release.
 
 The APK opens `https://slashai.lovable.app` inside the native WebView. Android System WebView must be enabled, but Chrome is not required. Internet access is required because the app loads the current published site.
 
+**Web-only updates do not need a new APK.** Because the WebView loads the live published site, publishing the web app in Lovable (Publish → Update) is enough for app users to get the change. Rebuild the APK only when the app name, icon, package ID, splash colors, or the URL in `capacitor.config.ts` changes.
+
 ## GitHub release
 
 The `Release` workflow builds the APK when a `v*` tag is pushed and publishes it to the GitHub Release. Configure these repository secrets:
