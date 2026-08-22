@@ -13,6 +13,7 @@
     "catalog:build": "bun scripts/generate-commands.mjs",
     "catalog:validate": "bun scripts/validate-catalog.mjs",
     "android:build": "bash android/build-android.sh",
+    "android:validate": "bun scripts/validate-android-association.mjs",
     "android:init": "npx @bubblewrap/cli init --manifest=android/twa-manifest.json --directory=android/project",
     "android:keystore": "bash android/generate-keystore.sh"
   },
