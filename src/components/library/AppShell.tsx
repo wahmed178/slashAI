@@ -133,8 +133,9 @@ function NavList({
             <div className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
               {DISCOVER_CHILDREN.map((child) => (
                 <Link
-                  key={child.to}
-                  to={child.to}
+                  key={child.section}
+                  to="/discover/$section"
+                  params={{ section: child.section }}
                   activeProps={{ className: "text-sidebar-accent-foreground" }}
                   onClick={onNavigate}
                   className="flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
@@ -143,6 +144,16 @@ function NavList({
                   {child.label}
                 </Link>
               ))}
+              <Link
+                to="/radar"
+                activeProps={{ className: "text-sidebar-accent-foreground" }}
+                onClick={onNavigate}
+                className="flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+              >
+                <Radar className="size-4 shrink-0" aria-hidden />
+                Free Radar
+              </Link>
+
             </div>
           )}
         </div>
