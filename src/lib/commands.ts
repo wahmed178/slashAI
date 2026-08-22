@@ -1,5 +1,6 @@
 import rawCommands from "@/data/commands.json";
 import rawCategories from "@/data/categories.json";
+import type { CatalogCategory, CatalogCommand } from "./catalog-validation";
 
 export type CommandType =
   | "image"
@@ -15,47 +16,74 @@ export type CommandType =
   | "learning"
   | "general";
 
-export interface SlashCommand {
-  id: string;
-  command: string;
-  title: string;
-  description: string;
-  usage: string;
-  example: string;
-  category: string;
-  subcategory: string;
-  tags: string[];
+export interface SlashCommand extends CatalogCommand {
   type: CommandType;
   difficulty: "easy" | "medium" | "advanced";
-  featured: boolean;
-  aliases: string[];
-  popularity: number;
-  addedAt: string;
 }
 
-export const COMMANDS = rawCommands as SlashCommand[];
+/** Runtime guard: identical ids or command names can never reach the UI. */
+function dedupeCatalog(list: SlashCommand[]): SlashCommand[] {
+  const seenId = new Set<string>();
+  const seenName = new Set<string>();
+  const out: SlashCommand[] = [];
+  for (const c of list) {
+    const name = c.command.trim().toLowerCase();
+    if (seenId.has(c.id) || seenName.has(name)) continue;
+    seenId.add(c.id);
+    seenName.add(name);
+    out.push(c);
+  }
+  return out;
+}
 
-export const CATEGORY_META = rawCategories as {
-  category: string;
-  icon: string;
-  type: CommandType;
-}[];
+export const COMMANDS: SlashCommand[] = dedupeCatalog(rawCommands as SlashCommand[]);
+
+/** Verified count — post-deduplication, safe to display. */
+export const VERIFIED_TOTAL = COMMANDS.length;
+
+export const CATEGORY_META = rawCategories as CatalogCategory[];
 
 export const CATEGORY_ICONS: Record<string, string> = Object.fromEntries(
   CATEGORY_META.map((c) => [c.category, c.icon]),
 );
 
-export const CATEGORY_COUNTS: { category: string; count: number; icon: string }[] = (() => {
-  const counts = new Map<string, number>();
-  for (const c of COMMANDS) counts.set(c.category, (counts.get(c.category) ?? 0) + 1);
-  return [...counts.entries()]
-    .map(([category, count]) => ({
+export interface CategoryNode {
+  category: string;
+  icon: string;
+  count: number;
+  subcategories: { subcategory: string; count: number }[];
+}
+
+/** category -> subcategory -> count, built from the data itself. */
+export const CATEGORY_TREE: CategoryNode[] = (() => {
+  const map = new Map<string, Map<string, number>>();
+  for (const c of COMMANDS) {
+    let subs = map.get(c.category);
+    if (!subs) map.set(c.category, (subs = new Map()));
+    subs.set(c.subcategory, (subs.get(c.subcategory) ?? 0) + 1);
+  }
+  return [...map.entries()]
+    .map(([category, subs]) => ({
       category,
-      count,
       icon: CATEGORY_ICONS[category] ?? "Sparkles",
+      count: [...subs.values()].reduce((a, b) => a + b, 0),
+      subcategories: [...subs.entries()]
+        .map(([subcategory, count]) => ({ subcategory, count }))
+        .sort((a, b) => a.subcategory.localeCompare(b.subcategory)),
     }))
     .sort((a, b) => a.category.localeCompare(b.category));
 })();
+
+export const CATEGORY_COUNTS = CATEGORY_TREE.map(({ category, count, icon }) => ({
+  category,
+  count,
+  icon,
+}));
+
+export const SUBCATEGORY_TOTAL = CATEGORY_TREE.reduce(
+  (n, c) => n + c.subcategories.length,
+  0,
+);
 
 export const TYPES: CommandType[] = [
   "image",
@@ -75,17 +103,36 @@ export const TYPES: CommandType[] = [
 export const FEATURED = COMMANDS.filter((c) => c.featured);
 
 const byId = new Map(COMMANDS.map((c) => [c.id, c]));
-export const getCommand = (id: string | undefined) => (id ? byId.get(id) : undefined);
+const byName = new Map(COMMANDS.map((c) => [c.command.slice(1).toLowerCase(), c]));
 
-/** Deterministic "command of the day" — stable for a given UTC date. */
+/** Resolve a share URL segment: either the stable id or the command name. */
+export const getCommand = (idOrSlug: string | undefined | null): SlashCommand | undefined => {
+  if (!idOrSlug) return undefined;
+  const key = idOrSlug.trim().toLowerCase().replace(/^\//, "");
+  return byId.get(key) ?? byName.get(key) ?? byId.get(key.replace(/[^a-z0-9]/g, ""));
+};
+
+export const commandPath = (cmd: SlashCommand) => `/c/${cmd.id}`;
+
+/** Deterministic "command of the day" — stable for a given UTC date, for everyone. */
 export function getDailyCommand(dateKey: string): SlashCommand {
-  let hash = 0;
-  for (let i = 0; i < dateKey.length; i++) hash = (hash * 31 + dateKey.charCodeAt(i)) >>> 0;
-  return COMMANDS[hash % COMMANDS.length]!;
+  let hash = 2166136261;
+  for (let i = 0; i < dateKey.length; i++) {
+    hash ^= dateKey.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return COMMANDS[(hash >>> 0) % COMMANDS.length]!;
 }
 
-export function getRandomCommand(): SlashCommand {
-  return COMMANDS[Math.floor(Math.random() * COMMANDS.length)]!;
+export const todayKey = () => new Date().toISOString().slice(0, 10);
+
+export function getRandomCommand(exceptId?: string): SlashCommand {
+  if (COMMANDS.length === 1) return COMMANDS[0]!;
+  let pick = COMMANDS[Math.floor(Math.random() * COMMANDS.length)]!;
+  while (exceptId && pick.id === exceptId) {
+    pick = COMMANDS[Math.floor(Math.random() * COMMANDS.length)]!;
+  }
+  return pick;
 }
 
 export function relatedCommands(cmd: SlashCommand, limit = 6): SlashCommand[] {
@@ -106,60 +153,61 @@ export function relatedCommands(cmd: SlashCommand, limit = 6): SlashCommand[] {
 
 /* ---------------------------------- search --------------------------------- */
 
-export interface SearchResult {
-  command: SlashCommand;
-  score: number;
-}
-
-/** Lightweight subsequence fuzzy match; returns a score or -1. */
-function fuzzyScore(haystack: string, needle: string): number {
-  let h = 0;
-  let streak = 0;
-  let score = 0;
-  for (let n = 0; n < needle.length; n++) {
-    const ch = needle[n];
-    let found = -1;
-    while (h < haystack.length) {
-      if (haystack[h] === ch) {
-        found = h;
-        h++;
-        break;
-      }
-      h++;
+/** Bounded edit distance — returns a number > max as soon as it is hopeless. */
+function editDistance(a: string, b: string, max: number): number {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    let best = i;
+    for (let j = 1; j <= b.length; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      const v = Math.min(prev[j]! + 1, row[j - 1]! + 1, prev[j - 1]! + cost);
+      row.push(v);
+      if (v < best) best = v;
     }
-    if (found === -1) return -1;
-    streak = found > 0 && haystack[found - 1] === needle[n - 1] ? streak + 1 : 0;
-    score += 1 + streak;
+    if (best > max) return max + 1;
+    prev = row;
   }
-  return score;
+  return prev[b.length]!;
 }
 
+/**
+ * Ranking tiers (highest first):
+ * exact command → command prefix → alias → title → tags → subcategory/category
+ * → description → how-to-use/example → typo-tolerant fuzzy.
+ */
 export function scoreCommand(cmd: SlashCommand, q: string): number {
   const needle = q.trim().toLowerCase().replace(/^\//, "");
   if (!needle) return 0;
-  const name = cmd.command.toLowerCase().replace(/^\//, "");
+  const name = cmd.command.slice(1).toLowerCase();
   const title = cmd.title.toLowerCase();
 
-  if (name === needle) return 1000;
-  if (name.startsWith(needle)) return 800 - name.length;
-  if (title.startsWith(needle)) return 700 - title.length;
-  if (name.includes(needle)) return 600 - name.length;
-  if (title.includes(needle)) return 500;
+  if (name === needle) return 10000;
+  if (cmd.aliases.some((a) => a.slice(1).toLowerCase() === needle)) return 9000;
+  if (name.startsWith(needle)) return 8000 - name.length;
+  if (title === needle) return 7500;
+  if (title.startsWith(needle)) return 7000 - title.length;
+  if (name.includes(needle)) return 6000 - name.length;
+  if (cmd.aliases.some((a) => a.toLowerCase().includes(needle))) return 5500;
+  if (title.includes(needle)) return 5000;
+  if (cmd.tags.some((t) => t.toLowerCase() === needle)) return 4500;
+  if (cmd.tags.some((t) => t.toLowerCase().includes(needle))) return 4000;
+  if (cmd.subcategory.toLowerCase().includes(needle)) return 3500;
+  if (cmd.category.toLowerCase().includes(needle)) return 3000;
+  if (cmd.description.toLowerCase().includes(needle)) return 2500;
+  if (cmd.howToUse.toLowerCase().includes(needle)) return 1500;
+  if (cmd.example.toLowerCase().includes(needle)) return 1200;
 
-  let score = 0;
-  if (cmd.tags.some((t) => t.toLowerCase().includes(needle))) score = Math.max(score, 380);
-  if (cmd.subcategory.toLowerCase().includes(needle)) score = Math.max(score, 340);
-  if (cmd.category.toLowerCase().includes(needle)) score = Math.max(score, 320);
-  if (cmd.description.toLowerCase().includes(needle)) score = Math.max(score, 260);
-  if (cmd.usage.toLowerCase().includes(needle) || cmd.example.toLowerCase().includes(needle))
-    score = Math.max(score, 180);
-  if (cmd.aliases.some((a) => a.toLowerCase().includes(needle))) score = Math.max(score, 300);
-  if (score) return score;
-
-  const fz = fuzzyScore(name, needle);
-  if (fz > 0) return 60 + fz;
-  const fzTitle = fuzzyScore(title.replace(/\s/g, ""), needle);
-  if (fzTitle > 0) return 30 + fzTitle;
+  // typo tolerance: one edit for short queries, two for longer ones
+  if (needle.length >= 4) {
+    const max = needle.length >= 7 ? 2 : 1;
+    const d = editDistance(name, needle, max);
+    if (d <= max) return 900 - d * 100;
+    for (const word of title.split(/\s+/)) {
+      if (editDistance(word, needle, max) <= max) return 700 - name.length;
+    }
+  }
   return -1;
 }
 
@@ -168,6 +216,7 @@ export type SortKey = "relevance" | "name" | "category" | "popularity" | "newest
 export interface FilterState {
   q: string;
   category: string;
+  subcategory?: string;
   type: string;
   difficulty: string;
   sort: SortKey;
@@ -182,6 +231,8 @@ export function filterCommands(state: FilterState): SlashCommand[] {
 
   for (const c of COMMANDS) {
     if (state.category !== "all" && c.category !== state.category) continue;
+    if (state.subcategory && state.subcategory !== "all" && c.subcategory !== state.subcategory)
+      continue;
     if (state.type !== "all" && c.type !== state.type) continue;
     if (state.difficulty !== "all" && c.difficulty !== state.difficulty) continue;
     if (state.onlyFavorites && !favSet.has(c.id)) continue;
@@ -201,7 +252,9 @@ export function filterCommands(state: FilterState): SlashCommand[] {
       b.s - a.s || b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
     name: (a, b) => a.c.command.localeCompare(b.c.command),
     category: (a, b) =>
-      a.c.category.localeCompare(b.c.category) || a.c.command.localeCompare(b.c.command),
+      a.c.category.localeCompare(b.c.category) ||
+      a.c.subcategory.localeCompare(b.c.subcategory) ||
+      a.c.command.localeCompare(b.c.command),
     popularity: (a, b) => b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
     newest: (a, b) => b.c.addedAt.localeCompare(a.c.addedAt),
   };
@@ -210,16 +263,27 @@ export function filterCommands(state: FilterState): SlashCommand[] {
   return list.map((x) => x.c);
 }
 
-export function suggestions(q: string, limit = 6): SlashCommand[] {
+export function suggestions(q: string, limit = 7): SlashCommand[] {
   if (!q.trim()) return [];
   return COMMANDS.map((c) => ({ c, s: scoreCommand(c, q) }))
     .filter((x) => x.s > 0)
-    .sort((a, b) => b.s - a.s)
+    .sort((a, b) => b.s - a.s || b.c.popularity - a.c.popularity)
     .slice(0, limit)
     .map((x) => x.c);
 }
 
 /** Ready-to-edit prompt template copied by "Use command". */
 export function commandTemplate(cmd: SlashCommand): string {
-  return `${cmd.command}\n\n# What it does: ${cmd.description}\n# How to use: ${cmd.usage}\n\nInput: <paste your input here>\nGoal: <what a great result looks like>\nConstraints: <tone, length, format>\n\n--- Example ---\n${cmd.example}`;
+  return `${cmd.command}
+
+# ${cmd.title} — ${cmd.category} / ${cmd.subcategory}
+# What it does: ${cmd.description}
+# How to use: ${cmd.howToUse}
+
+Input: <paste your input here>
+Goal: <what a great result looks like>
+Constraints: <tone, length, format>
+
+--- Example ---
+${cmd.example}`;
 }
