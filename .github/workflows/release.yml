@@ -100,10 +100,11 @@ jobs:
           # Bubblewrap's SDK path validation expects a root 'bin' or 'tools' directory.
           mkdir -p "$ANDROID_HOME/bin"
           if [ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ]; then
-            ln -s "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/bin"
+            ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/bin"
           else
-            ln -s "$ANDROID_HOME/cmdline-tools/16.0/bin" "$ANDROID_HOME/bin"
+            ln -sf "$ANDROID_HOME/cmdline-tools/16.0/bin" "$ANDROID_HOME/bin"
           fi
+
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
