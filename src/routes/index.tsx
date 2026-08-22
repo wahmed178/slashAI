@@ -95,7 +95,7 @@ export const Route = createFileRoute("/")({
 function LibraryPage() {
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/" });
-  const { hydrated, favorites, recents, settings, isFavorite, toggleFavorite, recordUse, clearRecents } = useLibrary();
+  const { hydrated, favorites, recents, settings, isFavorite, toggleFavorite, recordUse, clearRecents, updateSettings } = useLibrary();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -443,7 +443,7 @@ function LibraryPage() {
                   type="button"
                   aria-label="Grid view"
                   aria-pressed={settings.view === "grid"}
-                  onClick={() => useViewSetter("grid")}
+                  onClick={() => updateSettings({ view: "grid" })}
                   className={cn(
                     "rounded-md p-1.5",
                     settings.view === "grid" ? "bg-accent text-foreground" : "text-muted-foreground",
@@ -455,7 +455,7 @@ function LibraryPage() {
                   type="button"
                   aria-label="List view"
                   aria-pressed={settings.view === "list"}
-                  onClick={() => useViewSetter("list")}
+                  onClick={() => updateSettings({ view: "list" })}
                   className={cn(
                     "rounded-md p-1.5",
                     settings.view === "list" ? "bg-accent text-foreground" : "text-muted-foreground",
@@ -626,16 +626,4 @@ function LibraryPage() {
       />
     </div>
   );
-
-  function useViewSetter(view: "grid" | "list") {
-    settingsRef(view);
-  }
-
-  function settingsRef(view: "grid" | "list") {
-    updateView(view);
-  }
-
-  function updateView(view: "grid" | "list") {
-    updateSettingsRef.current?.(view);
-  }
 }
