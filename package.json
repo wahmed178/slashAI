@@ -11,7 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "catalog:build": "bun scripts/generate-commands.mjs",
-    "catalog:validate": "bun scripts/validate-catalog.mjs"
+    "catalog:validate": "bun scripts/validate-catalog.mjs",
+    "android:build": "bash android/build-android.sh",
+    "android:init": "npx @bubblewrap/cli init --manifest=android/twa-manifest.json --directory=android/project"
   },
   "overrides": {
     "rolldown": "1.2.1"

@@ -1,0 +1,40 @@
+{
+  "packageId": "com.slashai.app",
+  "host": "REPLACE_WITH_YOUR_PUBLISHED_DOMAIN",
+  "name": "SlashAI Command Library",
+  "launcherName": "SlashAI",
+  "display": "standalone",
+  "themeColor": "#12161c",
+  "navigationColor": "#12161c",
+  "navigationColorDark": "#12161c",
+  "navigationDividerColor": "#12161c",
+  "navigationDividerColorDark": "#12161c",
+  "backgroundColor": "#12161c",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-512.png",
+  "maskableIconUrl": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-maskable-512.png",
+  "monochromeIconUrl": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/android-adaptive-fg.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "android.keystore",
+    "alias": "slashai"
+  },
+  "appVersion": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Favorites",
+      "short_name": "Favorites",
+      "url": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/?fav=true",
+      "icon": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-192.png"
+    },
+    {
+      "name": "Daily Command",
+      "short_name": "Daily",
+      "url": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/?cmd=daily",
+      "icon": "https://REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/icons/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap"
+}

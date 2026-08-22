@@ -9,7 +9,9 @@
   "orientation": "portrait-primary",
   "background_color": "#12161c",
   "theme_color": "#12161c",
-  "categories": ["productivity", "utilities"],
+  "categories": ["productivity", "utilities", "education"],
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
     {
       "src": "/icons/icon-192.png",
@@ -28,6 +30,28 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "/icons/android-adaptive-fg.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "monochrome"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Favorites",
+      "short_name": "Favorites",
+      "description": "Open your favorite slash commands",
+      "url": "/?fav=true",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Daily Command",
+      "short_name": "Daily",
+      "description": "See today's featured slash command",
+      "url": "/?cmd=daily",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }
