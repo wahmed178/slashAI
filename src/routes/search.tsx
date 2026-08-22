@@ -13,6 +13,7 @@ import {
 import { AppShell } from "@/components/library/AppShell";
 import { SearchBox } from "@/components/library/SearchBox";
 import { CommandGrid, EmptyState } from "@/components/library/CommandGrid";
+import { ResourceGrid } from "@/components/library/ResourceCard";
 import { useLibrary } from "@/hooks/use-library";
 import {
   CATEGORY_TREE,
@@ -21,6 +22,7 @@ import {
   type SortKey,
   type FilterState,
 } from "@/lib/commands";
+import { searchResources } from "@/lib/resources";
 import { cn } from "@/lib/utils";
 
 interface SearchParams {
@@ -116,6 +118,8 @@ function SearchPage() {
     };
     return filterCommands(state);
   }, [q, cat, sub, search.type, search.diff, search.sort, favorites]);
+
+  const resourceHits = useMemo(() => searchResources(q, 6), [q]);
 
   const pageSize = settings.pageSize;
   const pages = Math.max(1, Math.ceil(results.length / pageSize));
