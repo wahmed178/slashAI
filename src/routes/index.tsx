@@ -326,8 +326,36 @@ function HomePage() {
               })}
             </div>
           </Section>
-        </>
-      )}
+
+          <Section
+            title="Hubs"
+            hint="Everything gathered for one kind of person."
+          >
+            <div className="grid gap-2 sm:grid-cols-2">
+              {[
+                ["students", "Student Hub", "Free software, study tools and student offers"],
+                ["professionals", "Professional Hub", "Work, writing, planning and research"],
+                ["developers", "Developer Hub", "APIs, editors and open-source picks"],
+                ["creators", "Creator Hub", "Capture, edit and design without watermarks"],
+              ].map(([id, title, blurb]) => (
+                <Link
+                  key={id}
+                  to="/hub/$audience"
+                  params={{ audience: id! }}
+                  className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+                >
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-semibold text-foreground">
+                      {title}
+                    </span>
+                    <span className="block truncate text-xs text-muted-foreground">{blurb}</span>
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </Section>
+      </>
+
 
       <p className="mt-10 flex items-center gap-1.5 text-xs text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden /> Everything is stored on this device — no
