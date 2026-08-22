@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
@@ -38,6 +39,11 @@ const RecentRoute = RecentRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CSlugRoute = CSlugRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/favorites': typeof FavoritesRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/favorites': typeof FavoritesRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections': typeof CollectionsIndexRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/favorites': typeof FavoritesRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/recent'
     | '/search'
+    | '/settings'
     | '/c/$slug'
     | '/collections/$id'
     | '/collections/'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/recent'
     | '/search'
+    | '/settings'
     | '/c/$slug'
     | '/collections/$id'
     | '/collections'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/recent'
     | '/search'
+    | '/settings'
     | '/c/$slug'
     | '/collections/$id'
     | '/collections/'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   FavoritesRoute: typeof FavoritesRoute
   RecentRoute: typeof RecentRoute
   SearchRoute: typeof SearchRoute
+  SettingsRoute: typeof SettingsRoute
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
@@ -189,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/c/$slug': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   FavoritesRoute: FavoritesRoute,
   RecentRoute: RecentRoute,
   SearchRoute: SearchRoute,
+  SettingsRoute: SettingsRoute,
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
