@@ -13,8 +13,9 @@ import part1 from "./catalog/part-1.mjs";
 import part2 from "./catalog/part-2.mjs";
 import part3 from "./catalog/part-3.mjs";
 import part4 from "./catalog/part-4.mjs";
+import part5 from "./catalog/part-5.mjs";
 
-const CATEGORIES = [...part1, ...part2, ...part3, ...part4];
+const CATEGORIES = [...part1, ...part2, ...part3, ...part4, ...part5];
 
 /** Signature, hand-written commands shown as featured entries. */
 const CURATED = [

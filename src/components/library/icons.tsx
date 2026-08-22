@@ -20,6 +20,11 @@ import {
   Sigma,
   UserRound,
   Bot,
+  Wallet,
+  HeartPulse,
+  Compass,
+  Users,
+  House,
   type LucideIcon,
 } from "lucide-react";
 
@@ -45,6 +50,11 @@ const MAP: Record<string, LucideIcon> = {
   Sigma,
   UserRound,
   Bot,
+  Wallet,
+  HeartPulse,
+  Compass,
+  Users,
+  House,
 };
 
 export function categoryIcon(name: string | undefined): LucideIcon {

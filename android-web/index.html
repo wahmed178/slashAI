@@ -2,10 +2,80 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#12161c" />
     <title>SlashAI</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: #12161c;
+        color: #f2f4f7;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+      .shell {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+      }
+      .mark {
+        display: flex;
+        width: 72px;
+        height: 72px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        background: #4fd7c3;
+        color: #10201e;
+        font-size: 34px;
+        font-weight: 700;
+      }
+      .name {
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+      .bar {
+        width: 120px;
+        height: 3px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .bar span {
+        display: block;
+        width: 40%;
+        height: 100%;
+        border-radius: 999px;
+        background: #4fd7c3;
+        animation: slide 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      @keyframes slide {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(320%);
+        }
+      }
+    </style>
   </head>
   <body>
-    <p>Loading SlashAI...</p>
+    <div class="shell">
+      <div class="mark">/</div>
+      <div class="name">SlashAI</div>
+      <div class="bar"><span></span></div>
+    </div>
   </body>
 </html>

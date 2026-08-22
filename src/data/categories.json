@@ -355,5 +355,67 @@
       "Troubleshooting",
       "Workflows"
     ]
+  },
+  {
+    "category": "Money & Finance",
+    "icon": "Wallet",
+    "type": "business",
+    "subcategories": [
+      "Audits",
+      "Budgeting",
+      "Decisions",
+      "Explainers",
+      "Planning"
+    ]
+  },
+  {
+    "category": "Health & Wellbeing",
+    "icon": "HeartPulse",
+    "type": "learning",
+    "subcategories": [
+      "Explainers",
+      "Habits",
+      "Improvement",
+      "Preparation",
+      "Routines"
+    ]
+  },
+  {
+    "category": "Travel & Local",
+    "icon": "Compass",
+    "type": "productivity",
+    "subcategories": [
+      "Costs",
+      "Discovery",
+      "Itineraries",
+      "Logistics",
+      "Packing",
+      "Phrases"
+    ]
+  },
+  {
+    "category": "Social & Community",
+    "icon": "Users",
+    "type": "business",
+    "subcategories": [
+      "Analysis",
+      "Engagement",
+      "Hooks",
+      "Planning",
+      "Posts",
+      "Repurposing"
+    ]
+  },
+  {
+    "category": "Home & Everyday",
+    "icon": "House",
+    "type": "general",
+    "subcategories": [
+      "Correspondence",
+      "Estimates",
+      "Organising",
+      "Planning",
+      "Troubleshooting"
+    ]
   }
 ]

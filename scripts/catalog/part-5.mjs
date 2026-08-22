@@ -1,0 +1,508 @@
+/**
+ * Catalog part 5 — everyday-life categories added in v1.1.
+ * Shape: category -> groups -> verbs [name, subcategory, phrase, ask, deliverable]
+ *                            -> objects [name, phrase, tags, sample]
+ */
+export default [
+  {
+    category: "Money & Finance",
+    type: "business",
+    icon: "Wallet",
+    groups: [
+      {
+        verbs: [
+          [
+            "Budget",
+            "Budgeting",
+            "build a realistic monthly budget from",
+            "Share your income, fixed costs and the one category you always overspend.",
+            "a category-by-category budget with a savings target you can actually hit",
+          ],
+          [
+            "Track",
+            "Budgeting",
+            "turn raw spending into a clear tracker for",
+            "Paste or attach the transactions and say which categories matter to you.",
+            "a categorised spend breakdown with the three biggest leaks highlighted",
+          ],
+          [
+            "Compare",
+            "Decisions",
+            "compare the real cost of options in",
+            "List the options, the timeframe, and any fees or interest you know about.",
+            "a side-by-side cost table over your chosen timeframe plus a plain verdict",
+          ],
+          [
+            "Plan",
+            "Planning",
+            "map a step-by-step money plan for",
+            "State the goal, the deadline and how much you can put aside each month.",
+            "a month-by-month plan with checkpoints and a fallback if income dips",
+          ],
+          [
+            "Explain",
+            "Explainers",
+            "explain in plain language how",
+            "Say what you already understand so the explanation starts from there.",
+            "a jargon-free explanation with one worked example and one common trap",
+          ],
+          [
+            "Review",
+            "Audits",
+            "audit for waste and hidden charges in",
+            "Attach the statement or list and mention anything you already suspect.",
+            "a list of questionable charges, ranked by how much cancelling would save",
+          ],
+        ],
+        objects: [
+          [
+            "Salary",
+            "a take-home pay figure and its deductions",
+            "salary,income,pay",
+            "a monthly payslip with tax, pension and insurance lines",
+          ],
+          [
+            "Subscriptions",
+            "a list of recurring subscriptions",
+            "subscriptions,recurring,saas",
+            "14 recurring charges across streaming, cloud storage and gym",
+          ],
+          [
+            "Loan",
+            "a loan or EMI schedule",
+            "loan,emi,interest",
+            "a 5-year car loan at 9.4% with a prepayment option",
+          ],
+          [
+            "Invoice",
+            "a freelance invoice or payment record",
+            "invoice,freelance,billing",
+            "three unpaid client invoices with different payment terms",
+          ],
+          [
+            "Savings",
+            "a savings or emergency-fund target",
+            "savings,goal,fund",
+            "a six-month emergency fund starting from zero",
+          ],
+          [
+            "Expenses",
+            "a month of everyday expenses",
+            "expenses,spending,statement",
+            "a bank export with 220 card transactions",
+          ],
+          [
+            "Taxes",
+            "tax documents and deductible items",
+            "tax,deduction,filing",
+            "receipts for a home office, courses and travel",
+          ],
+          [
+            "Investment",
+            "an investment or portfolio snapshot",
+            "investing,portfolio,risk",
+            "a portfolio split across index funds, one stock and cash",
+          ],
+        ],
+      },
+    ],
+  },
+  {
+    category: "Health & Wellbeing",
+    type: "learning",
+    icon: "HeartPulse",
+    groups: [
+      {
+        verbs: [
+          [
+            "Plan",
+            "Routines",
+            "design a sustainable routine around",
+            "Say how many days a week you can realistically commit and any limitation.",
+            "a week-by-week routine that scales with the time you actually have",
+          ],
+          [
+            "Simplify",
+            "Explainers",
+            "translate confusing terminology in",
+            "Paste the text or report and say what worried you about it.",
+            "a plain-language walkthrough with the questions worth asking a professional",
+          ],
+          [
+            "Track",
+            "Habits",
+            "build a simple tracking system for",
+            "Say what you want to notice and how much effort logging can take.",
+            "a low-friction tracker plus the two signals actually worth watching",
+          ],
+          [
+            "Prep",
+            "Preparation",
+            "prepare you in advance for",
+            "Describe the situation, your goal, and what usually goes wrong.",
+            "a prep checklist, questions to ask and what to bring",
+          ],
+          [
+            "Improve",
+            "Improvement",
+            "find small, sustainable improvements in",
+            "Describe the current state honestly, including what you have already tried.",
+            "three small changes ordered by effort, with the easiest first",
+          ],
+        ],
+        objects: [
+          [
+            "Sleep",
+            "a sleep pattern and wind-down routine",
+            "sleep,rest,routine",
+            "waking at 3am most nights and scrolling until 1am",
+          ],
+          [
+            "Workout",
+            "a training plan and its progression",
+            "fitness,training,exercise",
+            "three gym sessions a week with a bad shoulder",
+          ],
+          [
+            "Meals",
+            "weekly meals and grocery planning",
+            "meals,nutrition,groceries",
+            "cooking for two with 20 minutes on weeknights",
+          ],
+          [
+            "Hydration",
+            "daily water and caffeine intake",
+            "hydration,water,caffeine",
+            "four coffees a day and almost no water",
+          ],
+          [
+            "Stress",
+            "stress load and recovery time",
+            "stress,recovery,calm",
+            "back-to-back meetings with no breaks",
+          ],
+          [
+            "Posture",
+            "desk setup and posture habits",
+            "posture,desk,ergonomics",
+            "a laptop on a kitchen table for eight hours a day",
+          ],
+          [
+            "Appointment",
+            "a medical or dental appointment",
+            "appointment,health,questions",
+            "a 15-minute check-up you keep postponing",
+          ],
+          [
+            "Screen",
+            "daily screen time and phone habits",
+            "screentime,focus,phone",
+            "seven hours of screen time with 90 pickups a day",
+          ],
+        ],
+      },
+    ],
+  },
+  {
+    category: "Travel & Local",
+    type: "productivity",
+    icon: "Compass",
+    groups: [
+      {
+        verbs: [
+          [
+            "Plan",
+            "Itineraries",
+            "build a day-by-day itinerary for",
+            "Give the dates, budget and the pace you enjoy travelling at.",
+            "a paced itinerary with travel time, costs and a rainy-day alternative",
+          ],
+          [
+            "Pack",
+            "Packing",
+            "generate a right-sized packing list for",
+            "Say the climate, luggage limit and any activity that needs special gear.",
+            "a packing list grouped by bag, with the things people always forget",
+          ],
+          [
+            "Budget",
+            "Costs",
+            "estimate a realistic budget for",
+            "Share the destination, duration and how much comfort you want.",
+            "a cost estimate split into travel, stay, food and buffer",
+          ],
+          [
+            "Find",
+            "Discovery",
+            "shortlist genuinely good options for",
+            "Say what you want to avoid — that filters better than what you want.",
+            "a shortlist with why each made the cut and one honest downside",
+          ],
+          [
+            "Translate",
+            "Phrases",
+            "prepare the phrases you will actually need for",
+            "Name the language and the situations you expect to be in.",
+            "a phrase sheet with pronunciation and the polite version of each",
+          ],
+          [
+            "Check",
+            "Logistics",
+            "run a pre-departure logistics check on",
+            "List the bookings and documents you already have.",
+            "a checklist of gaps, deadlines and documents to sort before leaving",
+          ],
+        ],
+        objects: [
+          [
+            "Trip",
+            "a multi-day trip",
+            "trip,travel,itinerary",
+            "five days in Kyoto in April on a mid-range budget",
+          ],
+          [
+            "Weekend",
+            "a short weekend break",
+            "weekend,shortbreak,getaway",
+            "two nights within a four-hour drive",
+          ],
+          [
+            "Flight",
+            "flights and airport transfers",
+            "flight,airport,transfer",
+            "a red-eye with a 90-minute connection",
+          ],
+          [
+            "Stay",
+            "accommodation options",
+            "hotel,stay,booking",
+            "a family room near a metro stop under a set nightly rate",
+          ],
+          [
+            "Food",
+            "places to eat locally",
+            "food,restaurants,local",
+            "vegetarian dinner spots away from the tourist strip",
+          ],
+          [
+            "Commute",
+            "a daily commute or local transit route",
+            "commute,transit,route",
+            "a 40-minute bus and metro commute with one change",
+          ],
+          [
+            "Visa",
+            "visa and entry requirements",
+            "visa,documents,entry",
+            "a tourist visa needing bank statements and insurance",
+          ],
+          [
+            "Roadtrip",
+            "a road trip route with stops",
+            "roadtrip,driving,route",
+            "900 km over three days with kids in the car",
+          ],
+        ],
+      },
+    ],
+  },
+  {
+    category: "Social & Community",
+    type: "business",
+    icon: "Users",
+    groups: [
+      {
+        verbs: [
+          [
+            "Write",
+            "Posts",
+            "write a natural, non-cringe post for",
+            "Say the platform, the point you want to land and the tone you never use.",
+            "a ready-to-post draft plus two shorter alternatives",
+          ],
+          [
+            "Hook",
+            "Hooks",
+            "generate scroll-stopping openers for",
+            "Give the topic and the single most surprising thing about it.",
+            "ten opening lines ranked by how honest they stay to the content",
+          ],
+          [
+            "Repurpose",
+            "Repurposing",
+            "reshape existing material into",
+            "Paste the original and name the platform it is moving to.",
+            "a reformatted version that fits the new platform's rhythm",
+          ],
+          [
+            "Reply",
+            "Engagement",
+            "draft measured replies for",
+            "Paste the message and say how you want to come across.",
+            "three reply options from warm to firm, none of them defensive",
+          ],
+          [
+            "Schedule",
+            "Planning",
+            "lay out a posting calendar for",
+            "Say how often you can realistically post and what you already have.",
+            "a calendar with themes per slot and a reusable backlog",
+          ],
+          [
+            "Analyze",
+            "Analysis",
+            "read the signal in performance data from",
+            "Paste the numbers and say what you were trying to achieve.",
+            "what actually worked, what was noise, and what to try next",
+          ],
+        ],
+        objects: [
+          [
+            "Thread",
+            "a multi-post thread",
+            "thread,social,series",
+            "an eight-post thread on a lesson learned the hard way",
+          ],
+          [
+            "Reel",
+            "a short vertical video",
+            "reel,shorts,video",
+            "a 30-second clip with on-screen captions",
+          ],
+          [
+            "Caption",
+            "a caption under an image",
+            "caption,social,copy",
+            "a photo carousel from a product launch",
+          ],
+          [
+            "Newsletter",
+            "an email newsletter issue",
+            "newsletter,email,audience",
+            "a weekly issue to 1,200 subscribers",
+          ],
+          [
+            "Bio",
+            "a profile bio",
+            "bio,profile,intro",
+            "a 150-character bio that has to say what you do",
+          ],
+          [
+            "Comment",
+            "comments and community replies",
+            "comments,community,replies",
+            "a critical comment on a post that went semi-viral",
+          ],
+          [
+            "Announcement",
+            "a launch or update announcement",
+            "announcement,launch,update",
+            "shipping a feature people had been asking about for months",
+          ],
+          [
+            "Poll",
+            "a poll or audience question",
+            "poll,question,engagement",
+            "asking an audience which of two directions to build",
+          ],
+        ],
+      },
+    ],
+  },
+  {
+    category: "Home & Everyday",
+    type: "general",
+    icon: "House",
+    groups: [
+      {
+        verbs: [
+          [
+            "Plan",
+            "Planning",
+            "turn a vague intention into a plan for",
+            "Say your deadline, budget and who else is involved.",
+            "a sequenced plan with owners, costs and the first step to take today",
+          ],
+          [
+            "Fix",
+            "Troubleshooting",
+            "troubleshoot step by step",
+            "Describe the symptom, when it started and what you already tried.",
+            "an ordered diagnosis from cheapest check to call-a-professional",
+          ],
+          [
+            "Draft",
+            "Correspondence",
+            "draft the right message about",
+            "Say the outcome you want and how much goodwill you need to keep.",
+            "a clear, polite draft plus a firmer follow-up if it is ignored",
+          ],
+          [
+            "Organize",
+            "Organising",
+            "create a simple system to organise",
+            "Describe the space or mess and how much time you can spend.",
+            "a system that survives a bad week, not just a good one",
+          ],
+          [
+            "Estimate",
+            "Estimates",
+            "estimate time, cost and effort for",
+            "Give the size of the job and any constraint you cannot move.",
+            "a range estimate with the assumptions that drive it",
+          ],
+        ],
+        objects: [
+          [
+            "Move",
+            "a house or flat move",
+            "moving,home,logistics",
+            "moving two bedrooms across the city in three weeks",
+          ],
+          [
+            "Repair",
+            "a repair or maintenance job",
+            "repair,maintenance,diy",
+            "a tap that drips only when the heating is on",
+          ],
+          [
+            "Landlord",
+            "a message to a landlord or agency",
+            "landlord,rental,letter",
+            "a deposit that has not been returned after six weeks",
+          ],
+          [
+            "Warranty",
+            "a warranty or refund claim",
+            "warranty,refund,claim",
+            "a laptop failing twice inside the warranty period",
+          ],
+          [
+            "Chores",
+            "a household chore routine",
+            "chores,cleaning,routine",
+            "two people, one flat, and nobody doing the bins",
+          ],
+          [
+            "Event",
+            "a small personal event",
+            "event,party,hosting",
+            "a birthday dinner for twelve on a weeknight",
+          ],
+          [
+            "Gift",
+            "a gift decision",
+            "gift,present,ideas",
+            "a present for someone who says they want nothing",
+          ],
+          [
+            "Storage",
+            "storage and decluttering",
+            "storage,declutter,space",
+            "a spare room that has become a dumping ground",
+          ],
+        ],
+      },
+    ],
+  },
+];

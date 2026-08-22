@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { registerServiceWorker } from "../lib/register-sw";
 import { LibraryProvider } from "@/hooks/use-library";
 import { Toaster } from "@/components/ui/sonner";
+import { WhatsNewDialog } from "@/components/library/WhatsNewDialog";
 
 function NotFoundComponent() {
   return (
@@ -156,6 +157,7 @@ function RootComponent() {
       <LibraryProvider>
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
+        <WhatsNewDialog />
         <Toaster position="bottom-right" />
       </LibraryProvider>
     </QueryClientProvider>
