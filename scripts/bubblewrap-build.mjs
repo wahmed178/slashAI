@@ -37,7 +37,6 @@ async function main() {
     ? keystorePath
     : resolve(rootDir, keystorePath);
 
-
   const manifestData = {
     ...raw,
     webManifestUrl: raw.webManifestUrl || `https://${raw.host}/manifest.webmanifest`,
