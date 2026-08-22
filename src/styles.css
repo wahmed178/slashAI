@@ -109,6 +109,32 @@
   --shadow-panel: 0 1px 0 0 oklch(1 0 0 / 4%) inset, 0 8px 24px -12px oklch(0 0 0 / 60%);
 }
 
+/* True-black theme for OLED/AMOLED screens. */
+.amoled {
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.97 0.004 250);
+  --surface: oklch(0.06 0.006 252);
+  --surface-elevated: oklch(0.1 0.008 253);
+  --card: oklch(0.05 0.005 252);
+  --card-foreground: oklch(0.97 0.004 250);
+  --popover: oklch(0.05 0.005 252);
+  --popover-foreground: oklch(0.97 0.004 250);
+  --secondary: oklch(0.13 0.008 253);
+  --secondary-foreground: oklch(0.94 0.005 250);
+  --muted: oklch(0.11 0.007 253);
+  --muted-foreground: oklch(0.66 0.012 253);
+  --accent: oklch(0.15 0.01 253);
+  --accent-foreground: oklch(0.97 0.004 250);
+  --border: oklch(0.2 0.01 253);
+  --input: oklch(0.2 0.01 253);
+  --sidebar: oklch(0 0 0);
+  --sidebar-foreground: oklch(0.92 0.005 250);
+  --sidebar-accent: oklch(0.13 0.008 253);
+  --sidebar-accent-foreground: oklch(0.97 0.004 250);
+  --sidebar-border: oklch(0.18 0.01 253);
+  --shadow-panel: 0 1px 0 0 oklch(1 0 0 / 5%) inset, 0 8px 24px -12px oklch(0 0 0 / 80%);
+}
+
 .light {
   --background: oklch(0.985 0.003 250);
   --foreground: oklch(0.22 0.02 253);
