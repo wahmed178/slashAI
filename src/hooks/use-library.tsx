@@ -9,6 +9,8 @@ import {
 } from "react";
 
 import { APP_VERSION } from "@/lib/app-meta";
+import { todayKey } from "@/lib/commands";
+import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 
 export type Theme = "dark" | "light" | "amoled";
 export type Density = "comfortable" | "compact";
