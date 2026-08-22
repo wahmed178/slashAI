@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
+import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const ExploreIndexRoute = ExploreIndexRouteImport.update({
   path: '/explore/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExploreCategoryIndexRoute = ExploreCategoryIndexRouteImport.update({
+  id: '/explore/$category/',
+  path: '/explore/$category/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/c/$slug': typeof CSlugRoute
   '/explore/': typeof ExploreIndexRoute
+  '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/c/$slug': typeof CSlugRoute
   '/explore': typeof ExploreIndexRoute
+  '/explore/$category': typeof ExploreCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,20 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/c/$slug': typeof CSlugRoute
   '/explore/': typeof ExploreIndexRoute
+  '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search' | '/c/$slug' | '/explore/'
+  fullPaths: '/' | '/search' | '/c/$slug' | '/explore/' | '/explore/$category/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search' | '/c/$slug' | '/explore'
-  id: '__root__' | '/' | '/search' | '/c/$slug' | '/explore/'
+  to: '/' | '/search' | '/c/$slug' | '/explore' | '/explore/$category'
+  id:
+    | '__root__'
+    | '/'
+    | '/search'
+    | '/c/$slug'
+    | '/explore/'
+    | '/explore/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +82,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   CSlugRoute: typeof CSlugRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
+  ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/explore/$category/': {
+      id: '/explore/$category/'
+      path: '/explore/$category'
+      fullPath: '/explore/$category/'
+      preLoaderRoute: typeof ExploreCategoryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +130,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   CSlugRoute: CSlugRoute,
   ExploreIndexRoute: ExploreIndexRoute,
+  ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
