@@ -50,9 +50,9 @@ The web app is already published at **https://slash-command-vault.lovable.app**.
 
 ### 2. Fill in the domain placeholders
 
-`android/twa-manifest.json` already uses the published domain `slash-command-vault.lovable.app`. You should verify the host name matches your published domain before building.
+`android/twa-manifest.json` already uses the published domain `slash-command-vault.lovable.app` and the package name `dev.lovable.slashcommandvault`. Change these if you want a different package name or domain.
 
-Next, update `public/.well-known/assetlinks.json` with the **SHA-256 fingerprint** of your signing key (see step 4). This is what removes the browser address bar in the TWA app.
+`public/.well-known/assetlinks.json` needs the **SHA-256 fingerprint** of your signing key so the TWA can hide the browser address bar. The GitHub Actions workflow injects this automatically from your keystore secret at build time, but you can also paste it manually if you build locally.
 
 ### 3. Install Bubblewrap
 
