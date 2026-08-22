@@ -5,11 +5,7 @@
  * `?sw=off` is present — and in those cases any stale `/sw.js` registration is
  * removed so the preview always serves fresh code.
  */
-const BLOCKED_HOSTS = [
-  "lovableproject.com",
-  "lovableproject-dev.com",
-  "beta.lovable.dev",
-] as const;
+const BLOCKED_HOSTS = ["lovableproject.com", "lovableproject-dev.com", "beta.lovable.dev"] as const;
 
 function isBlockedHost(hostname: string) {
   return BLOCKED_HOSTS.some((h) => hostname === h || hostname.endsWith(`.${h}`));

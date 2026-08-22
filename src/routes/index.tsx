@@ -475,8 +475,7 @@ function LibraryPage() {
                       : "border-border bg-surface text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  {s.subcategory}{" "}
-                  <span className="text-muted-foreground/70">{s.count}</span>
+                  {s.subcategory} <span className="text-muted-foreground/70">{s.count}</span>
                 </button>
               ))}
             </div>
@@ -599,7 +598,14 @@ function LibraryPage() {
                 className="mt-4"
                 onClick={() => {
                   setDraft("");
-                  setSearch({ q: "", cat: "all", sub: "all", type: "all", diff: "all", fav: false });
+                  setSearch({
+                    q: "",
+                    cat: "all",
+                    sub: "all",
+                    type: "all",
+                    diff: "all",
+                    fav: false,
+                  });
                 }}
               >
                 Reset search

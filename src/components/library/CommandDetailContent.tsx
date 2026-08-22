@@ -141,7 +141,10 @@ export function CommandDetailContent({
               size="sm"
               className="h-7 gap-1.5 text-xs"
               onClick={() =>
-                onOpenCommand(related[Math.floor(Math.random() * related.length)] ?? getRandomCommand(command.id))
+                onOpenCommand(
+                  related[Math.floor(Math.random() * related.length)] ??
+                    getRandomCommand(command.id),
+                )
               }
             >
               <Shuffle className="size-3.5" /> Random related
@@ -166,11 +169,7 @@ export function CommandDetailContent({
         <Button onClick={() => useCommand(command, template)} className="gap-1.5">
           <Wand2 className="size-4" /> Use command
         </Button>
-        <Button
-          variant="outline"
-          onClick={() => copyPrompt(command, template)}
-          className="gap-1.5"
-        >
+        <Button variant="outline" onClick={() => copyPrompt(command, template)} className="gap-1.5">
           <Copy className="size-4" /> Copy full prompt
         </Button>
         <Button variant="outline" onClick={() => void shareCommand(command)} className="gap-1.5">

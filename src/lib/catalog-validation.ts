@@ -195,7 +195,8 @@ export function validateCatalog(
     for (const alias of cmd.aliases ?? []) push(byAlias, normalizeCommandName(alias), cmd.id);
   }
 
-  for (const [id, ids] of byId) if (ids.length > 1) err("duplicate-id", `duplicate id "${id}"`, ids);
+  for (const [id, ids] of byId)
+    if (ids.length > 1) err("duplicate-id", `duplicate id "${id}"`, ids);
   for (const [name, ids] of byName) {
     if (ids.length > 1) err("duplicate-command", `duplicate command name "${name}"`, ids);
   }

@@ -81,7 +81,12 @@ function CommandWidget({
         <Button size="sm" variant="secondary" className="gap-1.5" onClick={() => onOpen(command)}>
           Open
         </Button>
-        <Button size="sm" variant="outline" className="gap-1.5" onClick={() => copyCommand(command)}>
+        <Button
+          size="sm"
+          variant="outline"
+          className="gap-1.5"
+          onClick={() => copyCommand(command)}
+        >
           <Copy className="size-3.5" /> Copy
         </Button>
         <Button

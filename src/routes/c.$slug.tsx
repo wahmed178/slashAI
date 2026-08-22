@@ -47,8 +47,7 @@ function CommandPage() {
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite } = useLibrary();
 
-  const open = (cmd: SlashCommand) =>
-    void navigate({ to: "/c/$slug", params: { slug: cmd.id } });
+  const open = (cmd: SlashCommand) => void navigate({ to: "/c/$slug", params: { slug: cmd.id } });
 
   return (
     <div className="min-h-screen bg-background">

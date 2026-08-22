@@ -80,10 +80,7 @@ export const CATEGORY_COUNTS = CATEGORY_TREE.map(({ category, count, icon }) => 
   icon,
 }));
 
-export const SUBCATEGORY_TOTAL = CATEGORY_TREE.reduce(
-  (n, c) => n + c.subcategories.length,
-  0,
-);
+export const SUBCATEGORY_TOTAL = CATEGORY_TREE.reduce((n, c) => n + c.subcategories.length, 0);
 
 export const TYPES: CommandType[] = [
   "image",

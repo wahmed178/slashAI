@@ -111,7 +111,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     const term = q.trim();
     if (term.length < 2) return;
     setRecentSearches((prev) => {
-      const next = [term, ...prev.filter((x) => x.toLowerCase() !== term.toLowerCase())].slice(0, 8);
+      const next = [term, ...prev.filter((x) => x.toLowerCase() !== term.toLowerCase())].slice(
+        0,
+        8,
+      );
       localStorage.setItem(KEYS.searches, JSON.stringify(next));
       return next;
     });
