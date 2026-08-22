@@ -347,12 +347,13 @@ for (const cat of CATEGORIES) {
         const command = `/${verb}${objName}`;
         const h = hash(command);
         const title = `${verb.replace(/([a-z])([A-Z0-9])/g, "$1 $2")} ${objName}`;
-        const shortSample = sample
-          .split(/\s+/)
-          .slice(0, 9)
-          .join(" ")
-          .replace(/[.,;:]+$/, "")
-          .replace(/\s+(?:an?|the|of|from|and|or|with|for|to|in|on|by)$/i, "");
+        // prefer the first clause of the sample so descriptions never end mid-phrase
+        const firstClause = sample.split(/[,;–—]/)[0].trim();
+        const shortSample = (
+          firstClause.split(/\s+/).length >= 3
+            ? firstClause.split(/\s+/).slice(0, 10).join(" ")
+            : sample.split(/\s+/).slice(0, 10).join(" ")
+        ).replace(/[.,;:]+$/, "");
         const description = `${capitalize(phrase)} ${objPhrase} — e.g. ${shortSample}.`;
 
         const howToUse = [
