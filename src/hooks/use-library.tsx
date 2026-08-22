@@ -23,6 +23,8 @@ export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
   { id: "lime", label: "Lime", swatch: "oklch(0.82 0.19 130)" },
 ];
 
+export type HomeMode = "calm" | "feed";
+
 interface Settings {
   theme: Theme;
   density: Density;
@@ -32,8 +34,12 @@ interface Settings {
   reducedMotion: boolean;
   /** optional, local-only interest ids used to personalise Discover */
   interests: string[];
-  /** true once the user has answered (or skipped) the interests prompt */
+  /** true once the user has answered (or skipped) the onboarding wizard */
   onboarded: boolean;
+  /** optional persona id from lib/personas */
+  persona: string;
+  /** which home surface the user prefers: calm sections or the scroll feed */
+  homeMode: HomeMode;
 }
 
 const DEFAULT_SETTINGS: Settings = {
@@ -45,7 +51,16 @@ const DEFAULT_SETTINGS: Settings = {
   reducedMotion: false,
   interests: [],
   onboarded: false,
+  persona: "",
+  homeMode: "calm",
 };
+
+export interface Stats {
+  copies: number;
+  opens: number;
+}
+
+const DEFAULT_STATS: Stats = { copies: 0, opens: 0 };
 
 const KEYS = {
   favorites: "slashai.favorites",
@@ -53,6 +68,8 @@ const KEYS = {
   searches: "slashai.searches",
   settings: "slashai.settings",
   seenVersion: "slashai.seenVersion",
+  streak: "slashai.streak",
+  stats: "slashai.stats",
 };
 
 export interface BackupPayload {
