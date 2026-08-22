@@ -10,11 +10,46 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as RecentRouteImport } from './routes/recent'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
+import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
+import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
+import { Route as ExploreIndexRouteImport } from './routes/explore.index'
+import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
+import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritesRoute = FavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecentRoute = RecentRouteImport.update({
+  id: '/recent',
+  path: '/recent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CSlugRoute = CSlugRouteImport.update({
@@ -22,31 +57,134 @@ const CSlugRoute = CSlugRouteImport.update({
   path: '/c/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
+  id: '/collections/',
+  path: '/collections/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsIdRoute = CollectionsIdRouteImport.update({
+  id: '/collections/$id',
+  path: '/collections/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreIndexRoute = ExploreIndexRouteImport.update({
+  id: '/explore/',
+  path: '/explore/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreCategoryIndexRoute = ExploreCategoryIndexRouteImport.update({
+  id: '/explore/$category/',
+  path: '/explore/$category/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreCategorySubcategoryRoute =
+  ExploreCategorySubcategoryRouteImport.update({
+    id: '/explore/$category/$subcategory',
+    path: '/explore/$category/$subcategory',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/favorites': typeof FavoritesRoute
+  '/recent': typeof RecentRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
   '/c/$slug': typeof CSlugRoute
+  '/collections/$id': typeof CollectionsIdRoute
+  '/collections/': typeof CollectionsIndexRoute
+  '/explore/': typeof ExploreIndexRoute
+  '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
+  '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/favorites': typeof FavoritesRoute
+  '/recent': typeof RecentRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
   '/c/$slug': typeof CSlugRoute
+  '/collections/$id': typeof CollectionsIdRoute
+  '/collections': typeof CollectionsIndexRoute
+  '/explore': typeof ExploreIndexRoute
+  '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
+  '/explore/$category': typeof ExploreCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/favorites': typeof FavoritesRoute
+  '/recent': typeof RecentRoute
+  '/search': typeof SearchRoute
+  '/settings': typeof SettingsRoute
   '/c/$slug': typeof CSlugRoute
+  '/collections/$id': typeof CollectionsIdRoute
+  '/collections/': typeof CollectionsIndexRoute
+  '/explore/': typeof ExploreIndexRoute
+  '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
+  '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/c/$slug'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/favorites'
+    | '/recent'
+    | '/search'
+    | '/settings'
+    | '/c/$slug'
+    | '/collections/$id'
+    | '/collections/'
+    | '/explore/'
+    | '/explore/$category/$subcategory'
+    | '/explore/$category/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/c/$slug'
-  id: '__root__' | '/' | '/c/$slug'
+  to:
+    | '/'
+    | '/about'
+    | '/favorites'
+    | '/recent'
+    | '/search'
+    | '/settings'
+    | '/c/$slug'
+    | '/collections/$id'
+    | '/collections'
+    | '/explore'
+    | '/explore/$category/$subcategory'
+    | '/explore/$category'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/favorites'
+    | '/recent'
+    | '/search'
+    | '/settings'
+    | '/c/$slug'
+    | '/collections/$id'
+    | '/collections/'
+    | '/explore/'
+    | '/explore/$category/$subcategory'
+    | '/explore/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  FavoritesRoute: typeof FavoritesRoute
+  RecentRoute: typeof RecentRoute
+  SearchRoute: typeof SearchRoute
+  SettingsRoute: typeof SettingsRoute
   CSlugRoute: typeof CSlugRoute
+  CollectionsIdRoute: typeof CollectionsIdRoute
+  CollectionsIndexRoute: typeof CollectionsIndexRoute
+  ExploreIndexRoute: typeof ExploreIndexRoute
+  ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
+  ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +196,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favorites': {
+      id: '/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recent': {
+      id: '/recent'
+      path: '/recent'
+      fullPath: '/recent'
+      preLoaderRoute: typeof RecentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$slug': {
       id: '/c/$slug'
       path: '/c/$slug'
@@ -65,12 +238,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collections/': {
+      id: '/collections/'
+      path: '/collections'
+      fullPath: '/collections/'
+      preLoaderRoute: typeof CollectionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/$id': {
+      id: '/collections/$id'
+      path: '/collections/$id'
+      fullPath: '/collections/$id'
+      preLoaderRoute: typeof CollectionsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore/': {
+      id: '/explore/'
+      path: '/explore'
+      fullPath: '/explore/'
+      preLoaderRoute: typeof ExploreIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore/$category/': {
+      id: '/explore/$category/'
+      path: '/explore/$category'
+      fullPath: '/explore/$category/'
+      preLoaderRoute: typeof ExploreCategoryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore/$category/$subcategory': {
+      id: '/explore/$category/$subcategory'
+      path: '/explore/$category/$subcategory'
+      fullPath: '/explore/$category/$subcategory'
+      preLoaderRoute: typeof ExploreCategorySubcategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  FavoritesRoute: FavoritesRoute,
+  RecentRoute: RecentRoute,
+  SearchRoute: SearchRoute,
+  SettingsRoute: SettingsRoute,
   CSlugRoute: CSlugRoute,
+  CollectionsIdRoute: CollectionsIdRoute,
+  CollectionsIndexRoute: CollectionsIndexRoute,
+  ExploreIndexRoute: ExploreIndexRoute,
+  ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
+  ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

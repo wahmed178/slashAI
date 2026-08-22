@@ -28,17 +28,6 @@ function NotFoundComponent() {
         <div className="mt-6">
           <Link
             to="/"
-            search={{
-              q: "",
-              cat: "all",
-              sub: "all",
-              type: "all",
-              diff: "all",
-              sort: "relevance" as const,
-              fav: false,
-              page: 1,
-              cmd: undefined,
-            }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Go home
