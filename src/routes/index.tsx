@@ -180,12 +180,25 @@ function HomePage() {
     [hydrated, settings.interests, recents, favorites],
   );
 
+  const { updateSettings, streak } = useLibrary();
   const showOnboarding = hydrated && !settings.onboarded;
+  const name = personaGreetingName(settings.persona);
+  const feed = settings.homeMode === "feed";
 
   return (
     <AppShell hideHeaderSearch title="SlashAI">
+      {showOnboarding && <Onboarding />}
+
       <section className="pt-3 pb-1">
-        <p className="text-sm text-muted-foreground">{greeting()}</p>
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+          {greeting()}
+          {name ? `, ${name}` : ""}
+          {hydrated && streak.count > 1 && (
+            <span className="flex items-center gap-1 text-primary">
+              <Flame className="size-3.5" aria-hidden /> {streak.count}-day streak
+            </span>
+          )}
+        </p>
         <h1 className="mt-1 text-2xl font-black tracking-tight text-foreground sm:text-3xl">
           What are you working on?
         </h1>
@@ -198,6 +211,40 @@ function HomePage() {
           search
         </p>
       </section>
+
+      <div
+        role="tablist"
+        aria-label="Home layout"
+        className="mt-5 inline-flex rounded-xl border border-border bg-surface p-1"
+      >
+        {(
+          [
+            { id: "calm", label: "Calm", icon: LayoutList },
+            { id: "feed", label: "Feed", icon: Rows3 },
+          ] as const
+        ).map((m) => (
+          <button
+            key={m.id}
+            type="button"
+            role="tab"
+            aria-selected={settings.homeMode === m.id}
+            onClick={() => updateSettings({ homeMode: m.id })}
+            className={cn(
+              "flex min-h-9 items-center gap-1.5 rounded-lg px-3.5 text-sm font-medium transition-colors",
+              settings.homeMode === m.id
+                ? "bg-accent text-foreground"
+                : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            <m.icon className="size-4" aria-hidden /> {m.label}
+          </button>
+        ))}
+      </div>
+
+      {feed && <div className="mt-3"><HomeFeed /></div>}
+      {!feed && (
+        <>
+
 
       <div className="mt-6 flex flex-wrap gap-2">
         {quickCategories.map((c) => {
