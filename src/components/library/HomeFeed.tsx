@@ -145,7 +145,7 @@ function SectionHeader({
 }: {
   icon: typeof Flame;
   title: string;
-  hint?: string;
+  hint?: string | undefined;
 }) {
   return (
     <div className="pt-5 pb-1">
