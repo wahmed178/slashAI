@@ -192,7 +192,10 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             <span className="block truncate text-sm font-semibold text-sidebar-foreground">
               SlashAI
             </span>
-            <span className="block truncate text-xs text-muted-foreground">Command library</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Curated AI & free finds
+            </span>
+
           </span>
         </Link>
         <div className="flex-1 overflow-y-auto px-2 pb-4">
