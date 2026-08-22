@@ -108,6 +108,41 @@ Make sure the production URL is live and `/.well-known/assetlinks.json` is reach
 3. Upload the `app-release.aab`
 4. Fill in store listing, screenshots, privacy policy
 5. Publish
+### 8. Automated releases with GitHub Actions
+
+The repository includes `.github/workflows/release.yml`. On every push of a tag starting with `v` (for example `v1.0.0`), the workflow will:
+
+1. Run `bun lint` and `bun build`
+2. Inject the published domain into `android/twa-manifest.json`
+3. Set the app version from the tag
+4. Build the Android release APK and AAB
+5. Upload both as workflow artifacts
+
+Required GitHub repository settings:
+
+| Name | Type | Value |
+| --- | --- | --- |
+| `PUBLISHED_DOMAIN` | Repository variable | `slash-command-vault.lovable.app` |
+| `ANDROID_KEYSTORE_BASE64` | Repository secret | Base64 of your `android/android.keystore` |
+| `ANDROID_KEYSTORE_PASSWORD` | Repository secret | Keystore password |
+| `ANDROID_KEY_PASSWORD` | Repository secret | Key password |
+
+To generate a keystore and print its base64 value, run:
+
+```bash
+bun run android:keystore
+```
+
+Keep the keystore file safe — it is used to sign every future release, and losing it means you cannot update the app on Google Play.
+
+After the secrets are set, push a tag:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The workflow will run and produce the release files under **Actions → Release → Artifacts**.
 
 ## Updating the Android app
 
