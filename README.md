@@ -1,46 +1,81 @@
 # SlashAI
 
-Build a production-quality responsive web app called **SlashAI**. The purpose is a searchable library of 1,000+ AI slash commands such as /HandwrittenNotesImage, /Explode, /Scan, /100xUpscale. It must be designed from the beginning to be PWA-ready and mobile-first, with clean component architecture and an app-shell suitable for later installation as a PWA.
+> A fast, focused command library for better AI work.
 
-Core requirement: create a curated catalog of at least 1,000 unique slash commands. Each command needs: command name (starting with /), short description of what it does, detailed 'How to use' example, category, subcategory, tags, and whether it is primarily for image, text, document, data, coding, research, productivity, audio/video, business, learning, or general AI. Commands should be genuinely useful, not random filler. Include broad categories such as Image & Vision, Documents & OCR, Writing, Research, Analysis, Data, Coding, Productivity, Business, Quality & Performance, Learning, Audio, Video, Marketing, Design, Automation, Security/Privacy-safe utilities, Translation, Math/Science, Career, and General AI. Include commands ranging from simple utilities to advanced workflows. Generate at least 1,000 records and make the architecture easy to extend.
+SlashAI is a searchable library of 1,200+ copy-ready slash commands for writing, research, coding, design, documents, data, productivity, and more. Find a useful starting point, tune it to your task, and get back to the work.
 
-UI/UX: make it feel like a polished modern AI command dashboard, not a plain table. Desktop layout: left sidebar with logo/name, categories, favorites, recently used, and settings; main area with prominent global search, command count, quick filters, category chips, sort controls, and a responsive command-card grid/list. Mobile: bottom navigation or compact drawer, large search, touch-friendly cards. Use a dark-first premium interface with an optional light theme. Add keyboard-friendly navigation.
+**Live app:** [slashai.lovable.app](https://slashai.lovable.app)
+**Latest Android APK:** [Download from GitHub Releases](https://github.com/wahmed178/slashAI/releases/latest/download/slash-command-vault.apk)
 
-Search/dashboard requirements: instant fuzzy search across command name, description, how-to-use text, category, subcategory and tags; search suggestions; highlighted matches; category filtering; type filtering; favorites; recently used; sort by relevance/name/category/popularity/newest; pagination or virtualized rendering so 1,000+ commands remains fast. Add a command detail view/modal with copy button, example, explanation, related commands, tags, favorite toggle and 'Use command' action. Clicking Use command should copy a ready-to-edit template to clipboard and record recent usage.
+## The Experience
 
-Add: Favorites, Recently Used, Copy Command, Copy Full Prompt, Share-friendly command detail URL/state if practical, random command, daily command, category explorer, command count by category, empty states, loading states, keyboard shortcut hints, and a settings panel for theme and compact/comfortable density. Persist favorites, recents, theme, and settings locally so the app works without login.
+- **Search first:** instant fuzzy search across command names, descriptions, examples, categories, and tags.
+- **Built for scanning:** a dark-first interface with a compact command grid, restrained borders, Space Grotesk typography, and electric teal accents.
+- **Useful detail:** every command includes an explanation, usage example, tags, related commands, and copy actions.
+- **Personal by default:** favorites, recently used commands, theme, and density preferences persist locally without an account.
+- **Works offline:** the static catalog and PWA shell are designed for reliable use on mobile and desktop.
+- **Designed for Android:** the APK opens the published app inside a native Android WebView, so it works as an app rather than handing off to Chrome.
 
-PWA readiness: include web app manifest metadata, app icons placeholders, install-friendly viewport/meta tags, service-worker-ready architecture and offline-first handling for the static command catalog. If the environment supports a service worker safely, implement it; otherwise structure the app so one can be added later without refactoring. The app should work well on Android Chrome and desktop browsers.
+## Command Categories
 
-Data architecture: keep the command catalog in a structured local data module or JSON so it can later be moved to a database/API. Include a command schema with id, command, title, description, usage, example, category, subcategory, tags, type, difficulty, featured, and aliases. Avoid duplicate commands. Add a small set of featured commands for the dashboard.
+Image and Vision · Documents and OCR · Writing · Research · Analysis · Data · Coding · Productivity · Business · Quality and Performance · Learning · Audio · Video · Marketing · Design · Automation · Security and Privacy · Translation · Math and Science · Career · General AI
 
-Visual details: polished typography, subtle borders, good spacing, responsive cards, command badges, category icons, accessible contrast, smooth but restrained transitions. Do not overuse gradients or animations. Make the search the primary interaction.
+## Run Locally
 
-Important: do not merely create a mockup with 20 commands. Populate the actual catalog with 1,000+ useful command records and make search/filtering operate on the full catalog. Ensure there are no obvious duplicates and that every record has useful descriptions and usage examples. Include a README or internal notes describing how to add more commands later. Test the UI and fix obvious errors before finishing.
-
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://slashprompt.lovable.app
-
-**Android APK**: https://github.com/wahmed178/slashAI/releases/latest/download/slash-command-vault.apk
-
-To publish a new APK, configure the Android secrets and `PUBLISHED_DOMAIN` repository variable described in [android/README.md](android/README.md), then push a tag such as `v1.0.0`. GitHub Actions will build the APK and AAB and attach them to a GitHub Release.
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/7a5be5ac-220c-4f10-9f55-0a591e7f0b40).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Requirements: Node.js 18+ and npm.
 
 ```sh
 git clone <this-repository-url>
-cd <repository-name>
-npm i
+cd slashAI
+npm install
 npm run dev
 ```
+
+Useful commands:
+
+```sh
+npm run build             # production build
+npm run lint              # lint the codebase
+npm run catalog:validate  # validate the command catalog
+npm run catalog:build     # regenerate catalog data
+```
+
+## Project Shape
+
+```text
+src/
+	components/library/   command cards, details, sidebar, dashboard widgets
+	components/ui/        shared accessible UI primitives
+	data/                 generated command and category data
+	hooks/                library state, actions, mobile and network helpers
+	lib/                  catalog validation, commands, offline and error handling
+	routes/               TanStack Start routes
+public/                 manifest, icons and PWA assets
+android/                native Android WebView build configuration
+```
+
+The catalog is kept as structured local data so it can be extended or moved behind an API later. To add commands, update the catalog source and run the validation command before building.
+
+## Android APK
+
+The Android build uses Capacitor and a native WebView. It loads the published SlashAI site inside the app and does not require Chrome or Trusted Web Activity domain verification.
+
+See [android/README.md](android/README.md) for prerequisites, signing setup, local builds, and GitHub release configuration.
+
+For a local release build:
+
+```sh
+export ANDROID_KEYSTORE_PASSWORD='your-keystore-password'
+export ANDROID_KEY_PASSWORD='your-key-password'
+npm run android:build
+```
+
+The signed APK is written to `android/app/build/outputs/apk/release/app-release.apk`.
+
+## Built With
+
+React · TypeScript · Vite · TanStack Router · Tailwind CSS · Radix UI · Capacitor · Lovable
+
+## Lovable
+
+This project was created with [Lovable](https://lovable.dev). Continue development in the [Lovable editor](https://lovable.dev/projects/7a5be5ac-220c-4f10-9f55-0a591e7f0b40), or work locally and push changes to keep the project synchronized.

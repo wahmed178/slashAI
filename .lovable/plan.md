@@ -4,7 +4,7 @@ Goal: give you a WebView-based Android path (Capacitor) that hides the URL bar b
 
 1. Add Capacitor tooling
    - Install `@capacitor/core`, `@capacitor/cli`, and `@capacitor/android` as dev dependencies.
-   - Add `capacitor.config.ts` with app ID `dev.lovable.slashprompt`, app name `SlashAI`, and `server.url` set to `https://slashprompt.lovable.app` so the WebView loads the live published site.
+   - Add `capacitor.config.ts` with app ID `dev.lovable.slashprompt`, app name `SlashAI`, and `server.url` set to `https://slashai.lovable.app` so the WebView loads the live published site.
    - Add `capacitor-android:init`, `capacitor-android:sync`, `capacitor-android:build`, and `capacitor:copy` scripts to `package.json`.
 
 2. Initialize the Capacitor Android project
@@ -35,5 +35,5 @@ Goal: give you a WebView-based Android path (Capacitor) that hides the URL bar b
 
 7. Verification
    - Run the Capacitor build locally in the sandbox if possible, or via a manual GitHub Actions run.
-   - Confirm the generated APK installs and opens `https://slashprompt.lovable.app` without a URL bar.
+   - Confirm the generated APK installs and opens `https://slashai.lovable.app` without a URL bar.
    - Confirm that future Lovable edits still auto-sync to GitHub and that the existing TWA workflow still works if you choose to run it.

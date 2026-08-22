@@ -21,7 +21,7 @@ npm run android:build
 
 The signed APK is created at `android/app/build/outputs/apk/release/app-release.apk`.
 
-The APK opens the published SlashAI site inside the native WebView. Android System WebView must be enabled, but Chrome is not required. Internet access is required because the app loads the current published site.
+The APK opens `https://slashai.lovable.app` inside the native WebView. Android System WebView must be enabled, but Chrome is not required. Internet access is required because the app loads the current published site.
 
 ## GitHub release
 

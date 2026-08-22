@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   server: {
     androidScheme: "https",
-    url: "https://slashprompt.lovable.app",
+    url: "https://slashai.lovable.app",
   },
 };
 
