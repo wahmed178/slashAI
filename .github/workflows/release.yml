@@ -153,22 +153,42 @@ jobs:
           bun run android:validate -- android/android.keystore
           bun run scripts/bubblewrap-build.mjs android/twa-manifest.json android/project
 
-      - name: Upload Android artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-release
-          path: |
-            android/project/app/build/outputs/apk/release/app-release-signed.apk
-            android/project/app/build/outputs/bundle/release/app-release-signed.aab
-          if-no-files-found: error
-
       - name: Prepare downloadable release files
         run: |
-          cp android/project/app/build/outputs/apk/release/app-release-signed.apk slash-command-vault.apk
-          cp android/project/app/build/outputs/bundle/release/app-release-signed.aab slash-command-vault.aab
+          mkdir -p dist-android
+          cp android/project/app/build/outputs/apk/release/app-release-signed.apk dist-android/SlashAI.apk
+          cp android/project/app/build/outputs/bundle/release/app-release-signed.aab dist-android/SlashAI.aab
+          cp dist-android/SlashAI.apk slash-command-vault.apk
+          cp dist-android/SlashAI.aab slash-command-vault.aab
+          # Sanity check: a real APK must contain a binary AndroidManifest.xml + classes.dex
+          unzip -l dist-android/SlashAI.apk | grep -q "AndroidManifest.xml" || {
+            echo "::error::Built APK is missing AndroidManifest.xml"; exit 1; }
+          unzip -l dist-android/SlashAI.apk | grep -q "classes.dex" || {
+            echo "::error::Built APK is missing classes.dex"; exit 1; }
+          ls -lh dist-android
+
+      # NOTE: GitHub always wraps upload-artifact downloads in a .zip.
+      # The APK/AAB inside are intact — unzip once and install SlashAI.apk.
+      # For a direct (non-zipped) download, use the GitHub Release assets below.
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SlashAI-apk
+          path: dist-android/SlashAI.apk
+          if-no-files-found: error
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SlashAI-aab
+          path: dist-android/SlashAI.aab
+          if-no-files-found: error
+
 
       - name: Publish GitHub release assets
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
+
         with:
           tag_name: ${{ github.ref_name }}
           name: SlashAI ${{ github.ref_name }}
