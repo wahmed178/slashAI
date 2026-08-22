@@ -61,7 +61,13 @@ const MAP: Record<string, LucideIcon> = {
   Compass,
   Users,
   House,
+  Github,
+  Youtube,
+  Layers,
+  Lightbulb,
+  Wrench,
 };
+
 
 export function categoryIcon(name: string | undefined): LucideIcon {
   return (name && MAP[name]) || Sparkles;
