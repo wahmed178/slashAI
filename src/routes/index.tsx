@@ -398,7 +398,6 @@ function LibraryPage() {
                 <OfflineBadge />
               </div>
 
-
               <div className="mt-5">
                 <DashboardWidgets
                   isFavorite={isFavorite}
@@ -512,84 +511,83 @@ function LibraryPage() {
               </Button>
 
               <div className="hidden flex-wrap items-center gap-2 md:flex">
-
-              <select
-                aria-label="Filter by type"
-                value={search.type}
-                onChange={(e) => setSearch({ type: e.target.value })}
-                className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
-              >
-                <option value="all">All types</option>
-                {TYPES.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-              <select
-                aria-label="Filter by difficulty"
-                value={search.diff}
-                onChange={(e) => setSearch({ diff: e.target.value })}
-                className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
-              >
-                <option value="all">Any level</option>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="advanced">Advanced</option>
-              </select>
-              <select
-                aria-label="Sort commands"
-                value={search.sort}
-                onChange={(e) => setSearch({ sort: e.target.value as SortKey })}
-                className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
-              >
-                {SORTS.map((s) => (
-                  <option key={s} value={s}>
-                    Sort: {s}
-                  </option>
-                ))}
-              </select>
-              <div className="flex rounded-lg border border-border bg-surface p-0.5">
-                <button
-                  type="button"
-                  aria-label="Grid view"
-                  aria-pressed={settings.view === "grid"}
-                  onClick={() => updateSettings({ view: "grid" })}
-                  className={cn(
-                    "rounded-md p-1.5",
-                    settings.view === "grid"
-                      ? "bg-accent text-foreground"
-                      : "text-muted-foreground",
-                  )}
+                <select
+                  aria-label="Filter by type"
+                  value={search.type}
+                  onChange={(e) => setSearch({ type: e.target.value })}
+                  className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
                 >
-                  <LayoutGrid className="size-4" />
-                </button>
-                <button
-                  type="button"
-                  aria-label="List view"
-                  aria-pressed={settings.view === "list"}
-                  onClick={() => updateSettings({ view: "list" })}
-                  className={cn(
-                    "rounded-md p-1.5",
-                    settings.view === "list"
-                      ? "bg-accent text-foreground"
-                      : "text-muted-foreground",
-                  )}
+                  <option value="all">All types</option>
+                  {TYPES.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  aria-label="Filter by difficulty"
+                  value={search.diff}
+                  onChange={(e) => setSearch({ diff: e.target.value })}
+                  className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
                 >
-                  <List className="size-4" />
-                </button>
-              </div>
-              {activeFilters > 0 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() =>
-                    setSearch({ cat: "all", sub: "all", type: "all", diff: "all", fav: false })
-                  }
+                  <option value="all">Any level</option>
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+                <select
+                  aria-label="Sort commands"
+                  value={search.sort}
+                  onChange={(e) => setSearch({ sort: e.target.value as SortKey })}
+                  className="h-9 rounded-lg border border-border bg-surface px-2 text-xs text-foreground capitalize focus:ring-2 focus:ring-ring/40 focus:outline-none"
                 >
-                  Clear filters
-                </Button>
-              )}
+                  {SORTS.map((s) => (
+                    <option key={s} value={s}>
+                      Sort: {s}
+                    </option>
+                  ))}
+                </select>
+                <div className="flex rounded-lg border border-border bg-surface p-0.5">
+                  <button
+                    type="button"
+                    aria-label="Grid view"
+                    aria-pressed={settings.view === "grid"}
+                    onClick={() => updateSettings({ view: "grid" })}
+                    className={cn(
+                      "rounded-md p-1.5",
+                      settings.view === "grid"
+                        ? "bg-accent text-foreground"
+                        : "text-muted-foreground",
+                    )}
+                  >
+                    <LayoutGrid className="size-4" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="List view"
+                    aria-pressed={settings.view === "list"}
+                    onClick={() => updateSettings({ view: "list" })}
+                    className={cn(
+                      "rounded-md p-1.5",
+                      settings.view === "list"
+                        ? "bg-accent text-foreground"
+                        : "text-muted-foreground",
+                    )}
+                  >
+                    <List className="size-4" />
+                  </button>
+                </div>
+                {activeFilters > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                      setSearch({ cat: "all", sub: "all", type: "all", diff: "all", fav: false })
+                    }
+                  >
+                    Clear filters
+                  </Button>
+                )}
               </div>
             </div>
           </div>
@@ -690,7 +688,6 @@ function LibraryPage() {
               </div>
             </SheetContent>
           </Sheet>
-
 
           {/* results */}
           {!hydrated && results.length === 0 ? (

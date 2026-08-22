@@ -240,7 +240,6 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
   return Math.max(phrase, Math.round(total / tokens.length) + 250);
 }
 
-
 export type SortKey = "relevance" | "name" | "category" | "popularity" | "newest";
 
 export interface FilterState {
