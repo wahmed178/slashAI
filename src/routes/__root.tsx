@@ -29,6 +29,7 @@ function NotFoundComponent() {
             search={{
               q: "",
               cat: "all",
+              sub: "all",
               type: "all",
               diff: "all",
               sort: "relevance" as const,
