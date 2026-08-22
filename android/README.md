@@ -127,7 +127,7 @@ Required GitHub repository settings:
 | `ANDROID_KEYSTORE_PASSWORD` | Repository secret | Keystore password |
 | `ANDROID_KEY_PASSWORD` | Repository secret | Key password |
 
-To generate a keystore and print its base64 value, run:
+To generate a keystore and print its base64 value, run locally:
 
 ```bash
 bun run android:keystore
@@ -142,7 +142,17 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
-The workflow will run and produce the release files under **Actions → Release → Artifacts**.
+The workflow will:
+
+1. Lint and build the web app
+2. Inject the published domain into the TWA manifest
+3. Extract the SHA-256 fingerprint from your keystore and write it into `public/.well-known/assetlinks.json` automatically
+4. Build the Android release APK and AAB
+5. Upload both as workflow artifacts
+
+You can then download the APK/AAB from **Actions → Release → Artifacts** and upload the AAB to the Play Console.
+
+> **Note:** Because the workflow injects the SHA-256 fingerprint at build time, the published web app must be redeployed after the tag push so the live `/.well-known/assetlinks.json` contains the correct fingerprint. The app will still build without this, but the browser address bar will remain visible until the correct `assetlinks.json` is live.
 
 ## Updating the Android app
 
