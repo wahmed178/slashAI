@@ -121,7 +121,25 @@ jobs:
             echo "::error::Secret ANDROID_KEYSTORE_BASE64 is not set. Add base64 of android.keystore."
             exit 1
           fi
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/android.keystore
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$GITHUB_WORKSPACE/android/android.keystore"
+          node -e "
+            const fs = require('fs');
+            const p = 'android/twa-manifest.json';
+            const m = JSON.parse(fs.readFileSync(p, 'utf8'));
+            m.signingKey = { path: process.env.GITHUB_WORKSPACE + '/android/android.keystore', alias: 'slashai' };
+            fs.writeFileSync(p, JSON.stringify(m, null, 2));
+          "
+
+      - name: Configure Bubblewrap (no interactive prompts)
+        run: |
+          mkdir -p "$HOME/.bubblewrap"
+          cat > "$HOME/.bubblewrap/config.json" <<EOF
+          {
+            "jdkPath": "$JAVA_HOME",
+            "androidSdkPath": "$ANDROID_HOME"
+          }
+          EOF
+          cat "$HOME/.bubblewrap/config.json"
 
       - name: Initialize TWA project
         env:
@@ -130,10 +148,12 @@ jobs:
         run: npx --yes @bubblewrap/cli init --manifest=android/twa-manifest.json --directory=android/project --skipPwaValidation
 
       - name: Build Android release (APK + AAB)
+        working-directory: android/project
         env:
           BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: bun run android:build
+        run: npx --yes @bubblewrap/cli build --skipPwaValidation
+
 
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
