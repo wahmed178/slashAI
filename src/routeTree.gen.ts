@@ -12,9 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as MeRouteImport } from './routes/me'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
@@ -37,6 +39,11 @@ const FavoritesRoute = FavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MeRoute = MeRouteImport.update({
+  id: '/me',
+  path: '/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecentRoute = RecentRouteImport.update({
   id: '/recent',
   path: '/recent',
@@ -50,6 +57,11 @@ const SearchRoute = SearchRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CSlugRoute = CSlugRouteImport.update({
@@ -88,9 +100,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/favorites': typeof FavoritesRoute
+  '/me': typeof MeRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/tools': typeof ToolsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -102,9 +116,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/favorites': typeof FavoritesRoute
+  '/me': typeof MeRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/tools': typeof ToolsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections': typeof CollectionsIndexRoute
@@ -117,9 +133,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/favorites': typeof FavoritesRoute
+  '/me': typeof MeRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/tools': typeof ToolsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -133,9 +151,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/favorites'
+    | '/me'
     | '/recent'
     | '/search'
     | '/settings'
+    | '/tools'
     | '/c/$slug'
     | '/collections/$id'
     | '/collections/'
@@ -147,9 +167,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/favorites'
+    | '/me'
     | '/recent'
     | '/search'
     | '/settings'
+    | '/tools'
     | '/c/$slug'
     | '/collections/$id'
     | '/collections'
@@ -161,9 +183,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/favorites'
+    | '/me'
     | '/recent'
     | '/search'
     | '/settings'
+    | '/tools'
     | '/c/$slug'
     | '/collections/$id'
     | '/collections/'
@@ -176,9 +200,11 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   FavoritesRoute: typeof FavoritesRoute
+  MeRoute: typeof MeRoute
   RecentRoute: typeof RecentRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
+  ToolsRoute: typeof ToolsRoute
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
@@ -210,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FavoritesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/me': {
+      id: '/me'
+      path: '/me'
+      fullPath: '/me'
+      preLoaderRoute: typeof MeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recent': {
       id: '/recent'
       path: '/recent'
@@ -229,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/c/$slug': {
@@ -280,9 +320,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   FavoritesRoute: FavoritesRoute,
+  MeRoute: MeRoute,
   RecentRoute: RecentRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
+  ToolsRoute: ToolsRoute,
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,

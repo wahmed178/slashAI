@@ -9,6 +9,8 @@ import {
 } from "react";
 
 import { APP_VERSION } from "@/lib/app-meta";
+import { todayKey } from "@/lib/commands";
+import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 
 export type Theme = "dark" | "light" | "amoled";
 export type Density = "comfortable" | "compact";
@@ -23,6 +25,8 @@ export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
   { id: "lime", label: "Lime", swatch: "oklch(0.82 0.19 130)" },
 ];
 
+export type HomeMode = "calm" | "feed";
+
 interface Settings {
   theme: Theme;
   density: Density;
@@ -32,8 +36,12 @@ interface Settings {
   reducedMotion: boolean;
   /** optional, local-only interest ids used to personalise Discover */
   interests: string[];
-  /** true once the user has answered (or skipped) the interests prompt */
+  /** true once the user has answered (or skipped) the onboarding wizard */
   onboarded: boolean;
+  /** optional persona id from lib/personas */
+  persona: string;
+  /** which home surface the user prefers: calm sections or the scroll feed */
+  homeMode: HomeMode;
 }
 
 const DEFAULT_SETTINGS: Settings = {
@@ -45,7 +53,16 @@ const DEFAULT_SETTINGS: Settings = {
   reducedMotion: false,
   interests: [],
   onboarded: false,
+  persona: "",
+  homeMode: "calm",
 };
+
+export interface Stats {
+  copies: number;
+  opens: number;
+}
+
+const DEFAULT_STATS: Stats = { copies: 0, opens: 0 };
 
 const KEYS = {
   favorites: "slashai.favorites",
@@ -53,6 +70,8 @@ const KEYS = {
   searches: "slashai.searches",
   settings: "slashai.settings",
   seenVersion: "slashai.seenVersion",
+  streak: "slashai.streak",
+  stats: "slashai.stats",
 };
 
 export interface BackupPayload {
@@ -63,6 +82,8 @@ export interface BackupPayload {
   recents: string[];
   searches: string[];
   settings: Settings;
+  streak?: Streak;
+  stats?: Stats;
 }
 
 interface LibraryValue {
@@ -71,6 +92,8 @@ interface LibraryValue {
   recents: string[];
   recentSearches: string[];
   settings: Settings;
+  streak: Streak;
+  stats: Stats;
   /** true when the app was updated since the user last saw the release notes */
   showWhatsNew: boolean;
   dismissWhatsNew: () => void;
@@ -79,8 +102,10 @@ interface LibraryValue {
   toggleFavorite: (id: string) => void;
   recordUse: (id: string) => void;
   recordSearch: (q: string) => void;
+  recordCopy: () => number;
   clearRecents: () => void;
   clearSearches: () => void;
+  clearAllData: () => void;
   updateSettings: (patch: Partial<Settings>) => void;
   exportBackup: () => BackupPayload;
   importBackup: (raw: string) => { ok: boolean; message: string };
@@ -113,6 +138,8 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const [recents, setRecents] = useState<string[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
+  const [streak, setStreak] = useState<Streak>(EMPTY_STREAK);
+  const [stats, setStats] = useState<Stats>(DEFAULT_STATS);
   const [showWhatsNew, setShowWhatsNew] = useState(false);
 
   useEffect(() => {
@@ -120,6 +147,13 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     setRecents(readArray(KEYS.recents));
     setRecentSearches(readArray(KEYS.searches));
     setSettings(read<Settings>(KEYS.settings, DEFAULT_SETTINGS));
+    setStats(read<Stats>(KEYS.stats, DEFAULT_STATS));
+
+    // one streak transition per app open
+    const nextStreak = advanceStreak(read<Streak>(KEYS.streak, EMPTY_STREAK), todayKey());
+    setStreak(nextStreak);
+    localStorage.setItem(KEYS.streak, JSON.stringify(nextStreak));
+
     setHydrated(true);
 
     const seen = localStorage.getItem(KEYS.seenVersion);
@@ -159,6 +193,23 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(KEYS.recents, JSON.stringify(next));
       return next;
     });
+    setStats((prev) => {
+      const next = { ...prev, opens: prev.opens + 1 };
+      localStorage.setItem(KEYS.stats, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  /** Increments the local copy counter and returns the new total. */
+  const recordCopy = useCallback(() => {
+    let total = 0;
+    setStats((prev) => {
+      const next = { ...prev, copies: prev.copies + 1 };
+      total = next.copies;
+      localStorage.setItem(KEYS.stats, JSON.stringify(next));
+      return next;
+    });
+    return total;
   }, []);
 
   const recordSearch = useCallback((q: string) => {
@@ -184,6 +235,16 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(KEYS.searches, "[]");
   }, []);
 
+  const clearAllData = useCallback(() => {
+    for (const key of Object.values(KEYS)) localStorage.removeItem(key);
+    setFavorites([]);
+    setRecents([]);
+    setRecentSearches([]);
+    setStats(DEFAULT_STATS);
+    setStreak(EMPTY_STREAK);
+    setSettings(DEFAULT_SETTINGS);
+  }, []);
+
   const updateSettings = useCallback((patch: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...patch }));
   }, []);
@@ -197,8 +258,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       searches: recentSearches,
       settings,
+      streak,
+      stats,
     }),
-    [favorites, recents, recentSearches, settings],
+    [favorites, recents, recentSearches, settings, streak, stats],
   );
 
   const importBackup = useCallback((raw: string) => {
@@ -212,15 +275,21 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       const nextRec = list(data.recents);
       const nextSearch = list(data.searches);
       const nextSettings = { ...DEFAULT_SETTINGS, ...(data.settings ?? {}) };
+      const nextStats = { ...DEFAULT_STATS, ...(data.stats ?? {}) };
+      const nextStreak = { ...EMPTY_STREAK, ...(data.streak ?? {}) };
 
       setFavorites(nextFav);
       setRecents(nextRec);
       setRecentSearches(nextSearch);
       setSettings(nextSettings);
+      setStats(nextStats);
+      setStreak(nextStreak);
       localStorage.setItem(KEYS.favorites, JSON.stringify(nextFav));
       localStorage.setItem(KEYS.recents, JSON.stringify(nextRec));
       localStorage.setItem(KEYS.searches, JSON.stringify(nextSearch));
       localStorage.setItem(KEYS.settings, JSON.stringify(nextSettings));
+      localStorage.setItem(KEYS.stats, JSON.stringify(nextStats));
+      localStorage.setItem(KEYS.streak, JSON.stringify(nextStreak));
 
       return {
         ok: true,
@@ -238,6 +307,8 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       recentSearches,
       settings,
+      streak,
+      stats,
       showWhatsNew,
       dismissWhatsNew,
       openWhatsNew,
@@ -245,8 +316,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       toggleFavorite,
       recordUse,
       recordSearch,
+      recordCopy,
       clearRecents,
       clearSearches,
+      clearAllData,
       updateSettings,
       exportBackup,
       importBackup,
@@ -257,14 +330,18 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       recentSearches,
       settings,
+      streak,
+      stats,
       showWhatsNew,
       dismissWhatsNew,
       openWhatsNew,
       toggleFavorite,
       recordUse,
       recordSearch,
+      recordCopy,
       clearRecents,
       clearSearches,
+      clearAllData,
       updateSettings,
       exportBackup,
       importBackup,

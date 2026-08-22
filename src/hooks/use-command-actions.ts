@@ -4,9 +4,17 @@ import { toast } from "sonner";
 import { useLibrary } from "@/hooks/use-library";
 import { commandPath, commandTemplate, type SlashCommand } from "@/lib/commands";
 
+/** Small, non-intrusive celebrations at the moments that matter. */
+const COPY_MILESTONES: Record<number, string> = {
+  1: "Nice — your first command 🎉",
+  10: "10 commands copied. You're building a habit 💪",
+  50: "50 copies — official SlashAI power user ⚡",
+  100: "100 commands. That's a lot of saved time 🏆",
+};
+
 /** Clipboard + share + "recently used" behaviour, shared by the grid, modal and detail page. */
 export function useCommandActions() {
-  const { recordUse } = useLibrary();
+  const { recordUse, recordCopy } = useLibrary();
 
   const copy = useCallback(async (text: string, message: string) => {
     try {
@@ -17,28 +25,33 @@ export function useCommandActions() {
     }
   }, []);
 
-  const copyCommand = useCallback(
-    (cmd: SlashCommand) => {
+  /** copy + recent + milestone toast, used by every "copy" affordance */
+  const track = useCallback(
+    (cmd: SlashCommand, text: string, message: string) => {
       recordUse(cmd.id);
-      void copy(cmd.command, `${cmd.command} copied`);
+      const total = recordCopy();
+      const milestone = COPY_MILESTONES[total];
+      if (milestone) window.setTimeout(() => toast(milestone), 500);
+      void copy(text, message);
     },
-    [copy, recordUse],
+    [copy, recordUse, recordCopy],
+  );
+
+  const copyCommand = useCallback(
+    (cmd: SlashCommand) => track(cmd, cmd.command, `${cmd.command} copied`),
+    [track],
   );
 
   const copyPrompt = useCallback(
-    (cmd: SlashCommand, text?: string) => {
-      recordUse(cmd.id);
-      void copy(text ?? commandTemplate(cmd), "Full prompt copied");
-    },
-    [copy, recordUse],
+    (cmd: SlashCommand, text?: string) =>
+      track(cmd, text ?? commandTemplate(cmd), "Full prompt copied"),
+    [track],
   );
 
   const runCommand = useCallback(
-    (cmd: SlashCommand, text?: string) => {
-      recordUse(cmd.id);
-      void copy(text ?? commandTemplate(cmd), `${cmd.command} template copied — ready to edit`);
-    },
-    [copy, recordUse],
+    (cmd: SlashCommand, text?: string) =>
+      track(cmd, text ?? commandTemplate(cmd), `${cmd.command} template copied — ready to edit`),
+    [track],
   );
 
   const shareCommand = useCallback(
