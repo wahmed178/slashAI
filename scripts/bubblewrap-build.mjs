@@ -33,10 +33,10 @@ async function main() {
       "No signing keystore configured. Set TWA_KEYSTORE_PATH or signingKey.path in the manifest.",
     );
   }
-  const absoluteKeystorePath = resolve(
-    keystorePath.startsWith("/") ? rootDir : rootDir,
-    keystorePath,
-  );
+  const absoluteKeystorePath = keystorePath.startsWith("/")
+    ? keystorePath
+    : resolve(rootDir, keystorePath);
+
 
   const manifestData = {
     ...raw,
