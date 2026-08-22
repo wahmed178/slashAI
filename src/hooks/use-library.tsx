@@ -136,6 +136,8 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const [recents, setRecents] = useState<string[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
+  const [streak, setStreak] = useState<Streak>(EMPTY_STREAK);
+  const [stats, setStats] = useState<Stats>(DEFAULT_STATS);
   const [showWhatsNew, setShowWhatsNew] = useState(false);
 
   useEffect(() => {
@@ -143,6 +145,13 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     setRecents(readArray(KEYS.recents));
     setRecentSearches(readArray(KEYS.searches));
     setSettings(read<Settings>(KEYS.settings, DEFAULT_SETTINGS));
+    setStats(read<Stats>(KEYS.stats, DEFAULT_STATS));
+
+    // one streak transition per app open
+    const nextStreak = advanceStreak(read<Streak>(KEYS.streak, EMPTY_STREAK), todayKey());
+    setStreak(nextStreak);
+    localStorage.setItem(KEYS.streak, JSON.stringify(nextStreak));
+
     setHydrated(true);
 
     const seen = localStorage.getItem(KEYS.seenVersion);
