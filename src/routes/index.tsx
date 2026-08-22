@@ -10,13 +10,11 @@ import {
   LayoutGrid,
   List,
   X,
-  Sparkles,
-  CalendarDays,
   Command as CommandIcon,
   ChevronLeft,
   ChevronRight,
+  Clock,
 } from "lucide-react";
-import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -29,22 +27,23 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useLibrary } from "@/hooks/use-library";
+import { useCommandActions } from "@/hooks/use-command-actions";
 import { SidebarContents } from "@/components/library/AppSidebar";
 import { CommandCard } from "@/components/library/CommandCard";
 import { CommandDetail } from "@/components/library/CommandDetail";
+import { DashboardWidgets } from "@/components/library/DashboardWidgets";
+import { OfflineBadge } from "@/components/library/OfflineBadge";
 import { SettingsPanel } from "@/components/library/SettingsPanel";
 import { Highlight } from "@/components/library/Highlight";
 import { categoryIcon } from "@/components/library/icons";
 import {
-  CATEGORY_COUNTS,
   CATEGORY_ICONS,
-  COMMANDS,
-  FEATURED,
+  CATEGORY_TREE,
+  SUBCATEGORY_TOTAL,
   TYPES,
-  commandTemplate,
+  VERIFIED_TOTAL,
   filterCommands,
   getCommand,
-  getDailyCommand,
   getRandomCommand,
   suggestions,
   type SlashCommand,
@@ -54,6 +53,7 @@ import {
 interface LibrarySearch {
   q: string;
   cat: string;
+  sub: string;
   type: string;
   diff: string;
   sort: SortKey;
@@ -69,6 +69,7 @@ export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>): LibrarySearch => ({
     q: str(search["q"], ""),
     cat: str(search["cat"], "all"),
+    sub: str(search["sub"], "all"),
     type: str(search["type"], "all"),
     diff: str(search["diff"], "all"),
     sort: (SORTS.includes(search["sort"] as SortKey) ? search["sort"] : "relevance") as SortKey,
@@ -78,20 +79,19 @@ export const Route = createFileRoute("/")({
   }),
   head: () => ({
     meta: [
-      { title: "SlashAI Command Library — 1,200+ AI slash commands" },
+      { title: `SlashAI Command Library — ${VERIFIED_TOTAL} AI slash commands` },
       {
         name: "description",
-        content:
-          "Search a curated library of 1,200+ AI slash commands for images, documents, writing, code, data and research. Copy-ready prompts, favorites and offline-friendly.",
+        content: `Search ${VERIFIED_TOTAL} verified AI slash commands for images, documents, writing, code, data and research. Copy-ready prompts, favorites and offline access.`,
       },
       { property: "og:title", content: "SlashAI Command Library" },
       {
         property: "og:description",
-        content:
-          "A searchable dashboard of 1,200+ AI slash commands with copy-ready prompt templates.",
+        content: `A searchable dashboard of ${VERIFIED_TOTAL} AI slash commands with copy-ready prompt templates.`,
       },
       { name: "theme-color", content: "#12161c" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "SlashAI" },
     ],
     links: [{ rel: "manifest", href: "/manifest.webmanifest" }],
@@ -106,13 +106,15 @@ function LibraryPage() {
     hydrated,
     favorites,
     recents,
+    recentSearches,
     settings,
     isFavorite,
     toggleFavorite,
-    recordUse,
+    recordSearch,
     clearRecents,
     updateSettings,
   } = useLibrary();
+  const { copyCommand } = useCommandActions();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -142,13 +144,23 @@ function LibraryPage() {
       filterCommands({
         q: search.q,
         category: search.cat,
+        subcategory: search.sub,
         type: search.type,
         difficulty: search.diff,
         sort: search.sort,
         onlyFavorites: search.fav,
         favorites,
       }),
-    [search.q, search.cat, search.type, search.diff, search.sort, search.fav, favorites],
+    [
+      search.q,
+      search.cat,
+      search.sub,
+      search.type,
+      search.diff,
+      search.sort,
+      search.fav,
+      favorites,
+    ],
   );
 
   const pageSize = settings.pageSize;
@@ -158,7 +170,7 @@ function LibraryPage() {
 
   const selected = getCommand(search.cmd);
   const sugg = useMemo(() => (suggestOpen ? suggestions(draft) : []), [draft, suggestOpen]);
-  const daily = useMemo(() => getDailyCommand(new Date().toISOString().slice(0, 10)), []);
+  const activeCategory = CATEGORY_TREE.find((c) => c.category === search.cat);
 
   const openCommand = useCallback(
     (cmd: SlashCommand) => void navigate({ search: (prev) => ({ ...prev, cmd: cmd.id }) }),
@@ -167,23 +179,6 @@ function LibraryPage() {
   const closeCommand = useCallback(
     () => void navigate({ search: (prev) => ({ ...prev, cmd: undefined }) }),
     [navigate],
-  );
-
-  const copy = useCallback(async (text: string, message: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast.success(message);
-    } catch {
-      toast.error("Clipboard blocked by the browser");
-    }
-  }, []);
-
-  const useCommand = useCallback(
-    (cmd: SlashCommand) => {
-      recordUse(cmd.id);
-      void copy(commandTemplate(cmd), `${cmd.command} template copied — ready to edit`);
-    },
-    [copy, recordUse],
   );
 
   // keyboard shortcuts
@@ -208,15 +203,18 @@ function LibraryPage() {
 
   const activeFilters =
     (search.cat !== "all" ? 1 : 0) +
+    (search.sub !== "all" ? 1 : 0) +
     (search.type !== "all" ? 1 : 0) +
     (search.diff !== "all" ? 1 : 0) +
     (search.fav ? 1 : 0);
+
+  const isHome = !search.q && search.cat === "all" && !search.fav;
 
   const sidebar = (
     <SidebarContents
       category={search.cat}
       onCategory={(c) => {
-        setSearch({ cat: c, fav: false });
+        setSearch({ cat: c, sub: "all", fav: false });
         setMenuOpen(false);
       }}
       onlyFavorites={search.fav}
@@ -277,17 +275,21 @@ function LibraryPage() {
                   setSuggestOpen(true);
                 }}
                 onFocus={() => setSuggestOpen(true)}
-                onBlur={() => window.setTimeout(() => setSuggestOpen(false), 120)}
+                onBlur={() => {
+                  window.setTimeout(() => setSuggestOpen(false), 120);
+                  recordSearch(draft);
+                }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && sugg[0]) {
                     setSuggestOpen(false);
+                    recordSearch(draft);
                     openCommand(sugg[0]);
                   }
                 }}
                 type="search"
                 role="searchbox"
                 aria-label="Search commands"
-                placeholder="Search 1,200+ commands, tags or descriptions…"
+                placeholder={`Search ${VERIFIED_TOTAL.toLocaleString()} commands, tags or descriptions…`}
                 className="h-11 w-full rounded-xl border border-border bg-surface pr-20 pl-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40 focus:outline-none"
               />
               {draft ? (
@@ -305,28 +307,44 @@ function LibraryPage() {
                 </kbd>
               )}
 
-              {suggestOpen && sugg.length > 0 && (
-                <ul className="panel absolute top-[calc(100%+6px)] left-0 z-30 w-full overflow-hidden rounded-xl py-1">
-                  {sugg.map((s) => (
-                    <li key={s.id}>
+              {suggestOpen && (sugg.length > 0 || (!draft && recentSearches.length > 0)) && (
+                <div className="panel absolute top-[calc(100%+6px)] left-0 z-30 w-full overflow-hidden rounded-xl py-1">
+                  {!draft &&
+                    recentSearches.map((term) => (
                       <button
+                        key={term}
                         type="button"
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => {
+                          setDraft(term);
                           setSuggestOpen(false);
-                          openCommand(s);
                         }}
                         className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
                       >
-                        <CommandIcon className="size-3.5 shrink-0 text-primary" />
-                        <span className="font-mono text-xs">
-                          <Highlight text={s.command} query={draft} />
-                        </span>
-                        <span className="truncate text-xs text-muted-foreground">{s.title}</span>
+                        <Clock className="size-3.5 shrink-0 text-muted-foreground" />
+                        <span className="truncate text-xs text-muted-foreground">{term}</span>
                       </button>
-                    </li>
+                    ))}
+                  {sugg.map((s) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => {
+                        setSuggestOpen(false);
+                        recordSearch(draft);
+                        openCommand(s);
+                      }}
+                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
+                    >
+                      <CommandIcon className="size-3.5 shrink-0 text-primary" />
+                      <span className="font-mono text-xs">
+                        <Highlight text={s.command} query={draft} />
+                      </span>
+                      <span className="truncate text-xs text-muted-foreground">{s.title}</span>
+                    </button>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
 
@@ -351,59 +369,74 @@ function LibraryPage() {
         </header>
 
         <div className="mx-auto max-w-6xl px-4 py-6">
-          {!search.q && search.cat === "all" && !search.fav && (
+          {isHome && (
             <section className="mb-8">
               <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                 The SlashAI Command Library
               </h1>
               <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
-                {COMMANDS.length.toLocaleString()} curated AI slash commands across{" "}
-                {CATEGORY_COUNTS.length} categories. Search, copy a ready-to-edit prompt, and save
+                <span className="font-semibold text-foreground">
+                  {VERIFIED_TOTAL.toLocaleString()}
+                </span>{" "}
+                verified, de-duplicated AI slash commands across {CATEGORY_TREE.length} categories
+                and {SUBCATEGORY_TOTAL} subcategories. Search, copy a ready-to-edit prompt, and save
                 the ones you keep coming back to.
               </p>
 
-              <div className="mt-5 grid gap-3 md:grid-cols-3">
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted-foreground">
+                  {favorites.length} favorite{favorites.length === 1 ? "" : "s"}
+                </span>
                 <button
                   type="button"
-                  onClick={() => openCommand(daily)}
-                  className="panel rounded-xl p-4 text-left transition-colors hover:border-primary/50 md:col-span-1"
+                  onClick={() => setRecentsOpen(true)}
+                  className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
                 >
-                  <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-primary uppercase">
-                    <CalendarDays className="size-3.5" /> Command of the day
-                  </p>
-                  <p className="mt-2 font-mono text-sm text-foreground">{daily.command}</p>
-                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
-                    {daily.description}
-                  </p>
+                  {recents.length} recently used
                 </button>
-
-                <div className="panel rounded-xl p-4 md:col-span-2">
-                  <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
-                    <Sparkles className="size-3.5" /> Featured commands
-                  </p>
-                  <div className="mt-2.5 flex flex-wrap gap-1.5">
-                    {FEATURED.slice(0, 12).map((f) => (
-                      <button
-                        key={f.id}
-                        type="button"
-                        onClick={() => openCommand(f)}
-                        className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-                      >
-                        {f.command}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                <OfflineBadge />
               </div>
 
-              <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
-                {CATEGORY_COUNTS.map((c) => {
+              <div className="mt-5">
+                <DashboardWidgets
+                  isFavorite={isFavorite}
+                  onToggleFavorite={toggleFavorite}
+                  onOpen={openCommand}
+                />
+              </div>
+
+              {recents.length > 0 && (
+                <div className="mt-4">
+                  <p className="mb-2 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
+                    Recently used
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {recents.slice(0, 10).map((id) => {
+                      const c = getCommand(id);
+                      if (!c) return null;
+                      return (
+                        <button
+                          key={id}
+                          type="button"
+                          onClick={() => openCommand(c)}
+                          className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+                        >
+                          {c.command}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+                {CATEGORY_TREE.map((c) => {
                   const Icon = categoryIcon(c.icon);
                   return (
                     <button
                       key={c.category}
                       type="button"
-                      onClick={() => setSearch({ cat: c.category })}
+                      onClick={() => setSearch({ cat: c.category, sub: "all" })}
                       className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
                     >
                       <Icon className="size-3.5" /> {c.category}
@@ -413,6 +446,40 @@ function LibraryPage() {
                 })}
               </div>
             </section>
+          )}
+
+          {/* subcategory explorer */}
+          {activeCategory && (
+            <div className="mb-4 flex flex-wrap gap-1.5">
+              <button
+                type="button"
+                onClick={() => setSearch({ sub: "all" })}
+                className={cn(
+                  "rounded-full border px-2.5 py-1 text-xs transition-colors",
+                  search.sub === "all"
+                    ? "border-primary/60 bg-accent text-foreground"
+                    : "border-border bg-surface text-muted-foreground hover:text-foreground",
+                )}
+              >
+                All {activeCategory.category} ({activeCategory.count})
+              </button>
+              {activeCategory.subcategories.map((s) => (
+                <button
+                  key={s.subcategory}
+                  type="button"
+                  onClick={() => setSearch({ sub: s.subcategory })}
+                  className={cn(
+                    "rounded-full border px-2.5 py-1 text-xs transition-colors",
+                    search.sub === s.subcategory
+                      ? "border-primary/60 bg-accent text-foreground"
+                      : "border-border bg-surface text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {s.subcategory}{" "}
+                  <span className="text-muted-foreground/70">{s.count}</span>
+                </button>
+              ))}
+            </div>
           )}
 
           {/* toolbar */}
@@ -425,6 +492,7 @@ function LibraryPage() {
               {results.length === 1 ? "" : "s"}
               {search.fav && " in favorites"}
               {search.cat !== "all" && ` in ${search.cat}`}
+              {search.sub !== "all" && ` / ${search.sub}`}
             </p>
 
             <div className="ml-auto flex flex-wrap items-center gap-2">
@@ -498,7 +566,9 @@ function LibraryPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => setSearch({ cat: "all", type: "all", diff: "all", fav: false })}
+                  onClick={() =>
+                    setSearch({ cat: "all", sub: "all", type: "all", diff: "all", fav: false })
+                  }
                 >
                   Clear filters
                 </Button>
@@ -517,17 +587,19 @@ function LibraryPage() {
             <div className="panel flex flex-col items-center rounded-xl px-6 py-16 text-center">
               <Search className="size-6 text-muted-foreground" />
               <p className="mt-3 text-sm font-medium text-foreground">
-                No commands match that search
+                {search.fav ? "No favorites yet" : "No commands match that search"}
               </p>
               <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-                Try a shorter keyword, clear the filters, or explore a category from the sidebar.
+                {search.fav
+                  ? "Tap the star on any command to keep it here — favorites are stored on this device."
+                  : "Try a shorter keyword, clear the filters, or explore a category from the sidebar."}
               </p>
               <Button
                 variant="secondary"
                 className="mt-4"
                 onClick={() => {
                   setDraft("");
-                  setSearch({ q: "", cat: "all", type: "all", diff: "all", fav: false });
+                  setSearch({ q: "", cat: "all", sub: "all", type: "all", diff: "all", fav: false });
                 }}
               >
                 Reset search
@@ -551,7 +623,7 @@ function LibraryPage() {
                   favorite={isFavorite(c.id)}
                   onOpen={openCommand}
                   onToggleFavorite={toggleFavorite}
-                  onCopy={(cmd) => void copy(cmd.command, `${cmd.command} copied`)}
+                  onCopy={copyCommand}
                 />
               ))}
             </div>
@@ -589,7 +661,7 @@ function LibraryPage() {
           {
             label: "Browse",
             icon: LayoutGrid,
-            action: () => setSearch({ cat: "all", fav: false }),
+            action: () => setSearch({ cat: "all", sub: "all", fav: false }),
           },
           { label: "Search", icon: Search, action: () => inputRef.current?.focus() },
           { label: "Favorites", icon: Star, action: () => setSearch({ fav: true }) },
@@ -600,7 +672,7 @@ function LibraryPage() {
             key={item.label}
             type="button"
             onClick={item.action}
-            className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] text-muted-foreground active:text-foreground"
+            className="flex min-h-12 flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] text-muted-foreground active:text-foreground"
           >
             <item.icon className="size-5" />
             {item.label}
@@ -616,7 +688,9 @@ function LibraryPage() {
           </SheetHeader>
           <div className="space-y-1.5 px-4 pb-6">
             {recents.length === 0 && (
-              <p className="text-sm text-muted-foreground">Nothing here yet.</p>
+              <p className="text-sm text-muted-foreground">
+                Nothing here yet — copy or use a command and it will show up.
+              </p>
             )}
             {recents.map((id) => {
               const c = getCommand(id);
@@ -657,9 +731,6 @@ function LibraryPage() {
         favorite={selected ? isFavorite(selected.id) : false}
         onOpenChange={(o) => !o && closeCommand()}
         onToggleFavorite={toggleFavorite}
-        onCopyCommand={(c) => void copy(c.command, `${c.command} copied`)}
-        onCopyPrompt={(c) => void copy(commandTemplate(c), "Full prompt copied")}
-        onUse={useCommand}
         onSelectRelated={openCommand}
       />
     </div>
