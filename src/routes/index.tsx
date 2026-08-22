@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
+  SlidersHorizontal,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -118,6 +119,7 @@ function LibraryPage() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [recentsOpen, setRecentsOpen] = useState(false);
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [draft, setDraft] = useState(search.q);
