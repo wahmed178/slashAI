@@ -19,6 +19,7 @@ import { Route as RecentRouteImport } from './routes/recent'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
@@ -79,6 +80,11 @@ const ToolsRoute = ToolsRouteImport.update({
   path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WhatsNewRoute = WhatsNewRouteImport.update({
+  id: '/whats-new',
+  path: '/whats-new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CSlugRoute = CSlugRouteImport.update({
   id: '/c/$slug',
   path: '/c/$slug',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/whats-new': typeof WhatsNewRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/whats-new': typeof WhatsNewRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/whats-new': typeof WhatsNewRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
@@ -203,6 +212,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/tools'
+    | '/whats-new'
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
@@ -224,6 +234,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/tools'
+    | '/whats-new'
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
@@ -245,6 +256,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/tools'
+    | '/whats-new'
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
@@ -267,6 +279,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   ToolsRoute: typeof ToolsRoute
+  WhatsNewRoute: typeof WhatsNewRoute
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   DiscoverSectionRoute: typeof DiscoverSectionRoute
@@ -350,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/whats-new': {
+      id: '/whats-new'
+      path: '/whats-new'
+      fullPath: '/whats-new'
+      preLoaderRoute: typeof WhatsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$slug': {
       id: '/c/$slug'
       path: '/c/$slug'
@@ -427,6 +447,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   ToolsRoute: ToolsRoute,
+  WhatsNewRoute: WhatsNewRoute,
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   DiscoverSectionRoute: DiscoverSectionRoute,
