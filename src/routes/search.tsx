@@ -13,6 +13,7 @@ import {
 import { AppShell } from "@/components/library/AppShell";
 import { SearchBox } from "@/components/library/SearchBox";
 import { CommandGrid, EmptyState } from "@/components/library/CommandGrid";
+import { ResourceGrid } from "@/components/library/ResourceCard";
 import { useLibrary } from "@/hooks/use-library";
 import {
   CATEGORY_TREE,
@@ -21,6 +22,7 @@ import {
   type SortKey,
   type FilterState,
 } from "@/lib/commands";
+import { searchResources } from "@/lib/resources";
 import { cn } from "@/lib/utils";
 
 interface SearchParams {
@@ -117,6 +119,8 @@ function SearchPage() {
     return filterCommands(state);
   }, [q, cat, sub, search.type, search.diff, search.sort, favorites]);
 
+  const resourceHits = useMemo(() => searchResources(q, 6), [q]);
+
   const pageSize = settings.pageSize;
   const pages = Math.max(1, Math.ceil(results.length / pageSize));
   const current = Math.min(page, pages);
@@ -170,11 +174,24 @@ function SearchPage() {
             All of {cat}
           </Chip>
           {subcategories.map((s) => (
-            <Chip key={s.subcategory} active={sub === s.subcategory} onClick={() => set({ sub: s.subcategory })}>
+            <Chip
+              key={s.subcategory}
+              active={sub === s.subcategory}
+              onClick={() => set({ sub: s.subcategory })}
+            >
               {s.subcategory}
             </Chip>
           ))}
         </div>
+      )}
+
+      {resourceHits.length > 0 && (
+        <section className="mt-5">
+          <h2 className="mb-2 text-sm font-semibold text-foreground">
+            Curated resources ({resourceHits.length})
+          </h2>
+          <ResourceGrid resources={resourceHits} />
+        </section>
       )}
 
       <div className="mt-5">
@@ -190,7 +207,15 @@ function SearchPage() {
                 className="gap-1.5"
                 onClick={() =>
                   void navigate({
-                    search: { q: "", cat: "all", sub: "all", type: "all", diff: "all", sort: "relevance", page: 1 },
+                    search: {
+                      q: "",
+                      cat: "all",
+                      sub: "all",
+                      type: "all",
+                      diff: "all",
+                      sort: "relevance",
+                      page: 1,
+                    },
                   })
                 }
               >
@@ -238,7 +263,11 @@ function SearchPage() {
               </p>
               <div className="flex flex-wrap gap-2">
                 {SORTS.map((s) => (
-                  <Chip key={s} active={(search.sort ?? "relevance") === s} onClick={() => set({ sort: s })}>
+                  <Chip
+                    key={s}
+                    active={(search.sort ?? "relevance") === s}
+                    onClick={() => set({ sort: s })}
+                  >
                     {s}
                   </Chip>
                 ))}
@@ -250,7 +279,10 @@ function SearchPage() {
                 Type
               </p>
               <div className="flex flex-wrap gap-2">
-                <Chip active={(search.type ?? "all") === "all"} onClick={() => set({ type: "all" })}>
+                <Chip
+                  active={(search.type ?? "all") === "all"}
+                  onClick={() => set({ type: "all" })}
+                >
                   Any
                 </Chip>
                 {TYPES.map((t) => (

@@ -163,8 +163,8 @@ export function Onboarding({ onDone }: { onDone?: () => void }) {
               </Button>
             </div>
             <p className="mt-6 text-xs text-muted-foreground">
-              No account, no tracking — all of this stays on your device and can be changed any
-              time from the Me tab.
+              No account, no tracking — all of this stays on your device and can be changed any time
+              from the Me tab.
             </p>
           </section>
         )}

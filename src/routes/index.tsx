@@ -1,13 +1,20 @@
 import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, History, Flame, LayoutList, Rows3 } from "lucide-react";
+import {
+  ArrowRight,
+  Sparkles,
+  Star,
+  History,
+  Flame,
+  Compass,
+  Radar as RadarIcon,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/library/AppShell";
 import { SearchBox } from "@/components/library/SearchBox";
 import { Discover } from "@/components/library/Discover";
 import { Onboarding } from "@/components/library/Onboarding";
-import { HomeFeed } from "@/components/library/HomeFeed";
+import { ResourceGrid } from "@/components/library/ResourceCard";
 import { categoryIcon } from "@/components/library/icons";
 import { useLibrary } from "@/hooks/use-library";
 import {
@@ -18,8 +25,8 @@ import {
   type SlashCommand,
 } from "@/lib/commands";
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
+import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
 import { personaGreetingName } from "@/lib/personas";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -132,10 +139,13 @@ function HomePage() {
     [hydrated, settings.interests, recents, favorites],
   );
 
-  const { updateSettings, streak } = useLibrary();
+  const { streak } = useLibrary();
   const showOnboarding = hydrated && !settings.onboarded;
   const name = personaGreetingName(settings.persona);
-  const feed = settings.homeMode === "feed";
+  const weeklyFinds = useMemo(() => {
+    const weekly = DROPS.find((d) => d.cadence === "Weekly");
+    return weekly ? dropItems(weekly).slice(0, 6) : [];
+  }, []);
 
   return (
     <AppShell hideHeaderSearch title="SlashAI">
@@ -158,156 +168,199 @@ function HomePage() {
           <SearchBox size="lg" placeholder="Describe the task, or type a command…" />
         </div>
         <p className="mt-2 text-xs text-muted-foreground">
-          {VERIFIED_TOTAL.toLocaleString()} commands · press{" "}
+          {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · press{" "}
           <kbd className="rounded border border-border bg-muted px-1 font-mono">/</kbd> anywhere to
           search
         </p>
       </section>
 
-      <div
-        role="tablist"
-        aria-label="Home layout"
-        className="mt-5 inline-flex rounded-xl border border-border bg-surface p-1"
-      >
-        {(
-          [
-            { id: "calm", label: "Calm", icon: LayoutList },
-            { id: "feed", label: "Feed", icon: Rows3 },
-          ] as const
-        ).map((m) => (
-          <button
-            key={m.id}
-            type="button"
-            role="tab"
-            aria-selected={settings.homeMode === m.id}
-            onClick={() => updateSettings({ homeMode: m.id })}
-            className={cn(
-              "flex min-h-9 items-center gap-1.5 rounded-lg px-3.5 text-sm font-medium transition-colors",
-              settings.homeMode === m.id
-                ? "bg-accent text-foreground"
-                : "text-muted-foreground hover:text-foreground",
-            )}
-          >
-            <m.icon className="size-4" aria-hidden /> {m.label}
-          </button>
-        ))}
+      <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+        <Link
+          to="/whats-new"
+          className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
+        >
+          <Sparkles className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">What&apos;s new</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              This week&apos;s free finds
+            </span>
+          </span>
+        </Link>
+        <Link
+          to="/radar"
+          className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
+        >
+          <RadarIcon className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Free Radar</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Offers with the conditions stated
+            </span>
+          </span>
+        </Link>
+        <Link
+          to="/discover"
+          className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
+        >
+          <Compass className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Discover</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Tools, GitHub, learning
+            </span>
+          </span>
+        </Link>
       </div>
 
-      {feed && (
-        <div className="mt-3">
-          <HomeFeed />
-        </div>
-      )}
-      {!feed && (
-        <>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {quickCategories.map((c) => {
-              const Icon = categoryIcon(c.icon);
-              return (
-                <Link
-                  key={c.category}
-                  to="/explore/$category"
-                  params={{ category: c.category }}
-                  className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-                >
-                  <Icon className="size-4 shrink-0 text-primary" aria-hidden />
-                  <span className="truncate">{c.category}</span>
-                </Link>
-              );
-            })}
-            <Link
-              to="/explore"
-              className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
-            >
-              All categories <ArrowRight className="size-4" aria-hidden />
-            </Link>
-          </div>
-
-          <Section
-            title="Discover"
-            hint="One fresh pick a day, plus a reroll whenever you want one."
+      <>
+        <div className="mt-6 flex flex-wrap gap-2">
+          {quickCategories.map((c) => {
+            const Icon = categoryIcon(c.icon);
+            return (
+              <Link
+                key={c.category}
+                to="/explore/$category"
+                params={{ category: c.category }}
+                className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+              >
+                <Icon className="size-4 shrink-0 text-primary" aria-hidden />
+                <span className="truncate">{c.category}</span>
+              </Link>
+            );
+          })}
+          <Link
+            to="/explore"
+            className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
           >
-            <Discover />
-          </Section>
+            All categories <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
 
-          {recentCommands.length > 0 && (
-            <Section
-              title="Continue where you left off"
-              action={
-                <Link
-                  to="/recent"
-                  className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                >
-                  <History className="size-4" aria-hidden /> All
-                </Link>
-              }
+        <Section
+          title="Command of the day"
+          hint="One fresh pick a day, plus a reroll whenever you want one."
+        >
+          <Discover />
+        </Section>
+
+        <Section
+          title="This week's free finds"
+          hint="Hand-picked, with a last-checked date on every entry."
+          action={
+            <Link
+              to="/whats-new"
+              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
             >
-              <CommandRow commands={recentCommands} />
-            </Section>
-          )}
+              All <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          }
+        >
+          <ResourceGrid resources={weeklyFinds} />
+        </Section>
 
-          {favoriteCommands.length > 0 && (
-            <Section
-              title="Your favorites"
-              action={
-                <Link
-                  to="/favorites"
-                  className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                >
-                  <Star className="size-4" aria-hidden /> All
-                </Link>
-              }
-            >
-              <CommandRow commands={favoriteCommands} />
-            </Section>
-          )}
-
-          {forYou.length > 0 && (
-            <Section title="For you" hint="Based on what you saved and opened on this device.">
-              <CommandRow commands={forYou} />
-            </Section>
-          )}
-
+        {recentCommands.length > 0 && (
           <Section
-            title="Collections"
-            hint="Curated starting points — every collection is open to everyone."
+            title="Continue where you left off"
             action={
               <Link
-                to="/collections"
+                to="/recent"
                 className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
               >
-                All <ArrowRight className="size-4" aria-hidden />
+                <History className="size-4" aria-hidden /> All
               </Link>
             }
           >
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {COLLECTIONS.slice(0, 6).map((c) => {
-                const Icon = categoryIcon(c.icon);
-                return (
-                  <Link
-                    key={c.id}
-                    to="/collections/$id"
-                    params={{ id: c.id }}
-                    className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
-                  >
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-                      <Icon className="size-4.5" aria-hidden />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block truncate text-sm font-semibold text-foreground">
-                        {c.title}
-                      </span>
-                      <span className="block truncate text-xs text-muted-foreground">
-                        {c.count} commands
-                      </span>
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
+            <CommandRow commands={recentCommands} />
           </Section>
-        </>
-      )}
+        )}
+
+        {favoriteCommands.length > 0 && (
+          <Section
+            title="Your favorites"
+            action={
+              <Link
+                to="/favorites"
+                className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+              >
+                <Star className="size-4" aria-hidden /> All
+              </Link>
+            }
+          >
+            <CommandRow commands={favoriteCommands} />
+          </Section>
+        )}
+
+        {forYou.length > 0 && (
+          <Section title="For you" hint="Based on what you saved and opened on this device.">
+            <CommandRow commands={forYou} />
+          </Section>
+        )}
+
+        <Section
+          title="Collections"
+          hint="Curated starting points — every collection is open to everyone."
+          action={
+            <Link
+              to="/collections"
+              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              All <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          }
+        >
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {COLLECTIONS.slice(0, 6).map((c) => {
+              const Icon = categoryIcon(c.icon);
+              return (
+                <Link
+                  key={c.id}
+                  to="/collections/$id"
+                  params={{ id: c.id }}
+                  className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+                >
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
+                    <Icon className="size-4.5" aria-hidden />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-semibold text-foreground">
+                      {c.title}
+                    </span>
+                    <span className="block truncate text-xs text-muted-foreground">
+                      {c.count} commands
+                    </span>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </Section>
+
+        <Section title="Hubs" hint="Everything gathered for one kind of person.">
+          <div className="grid gap-2 sm:grid-cols-2">
+            {[
+              ["students", "Student Hub", "Free software, study tools and student offers"],
+              ["professionals", "Professional Hub", "Work, writing, planning and research"],
+              ["developers", "Developer Hub", "APIs, editors and open-source picks"],
+              ["creators", "Creator Hub", "Capture, edit and design without watermarks"],
+            ].map(([id, title, blurb]) => (
+              <Link
+                key={id}
+                to="/hub/$audience"
+                params={{ audience: id! }}
+                className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+              >
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-semibold text-foreground">
+                    {title}
+                  </span>
+                  <span className="block truncate text-xs text-muted-foreground">{blurb}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      </>
 
       <p className="mt-10 flex items-center gap-1.5 text-xs text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden /> Everything is stored on this device — no

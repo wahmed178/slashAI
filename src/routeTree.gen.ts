@@ -11,16 +11,23 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as MeRouteImport } from './routes/me'
+import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
+import { Route as DiscoverIndexRouteImport } from './routes/discover.index'
+import { Route as DiscoverSectionRouteImport } from './routes/discover.$section'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
+import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
+import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 
@@ -34,6 +41,11 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlternativesRoute = AlternativesRouteImport.update({
+  id: '/alternatives',
+  path: '/alternatives',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
@@ -42,6 +54,11 @@ const FavoritesRoute = FavoritesRouteImport.update({
 const MeRoute = MeRouteImport.update({
   id: '/me',
   path: '/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadarRoute = RadarRouteImport.update({
+  id: '/radar',
+  path: '/radar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecentRoute = RecentRouteImport.update({
@@ -64,6 +81,11 @@ const ToolsRoute = ToolsRouteImport.update({
   path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WhatsNewRoute = WhatsNewRouteImport.update({
+  id: '/whats-new',
+  path: '/whats-new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CSlugRoute = CSlugRouteImport.update({
   id: '/c/$slug',
   path: '/c/$slug',
@@ -79,9 +101,29 @@ const CollectionsIdRoute = CollectionsIdRouteImport.update({
   path: '/collections/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
+  id: '/discover/',
+  path: '/discover/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscoverSectionRoute = DiscoverSectionRouteImport.update({
+  id: '/discover/$section',
+  path: '/discover/$section',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreIndexRoute = ExploreIndexRouteImport.update({
   id: '/explore/',
   path: '/explore/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HubAudienceRoute = HubAudienceRouteImport.update({
+  id: '/hub/$audience',
+  path: '/hub/$audience',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RIdRoute = RIdRouteImport.update({
+  id: '/r/$id',
+  path: '/r/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExploreCategoryIndexRoute = ExploreCategoryIndexRouteImport.update({
@@ -99,15 +141,22 @@ const ExploreCategorySubcategoryRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
   '/me': typeof MeRoute
+  '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/whats-new': typeof WhatsNewRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
+  '/discover/$section': typeof DiscoverSectionRoute
+  '/hub/$audience': typeof HubAudienceRoute
+  '/r/$id': typeof RIdRoute
   '/collections/': typeof CollectionsIndexRoute
+  '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -115,15 +164,22 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
   '/me': typeof MeRoute
+  '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/whats-new': typeof WhatsNewRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
+  '/discover/$section': typeof DiscoverSectionRoute
+  '/hub/$audience': typeof HubAudienceRoute
+  '/r/$id': typeof RIdRoute
   '/collections': typeof CollectionsIndexRoute
+  '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
@@ -132,15 +188,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
   '/me': typeof MeRoute
+  '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/whats-new': typeof WhatsNewRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
+  '/discover/$section': typeof DiscoverSectionRoute
+  '/hub/$audience': typeof HubAudienceRoute
+  '/r/$id': typeof RIdRoute
   '/collections/': typeof CollectionsIndexRoute
+  '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -150,15 +213,22 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/alternatives'
     | '/favorites'
     | '/me'
+    | '/radar'
     | '/recent'
     | '/search'
     | '/settings'
     | '/tools'
+    | '/whats-new'
     | '/c/$slug'
     | '/collections/$id'
+    | '/discover/$section'
+    | '/hub/$audience'
+    | '/r/$id'
     | '/collections/'
+    | '/discover/'
     | '/explore/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -166,15 +236,22 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/alternatives'
     | '/favorites'
     | '/me'
+    | '/radar'
     | '/recent'
     | '/search'
     | '/settings'
     | '/tools'
+    | '/whats-new'
     | '/c/$slug'
     | '/collections/$id'
+    | '/discover/$section'
+    | '/hub/$audience'
+    | '/r/$id'
     | '/collections'
+    | '/discover'
     | '/explore'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
@@ -182,15 +259,22 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/alternatives'
     | '/favorites'
     | '/me'
+    | '/radar'
     | '/recent'
     | '/search'
     | '/settings'
     | '/tools'
+    | '/whats-new'
     | '/c/$slug'
     | '/collections/$id'
+    | '/discover/$section'
+    | '/hub/$audience'
+    | '/r/$id'
     | '/collections/'
+    | '/discover/'
     | '/explore/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -199,15 +283,22 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AlternativesRoute: typeof AlternativesRoute
   FavoritesRoute: typeof FavoritesRoute
   MeRoute: typeof MeRoute
+  RadarRoute: typeof RadarRoute
   RecentRoute: typeof RecentRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   ToolsRoute: typeof ToolsRoute
+  WhatsNewRoute: typeof WhatsNewRoute
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
+  DiscoverSectionRoute: typeof DiscoverSectionRoute
+  HubAudienceRoute: typeof HubAudienceRoute
+  RIdRoute: typeof RIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
+  DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
@@ -229,6 +320,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alternatives': {
+      id: '/alternatives'
+      path: '/alternatives'
+      fullPath: '/alternatives'
+      preLoaderRoute: typeof AlternativesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favorites': {
       id: '/favorites'
       path: '/favorites'
@@ -241,6 +339,13 @@ declare module '@tanstack/react-router' {
       path: '/me'
       fullPath: '/me'
       preLoaderRoute: typeof MeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radar': {
+      id: '/radar'
+      path: '/radar'
+      fullPath: '/radar'
+      preLoaderRoute: typeof RadarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recent': {
@@ -271,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/whats-new': {
+      id: '/whats-new'
+      path: '/whats-new'
+      fullPath: '/whats-new'
+      preLoaderRoute: typeof WhatsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/c/$slug': {
       id: '/c/$slug'
       path: '/c/$slug'
@@ -292,11 +404,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/discover/': {
+      id: '/discover/'
+      path: '/discover'
+      fullPath: '/discover/'
+      preLoaderRoute: typeof DiscoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discover/$section': {
+      id: '/discover/$section'
+      path: '/discover/$section'
+      fullPath: '/discover/$section'
+      preLoaderRoute: typeof DiscoverSectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore/': {
       id: '/explore/'
       path: '/explore'
       fullPath: '/explore/'
       preLoaderRoute: typeof ExploreIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hub/$audience': {
+      id: '/hub/$audience'
+      path: '/hub/$audience'
+      fullPath: '/hub/$audience'
+      preLoaderRoute: typeof HubAudienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/r/$id': {
+      id: '/r/$id'
+      path: '/r/$id'
+      fullPath: '/r/$id'
+      preLoaderRoute: typeof RIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/explore/$category/': {
@@ -319,15 +459,22 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AlternativesRoute: AlternativesRoute,
   FavoritesRoute: FavoritesRoute,
   MeRoute: MeRoute,
+  RadarRoute: RadarRoute,
   RecentRoute: RecentRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   ToolsRoute: ToolsRoute,
+  WhatsNewRoute: WhatsNewRoute,
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
+  DiscoverSectionRoute: DiscoverSectionRoute,
+  HubAudienceRoute: HubAudienceRoute,
+  RIdRoute: RIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
+  DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,

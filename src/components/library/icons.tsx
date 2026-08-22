@@ -25,6 +25,11 @@ import {
   Compass,
   Users,
   House,
+  Github,
+  Youtube,
+  Layers,
+  Lightbulb,
+  Wrench,
   type LucideIcon,
 } from "lucide-react";
 
@@ -55,6 +60,11 @@ const MAP: Record<string, LucideIcon> = {
   Compass,
   Users,
   House,
+  Github,
+  Youtube,
+  Layers,
+  Lightbulb,
+  Wrench,
 };
 
 export function categoryIcon(name: string | undefined): LucideIcon {

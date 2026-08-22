@@ -13,6 +13,13 @@ import {
   Layers,
   Wrench,
   UserRound,
+  Search as SearchIcon,
+  Sparkles,
+  Github,
+  GraduationCap,
+  Youtube,
+  Lightbulb,
+  Radar,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -28,17 +35,30 @@ import { cn } from "@/lib/utils";
 import { SearchBox } from "./SearchBox";
 import { OfflineBadge } from "./OfflineBadge";
 
+/** mobile bottom bar — four essentials only */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/explore", label: "Explore", icon: Compass, exact: false },
-  { to: "/tools", label: "Tools", icon: Wrench, exact: false },
+  { to: "/discover", label: "Discover", icon: Compass, exact: false },
   { to: "/favorites", label: "Saved", icon: Heart, exact: false },
-  { to: "/me", label: "Me", icon: UserRound, exact: false },
+  { to: "/search", label: "Search", icon: SearchIcon, exact: false },
+] as const;
+
+/** nested under Discover in the sidebar and the drawer */
+const DISCOVER_CHILDREN = [
+  { section: "ai", label: "AI", icon: Sparkles },
+  { section: "free-tools", label: "Free Tools", icon: Wrench },
+  { section: "github", label: "GitHub", icon: Github },
+  { section: "learn", label: "Learn", icon: GraduationCap },
+  { section: "resources", label: "Resources", icon: Layers },
+  { section: "youtube", label: "YouTube", icon: Youtube },
+  { section: "tips", label: "Tips & Tricks", icon: Lightbulb },
 ] as const;
 
 const SECONDARY = [
+  { to: "/explore", label: "Commands", icon: Terminal },
   { to: "/collections", label: "Collections", icon: Layers },
   { to: "/recent", label: "Recent", icon: History },
+  { to: "/me", label: "Me", icon: UserRound },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
 ] as const;
@@ -92,21 +112,48 @@ function NavList({
 
   return (
     <nav className="space-y-1" aria-label="Primary">
-      {PRIMARY.map((item) => (
-        <Link
-          key={item.to}
-          to={item.to}
-          activeOptions={{ exact: item.exact, includeSearch: false }}
-          activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-          onClick={onNavigate}
-          className={cls}
-        >
-          <item.icon className="size-4.5 shrink-0" aria-hidden />
-          {item.label}
-          {counts[item.to] ? (
-            <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
-          ) : null}
-        </Link>
+      {PRIMARY.filter((item) => item.to !== "/search").map((item) => (
+        <div key={item.to}>
+          <Link
+            to={item.to}
+            activeOptions={{ exact: item.exact, includeSearch: false }}
+            activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
+            onClick={onNavigate}
+            className={cls}
+          >
+            <item.icon className="size-4.5 shrink-0" aria-hidden />
+            {item.label}
+            {counts[item.to] ? (
+              <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
+            ) : null}
+          </Link>
+          {item.to === "/discover" && (
+            <div className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
+              {DISCOVER_CHILDREN.map((child) => (
+                <Link
+                  key={child.section}
+                  to="/discover/$section"
+                  params={{ section: child.section }}
+                  activeProps={{ className: "text-sidebar-accent-foreground" }}
+                  onClick={onNavigate}
+                  className="flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                >
+                  <child.icon className="size-4 shrink-0" aria-hidden />
+                  {child.label}
+                </Link>
+              ))}
+              <Link
+                to="/radar"
+                activeProps={{ className: "text-sidebar-accent-foreground" }}
+                onClick={onNavigate}
+                className="flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+              >
+                <Radar className="size-4 shrink-0" aria-hidden />
+                Free Radar
+              </Link>
+            </div>
+          )}
+        </div>
       ))}
 
       {showSecondary && (
@@ -122,6 +169,9 @@ function NavList({
             >
               <item.icon className="size-4.5 shrink-0" aria-hidden />
               {item.label}
+              {counts[item.to] ? (
+                <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
+              ) : null}
             </Link>
           ))}
         </>
@@ -149,7 +199,9 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             <span className="block truncate text-sm font-semibold text-sidebar-foreground">
               SlashAI
             </span>
-            <span className="block truncate text-xs text-muted-foreground">Command library</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Curated AI & free finds
+            </span>
           </span>
         </Link>
         <div className="flex-1 overflow-y-auto px-2 pb-4">
