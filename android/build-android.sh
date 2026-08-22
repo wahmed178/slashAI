@@ -29,4 +29,9 @@ fi
 
 cd "$ROOT_DIR"
 export TWA_KEYSTORE_PATH="${TWA_KEYSTORE_PATH:-$SCRIPT_DIR/android.keystore}"
+
+# Fail early if the signing certificate is not declared in assetlinks.json —
+# otherwise the installed TWA opens with a visible browser address bar.
+bun run scripts/validate-android-association.mjs "$TWA_KEYSTORE_PATH"
+
 bun run scripts/bubblewrap-build.mjs android/twa-manifest.json android/project
