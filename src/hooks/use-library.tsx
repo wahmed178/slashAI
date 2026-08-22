@@ -80,6 +80,8 @@ export interface BackupPayload {
   recents: string[];
   searches: string[];
   settings: Settings;
+  streak?: Streak;
+  stats?: Stats;
 }
 
 interface LibraryValue {
@@ -88,6 +90,8 @@ interface LibraryValue {
   recents: string[];
   recentSearches: string[];
   settings: Settings;
+  streak: Streak;
+  stats: Stats;
   /** true when the app was updated since the user last saw the release notes */
   showWhatsNew: boolean;
   dismissWhatsNew: () => void;
@@ -96,8 +100,10 @@ interface LibraryValue {
   toggleFavorite: (id: string) => void;
   recordUse: (id: string) => void;
   recordSearch: (q: string) => void;
+  recordCopy: () => number;
   clearRecents: () => void;
   clearSearches: () => void;
+  clearAllData: () => void;
   updateSettings: (patch: Partial<Settings>) => void;
   exportBackup: () => BackupPayload;
   importBackup: (raw: string) => { ok: boolean; message: string };
