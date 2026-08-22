@@ -19,11 +19,48 @@ jobs:
         with:
           bun-version: latest
 
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Lint
         run: bun run lint
+
+      - name: Restore signing keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > android/android.keystore
+          else
+            echo "No ANDROID_KEYSTORE_BASE64 secret; assetlinks.json will keep the repo fingerprint."
+          fi
+
+      - name: Inject published domain and SHA-256 fingerprint
+        env:
+          PUBLISHED_DOMAIN: ${{ vars.PUBLISHED_DOMAIN }}
+        run: |
+          if [ -z "$PUBLISHED_DOMAIN" ]; then
+            echo "::error::Repository variable PUBLISHED_DOMAIN is not set (e.g. slash-command-vault.lovable.app)."
+            exit 1
+          fi
+          sed -i "s|REPLACE_WITH_YOUR_PUBLISHED_DOMAIN|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
+          sed -i "s|slash-command-vault.lovable.app|$PUBLISHED_DOMAIN|g" android/twa-manifest.json
+          sed -i "s|REPLACE_WITH_YOUR_PUBLISHED_DOMAIN|$PUBLISHED_DOMAIN|g" public/.well-known/assetlinks.json
+          sed -i "s|slash-command-vault.lovable.app|$PUBLISHED_DOMAIN|g" public/.well-known/assetlinks.json
+
+          if [ -f android/android.keystore ]; then
+            FINGERPRINT=$(keytool -list -v -keystore android/android.keystore -alias slashai -storepass "${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" | grep "SHA256:" | sed 's/^.*SHA256: //')
+            if [ -n "$FINGERPRINT" ]; then
+              sed -i "s|REPLACE_WITH_YOUR_SHA256_FINGERPRINT|$FINGERPRINT|g" public/.well-known/assetlinks.json
+              echo "Injected SHA-256 fingerprint: $FINGERPRINT"
+            fi
+            rm -f android/android.keystore
+          fi
 
       - name: Build
         run: bun run build
@@ -34,6 +71,7 @@ jobs:
           name: web-dist
           path: dist
           if-no-files-found: warn
+
 
   android:
     name: Android release build (TWA)
@@ -60,17 +98,8 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Inject published domain into TWA manifest
-        env:
-          PUBLISHED_DOMAIN: ${{ vars.PUBLISHED_DOMAIN }}
-        run: |
-          if [ -z "$PUBLISHED_DOMAIN" ]; then
-            echo "::error::Repository variable PUBLISHED_DOMAIN is not set (e.g. slashai.lovable.app)."
-            exit 1
-          fi
-          sed -i "s/REPLACE_WITH_YOUR_PUBLISHED_DOMAIN/$PUBLISHED_DOMAIN/g" android/twa-manifest.json
-
       - name: Set version from tag
+
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           node -e "

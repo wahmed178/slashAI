@@ -1,5 +1,7 @@
 # SlashAI Android App
 
+Published web URL: **https://slash-command-vault.lovable.app**
+
 This folder contains the configuration needed to wrap the **SlashAI Command Library** web app into a real Android APK using **Trusted Web Activity (TWA)**. The app itself stays a web app — this is just a lightweight native shell that opens it full-screen, so you can publish it on the Google Play Store.
 
 ## What is TWA?
@@ -42,15 +44,15 @@ On your local machine (the Lovable editor cannot run Android tooling):
 
 ## Step-by-step build
 
-### 1. Publish the web app
+### 1. Publish the web app (done)
 
-You must have a stable production URL before building the Android wrapper. TWA domain verification does not work with Lovable preview URLs.
+The web app is already published at **https://slash-command-vault.lovable.app**. TWA domain verification does not work with Lovable preview URLs, so a published domain is required.
 
 ### 2. Fill in the domain placeholders
 
-Open `android/twa-manifest.json` and replace every occurrence of `REPLACE_WITH_YOUR_PUBLISHED_DOMAIN` with your real domain, e.g. `slashai.lovable.app`.
+`android/twa-manifest.json` already uses the published domain `slash-command-vault.lovable.app` and the package name `dev.lovable.slashcommandvault`. Change these if you want a different package name or domain.
 
-Also update `public/.well-known/assetlinks.json` with the same domain and the SHA-256 fingerprint of your signing key (see step 4).
+`public/.well-known/assetlinks.json` needs the **SHA-256 fingerprint** of your signing key so the TWA can hide the browser address bar. The GitHub Actions workflow injects this automatically from your keystore secret at build time, but you can also paste it manually if you build locally.
 
 ### 3. Install Bubblewrap
 
@@ -106,6 +108,51 @@ Make sure the production URL is live and `/.well-known/assetlinks.json` is reach
 3. Upload the `app-release.aab`
 4. Fill in store listing, screenshots, privacy policy
 5. Publish
+### 8. Automated releases with GitHub Actions
+
+The repository includes `.github/workflows/release.yml`. On every push of a tag starting with `v` (for example `v1.0.0`), the workflow will:
+
+1. Run `bun lint` and `bun build`
+2. Inject the published domain into `android/twa-manifest.json`
+3. Set the app version from the tag
+4. Build the Android release APK and AAB
+5. Upload both as workflow artifacts
+
+Required GitHub repository settings:
+
+| Name | Type | Value |
+| --- | --- | --- |
+| `PUBLISHED_DOMAIN` | Repository variable | `slash-command-vault.lovable.app` |
+| `ANDROID_KEYSTORE_BASE64` | Repository secret | Base64 of your `android/android.keystore` |
+| `ANDROID_KEYSTORE_PASSWORD` | Repository secret | Keystore password |
+| `ANDROID_KEY_PASSWORD` | Repository secret | Key password |
+
+To generate a keystore and print its base64 value, run locally:
+
+```bash
+bun run android:keystore
+```
+
+Keep the keystore file safe — it is used to sign every future release, and losing it means you cannot update the app on Google Play.
+
+After the secrets are set, push a tag:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The workflow will:
+
+1. Lint and build the web app
+2. Inject the published domain into the TWA manifest
+3. Extract the SHA-256 fingerprint from your keystore and write it into `public/.well-known/assetlinks.json` automatically
+4. Build the Android release APK and AAB
+5. Upload both as workflow artifacts
+
+You can then download the APK/AAB from **Actions → Release → Artifacts** and upload the AAB to the Play Console.
+
+> **Note:** Because the workflow injects the SHA-256 fingerprint at build time, the published web app must be redeployed after the tag push so the live `/.well-known/assetlinks.json` contains the correct fingerprint. The app will still build without this, but the browser address bar will remain visible until the correct `assetlinks.json` is live.
 
 ## Updating the Android app
 
