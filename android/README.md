@@ -1,6 +1,6 @@
 # SlashAI Android App
 
-Published web URL: **https://slash-command-vault.lovable.app**
+Published web URL: **https://slashprompt.lovable.app**
 
 This folder contains the configuration needed to wrap the **SlashAI Command Library** web app into a real Android APK using **Trusted Web Activity (TWA)**. The app itself stays a web app — this is just a lightweight native shell that opens it full-screen, so you can publish it on the Google Play Store.
 
@@ -32,7 +32,7 @@ On your local machine (the Lovable editor cannot run Android tooling):
 1. **Node.js 18+** and npm
 2. **Java JDK 11+** (includes `keytool` and `jarsigner`)
 3. **Android SDK** (download via Android Studio or command-line tools)
-4. The web app must be **published** on a stable public domain (e.g. `slashai.lovable.app` or a custom domain)
+4. The web app must be **published** on a stable public domain (e.g. `slashprompt.lovable.app` or a custom domain)
 
 ## Files in this folder
 
@@ -46,11 +46,11 @@ On your local machine (the Lovable editor cannot run Android tooling):
 
 ### 1. Publish the web app (done)
 
-The web app is already published at **https://slash-command-vault.lovable.app**. TWA domain verification does not work with Lovable preview URLs, so a published domain is required.
+The web app is already published at **https://slashprompt.lovable.app**. TWA domain verification does not work with Lovable preview URLs, so a published domain is required.
 
 ### 2. Fill in the domain placeholders
 
-`android/twa-manifest.json` already uses the published domain `slash-command-vault.lovable.app` and the package name `dev.lovable.slashcommandvault`. Change these if you want a different package name or domain.
+`android/twa-manifest.json` already uses the published domain `slashprompt.lovable.app` and the package name `dev.lovable.slashprompt`. Change these if you want a different package name or domain.
 
 `public/.well-known/assetlinks.json` needs the **SHA-256 fingerprint** of your signing key so the TWA can hide the browser address bar. The GitHub Actions workflow injects this automatically from your keystore secret at build time, but you can also paste it manually if you build locally.
 
@@ -122,7 +122,7 @@ Required GitHub repository settings:
 
 | Name | Type | Value |
 | --- | --- | --- |
-| `PUBLISHED_DOMAIN` | Repository variable | `slash-command-vault.lovable.app` |
+| `PUBLISHED_DOMAIN` | Repository variable | `slashprompt.lovable.app` |
 | `ANDROID_KEYSTORE_BASE64` | Repository secret | Base64 of your `android/android.keystore` |
 | `ANDROID_KEYSTORE_PASSWORD` | Repository secret | Keystore password |
 | `ANDROID_KEY_PASSWORD` | Repository secret | Key password |
