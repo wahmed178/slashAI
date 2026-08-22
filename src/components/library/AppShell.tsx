@@ -45,15 +45,15 @@ const PRIMARY = [
 
 /** nested under Discover in the sidebar and the drawer */
 const DISCOVER_CHILDREN = [
-  { to: "/discover/ai", label: "AI", icon: Sparkles },
-  { to: "/discover/free-tools", label: "Free Tools", icon: Wrench },
-  { to: "/discover/github", label: "GitHub", icon: Github },
-  { to: "/discover/learn", label: "Learn", icon: GraduationCap },
-  { to: "/discover/resources", label: "Resources", icon: Layers },
-  { to: "/discover/youtube", label: "YouTube", icon: Youtube },
-  { to: "/discover/tips", label: "Tips & Tricks", icon: Lightbulb },
-  { to: "/radar", label: "Free Radar", icon: Radar },
+  { section: "ai", label: "AI", icon: Sparkles },
+  { section: "free-tools", label: "Free Tools", icon: Wrench },
+  { section: "github", label: "GitHub", icon: Github },
+  { section: "learn", label: "Learn", icon: GraduationCap },
+  { section: "resources", label: "Resources", icon: Layers },
+  { section: "youtube", label: "YouTube", icon: Youtube },
+  { section: "tips", label: "Tips & Tricks", icon: Lightbulb },
 ] as const;
+
 
 const SECONDARY = [
   { to: "/explore", label: "Commands", icon: Terminal },
