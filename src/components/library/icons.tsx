@@ -1,0 +1,52 @@
+import {
+  Image,
+  FileText,
+  PenLine,
+  Search,
+  Sparkles,
+  Database,
+  Code2,
+  Zap,
+  Briefcase,
+  Gauge,
+  GraduationCap,
+  AudioLines,
+  Clapperboard,
+  Megaphone,
+  Palette,
+  Workflow,
+  ShieldCheck,
+  Languages,
+  Sigma,
+  UserRound,
+  Bot,
+  type LucideIcon,
+} from "lucide-react";
+
+const MAP: Record<string, LucideIcon> = {
+  Image,
+  FileText,
+  PenLine,
+  Search,
+  Sparkles,
+  Database,
+  Code2,
+  Zap,
+  Briefcase,
+  Gauge,
+  GraduationCap,
+  AudioLines,
+  Clapperboard,
+  Megaphone,
+  Palette,
+  Workflow,
+  ShieldCheck,
+  Languages,
+  Sigma,
+  UserRound,
+  Bot,
+};
+
+export function categoryIcon(name: string | undefined): LucideIcon {
+  return (name && MAP[name]) || Sparkles;
+}
