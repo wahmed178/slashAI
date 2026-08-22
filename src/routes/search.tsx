@@ -177,7 +177,17 @@ function SearchPage() {
         </div>
       )}
 
+      {resourceHits.length > 0 && (
+        <section className="mt-5">
+          <h2 className="mb-2 text-sm font-semibold text-foreground">
+            Curated resources ({resourceHits.length})
+          </h2>
+          <ResourceGrid resources={resourceHits} />
+        </section>
+      )}
+
       <div className="mt-5">
+
         {visible.length > 0 ? (
           <CommandGrid commands={visible} query={q} />
         ) : (
