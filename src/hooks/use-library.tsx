@@ -191,6 +191,23 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(KEYS.recents, JSON.stringify(next));
       return next;
     });
+    setStats((prev) => {
+      const next = { ...prev, opens: prev.opens + 1 };
+      localStorage.setItem(KEYS.stats, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  /** Increments the local copy counter and returns the new total. */
+  const recordCopy = useCallback(() => {
+    let total = 0;
+    setStats((prev) => {
+      const next = { ...prev, copies: prev.copies + 1 };
+      total = next.copies;
+      localStorage.setItem(KEYS.stats, JSON.stringify(next));
+      return next;
+    });
+    return total;
   }, []);
 
   const recordSearch = useCallback((q: string) => {
@@ -216,6 +233,16 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(KEYS.searches, "[]");
   }, []);
 
+  const clearAllData = useCallback(() => {
+    for (const key of Object.values(KEYS)) localStorage.removeItem(key);
+    setFavorites([]);
+    setRecents([]);
+    setRecentSearches([]);
+    setStats(DEFAULT_STATS);
+    setStreak(EMPTY_STREAK);
+    setSettings(DEFAULT_SETTINGS);
+  }, []);
+
   const updateSettings = useCallback((patch: Partial<Settings>) => {
     setSettings((prev) => ({ ...prev, ...patch }));
   }, []);
@@ -229,8 +256,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       searches: recentSearches,
       settings,
+      streak,
+      stats,
     }),
-    [favorites, recents, recentSearches, settings],
+    [favorites, recents, recentSearches, settings, streak, stats],
   );
 
   const importBackup = useCallback((raw: string) => {
@@ -244,15 +273,21 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       const nextRec = list(data.recents);
       const nextSearch = list(data.searches);
       const nextSettings = { ...DEFAULT_SETTINGS, ...(data.settings ?? {}) };
+      const nextStats = { ...DEFAULT_STATS, ...(data.stats ?? {}) };
+      const nextStreak = { ...EMPTY_STREAK, ...(data.streak ?? {}) };
 
       setFavorites(nextFav);
       setRecents(nextRec);
       setRecentSearches(nextSearch);
       setSettings(nextSettings);
+      setStats(nextStats);
+      setStreak(nextStreak);
       localStorage.setItem(KEYS.favorites, JSON.stringify(nextFav));
       localStorage.setItem(KEYS.recents, JSON.stringify(nextRec));
       localStorage.setItem(KEYS.searches, JSON.stringify(nextSearch));
       localStorage.setItem(KEYS.settings, JSON.stringify(nextSettings));
+      localStorage.setItem(KEYS.stats, JSON.stringify(nextStats));
+      localStorage.setItem(KEYS.streak, JSON.stringify(nextStreak));
 
       return {
         ok: true,
@@ -270,6 +305,8 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       recentSearches,
       settings,
+      streak,
+      stats,
       showWhatsNew,
       dismissWhatsNew,
       openWhatsNew,
@@ -277,8 +314,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       toggleFavorite,
       recordUse,
       recordSearch,
+      recordCopy,
       clearRecents,
       clearSearches,
+      clearAllData,
       updateSettings,
       exportBackup,
       importBackup,
@@ -289,14 +328,18 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       recentSearches,
       settings,
+      streak,
+      stats,
       showWhatsNew,
       dismissWhatsNew,
       openWhatsNew,
       toggleFavorite,
       recordUse,
       recordSearch,
+      recordCopy,
       clearRecents,
       clearSearches,
+      clearAllData,
       updateSettings,
       exportBackup,
       importBackup,
