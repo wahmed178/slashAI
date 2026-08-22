@@ -14,6 +14,7 @@ import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
+import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -43,6 +44,11 @@ const CSlugRoute = CSlugRouteImport.update({
   path: '/c/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
+  id: '/collections/',
+  path: '/collections/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreIndexRoute = ExploreIndexRouteImport.update({
   id: '/explore/',
   path: '/explore/',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/c/$slug': typeof CSlugRoute
+  '/collections/': typeof CollectionsIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/c/$slug': typeof CSlugRoute
+  '/collections': typeof CollectionsIndexRoute
   '/explore': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
   '/c/$slug': typeof CSlugRoute
+  '/collections/': typeof CollectionsIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/recent'
     | '/search'
     | '/c/$slug'
+    | '/collections/'
     | '/explore/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/recent'
     | '/search'
     | '/c/$slug'
+    | '/collections'
     | '/explore'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/recent'
     | '/search'
     | '/c/$slug'
+    | '/collections/'
     | '/explore/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   RecentRoute: typeof RecentRoute
   SearchRoute: typeof SearchRoute
   CSlugRoute: typeof CSlugRoute
+  CollectionsIndexRoute: typeof CollectionsIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collections/': {
+      id: '/collections/'
+      path: '/collections'
+      fullPath: '/collections/'
+      preLoaderRoute: typeof CollectionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore/': {
       id: '/explore/'
       path: '/explore'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecentRoute: RecentRoute,
   SearchRoute: SearchRoute,
   CSlugRoute: CSlugRoute,
+  CollectionsIndexRoute: CollectionsIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
