@@ -324,7 +324,10 @@ mark {
   animation: feed-in var(--motion-base, 220ms) ease-out both;
 }
 
-:root[data-motion="reduced"] .feed-in,
+:root[data-motion="reduced"] .feed-in {
+  animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .feed-in {
     animation: none;
