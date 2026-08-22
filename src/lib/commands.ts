@@ -169,13 +169,20 @@ function editDistance(a: string, b: string, max: number): number {
   return prev[b.length]!;
 }
 
+/** Initials of a multi-word title, e.g. "Clean CSV Data" -> "ccd". */
+const initials = (s: string) =>
+  s
+    .split(/[\s&/-]+/)
+    .filter(Boolean)
+    .map((w) => w[0]!.toLowerCase())
+    .join("");
+
 /**
- * Ranking tiers (highest first):
+ * Score a single term. Ranking tiers (highest first):
  * exact command → command prefix → alias → title → tags → subcategory/category
  * → description → how-to-use/example → typo-tolerant fuzzy.
  */
-export function scoreCommand(cmd: SlashCommand, q: string): number {
-  const needle = q.trim().toLowerCase().replace(/^\//, "");
+function scoreTerm(cmd: SlashCommand, needle: string): number {
   if (!needle) return 0;
   const name = cmd.command.slice(1).toLowerCase();
   const title = cmd.title.toLowerCase();
@@ -185,6 +192,7 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
   if (name.startsWith(needle)) return 8000 - name.length;
   if (title === needle) return 7500;
   if (title.startsWith(needle)) return 7000 - title.length;
+  if (needle.length >= 2 && initials(cmd.title) === needle) return 6500;
   if (name.includes(needle)) return 6000 - name.length;
   if (cmd.aliases.some((a) => a.toLowerCase().includes(needle))) return 5500;
   if (title.includes(needle)) return 5000;
@@ -193,6 +201,7 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
   if (cmd.subcategory.toLowerCase().includes(needle)) return 3500;
   if (cmd.category.toLowerCase().includes(needle)) return 3000;
   if (cmd.description.toLowerCase().includes(needle)) return 2500;
+  if (cmd.type.toLowerCase() === needle || cmd.difficulty === needle) return 2000;
   if (cmd.howToUse.toLowerCase().includes(needle)) return 1500;
   if (cmd.example.toLowerCase().includes(needle)) return 1200;
 
@@ -204,9 +213,33 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
     for (const word of title.split(/\s+/)) {
       if (editDistance(word, needle, max) <= max) return 700 - name.length;
     }
+    for (const tag of cmd.tags) {
+      if (editDistance(tag.toLowerCase(), needle, max) <= max) return 600;
+    }
   }
   return -1;
 }
+
+/**
+ * Multi-word queries match in any order: every word must hit something, and the
+ * whole phrase matching as-is always outranks the word-by-word result.
+ */
+export function scoreCommand(cmd: SlashCommand, q: string): number {
+  const cleaned = q.trim().toLowerCase().replace(/^\//, "");
+  if (!cleaned) return 0;
+  const tokens = cleaned.split(/[\s,]+/).filter(Boolean);
+  if (tokens.length < 2) return scoreTerm(cmd, cleaned);
+
+  let total = 0;
+  for (const t of tokens) {
+    const s = scoreTerm(cmd, t);
+    if (s < 0) return -1;
+    total += s;
+  }
+  const phrase = scoreTerm(cmd, cleaned);
+  return Math.max(phrase, Math.round(total / tokens.length) + 250);
+}
+
 
 export type SortKey = "relevance" | "name" | "category" | "popularity" | "newest";
 

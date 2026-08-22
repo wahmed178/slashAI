@@ -75,7 +75,7 @@ function CommandWidget({
       </button>
 
       <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{command.description}</p>
-      <p className="mt-1 text-xs text-muted-foreground/80">{hint}</p>
+      <p className="mt-1 hidden text-xs text-muted-foreground/80 sm:block">{hint}</p>
 
       <div className="mt-3 flex items-center gap-1.5">
         <Button size="sm" variant="secondary" className="gap-1.5" onClick={() => onOpen(command)}>

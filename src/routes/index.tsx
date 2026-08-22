@@ -372,15 +372,14 @@ function LibraryPage() {
           {isHome && (
             <section className="mb-8">
               <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                The SlashAI library
+                Find the right AI command
               </h1>
-              <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
+              <p className="mt-1.5 text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">
                   {VERIFIED_TOTAL.toLocaleString()}
                 </span>{" "}
-                verified, de-duplicated AI slash commands across {CATEGORY_TREE.length} categories
-                and {SUBCATEGORY_TOTAL} subcategories. Search, copy a ready-to-edit prompt, and save
-                the ones you keep coming back to.
+                commands · {CATEGORY_TREE.length} categories · tap to copy
+                <span className="hidden sm:inline"> · {SUBCATEGORY_TOTAL} subcategories</span>
               </p>
 
               <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -396,6 +395,7 @@ function LibraryPage() {
                 </button>
                 <OfflineBadge />
               </div>
+
 
               <div className="mt-5">
                 <DashboardWidgets
@@ -495,6 +495,22 @@ function LibraryPage() {
             </p>
 
             <div className="ml-auto flex flex-wrap items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-1.5 md:hidden"
+                onClick={() => setFiltersOpen(true)}
+              >
+                <SlidersHorizontal className="size-4" /> Filters
+                {activeFilters > 0 && (
+                  <span className="rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
+                    {activeFilters}
+                  </span>
+                )}
+              </Button>
+
+              <div className="hidden flex-wrap items-center gap-2 md:flex">
+
               <select
                 aria-label="Filter by type"
                 value={search.type}
@@ -572,8 +588,107 @@ function LibraryPage() {
                   Clear filters
                 </Button>
               )}
+              </div>
             </div>
           </div>
+
+          {/* mobile filters */}
+          <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+            <SheetContent side="bottom" className="gap-0 md:hidden">
+              <SheetHeader>
+                <SheetTitle>Filters & sort</SheetTitle>
+                <SheetDescription>
+                  {results.length.toLocaleString()} command{results.length === 1 ? "" : "s"} match
+                </SheetDescription>
+              </SheetHeader>
+              <div className="space-y-4 px-4 pb-8">
+                <div>
+                  <p className="mb-1.5 text-xs font-semibold text-muted-foreground uppercase">
+                    Type
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["all", ...TYPES].map((t) => (
+                      <button
+                        key={t}
+                        type="button"
+                        onClick={() => setSearch({ type: t })}
+                        className={cn(
+                          "rounded-full border px-3 py-1.5 text-xs capitalize transition-colors",
+                          search.type === t
+                            ? "border-primary/60 bg-accent text-foreground"
+                            : "border-border bg-surface text-muted-foreground",
+                        )}
+                      >
+                        {t === "all" ? "All types" : t}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="mb-1.5 text-xs font-semibold text-muted-foreground uppercase">
+                    Level
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["all", "easy", "medium", "advanced"].map((d) => (
+                      <button
+                        key={d}
+                        type="button"
+                        onClick={() => setSearch({ diff: d })}
+                        className={cn(
+                          "rounded-full border px-3 py-1.5 text-xs capitalize transition-colors",
+                          search.diff === d
+                            ? "border-primary/60 bg-accent text-foreground"
+                            : "border-border bg-surface text-muted-foreground",
+                        )}
+                      >
+                        {d === "all" ? "Any level" : d}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="mb-1.5 text-xs font-semibold text-muted-foreground uppercase">
+                    Sort
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {SORTS.map((s) => (
+                      <button
+                        key={s}
+                        type="button"
+                        onClick={() => setSearch({ sort: s })}
+                        className={cn(
+                          "rounded-full border px-3 py-1.5 text-xs capitalize transition-colors",
+                          search.sort === s
+                            ? "border-primary/60 bg-accent text-foreground"
+                            : "border-border bg-surface text-muted-foreground",
+                        )}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() =>
+                      setSearch({ cat: "all", sub: "all", type: "all", diff: "all", fav: false })
+                    }
+                  >
+                    Clear all
+                  </Button>
+                  <Button className="flex-1" onClick={() => setFiltersOpen(false)}>
+                    Show results
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+
 
           {/* results */}
           {!hydrated && results.length === 0 ? (

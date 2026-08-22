@@ -8,21 +8,37 @@ import {
   type ReactNode,
 } from "react";
 
+import { APP_VERSION } from "@/lib/app-meta";
+
 export type Theme = "dark" | "light";
 export type Density = "comfortable" | "compact";
+export type Accent = "teal" | "violet" | "amber" | "rose" | "blue" | "lime";
+
+export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
+  { id: "teal", label: "Teal", swatch: "oklch(0.79 0.15 178)" },
+  { id: "violet", label: "Violet", swatch: "oklch(0.72 0.17 300)" },
+  { id: "amber", label: "Amber", swatch: "oklch(0.82 0.16 78)" },
+  { id: "rose", label: "Rose", swatch: "oklch(0.72 0.17 12)" },
+  { id: "blue", label: "Blue", swatch: "oklch(0.72 0.15 250)" },
+  { id: "lime", label: "Lime", swatch: "oklch(0.82 0.19 130)" },
+];
 
 interface Settings {
   theme: Theme;
   density: Density;
+  accent: Accent;
   view: "grid" | "list";
   pageSize: number;
+  reducedMotion: boolean;
 }
 
 const DEFAULT_SETTINGS: Settings = {
   theme: "dark",
   density: "comfortable",
+  accent: "teal",
   view: "grid",
   pageSize: 24,
+  reducedMotion: false,
 };
 
 const KEYS = {
@@ -30,7 +46,18 @@ const KEYS = {
   recents: "slashai.recents",
   searches: "slashai.searches",
   settings: "slashai.settings",
+  seenVersion: "slashai.seenVersion",
 };
+
+export interface BackupPayload {
+  app: "slashai";
+  version: string;
+  exportedAt: string;
+  favorites: string[];
+  recents: string[];
+  searches: string[];
+  settings: Settings;
+}
 
 interface LibraryValue {
   hydrated: boolean;
@@ -38,6 +65,10 @@ interface LibraryValue {
   recents: string[];
   recentSearches: string[];
   settings: Settings;
+  /** true when the app was updated since the user last saw the release notes */
+  showWhatsNew: boolean;
+  dismissWhatsNew: () => void;
+  openWhatsNew: () => void;
   isFavorite: (id: string) => boolean;
   toggleFavorite: (id: string) => void;
   recordUse: (id: string) => void;
@@ -45,6 +76,8 @@ interface LibraryValue {
   clearRecents: () => void;
   clearSearches: () => void;
   updateSettings: (patch: Partial<Settings>) => void;
+  exportBackup: () => BackupPayload;
+  importBackup: (raw: string) => { ok: boolean; message: string };
 }
 
 const LibraryContext = createContext<LibraryValue | null>(null);
@@ -74,6 +107,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const [recents, setRecents] = useState<string[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
+  const [showWhatsNew, setShowWhatsNew] = useState(false);
 
   useEffect(() => {
     setFavorites(readArray(KEYS.favorites));
@@ -81,15 +115,28 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     setRecentSearches(readArray(KEYS.searches));
     setSettings(read<Settings>(KEYS.settings, DEFAULT_SETTINGS));
     setHydrated(true);
+
+    const seen = localStorage.getItem(KEYS.seenVersion);
+    // brand new installs shouldn't be greeted by release notes
+    if (!seen) localStorage.setItem(KEYS.seenVersion, APP_VERSION);
+    else if (seen !== APP_VERSION) setShowWhatsNew(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated) return;
     const root = document.documentElement;
     root.classList.toggle("light", settings.theme === "light");
+    root.dataset["accent"] = settings.accent;
+    root.dataset["motion"] = settings.reducedMotion ? "reduced" : "full";
     root.style.colorScheme = settings.theme;
     localStorage.setItem(KEYS.settings, JSON.stringify(settings));
   }, [settings, hydrated]);
+
+  const dismissWhatsNew = useCallback(() => {
+    localStorage.setItem(KEYS.seenVersion, APP_VERSION);
+    setShowWhatsNew(false);
+  }, []);
+  const openWhatsNew = useCallback(() => setShowWhatsNew(true), []);
 
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((prev) => {
@@ -134,6 +181,49 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     setSettings((prev) => ({ ...prev, ...patch }));
   }, []);
 
+  const exportBackup = useCallback(
+    (): BackupPayload => ({
+      app: "slashai",
+      version: APP_VERSION,
+      exportedAt: new Date().toISOString(),
+      favorites,
+      recents,
+      searches: recentSearches,
+      settings,
+    }),
+    [favorites, recents, recentSearches, settings],
+  );
+
+  const importBackup = useCallback((raw: string) => {
+    try {
+      const data = JSON.parse(raw) as Partial<BackupPayload>;
+      if (data.app !== "slashai") return { ok: false, message: "That file isn't a SlashAI backup" };
+      const list = (v: unknown) =>
+        Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : [];
+
+      const nextFav = list(data.favorites);
+      const nextRec = list(data.recents);
+      const nextSearch = list(data.searches);
+      const nextSettings = { ...DEFAULT_SETTINGS, ...(data.settings ?? {}) };
+
+      setFavorites(nextFav);
+      setRecents(nextRec);
+      setRecentSearches(nextSearch);
+      setSettings(nextSettings);
+      localStorage.setItem(KEYS.favorites, JSON.stringify(nextFav));
+      localStorage.setItem(KEYS.recents, JSON.stringify(nextRec));
+      localStorage.setItem(KEYS.searches, JSON.stringify(nextSearch));
+      localStorage.setItem(KEYS.settings, JSON.stringify(nextSettings));
+
+      return {
+        ok: true,
+        message: `Restored ${nextFav.length} favourite${nextFav.length === 1 ? "" : "s"}`,
+      };
+    } catch {
+      return { ok: false, message: "Couldn't read that file" };
+    }
+  }, []);
+
   const value = useMemo<LibraryValue>(
     () => ({
       hydrated,
@@ -141,6 +231,9 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       recentSearches,
       settings,
+      showWhatsNew,
+      dismissWhatsNew,
+      openWhatsNew,
       isFavorite: (id) => favorites.includes(id),
       toggleFavorite,
       recordUse,
@@ -148,6 +241,8 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       clearRecents,
       clearSearches,
       updateSettings,
+      exportBackup,
+      importBackup,
     }),
     [
       hydrated,
@@ -155,12 +250,17 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recents,
       recentSearches,
       settings,
+      showWhatsNew,
+      dismissWhatsNew,
+      openWhatsNew,
       toggleFavorite,
       recordUse,
       recordSearch,
       clearRecents,
       clearSearches,
       updateSettings,
+      exportBackup,
+      importBackup,
     ],
   );
 
