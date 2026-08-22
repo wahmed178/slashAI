@@ -307,3 +307,26 @@ mark {
   padding: 0 2px;
 }
 
+
+/* feed entrance — restrained, respects the reduced-motion setting */
+@keyframes feed-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.feed-in {
+  animation: feed-in var(--motion-base, 220ms) ease-out both;
+}
+
+:root[data-motion="reduced"] .feed-in,
+@media (prefers-reduced-motion: reduce) {
+  .feed-in {
+    animation: none;
+  }
+}
