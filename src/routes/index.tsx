@@ -351,6 +351,8 @@ function HomePage() {
           })}
         </div>
       </Section>
+        </>
+      )}
 
       <p className="mt-10 flex items-center gap-1.5 text-xs text-muted-foreground">
         <Sparkles className="size-3.5" aria-hidden /> Everything is stored on this device — no
