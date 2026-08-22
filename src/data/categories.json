@@ -1,0 +1,107 @@
+[
+  {
+    "category": "Image & Vision",
+    "icon": "Image",
+    "type": "image"
+  },
+  {
+    "category": "Documents & OCR",
+    "icon": "FileText",
+    "type": "document"
+  },
+  {
+    "category": "Writing",
+    "icon": "PenLine",
+    "type": "text"
+  },
+  {
+    "category": "Research",
+    "icon": "Search",
+    "type": "research"
+  },
+  {
+    "category": "Analysis",
+    "icon": "Sparkles",
+    "type": "text"
+  },
+  {
+    "category": "Data",
+    "icon": "Database",
+    "type": "data"
+  },
+  {
+    "category": "Coding",
+    "icon": "Code2",
+    "type": "coding"
+  },
+  {
+    "category": "Productivity",
+    "icon": "Zap",
+    "type": "productivity"
+  },
+  {
+    "category": "Business",
+    "icon": "Briefcase",
+    "type": "business"
+  },
+  {
+    "category": "Quality & Performance",
+    "icon": "Gauge",
+    "type": "general"
+  },
+  {
+    "category": "Learning",
+    "icon": "GraduationCap",
+    "type": "learning"
+  },
+  {
+    "category": "Audio",
+    "icon": "AudioLines",
+    "type": "audio"
+  },
+  {
+    "category": "Video",
+    "icon": "Clapperboard",
+    "type": "video"
+  },
+  {
+    "category": "Marketing",
+    "icon": "Megaphone",
+    "type": "business"
+  },
+  {
+    "category": "Design",
+    "icon": "Palette",
+    "type": "image"
+  },
+  {
+    "category": "Automation",
+    "icon": "Workflow",
+    "type": "productivity"
+  },
+  {
+    "category": "Security & Privacy",
+    "icon": "ShieldCheck",
+    "type": "general"
+  },
+  {
+    "category": "Translation",
+    "icon": "Languages",
+    "type": "text"
+  },
+  {
+    "category": "Math & Science",
+    "icon": "Sigma",
+    "type": "general"
+  },
+  {
+    "category": "Career",
+    "icon": "UserRound",
+    "type": "productivity"
+  },
+  {
+    "category": "General AI",
+    "icon": "Bot",
+    "type": "general"
+  }
+]
