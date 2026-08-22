@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import {
   Moon,
+  MoonStar,
   Sun,
   Rows3,
   Rows4,
@@ -97,7 +98,7 @@ export function SettingsPanel({
           <div className="space-y-6 px-4 pb-10">
             <section>
               <SectionTitle>Theme</SectionTitle>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 <Button
                   variant={settings.theme === "dark" ? "default" : "outline"}
                   onClick={() => updateSettings({ theme: "dark" })}
@@ -111,6 +112,13 @@ export function SettingsPanel({
                   className="gap-1.5"
                 >
                   <Sun className="size-4" /> Light
+                </Button>
+                <Button
+                  variant={settings.theme === "amoled" ? "default" : "outline"}
+                  onClick={() => updateSettings({ theme: "amoled" })}
+                  className="gap-1.5"
+                >
+                  <MoonStar className="size-4" /> AMOLED
                 </Button>
               </div>
             </section>
