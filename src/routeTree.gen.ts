@@ -20,6 +20,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
+import { Route as DiscoverIndexRouteImport } from './routes/discover.index'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -79,6 +80,11 @@ const CollectionsIdRoute = CollectionsIdRouteImport.update({
   path: '/collections/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
+  id: '/discover/',
+  path: '/discover/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreIndexRoute = ExploreIndexRouteImport.update({
   id: '/explore/',
   path: '/explore/',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections/': typeof CollectionsIndexRoute
+  '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections': typeof CollectionsIndexRoute
+  '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/collections/': typeof CollectionsIndexRoute
+  '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/collections/'
+    | '/discover/'
     | '/explore/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/collections'
+    | '/discover'
     | '/explore'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/collections/'
+    | '/discover/'
     | '/explore/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
+  DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
@@ -292,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/discover/': {
+      id: '/discover/'
+      path: '/discover'
+      fullPath: '/discover/'
+      preLoaderRoute: typeof DiscoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore/': {
       id: '/explore/'
       path: '/explore'
@@ -328,6 +348,7 @@ const rootRouteChildren: RootRouteChildren = {
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
+  DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
