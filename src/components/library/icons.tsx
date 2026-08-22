@@ -25,8 +25,14 @@ import {
   Compass,
   Users,
   House,
+  Github,
+  Youtube,
+  Layers,
+  Lightbulb,
+  Wrench,
   type LucideIcon,
 } from "lucide-react";
+
 
 const MAP: Record<string, LucideIcon> = {
   Image,
