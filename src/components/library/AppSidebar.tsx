@@ -13,7 +13,7 @@ interface Props {
   recentsCount: number;
   onOpenRecents: () => void;
   onOpenSettings: () => void;
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 }
 
 export function SidebarContents({

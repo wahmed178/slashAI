@@ -53,7 +53,7 @@ interface LibrarySearch {
   sort: SortKey;
   fav: boolean;
   page: number;
-  cmd?: string;
+  cmd: string | undefined;
 }
 
 const SORTS: SortKey[] = ["relevance", "name", "category", "popularity", "newest"];
@@ -61,14 +61,14 @@ const str = (v: unknown, fallback: string) => (typeof v === "string" && v ? v : 
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>): LibrarySearch => ({
-    q: str(search.q, ""),
-    cat: str(search.cat, "all"),
-    type: str(search.type, "all"),
-    diff: str(search.diff, "all"),
-    sort: (SORTS.includes(search.sort as SortKey) ? search.sort : "relevance") as SortKey,
-    fav: search.fav === true || search.fav === "true",
-    page: Math.max(1, Number(search.page) || 1),
-    cmd: typeof search.cmd === "string" && search.cmd ? search.cmd : undefined,
+    q: str(search["q"], ""),
+    cat: str(search["cat"], "all"),
+    type: str(search["type"], "all"),
+    diff: str(search["diff"], "all"),
+    sort: (SORTS.includes(search["sort"] as SortKey) ? search["sort"] : "relevance") as SortKey,
+    fav: search["fav"] === true || search["fav"] === "true",
+    page: Math.max(1, Number(search["page"]) || 1),
+    cmd: typeof search["cmd"] === "string" && search["cmd"] ? (search["cmd"] as string) : undefined,
   }),
   head: () => ({
     meta: [

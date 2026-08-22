@@ -81,11 +81,11 @@ export const getCommand = (id: string | undefined) => (id ? byId.get(id) : undef
 export function getDailyCommand(dateKey: string): SlashCommand {
   let hash = 0;
   for (let i = 0; i < dateKey.length; i++) hash = (hash * 31 + dateKey.charCodeAt(i)) >>> 0;
-  return COMMANDS[hash % COMMANDS.length];
+  return COMMANDS[hash % COMMANDS.length]!;
 }
 
 export function getRandomCommand(): SlashCommand {
-  return COMMANDS[Math.floor(Math.random() * COMMANDS.length)];
+  return COMMANDS[Math.floor(Math.random() * COMMANDS.length)]!;
 }
 
 export function relatedCommands(cmd: SlashCommand, limit = 6): SlashCommand[] {
