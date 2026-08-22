@@ -43,6 +43,8 @@ const DEFAULT_SETTINGS: Settings = {
   view: "grid",
   pageSize: 24,
   reducedMotion: false,
+  interests: [],
+  onboarded: false,
 };
 
 const KEYS = {
