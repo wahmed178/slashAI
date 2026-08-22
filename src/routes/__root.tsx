@@ -91,14 +91,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SlashAI Command Library" },
+      { title: "SlashAI" },
       {
         name: "description",
         content:
           "A searchable library of 1,200+ AI slash commands with copy-ready prompt templates.",
       },
       { name: "author", content: "SlashAI" },
-      { property: "og:title", content: "SlashAI Command Library" },
+      { property: "og:title", content: "SlashAI" },
       {
         property: "og:description",
         content:

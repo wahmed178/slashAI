@@ -79,12 +79,12 @@ export const Route = createFileRoute("/")({
   }),
   head: () => ({
     meta: [
-      { title: `SlashAI Command Library — ${VERIFIED_TOTAL} AI slash commands` },
+      { title: `SlashAI — ${VERIFIED_TOTAL} AI slash commands` },
       {
         name: "description",
         content: `Search ${VERIFIED_TOTAL} verified AI slash commands for images, documents, writing, code, data and research. Copy-ready prompts, favorites and offline access.`,
       },
-      { property: "og:title", content: "SlashAI Command Library" },
+      { property: "og:title", content: "SlashAI" },
       {
         property: "og:description",
         content: `A searchable dashboard of ${VERIFIED_TOTAL} AI slash commands with copy-ready prompt templates.`,
@@ -372,7 +372,7 @@ function LibraryPage() {
           {isHome && (
             <section className="mb-8">
               <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                The SlashAI Command Library
+                The SlashAI library
               </h1>
               <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
                 <span className="font-semibold text-foreground">

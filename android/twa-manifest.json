@@ -1,7 +1,7 @@
 {
   "packageId": "dev.lovable.slashprompt",
   "host": "slashprompt.lovable.app",
-  "name": "SlashAI Command Library",
+  "name": "SlashAI",
   "launcherName": "SlashAI",
   "display": "standalone",
   "themeColor": "#12161c",
