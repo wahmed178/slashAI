@@ -86,10 +86,6 @@ jobs:
         with:
           bun-version: latest
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -100,14 +96,22 @@ jobs:
           export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/cmdline-tools/16.0/bin:$ANDROID_HOME/platform-tools:$PATH"
           mkdir -p "$ANDROID_HOME/licenses"
           yes | sdkmanager --licenses || true
-          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          sdkmanager --install "platform-tools" "platforms;android-36" "build-tools;36.1.0"
+          # Bubblewrap's SDK path validation expects a root 'bin' or 'tools' directory.
+          mkdir -p "$ANDROID_HOME/bin"
+          if [ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ]; then
+            ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin" "$ANDROID_HOME/bin"
+          else
+            ln -sf "$ANDROID_HOME/cmdline-tools/16.0/bin" "$ANDROID_HOME/bin"
+          fi
+
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
       - name: Set version from tag
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          export VERSION="${GITHUB_REF_NAME#v}"
           node -e "
             const fs = require('fs');
             const p = 'android/twa-manifest.json';
@@ -116,8 +120,7 @@ jobs:
             m.appVersionCode = Number(process.env.GITHUB_RUN_NUMBER);
             fs.writeFileSync(p, JSON.stringify(m, null, 2));
           "
-        env:
-          VERSION: ${{ github.ref_name }}
+
 
       - name: Restore signing keystore
         env:
@@ -128,47 +131,23 @@ jobs:
             exit 1
           fi
           echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$GITHUB_WORKSPACE/android/android.keystore"
-          node -e "
-            const fs = require('fs');
-            const p = 'android/twa-manifest.json';
-            const m = JSON.parse(fs.readFileSync(p, 'utf8'));
-            m.signingKey = { path: process.env.GITHUB_WORKSPACE + '/android/android.keystore', alias: 'slashai' };
-            fs.writeFileSync(p, JSON.stringify(m, null, 2));
-          "
-
-      - name: Configure Bubblewrap (no interactive prompts)
-        run: |
-          mkdir -p "$HOME/.bubblewrap"
-          cat > "$HOME/.bubblewrap/config.json" <<EOF
-          {
-            "jdkPath": "$JAVA_HOME",
-            "androidSdkPath": "$ANDROID_HOME"
-          }
-          EOF
-          cat "$HOME/.bubblewrap/config.json"
-
-      - name: Initialize TWA project
-        env:
-          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: npx --yes @bubblewrap/cli init --manifest=android/twa-manifest.json --directory=android/project --skipPwaValidation
 
       - name: Build Android release (APK + AAB)
-        working-directory: android/project
         env:
           BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: npx --yes @bubblewrap/cli build --skipPwaValidation
+          TWA_KEYSTORE_PATH: ${{ github.workspace }}/android/android.keystore
+        run: bun run scripts/bubblewrap-build.mjs android/twa-manifest.json android/project
 
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
         with:
           name: android-release
           path: |
-            android/project/app/build/outputs/apk/release/*.apk
-            android/project/app/build/outputs/bundle/release/*.aab
+            android/project/app/build/outputs/apk/release/app-release-signed.apk
+            android/project/app/build/outputs/bundle/release/app-release-signed.aab
           if-no-files-found: error
 
       - name: Remove keystore
         if: always()
-        run: rm -f android/android.keystore
+        run: rm -f "$GITHUB_WORKSPACE/android/android.keystore"

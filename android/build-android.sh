@@ -5,33 +5,28 @@ set -euo pipefail
 # This runs on your local machine, not inside the Lovable editor.
 #
 # Requirements:
-#   - Node.js 18+ and npm
-#   - Java JDK 11+ (keytool + jarsigner)
+#   - bun (https://bun.sh)
+#   - Java JDK 17+ (keytool + jarsigner)
 #   - Android SDK command-line tools (or Android Studio)
+#   - Environment variables:
+#       BUBBLEWRAP_KEYSTORE_PASSWORD
+#       BUBBLEWRAP_KEY_PASSWORD
+#       JAVA_HOME
+#       ANDROID_HOME
+#   - A signing keystore at android/android.keystore (or set TWA_KEYSTORE_PATH)
 #
 # Usage:
-#   1. Fill in android/twa-manifest.json with your published domain.
-#   2. Run: bash android/build-android.sh
+#   bash android/build-android.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 
-# Domain must be replaced before building.
 MANIFEST="$SCRIPT_DIR/twa-manifest.json"
 if grep -q "REPLACE_WITH_YOUR_PUBLISHED_DOMAIN" "$MANIFEST"; then
   echo "ERROR: Replace REPLACE_WITH_YOUR_PUBLISHED_DOMAIN in $MANIFEST with your published domain first."
   exit 1
 fi
 
-# Install Bubblewrap CLI if not present.
-if ! command -v bubblewrap &> /dev/null; then
-  echo "Installing Bubblewrap CLI..."
-  npm install -g @bubblewrap/cli
-fi
-
-# Build the Android project.
-echo "Building SlashAI Android app..."
-cd "$SCRIPT_DIR"
-bubblewrap build --manifest="$MANIFEST" --directory="$SCRIPT_DIR/project"
-
-echo "Done. APK / AAB are in $SCRIPT_DIR/project/"
+cd "$ROOT_DIR"
+export TWA_KEYSTORE_PATH="${TWA_KEYSTORE_PATH:-$SCRIPT_DIR/android.keystore}"
+bun run scripts/bubblewrap-build.mjs android/twa-manifest.json android/project

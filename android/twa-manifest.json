@@ -14,8 +14,8 @@
   "startUrl": "/",
   "iconUrl": "https://slashprompt.lovable.app/icons/icon-512.png",
   "maskableIconUrl": "https://slashprompt.lovable.app/icons/icon-maskable-512.png",
-  "monochromeIconUrl": "https://slashprompt.lovable.app/icons/android-adaptive-fg.png",
   "splashScreenFadeOutDuration": 300,
+
   "signingKey": {
     "path": "android.keystore",
     "alias": "slashai"
