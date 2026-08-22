@@ -30,6 +30,10 @@ interface Settings {
   view: "grid" | "list";
   pageSize: number;
   reducedMotion: boolean;
+  /** optional, local-only interest ids used to personalise Discover */
+  interests: string[];
+  /** true once the user has answered (or skipped) the interests prompt */
+  onboarded: boolean;
 }
 
 const DEFAULT_SETTINGS: Settings = {
