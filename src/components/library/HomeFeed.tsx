@@ -18,7 +18,13 @@ import { useLibrary } from "@/hooks/use-library";
 import { COLLECTIONS } from "@/lib/collections";
 import { getPersona, personaCommands } from "@/lib/personas";
 import { toolsForPersona } from "@/lib/tools";
-import { COMMANDS, getDailyCommand, getRandomCommand, todayKey, type SlashCommand } from "@/lib/commands";
+import {
+  COMMANDS,
+  getDailyCommand,
+  getRandomCommand,
+  todayKey,
+  type SlashCommand,
+} from "@/lib/commands";
 import { NEWEST_COMMANDS, newToYou, tipForDay, trendingCommands } from "@/lib/engagement";
 
 type Block =
@@ -92,7 +98,9 @@ export function HomeFeed() {
 
     // endless tail: the rest of the catalog, most useful first
     const shown = new Set(
-      out.filter((b) => b.kind === "command" || b.kind === "daily").map((b) => (b as never as { command: SlashCommand }).command.id),
+      out
+        .filter((b) => b.kind === "command" || b.kind === "daily")
+        .map((b) => (b as never as { command: SlashCommand }).command.id),
     );
     const tail = [...COMMANDS]
       .filter((c) => !shown.has(c.id))
@@ -286,7 +294,10 @@ function FeedBlock({
       return (
         <section className="panel feed-in rounded-2xl p-4 text-center">
           <p className="text-sm text-muted-foreground">Not sure what you need?</p>
-          <Button className="mt-3 gap-2" onClick={() => setSurprise(getRandomCommand(surprise?.id))}>
+          <Button
+            className="mt-3 gap-2"
+            onClick={() => setSurprise(getRandomCommand(surprise?.id))}
+          >
             <Shuffle className="size-4" /> Surprise me
           </Button>
           {surprise && (

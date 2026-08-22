@@ -74,9 +74,18 @@ function BackButton({ to, label }: { to: string; label: string }) {
   );
 }
 
-function NavList({ onNavigate, showSecondary = true }: { onNavigate?: () => void; showSecondary?: boolean }) {
+function NavList({
+  onNavigate,
+  showSecondary = true,
+}: {
+  onNavigate?: () => void;
+  showSecondary?: boolean;
+}) {
   const { favorites, recents } = useLibrary();
-  const counts: Record<string, number> = { "/favorites": favorites.length, "/recent": recents.length };
+  const counts: Record<string, number> = {
+    "/favorites": favorites.length,
+    "/recent": recents.length,
+  };
 
   const cls =
     "flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none";

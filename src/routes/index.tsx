@@ -77,7 +77,6 @@ function greeting() {
   return "Good evening";
 }
 
-
 function CommandRow({ commands }: { commands: SlashCommand[] }) {
   return (
     <div className="grid gap-2 sm:grid-cols-2">
@@ -129,8 +128,7 @@ function HomePage() {
   );
 
   const forYou = useMemo(
-    () =>
-      hydrated ? recommendedCommands(settings.interests, recents, favorites, 4) : [],
+    () => (hydrated ? recommendedCommands(settings.interests, recents, favorites, 4) : []),
     [hydrated, settings.interests, recents, favorites],
   );
 
@@ -195,116 +193,119 @@ function HomePage() {
         ))}
       </div>
 
-      {feed && <div className="mt-3"><HomeFeed /></div>}
+      {feed && (
+        <div className="mt-3">
+          <HomeFeed />
+        </div>
+      )}
       {!feed && (
         <>
-
-
-      <div className="mt-6 flex flex-wrap gap-2">
-        {quickCategories.map((c) => {
-          const Icon = categoryIcon(c.icon);
-          return (
+          <div className="mt-6 flex flex-wrap gap-2">
+            {quickCategories.map((c) => {
+              const Icon = categoryIcon(c.icon);
+              return (
+                <Link
+                  key={c.category}
+                  to="/explore/$category"
+                  params={{ category: c.category }}
+                  className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+                >
+                  <Icon className="size-4 shrink-0 text-primary" aria-hidden />
+                  <span className="truncate">{c.category}</span>
+                </Link>
+              );
+            })}
             <Link
-              key={c.category}
-              to="/explore/$category"
-              params={{ category: c.category }}
-              className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+              to="/explore"
+              className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
             >
-              <Icon className="size-4 shrink-0 text-primary" aria-hidden />
-              <span className="truncate">{c.category}</span>
+              All categories <ArrowRight className="size-4" aria-hidden />
             </Link>
-          );
-        })}
-        <Link
-          to="/explore"
-          className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
-        >
-          All categories <ArrowRight className="size-4" aria-hidden />
-        </Link>
-      </div>
+          </div>
 
-      
-
-      <Section title="Discover" hint="One fresh pick a day, plus a reroll whenever you want one.">
-        <Discover />
-      </Section>
-
-      {recentCommands.length > 0 && (
-        <Section
-          title="Continue where you left off"
-          action={
-            <Link
-              to="/recent"
-              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-            >
-              <History className="size-4" aria-hidden /> All
-            </Link>
-          }
-        >
-          <CommandRow commands={recentCommands} />
-        </Section>
-      )}
-
-      {favoriteCommands.length > 0 && (
-        <Section
-          title="Your favorites"
-          action={
-            <Link
-              to="/favorites"
-              className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-            >
-              <Star className="size-4" aria-hidden /> All
-            </Link>
-          }
-        >
-          <CommandRow commands={favoriteCommands} />
-        </Section>
-      )}
-
-      {forYou.length > 0 && (
-        <Section title="For you" hint="Based on what you saved and opened on this device.">
-          <CommandRow commands={forYou} />
-        </Section>
-      )}
-
-      <Section
-        title="Collections"
-        hint="Curated starting points — every collection is open to everyone."
-        action={
-          <Link
-            to="/collections"
-            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          <Section
+            title="Discover"
+            hint="One fresh pick a day, plus a reroll whenever you want one."
           >
-            All <ArrowRight className="size-4" aria-hidden />
-          </Link>
-        }
-      >
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {COLLECTIONS.slice(0, 6).map((c) => {
-            const Icon = categoryIcon(c.icon);
-            return (
+            <Discover />
+          </Section>
+
+          {recentCommands.length > 0 && (
+            <Section
+              title="Continue where you left off"
+              action={
+                <Link
+                  to="/recent"
+                  className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                >
+                  <History className="size-4" aria-hidden /> All
+                </Link>
+              }
+            >
+              <CommandRow commands={recentCommands} />
+            </Section>
+          )}
+
+          {favoriteCommands.length > 0 && (
+            <Section
+              title="Your favorites"
+              action={
+                <Link
+                  to="/favorites"
+                  className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                >
+                  <Star className="size-4" aria-hidden /> All
+                </Link>
+              }
+            >
+              <CommandRow commands={favoriteCommands} />
+            </Section>
+          )}
+
+          {forYou.length > 0 && (
+            <Section title="For you" hint="Based on what you saved and opened on this device.">
+              <CommandRow commands={forYou} />
+            </Section>
+          )}
+
+          <Section
+            title="Collections"
+            hint="Curated starting points — every collection is open to everyone."
+            action={
               <Link
-                key={c.id}
-                to="/collections/$id"
-                params={{ id: c.id }}
-                className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+                to="/collections"
+                className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
               >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-                  <Icon className="size-4.5" aria-hidden />
-                </span>
-                <span className="min-w-0">
-                  <span className="block truncate text-sm font-semibold text-foreground">
-                    {c.title}
-                  </span>
-                  <span className="block truncate text-xs text-muted-foreground">
-                    {c.count} commands
-                  </span>
-                </span>
+                All <ArrowRight className="size-4" aria-hidden />
               </Link>
-            );
-          })}
-        </div>
-      </Section>
+            }
+          >
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {COLLECTIONS.slice(0, 6).map((c) => {
+                const Icon = categoryIcon(c.icon);
+                return (
+                  <Link
+                    key={c.id}
+                    to="/collections/$id"
+                    params={{ id: c.id }}
+                    className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+                  >
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
+                      <Icon className="size-4.5" aria-hidden />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm font-semibold text-foreground">
+                        {c.title}
+                      </span>
+                      <span className="block truncate text-xs text-muted-foreground">
+                        {c.count} commands
+                      </span>
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          </Section>
         </>
       )}
 

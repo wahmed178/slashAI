@@ -64,16 +64,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function MePage() {
-  const {
-    hydrated,
-    settings,
-    updateSettings,
-    favorites,
-    recents,
-    streak,
-    stats,
-    clearAllData,
-  } = useLibrary();
+  const { hydrated, settings, updateSettings, favorites, recents, streak, stats, clearAllData } =
+    useLibrary();
   const [editingPersona, setEditingPersona] = useState(false);
 
   const persona = getPersona(settings.persona);
