@@ -33,7 +33,7 @@ keytool -genkey \
   -keyalg RSA \
   -keysize 2048 \
   -validity "$VALIDITY" \
-  -dname "CN=SlashAI Command Library, OU=Mobile, O=Lovable, L=Unknown, ST=Unknown, C=US"
+  -dname "CN=SlashAI, OU=Mobile, O=Lovable, L=Unknown, ST=Unknown, C=US"
 
 echo ""
 echo "SHA-256 fingerprint (paste this into public/.well-known/assetlinks.json):"

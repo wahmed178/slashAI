@@ -149,10 +149,10 @@ export function SettingsPanel({
                 Created by Waseem Ahmed
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Waseem Ahmed built the SlashAI Command Library out of a simple, practical idea: AI
-                is most useful when its capabilities are organised well enough to reach in a second.
-                The library reflects a builder's mindset — structure first, then polish, with a
-                steady focus on everyday productivity rather than novelty.
+                Waseem Ahmed built SlashAI out of a simple, practical idea: AI is most useful when
+                its capabilities are organised well enough to reach in a second. The library
+                reflects a builder's mindset — structure first, then polish, with a steady focus on
+                everyday productivity rather than novelty.
               </p>
 
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

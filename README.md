@@ -1,6 +1,6 @@
-# Slash Command Hub
+# SlashAI
 
-Build a production-quality responsive web app called **SlashAI Command Library**. The purpose is a searchable library of 1,000+ AI slash commands such as /HandwrittenNotesImage, /Explode, /Scan, /100xUpscale. It must be designed from the beginning to be PWA-ready and mobile-first, with clean component architecture and an app-shell suitable for later installation as a PWA.
+Build a production-quality responsive web app called **SlashAI**. The purpose is a searchable library of 1,000+ AI slash commands such as /HandwrittenNotesImage, /Explode, /Scan, /100xUpscale. It must be designed from the beginning to be PWA-ready and mobile-first, with clean component architecture and an app-shell suitable for later installation as a PWA.
 
 Core requirement: create a curated catalog of at least 1,000 unique slash commands. Each command needs: command name (starting with /), short description of what it does, detailed 'How to use' example, category, subcategory, tags, and whether it is primarily for image, text, document, data, coding, research, productivity, audio/video, business, learning, or general AI. Commands should be genuinely useful, not random filler. Include broad categories such as Image & Vision, Documents & OCR, Writing, Research, Analysis, Data, Coding, Productivity, Business, Quality & Performance, Learning, Audio, Video, Marketing, Design, Automation, Security/Privacy-safe utilities, Translation, Math/Science, Career, and General AI. Include commands ranging from simple utilities to advanced workflows. Generate at least 1,000 records and make the architecture easy to extend.
 

@@ -2,7 +2,7 @@
 
 Published web URL: **https://slashprompt.lovable.app**
 
-This folder contains the configuration needed to wrap the **SlashAI Command Library** web app into a real Android APK using **Trusted Web Activity (TWA)**. The app itself stays a web app — this is just a lightweight native shell that opens it full-screen, so you can publish it on the Google Play Store.
+This folder contains the configuration needed to wrap the **SlashAI** web app into a real Android APK using **Trusted Web Activity (TWA)**. The app itself stays a web app — this is just a lightweight native shell that opens it full-screen, so you can publish it on the Google Play Store.
 
 ## What is TWA?
 
