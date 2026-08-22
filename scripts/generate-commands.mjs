@@ -351,7 +351,8 @@ for (const cat of CATEGORIES) {
           .split(/\s+/)
           .slice(0, 9)
           .join(" ")
-          .replace(/[.,;:]$/, "");
+          .replace(/[.,;:]+$/, "")
+          .replace(/\s+(?:an?|the|of|from|and|or|with|for|to|in|on|by)$/i, "");
         const description = `${capitalize(phrase)} ${objPhrase} — e.g. ${shortSample}.`;
 
         const howToUse = [
