@@ -44,15 +44,15 @@ On your local machine (the Lovable editor cannot run Android tooling):
 
 ## Step-by-step build
 
-### 1. Publish the web app
+### 1. Publish the web app (done)
 
-You must have a stable production URL before building the Android wrapper. TWA domain verification does not work with Lovable preview URLs.
+The web app is already published at **https://slash-command-vault.lovable.app**. TWA domain verification does not work with Lovable preview URLs, so a published domain is required.
 
 ### 2. Fill in the domain placeholders
 
-Open `android/twa-manifest.json` and replace every occurrence of `REPLACE_WITH_YOUR_PUBLISHED_DOMAIN` with your real domain, e.g. `slashai.lovable.app`.
+`android/twa-manifest.json` already uses the published domain `slash-command-vault.lovable.app`. You should verify the host name matches your published domain before building.
 
-Also update `public/.well-known/assetlinks.json` with the same domain and the SHA-256 fingerprint of your signing key (see step 4).
+Next, update `public/.well-known/assetlinks.json` with the **SHA-256 fingerprint** of your signing key (see step 4). This is what removes the browser address bar in the TWA app.
 
 ### 3. Install Bubblewrap
 
