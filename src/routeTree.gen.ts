@@ -21,6 +21,7 @@ import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
 import { Route as DiscoverIndexRouteImport } from './routes/discover.index'
+import { Route as DiscoverSectionRouteImport } from './routes/discover.$section'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -85,6 +86,11 @@ const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
   path: '/discover/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiscoverSectionRoute = DiscoverSectionRouteImport.update({
+  id: '/discover/$section',
+  path: '/discover/$section',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreIndexRoute = ExploreIndexRouteImport.update({
   id: '/explore/',
   path: '/explore/',
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/tools': typeof ToolsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
+  '/discover/$section': typeof DiscoverSectionRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/tools': typeof ToolsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
+  '/discover/$section': typeof DiscoverSectionRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/tools': typeof ToolsRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
+  '/discover/$section': typeof DiscoverSectionRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/c/$slug'
     | '/collections/$id'
+    | '/discover/$section'
     | '/collections/'
     | '/discover/'
     | '/explore/'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/c/$slug'
     | '/collections/$id'
+    | '/discover/$section'
     | '/collections'
     | '/discover'
     | '/explore'
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/c/$slug'
     | '/collections/$id'
+    | '/discover/$section'
     | '/collections/'
     | '/discover/'
     | '/explore/'
@@ -219,6 +231,7 @@ export interface RootRouteChildren {
   ToolsRoute: typeof ToolsRoute
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
+  DiscoverSectionRoute: typeof DiscoverSectionRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
@@ -312,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiscoverIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/discover/$section': {
+      id: '/discover/$section'
+      path: '/discover/$section'
+      fullPath: '/discover/$section'
+      preLoaderRoute: typeof DiscoverSectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore/': {
       id: '/explore/'
       path: '/explore'
@@ -347,6 +367,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsRoute: ToolsRoute,
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
+  DiscoverSectionRoute: DiscoverSectionRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
