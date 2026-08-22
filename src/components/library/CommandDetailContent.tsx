@@ -28,7 +28,7 @@ export function CommandDetailContent({
 }: Props) {
   const Icon = categoryIcon(CATEGORY_ICONS[command.category]);
   const related = relatedCommands(command);
-  const { copyCommand, copyPrompt, useCommand, shareCommand } = useCommandActions();
+  const { copyCommand, copyPrompt, runCommand, shareCommand } = useCommandActions();
   const [template, setTemplate] = useState(() => commandTemplate(command));
   const [copied, setCopied] = useState(false);
 
@@ -166,7 +166,7 @@ export function CommandDetailContent({
       )}
 
       <div className="flex flex-wrap items-center gap-2 border-t border-border pt-4">
-        <Button onClick={() => useCommand(command, template)} className="gap-1.5">
+        <Button onClick={() => runCommand(command, template)} className="gap-1.5">
           <Wand2 className="size-4" /> Use command
         </Button>
         <Button variant="outline" onClick={() => copyPrompt(command, template)} className="gap-1.5">

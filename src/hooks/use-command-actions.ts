@@ -33,7 +33,7 @@ export function useCommandActions() {
     [copy, recordUse],
   );
 
-  const useCommand = useCallback(
+  const runCommand = useCallback(
     (cmd: SlashCommand, text?: string) => {
       recordUse(cmd.id);
       void copy(text ?? commandTemplate(cmd), `${cmd.command} template copied — ready to edit`);
@@ -61,5 +61,5 @@ export function useCommandActions() {
     [copy],
   );
 
-  return { copy, copyCommand, copyPrompt, useCommand, shareCommand };
+  return { copy, copyCommand, copyPrompt, runCommand, shareCommand };
 }
