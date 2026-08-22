@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as SearchRouteImport } from './routes/search'
@@ -24,6 +25,11 @@ import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -80,6 +86,7 @@ const ExploreCategorySubcategoryRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/favorites': typeof FavoritesRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/favorites': typeof FavoritesRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
@@ -107,6 +115,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/favorites': typeof FavoritesRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
@@ -122,6 +131,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/favorites'
     | '/recent'
     | '/search'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/favorites'
     | '/recent'
     | '/search'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/favorites'
     | '/recent'
     | '/search'
@@ -162,6 +174,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   FavoritesRoute: typeof FavoritesRoute
   RecentRoute: typeof RecentRoute
   SearchRoute: typeof SearchRoute
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -258,6 +278,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   FavoritesRoute: FavoritesRoute,
   RecentRoute: RecentRoute,
   SearchRoute: SearchRoute,
