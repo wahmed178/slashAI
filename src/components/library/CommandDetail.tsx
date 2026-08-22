@@ -1,5 +1,11 @@
 import { Star, Copy, Wand2, Hash } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { categoryIcon } from "./icons";
@@ -53,17 +59,23 @@ export function CommandDetail({
         <ScrollArea className="max-h-[52vh]">
           <div className="space-y-5 px-5 py-4">
             <section>
-              <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">What it does</h4>
+              <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                What it does
+              </h4>
               <p className="mt-1.5 text-sm text-foreground">{command.description}</p>
             </section>
 
             <section>
-              <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">How to use</h4>
+              <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                How to use
+              </h4>
               <p className="mt-1.5 text-sm text-foreground">{command.usage}</p>
             </section>
 
             <section>
-              <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Example</h4>
+              <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                Example
+              </h4>
               <pre className="mt-1.5 overflow-x-auto rounded-lg border border-border bg-muted p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap text-foreground">
                 {command.example}
               </pre>

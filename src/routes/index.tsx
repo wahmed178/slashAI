@@ -19,7 +19,13 @@ import {
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useLibrary } from "@/hooks/use-library";
@@ -81,7 +87,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "SlashAI Command Library" },
       {
         property: "og:description",
-        content: "A searchable dashboard of 1,200+ AI slash commands with copy-ready prompt templates.",
+        content:
+          "A searchable dashboard of 1,200+ AI slash commands with copy-ready prompt templates.",
       },
       { name: "theme-color", content: "#12161c" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -95,7 +102,17 @@ export const Route = createFileRoute("/")({
 function LibraryPage() {
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/" });
-  const { hydrated, favorites, recents, settings, isFavorite, toggleFavorite, recordUse, clearRecents, updateSettings } = useLibrary();
+  const {
+    hydrated,
+    favorites,
+    recents,
+    settings,
+    isFavorite,
+    toggleFavorite,
+    recordUse,
+    clearRecents,
+    updateSettings,
+  } = useLibrary();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -190,7 +207,10 @@ function LibraryPage() {
   }, [openCommand]);
 
   const activeFilters =
-    (search.cat !== "all" ? 1 : 0) + (search.type !== "all" ? 1 : 0) + (search.diff !== "all" ? 1 : 0) + (search.fav ? 1 : 0);
+    (search.cat !== "all" ? 1 : 0) +
+    (search.type !== "all" ? 1 : 0) +
+    (search.diff !== "all" ? 1 : 0) +
+    (search.fav ? 1 : 0);
 
   const sidebar = (
     <SidebarContents
@@ -337,8 +357,9 @@ function LibraryPage() {
                 The SlashAI Command Library
               </h1>
               <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
-                {COMMANDS.length.toLocaleString()} curated AI slash commands across {CATEGORY_COUNTS.length}{" "}
-                categories. Search, copy a ready-to-edit prompt, and save the ones you keep coming back to.
+                {COMMANDS.length.toLocaleString()} curated AI slash commands across{" "}
+                {CATEGORY_COUNTS.length} categories. Search, copy a ready-to-edit prompt, and save
+                the ones you keep coming back to.
               </p>
 
               <div className="mt-5 grid gap-3 md:grid-cols-3">
@@ -351,7 +372,9 @@ function LibraryPage() {
                     <CalendarDays className="size-3.5" /> Command of the day
                   </p>
                   <p className="mt-2 font-mono text-sm text-foreground">{daily.command}</p>
-                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{daily.description}</p>
+                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+                    {daily.description}
+                  </p>
                 </button>
 
                 <div className="panel rounded-xl p-4 md:col-span-2">
@@ -395,7 +418,10 @@ function LibraryPage() {
           {/* toolbar */}
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <p className="text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">{results.length.toLocaleString()}</span> command
+              <span className="font-semibold text-foreground">
+                {results.length.toLocaleString()}
+              </span>{" "}
+              command
               {results.length === 1 ? "" : "s"}
               {search.fav && " in favorites"}
               {search.cat !== "all" && ` in ${search.cat}`}
@@ -446,7 +472,9 @@ function LibraryPage() {
                   onClick={() => updateSettings({ view: "grid" })}
                   className={cn(
                     "rounded-md p-1.5",
-                    settings.view === "grid" ? "bg-accent text-foreground" : "text-muted-foreground",
+                    settings.view === "grid"
+                      ? "bg-accent text-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   <LayoutGrid className="size-4" />
@@ -458,7 +486,9 @@ function LibraryPage() {
                   onClick={() => updateSettings({ view: "list" })}
                   className={cn(
                     "rounded-md p-1.5",
-                    settings.view === "list" ? "bg-accent text-foreground" : "text-muted-foreground",
+                    settings.view === "list"
+                      ? "bg-accent text-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   <List className="size-4" />
@@ -486,7 +516,9 @@ function LibraryPage() {
           ) : results.length === 0 ? (
             <div className="panel flex flex-col items-center rounded-xl px-6 py-16 text-center">
               <Search className="size-6 text-muted-foreground" />
-              <p className="mt-3 text-sm font-medium text-foreground">No commands match that search</p>
+              <p className="mt-3 text-sm font-medium text-foreground">
+                No commands match that search
+              </p>
               <p className="mt-1 max-w-sm text-sm text-muted-foreground">
                 Try a shorter keyword, clear the filters, or explore a category from the sidebar.
               </p>
@@ -554,7 +586,11 @@ function LibraryPage() {
       {/* mobile bottom nav */}
       <nav className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-around border-t border-border bg-surface/95 backdrop-blur-md lg:hidden">
         {[
-          { label: "Browse", icon: LayoutGrid, action: () => setSearch({ cat: "all", fav: false }) },
+          {
+            label: "Browse",
+            icon: LayoutGrid,
+            action: () => setSearch({ cat: "all", fav: false }),
+          },
           { label: "Search", icon: Search, action: () => inputRef.current?.focus() },
           { label: "Favorites", icon: Star, action: () => setSearch({ fav: true }) },
           { label: "Recent", icon: History, action: () => setRecentsOpen(true) },
@@ -579,7 +615,9 @@ function LibraryPage() {
             <SheetDescription>The last commands you copied on this device.</SheetDescription>
           </SheetHeader>
           <div className="space-y-1.5 px-4 pb-6">
-            {recents.length === 0 && <p className="text-sm text-muted-foreground">Nothing here yet.</p>}
+            {recents.length === 0 && (
+              <p className="text-sm text-muted-foreground">Nothing here yet.</p>
+            )}
             {recents.map((id) => {
               const c = getCommand(id);
               if (!c) return null;

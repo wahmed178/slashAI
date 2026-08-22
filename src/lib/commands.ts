@@ -178,7 +178,7 @@ export interface FilterState {
 export function filterCommands(state: FilterState): SlashCommand[] {
   const favSet = new Set(state.favorites);
   const q = state.q.trim();
-  let list: { c: SlashCommand; s: number }[] = [];
+  const list: { c: SlashCommand; s: number }[] = [];
 
   for (const c of COMMANDS) {
     if (state.category !== "all" && c.category !== state.category) continue;
@@ -193,10 +193,15 @@ export function filterCommands(state: FilterState): SlashCommand[] {
     list.push({ c, s });
   }
 
-  const cmp: Record<SortKey, (a: { c: SlashCommand; s: number }, b: { c: SlashCommand; s: number }) => number> = {
-    relevance: (a, b) => b.s - a.s || b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
+  const cmp: Record<
+    SortKey,
+    (a: { c: SlashCommand; s: number }, b: { c: SlashCommand; s: number }) => number
+  > = {
+    relevance: (a, b) =>
+      b.s - a.s || b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
     name: (a, b) => a.c.command.localeCompare(b.c.command),
-    category: (a, b) => a.c.category.localeCompare(b.c.category) || a.c.command.localeCompare(b.c.command),
+    category: (a, b) =>
+      a.c.category.localeCompare(b.c.category) || a.c.command.localeCompare(b.c.command),
     popularity: (a, b) => b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
     newest: (a, b) => b.c.addedAt.localeCompare(a.c.addedAt),
   };

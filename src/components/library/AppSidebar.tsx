@@ -59,7 +59,11 @@ export function SidebarContents({
       </div>
 
       <div className="space-y-1 px-2 py-3">
-        <button type="button" className={item(category === "all" && !onlyFavorites)} onClick={() => onCategory("all")}>
+        <button
+          type="button"
+          className={item(category === "all" && !onlyFavorites)}
+          onClick={() => onCategory("all")}
+        >
           <LayoutGrid className="size-4" /> All commands
           <span className="ml-auto text-xs text-muted-foreground">{COMMANDS.length}</span>
         </button>

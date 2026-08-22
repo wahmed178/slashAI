@@ -92,13 +92,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "SlashAI Command Library" },
       {
         name: "description",
-        content: "A searchable library of 1,200+ AI slash commands with copy-ready prompt templates.",
+        content:
+          "A searchable library of 1,200+ AI slash commands with copy-ready prompt templates.",
       },
       { name: "author", content: "SlashAI" },
       { property: "og:title", content: "SlashAI Command Library" },
       {
         property: "og:description",
-        content: "A searchable library of 1,200+ AI slash commands with copy-ready prompt templates.",
+        content:
+          "A searchable library of 1,200+ AI slash commands with copy-ready prompt templates.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

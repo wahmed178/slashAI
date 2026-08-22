@@ -1,5 +1,11 @@
 import { Moon, Sun, Rows3, Rows4, Keyboard } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useLibrary } from "@/hooks/use-library";
 
@@ -10,7 +16,13 @@ const SHORTCUTS: [string, string][] = [
   ["R", "Random command"],
 ];
 
-export function SettingsPanel({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+export function SettingsPanel({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
   const { settings, updateSettings } = useLibrary();
 
   return (
@@ -23,7 +35,9 @@ export function SettingsPanel({ open, onOpenChange }: { open: boolean; onOpenCha
 
         <div className="space-y-6 px-4 pb-6">
           <section>
-            <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">Theme</p>
+            <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              Theme
+            </p>
             <div className="grid grid-cols-2 gap-2">
               <Button
                 variant={settings.theme === "dark" ? "default" : "outline"}
@@ -43,7 +57,9 @@ export function SettingsPanel({ open, onOpenChange }: { open: boolean; onOpenCha
           </section>
 
           <section>
-            <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">Density</p>
+            <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              Density
+            </p>
             <div className="grid grid-cols-2 gap-2">
               <Button
                 variant={settings.density === "comfortable" ? "default" : "outline"}
@@ -63,7 +79,9 @@ export function SettingsPanel({ open, onOpenChange }: { open: boolean; onOpenCha
           </section>
 
           <section>
-            <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">Results per page</p>
+            <p className="mb-2 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              Results per page
+            </p>
             <div className="grid grid-cols-3 gap-2">
               {[24, 48, 96].map((n) => (
                 <Button

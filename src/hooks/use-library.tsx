@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 export type Theme = "dark" | "light";
 export type Density = "comfortable" | "compact";
@@ -114,7 +122,16 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       clearRecents,
       updateSettings,
     }),
-    [hydrated, favorites, recents, settings, toggleFavorite, recordUse, clearRecents, updateSettings],
+    [
+      hydrated,
+      favorites,
+      recents,
+      settings,
+      toggleFavorite,
+      recordUse,
+      clearRecents,
+      updateSettings,
+    ],
   );
 
   return <LibraryContext.Provider value={value}>{children}</LibraryContext.Provider>;
