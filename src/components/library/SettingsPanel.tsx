@@ -146,14 +146,15 @@ export function SettingsPanel({
                 <UserRound className="size-3.5" /> About
               </p>
               <h3 className="mt-2 text-base font-semibold text-foreground">
-                Created by Khaja Waseem Ahmed Adil
+                Created by Waseem Ahmed
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Khaja Waseem Ahmed Adil is the creator of the SlashAI Command Library — a builder
-                focused on AI productivity, prompt systems, and practical digital tools. His work
-                centres on turning scattered AI capabilities into organised, dependable workflows
-                that people can actually use in daily work.
+                Waseem Ahmed built the SlashAI Command Library out of a simple, practical idea: AI
+                is most useful when its capabilities are organised well enough to reach in a second.
+                The library reflects a builder's mindset — structure first, then polish, with a
+                steady focus on everyday productivity rather than novelty.
               </p>
+
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 This project reflects that approach: {VERIFIED_TOTAL.toLocaleString()} verified
                 commands across {CATEGORY_TREE.length} categories, each written to be discoverable,
