@@ -8,6 +8,14 @@ import {
   Flame,
   Compass,
   Radar as RadarIcon,
+  PenLine,
+  GraduationCap,
+  Code2,
+  Image as ImageIcon,
+  FileText,
+  Briefcase,
+  Search as SearchIcon,
+  Wand2,
 } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
@@ -27,6 +35,18 @@ import {
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
 import { personaGreetingName } from "@/lib/personas";
+
+/** plain-language entry points — each one is just a good search */
+const INTENTS = [
+  { label: "Write something", q: "write draft", icon: PenLine },
+  { label: "Study or revise", q: "study explain", icon: GraduationCap },
+  { label: "Write or fix code", q: "code debug", icon: Code2 },
+  { label: "Work with an image", q: "image edit", icon: ImageIcon },
+  { label: "Handle a document", q: "document summarize", icon: FileText },
+  { label: "Do research", q: "research sources", icon: SearchIcon },
+  { label: "Get work done", q: "email plan meeting", icon: Briefcase },
+  { label: "Make something creative", q: "creative idea", icon: Wand2 },
+] as const;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -172,6 +192,25 @@ function HomePage() {
           <kbd className="rounded border border-border bg-muted px-1 font-mono">/</kbd> anywhere to
           search
         </p>
+      </section>
+
+      <section className="mt-6">
+        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          I want to…
+        </h2>
+        <div className="mt-2.5 grid gap-2 sm:grid-cols-3 lg:grid-cols-4">
+          {INTENTS.map((intent) => (
+            <Link
+              key={intent.label}
+              to="/search"
+              search={{ q: intent.q }}
+              className="panel flex items-center gap-2.5 rounded-xl p-3 transition-colors hover:border-primary/50"
+            >
+              <intent.icon className="size-4 shrink-0 text-primary" aria-hidden />
+              <span className="truncate text-sm font-medium text-foreground">{intent.label}</span>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <div className="mt-6 grid gap-2.5 sm:grid-cols-3">

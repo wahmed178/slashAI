@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "1.2.0";
+export const APP_VERSION = "1.3.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,20 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "1.3.0",
+    date: "2026-08-23",
+    title: "Free AI, Reddit and themes",
+    changes: [
+      "New Free AI section: Andi, Duck.ai, HuggingChat, Eye2, LMArena, Le Chat, DeepSeek, Groq, local model apps and more.",
+      "New Reddit section — the subreddits and wikis that actually hold free resources, from r/freebies to the r/learnprogramming wiki.",
+      "New Free Time section: legal free movies and TV, public-domain books, radio, games and good blogs.",
+      "New Websites section for single-purpose sites that do one thing properly.",
+      "Four new themes — Batman, Ocean, Moonlight and Warm — alongside Dark, Light and AMOLED.",
+      "'I want to…' shortcuts on the home screen for when you don't know what to search.",
+      "Every command now shows where to run it, with a tip for ChatGPT, Claude, Gemini, Grok, Perplexity, DeepSeek and Duck.ai.",
+    ],
+  },
   {
     version: "1.2.0",
     date: "2026-08-22",

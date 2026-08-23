@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Star, Copy, Wand2, Hash, Share2, Shuffle, Check } from "lucide-react";
+import { Star, Copy, Wand2, Hash, Share2, Shuffle, Check, ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { categoryIcon } from "./icons";
@@ -11,6 +11,7 @@ import {
   relatedCommands,
   type SlashCommand,
 } from "@/lib/commands";
+import { AI_TARGETS, defaultAiTarget } from "@/lib/ai-targets";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -31,6 +32,8 @@ export function CommandDetailContent({
   const { copyCommand, copyPrompt, runCommand, shareCommand } = useCommandActions();
   const [template, setTemplate] = useState(() => commandTemplate(command));
   const [copied, setCopied] = useState(false);
+  const [targetId, setTargetId] = useState(defaultAiTarget.id);
+  const target = AI_TARGETS.find((t) => t.id === targetId) ?? defaultAiTarget;
 
   useEffect(() => {
     setTemplate(commandTemplate(command));
@@ -116,6 +119,48 @@ export function CommandDetailContent({
           rows={8}
           className="mt-1.5 w-full resize-y rounded-lg border border-border bg-surface p-3 font-mono text-xs leading-relaxed text-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40 focus:outline-none"
         />
+      </section>
+
+      <section>
+        <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Run it in
+        </h4>
+        <div className="mt-2 -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+          {AI_TARGETS.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              aria-pressed={target.id === t.id}
+              onClick={() => setTargetId(t.id)}
+              className={cn(
+                "min-h-9 shrink-0 rounded-full border px-3.5 text-sm transition-colors",
+                target.id === t.id
+                  ? "border-primary bg-accent text-foreground"
+                  : "border-border bg-surface text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {t.name}
+            </button>
+          ))}
+        </div>
+        <div className="mt-2 rounded-xl border border-border bg-surface p-3">
+          <p className="text-sm text-foreground">{target.tip}</p>
+          <div className="mt-2.5 flex flex-wrap items-center gap-2">
+            <Button
+              size="sm"
+              variant="secondary"
+              className="gap-1.5"
+              onClick={() => {
+                void navigator.clipboard.writeText(template);
+                flash();
+                window.open(target.url, "_blank", "noopener,noreferrer");
+              }}
+            >
+              <ExternalLink className="size-3.5" /> Copy &amp; open {target.name}
+            </Button>
+            <span className="text-[11px] text-muted-foreground">{target.free}</span>
+          </div>
+        </div>
       </section>
 
       <section className="flex flex-wrap items-center gap-1.5">

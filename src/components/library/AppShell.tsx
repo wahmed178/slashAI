@@ -1,6 +1,10 @@
 import { useState, type ReactNode } from "react";
 import { Link, useNavigate, useRouter, useRouterState } from "@tanstack/react-router";
 import {
+  Bot,
+  MessagesSquare,
+  Globe,
+  Coffee,
   Home,
   Compass,
   Heart,
@@ -46,11 +50,15 @@ const PRIMARY = [
 /** nested under Discover in the sidebar and the drawer */
 const DISCOVER_CHILDREN = [
   { section: "ai", label: "AI", icon: Sparkles },
+  { section: "free-ai", label: "Free AI", icon: Bot },
   { section: "free-tools", label: "Free Tools", icon: Wrench },
   { section: "github", label: "GitHub", icon: Github },
   { section: "learn", label: "Learn", icon: GraduationCap },
   { section: "resources", label: "Resources", icon: Layers },
   { section: "youtube", label: "YouTube", icon: Youtube },
+  { section: "reddit", label: "Reddit", icon: MessagesSquare },
+  { section: "websites", label: "Websites", icon: Globe },
+  { section: "free-time", label: "Free Time", icon: Coffee },
   { section: "tips", label: "Tips & Tricks", icon: Lightbulb },
 ] as const;
 

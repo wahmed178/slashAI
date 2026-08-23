@@ -1,9 +1,6 @@
 import { useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  Moon,
-  MoonStar,
-  Sun,
   Rows3,
   Rows4,
   Keyboard,
@@ -21,7 +18,7 @@ import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/library/AppShell";
-import { useLibrary, ACCENTS } from "@/hooks/use-library";
+import { useLibrary, ACCENTS, THEMES, FIXED_ACCENT_THEMES } from "@/hooks/use-library";
 import { CATEGORY_TREE, VERIFIED_TOTAL } from "@/lib/commands";
 import { INTERESTS } from "@/lib/collections";
 import { APP_DETAILS, CHANGELOG } from "@/lib/app-meta";
@@ -74,6 +71,7 @@ function SettingsPage() {
     openWhatsNew,
   } = useLibrary();
   const fileRef = useRef<HTMLInputElement>(null);
+  const accentLocked = FIXED_ACCENT_THEMES.includes(settings.theme);
 
   const download = () => {
     const blob = new Blob([JSON.stringify(exportBackup(), null, 2)], { type: "application/json" });
@@ -112,28 +110,35 @@ function SettingsPage() {
       </header>
 
       <Section title="Theme">
-        <div className="grid grid-cols-3 gap-2">
-          <Button
-            variant={settings.theme === "dark" ? "default" : "outline"}
-            onClick={() => updateSettings({ theme: "dark" })}
-            className="gap-1.5"
-          >
-            <Moon className="size-4" /> Dark
-          </Button>
-          <Button
-            variant={settings.theme === "light" ? "default" : "outline"}
-            onClick={() => updateSettings({ theme: "light" })}
-            className="gap-1.5"
-          >
-            <Sun className="size-4" /> Light
-          </Button>
-          <Button
-            variant={settings.theme === "amoled" ? "default" : "outline"}
-            onClick={() => updateSettings({ theme: "amoled" })}
-            className="gap-1.5"
-          >
-            <MoonStar className="size-4" /> AMOLED
-          </Button>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {THEMES.map((t) => {
+            const active = settings.theme === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                aria-pressed={active}
+                onClick={() => updateSettings({ theme: t.id })}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl border p-3 text-left transition-colors active:scale-[0.99]",
+                  active
+                    ? "border-primary bg-accent"
+                    : "border-border bg-surface hover:border-primary/40",
+                )}
+              >
+                <span
+                  className="size-8 shrink-0 rounded-full border border-border"
+                  style={{ backgroundColor: t.swatch }}
+                  aria-hidden
+                />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-semibold text-foreground">{t.label}</span>
+                  <span className="block truncate text-xs text-muted-foreground">{t.hint}</span>
+                </span>
+                {active && <Check className="size-4 shrink-0 text-primary" aria-hidden />}
+              </button>
+            );
+          })}
         </div>
       </Section>
 
@@ -145,10 +150,12 @@ function SettingsPage() {
               type="button"
               aria-label={a.label}
               aria-pressed={settings.accent === a.id}
+              disabled={accentLocked}
               onClick={() => updateSettings({ accent: a.id })}
               className={cn(
                 "flex size-10 items-center justify-center rounded-full border-2 transition-transform active:scale-95",
                 settings.accent === a.id ? "border-foreground" : "border-transparent",
+                accentLocked && "cursor-not-allowed opacity-40",
               )}
               style={{ backgroundColor: a.swatch }}
             >
@@ -156,6 +163,12 @@ function SettingsPage() {
             </button>
           ))}
         </div>
+        {accentLocked && (
+          <p className="mt-2 text-xs text-muted-foreground">
+            The {THEMES.find((t) => t.id === settings.theme)?.label} theme brings its own colour.
+            Switch to Dark, Light or AMOLED to pick an accent.
+          </p>
+        )}
       </Section>
 
       <Section title="Layout">

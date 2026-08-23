@@ -30,6 +30,11 @@ import {
   Layers,
   Lightbulb,
   Wrench,
+  MessagesSquare,
+  Globe,
+  Coffee,
+  Gamepad2,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react";
 
@@ -65,6 +70,11 @@ const MAP: Record<string, LucideIcon> = {
   Layers,
   Lightbulb,
   Wrench,
+  MessagesSquare,
+  Globe,
+  Coffee,
+  Gamepad2,
+  BookOpen,
 };
 
 export function categoryIcon(name: string | undefined): LucideIcon {
