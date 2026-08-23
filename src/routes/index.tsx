@@ -174,6 +174,27 @@ function HomePage() {
         </p>
       </section>
 
+      <section className="mt-6">
+        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          I want to…
+        </h2>
+        <div className="mt-2.5 grid gap-2 sm:grid-cols-3 lg:grid-cols-4">
+          {INTENTS.map((intent) => (
+            <Link
+              key={intent.label}
+              to="/search"
+              search={{ q: intent.q }}
+              className="panel flex items-center gap-2.5 rounded-xl p-3 transition-colors hover:border-primary/50"
+            >
+              <intent.icon className="size-4 shrink-0 text-primary" aria-hidden />
+              <span className="truncate text-sm font-medium text-foreground">{intent.label}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+
+
       <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
         <Link
           to="/whats-new"

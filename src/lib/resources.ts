@@ -10,8 +10,21 @@
  * component changes are needed.
  */
 
+import { EXTRA_RESOURCES } from "./resources-extra";
+
 export type ResourceSection =
-  "ai" | "free-tools" | "github" | "learn" | "resources" | "youtube" | "tips";
+  | "ai"
+  | "free-ai"
+  | "free-tools"
+  | "github"
+  | "learn"
+  | "resources"
+  | "youtube"
+  | "reddit"
+  | "websites"
+  | "free-time"
+  | "tips";
+
 
 export type Pricing =
   | "Completely Free"
@@ -32,7 +45,10 @@ export type ResourceType =
   | "Dataset"
   | "Cheat Sheet"
   | "Tutorial"
-  | "Trick";
+  | "Trick"
+  | "Subreddit"
+  | "Wiki";
+
 
 export type Audience =
   | "Everyone"
@@ -147,6 +163,14 @@ export const SECTIONS: SectionDef[] = [
     ],
   },
   {
+    id: "free-ai",
+    label: "Free AI",
+    blurb: "Assistants, answer engines and open models you can use for nothing.",
+    icon: "Bot",
+    categories: ["Free AI Chat", "AI Search", "Open Models", "AI Comparison", "AI Coding"],
+  },
+
+  {
     id: "github",
     label: "GitHub",
     blurb: "Repositories that are genuinely useful, not just starred.",
@@ -196,6 +220,36 @@ export const SECTIONS: SectionDef[] = [
     categories: ["AI", "Development", "Android & Linux", "Productivity", "Design", "Learning"],
   },
   {
+    id: "reddit",
+    label: "Reddit",
+    blurb: "Subreddits and wikis that quietly hold the best free resources.",
+    icon: "MessagesSquare",
+    categories: [
+      "Wikis & Megathreads",
+      "Free Stuff",
+      "Movies & TV",
+      "Books & Reading",
+      "Blogs & Writing",
+      "Tech & AI",
+      "Learning",
+    ],
+  },
+  {
+    id: "websites",
+    label: "Websites",
+    blurb: "Single-purpose sites that do one thing properly.",
+    icon: "Globe",
+    categories: ["Hidden Gems", "Productivity", "Search", "Design", "Utilities"],
+  },
+  {
+    id: "free-time",
+    label: "Free Time",
+    blurb: "Legal free movies, books, radio, games and good blogs.",
+    icon: "Coffee",
+    categories: ["Movies & TV", "Reading", "Blogs", "Games", "Music & Radio", "Fun"],
+  },
+
+  {
     id: "tips",
     label: "Tips & Tricks",
     blurb: "Small practical moves with clear steps.",
@@ -218,7 +272,7 @@ const r = (
   ...x,
 });
 
-export const RESOURCES: Resource[] = [
+const BASE_RESOURCES: Resource[] = [
   // ---------------------------------------------------------------- AI
   r({
     id: "chatgpt",
@@ -1441,6 +1495,8 @@ export const RESOURCES: Resource[] = [
     tags: ["focus", "habits", "workflow"],
   }),
 ];
+
+export const RESOURCES: Resource[] = [...BASE_RESOURCES, ...EXTRA_RESOURCES];
 
 // ------------------------------------------------------------- selectors
 
