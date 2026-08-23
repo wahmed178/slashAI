@@ -12,31 +12,48 @@ import { APP_VERSION } from "@/lib/app-meta";
 import { todayKey } from "@/lib/commands";
 import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 
-export type Theme =
-  | "dark"
-  | "light"
-  | "amoled"
-  | "batman"
-  | "ocean"
-  | "moonlight"
-  | "warm";
+export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm";
 export type Density = "comfortable" | "compact";
 export type Accent = "teal" | "violet" | "amber" | "rose" | "blue" | "lime";
 
 /** every theme except the default dark maps 1:1 to a class on <html> */
 export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[] = [
-  { id: "dark", label: "Dark", hint: "The default, easy on the eyes", swatch: "oklch(0.16 0.012 250)" },
-  { id: "light", label: "Light", hint: "Bright rooms and daylight", swatch: "oklch(0.985 0.003 250)" },
+  {
+    id: "dark",
+    label: "Dark",
+    hint: "The default, easy on the eyes",
+    swatch: "oklch(0.16 0.012 250)",
+  },
+  {
+    id: "light",
+    label: "Light",
+    hint: "Bright rooms and daylight",
+    swatch: "oklch(0.985 0.003 250)",
+  },
   { id: "amoled", label: "AMOLED", hint: "True black, saves battery", swatch: "oklch(0 0 0)" },
   { id: "batman", label: "Batman", hint: "Near-black with gold", swatch: "oklch(0.84 0.16 92)" },
-  { id: "ocean", label: "Ocean", hint: "Deep blue, cyan highlights", swatch: "oklch(0.8 0.13 205)" },
-  { id: "moonlight", label: "Moonlight", hint: "Soft indigo and lavender", swatch: "oklch(0.82 0.09 295)" },
-  { id: "warm", label: "Warm", hint: "Sepia tones for night reading", swatch: "oklch(0.81 0.14 65)" },
+  {
+    id: "ocean",
+    label: "Ocean",
+    hint: "Deep blue, cyan highlights",
+    swatch: "oklch(0.8 0.13 205)",
+  },
+  {
+    id: "moonlight",
+    label: "Moonlight",
+    hint: "Soft indigo and lavender",
+    swatch: "oklch(0.82 0.09 295)",
+  },
+  {
+    id: "warm",
+    label: "Warm",
+    hint: "Sepia tones for night reading",
+    swatch: "oklch(0.81 0.14 65)",
+  },
 ];
 
 /** themes that fix their own primary colour, so the accent picker is inert */
 export const FIXED_ACCENT_THEMES: Theme[] = ["batman", "ocean", "moonlight", "warm"];
-
 
 export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
   { id: "teal", label: "Teal", swatch: "oklch(0.79 0.15 178)" },

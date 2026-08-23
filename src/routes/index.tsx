@@ -213,8 +213,6 @@ function HomePage() {
         </div>
       </section>
 
-
-
       <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
         <Link
           to="/whats-new"

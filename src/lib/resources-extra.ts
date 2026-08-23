@@ -273,7 +273,8 @@ export const EXTRA_RESOURCES: Resource[] = [
     platform: ["Web"],
     tags: ["app-builder", "byok", "no-code"],
     difficulty: "Beginner",
-    notes: "Bring-your-own-key means no subscription and no lock-in if you already have an API key.",
+    notes:
+      "Bring-your-own-key means no subscription and no lock-in if you already have an API key.",
     radar: "New Free AI Tool",
     commandQuery: "product spec",
   }),
@@ -357,7 +358,8 @@ export const EXTRA_RESOURCES: Resource[] = [
     type: "Subreddit",
     platform: ["Web"],
     tags: ["movies", "youtube", "legal"],
-    notes: "Only official or public-domain uploads belong here — check the channel before watching.",
+    notes:
+      "Only official or public-domain uploads belong here — check the channel before watching.",
   }),
   r({
     id: "rd-documentaries",

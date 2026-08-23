@@ -163,8 +163,6 @@ export function CommandDetailContent({
         </div>
       </section>
 
-
-
       <section className="flex flex-wrap items-center gap-1.5">
         {command.tags.map((tag) => (
           <span

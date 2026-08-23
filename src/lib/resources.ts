@@ -25,7 +25,6 @@ export type ResourceSection =
   | "free-time"
   | "tips";
 
-
 export type Pricing =
   | "Completely Free"
   | "Free Tier"
@@ -48,7 +47,6 @@ export type ResourceType =
   | "Trick"
   | "Subreddit"
   | "Wiki";
-
 
 export type Audience =
   | "Everyone"
