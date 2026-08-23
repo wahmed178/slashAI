@@ -165,8 +165,8 @@ function SettingsPage() {
         </div>
         {accentLocked && (
           <p className="mt-2 text-xs text-muted-foreground">
-            The {settings.theme} theme brings its own colour. Switch to Dark, Light or AMOLED to
-            pick an accent.
+            The {THEMES.find((t) => t.id === settings.theme)?.label} theme brings its own colour.
+            Switch to Dark, Light or AMOLED to pick an accent.
           </p>
         )}
       </Section>
