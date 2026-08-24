@@ -215,6 +215,18 @@ function HomePage() {
 
       <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
         <Link
+          to="/play"
+          className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-[transform,border-color] duration-300 hover:-translate-y-0.5 hover:border-primary/50"
+        >
+          <Dices className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Play</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Toss, dice, surprise me
+            </span>
+          </span>
+        </Link>
+        <Link
           to="/whats-new"
           className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
         >
@@ -226,6 +238,7 @@ function HomePage() {
             </span>
           </span>
         </Link>
+
         <Link
           to="/radar"
           className="panel flex items-center gap-2.5 rounded-xl p-3.5 transition-colors hover:border-primary/50"
