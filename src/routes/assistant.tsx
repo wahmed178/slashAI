@@ -420,45 +420,88 @@ function AssistantPage() {
               </Button>
             </form>
 
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {(["all", "todo", "doing", "done"] as const).map((f) => (
+                <button
+                  key={f}
+                  type="button"
+                  aria-pressed={filter === f}
+                  onClick={() => setFilter(f)}
+                  className={cn(
+                    "rounded-full border px-2.5 py-1 text-xs transition-colors",
+                    filter === f
+                      ? "border-primary bg-accent text-foreground"
+                      : "border-border bg-surface text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {f === "all" ? "All" : STATUS_LABEL[f]}
+                </button>
+              ))}
+            </div>
+
             <ul className="mt-3 space-y-1.5">
-              {tasks.length === 0 && (
+              {visibleTasks.length === 0 && (
                 <li className="py-4 text-center text-sm text-muted-foreground">
-                  No tasks yet — save a workflow step to start.
+                  {tasks.length === 0
+                    ? "No tasks yet — save a workflow step to start."
+                    : "Nothing in this view."}
                 </li>
               )}
-              {tasks.map((t) => (
+              {visibleTasks.map((t) => (
                 <li
                   key={t.id}
                   className="flex items-start gap-2 rounded-lg border border-border bg-surface p-2"
                 >
                   <button
                     type="button"
-                    role="checkbox"
-                    aria-checked={t.done}
-                    aria-label={t.done ? `Mark "${t.text}" as open` : `Complete "${t.text}"`}
-                    onClick={() => {
-                      feedback(t.done ? "tap" : "win");
-                      setTasks((prev) =>
-                        prev.map((x) => (x.id === t.id ? { ...x, done: !x.done } : x)),
-                      );
-                    }}
+                    aria-label={`${t.text} — status ${STATUS_LABEL[t.status]}, tap to change`}
+                    onClick={() => cycleStatus(t.id)}
                     className={cn(
                       "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border transition-colors",
-                      t.done
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border text-transparent hover:border-primary/60",
+                      t.status === "done" && "border-primary bg-primary text-primary-foreground",
+                      t.status === "doing" && "border-primary text-primary",
+                      t.status === "todo" && "border-border text-transparent hover:border-primary/60",
                     )}
                   >
-                    <Check className="size-3.5" />
+                    {t.status === "doing" ? (
+                      <Circle className="size-2 fill-current" />
+                    ) : (
+                      <Check className="size-3.5" />
+                    )}
                   </button>
-                  <span
-                    className={cn(
-                      "min-w-0 flex-1 text-sm",
-                      t.done ? "text-muted-foreground line-through" : "text-foreground",
-                    )}
-                  >
-                    {t.text}
-                  </span>
+                  <div className="min-w-0 flex-1">
+                    <span
+                      className={cn(
+                        "block text-sm",
+                        t.status === "done"
+                          ? "text-muted-foreground line-through"
+                          : "text-foreground",
+                      )}
+                    >
+                      {t.text}
+                    </span>
+                    <span className="text-[11px] text-muted-foreground">
+                      {STATUS_LABEL[t.status]}
+                    </span>
+                  </div>
+                  <div className="flex shrink-0 flex-col">
+                    <button
+                      type="button"
+                      aria-label={`Move "${t.text}" up`}
+                      onClick={() => move(t.id, -1)}
+                      className="rounded-md p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+                    >
+                      <ChevronUp className="size-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={`Move "${t.text}" down`}
+                      onClick={() => move(t.id, 1)}
+                      className="rounded-md p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+                    >
+                      <ChevronDown className="size-3.5" />
+                    </button>
+                  </div>
                   <button
                     type="button"
                     aria-label={`Delete "${t.text}"`}
@@ -471,16 +514,24 @@ function AssistantPage() {
               ))}
             </ul>
 
-            {tasks.some((t) => t.done) && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="mt-3 w-full"
-                onClick={() => setTasks((prev) => prev.filter((t) => !t.done))}
-              >
-                Clear completed
-              </Button>
+            {tasks.length > 0 && (
+              <div className="mt-3 flex gap-2">
+                <Button variant="outline" size="sm" className="flex-1 gap-1.5" onClick={exportTasks}>
+                  <Download className="size-4" /> Export
+                </Button>
+                {tasks.some((t) => t.status === "done") && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => setTasks((prev) => prev.filter((t) => t.status !== "done"))}
+                  >
+                    Clear done
+                  </Button>
+                )}
+              </div>
             )}
+
           </div>
         </aside>
       </div>
