@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Eye, ExternalLink, Music2, Play, Search, Video, X } from "lucide-react";
+import {
+  Eye,
+  ExternalLink,
+  ListPlus,
+  ListVideo,
+  Music2,
+  Pause,
+  Play,
+  Repeat,
+  Search,
+  Shuffle,
+  SkipBack,
+  SkipForward,
+  Trash2,
+  Video,
+  X,
+} from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { Button } from "@/components/ui/button";
+import { useYouTubePlayer } from "@/hooks/use-yt-player";
 import { searchVideos, type VideoHit } from "@/lib/media.functions";
 import { feedback } from "@/lib/play-sound";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/youtube")({
   head: () => ({
