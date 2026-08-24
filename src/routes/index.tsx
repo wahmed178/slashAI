@@ -16,6 +16,8 @@ import {
   Briefcase,
   Search as SearchIcon,
   Wand2,
+  Dices,
+
 } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
