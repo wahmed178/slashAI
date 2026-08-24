@@ -1,39 +1,61 @@
-Add a Capacitor Android wrapper alongside the existing TWA setup
+# SlashAI v1.4.0 — UI modernization + Build Ideas Library
 
-Goal: give you a WebView-based Android path (Capacitor) that hides the URL bar by default, while keeping the existing TWA workflow and files intact so nothing breaks.
+Two things shape this plan, based on your answers:
 
-1. Add Capacitor tooling
-   - Install `@capacitor/core`, `@capacitor/cli`, and `@capacitor/android` as dev dependencies.
-   - Add `capacitor.config.ts` with app ID `dev.lovable.slashprompt`, app name `SlashAI`, and `server.url` set to `https://slashai.lovable.app` so the WebView loads the live published site.
-   - Add `capacitor-android:init`, `capacitor-android:sync`, `capacitor-android:build`, and `capacitor:copy` scripts to `package.json`.
+- **No database, no logins.** Ideas ship as a local data module (same pattern as the 1,499-command catalog), and saves/projects live on-device like favourites already do. That keeps the Android/offline behaviour intact.
+- **AI runs through your OpenRouter key**, called from the app's own server (never the browser), so the key is never shipped to users or visible in the app.
 
-2. Initialize the Capacitor Android project
-   - Run `cap add android` in a deterministic, non-interactive way (or commit the generated `android-capacitor/` folder after generation).
-   - Keep the existing `android/` folder (TWA/Bubblewrap) untouched.
-   - Configure the Capacitor `AndroidManifest.xml` with `screenOrientation` and the same package name as the TWA to avoid Play Store conflicts if you later choose one path.
-   - Set the splash screen color and app icon to match the existing PWA manifest colors (`#12161c`).
+## Part 1 — UI modernization
 
-3. Configure WebView behavior
-   - Ensure `allowNavigation` and `cleartext` settings are correct for HTTPS-only production.
-   - Keep the URL bar hidden: Capacitor WebView does not show a browser address bar by default.
-   - Confirm the app opens to the published URL and the service worker/offline behavior from the PWA still works inside the WebView.
+Applied to existing pages, not a redesign; the SlashAI identity, 7 themes, accent system, sidebar/bottom-nav and routes all stay.
 
-4. Add a new GitHub Actions workflow for Capacitor
-   - Create `.github/workflows/release-capacitor.yml`.
-   - Trigger: `workflow_dispatch` and `push` tags starting with `v*` (same as the TWA workflow, but independent).
-   - Steps: lint, build web, set up JDK, accept Android SDK licenses, sync Capacitor Android project, restore signing keystore, build signed APK and AAB with Gradle, verify APK contains manifest/dex, upload artifacts.
-   - Reuse the same GitHub secrets (`ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_PASSWORD`) so no new secrets are needed.
+- Refine `src/styles.css` tokens: an 8px spacing scale, frosted/glass surface tokens, elevation shadows, tightened type scale. Keep OKLCH tokens and all 7 themes working.
+- Card, badge and button polish: real primary / secondary / ghost hierarchy, hover-lift and press micro-interactions, respecting the existing reduced-motion setting.
+- Sticky header refinements, smoother mobile drawer, active-state clarity in both navs.
+- Shared skeleton, empty-state and error-state components, used across Discover, Search, Explore, Collections, Radar, Favourites and Build Ideas.
+- Landing/Home pass: stronger hero, clearer feature sections, verified-count social proof strip, tightened CTA hierarchy.
 
-5. Keep the existing TWA workflow as-is
-   - Leave `.github/workflows/release.yml` unchanged.
-   - Leave `android/`, `android/twa-manifest.json`, `scripts/bubblewrap-build.mjs`, and `scripts/validate-android-association.mjs` unchanged.
+## Part 2 — Content upgrade
 
-6. Update documentation
-   - Update `android/README.md` to explain the two options: TWA (`release.yml`) and Capacitor (`release-capacitor.yml`).
-   - Add instructions for building the Capacitor wrapper locally and for Play Store upload.
-   - Note that the Capacitor AAB can use the same package name as the TWA, but you should choose only one upload path per Play Store listing.
+- Rewritten Home headline/subheadline, feature and section copy, and an FAQ block — benefit-driven, aimed at builders and founders.
+- Pass over About and section descriptions to remove thin copy.
 
-7. Verification
-   - Run the Capacitor build locally in the sandbox if possible, or via a manual GitHub Actions run.
-   - Confirm the generated APK installs and opens `https://slashai.lovable.app` without a URL bar.
-   - Confirm that future Lovable edits still auto-sync to GitHub and that the existing TWA workflow still works if you choose to run it.
+## Part 3 — Build Ideas Library
+
+### Data (local, typed)
+
+`src/data/build-ideas/` split into part files (mirrors `scripts/catalog/`), merged and typed in `src/lib/build-ideas.ts`. Every field from your brief is present and populated on every idea: problem, target users, solution, key/MVP/future features, tech stack, monetization + pricing, customer acquisition, first-10-customers, build steps, risks, opportunity score, tags, difficulty, business model, build type, suitable-for.
+
+**150 ideas**, distributed exactly as specified: AI 20, SaaS 15, Productivity 12, Business 12, Finance 10, Education 10, Healthcare 8, HR 8, Marketing 10, E-commerce 10, Creator Tools 10, Developer Tools 10, Quality & Operations 8, Personal Tools 7. A validation script (like `catalog:validate`) fails the build on any empty field, duplicate slug, or category-count mismatch.
+
+### `/build-ideas` — library
+
+Full-text search across title, problem, tags, features; filter panel for Category, Difficulty, Business Model, Build Type, Suitable For; responsive 3/2/1 card grid with title, short description, badges, opportunity score, monetization type and View Idea; sort by Newest, Highest Opportunity, Most Saved (local), Easiest to Build; incremental "load more".
+
+### `/build-ideas/$slug` — detail
+
+All 10 sections in your order, with features as tabs, numbered build steps, risks, and prominent **Build This** + **Save Idea** actions. Per-page SEO title/description and OG tags.
+
+### Build This
+
+Opens a drawer with a full product specification (overview, users & roles, core features, pages/screens, user flows, database entities, auth, payments, integrations, MVP scope) plus **Copy Lovable Prompt** — a complete paste-ready prompt. Generated by AI on first open and cached on-device per idea, so repeat opens are instant and offline.
+
+### `/build-ideas/validate` — Idea Validator
+
+Textarea input; returns problem clarity, target customer, competition landscape, monetization potential, build difficulty, acquisition difficulty, 3 differentiation opportunities, overall score, and a Build / Improve First / Avoid recommendation, in a card layout with the "AI-generated analysis, not guaranteed market research" disclaimer. Validated ideas can be saved to My Projects.
+
+### `/build-ideas/projects` — My Projects
+
+Device-local (no login needed): saved ideas with remove, projects with the Idea → Validate → Plan → Build → Launch tracker, status tags, auto-saving notes, and quick links to the detail page, spec and prompt. Included in the existing JSON backup/restore.
+
+### Navigation
+
+"Build Ideas" added to the sidebar and mobile drawer with Browse Ideas, Validate an Idea, My Projects. Bottom nav stays at four items.
+
+## Technical notes
+
+- AI calls live in a server function (`src/lib/build-ideas.functions.ts`) reading `OPENROUTER_API_KEY` from server secrets — the key never reaches the browser or the Android bundle. I'll store it as a secret in this project; you can rotate or replace it any time under the project's Settings → Secrets (Cloud/backend settings), and it stays hidden there. Model: Claude Sonnet via OpenRouter, with clear error states for rate limits/credit issues.
+- Because there is no database, the admin content panel from your brief isn't buildable — ideas are code-managed. Adding or editing ideas means an edit to the data files (I can do that on request); publish/unpublish is represented by an `isPublished` flag in the data.
+- No auth is added, so "authenticated-only" routes and RLS don't apply; My Projects is device-scoped instead.
+- Error boundaries on the new routes, skeletons for async content, lazy-loaded images with alt text, PWA precaching for the new routes so the library works offline.
+- Version bumped to 1.4.0 with a changelog entry that surfaces in the What's New dialog.
