@@ -35,6 +35,12 @@ import {
   Coffee,
   Gamepad2,
   BookOpen,
+  Terminal,
+  FolderKanban,
+  Film,
+  Radio,
+  Dices,
+  Heart,
   type LucideIcon,
 } from "lucide-react";
 
@@ -75,6 +81,12 @@ const MAP: Record<string, LucideIcon> = {
   Coffee,
   Gamepad2,
   BookOpen,
+  Terminal,
+  FolderKanban,
+  Film,
+  Radio,
+  Dices,
+  Heart,
 };
 
 export function categoryIcon(name: string | undefined): LucideIcon {

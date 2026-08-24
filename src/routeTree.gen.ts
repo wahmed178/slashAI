@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
+import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as FindRouteImport } from './routes/find'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as MeRouteImport } from './routes/me'
+import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as PlayRouteImport } from './routes/play'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RecentRouteImport } from './routes/recent'
@@ -22,6 +25,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
+import { Route as YoutubeRouteImport } from './routes/youtube'
 import { Route as BuildIdeasIndexRouteImport } from './routes/build-ideas.index'
 import { Route as BuildIdeasSlugRouteImport } from './routes/build-ideas.$slug'
 import { Route as BuildIdeasProjectsRouteImport } from './routes/build-ideas.projects'
@@ -52,9 +56,19 @@ const AlternativesRoute = AlternativesRouteImport.update({
   path: '/alternatives',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindRoute = FindRouteImport.update({
+  id: '/find',
+  path: '/find',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -65,6 +79,11 @@ const LiveRoute = LiveRouteImport.update({
 const MeRoute = MeRouteImport.update({
   id: '/me',
   path: '/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoviesRoute = MoviesRouteImport.update({
+  id: '/movies',
+  path: '/movies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PlayRoute = PlayRouteImport.update({
@@ -100,6 +119,11 @@ const ToolsRoute = ToolsRouteImport.update({
 const WhatsNewRoute = WhatsNewRouteImport.update({
   id: '/whats-new',
   path: '/whats-new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const YoutubeRoute = YoutubeRouteImport.update({
+  id: '/youtube',
+  path: '/youtube',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuildIdeasIndexRoute = BuildIdeasIndexRouteImport.update({
@@ -178,9 +202,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
+  '/assistant': typeof AssistantRoute
   '/favorites': typeof FavoritesRoute
+  '/find': typeof FindRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
+  '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
@@ -188,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
   '/whats-new': typeof WhatsNewRoute
+  '/youtube': typeof YoutubeRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -207,9 +235,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
+  '/assistant': typeof AssistantRoute
   '/favorites': typeof FavoritesRoute
+  '/find': typeof FindRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
+  '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
@@ -217,6 +248,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
   '/whats-new': typeof WhatsNewRoute
+  '/youtube': typeof YoutubeRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -237,9 +269,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
+  '/assistant': typeof AssistantRoute
   '/favorites': typeof FavoritesRoute
+  '/find': typeof FindRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
+  '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
@@ -247,6 +282,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
   '/whats-new': typeof WhatsNewRoute
+  '/youtube': typeof YoutubeRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -268,9 +304,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/alternatives'
+    | '/assistant'
     | '/favorites'
+    | '/find'
     | '/live'
     | '/me'
+    | '/movies'
     | '/play'
     | '/radar'
     | '/recent'
@@ -278,6 +317,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tools'
     | '/whats-new'
+    | '/youtube'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -297,9 +337,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/alternatives'
+    | '/assistant'
     | '/favorites'
+    | '/find'
     | '/live'
     | '/me'
+    | '/movies'
     | '/play'
     | '/radar'
     | '/recent'
@@ -307,6 +350,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tools'
     | '/whats-new'
+    | '/youtube'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -326,9 +370,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/alternatives'
+    | '/assistant'
     | '/favorites'
+    | '/find'
     | '/live'
     | '/me'
+    | '/movies'
     | '/play'
     | '/radar'
     | '/recent'
@@ -336,6 +383,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tools'
     | '/whats-new'
+    | '/youtube'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -356,9 +404,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AlternativesRoute: typeof AlternativesRoute
+  AssistantRoute: typeof AssistantRoute
   FavoritesRoute: typeof FavoritesRoute
+  FindRoute: typeof FindRoute
   LiveRoute: typeof LiveRoute
   MeRoute: typeof MeRoute
+  MoviesRoute: typeof MoviesRoute
   PlayRoute: typeof PlayRoute
   RadarRoute: typeof RadarRoute
   RecentRoute: typeof RecentRoute
@@ -366,6 +417,7 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   ToolsRoute: typeof ToolsRoute
   WhatsNewRoute: typeof WhatsNewRoute
+  YoutubeRoute: typeof YoutubeRoute
   BuildIdeasSlugRoute: typeof BuildIdeasSlugRoute
   BuildIdeasProjectsRoute: typeof BuildIdeasProjectsRoute
   BuildIdeasValidateRoute: typeof BuildIdeasValidateRoute
@@ -405,11 +457,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AlternativesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favorites': {
       id: '/favorites'
       path: '/favorites'
       fullPath: '/favorites'
       preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/find': {
+      id: '/find'
+      path: '/find'
+      fullPath: '/find'
+      preLoaderRoute: typeof FindRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -424,6 +490,13 @@ declare module '@tanstack/react-router' {
       path: '/me'
       fullPath: '/me'
       preLoaderRoute: typeof MeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movies': {
+      id: '/movies'
+      path: '/movies'
+      fullPath: '/movies'
+      preLoaderRoute: typeof MoviesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/play': {
@@ -473,6 +546,13 @@ declare module '@tanstack/react-router' {
       path: '/whats-new'
       fullPath: '/whats-new'
       preLoaderRoute: typeof WhatsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/youtube': {
+      id: '/youtube'
+      path: '/youtube'
+      fullPath: '/youtube'
+      preLoaderRoute: typeof YoutubeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/build-ideas/': {
@@ -580,9 +660,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AlternativesRoute: AlternativesRoute,
+  AssistantRoute: AssistantRoute,
   FavoritesRoute: FavoritesRoute,
+  FindRoute: FindRoute,
   LiveRoute: LiveRoute,
   MeRoute: MeRoute,
+  MoviesRoute: MoviesRoute,
   PlayRoute: PlayRoute,
   RadarRoute: RadarRoute,
   RecentRoute: RecentRoute,
@@ -590,6 +673,7 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   ToolsRoute: ToolsRoute,
   WhatsNewRoute: WhatsNewRoute,
+  YoutubeRoute: YoutubeRoute,
   BuildIdeasSlugRoute: BuildIdeasSlugRoute,
   BuildIdeasProjectsRoute: BuildIdeasProjectsRoute,
   BuildIdeasValidateRoute: BuildIdeasValidateRoute,

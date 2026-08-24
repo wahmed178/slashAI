@@ -28,6 +28,8 @@ import {
   Radar,
   Dices,
   Radio,
+  Wand2,
+  Film,
 
 
 } from "lucide-react";
@@ -70,7 +72,11 @@ const DISCOVER_CHILDREN = [
 
 const SECONDARY = [
   { to: "/explore", label: "Commands", icon: Terminal },
+  { to: "/assistant", label: "Assistant", icon: Bot },
+  { to: "/find", label: "Advanced search", icon: Wand2 },
   { to: "/live", label: "Live", icon: Radio },
+  { to: "/youtube", label: "YouTube & Music", icon: Youtube },
+  { to: "/movies", label: "Movies", icon: Film },
   { to: "/collections", label: "Collections", icon: Layers },
   { to: "/play", label: "Play", icon: Dices },
 
@@ -79,6 +85,7 @@ const SECONDARY = [
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
 ] as const;
+
 
 
 interface Props {
