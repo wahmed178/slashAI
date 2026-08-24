@@ -13,6 +13,8 @@ import {
   Info,
   Menu,
   ChevronLeft,
+  ChevronDown,
+  FolderKanban,
   Terminal,
   Layers,
   Wrench,
@@ -102,6 +104,15 @@ function BackButton({ to, label }: { to: string; label: string }) {
   );
 }
 
+const IDEA_CHILDREN = [
+  { to: "/build-ideas", label: "Browse ideas", icon: Lightbulb },
+  { to: "/build-ideas/validate", label: "Validate an idea", icon: Sparkles },
+  { to: "/build-ideas/projects", label: "My projects", icon: FolderKanban },
+] as const;
+
+const subLinkCls =
+  "flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground";
+
 function NavList({
   onNavigate,
   showSecondary = true,
@@ -110,6 +121,9 @@ function NavList({
   showSecondary?: boolean;
 }) {
   const { favorites, recents } = useLibrary();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [discoverOpen, setDiscoverOpen] = useState(() => pathname.startsWith("/discover"));
+  const [ideasOpen, setIdeasOpen] = useState(() => pathname.startsWith("/build-ideas"));
   const counts: Record<string, number> = {
     "/favorites": favorites.length,
     "/recent": recents.length,
@@ -122,21 +136,44 @@ function NavList({
     <nav className="space-y-1" aria-label="Primary">
       {PRIMARY.filter((item) => item.to !== "/search").map((item) => (
         <div key={item.to}>
-          <Link
-            to={item.to}
-            activeOptions={{ exact: item.exact, includeSearch: false }}
-            activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-            onClick={onNavigate}
-            className={cls}
-          >
-            <item.icon className="size-4.5 shrink-0" aria-hidden />
-            {item.label}
-            {counts[item.to] ? (
-              <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
-            ) : null}
-          </Link>
-          {item.to === "/discover" && (
-            <div className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
+          <div className="flex items-center gap-1">
+            <Link
+              to={item.to}
+              activeOptions={{ exact: item.exact, includeSearch: false }}
+              activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
+              onClick={onNavigate}
+              className={cn(cls, "flex-1")}
+            >
+              <item.icon className="size-4.5 shrink-0" aria-hidden />
+              {item.label}
+              {counts[item.to] ? (
+                <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
+              ) : null}
+            </Link>
+            {item.to === "/discover" && (
+              <button
+                type="button"
+                aria-expanded={discoverOpen}
+                aria-controls="discover-subnav"
+                aria-label={discoverOpen ? "Collapse Discover" : "Expand Discover"}
+                onClick={() => setDiscoverOpen((v) => !v)}
+                className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none"
+              >
+                <ChevronDown
+                  className={cn(
+                    "size-4 transition-transform duration-200",
+                    !discoverOpen && "-rotate-90",
+                  )}
+                  aria-hidden
+                />
+              </button>
+            )}
+          </div>
+          {item.to === "/discover" && discoverOpen && (
+            <div
+              id="discover-subnav"
+              className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2"
+            >
               {DISCOVER_CHILDREN.map((child) => (
                 <Link
                   key={child.section}
@@ -144,7 +181,7 @@ function NavList({
                   params={{ section: child.section }}
                   activeProps={{ className: "text-sidebar-accent-foreground" }}
                   onClick={onNavigate}
-                  className="flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                  className={subLinkCls}
                 >
                   <child.icon className="size-4 shrink-0" aria-hidden />
                   {child.label}
@@ -154,7 +191,7 @@ function NavList({
                 to="/radar"
                 activeProps={{ className: "text-sidebar-accent-foreground" }}
                 onClick={onNavigate}
-                className="flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
+                className={subLinkCls}
               >
                 <Radar className="size-4 shrink-0" aria-hidden />
                 Free Radar
@@ -163,6 +200,52 @@ function NavList({
           )}
         </div>
       ))}
+
+      {/* Build Ideas — its own collapsible group */}
+      <div>
+        <div className="flex items-center gap-1">
+          <Link
+            to="/build-ideas"
+            activeOptions={{ exact: true, includeSearch: false }}
+            activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
+            onClick={onNavigate}
+            className={cn(cls, "flex-1")}
+          >
+            <Lightbulb className="size-4.5 shrink-0" aria-hidden />
+            Build Ideas
+          </Link>
+          <button
+            type="button"
+            aria-expanded={ideasOpen}
+            aria-controls="ideas-subnav"
+            aria-label={ideasOpen ? "Collapse Build Ideas" : "Expand Build Ideas"}
+            onClick={() => setIdeasOpen((v) => !v)}
+            className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none"
+          >
+            <ChevronDown
+              className={cn("size-4 transition-transform duration-200", !ideasOpen && "-rotate-90")}
+              aria-hidden
+            />
+          </button>
+        </div>
+        {ideasOpen && (
+          <div id="ideas-subnav" className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
+            {IDEA_CHILDREN.map((child) => (
+              <Link
+                key={child.to}
+                to={child.to}
+                activeOptions={{ exact: true, includeSearch: false }}
+                activeProps={{ className: "text-sidebar-accent-foreground" }}
+                onClick={onNavigate}
+                className={subLinkCls}
+              >
+                <child.icon className="size-4 shrink-0" aria-hidden />
+                {child.label}
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
 
       {showSecondary && (
         <>
