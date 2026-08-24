@@ -13,6 +13,19 @@ export interface ReleaseNote {
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
   {
+    version: "1.4.0",
+    date: "2026-08-24",
+    title: "Build Ideas Library",
+    changes: [
+      "New Build Ideas library: 150 researched product ideas with the problem, target users, MVP scope, tech stack, pricing and a first-10-customers plan.",
+      "Search and filter ideas by category, difficulty, business model, build type and who they suit.",
+      "'Build this' generates a full product spec plus a paste-ready Lovable prompt, cached on your device so it opens instantly and works offline.",
+      "Idea validator: describe your own idea and get scores for problem clarity, competition, monetization, build and acquisition difficulty.",
+      "My projects tracks saved ideas from Idea to Launch with auto-saving notes — all on-device, no account needed.",
+      "Sidebar sections for Discover and Build Ideas now collapse and expand with a toggle.",
+    ],
+  },
+  {
     version: "1.3.0",
     date: "2026-08-23",
     title: "Free AI, Reddit and themes",
