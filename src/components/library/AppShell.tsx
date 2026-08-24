@@ -68,8 +68,10 @@ const DISCOVER_CHILDREN = [
 
 const SECONDARY = [
   { to: "/explore", label: "Commands", icon: Terminal },
+  { to: "/live", label: "Live", icon: Radio },
   { to: "/collections", label: "Collections", icon: Layers },
   { to: "/play", label: "Play", icon: Dices },
+
   { to: "/recent", label: "Recent", icon: History },
   { to: "/me", label: "Me", icon: UserRound },
   { to: "/settings", label: "Settings", icon: SettingsIcon },

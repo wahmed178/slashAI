@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as FavoritesRouteImport } from './routes/favorites'
+import { Route as LiveRouteImport } from './routes/live'
 import { Route as MeRouteImport } from './routes/me'
 import { Route as PlayRouteImport } from './routes/play'
 import { Route as RadarRouteImport } from './routes/radar'
@@ -54,6 +55,11 @@ const AlternativesRoute = AlternativesRouteImport.update({
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LiveRoute = LiveRouteImport.update({
+  id: '/live',
+  path: '/live',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MeRoute = MeRouteImport.update({
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
+  '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
+  '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
+  '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
@@ -260,6 +269,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/alternatives'
     | '/favorites'
+    | '/live'
     | '/me'
     | '/play'
     | '/radar'
@@ -288,6 +298,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/alternatives'
     | '/favorites'
+    | '/live'
     | '/me'
     | '/play'
     | '/radar'
@@ -316,6 +327,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/alternatives'
     | '/favorites'
+    | '/live'
     | '/me'
     | '/play'
     | '/radar'
@@ -345,6 +357,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AlternativesRoute: typeof AlternativesRoute
   FavoritesRoute: typeof FavoritesRoute
+  LiveRoute: typeof LiveRoute
   MeRoute: typeof MeRoute
   PlayRoute: typeof PlayRoute
   RadarRoute: typeof RadarRoute
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       path: '/favorites'
       fullPath: '/favorites'
       preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/live': {
+      id: '/live'
+      path: '/live'
+      fullPath: '/live'
+      preLoaderRoute: typeof LiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/me': {
@@ -561,6 +581,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AlternativesRoute: AlternativesRoute,
   FavoritesRoute: FavoritesRoute,
+  LiveRoute: LiveRoute,
   MeRoute: MeRoute,
   PlayRoute: PlayRoute,
   RadarRoute: RadarRoute,
