@@ -321,6 +321,31 @@ function AssistantPage() {
                     >
                       <ListChecks className="size-4" /> Save all as tasks
                     </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="gap-1.5"
+                      onClick={() => {
+                        download(`slashai-${slugify(turn.question)}.md`, workflowMarkdown(turn));
+                        feedback("win");
+                      }}
+                    >
+                      <Download className="size-4" /> Export workflow
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="gap-1.5"
+                      onClick={() => void copy(`${turn.id}-md`, workflowMarkdown(turn))}
+                    >
+                      {copied === `${turn.id}-md` ? (
+                        <Check className="size-4" />
+                      ) : (
+                        <Copy className="size-4" />
+                      )}
+                      Copy as Markdown
+                    </Button>
+
                     <Button size="sm" variant="ghost" asChild>
                       <Link to="/find" search={{ q: turn.question }}>
                         Open full shortlist
