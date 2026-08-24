@@ -25,6 +25,8 @@ export default defineConfig({
         manifest: false,
         workbox: {
           globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff2}"],
+          // the command catalog chunk is large; keep it precached for offline use
+          maximumFileSizeToCacheInBytes: 12 * 1024 * 1024,
           navigateFallback: "/",
           navigateFallbackDenylist: [/^\/~oauth/, /^\/api\//],
           cleanupOutdatedCaches: true,
