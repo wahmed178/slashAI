@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Link, useNavigate, useRouter, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Bot,
   MessagesSquare,
@@ -101,15 +101,18 @@ interface Props {
 }
 
 function BackButton({ to, label }: { to: string; label: string }) {
-  const router = useRouter();
-  const navigate = useNavigate();
+  const goBack = () => {
+    // Use native browser history so the user always returns to whatever
+    // page they came from — whether that's explore, search results, a
+    // collection, or another command. When there is no previous page
+    // (deep link / first visit) the browser stays put.
+    window.history.back();
+  };
+
   return (
     <button
       type="button"
-      onClick={() => {
-        if (router.history.canGoBack()) router.history.back();
-        else void navigate({ to, search: true as never });
-      }}
+      onClick={goBack}
       className="-ml-1 flex min-h-10 shrink-0 items-center gap-1 rounded-lg px-2 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       <ChevronLeft className="size-5" aria-hidden />
