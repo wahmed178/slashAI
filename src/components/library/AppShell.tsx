@@ -13,6 +13,8 @@ import {
   Info,
   Menu,
   ChevronLeft,
+  ChevronDown,
+  FolderKanban,
   Terminal,
   Layers,
   Wrench,
