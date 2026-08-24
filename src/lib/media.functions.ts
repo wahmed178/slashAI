@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { REGIONAL_SHELVES } from "./regional-films";
 
 /* --------------------------------- youtube -------------------------------- */
 
@@ -184,4 +185,37 @@ export const movieDetail = createServerFn({ method: "GET" })
       | { meta?: CinemetaMeta }
       | null;
     return json?.meta ? toMovie(json.meta) : null;
+  });
+
+/**
+ * Regional shelf — curated seed titles per language, enriched in parallel from
+ * the free metadata source. Language catalogs are not available upstream, so
+ * this keeps every shelf reliable and legally safe (metadata + links only).
+ */
+export const regionalShelf = createServerFn({ method: "GET" })
+  .inputValidator((data) => z.object({ lang: z.string().trim().max(20) }).parse(data))
+  .handler(async ({ data }): Promise<MovieHit[]> => {
+    const shelf =
+      REGIONAL_SHELVES.find((s) => s.lang === data.lang) ?? REGIONAL_SHELVES[0]!;
+    const results = await Promise.all(
+      shelf.films.map(async (seed) => {
+        const json = (await fetchJson(
+          `https://v3-cinemeta.strem.io/catalog/movie/top/search=${encodeURIComponent(seed.title)}.json`,
+          8000,
+        )) as { metas?: CinemetaMeta[] } | null;
+        const metas = json?.metas ?? [];
+        const wanted = seed.title.toLowerCase();
+        const best =
+          metas.find(
+            (m) =>
+              (m.name ?? "").toLowerCase() === wanted &&
+              String(m.year ?? m.releaseInfo ?? "").startsWith(seed.year),
+          ) ??
+          metas.find((m) => (m.name ?? "").toLowerCase() === wanted) ??
+          metas[0];
+        const hit = best ? toMovie(best) : null;
+        return hit ?? { id: `seed-${seed.title}`, title: seed.title, year: seed.year, poster: null, rating: null, genres: [], description: "", cast: [], runtime: null };
+      }),
+    );
+    return results;
   });
