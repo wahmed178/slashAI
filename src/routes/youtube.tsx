@@ -270,8 +270,10 @@ function YouTubePage() {
           <div className="aspect-video w-full bg-black">
             <iframe
               key={now.id}
+              ref={player.frameRef}
+              onLoad={attach}
               title={now.title}
-              src={`https://www.youtube-nocookie.com/embed/${now.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+              src={`https://www.youtube-nocookie.com/embed/${now.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${typeof window === "undefined" ? "" : encodeURIComponent(window.location.origin)}`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               loading="lazy"
@@ -279,16 +281,41 @@ function YouTubePage() {
               className="size-full border-0"
             />
           </div>
+
+          <div
+            role="progressbar"
+            aria-label="Playback progress"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            className="h-1 w-full bg-surface-elevated"
+          >
+            <div
+              className="h-full bg-primary transition-[width] duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
           <div className="flex items-start gap-3 p-4">
             <div className="min-w-0 flex-1">
               <h2 className="truncate text-sm font-semibold text-foreground">{now.title}</h2>
-              <p className="mt-0.5 truncate text-xs text-muted-foreground">{now.author}</p>
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                {now.author}
+                {player.duration > 0 && (
+                  <span className="ml-2 tabular-nums">
+                    {fmtDuration(player.time)} / {fmtDuration(player.duration)}
+                  </span>
+                )}
+                <span className="ml-2">
+                  · {index + 1} of {queue.length}
+                </span>
+              </p>
             </div>
             <a
-              href={`https://www.youtube.com/watch?v=${now.id}`}
+              href={handoff}
               target="_blank"
               rel="noreferrer noopener"
-              aria-label="Open on YouTube"
+              aria-label="Continue on YouTube at this timestamp"
               className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-foreground"
             >
               <ExternalLink className="size-4" />
@@ -296,14 +323,125 @@ function YouTubePage() {
             <button
               type="button"
               aria-label="Close player"
-              onClick={() => setNow(null)}
+              onClick={() => {
+                setQueue([]);
+                setIndex(0);
+              }}
               className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-foreground"
             >
               <X className="size-4" />
             </button>
           </div>
+
+          <div className="flex flex-wrap items-center gap-2 border-t border-border px-4 py-3">
+            <button
+              type="button"
+              aria-label="Previous"
+              onClick={() => {
+                feedback("tap");
+                advance(-1);
+              }}
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              <SkipBack className="size-4" />
+            </button>
+            <button
+              type="button"
+              aria-label={player.state === "playing" ? "Pause" : "Play"}
+              onClick={() => {
+                feedback("tap");
+                player.toggle();
+              }}
+              className="grid size-10 place-items-center rounded-full bg-primary text-primary-foreground transition-transform active:scale-95"
+            >
+              {player.state === "playing" ? (
+                <Pause className="size-4" />
+              ) : (
+                <Play className="size-4" />
+              )}
+            </button>
+            <button
+              type="button"
+              aria-label="Next"
+              onClick={() => {
+                feedback("tap");
+                advance(1);
+              }}
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              <SkipForward className="size-4" />
+            </button>
+            <button
+              type="button"
+              aria-pressed={shuffle}
+              aria-label="Shuffle"
+              onClick={() => setShuffle((s) => !s)}
+              className={cn(
+                "rounded-lg p-2 transition-colors hover:bg-accent",
+                shuffle ? "text-primary" : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              <Shuffle className="size-4" />
+            </button>
+            <button
+              type="button"
+              aria-pressed={repeat}
+              aria-label="Repeat queue"
+              onClick={() => setRepeat((r) => !r)}
+              className={cn(
+                "rounded-lg p-2 transition-colors hover:bg-accent",
+                repeat ? "text-primary" : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              <Repeat className="size-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setQueueOpen((o) => !o)}
+              aria-expanded={queueOpen}
+              className="ml-auto inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-border px-3 text-xs text-foreground hover:bg-accent"
+            >
+              <ListVideo className="size-4" /> Queue ({queue.length})
+            </button>
+          </div>
+
+          {queueOpen && queue.length > 0 && (
+            <ol className="max-h-72 divide-y divide-border overflow-y-auto border-t border-border">
+              {queue.map((v, i) => (
+                <li
+                  key={`${v.id}-${i}`}
+                  className={cn(
+                    "flex items-center gap-3 px-4 py-2",
+                    i === index && "bg-accent/60",
+                  )}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setIndex(i)}
+                    className="min-w-0 flex-1 text-left"
+                  >
+                    <span className="line-clamp-1 text-xs font-medium text-foreground">
+                      {i + 1}. {v.title}
+                    </span>
+                    <span className="line-clamp-1 text-[11px] text-muted-foreground">
+                      {v.author}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={`Remove ${v.title} from queue`}
+                    onClick={() => removeAt(i)}
+                    className="rounded-lg p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+                  >
+                    <Trash2 className="size-3.5" />
+                  </button>
+                </li>
+              ))}
+            </ol>
+          )}
         </section>
       )}
+
 
       <div className="mt-6">
         {isFetching && hits.length === 0 ? (
