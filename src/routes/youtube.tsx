@@ -455,55 +455,68 @@ function YouTubePage() {
             {hits.map((v) => (
               <article
                 key={v.id}
-                role="button"
-                tabIndex={0}
-                aria-label={`Play ${v.title}`}
-                onClick={() => {
-                  feedback("tap");
-                  setNow(v);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setNow(v);
-                  }
-                }}
                 className={cn(
-                  "glass lift group cursor-pointer overflow-hidden rounded-2xl outline-none",
-                  "focus-visible:ring-2 focus-visible:ring-ring",
+                  "glass lift group overflow-hidden rounded-2xl outline-none",
                   now?.id === v.id && "ring-2 ring-primary",
                 )}
               >
-                <div className="relative aspect-video overflow-hidden bg-surface-elevated">
-                  <img
-                    src={v.thumb}
-                    alt=""
-                    loading="lazy"
-                    className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                  />
-                  <span className="absolute inset-0 grid place-items-center bg-black/25 opacity-0 transition-opacity group-hover:opacity-100">
-                    <Play className="size-9 text-white drop-shadow" aria-hidden />
-                  </span>
-                  {v.duration > 0 && (
-                    <span className="absolute right-2 bottom-2 rounded-md bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">
-                      {fmtDuration(v.duration)}
+                <button
+                  type="button"
+                  aria-label={`Play ${v.title}`}
+                  onClick={() => playNow(v)}
+                  className="block w-full text-left focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                >
+                  <div className="relative aspect-video overflow-hidden bg-surface-elevated">
+                    <img
+                      src={v.thumb}
+                      alt=""
+                      loading="lazy"
+                      className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                    <span className="absolute inset-0 grid place-items-center bg-black/25 opacity-0 transition-opacity group-hover:opacity-100">
+                      <Play className="size-9 text-white drop-shadow" aria-hidden />
                     </span>
-                  )}
-                </div>
-                <div className="p-3">
-                  <h3 className="line-clamp-2 text-sm font-medium text-foreground">{v.title}</h3>
-                  <p className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                    <span className="truncate">{v.author}</span>
-                    {v.views > 0 && (
-                      <span className="flex shrink-0 items-center gap-1">
-                        <Eye className="size-3" /> {fmtViews(v.views)}
+                    {v.duration > 0 && (
+                      <span className="absolute right-2 bottom-2 rounded-md bg-black/75 px-1.5 py-0.5 text-[11px] font-medium text-white">
+                        {fmtDuration(v.duration)}
                       </span>
                     )}
-                  </p>
+                  </div>
+                  <div className="p-3">
+                    <h3 className="line-clamp-2 text-sm font-medium text-foreground">{v.title}</h3>
+                    <p className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                      <span className="truncate">{v.author}</span>
+                      {v.views > 0 && (
+                        <span className="flex shrink-0 items-center gap-1">
+                          <Eye className="size-3" /> {fmtViews(v.views)}
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                </button>
+                <div className="flex items-center gap-2 border-t border-border px-3 py-2">
+                  <button
+                    type="button"
+                    onClick={() => enqueue(v)}
+                    disabled={queuedIds.has(v.id)}
+                    className="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-border px-2.5 text-xs text-foreground transition-colors hover:bg-accent disabled:opacity-50"
+                  >
+                    <ListPlus className="size-3.5" />
+                    {queuedIds.has(v.id) ? "Queued" : "Add to queue"}
+                  </button>
+                  <a
+                    href={`https://www.youtube.com/watch?v=${v.id}`}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label={`Open ${v.title} on YouTube`}
+                    className="ml-auto rounded-lg p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+                  >
+                    <ExternalLink className="size-3.5" />
+                  </a>
                 </div>
               </article>
             ))}
+
           </div>
         ) : (
           <div className="glass rounded-2xl px-6 py-14 text-center">
