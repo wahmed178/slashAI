@@ -1,0 +1,72 @@
+/** Server-only helpers for the Build Ideas AI features. */
+
+const MODEL = "anthropic/claude-sonnet-4.5";
+const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
+
+export async function askOpenRouter(system: string, user: string) {
+  const key = process.env["OPENROUTER_API_KEY"];
+  if (!key) {
+    throw new Error("AI is not configured on the server yet.");
+  }
+
+  const res = await fetch(ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": "https://slashai.lovable.app",
+      "X-Title": "SlashAI Build Ideas",
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 3000,
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: user },
+      ],
+    }),
+  });
+
+  if (res.status === 429) throw new Error("AI is rate limited right now. Try again in a minute.");
+  if (res.status === 402) throw new Error("The AI account is out of credit.");
+  if (!res.ok) throw new Error(`AI request failed (${res.status}).`);
+
+  const json = (await res.json()) as {
+    choices?: { message?: { content?: string } }[];
+  };
+  const text = json.choices?.[0]?.message?.content?.trim();
+  if (!text) throw new Error("The AI returned an empty response.");
+  return text;
+}
+
+export const SPEC_SYSTEM =
+  "You are a senior product architect. Produce a concise but complete product specification in GitHub-flavoured markdown. Use exactly these H2 sections in this order: Product Overview, Target Users & Roles, Core Features, Required Pages/Screens, Main User Flows, Database Entities, Auth Requirements, Payment Requirements, Recommended Integrations, MVP Scope. Then a final H2 section named 'Lovable Prompt' containing one fenced code block holding a single paste-ready prompt (second person, imperative, self-contained, no markdown headings inside) that instructs an AI app builder to build the MVP. Be specific and avoid filler.";
+
+export const VALIDATE_SYSTEM =
+  "You are a pragmatic startup analyst. Reply with ONLY minified JSON matching this shape: {\"problemClarity\":{\"score\":number,\"notes\":string},\"targetCustomer\":{\"customer\":string,\"notes\":string},\"competition\":{\"level\":\"Low\"|\"Medium\"|\"High\",\"notes\":string},\"monetization\":{\"score\":number,\"notes\":string},\"buildDifficulty\":{\"score\":number,\"notes\":string},\"acquisitionDifficulty\":{\"score\":number,\"notes\":string},\"differentiation\":[string,string,string],\"overallScore\":number,\"recommendation\":\"Build\"|\"Improve First\"|\"Avoid\",\"reason\":string}. Scores are 1-10 integers. No markdown, no code fences.";
+
+export function specPrompt(payload: {
+  title: string;
+  short: string;
+  problem: string;
+  targetUsers: string;
+  solution: string;
+  keyFeatures: string[];
+  mvpFeatures: string[];
+  techStack: string[];
+  businessModel: string;
+  buildType: string;
+}) {
+  return [
+    `Product: ${payload.title}`,
+    `Pitch: ${payload.short}`,
+    `Problem: ${payload.problem}`,
+    `Target users: ${payload.targetUsers}`,
+    `Solution: ${payload.solution}`,
+    `Key features: ${payload.keyFeatures.join("; ")}`,
+    `MVP features: ${payload.mvpFeatures.join("; ")}`,
+    `Suggested stack: ${payload.techStack.join(", ")}`,
+    `Business model: ${payload.businessModel}`,
+    `Build type: ${payload.buildType}`,
+  ].join("\n");
+}

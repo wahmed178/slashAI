@@ -20,6 +20,10 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
+import { Route as BuildIdeasIndexRouteImport } from './routes/build-ideas.index'
+import { Route as BuildIdeasSlugRouteImport } from './routes/build-ideas.$slug'
+import { Route as BuildIdeasProjectsRouteImport } from './routes/build-ideas.projects'
+import { Route as BuildIdeasValidateRouteImport } from './routes/build-ideas.validate'
 import { Route as CSlugRouteImport } from './routes/c.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
@@ -86,6 +90,26 @@ const WhatsNewRoute = WhatsNewRouteImport.update({
   path: '/whats-new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuildIdeasIndexRoute = BuildIdeasIndexRouteImport.update({
+  id: '/build-ideas/',
+  path: '/build-ideas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildIdeasSlugRoute = BuildIdeasSlugRouteImport.update({
+  id: '/build-ideas/$slug',
+  path: '/build-ideas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildIdeasProjectsRoute = BuildIdeasProjectsRouteImport.update({
+  id: '/build-ideas/projects',
+  path: '/build-ideas/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildIdeasValidateRoute = BuildIdeasValidateRouteImport.update({
+  id: '/build-ideas/validate',
+  path: '/build-ideas/validate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CSlugRoute = CSlugRouteImport.update({
   id: '/c/$slug',
   path: '/c/$slug',
@@ -150,11 +174,15 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
   '/whats-new': typeof WhatsNewRoute
+  '/build-ideas/$slug': typeof BuildIdeasSlugRoute
+  '/build-ideas/projects': typeof BuildIdeasProjectsRoute
+  '/build-ideas/validate': typeof BuildIdeasValidateRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
+  '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
@@ -173,11 +201,15 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
   '/whats-new': typeof WhatsNewRoute
+  '/build-ideas/$slug': typeof BuildIdeasSlugRoute
+  '/build-ideas/projects': typeof BuildIdeasProjectsRoute
+  '/build-ideas/validate': typeof BuildIdeasValidateRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
+  '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
@@ -197,11 +229,15 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
   '/whats-new': typeof WhatsNewRoute
+  '/build-ideas/$slug': typeof BuildIdeasSlugRoute
+  '/build-ideas/projects': typeof BuildIdeasProjectsRoute
+  '/build-ideas/validate': typeof BuildIdeasValidateRoute
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
+  '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
@@ -222,11 +258,15 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tools'
     | '/whats-new'
+    | '/build-ideas/$slug'
+    | '/build-ideas/projects'
+    | '/build-ideas/validate'
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
     | '/hub/$audience'
     | '/r/$id'
+    | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
@@ -245,11 +285,15 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tools'
     | '/whats-new'
+    | '/build-ideas/$slug'
+    | '/build-ideas/projects'
+    | '/build-ideas/validate'
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
     | '/hub/$audience'
     | '/r/$id'
+    | '/build-ideas'
     | '/collections'
     | '/discover'
     | '/explore'
@@ -268,11 +312,15 @@ export interface FileRouteTypes {
     | '/settings'
     | '/tools'
     | '/whats-new'
+    | '/build-ideas/$slug'
+    | '/build-ideas/projects'
+    | '/build-ideas/validate'
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
     | '/hub/$audience'
     | '/r/$id'
+    | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
@@ -292,11 +340,15 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   ToolsRoute: typeof ToolsRoute
   WhatsNewRoute: typeof WhatsNewRoute
+  BuildIdeasSlugRoute: typeof BuildIdeasSlugRoute
+  BuildIdeasProjectsRoute: typeof BuildIdeasProjectsRoute
+  BuildIdeasValidateRoute: typeof BuildIdeasValidateRoute
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   DiscoverSectionRoute: typeof DiscoverSectionRoute
   HubAudienceRoute: typeof HubAudienceRoute
   RIdRoute: typeof RIdRoute
+  BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
@@ -381,6 +433,34 @@ declare module '@tanstack/react-router' {
       path: '/whats-new'
       fullPath: '/whats-new'
       preLoaderRoute: typeof WhatsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build-ideas/': {
+      id: '/build-ideas/'
+      path: '/build-ideas'
+      fullPath: '/build-ideas/'
+      preLoaderRoute: typeof BuildIdeasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build-ideas/$slug': {
+      id: '/build-ideas/$slug'
+      path: '/build-ideas/$slug'
+      fullPath: '/build-ideas/$slug'
+      preLoaderRoute: typeof BuildIdeasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build-ideas/projects': {
+      id: '/build-ideas/projects'
+      path: '/build-ideas/projects'
+      fullPath: '/build-ideas/projects'
+      preLoaderRoute: typeof BuildIdeasProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/build-ideas/validate': {
+      id: '/build-ideas/validate'
+      path: '/build-ideas/validate'
+      fullPath: '/build-ideas/validate'
+      preLoaderRoute: typeof BuildIdeasValidateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/c/$slug': {
@@ -468,11 +548,15 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   ToolsRoute: ToolsRoute,
   WhatsNewRoute: WhatsNewRoute,
+  BuildIdeasSlugRoute: BuildIdeasSlugRoute,
+  BuildIdeasProjectsRoute: BuildIdeasProjectsRoute,
+  BuildIdeasValidateRoute: BuildIdeasValidateRoute,
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   DiscoverSectionRoute: DiscoverSectionRoute,
   HubAudienceRoute: HubAudienceRoute,
   RIdRoute: RIdRoute,
+  BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
