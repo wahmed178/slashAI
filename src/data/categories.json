@@ -417,5 +417,280 @@
       "Planning",
       "Troubleshooting"
     ]
+  },
+  {
+    "category": "Web & Frontend",
+    "icon": "Layout",
+    "type": "coding",
+    "subcategories": [
+      "Accessibility",
+      "Components",
+      "Frameworks",
+      "Interaction",
+      "Performance",
+      "Styling",
+      "Tooling"
+    ]
+  },
+  {
+    "category": "Backend & APIs",
+    "icon": "Server",
+    "type": "coding",
+    "subcategories": [
+      "ApiDesign",
+      "Auth",
+      "DataLayer",
+      "Reliability",
+      "Security"
+    ]
+  },
+  {
+    "category": "DevOps & Cloud",
+    "icon": "Cloud",
+    "type": "coding",
+    "subcategories": [
+      "CICD",
+      "IncidentResponse",
+      "Infra",
+      "Observability"
+    ]
+  },
+  {
+    "category": "Mobile & Apps",
+    "icon": "Smartphone",
+    "type": "coding",
+    "subcategories": [
+      "AppDev",
+      "AppPerformance",
+      "AppQuality",
+      "Distribution",
+      "Growth"
+    ]
+  },
+  {
+    "category": "Testing & QA",
+    "icon": "FlaskConical",
+    "type": "coding",
+    "subcategories": [
+      "Automation",
+      "BugManagement",
+      "E2E",
+      "Integration",
+      "PerformanceTesting",
+      "QualityProcess",
+      "Regression",
+      "TestWriting"
+    ]
+  },
+  {
+    "category": "AI Agents & Prompting",
+    "icon": "Bot",
+    "type": "general",
+    "subcategories": [
+      "Agent Architecture",
+      "Model Ops",
+      "Prompt Authoring"
+    ]
+  },
+  {
+    "category": "Machine Learning",
+    "icon": "Brain",
+    "type": "data",
+    "subcategories": [
+      "Data Prep",
+      "MLOps",
+      "Modeling"
+    ]
+  },
+  {
+    "category": "Databases & SQL",
+    "icon": "Database",
+    "type": "data",
+    "subcategories": [
+      "Operations",
+      "Query Authoring",
+      "Schema Design"
+    ]
+  },
+  {
+    "category": "Spreadsheets",
+    "icon": "Table",
+    "type": "data",
+    "subcategories": [
+      "Data Hygiene",
+      "Formulas",
+      "Modeling"
+    ]
+  },
+  {
+    "category": "Analytics & Reporting",
+    "icon": "ChartLine",
+    "type": "data",
+    "subcategories": [
+      "Analysis",
+      "Metrics & Governance",
+      "Reporting"
+    ]
+  },
+  {
+    "category": "Sales & CRM",
+    "icon": "HandCoins",
+    "type": "business",
+    "subcategories": [
+      "CRM Ops",
+      "Deals",
+      "Outreach",
+      "Pipeline",
+      "Prospecting"
+    ]
+  },
+  {
+    "category": "Customer Support",
+    "icon": "Headphones",
+    "type": "business",
+    "subcategories": [
+      "Knowledge Base",
+      "Support Ops",
+      "Ticket Handling"
+    ]
+  },
+  {
+    "category": "Legal & Contracts",
+    "icon": "Scale",
+    "type": "business",
+    "subcategories": [
+      "Compliance",
+      "Contract Drafting",
+      "Disputes"
+    ]
+  },
+  {
+    "category": "HR & Hiring",
+    "icon": "Users",
+    "type": "business",
+    "subcategories": [
+      "Employee Lifecycle",
+      "People Ops",
+      "Recruiting"
+    ]
+  },
+  {
+    "category": "Ecommerce & Retail",
+    "icon": "ShoppingCart",
+    "type": "business",
+    "subcategories": [
+      "Customer Retail Ops",
+      "Merchandising",
+      "Product Listings"
+    ]
+  },
+  {
+    "category": "Content & Social Media",
+    "icon": "Megaphone",
+    "type": "text",
+    "subcategories": [
+      "Analytics",
+      "CommunityOps",
+      "Distribution",
+      "Documentation",
+      "Drafting",
+      "Editing",
+      "Identity",
+      "Optimization",
+      "Partnerships",
+      "Planning",
+      "Research",
+      "Revenue",
+      "Strategy"
+    ]
+  },
+  {
+    "category": "Gaming & Esports",
+    "icon": "Gamepad2",
+    "type": "general",
+    "subcategories": [
+      "Broadcasting",
+      "Business",
+      "GameDesign",
+      "Gameplay",
+      "Improvement",
+      "Loadouts",
+      "Marketing",
+      "Mechanics",
+      "Meta",
+      "Operations",
+      "QA",
+      "Storytelling",
+      "TeamOps"
+    ]
+  },
+  {
+    "category": "Food & Cooking",
+    "icon": "ChefHat",
+    "type": "general",
+    "subcategories": [
+      "Adjustments",
+      "Entertaining",
+      "Fixes",
+      "Nutrition",
+      "Pairing",
+      "PantryOps",
+      "Planning",
+      "Prep",
+      "Presentation",
+      "Recipes",
+      "Sourcing",
+      "Storage",
+      "Sustainability",
+      "Technique"
+    ]
+  },
+  {
+    "category": "Sports & Fitness",
+    "icon": "Dumbbell",
+    "type": "learning",
+    "subcategories": [
+      "Analysis",
+      "Analytics",
+      "Assessment",
+      "Coaching",
+      "Consistency",
+      "Equipment",
+      "GamePlan",
+      "Nutrition",
+      "PostGame",
+      "Preparation",
+      "Programming",
+      "Psychology",
+      "Recovery",
+      "Rules",
+      "TeamOps",
+      "Technique"
+    ]
+  },
+  {
+    "category": "Events & Community",
+    "icon": "CalendarHeart",
+    "type": "productivity",
+    "subcategories": [
+      "Broadcast",
+      "Communications",
+      "Contingency",
+      "Design",
+      "Engagement",
+      "Evaluation",
+      "Feedback",
+      "Finance",
+      "Fundraising",
+      "Logistics",
+      "Meetings",
+      "Membership",
+      "Operations",
+      "PostEvent",
+      "Procurement",
+      "RiskManagement",
+      "Timeline",
+      "Volunteers"
+    ]
   }
 ]
