@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as MeRouteImport } from './routes/me'
+import { Route as PlayRouteImport } from './routes/play'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as SearchRouteImport } from './routes/search'
@@ -58,6 +59,11 @@ const FavoritesRoute = FavoritesRouteImport.update({
 const MeRoute = MeRouteImport.update({
   id: '/me',
   path: '/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayRoute = PlayRouteImport.update({
+  id: '/play',
+  path: '/play',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RadarRoute = RadarRouteImport.update({
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
   '/me': typeof MeRoute
+  '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
   '/me': typeof MeRoute
+  '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
@@ -223,6 +231,7 @@ export interface FileRoutesById {
   '/alternatives': typeof AlternativesRoute
   '/favorites': typeof FavoritesRoute
   '/me': typeof MeRoute
+  '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/search': typeof SearchRoute
@@ -252,6 +261,7 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/favorites'
     | '/me'
+    | '/play'
     | '/radar'
     | '/recent'
     | '/search'
@@ -279,6 +289,7 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/favorites'
     | '/me'
+    | '/play'
     | '/radar'
     | '/recent'
     | '/search'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/favorites'
     | '/me'
+    | '/play'
     | '/radar'
     | '/recent'
     | '/search'
@@ -334,6 +346,7 @@ export interface RootRouteChildren {
   AlternativesRoute: typeof AlternativesRoute
   FavoritesRoute: typeof FavoritesRoute
   MeRoute: typeof MeRoute
+  PlayRoute: typeof PlayRoute
   RadarRoute: typeof RadarRoute
   RecentRoute: typeof RecentRoute
   SearchRoute: typeof SearchRoute
@@ -391,6 +404,13 @@ declare module '@tanstack/react-router' {
       path: '/me'
       fullPath: '/me'
       preLoaderRoute: typeof MeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/play': {
+      id: '/play'
+      path: '/play'
+      fullPath: '/play'
+      preLoaderRoute: typeof PlayRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/radar': {
@@ -542,6 +562,7 @@ const rootRouteChildren: RootRouteChildren = {
   AlternativesRoute: AlternativesRoute,
   FavoritesRoute: FavoritesRoute,
   MeRoute: MeRoute,
+  PlayRoute: PlayRoute,
   RadarRoute: RadarRoute,
   RecentRoute: RecentRoute,
   SearchRoute: SearchRoute,
