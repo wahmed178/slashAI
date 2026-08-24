@@ -71,12 +71,67 @@ const fmtDuration = (s: number) => {
 const fmtViews = (v: number) =>
   v >= 1_000_000 ? `${(v / 1_000_000).toFixed(1)}M` : v >= 1000 ? `${Math.round(v / 1000)}K` : `${v}`;
 
+const QUEUE_KEY = "slashai.yt.queue.v1";
+
+function loadQueue(): VideoHit[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(QUEUE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? (parsed as VideoHit[]).slice(0, 100) : [];
+  } catch {
+    return [];
+  }
+}
+
 function YouTubePage() {
   const run = useServerFn(searchVideos);
   const [draft, setDraft] = useState("lofi beats to study");
   const [q, setQ] = useState("lofi beats to study");
   const [music, setMusic] = useState(false);
-  const [now, setNow] = useState<VideoHit | null>(null);
+  const [queue, setQueue] = useState<VideoHit[]>([]);
+  const [index, setIndex] = useState(0);
+  const [repeat, setRepeat] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
+  const [queueOpen, setQueueOpen] = useState(false);
+
+  // hydrate the persisted queue after mount so SSR markup stays stable
+  useEffect(() => setQueue(loadQueue()), []);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(QUEUE_KEY, JSON.stringify(queue.slice(0, 100)));
+    } catch {
+      /* storage full or blocked — the queue simply stays in memory */
+    }
+  }, [queue]);
+
+  const now = queue[index] ?? null;
+
+  const advance = useCallback(
+    (step: 1 | -1) => {
+      setIndex((i) => {
+        if (queue.length === 0) return 0;
+        if (shuffle && step === 1) {
+          if (queue.length === 1) return 0;
+          let next = i;
+          while (next === i) next = Math.floor(Math.random() * queue.length);
+          return next;
+        }
+        const next = i + step;
+        if (next >= queue.length) return repeat ? 0 : i;
+        if (next < 0) return repeat ? queue.length - 1 : 0;
+        return next;
+      });
+    },
+    [queue.length, repeat, shuffle],
+  );
+
+  const player = useYouTubePlayer(() => advance(1));
+  const { attach, reset } = player;
+  useEffect(() => {
+    if (now) reset();
+  }, [now?.id, reset, now]);
 
   const { data, isFetching } = useQuery({
     queryKey: ["yt", q, music],
@@ -86,6 +141,7 @@ function YouTubePage() {
   });
 
   const hits = data?.hits ?? [];
+  const queuedIds = useMemo(() => new Set(queue.map((v) => v.id)), [queue]);
 
   const search = (term: string) => {
     const next = term.trim();
@@ -94,6 +150,41 @@ function YouTubePage() {
     setDraft(next);
     setQ(next);
   };
+
+  /** Play now: put the track at the front of the "up next" run and jump to it. */
+  const playNow = (video: VideoHit) => {
+    feedback("tap");
+    setQueue((prev) => {
+      const existing = prev.findIndex((v) => v.id === video.id);
+      if (existing >= 0) {
+        setIndex(existing);
+        return prev;
+      }
+      const next = [...prev];
+      next.splice(index + (prev.length ? 1 : 0), 0, video);
+      setIndex(prev.length ? index + 1 : 0);
+      return next;
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const enqueue = (video: VideoHit) => {
+    feedback("tap");
+    setQueue((prev) => (prev.some((v) => v.id === video.id) ? prev : [...prev, video]));
+  };
+
+  const removeAt = (i: number) => {
+    setQueue((prev) => prev.filter((_, n) => n !== i));
+    setIndex((cur) => (i < cur ? cur - 1 : Math.max(0, Math.min(cur, queue.length - 2))));
+  };
+
+  const handoff = now
+    ? `https://www.youtube.com/watch?v=${now.id}${player.time > 3 ? `&t=${Math.floor(player.time)}s` : ""}`
+    : "#";
+
+  const progress =
+    player.duration > 0 ? Math.min(100, (player.time / player.duration) * 100) : 0;
+
 
   return (
     <AppShell wide hideHeaderSearch title="YouTube">
