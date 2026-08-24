@@ -416,9 +416,56 @@
   box-shadow: var(--shadow-panel);
 }
 
+/* frosted premium surface — used for hero blocks and live widgets */
+@utility glass {
+  background: color-mix(in oklab, var(--surface) 72%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 80%, var(--primary) 12%);
+  box-shadow: var(--shadow-panel);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* soft primary halo behind a card, purely decorative */
+@utility aurora {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      120% 100% at 0% 0%,
+      color-mix(in oklab, var(--primary) 14%, transparent),
+      transparent 60%
+    ),
+    var(--surface);
+}
+
+/* lift + glow on hover, disabled under reduced motion */
+@utility lift {
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    box-shadow 260ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
+    box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--primary) 55%, transparent);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.985);
+  }
+}
+
 @utility density-compact {
   --card-pad: 0.75rem;
 }
+
+:root[data-motion="reduced"] .lift,
+:root[data-motion="reduced"] .lift:hover {
+  transform: none;
+  transition: none;
+}
+
 
 mark {
   background: var(--highlight);
