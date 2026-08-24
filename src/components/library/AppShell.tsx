@@ -26,6 +26,8 @@ import {
   Youtube,
   Lightbulb,
   Radar,
+  Dices,
+
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
