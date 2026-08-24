@@ -6,7 +6,8 @@ import { ExternalLink, Film, Search, Star, X } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { Button } from "@/components/ui/button";
-import { searchMovies, type MovieHit } from "@/lib/media.functions";
+import { regionalMovies, searchMovies, type MovieHit } from "@/lib/media.functions";
+import { SHELF_LANGS } from "@/lib/regional-films";
 import { feedback } from "@/lib/play-sound";
 import { cn } from "@/lib/utils";
 
@@ -34,22 +35,6 @@ export const Route = createFileRoute("/movies")({
   component: MoviesPage,
 });
 
-/** Regional shelves — each maps to a Cinemeta genre/keyword seed. */
-const SHELVES = [
-  { label: "Bollywood", genre: "Bollywood" },
-  { label: "Hindi", genre: "Hindi" },
-  { label: "Telugu", genre: "Telugu" },
-  { label: "Tamil", genre: "Tamil" },
-  { label: "Malayalam", genre: "Malayalam" },
-  { label: "Kannada", genre: "Kannada" },
-  { label: "Marathi", genre: "Marathi" },
-  { label: "Bengali", genre: "Bengali" },
-  { label: "Punjabi", genre: "Punjabi" },
-  { label: "Pakistani", genre: "Urdu" },
-  { label: "Nepali", genre: "Nepali" },
-  { label: "Sinhala", genre: "Sinhala" },
-] as const;
-
 /** Legal, region-aware places to actually watch a title. */
 const SOURCES = (title: string, year: string) => {
   const q = encodeURIComponent(year ? `${title} ${year}` : title);
@@ -67,16 +52,17 @@ const SOURCES = (title: string, year: string) => {
 };
 
 function MoviesPage() {
-  const run = useServerFn(searchMovies);
+  const runSearch = useServerFn(searchMovies);
+  const runShelf = useServerFn(regionalMovies);
   const [draft, setDraft] = useState("");
   const [q, setQ] = useState("");
-  const [genre, setGenre] = useState<string>("Bollywood");
+  const [lang, setLang] = useState<string>("hindi");
   const [open, setOpen] = useState<MovieHit | null>(null);
 
   const { data, isFetching } = useQuery({
-    queryKey: ["movies", q, genre],
-    queryFn: () => run({ data: { q, genre } }),
-    staleTime: 10 * 60_000,
+    queryKey: ["movies", q, lang],
+    queryFn: () => (q ? runSearch({ data: { q } }) : runShelf({ data: { lang } })),
+    staleTime: 30 * 60_000,
   });
 
   const movies = data ?? [];
@@ -131,20 +117,21 @@ function MoviesPage() {
         </form>
 
         <div className="mt-3 flex flex-wrap gap-2">
-          {SHELVES.map((s) => (
+          {SHELF_LANGS.map((s) => (
             <button
-              key={s.label}
+              key={s.lang}
               type="button"
-              aria-pressed={!q && genre === s.genre}
+              title={s.region}
+              aria-pressed={!q && lang === s.lang}
               onClick={() => {
                 feedback("tap");
                 setQ("");
                 setDraft("");
-                setGenre(s.genre);
+                setLang(s.lang);
               }}
               className={cn(
                 "min-h-9 rounded-full border px-3.5 text-sm transition-colors",
-                !q && genre === s.genre
+                !q && lang === s.lang
                   ? "border-primary bg-accent text-foreground"
                   : "border-border bg-surface text-muted-foreground hover:text-foreground",
               )}
