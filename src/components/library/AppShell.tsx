@@ -26,6 +26,8 @@ import {
   Youtube,
   Lightbulb,
   Radar,
+  Dices,
+
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -67,11 +69,13 @@ const DISCOVER_CHILDREN = [
 const SECONDARY = [
   { to: "/explore", label: "Commands", icon: Terminal },
   { to: "/collections", label: "Collections", icon: Layers },
+  { to: "/play", label: "Play", icon: Dices },
   { to: "/recent", label: "Recent", icon: History },
   { to: "/me", label: "Me", icon: UserRound },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
 ] as const;
+
 
 interface Props {
   children: ReactNode;

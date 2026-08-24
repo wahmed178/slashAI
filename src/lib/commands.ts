@@ -221,8 +221,9 @@ function scoreTerm(cmd: SlashCommand, needle: string): number {
 }
 
 /**
- * Multi-word queries match in any order: every word must hit something, and the
- * whole phrase matching as-is always outranks the word-by-word result.
+ * Multi-word queries match in any order. Commands matching every word rank
+ * highest, but partial matches are still returned so plain-language phrases
+ * like "study explain" or "email plan meeting" never dead-end at zero results.
  */
 export function scoreCommand(cmd: SlashCommand, q: string): number {
   const cleaned = q.trim().toLowerCase().replace(/^\//, "");
@@ -231,14 +232,23 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
   if (tokens.length < 2) return scoreTerm(cmd, cleaned);
 
   let total = 0;
+  let matched = 0;
   for (const t of tokens) {
     const s = scoreTerm(cmd, t);
-    if (s < 0) return -1;
-    total += s;
+    if (s > 0) {
+      matched += 1;
+      total += s;
+    }
   }
+  if (matched === 0) return -1;
+
+  const missed = tokens.length - matched;
+  const avg = Math.round(total / matched);
+  const wordScore = avg + (missed === 0 ? 250 : 0) - missed * 400;
   const phrase = scoreTerm(cmd, cleaned);
-  return Math.max(phrase, Math.round(total / tokens.length) + 250);
+  return Math.max(phrase, Math.max(wordScore, 1));
 }
+
 
 export type SortKey = "relevance" | "name" | "category" | "popularity" | "newest";
 
