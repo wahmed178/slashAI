@@ -30,8 +30,6 @@ import {
   Radio,
   Wand2,
   Film,
-
-
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -85,8 +83,6 @@ const SECONDARY = [
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
 ] as const;
-
-
 
 interface Props {
   children: ReactNode;
@@ -247,7 +243,10 @@ function NavList({
           </button>
         </div>
         {ideasOpen && (
-          <div id="ideas-subnav" className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
+          <div
+            id="ideas-subnav"
+            className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2"
+          >
             {IDEA_CHILDREN.map((child) => (
               <Link
                 key={child.to}
