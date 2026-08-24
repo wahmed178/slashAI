@@ -681,7 +681,7 @@ export default [
           ["YouthTeam", "a team of young athletes", "youth,coaching,development", "a youth soccer team ages 8 to 10"],
           ["RivalryGame", "a high-stakes matchup between rivals", "rivalry,game,competition", "a rivalry game between two neighboring high schools"],
           ["Playoffs", "a postseason elimination series", "playoffs,postseason,competition", "playoffs in a recreational basketball league"],
-          ["DraftPick", "a selection of a new player", "draft,recruitment,team", "a draft pick strategy for the third overall pick"],
+          ["RosterSpot", "an open roster position", "roster,recruitment,team", "a roster spot strategy for the third overall pick"],
           ["RefereeCall", "an official's in-game decision", "referee,rules,officiating", "a referee call on a disputed offside play"],
           ["TeamRoster", "the full list of team members", "roster,team,management", "a team roster with two injured starters"],
           ["ScoutingReport", "a written analysis of an opponent", "scouting,analysis,opponent", "a scouting report on next week's opponent"],

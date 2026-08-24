@@ -30,10 +30,13 @@ export const Route = createFileRoute("/assistant")({
   component: AssistantPage,
 });
 
+type TaskStatus = "todo" | "doing" | "done";
+
 interface Task {
   id: string;
   text: string;
-  done: boolean;
+  status: TaskStatus;
+  createdAt: string;
 }
 
 interface Turn {
@@ -51,21 +54,75 @@ const SHORTCUTS = [
   "find free tools for video editing",
 ];
 
+const STATUS_ORDER: TaskStatus[] = ["todo", "doing", "done"];
+const STATUS_LABEL: Record<TaskStatus, string> = {
+  todo: "To do",
+  doing: "In progress",
+  done: "Done",
+};
+
+/** Tolerates the pre-1.5 `{ done: boolean }` shape so saved tasks survive. */
 function loadTasks(): Task[] {
   if (typeof window === "undefined") return [];
   try {
     const raw = window.localStorage.getItem(TASKS_KEY);
-    return raw ? (JSON.parse(raw) as Task[]) : [];
+    const parsed = raw ? (JSON.parse(raw) as unknown) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map((item, i) => {
+      const t = item as Partial<Task> & { done?: boolean };
+      return {
+        id: t.id ?? `legacy-${i}`,
+        text: String(t.text ?? ""),
+        status: t.status ?? (t.done ? "done" : "todo"),
+        createdAt: t.createdAt ?? new Date().toISOString(),
+      };
+    });
   } catch {
     return [];
   }
 }
+
+/** Markdown export used for both copy-to-clipboard and file download. */
+function workflowMarkdown(turn: Turn): string {
+  const { result, question } = turn;
+  const lines = [
+    `# Workflow — ${question}`,
+    "",
+    "## Steps",
+    ...result.steps.map((s, i) => `${i + 1}. ${s}`),
+  ];
+  if (result.commands.length > 0) {
+    lines.push("", "## Commands", ...result.commands.slice(0, 8).map((c) => `- ${c.command} — ${c.title}`));
+  }
+  if (result.features.length > 0) {
+    lines.push("", "## In-app features", ...result.features.slice(0, 6).map((f) => `- ${f.feature.label} (${f.feature.to})`));
+  }
+  lines.push("", "## Prompt", "```", result.prompt, "```", "", "_Generated with SlashAI_");
+  return lines.join("\n");
+}
+
+function download(filename: string, body: string) {
+  const url = URL.createObjectURL(new Blob([body], { type: "text/markdown;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 40) || "workflow";
 
 function AssistantPage() {
   const [turns, setTurns] = useState<Turn[]>([]);
   const [draft, setDraft] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDraft, setTaskDraft] = useState("");
+  const [filter, setFilter] = useState<"all" | TaskStatus>("all");
   const [copied, setCopied] = useState<string | null>(null);
   const threadEnd = useRef<HTMLDivElement>(null);
 
@@ -78,7 +135,11 @@ function AssistantPage() {
     threadEnd.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [turns.length]);
 
-  const open = useMemo(() => tasks.filter((t) => !t.done).length, [tasks]);
+  const open = useMemo(() => tasks.filter((t) => t.status !== "done").length, [tasks]);
+  const visibleTasks = useMemo(
+    () => (filter === "all" ? tasks : tasks.filter((t) => t.status === filter)),
+    [tasks, filter],
+  );
 
   const ask = (question: string) => {
     const q = question.trim();
@@ -95,8 +156,32 @@ function AssistantPage() {
     const t = text.trim();
     if (!t) return;
     feedback("tap");
-    setTasks((prev) => [{ id: `${Date.now()}-${prev.length}`, text: t, done: false }, ...prev]);
+    setTasks((prev) => [
+      { id: `${Date.now()}-${prev.length}`, text: t, status: "todo", createdAt: new Date().toISOString() },
+      ...prev,
+    ]);
   };
+
+  const cycleStatus = (id: string) =>
+    setTasks((prev) =>
+      prev.map((t) => {
+        if (t.id !== id) return t;
+        const next = STATUS_ORDER[(STATUS_ORDER.indexOf(t.status) + 1) % 3]!;
+        feedback(next === "done" ? "win" : "tap");
+        return { ...t, status: next };
+      }),
+    );
+
+  /** Reorder within the full list, using the item's real index. */
+  const move = (id: string, dir: -1 | 1) =>
+    setTasks((prev) => {
+      const i = prev.findIndex((t) => t.id === id);
+      const j = i + dir;
+      if (i < 0 || j < 0 || j >= prev.length) return prev;
+      const next = [...prev];
+      [next[i], next[j]] = [next[j]!, next[i]!];
+      return next;
+    });
 
   const copy = async (id: string, text: string) => {
     try {
@@ -108,6 +193,20 @@ function AssistantPage() {
       /* clipboard unavailable */
     }
   };
+
+  const exportTasks = () => {
+    if (tasks.length === 0) return;
+    const body = [
+      "# SlashAI tasks",
+      "",
+      ...tasks.map(
+        (t) => `- [${t.status === "done" ? "x" : " "}] ${t.text} _(${STATUS_LABEL[t.status]})_`,
+      ),
+    ].join("\n");
+    download("slashai-tasks.md", body);
+    feedback("win");
+  };
+
 
   return (
     <AppShell wide hideHeaderSearch title="Assistant">
