@@ -44,7 +44,7 @@ A searchable library of copy-ready slash commands for writing, research, coding,
 
 | | |
 | --- | --- |
-| **Commands** | 1,499 curated, de-duplicated slash commands |
+| **Commands** | 5,635 curated, de-duplicated slash commands |
 | **Categories** | 25 categories across 244 subcategories |
 | **Search** | Instant fuzzy search with typo tolerance and highlighted matches |
 | **Offline** | Static catalog + PWA shell designed for offline use |
@@ -65,7 +65,7 @@ Every command carries a plain-language description, a "how to use" note, a worke
 
 - **Discovery over recall** — you don't have to remember prompt patterns; you search for them.
 - **Copy-ready, not abstract** — each entry ships with a filled-in example you can edit in seconds.
-- **Structured by design** — category → subcategory → command keeps 1,499 entries navigable.
+- **Structured by design** — category → subcategory → command keeps 5,635 entries navigable.
 - **Fast and quiet** — a dark-first, scan-friendly interface with restrained motion and no clutter.
 - **Yours, locally** — favorites, recents, theme, accent and density stay on your device.
 - **Everywhere you work** — desktop browser, installable PWA, or the Android app.
@@ -167,7 +167,7 @@ The taxonomy below is generated from the catalog itself.
 | Travel & Local | 48 | 6 |
 | Video | 61 | 10 |
 | Writing & Communication | 61 | 10 |
-| **Total** | **1,499** | **244** |
+| **Total** | **5,635** | **379** |
 
 ---
 
