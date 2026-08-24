@@ -249,6 +249,74 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
   return Math.max(phrase, Math.max(wordScore, 1));
 }
 
+/* ------------------------------ search index ------------------------------ */
+
+/**
+ * Inverted word index, built once on first search. At 5,000+ commands a naive
+ * full scan (with edit-distance fallbacks) is the bottleneck, so every query
+ * token first narrows the catalog to a candidate bucket keyed by the token's
+ * first three characters. Tokens that hit nothing in the index (typos, words
+ * that only appear in the how-to/example bodies) fall back to a full scan, so
+ * result quality is unchanged — only the common path gets faster.
+ */
+const WORD_RE = /[a-z0-9]+/g;
+
+let PREFIX_INDEX: Map<string, number[]> | null = null;
+
+function buildIndex(): Map<string, number[]> {
+  const index = new Map<string, number[]>();
+  COMMANDS.forEach((c, i) => {
+    const haystack = `${c.command.slice(1)} ${c.title} ${c.tags.join(" ")} ${c.subcategory} ${c.category} ${c.description}`
+      .toLowerCase()
+      .replace(/([a-z])([A-Z])/g, "$1 $2");
+    const seen = new Set<string>();
+    for (const word of haystack.match(WORD_RE) ?? []) {
+      // index every 3-char window so mid-word matches ("upscale" in "100xUpscale") still hit
+      for (let s = 0; s + 3 <= word.length; s++) {
+        const key = word.slice(s, s + 3);
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const bucket = index.get(key);
+        if (bucket) bucket.push(i);
+        else index.set(key, [i]);
+      }
+      if (word.length < 3 && !seen.has(word)) {
+        seen.add(word);
+        const bucket = index.get(word);
+        if (bucket) bucket.push(i);
+        else index.set(word, [i]);
+      }
+    }
+  });
+  return index;
+}
+
+/** Candidate command indexes for a query, or null when a full scan is required. */
+function candidateIndexes(tokens: string[]): number[] | null {
+  PREFIX_INDEX ??= buildIndex();
+  const out = new Set<number>();
+  for (const token of tokens) {
+    const key = token.length >= 3 ? token.slice(0, 3) : token;
+    const bucket = PREFIX_INDEX.get(key);
+    // an unknown token means typo tolerance or deep-body text is in play
+    if (!bucket) return null;
+    for (const i of bucket) out.add(i);
+  }
+  return [...out];
+}
+
+function searchCandidates(q: string): SlashCommand[] {
+  const tokens = q
+    .trim()
+    .toLowerCase()
+    .replace(/^\//, "")
+    .split(/[\s,]+/)
+    .filter(Boolean);
+  if (tokens.length === 0) return COMMANDS;
+  const ids = candidateIndexes(tokens);
+  if (!ids) return COMMANDS;
+  return ids.map((i) => COMMANDS[i]!);
+}
 
 export type SortKey = "relevance" | "name" | "category" | "popularity" | "newest";
 
@@ -263,53 +331,84 @@ export interface FilterState {
   favorites: string[];
 }
 
+const RESULT_CACHE = new Map<string, SlashCommand[]>();
+const CACHE_LIMIT = 40;
+
+function cached(key: string, compute: () => SlashCommand[]): SlashCommand[] {
+  const hit = RESULT_CACHE.get(key);
+  if (hit) return hit;
+  const value = compute();
+  if (RESULT_CACHE.size >= CACHE_LIMIT) RESULT_CACHE.delete(RESULT_CACHE.keys().next().value!);
+  RESULT_CACHE.set(key, value);
+  return value;
+}
+
 export function filterCommands(state: FilterState): SlashCommand[] {
-  const favSet = new Set(state.favorites);
   const q = state.q.trim();
-  const list: { c: SlashCommand; s: number }[] = [];
+  const key = [
+    q.toLowerCase(),
+    state.category,
+    state.subcategory ?? "all",
+    state.type,
+    state.difficulty,
+    state.sort,
+    state.onlyFavorites ? state.favorites.join(",") : "",
+  ].join("|");
 
-  for (const c of COMMANDS) {
-    if (state.category !== "all" && c.category !== state.category) continue;
-    if (state.subcategory && state.subcategory !== "all" && c.subcategory !== state.subcategory)
-      continue;
-    if (state.type !== "all" && c.type !== state.type) continue;
-    if (state.difficulty !== "all" && c.difficulty !== state.difficulty) continue;
-    if (state.onlyFavorites && !favSet.has(c.id)) continue;
-    let s = 0;
-    if (q) {
-      s = scoreCommand(c, q);
-      if (s < 0) continue;
+  return cached(key, () => {
+    const favSet = new Set(state.favorites);
+    const list: { c: SlashCommand; s: number }[] = [];
+
+    for (const c of q ? searchCandidates(q) : COMMANDS) {
+      if (state.category !== "all" && c.category !== state.category) continue;
+      if (state.subcategory && state.subcategory !== "all" && c.subcategory !== state.subcategory)
+        continue;
+      if (state.type !== "all" && c.type !== state.type) continue;
+      if (state.difficulty !== "all" && c.difficulty !== state.difficulty) continue;
+      if (state.onlyFavorites && !favSet.has(c.id)) continue;
+      let s = 0;
+      if (q) {
+        s = scoreCommand(c, q);
+        if (s < 0) continue;
+      }
+      list.push({ c, s });
     }
-    list.push({ c, s });
-  }
 
-  const cmp: Record<
-    SortKey,
-    (a: { c: SlashCommand; s: number }, b: { c: SlashCommand; s: number }) => number
-  > = {
-    relevance: (a, b) =>
-      b.s - a.s || b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
-    name: (a, b) => a.c.command.localeCompare(b.c.command),
-    category: (a, b) =>
-      a.c.category.localeCompare(b.c.category) ||
-      a.c.subcategory.localeCompare(b.c.subcategory) ||
-      a.c.command.localeCompare(b.c.command),
-    popularity: (a, b) => b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
-    newest: (a, b) => b.c.addedAt.localeCompare(a.c.addedAt),
-  };
+    const cmp: Record<
+      SortKey,
+      (a: { c: SlashCommand; s: number }, b: { c: SlashCommand; s: number }) => number
+    > = {
+      relevance: (a, b) =>
+        b.s - a.s ||
+        Number(b.c.featured) - Number(a.c.featured) ||
+        b.c.popularity - a.c.popularity ||
+        a.c.command.length - b.c.command.length ||
+        a.c.command.localeCompare(b.c.command),
+      name: (a, b) => a.c.command.localeCompare(b.c.command),
+      category: (a, b) =>
+        a.c.category.localeCompare(b.c.category) ||
+        a.c.subcategory.localeCompare(b.c.subcategory) ||
+        a.c.command.localeCompare(b.c.command),
+      popularity: (a, b) =>
+        b.c.popularity - a.c.popularity || a.c.command.localeCompare(b.c.command),
+      newest: (a, b) => b.c.addedAt.localeCompare(a.c.addedAt) || b.c.popularity - a.c.popularity,
+    };
 
-  list.sort(cmp[state.sort]);
-  return list.map((x) => x.c);
+    list.sort(cmp[state.sort]);
+    return list.map((x) => x.c);
+  });
 }
 
 export function suggestions(q: string, limit = 7): SlashCommand[] {
   if (!q.trim()) return [];
-  return COMMANDS.map((c) => ({ c, s: scoreCommand(c, q) }))
+  return searchCandidates(q)
+    .map((c) => ({ c, s: scoreCommand(c, q) }))
     .filter((x) => x.s > 0)
     .sort((a, b) => b.s - a.s || b.c.popularity - a.c.popularity)
     .slice(0, limit)
     .map((x) => x.c);
 }
+
 
 /** Ready-to-edit prompt template copied by "Use command". */
 export function commandTemplate(cmd: SlashCommand): string {
