@@ -1,6 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Bot, Check, Copy, ListChecks, Plus, Send, Trash2, User } from "lucide-react";
+import {
+  Bot,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Circle,
+  Copy,
+  Download,
+  ListChecks,
+  Plus,
+  Send,
+  Trash2,
+  User,
+} from "lucide-react";
+
 
 import { AppShell } from "@/components/library/AppShell";
 import { Button } from "@/components/ui/button";
