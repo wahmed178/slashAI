@@ -18,6 +18,10 @@ import {
   Wand2,
   Radio,
   Dices,
+  Bot,
+  Film,
+  Youtube,
+
 
 } from "lucide-react";
 
@@ -217,6 +221,45 @@ function HomePage() {
       </section>
 
       <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
+        <Link to="/assistant" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
+          <Bot className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Assistant</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Workflows and tasks
+            </span>
+          </span>
+        </Link>
+        <Link to="/find" search={{ q: "" }} className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
+          <Wand2 className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Advanced search</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Keywords to shortlist
+            </span>
+          </span>
+        </Link>
+        <Link to="/movies" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
+          <Film className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">Movies</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Regional film finder
+            </span>
+          </span>
+        </Link>
+        <Link
+          to="/youtube"
+          className="panel lift flex items-center gap-2.5 rounded-xl p-3.5"
+        >
+          <Youtube className="size-5 shrink-0 text-primary" aria-hidden />
+          <span className="min-w-0">
+            <span className="block text-sm font-semibold text-foreground">YouTube & Music</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Search and play
+            </span>
+          </span>
+        </Link>
         <Link
           to="/live"
           className="panel lift flex items-center gap-2.5 rounded-xl p-3.5"
@@ -241,6 +284,7 @@ function HomePage() {
             </span>
           </span>
         </Link>
+
 
         <Link
           to="/whats-new"
