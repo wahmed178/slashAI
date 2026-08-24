@@ -159,9 +159,9 @@ export const getWeather = createServerFn({ method: "GET" })
 /** Fixtures and scores for a sport on a given day from TheSportsDB's free tier. */
 export const getMatches = createServerFn({ method: "GET" })
   .inputValidator((data) =>
-    z.object({ sport: z.enum(["Soccer", "Cricket"]), offsetDays: z.number().min(-3).max(3) }).parse(
-      data,
-    ),
+    z
+      .object({ sport: z.enum(["Soccer", "Cricket"]), offsetDays: z.number().min(-3).max(3) })
+      .parse(data),
   )
   .handler(async ({ data }): Promise<MatchItem[]> => {
     try {

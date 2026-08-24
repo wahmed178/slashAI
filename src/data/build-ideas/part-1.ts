@@ -265,7 +265,8 @@ export const PART_1: RawIdea[] = [
     short: "Records a lecture and returns structured notes, flashcards and a practice quiz.",
     problem:
       "Students cannot listen properly and take good notes at the same time, and revising from a two-hour recording is impractical.",
-    targetUsers: "University and college students, bootcamp learners, professionals studying part-time.",
+    targetUsers:
+      "University and college students, bootcamp learners, professionals studying part-time.",
     solution:
       "Record or upload the lecture, transcribe it, and produce structured notes with headings, a glossary of terms, spaced-repetition flashcards and a self-test quiz.",
     key: [
@@ -475,7 +476,11 @@ export const PART_1: RawIdea[] = [
       "Vertical reframing with speaker tracking",
       "Direct export presets per platform",
     ],
-    mvp: ["Upload audio or video", "Five ranked clip suggestions with timestamps", "MP4 export with captions"],
+    mvp: [
+      "Upload audio or video",
+      "Five ranked clip suggestions with timestamps",
+      "MP4 export with captions",
+    ],
     future: [
       "Scheduling and direct publishing",
       "Performance feedback loop that learns what worked",
@@ -514,7 +519,8 @@ export const PART_1: RawIdea[] = [
     short: "Matches your organisation to open grants and tenders and drafts the first answer set.",
     problem:
       "Public grant and tender portals are fragmented and badly searchable, so small organisations miss funding they qualify for.",
-    targetUsers: "Nonprofits, small consultancies, research groups, small construction and IT suppliers.",
+    targetUsers:
+      "Nonprofits, small consultancies, research groups, small construction and IT suppliers.",
     solution:
       "Build a profile once, receive matched opportunities from public portals with eligibility explained in plain language, and generate first-draft answers to standard questionnaire sections.",
     key: [
@@ -609,7 +615,8 @@ export const PART_1: RawIdea[] = [
     businessModel: "Subscription",
     buildType: "SaaS",
     suitableFor: "Business",
-    short: "One search box over Drive, Notion and Slack that answers with sources and permissions respected.",
+    short:
+      "One search box over Drive, Notion and Slack that answers with sources and permissions respected.",
     problem:
       "Company knowledge is scattered across four tools, so staff ask colleagues instead of searching and the same answer gets rewritten weekly.",
     targetUsers: "Companies of 20–300 staff, operations leads, internal IT.",
@@ -712,7 +719,11 @@ export const PART_1: RawIdea[] = [
       "Glossary for product-specific terms",
       "Pull request output for review",
     ],
-    mvp: ["Upload or connect JSON locale files", "Translate missing keys", "Download updated files"],
+    mvp: [
+      "Upload or connect JSON locale files",
+      "Translate missing keys",
+      "Download updated files",
+    ],
     future: ["Screenshot context upload", "Human reviewer marketplace", "Mobile platform formats"],
     stack: ["Node.js", "GitHub API", "Claude", "Postgres", "Stripe"],
     money: ["Subscription by key count", "Per-language add-on"],
@@ -789,10 +800,12 @@ export const PART_1: RawIdea[] = [
     businessModel: "One-time",
     buildType: "Website",
     suitableFor: "Beginner",
-    short: "Produces firm, correctly structured complaint and dispute letters people actually send.",
+    short:
+      "Produces firm, correctly structured complaint and dispute letters people actually send.",
     problem:
       "Consumers lose refunds, deposits and disputes because they do not know how to write a formal letter that gets taken seriously.",
-    targetUsers: "Consumers disputing charges, tenants, small landlords, freelancers chasing invoices.",
+    targetUsers:
+      "Consumers disputing charges, tenants, small landlords, freelancers chasing invoices.",
     solution:
       "Answer a short guided questionnaire per scenario and receive a properly structured letter citing the relevant consumer protection principles, with a suggested escalation timeline.",
     key: [
@@ -805,7 +818,11 @@ export const PART_1: RawIdea[] = [
     mvp: ["Three scenarios", "Guided form to letter", "PDF download"],
     future: ["Regional legal variants", "Certified post integration", "Case tracking"],
     stack: ["Next.js", "Claude", "PDF generation", "Stripe", "Supabase"],
-    money: ["Pay per letter", "Bundle of three", "Small subscription for landlords and freelancers"],
+    money: [
+      "Pay per letter",
+      "Bundle of three",
+      "Small subscription for landlords and freelancers",
+    ],
     pricing: "$5 per letter, $12 for a three-letter bundle, $9/mo unlimited for frequent users.",
     acquisition:
       "SEO for 'how to write a complaint letter about X', consumer forums, and free templates that upsell the tailored version.",
@@ -879,7 +896,8 @@ export const PART_1: RawIdea[] = [
     businessModel: "Subscription",
     buildType: "SaaS",
     suitableFor: "Freelancer",
-    short: "Photos plus facts in, compliant and compelling listing copy out, in every required format.",
+    short:
+      "Photos plus facts in, compliant and compelling listing copy out, in every required format.",
     problem:
       "Agents write the same listing description five times for five portals and each has different length and tone requirements.",
     targetUsers: "Estate agents, letting agents, property managers, private sellers.",
@@ -939,7 +957,13 @@ export const PART_1: RawIdea[] = [
     ],
     mvp: ["CSV import", "Categorisation plus monthly briefing", "One savings goal"],
     future: ["Open banking connections", "Household sharing", "Scenario planning"],
-    stack: ["Capacitor or React Native", "Claude", "SQLite local storage", "Supabase", "RevenueCat"],
+    stack: [
+      "Capacitor or React Native",
+      "Claude",
+      "SQLite local storage",
+      "Supabase",
+      "RevenueCat",
+    ],
     money: ["Freemium", "Subscription for coaching and goals", "Annual plan"],
     pricing: "Free import and categorisation, Coach $5/mo or $39/year.",
     acquisition:

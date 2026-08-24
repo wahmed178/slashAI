@@ -110,7 +110,11 @@ function ValidatePage() {
         />
         <div className="flex flex-wrap items-center gap-2">
           <Button onClick={() => void submit()} disabled={loading || idea.trim().length < 20}>
-            {loading ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
+            {loading ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Sparkles className="size-4" />
+            )}
             Validate idea
           </Button>
           <span className="text-xs text-muted-foreground">
@@ -180,7 +184,9 @@ function ValidatePage() {
             />
             <div className="panel rounded-xl p-4">
               <h3 className="text-sm font-bold text-foreground">Target customer</h3>
-              <p className="mt-1 text-sm font-medium text-primary">{result.targetCustomer.customer}</p>
+              <p className="mt-1 text-sm font-medium text-primary">
+                {result.targetCustomer.customer}
+              </p>
               <p className="mt-1 text-sm text-muted-foreground">{result.targetCustomer.notes}</p>
             </div>
             <div className="panel rounded-xl p-4">

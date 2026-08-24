@@ -15,7 +15,6 @@ import {
   User,
 } from "lucide-react";
 
-
 import { AppShell } from "@/components/library/AppShell";
 import { Button } from "@/components/ui/button";
 import { categoryIcon } from "@/components/library/icons";
@@ -106,10 +105,18 @@ function workflowMarkdown(turn: Turn): string {
     ...result.steps.map((s, i) => `${i + 1}. ${s}`),
   ];
   if (result.commands.length > 0) {
-    lines.push("", "## Commands", ...result.commands.slice(0, 8).map((c) => `- ${c.command} — ${c.title}`));
+    lines.push(
+      "",
+      "## Commands",
+      ...result.commands.slice(0, 8).map((c) => `- ${c.command} — ${c.title}`),
+    );
   }
   if (result.features.length > 0) {
-    lines.push("", "## In-app features", ...result.features.slice(0, 6).map((f) => `- ${f.feature.label} (${f.feature.to})`));
+    lines.push(
+      "",
+      "## In-app features",
+      ...result.features.slice(0, 6).map((f) => `- ${f.feature.label} (${f.feature.to})`),
+    );
   }
   lines.push("", "## Prompt", "```", result.prompt, "```", "", "_Generated with SlashAI_");
   return lines.join("\n");
@@ -171,7 +178,12 @@ function AssistantPage() {
     if (!t) return;
     feedback("tap");
     setTasks((prev) => [
-      { id: `${Date.now()}-${prev.length}`, text: t, status: "todo", createdAt: new Date().toISOString() },
+      {
+        id: `${Date.now()}-${prev.length}`,
+        text: t,
+        status: "todo",
+        createdAt: new Date().toISOString(),
+      },
       ...prev,
     ]);
   };
@@ -220,7 +232,6 @@ function AssistantPage() {
     download("slashai-tasks.md", body);
     feedback("win");
   };
-
 
   return (
     <AppShell wide hideHeaderSearch title="Assistant">
@@ -324,7 +335,11 @@ function AssistantPage() {
                       className="gap-1.5"
                       onClick={() => void copy(turn.id, turn.result.prompt)}
                     >
-                      {copied === turn.id ? <Check className="size-4" /> : <Copy className="size-4" />}
+                      {copied === turn.id ? (
+                        <Check className="size-4" />
+                      ) : (
+                        <Copy className="size-4" />
+                      )}
                       {copied === turn.id ? "Copied" : "Copy prompt"}
                     </Button>
                     <Button
@@ -474,7 +489,8 @@ function AssistantPage() {
                       "mt-0.5 grid size-5 shrink-0 place-items-center rounded-md border transition-colors",
                       t.status === "done" && "border-primary bg-primary text-primary-foreground",
                       t.status === "doing" && "border-primary text-primary",
-                      t.status === "todo" && "border-border text-transparent hover:border-primary/60",
+                      t.status === "todo" &&
+                        "border-border text-transparent hover:border-primary/60",
                     )}
                   >
                     {t.status === "doing" ? (
@@ -530,7 +546,12 @@ function AssistantPage() {
 
             {tasks.length > 0 && (
               <div className="mt-3 flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1 gap-1.5" onClick={exportTasks}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 gap-1.5"
+                  onClick={exportTasks}
+                >
                   <Download className="size-4" /> Export
                 </Button>
                 {tasks.some((t) => t.status === "done") && (
@@ -545,7 +566,6 @@ function AssistantPage() {
                 )}
               </div>
             )}
-
           </div>
         </aside>
       </div>

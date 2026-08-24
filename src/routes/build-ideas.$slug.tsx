@@ -72,7 +72,11 @@ function IdeaDetail() {
   const related = relatedIdeas(idea);
 
   return (
-    <AppShell hideHeaderSearch title={idea.title} back={{ to: "/build-ideas", label: "Build Ideas" }}>
+    <AppShell
+      hideHeaderSearch
+      title={idea.title}
+      back={{ to: "/build-ideas", label: "Build Ideas" }}
+    >
       <header className="pt-2">
         <div className="flex flex-wrap items-center gap-1.5">
           <Badge variant="secondary">{idea.category}</Badge>
@@ -163,7 +167,10 @@ function IdeaDetail() {
         </p>
       </Section>
 
-      <Section title="Build steps" icon={<ListChecks className="size-4 text-primary" aria-hidden />}>
+      <Section
+        title="Build steps"
+        icon={<ListChecks className="size-4 text-primary" aria-hidden />}
+      >
         <ol className="ml-4 list-decimal space-y-1">
           {idea.buildSteps.map((step) => (
             <li key={step}>{step}</li>
@@ -171,7 +178,10 @@ function IdeaDetail() {
         </ol>
       </Section>
 
-      <Section title="Risks & challenges" icon={<ShieldAlert className="size-4 text-primary" aria-hidden />}>
+      <Section
+        title="Risks & challenges"
+        icon={<ShieldAlert className="size-4 text-primary" aria-hidden />}
+      >
         <Bullets items={idea.risks} />
       </Section>
 
@@ -206,7 +216,9 @@ function IdeaDetail() {
                 className="panel rounded-xl p-4 transition-colors hover:border-primary/50"
               >
                 <span className="block text-sm font-bold text-foreground">{r.title}</span>
-                <span className="mt-1 block text-xs text-muted-foreground">{r.shortDescription}</span>
+                <span className="mt-1 block text-xs text-muted-foreground">
+                  {r.shortDescription}
+                </span>
               </Link>
             ))}
           </div>

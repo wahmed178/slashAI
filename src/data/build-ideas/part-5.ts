@@ -113,7 +113,11 @@ export const PART_5: RawIdea[] = [
       "Performance feedback into future drafts",
     ],
     mvp: ["Import source content", "Generate drafts for two platforms", "Copy or export"],
-    future: ["Direct publishing integrations", "Team review workflows", "Performance-informed generation"],
+    future: [
+      "Direct publishing integrations",
+      "Team review workflows",
+      "Performance-informed generation",
+    ],
     stack: ["Next.js", "Claude", "Supabase", "Platform APIs", "Stripe"],
     money: ["Subscription by generation volume", "Agency multi-brand plan"],
     pricing: "$29/mo solo, $99/mo agency with 5 brands.",
@@ -209,8 +213,7 @@ export const PART_5: RawIdea[] = [
     pricing: "$49/mo up to 200 members, $149/mo up to 2,000, no revenue share.",
     acquisition:
       "Direct comparison content against revenue-share platforms, plus migration help as the wedge.",
-    first10:
-      "Migrate ten communities personally, including member records and payment continuity.",
+    first10: "Migrate ten communities personally, including member records and payment continuity.",
     steps: [
       "Build membership tiers and payments",
       "Build discussion spaces and moderation",
@@ -248,7 +251,11 @@ export const PART_5: RawIdea[] = [
       "Historical library of what worked",
     ],
     mvp: ["Two-option test", "Panel responses", "Results view"],
-    future: ["Post-publish performance correlation", "Team collaboration", "Agency multi-channel accounts"],
+    future: [
+      "Post-publish performance correlation",
+      "Team collaboration",
+      "Agency multi-channel accounts",
+    ],
     stack: ["Next.js", "Panel provider API", "Postgres", "R2 storage", "Stripe"],
     money: ["Credits per test", "Subscription for regular testers", "Agency plan"],
     pricing: "$5 per test with 100 responses, $39/mo for 10 tests.",
@@ -299,8 +306,7 @@ export const PART_5: RawIdea[] = [
     pricing: "$79/mo up to 50 active learners, $199/mo up to 300.",
     acquisition:
       "Educator communities, content on cohort completion rates, and partnerships with course platforms.",
-    first10:
-      "Run one cohort free for ten educators and publish the completion rate improvement.",
+    first10: "Run one cohort free for ten educators and publish the completion rate improvement.",
     steps: [
       "Build cohort and session structure",
       "Build assignments and feedback",
@@ -389,8 +395,7 @@ export const PART_5: RawIdea[] = [
     pricing: "$15/mo for 500GB, $39/mo for 3TB, no commission on sales.",
     acquisition:
       "Photography communities, cost comparison against commission-taking platforms, and gallery branding as a growth loop.",
-    first10:
-      "Migrate ten photographers' active galleries and archives for them free of charge.",
+    first10: "Migrate ten photographers' active galleries and archives for them free of charge.",
     steps: [
       "Build upload and image processing pipeline",
       "Build galleries with selection features",
@@ -428,7 +433,11 @@ export const PART_5: RawIdea[] = [
       "Refunds for unanswered questions",
     ],
     mvp: ["Question queue with payment", "Answer recording", "Delivery"],
-    future: ["Subscription question passes", "Community upvoting", "Podcast feed of published answers"],
+    future: [
+      "Subscription question passes",
+      "Community upvoting",
+      "Podcast feed of published answers",
+    ],
     stack: ["Next.js", "Stripe Connect", "Media recording and storage", "Supabase"],
     money: ["Commission per answered question", "Creator subscription for lower commission"],
     pricing: "10% commission, or $19/mo for 3% commission.",
@@ -595,10 +604,12 @@ export const PART_5: RawIdea[] = [
     businessModel: "One-time",
     buildType: "SaaS",
     suitableFor: "Startup",
-    short: "Error monitoring you run yourself, with a one-time licence instead of per-event pricing.",
+    short:
+      "Error monitoring you run yourself, with a one-time licence instead of per-event pricing.",
     problem:
       "Error monitoring pricing scales with event volume, so teams sample away the errors they most need to see.",
-    targetUsers: "Teams with data residency requirements, cost-sensitive startups, agencies hosting for clients.",
+    targetUsers:
+      "Teams with data residency requirements, cost-sensitive startups, agencies hosting for clients.",
     solution:
       "A self-hostable error tracker with source map support, release tracking and session context, sold as a perpetual licence with optional updates.",
     key: [
@@ -611,7 +622,11 @@ export const PART_5: RawIdea[] = [
     mvp: ["JavaScript and Node SDKs", "Error grouping", "Docker deployment"],
     future: ["More language SDKs", "Managed hosting option", "Alert routing integrations"],
     stack: ["Node.js", "ClickHouse", "Next.js", "Docker", "Licence server"],
-    money: ["One-time licence per deployment", "Annual updates subscription", "Managed hosting upsell"],
+    money: [
+      "One-time licence per deployment",
+      "Annual updates subscription",
+      "Managed hosting upsell",
+    ],
     pricing: "$499 perpetual licence, $199/year for updates and support.",
     acquisition:
       "Cost comparison content against event-priced vendors, plus self-hosting communities.",
@@ -643,7 +658,8 @@ export const PART_5: RawIdea[] = [
     short: "New engineers get a working environment in an hour, not a week.",
     problem:
       "New developers lose their first week to environment setup, and the setup document is always out of date.",
-    targetUsers: "Engineering managers, platform teams, agencies rotating developers across projects.",
+    targetUsers:
+      "Engineering managers, platform teams, agencies rotating developers across projects.",
     solution:
       "Define the environment as code, verify it continuously in CI so it never rots, and give new joiners a single command plus a checklist of verified working steps.",
     key: [
@@ -654,7 +670,11 @@ export const PART_5: RawIdea[] = [
       "Time-to-first-commit reporting",
     ],
     mvp: ["Environment definition", "Bootstrap script generation", "Verification in CI"],
-    future: ["Cloud development environments", "Multi-repo workspaces", "Access provisioning automation"],
+    future: [
+      "Cloud development environments",
+      "Multi-repo workspaces",
+      "Access provisioning automation",
+    ],
     stack: ["Node.js CLI", "Container tooling", "GitHub Actions", "Next.js dashboard"],
     money: ["Per-developer subscription", "Platform team plan"],
     pricing: "$10/developer/mo, minimum $100/mo.",
@@ -703,8 +723,7 @@ export const PART_5: RawIdea[] = [
     stack: ["Cloudflare Workers", "Durable storage", "Next.js", "Stripe"],
     money: ["Freemium by flags and requests", "Team subscription"],
     pricing: "Free up to 10 flags, $29/mo unlimited flags to 5M requests, $99/mo to 50M.",
-    acquisition:
-      "Developer content, open-source SDKs, and pricing comparison against incumbents.",
+    acquisition: "Developer content, open-source SDKs, and pricing comparison against incumbents.",
     first10:
       "Sponsor and support integration into ten open-source projects and small startups directly.",
     steps: [
@@ -733,7 +752,8 @@ export const PART_5: RawIdea[] = [
     short: "Flags the docs page that describes code you deleted six months ago.",
     problem:
       "Documentation silently goes stale, and users only discover it when a code sample fails.",
-    targetUsers: "Developer relations teams, API providers, open-source maintainers, technical writers.",
+    targetUsers:
+      "Developer relations teams, API providers, open-source maintainers, technical writers.",
     solution:
       "Link documentation sections to code paths, detect when linked code changes without a docs update, and test code samples automatically in CI.",
     key: [
@@ -744,7 +764,11 @@ export const PART_5: RawIdea[] = [
       "Freshness dashboard by section",
     ],
     mvp: ["Docs-to-code links", "Change alerts", "Link checking"],
-    future: ["Automatic sample repair suggestions", "Analytics-weighted prioritisation", "Multi-repo support"],
+    future: [
+      "Automatic sample repair suggestions",
+      "Analytics-weighted prioritisation",
+      "Multi-repo support",
+    ],
     stack: ["Node.js", "GitHub app", "Postgres", "Next.js", "Stripe"],
     money: ["Per-repository subscription", "Team plan", "Free for open source"],
     pricing: "$39/mo per docs site, team plan $149/mo.",
@@ -789,7 +813,11 @@ export const PART_5: RawIdea[] = [
       "Forecasting with commitment guidance",
     ],
     mvp: ["Billing ingestion for one provider", "Attribution by tag", "Anomaly alerts"],
-    future: ["Multi-cloud support", "Automated cleanup actions", "Commitment purchase recommendations"],
+    future: [
+      "Multi-cloud support",
+      "Automated cleanup actions",
+      "Commitment purchase recommendations",
+    ],
     stack: ["Node.js workers", "ClickHouse", "Cloud billing APIs", "Next.js", "Stripe"],
     money: ["Flat subscription by spend tier", "Percentage-of-savings option"],
     pricing: "$99/mo under $20k monthly cloud spend, $299/mo under $100k.",
@@ -834,7 +862,11 @@ export const PART_5: RawIdea[] = [
       "Delivery search and replay",
     ],
     mvp: ["Delivery with retries and signing", "Delivery log", "Manual replay"],
-    future: ["Customer-facing embeddable portal", "Event filtering per endpoint", "Self-hosted option"],
+    future: [
+      "Customer-facing embeddable portal",
+      "Event filtering per endpoint",
+      "Self-hosted option",
+    ],
     stack: ["Cloudflare Workers", "Queues", "ClickHouse", "Next.js", "Stripe"],
     money: ["Freemium by delivery volume", "Subscription tiers", "Enterprise contracts"],
     pricing: "Free to 10k deliveries monthly, $49/mo to 1M, $199/mo to 20M.",
@@ -868,7 +900,8 @@ export const PART_5: RawIdea[] = [
     short: "Finds real accessibility failures and shows the exact code change to make.",
     problem:
       "Automated accessibility scanners produce long lists of issues without telling developers what to change, so reports get ignored.",
-    targetUsers: "Front-end developers, agencies with accessibility obligations, public sector suppliers.",
+    targetUsers:
+      "Front-end developers, agencies with accessibility obligations, public sector suppliers.",
     solution:
       "Scan pages and components, prioritise issues by real user impact, and generate the specific code diff to fix each one in the project's own framework.",
     key: [
@@ -879,7 +912,11 @@ export const PART_5: RawIdea[] = [
       "Compliance reporting for procurement",
     ],
     mvp: ["Page scanning", "Prioritised issues", "Fix suggestions"],
-    future: ["Design system rule enforcement", "Manual audit workflow", "Assistive technology testing guidance"],
+    future: [
+      "Design system rule enforcement",
+      "Manual audit workflow",
+      "Assistive technology testing guidance",
+    ],
     stack: ["Playwright workers", "axe-core", "Claude", "Next.js", "Stripe"],
     money: ["Subscription by pages scanned", "Agency plan", "One-off audit reports"],
     pricing: "$49/mo for 100 pages, agency $199/mo, one-off audit $499.",
@@ -976,8 +1013,7 @@ export const PART_5: RawIdea[] = [
     pricing: "$149/mo up to 50 suppliers, $399/mo up to 300.",
     acquisition:
       "Procurement and quality communities, and free scorecard templates that rank in search.",
-    first10:
-      "Build the first quarter of scorecards manually from ten companies' existing records.",
+    first10: "Build the first quarter of scorecards manually from ten companies' existing records.",
     steps: [
       "Model suppliers, deliveries and issues",
       "Build logging flows that are fast for warehouse staff",
@@ -1004,7 +1040,8 @@ export const PART_5: RawIdea[] = [
     short: "Postmortems that produce tracked actions instead of a forgotten document.",
     problem:
       "Teams write thorough postmortems and then never complete the actions, so the same incident recurs.",
-    targetUsers: "Engineering and operations teams, SRE functions, regulated operations departments.",
+    targetUsers:
+      "Engineering and operations teams, SRE functions, regulated operations departments.",
     solution:
       "A guided postmortem template that turns findings into owned, dated actions tracked to completion, with recurrence detection across incidents.",
     key: [
@@ -1021,8 +1058,7 @@ export const PART_5: RawIdea[] = [
     pricing: "$8/user/mo, team plan $99/mo unlimited users.",
     acquisition:
       "SRE communities, free postmortem templates, and content on action completion rates.",
-    first10:
-      "Facilitate ten teams' next postmortem personally and leave the tracker behind.",
+    first10: "Facilitate ten teams' next postmortem personally and leave the tracker behind.",
     steps: [
       "Build templates and postmortem authoring",
       "Build action tracking with owners",
@@ -1064,8 +1100,7 @@ export const PART_5: RawIdea[] = [
     stack: ["Capacitor", "Supabase", "Barcode scanning library", "Stripe"],
     money: ["Per-site subscription", "Per-user tiers"],
     pricing: "$79/mo per site including 5 users, $8 per extra user.",
-    acquisition:
-      "Warehouse operations communities, and free cycle count planning templates.",
+    acquisition: "Warehouse operations communities, and free cycle count planning templates.",
     first10:
       "Run one cycle count programme free for ten sites and report their inventory accuracy improvement.",
     steps: [
@@ -1105,14 +1140,17 @@ export const PART_5: RawIdea[] = [
       "Search across the procedure library",
     ],
     mvp: ["Step capture and editing", "Published procedure pages", "Acknowledgements"],
-    future: ["Checklist execution mode with evidence", "Multi-language procedures", "Audit export packs"],
+    future: [
+      "Checklist execution mode with evidence",
+      "Multi-language procedures",
+      "Audit export packs",
+    ],
     stack: ["Next.js", "Browser capture extension", "Supabase", "R2 storage", "Stripe"],
     money: ["Per-seat subscription", "Company plan", "Franchise multi-site plan"],
     pricing: "$8/user/mo, company plan $99/mo unlimited, franchise plans custom.",
     acquisition:
       "Operations communities, free procedure templates by industry, and franchise network outreach.",
-    first10:
-      "Document ten businesses' three most critical processes for them free of charge.",
+    first10: "Document ten businesses' three most critical processes for them free of charge.",
     steps: [
       "Build capture tooling",
       "Build step extraction and editing",
@@ -1244,8 +1282,7 @@ export const PART_5: RawIdea[] = [
     stack: ["Next.js tablet interface", "Postgres", "Stripe"],
     money: ["Per-line subscription", "Site licence"],
     pricing: "$99/mo per production line, site licence $399/mo.",
-    acquisition:
-      "Manufacturing improvement communities, and free downtime cost calculators.",
+    acquisition: "Manufacturing improvement communities, and free downtime cost calculators.",
     first10:
       "Run a two-week manual downtime study at ten sites and hand over the ranked cause list.",
     steps: [
@@ -1337,8 +1374,7 @@ export const PART_5: RawIdea[] = [
     pricing: "Free basic splitting, Plus $2/mo per household for rules and imports.",
     acquisition:
       "Shared-living communities, university accommodation groups, and content on fair splitting.",
-    first10:
-      "Recruit ten households directly and configure their exact split rules for them.",
+    first10: "Recruit ten households directly and configure their exact split rules for them.",
     steps: [
       "Build expenses and split rule engine",
       "Build balances and settlement",
@@ -1421,7 +1457,11 @@ export const PART_5: RawIdea[] = [
       "Dietary and dislike filters",
     ],
     mvp: ["Pantry list", "Weekly plan generation", "Shopping list"],
-    future: ["Receipt scanning to update pantry", "Supermarket price comparison", "Household sharing"],
+    future: [
+      "Receipt scanning to update pantry",
+      "Supermarket price comparison",
+      "Household sharing",
+    ],
     stack: ["Capacitor", "Supabase", "Recipe data", "RevenueCat"],
     money: ["Freemium", "Subscription for planning features", "Affiliate on grocery orders"],
     pricing: "Free manual planning, Plus $3/mo for automatic plans and waste tracking.",
@@ -1511,7 +1551,11 @@ export const PART_5: RawIdea[] = [
       "Shared lists for couples and families",
     ],
     mvp: ["Occasions and reminders", "Idea capture", "Gift history"],
-    future: ["Shared family wishlists", "Price drop alerts on saved ideas", "Group gifting coordination"],
+    future: [
+      "Shared family wishlists",
+      "Price drop alerts on saved ideas",
+      "Group gifting coordination",
+    ],
     stack: ["Capacitor", "Supabase", "Push notifications", "RevenueCat"],
     money: ["Freemium", "Subscription", "Affiliate on gift purchases"],
     pricing: "Free 10 people, Plus $2/mo unlimited with sharing.",
@@ -1527,11 +1571,7 @@ export const PART_5: RawIdea[] = [
       "Add sharing",
       "Add subscriptions",
     ],
-    risks: [
-      "Highly seasonal usage",
-      "Calendar apps cover reminders",
-      "Low willingness to pay",
-    ],
+    risks: ["Highly seasonal usage", "Calendar apps cover reminders", "Low willingness to pay"],
     score: 5,
     tags: ["gifts", "occasions", "reminders", "family"],
   },
@@ -1556,12 +1596,15 @@ export const PART_5: RawIdea[] = [
       "Outcome analytics on what gets responses",
     ],
     mvp: ["Application list with stages", "Reminders", "Document storage"],
-    future: ["Browser extension to save postings", "Interview question generation", "Salary negotiation tracker"],
+    future: [
+      "Browser extension to save postings",
+      "Interview question generation",
+      "Salary negotiation tracker",
+    ],
     stack: ["Next.js", "Supabase", "R2 storage", "Stripe"],
     money: ["Freemium by active applications", "Subscription during job search", "Lifetime option"],
     pricing: "Free 10 applications, Plus $6/mo, or $29 for three months.",
-    acquisition:
-      "Career communities, graduate careers services, and content on follow-up timing.",
+    acquisition: "Career communities, graduate careers services, and content on follow-up timing.",
     first10:
       "Support 20 active job seekers directly through a full search and refine around what they actually needed.",
     steps: [

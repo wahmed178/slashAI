@@ -266,9 +266,10 @@ let PREFIX_INDEX: Map<string, number[]> | null = null;
 function buildIndex(): Map<string, number[]> {
   const index = new Map<string, number[]>();
   COMMANDS.forEach((c, i) => {
-    const haystack = `${c.command.slice(1)} ${c.title} ${c.tags.join(" ")} ${c.subcategory} ${c.category} ${c.description}`
-      .toLowerCase()
-      .replace(/([a-z])([A-Z])/g, "$1 $2");
+    const haystack =
+      `${c.command.slice(1)} ${c.title} ${c.tags.join(" ")} ${c.subcategory} ${c.category} ${c.description}`
+        .toLowerCase()
+        .replace(/([a-z])([A-Z])/g, "$1 $2");
     const seen = new Set<string>();
     for (const word of haystack.match(WORD_RE) ?? []) {
       // index every 3-char window so mid-word matches ("upscale" in "100xUpscale") still hit
@@ -408,7 +409,6 @@ export function suggestions(q: string, limit = 7): SlashCommand[] {
     .slice(0, limit)
     .map((x) => x.c);
 }
-
 
 /** Ready-to-edit prompt template copied by "Use command". */
 export function commandTemplate(cmd: SlashCommand): string {

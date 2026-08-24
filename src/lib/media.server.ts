@@ -178,8 +178,8 @@ export async function runRegionalShelf(lang: string): Promise<MovieHit[]> {
 
 export async function runMovieDetail(id: string): Promise<MovieHit | null> {
   if (!/^tt\d+$/.test(id)) return null;
-  const json = (await fetchJson(`${CINEMETA}/meta/movie/${id}.json`)) as
-    | { meta?: CinemetaMeta }
-    | null;
+  const json = (await fetchJson(`${CINEMETA}/meta/movie/${id}.json`)) as {
+    meta?: CinemetaMeta;
+  } | null;
   return json?.meta ? toMovie(json.meta) : null;
 }

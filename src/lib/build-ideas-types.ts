@@ -9,12 +9,7 @@
 export type Difficulty = "Beginner" | "Intermediate" | "Advanced";
 
 export type BusinessModel =
-  | "Subscription"
-  | "One-time"
-  | "Freemium"
-  | "Marketplace"
-  | "Advertising"
-  | "Service";
+  "Subscription" | "One-time" | "Freemium" | "Marketplace" | "Advertising" | "Service";
 
 export type BuildType = "Website" | "SaaS" | "Mobile App" | "Internal Tool";
 

@@ -46,7 +46,10 @@ const SOURCES = (title: string, year: string) => {
     { label: "JioHotstar", url: `https://www.hotstar.com/in/explore?search_query=${plain}` },
     { label: "Zee5", url: `https://www.zee5.com/search?q=${plain}` },
     { label: "SonyLIV", url: `https://www.sonyliv.com/search?searchTerm=${plain}` },
-    { label: "YouTube Movies (free & rent)", url: `https://www.youtube.com/results?search_query=${q}+full+movie` },
+    {
+      label: "YouTube Movies (free & rent)",
+      url: `https://www.youtube.com/results?search_query=${q}+full+movie`,
+    },
     { label: "IMDb page", url: `https://www.imdb.com/find/?q=${plain}` },
   ];
 };

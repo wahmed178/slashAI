@@ -134,7 +134,8 @@ export function filterIdeas(filters: IdeaFilters, sort: IdeaSort, savedIds: stri
 
   const matched = BUILD_IDEAS.filter((idea) => {
     if (filters.categories.length && !filters.categories.includes(idea.category)) return false;
-    if (filters.difficulties.length && !filters.difficulties.includes(idea.difficulty)) return false;
+    if (filters.difficulties.length && !filters.difficulties.includes(idea.difficulty))
+      return false;
     if (filters.models.length && !filters.models.includes(idea.businessModel)) return false;
     if (filters.types.length && !filters.types.includes(idea.buildType)) return false;
     if (filters.suitable.length && !filters.suitable.includes(idea.suitableFor)) return false;
@@ -163,5 +164,8 @@ export function filterIdeas(filters: IdeaFilters, sort: IdeaSort, savedIds: stri
 }
 
 export function relatedIdeas(idea: BuildIdea, limit = 3) {
-  return BUILD_IDEAS.filter((i) => i.id !== idea.id && i.category === idea.category).slice(0, limit);
+  return BUILD_IDEAS.filter((i) => i.id !== idea.id && i.category === idea.category).slice(
+    0,
+    limit,
+  );
 }

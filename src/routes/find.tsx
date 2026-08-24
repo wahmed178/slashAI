@@ -168,7 +168,12 @@ function FindPage() {
               <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                 Ready-to-copy prompt
               </h2>
-              <Button size="sm" variant={copied ? "secondary" : "default"} className="gap-1.5" onClick={copyPrompt}>
+              <Button
+                size="sm"
+                variant={copied ? "secondary" : "default"}
+                className="gap-1.5"
+                onClick={copyPrompt}
+              >
                 {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
                 {copied ? "Copied" : "Copy prompt"}
               </Button>

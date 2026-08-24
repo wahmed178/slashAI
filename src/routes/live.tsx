@@ -218,7 +218,12 @@ function MatchRow({ m }: { m: MatchItem }) {
   return (
     <li className="panel lift flex items-center gap-3 rounded-xl px-3 py-2.5">
       {m.badge ? (
-        <img src={m.badge} alt="" loading="lazy" className="size-8 shrink-0 rounded object-contain" />
+        <img
+          src={m.badge}
+          alt=""
+          loading="lazy"
+          className="size-8 shrink-0 rounded object-contain"
+        />
       ) : (
         <Trophy className="size-8 shrink-0 p-1.5 text-primary" aria-hidden />
       )}
@@ -250,7 +255,9 @@ function MatchRow({ m }: { m: MatchItem }) {
             live ? "font-semibold text-primary" : "text-muted-foreground",
           )}
         >
-          {live && <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-primary align-middle" />}
+          {live && (
+            <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-primary align-middle" />
+          )}
           {m.status}
         </p>
       </div>
@@ -299,7 +306,9 @@ function ScoresCard({ sport, title }: { sport: "Soccer" | "Cricket"; title: stri
       {!data && isFetching ? (
         <Skeleton rows={5} />
       ) : !data || data.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No {title.toLowerCase()} listed for {label.toLowerCase()}.</p>
+        <p className="text-sm text-muted-foreground">
+          No {title.toLowerCase()} listed for {label.toLowerCase()}.
+        </p>
       ) : (
         <ul className="max-h-96 space-y-2 overflow-y-auto pr-1">
           {data.map((m) => (

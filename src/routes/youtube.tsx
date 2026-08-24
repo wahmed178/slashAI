@@ -27,7 +27,6 @@ import { searchVideos, type VideoHit } from "@/lib/media.functions";
 import { feedback } from "@/lib/play-sound";
 import { cn } from "@/lib/utils";
 
-
 export const Route = createFileRoute("/youtube")({
   head: () => ({
     meta: [
@@ -69,7 +68,11 @@ const fmtDuration = (s: number) => {
 };
 
 const fmtViews = (v: number) =>
-  v >= 1_000_000 ? `${(v / 1_000_000).toFixed(1)}M` : v >= 1000 ? `${Math.round(v / 1000)}K` : `${v}`;
+  v >= 1_000_000
+    ? `${(v / 1_000_000).toFixed(1)}M`
+    : v >= 1000
+      ? `${Math.round(v / 1000)}K`
+      : `${v}`;
 
 const QUEUE_KEY = "slashai.yt.queue.v1";
 
@@ -182,9 +185,7 @@ function YouTubePage() {
     ? `https://www.youtube.com/watch?v=${now.id}${player.time > 3 ? `&t=${Math.floor(player.time)}s` : ""}`
     : "#";
 
-  const progress =
-    player.duration > 0 ? Math.min(100, (player.time / player.duration) * 100) : 0;
-
+  const progress = player.duration > 0 ? Math.min(100, (player.time / player.duration) * 100) : 0;
 
   return (
     <AppShell wide hideHeaderSearch title="YouTube">
@@ -410,10 +411,7 @@ function YouTubePage() {
               {queue.map((v, i) => (
                 <li
                   key={`${v.id}-${i}`}
-                  className={cn(
-                    "flex items-center gap-3 px-4 py-2",
-                    i === index && "bg-accent/60",
-                  )}
+                  className={cn("flex items-center gap-3 px-4 py-2", i === index && "bg-accent/60")}
                 >
                   <button
                     type="button"
@@ -441,7 +439,6 @@ function YouTubePage() {
           )}
         </section>
       )}
-
 
       <div className="mt-6">
         {isFetching && hits.length === 0 ? (
@@ -516,7 +513,6 @@ function YouTubePage() {
                 </div>
               </article>
             ))}
-
           </div>
         ) : (
           <div className="glass rounded-2xl px-6 py-14 text-center">

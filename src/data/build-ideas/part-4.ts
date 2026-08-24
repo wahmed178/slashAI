@@ -25,7 +25,11 @@ export const PART_4: RawIdea[] = [
     mvp: ["Reminder sequences with confirmation", "Manual waitlist", "Basic reporting"],
     future: ["Practice management integrations", "Deposit collection", "Multi-site analytics"],
     stack: ["Next.js", "Twilio", "Postgres", "Stripe", "Cron worker"],
-    money: ["Per-clinic subscription", "Message usage add-on", "Percentage-of-recovery pilot pricing"],
+    money: [
+      "Per-clinic subscription",
+      "Message usage add-on",
+      "Percentage-of-recovery pilot pricing",
+    ],
     pricing: "$79/mo per clinic including 500 messages, $0.05 per extra message.",
     acquisition:
       "Direct outreach to private clinics, practice-management resellers, and a free no-show cost calculator.",
@@ -68,7 +72,11 @@ export const PART_4: RawIdea[] = [
       "Shared notes between multiple carers",
     ],
     mvp: ["Schedule entry", "Patient reminders and confirmation", "Carer notification"],
-    future: ["Pharmacy refill integration", "Care agency dashboards", "Smart pill dispenser support"],
+    future: [
+      "Pharmacy refill integration",
+      "Care agency dashboards",
+      "Smart pill dispenser support",
+    ],
     stack: ["React Native or Capacitor", "Supabase", "Push notifications", "RevenueCat"],
     money: ["Freemium for one patient", "Family subscription", "Care agency licences"],
     pricing: "Free single patient, Family $5/mo for multiple carers, agency plans from $99/mo.",
@@ -147,7 +155,8 @@ export const PART_4: RawIdea[] = [
     short: "Structured tracking that turns into a one-page summary for the next appointment.",
     problem:
       "Patients with chronic conditions cannot recall patterns during a ten-minute consultation, so treatment decisions are made on vague recollection.",
-    targetUsers: "People with migraine, IBS, endometriosis, arthritis and similar conditions; their clinicians.",
+    targetUsers:
+      "People with migraine, IBS, endometriosis, arthritis and similar conditions; their clinicians.",
     solution:
       "Fast daily logging of symptoms, triggers and medication, with pattern detection and a printable one-page summary formatted for a clinical appointment.",
     key: [
@@ -158,9 +167,17 @@ export const PART_4: RawIdea[] = [
       "Condition-specific templates",
     ],
     mvp: ["Daily log for one condition", "Trend charts", "PDF summary"],
-    future: ["Wearable data import", "Clinician shared access", "Research data contribution opt-in"],
+    future: [
+      "Wearable data import",
+      "Clinician shared access",
+      "Research data contribution opt-in",
+    ],
     stack: ["React Native or Capacitor", "Local storage with sync", "Supabase", "RevenueCat"],
-    money: ["Freemium", "Subscription for exports and patterns", "Research partnerships with consent"],
+    money: [
+      "Freemium",
+      "Subscription for exports and patterns",
+      "Research partnerships with consent",
+    ],
     pricing: "Free logging, Plus $4/mo for pattern analysis and clinician exports.",
     acquisition:
       "Patient communities and charities per condition, clinician recommendations, and condition-specific content.",
@@ -418,7 +435,8 @@ export const PART_4: RawIdea[] = [
     short: "Chases referees automatically and stores the responses with consent evidence.",
     problem:
       "Reference chasing is manual email tennis that delays start dates, and consent evidence is scattered across inboxes.",
-    targetUsers: "Recruitment agencies, HR teams, care and education employers with statutory checks.",
+    targetUsers:
+      "Recruitment agencies, HR teams, care and education employers with statutory checks.",
     solution:
       "Candidate submits referee details with recorded consent, the system sends structured reference requests with automated chasing, and results are stored in a compliant file.",
     key: [
@@ -429,7 +447,11 @@ export const PART_4: RawIdea[] = [
       "Exportable candidate file",
     ],
     mvp: ["Reference request sending", "Automated chasing", "Stored responses"],
-    future: ["Identity and right-to-work verification partners", "ATS integrations", "Sector-specific statutory packs"],
+    future: [
+      "Identity and right-to-work verification partners",
+      "ATS integrations",
+      "Sector-specific statutory packs",
+    ],
     stack: ["Next.js", "Supabase", "Resend", "Stripe"],
     money: ["Per-check pricing", "Agency subscription", "Enterprise contracts"],
     pricing: "$8 per completed reference, agency plan $199/mo for 50 checks.",
@@ -519,7 +541,11 @@ export const PART_4: RawIdea[] = [
       "Mobility analytics for HR",
     ],
     mvp: ["Listings and applications", "Basic matching", "Manager approvals"],
-    future: ["Skills inference from work systems", "Mentoring matching", "Succession planning views"],
+    future: [
+      "Skills inference from work systems",
+      "Mentoring matching",
+      "Succession planning views",
+    ],
     stack: ["Next.js", "Postgres", "SSO integration", "Stripe"],
     money: ["Per-employee subscription", "Annual enterprise contracts"],
     pricing: "$2/employee/mo with annual contracts, minimum $2,000/year.",
@@ -564,7 +590,11 @@ export const PART_4: RawIdea[] = [
       "Audit report for security reviews",
     ],
     mvp: ["Registry and checklist templates", "Task assignment", "Completion tracking"],
-    future: ["Identity provider integration for automatic revocation", "Asset return tracking with shipping labels", "Onboarding mirror flow"],
+    future: [
+      "Identity provider integration for automatic revocation",
+      "Asset return tracking with shipping labels",
+      "Onboarding mirror flow",
+    ],
     stack: ["Next.js", "Supabase", "Resend", "Stripe"],
     money: ["Per-company subscription", "Per-leaver pricing", "Security compliance bundle"],
     pricing: "$49/mo per company, or $15 per leaver for occasional use.",
@@ -640,10 +670,12 @@ export const PART_4: RawIdea[] = [
     businessModel: "Subscription",
     buildType: "SaaS",
     suitableFor: "Business",
-    short: "Keeps insurance, certifications and right-to-work documents current for every contractor.",
+    short:
+      "Keeps insurance, certifications and right-to-work documents current for every contractor.",
     problem:
       "Companies using many contractors let insurance and certification expire unnoticed, which invalidates cover and fails audits.",
-    targetUsers: "Construction firms, facilities managers, agencies using freelancers, event companies.",
+    targetUsers:
+      "Construction firms, facilities managers, agencies using freelancers, event companies.",
     solution:
       "Each contractor uploads required documents to their own profile, expiry dates are tracked, and work assignment is blocked when a document lapses.",
     key: [
@@ -654,7 +686,11 @@ export const PART_4: RawIdea[] = [
       "Audit-ready compliance report",
     ],
     mvp: ["Document upload with expiry", "Reminders", "Compliance status list"],
-    future: ["Insurance provider verification", "Site check-in enforcement", "Client-facing compliance sharing"],
+    future: [
+      "Insurance provider verification",
+      "Site check-in enforcement",
+      "Client-facing compliance sharing",
+    ],
     stack: ["Next.js", "Supabase", "R2 storage", "Resend", "Stripe"],
     money: ["Per-contractor subscription", "Company platform fee", "Verification service"],
     pricing: "$2 per active contractor per month, $99/mo platform minimum.",
@@ -699,7 +735,11 @@ export const PART_4: RawIdea[] = [
       "Refresh cadence with data recency indicators",
     ],
     mvp: ["Contribution form", "Benchmarks for 20 common roles", "Simple band builder"],
-    future: ["Payroll integrations for automatic contribution", "Pay equity analysis", "Regional expansion"],
+    future: [
+      "Payroll integrations for automatic contribution",
+      "Pay equity analysis",
+      "Regional expansion",
+    ],
     stack: ["Next.js", "Postgres", "Privacy-preserving aggregation", "Stripe"],
     money: ["Subscription with contribution discount", "Consultant plan", "Report sales"],
     pricing: "$99/mo, or $39/mo for companies contributing current data.",
@@ -790,7 +830,11 @@ export const PART_4: RawIdea[] = [
       "Writer-ready export",
     ],
     mvp: ["Keyword input", "Brief with structure and questions", "Export to doc"],
-    future: ["Content scoring after publication", "Team workflow and assignments", "Multi-language briefs"],
+    future: [
+      "Content scoring after publication",
+      "Team workflow and assignments",
+      "Multi-language briefs",
+    ],
     stack: ["Next.js", "Search data API", "Claude", "Postgres", "Stripe"],
     money: ["Subscription by briefs per month", "Agency plan", "Per-brief credits"],
     pricing: "$29/mo for 20 briefs, $99/mo for 100, agency $249/mo.",
@@ -880,7 +924,11 @@ export const PART_4: RawIdea[] = [
       "White-label client reports",
     ],
     mvp: ["Single grid scan for one keyword", "Heat map", "PDF report"],
-    future: ["Automated weekly scans", "Review and citation monitoring", "Agency multi-client dashboards"],
+    future: [
+      "Automated weekly scans",
+      "Review and citation monitoring",
+      "Agency multi-client dashboards",
+    ],
     stack: ["Node.js workers", "Search data API", "Next.js", "Mapbox", "Stripe"],
     money: ["Subscription by scan volume", "Agency white-label plan", "Pay-per-scan credits"],
     pricing: "$49/mo for 100 scans, agency $199/mo for 1,000 scans and white-label.",
@@ -970,7 +1018,11 @@ export const PART_4: RawIdea[] = [
       "Warm-up scheduling guidance",
     ],
     mvp: ["Domain health checks", "Placement test", "Alerting"],
-    future: ["Direct integration with sending tools", "Mailbox rotation guidance", "Agency dashboards"],
+    future: [
+      "Direct integration with sending tools",
+      "Mailbox rotation guidance",
+      "Agency dashboards",
+    ],
     stack: ["Node.js workers", "IMAP seed accounts", "Postgres", "Next.js", "Stripe"],
     money: ["Subscription by domain", "Agency plan", "One-off audit"],
     pricing: "$29/mo per domain, agency $149/mo for 10 domains, one-off audit $99.",
@@ -1017,7 +1069,10 @@ export const PART_4: RawIdea[] = [
     mvp: ["Referral links", "Conversion tracking", "Manual reward issuance"],
     future: ["Automated reward payouts", "Two-sided incentives", "Commerce platform integrations"],
     stack: ["Next.js", "Supabase", "Stripe", "Resend"],
-    money: ["Subscription by tracked referrals", "Percentage of rewarded revenue for larger accounts"],
+    money: [
+      "Subscription by tracked referrals",
+      "Percentage of rewarded revenue for larger accounts",
+    ],
     pricing: "$39/mo up to 100 referrals, $99/mo up to 500.",
     acquisition:
       "Small business communities, commerce app stores, and case studies quantifying referral share.",
@@ -1094,7 +1149,8 @@ export const PART_4: RawIdea[] = [
     short: "Connects niche media owners with advertisers who want their exact audience.",
     problem:
       "Small newsletters and podcasts have valuable niche audiences but no sales team, and advertisers cannot find them.",
-    targetUsers: "Newsletter and podcast owners with 2,000–50,000 audience; B2B and D2C advertisers.",
+    targetUsers:
+      "Newsletter and podcast owners with 2,000–50,000 audience; B2B and D2C advertisers.",
     solution:
       "A curated marketplace with verified audience stats, transparent pricing, escrowed payments and standardised performance reporting after each placement.",
     key: [
@@ -1104,7 +1160,11 @@ export const PART_4: RawIdea[] = [
       "Standard performance reporting",
       "Advertiser discovery by audience attributes",
     ],
-    mvp: ["Media owner listings with verified stats", "Booking request flow", "Manual payment handling"],
+    mvp: [
+      "Media owner listings with verified stats",
+      "Booking request flow",
+      "Manual payment handling",
+    ],
     future: ["Programmatic booking", "Bundles across multiple placements", "Creative testing"],
     stack: ["Next.js", "Postgres", "Stripe Connect", "Analytics verification integrations"],
     money: ["Commission per placement", "Featured listing fees", "Advertiser subscription"],
@@ -1150,7 +1210,11 @@ export const PART_4: RawIdea[] = [
       "Post-event follow-up automation",
     ],
     mvp: ["Registration page", "Reminder sequence", "Attendance import"],
-    future: ["Direct webinar platform integrations", "In-person check-in app", "Series and community features"],
+    future: [
+      "Direct webinar platform integrations",
+      "In-person check-in app",
+      "Series and community features",
+    ],
     stack: ["Next.js", "Supabase", "Resend", "Twilio", "Stripe"],
     money: ["Subscription by events or registrants", "Ticketing fee option"],
     pricing: "$39/mo up to 500 registrants monthly, $99/mo up to 2,500.",
@@ -1185,7 +1249,8 @@ export const PART_4: RawIdea[] = [
     short: "Finds the products and sizes driving returns and fixes the listing before more ship.",
     problem:
       "Apparel returns destroy margin, and brands see a single returns percentage without knowing which product, size or description caused it.",
-    targetUsers: "Apparel and footwear brands, marketplace sellers, e-commerce operations managers.",
+    targetUsers:
+      "Apparel and footwear brands, marketplace sellers, e-commerce operations managers.",
     solution:
       "Analyse returns data by product, size and reason, correlate with listing content and reviews, and recommend specific fixes such as size guide corrections or photo changes.",
     key: [
@@ -1196,7 +1261,11 @@ export const PART_4: RawIdea[] = [
       "Post-change tracking to prove the fix",
     ],
     mvp: ["Returns data import", "Product and size breakdown", "Top-issue report"],
-    future: ["Automated size guide generation", "Fit prediction for shoppers", "Supplier quality reporting"],
+    future: [
+      "Automated size guide generation",
+      "Fit prediction for shoppers",
+      "Supplier quality reporting",
+    ],
     stack: ["Next.js", "Shopify API", "Postgres", "Claude", "Stripe"],
     money: ["Subscription by order volume", "Percentage-of-savings pilot pricing"],
     pricing: "$99/mo up to 2,000 orders monthly, $299/mo up to 20,000.",
@@ -1245,8 +1314,7 @@ export const PART_4: RawIdea[] = [
     stack: ["Next.js", "Shopify API", "Postgres", "Stripe"],
     money: ["Subscription by revenue tier", "Percentage of incremental bundle revenue"],
     pricing: "$49/mo under $50k monthly revenue, $149/mo above, or 2% of bundle revenue.",
-    acquisition:
-      "App store listings, e-commerce communities, and free basket affinity reports.",
+    acquisition: "App store listings, e-commerce communities, and free basket affinity reports.",
     first10:
       "Run the free affinity analysis for 25 stores and show each the bundle they are missing.",
     steps: [
@@ -1290,8 +1358,7 @@ export const PART_4: RawIdea[] = [
     stack: ["Node.js workers", "Postgres", "Marketplace APIs", "Next.js", "Stripe"],
     money: ["Subscription by SKUs and channels", "Order volume tiers"],
     pricing: "$79/mo for 2 channels and 1,000 SKUs, $249/mo for 5 channels and 10,000 SKUs.",
-    acquisition:
-      "Seller communities per marketplace, and free listing-error audits.",
+    acquisition: "Seller communities per marketplace, and free listing-error audits.",
     first10:
       "Migrate ten sellers' catalogues personally, absorbing the mapping work that usually blocks adoption.",
     steps: [
@@ -1335,8 +1402,7 @@ export const PART_4: RawIdea[] = [
     stack: ["Next.js", "Carrier APIs or aggregator", "Postgres", "Resend", "Stripe"],
     money: ["Subscription by shipment volume", "Revenue share on recommendation sales"],
     pricing: "$29/mo up to 1,000 shipments, $99/mo up to 10,000.",
-    acquisition:
-      "Commerce app stores, support-cost content, and free ticket deflection estimates.",
+    acquisition: "Commerce app stores, support-cost content, and free ticket deflection estimates.",
     first10:
       "Count 'where is my order' tickets for ten brands over a fortnight and offer a trial priced against that cost.",
     steps: [
@@ -1376,7 +1442,11 @@ export const PART_4: RawIdea[] = [
       "Stockist activity reporting",
     ],
     mvp: ["Stockist accounts with pricing", "Order placement", "Order export"],
-    future: ["Rep ordering on mobile", "Integration with accounting", "Stockist discovery marketplace"],
+    future: [
+      "Rep ordering on mobile",
+      "Integration with accounting",
+      "Stockist discovery marketplace",
+    ],
     stack: ["Next.js", "Supabase", "Stripe", "Resend"],
     money: ["Subscription by stockist count", "Payment processing margin"],
     pricing: "$49/mo up to 25 stockists, $129/mo up to 150.",
@@ -1421,7 +1491,11 @@ export const PART_4: RawIdea[] = [
       "Copy suggestions addressing common objections",
     ],
     mvp: ["Import reviews for your own products", "Theme report", "Export"],
-    future: ["Automated monitoring and alerts", "Category-wide benchmark reports", "Roadmap integration"],
+    future: [
+      "Automated monitoring and alerts",
+      "Category-wide benchmark reports",
+      "Roadmap integration",
+    ],
     stack: ["Next.js", "Postgres", "Claude", "Marketplace data sources", "Stripe"],
     money: ["Subscription by products monitored", "One-off category reports"],
     pricing: "$79/mo for 25 products, $199/mo for 200; category report $499.",
@@ -1466,7 +1540,11 @@ export const PART_4: RawIdea[] = [
       "Cost reporting by channel and product",
     ],
     mvp: ["Rate comparison for two carriers", "Label purchase", "Tracking"],
-    future: ["Marketplace order import", "Rules-based automatic carrier selection", "Insurance and claims handling"],
+    future: [
+      "Marketplace order import",
+      "Rules-based automatic carrier selection",
+      "Insurance and claims handling",
+    ],
     stack: ["Next.js", "Carrier and aggregator APIs", "Postgres", "Stripe"],
     money: ["Margin on discounted label rates", "Small subscription for volume tools"],
     pricing: "Free to compare, margin built into label rates; Pro tools $19/mo.",
@@ -1545,7 +1623,8 @@ export const PART_4: RawIdea[] = [
     short: "Secure downloads, licence keys and update delivery for digital goods.",
     problem:
       "Sellers of templates, plugins and digital assets email files manually and have no way to manage licences or ship updates.",
-    targetUsers: "Template and plugin makers, digital artists, font and preset sellers, indie software developers.",
+    targetUsers:
+      "Template and plugin makers, digital artists, font and preset sellers, indie software developers.",
     solution:
       "Upload the product, sell it with checkout, deliver expiring secure download links, issue and validate licence keys, and notify buyers when an update ships.",
     key: [
@@ -1601,7 +1680,11 @@ export const PART_4: RawIdea[] = [
       "Daily delivery cost reporting",
     ],
     mvp: ["Order import", "Optimised route", "Driver view with completion"],
-    future: ["Multiple drivers and zones", "Customer self-scheduling", "Commerce platform integration"],
+    future: [
+      "Multiple drivers and zones",
+      "Customer self-scheduling",
+      "Commerce platform integration",
+    ],
     stack: ["Capacitor", "Routing API", "Supabase", "Twilio", "Stripe"],
     money: ["Per-vehicle subscription", "Notification usage add-on"],
     pricing: "$29/mo per vehicle including 500 notifications.",

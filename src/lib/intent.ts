@@ -27,7 +27,19 @@ export const FEATURES: FeatureTarget[] = [
     label: "Command library",
     blurb: "Slash commands for any AI assistant, with copy-ready examples.",
     to: "/search",
-    keywords: ["command", "prompt", "slash", "ai", "chatgpt", "gemini", "claude", "write", "image", "code", "summarize"],
+    keywords: [
+      "command",
+      "prompt",
+      "slash",
+      "ai",
+      "chatgpt",
+      "gemini",
+      "claude",
+      "write",
+      "image",
+      "code",
+      "summarize",
+    ],
     icon: "Terminal",
   },
   {
@@ -35,7 +47,17 @@ export const FEATURES: FeatureTarget[] = [
     label: "Build ideas",
     blurb: "Validated product ideas with MVP scope, monetisation and build steps.",
     to: "/build-ideas",
-    keywords: ["idea", "startup", "saas", "business", "side project", "build", "app idea", "product", "mvp"],
+    keywords: [
+      "idea",
+      "startup",
+      "saas",
+      "business",
+      "side project",
+      "build",
+      "app idea",
+      "product",
+      "mvp",
+    ],
     icon: "Lightbulb",
   },
   {
@@ -59,7 +81,18 @@ export const FEATURES: FeatureTarget[] = [
     label: "Assistant & tasks",
     blurb: "Ask in plain words, get a workflow plus tasks you can tick off.",
     to: "/assistant",
-    keywords: ["assistant", "bot", "help", "task", "todo", "workflow", "plan", "steps", "checklist", "reminder"],
+    keywords: [
+      "assistant",
+      "bot",
+      "help",
+      "task",
+      "todo",
+      "workflow",
+      "plan",
+      "steps",
+      "checklist",
+      "reminder",
+    ],
     icon: "Bot",
   },
   {
@@ -67,7 +100,18 @@ export const FEATURES: FeatureTarget[] = [
     label: "YouTube hub",
     blurb: "Search videos and music, play them in an embedded player.",
     to: "/youtube",
-    keywords: ["youtube", "video", "music", "song", "songs", "watch", "lofi", "playlist", "audio", "tutorial"],
+    keywords: [
+      "youtube",
+      "video",
+      "music",
+      "song",
+      "songs",
+      "watch",
+      "lofi",
+      "playlist",
+      "audio",
+      "tutorial",
+    ],
     icon: "Youtube",
   },
   {
@@ -75,7 +119,21 @@ export const FEATURES: FeatureTarget[] = [
     label: "Movie finder",
     blurb: "Regional films from India, Pakistan and neighbours with legal watch links.",
     to: "/movies",
-    keywords: ["movie", "movies", "film", "cinema", "bollywood", "telugu", "tamil", "hindi", "urdu", "malayalam", "pakistani", "netflix", "streaming"],
+    keywords: [
+      "movie",
+      "movies",
+      "film",
+      "cinema",
+      "bollywood",
+      "telugu",
+      "tamil",
+      "hindi",
+      "urdu",
+      "malayalam",
+      "pakistani",
+      "netflix",
+      "streaming",
+    ],
     icon: "Film",
   },
   {
@@ -83,7 +141,18 @@ export const FEATURES: FeatureTarget[] = [
     label: "Live dashboard",
     blurb: "News, weather and cricket + football scores in one place.",
     to: "/live",
-    keywords: ["news", "weather", "cricket", "football", "score", "match", "live", "today", "temperature", "forecast"],
+    keywords: [
+      "news",
+      "weather",
+      "cricket",
+      "football",
+      "score",
+      "match",
+      "live",
+      "today",
+      "temperature",
+      "forecast",
+    ],
     icon: "Radio",
   },
   {
@@ -99,7 +168,17 @@ export const FEATURES: FeatureTarget[] = [
     label: "Discover hub",
     blurb: "Free AI, GitHub gems, Reddit wikis, websites and learning resources.",
     to: "/discover",
-    keywords: ["discover", "resource", "github", "reddit", "website", "learn", "course", "free stuff", "open source"],
+    keywords: [
+      "discover",
+      "resource",
+      "github",
+      "reddit",
+      "website",
+      "learn",
+      "course",
+      "free stuff",
+      "open source",
+    ],
     icon: "Compass",
   },
   {
@@ -107,7 +186,18 @@ export const FEATURES: FeatureTarget[] = [
     label: "Play & decide",
     blurb: "Coin toss, dice, decision wheel and a surprise command.",
     to: "/play",
-    keywords: ["play", "game", "bored", "toss", "coin", "dice", "random", "decide", "fun", "time pass"],
+    keywords: [
+      "play",
+      "game",
+      "bored",
+      "toss",
+      "coin",
+      "dice",
+      "random",
+      "decide",
+      "fun",
+      "time pass",
+    ],
     icon: "Dices",
   },
   {
@@ -129,7 +219,10 @@ export const FEATURES: FeatureTarget[] = [
 ];
 
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
-const tokens = (s: string) => norm(s).split(/\s+/).filter((t) => t.length > 1);
+const tokens = (s: string) =>
+  norm(s)
+    .split(/\s+/)
+    .filter((t) => t.length > 1);
 
 export interface FeatureMatch {
   feature: FeatureTarget;

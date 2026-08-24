@@ -9,7 +9,8 @@ export const PART_3: RawIdea[] = [
     businessModel: "Marketplace",
     buildType: "Website",
     suitableFor: "Startup",
-    short: "A vetted directory and booking layer for trades in a single city, not a global platform.",
+    short:
+      "A vetted directory and booking layer for trades in a single city, not a global platform.",
     problem:
       "National marketplaces sell the same lead to five tradespeople and neither side is happy; locals still ask for recommendations in Facebook groups.",
     targetUsers: "Homeowners in one city, and the local trades who serve them.",
@@ -22,7 +23,11 @@ export const PART_3: RawIdea[] = [
       "Direct request-to-book with response tracking",
       "Neighbourhood-level search",
     ],
-    mvp: ["Provider directory with 40 vetted trades", "Request form routed to providers", "Reviews"],
+    mvp: [
+      "Provider directory with 40 vetted trades",
+      "Request form routed to providers",
+      "Reviews",
+    ],
     future: ["Payments and deposits", "Provider subscription tools", "Expansion to a second city"],
     stack: ["Next.js", "Supabase", "Stripe", "Mapbox", "Resend"],
     money: ["Flat monthly listing fee", "Featured placement", "Booking deposits"],
@@ -54,10 +59,12 @@ export const PART_3: RawIdea[] = [
     businessModel: "Subscription",
     buildType: "SaaS",
     suitableFor: "Business",
-    short: "Standard operating procedures every branch actually completes and the head office can see.",
+    short:
+      "Standard operating procedures every branch actually completes and the head office can see.",
     problem:
       "Multi-site businesses distribute laminated checklists and have no idea whether opening, closing and safety routines are being done.",
-    targetUsers: "Franchise owners, multi-site restaurants, gyms, retail chains, cleaning companies.",
+    targetUsers:
+      "Franchise owners, multi-site restaurants, gyms, retail chains, cleaning companies.",
     solution:
       "Digital checklists per site and shift with photo proof, exception flagging and a head-office dashboard showing compliance per branch.",
     key: [
@@ -68,7 +75,11 @@ export const PART_3: RawIdea[] = [
       "Offline completion with later sync",
     ],
     mvp: ["Templates and daily checklists", "Mobile completion", "Simple compliance report"],
-    future: ["Temperature and equipment sensor logging", "Audit scheduling", "Training modules attached to tasks"],
+    future: [
+      "Temperature and equipment sensor logging",
+      "Audit scheduling",
+      "Training modules attached to tasks",
+    ],
     stack: ["Next.js", "Capacitor mobile shell", "Supabase", "R2 storage", "Stripe"],
     money: ["Per-site subscription", "Head-office platform fee", "Onboarding service"],
     pricing: "$29/mo per site, $99/mo head-office dashboard, $500 onboarding for 10+ sites.",
@@ -237,7 +248,8 @@ export const PART_3: RawIdea[] = [
     short: "Turns your metrics into a consistent monthly investor update that actually gets sent.",
     problem:
       "Founders skip investor updates when busy, then lose the relationship and the easy follow-on introductions.",
-    targetUsers: "Startup founders, fund-backed small businesses, nonprofit directors reporting to boards.",
+    targetUsers:
+      "Startup founders, fund-backed small businesses, nonprofit directors reporting to boards.",
     solution:
       "Pull key metrics from connected sources, prompt the founder for three short commentary answers, and produce a consistent update sent to the investor list with read tracking.",
     key: [
@@ -342,8 +354,7 @@ export const PART_3: RawIdea[] = [
     stack: ["Next.js", "Capacitor for staff app", "Postgres", "Push notifications", "Stripe"],
     money: ["Per-employee subscription", "Location minimum", "Payroll export add-on"],
     pricing: "$2/employee/mo with a $25/mo location minimum.",
-    acquisition:
-      "Local outreach, industry groups, and free migration from spreadsheet rotas.",
+    acquisition: "Local outreach, industry groups, and free migration from spreadsheet rotas.",
     first10:
       "Rebuild the current rota for ten local venues in the tool for free and let the manager compare it to their spreadsheet.",
     steps: [
@@ -518,7 +529,11 @@ export const PART_3: RawIdea[] = [
       "Reduction action suggestions with cost estimates",
     ],
     mvp: ["Energy and travel data entry", "Basic scope 1 and 2 estimate", "PDF report"],
-    future: ["Supply chain scope 3 estimation", "Utility bill parsing", "Consultant multi-client mode"],
+    future: [
+      "Supply chain scope 3 estimation",
+      "Utility bill parsing",
+      "Consultant multi-client mode",
+    ],
     stack: ["Next.js", "Postgres", "Emission factor datasets", "Claude", "Stripe"],
     money: ["Annual subscription", "Consultant plan", "Report review service"],
     pricing: "$600/year per company, consultant plan $200/mo for 15 companies.",
@@ -550,7 +565,8 @@ export const PART_3: RawIdea[] = [
     businessModel: "Freemium",
     buildType: "Website",
     suitableFor: "Beginner",
-    short: "Finds every recurring charge in your statement and shows exactly how to cancel each one.",
+    short:
+      "Finds every recurring charge in your statement and shows exactly how to cancel each one.",
     problem:
       "People pay for forgotten subscriptions for years, and cancellation flows are deliberately hard to find.",
     targetUsers: "Consumers, households cutting costs, small business owners reviewing spend.",
@@ -643,7 +659,8 @@ export const PART_3: RawIdea[] = [
     short: "Per-property profit, arrears and compliance dates for small landlords.",
     problem:
       "Small landlords track rent in a spreadsheet and cannot answer which property actually makes money after costs and voids.",
-    targetUsers: "Small landlords with 2–20 units, property managers, family property partnerships.",
+    targetUsers:
+      "Small landlords with 2–20 units, property managers, family property partnerships.",
     solution:
       "Track rent due and received, costs, mortgage payments and compliance certificate dates per property, with a clear yield and cash position per unit.",
     key: [
@@ -703,8 +720,7 @@ export const PART_3: RawIdea[] = [
     stack: ["React Native or Capacitor", "Supabase", "Exchange rate API", "Stripe", "RevenueCat"],
     money: ["Freemium", "Pro subscription for clubs", "Payment fee on collected transfers"],
     pricing: "Free for personal groups, Club plan $9/mo, 1% on collected payments.",
-    acquisition:
-      "University societies, sports club networks, and viral group invites.",
+    acquisition: "University societies, sports club networks, and viral group invites.",
     first10:
       "Run treasury for five real clubs for a season, absorbing the manual work until the tooling replaces it.",
     steps: [
@@ -733,7 +749,8 @@ export const PART_3: RawIdea[] = [
     short: "Connects small suppliers with funders willing to advance a specific invoice.",
     problem:
       "Small suppliers wait 60 to 90 days for payment while paying staff weekly, and bank facilities are slow to arrange.",
-    targetUsers: "Small suppliers to large corporates, staffing agencies, logistics providers, funders.",
+    targetUsers:
+      "Small suppliers to large corporates, staffing agencies, logistics providers, funders.",
     solution:
       "Suppliers upload verified invoices, funders bid to advance them at a stated discount, and repayment is tracked when the customer pays.",
     key: [
@@ -743,10 +760,18 @@ export const PART_3: RawIdea[] = [
       "Repayment tracking and reconciliation",
       "Supplier credit history over time",
     ],
-    mvp: ["Manual invoice verification", "Fixed-rate advance from one funding partner", "Repayment tracking"],
+    mvp: [
+      "Manual invoice verification",
+      "Fixed-rate advance from one funding partner",
+      "Repayment tracking",
+    ],
     future: ["Multi-funder auctions", "Accounting integrations", "Automated debtor risk scoring"],
     stack: ["Next.js", "Postgres", "KYC provider", "Payment rails", "Stripe for platform fees"],
-    money: ["Percentage fee per advance", "Funder platform fee", "Subscription for premium suppliers"],
+    money: [
+      "Percentage fee per advance",
+      "Funder platform fee",
+      "Subscription for premium suppliers",
+    ],
     pricing: "1–3% of the advanced invoice value, shared between platform and funder.",
     acquisition:
       "Industry associations in slow-paying sectors, accountant referrals, and direct outreach to suppliers of known slow payers.",
@@ -820,7 +845,8 @@ export const PART_3: RawIdea[] = [
     businessModel: "Freemium",
     buildType: "Website",
     suitableFor: "Startup",
-    short: "Shows what changing contributions, retirement age or returns really does to the outcome.",
+    short:
+      "Shows what changing contributions, retirement age or returns really does to the outcome.",
     problem:
       "Standard retirement calculators give a single scary number with no way to test realistic changes.",
     targetUsers: "Working adults planning retirement, financial coaches, workplace benefit teams.",
@@ -969,7 +995,11 @@ export const PART_3: RawIdea[] = [
       "Savings tracker across bills",
     ],
     mvp: ["Three provider categories", "Script generation", "Savings tracker"],
-    future: ["Done-for-you negotiation service", "Renewal reminders", "Community-sourced target prices"],
+    future: [
+      "Done-for-you negotiation service",
+      "Renewal reminders",
+      "Community-sourced target prices",
+    ],
     stack: ["Next.js", "Claude", "Supabase", "Stripe"],
     money: ["Success fee on savings", "One-time script purchase", "Subscription for reminders"],
     pricing: "$5 per script pack, or 20% of the first year's saving for the done-for-you service.",
@@ -1049,7 +1079,8 @@ export const PART_3: RawIdea[] = [
     short: "Real conversation practice with pronunciation and grammar feedback after each turn.",
     problem:
       "Learners can read and listen but freeze when speaking, and human tutors are expensive for daily practice.",
-    targetUsers: "Language learners at intermediate level, exam candidates, professionals relocating.",
+    targetUsers:
+      "Language learners at intermediate level, exam candidates, professionals relocating.",
     solution:
       "Scenario-based spoken conversations with an AI partner that corrects pronunciation and grammar gently, tracks recurring errors and revisits them.",
     key: [
@@ -1059,7 +1090,11 @@ export const PART_3: RawIdea[] = [
       "Recurring error tracking and revision",
       "Exam-format practice modes",
     ],
-    mvp: ["Five scenarios in one language", "Speech recognition plus correction", "Session summary"],
+    mvp: [
+      "Five scenarios in one language",
+      "Speech recognition plus correction",
+      "Session summary",
+    ],
     future: ["More languages", "Tutor marketplace handoff", "Group speaking rooms"],
     stack: ["React Native", "Realtime speech API", "Claude", "Supabase", "RevenueCat"],
     money: ["Subscription", "Annual plan", "Exam prep packs"],
@@ -1240,7 +1275,11 @@ export const PART_3: RawIdea[] = [
       "Age-appropriate safety controls",
     ],
     mvp: ["Photo or typed question", "Guided steps without the answer", "Parent summary"],
-    future: ["Curriculum alignment per region", "School partnerships", "Progress tracking over terms"],
+    future: [
+      "Curriculum alignment per region",
+      "School partnerships",
+      "Progress tracking over terms",
+    ],
     stack: ["Capacitor or React Native", "Vision model", "Claude", "Supabase", "RevenueCat"],
     money: ["Freemium", "Family subscription", "School licences"],
     pricing: "Free 5 questions/week, Family $8/mo, school licence from $500/year.",
@@ -1285,10 +1324,15 @@ export const PART_3: RawIdea[] = [
       "Shareable PDF version",
     ],
     mvp: ["Manual certificate entry with links", "Public portfolio page", "PDF export"],
-    future: ["Automated verification integrations", "Provider-issued credentials", "Recruiter search"],
+    future: [
+      "Automated verification integrations",
+      "Provider-issued credentials",
+      "Recruiter search",
+    ],
     stack: ["Next.js", "Supabase", "Stripe", "Cloudflare"],
     money: ["Freemium", "Custom domain subscription", "Provider issuing plans"],
-    pricing: "Free portfolio, Pro $4/mo for custom domain and analytics, provider plans from $99/mo.",
+    pricing:
+      "Free portfolio, Pro $4/mo for custom domain and analytics, provider plans from $99/mo.",
     acquisition:
       "Career-change communities, training provider partnerships, and SEO from public portfolio pages.",
     first10:
@@ -1361,10 +1405,12 @@ export const PART_3: RawIdea[] = [
     businessModel: "Advertising",
     buildType: "Website",
     suitableFor: "Beginner",
-    short: "Matches learners studying the same thing at the same pace into small accountable groups.",
+    short:
+      "Matches learners studying the same thing at the same pace into small accountable groups.",
     problem:
       "Online learners drop out because they study alone, and finding peers at the same stage is oddly hard.",
-    targetUsers: "MOOC learners, exam candidates, university students, professional certification takers.",
+    targetUsers:
+      "MOOC learners, exam candidates, university students, professional certification takers.",
     solution:
       "Match learners by course, target date and weekly time commitment into groups of four to six, with a scheduled first session and simple check-in structure.",
     key: [
@@ -1377,8 +1423,13 @@ export const PART_3: RawIdea[] = [
     mvp: ["Signup with course and availability", "Group formation", "Email introductions"],
     future: ["Integrated video sessions", "Provider partnerships", "Paid coach-led groups"],
     stack: ["Next.js", "Supabase", "Resend", "Matching worker"],
-    money: ["Advertising and course affiliate revenue", "Paid coach-led groups", "Provider sponsorship"],
-    pricing: "Free for learners; revenue from course affiliate links and sponsored provider groups.",
+    money: [
+      "Advertising and course affiliate revenue",
+      "Paid coach-led groups",
+      "Provider sponsorship",
+    ],
+    pricing:
+      "Free for learners; revenue from course affiliate links and sponsored provider groups.",
     acquisition:
       "Course-specific subreddits and Discords, and partnerships with course creators who want completion rates up.",
     first10:
@@ -1406,7 +1457,8 @@ export const PART_3: RawIdea[] = [
     businessModel: "Freemium",
     buildType: "Mobile App",
     suitableFor: "Beginner",
-    short: "Builds a realistic revision plan around the exam dates and adapts when you fall behind.",
+    short:
+      "Builds a realistic revision plan around the exam dates and adapts when you fall behind.",
     problem:
       "Students make a colourful revision timetable, fall behind in week one, and abandon it entirely.",
     targetUsers: "School and university students, exam candidates, parents supporting revision.",

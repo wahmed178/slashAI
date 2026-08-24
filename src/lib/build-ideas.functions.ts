@@ -1,12 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-import {
-  askOpenRouter,
-  SPEC_SYSTEM,
-  VALIDATE_SYSTEM,
-  specPrompt,
-} from "@/lib/build-ideas.server";
+import { askOpenRouter, SPEC_SYSTEM, VALIDATE_SYSTEM, specPrompt } from "@/lib/build-ideas.server";
 
 export const generateSpec = createServerFn({ method: "POST" })
   .inputValidator((data) =>

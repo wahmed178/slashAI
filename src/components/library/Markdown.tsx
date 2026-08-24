@@ -32,7 +32,10 @@ export function Markdown({ source }: { source: string }) {
   const flushList = () => {
     if (!list.length) return;
     blocks.push(
-      <ul key={`ul-${blocks.length}`} className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
+      <ul
+        key={`ul-${blocks.length}`}
+        className="ml-4 list-disc space-y-1 text-sm text-muted-foreground"
+      >
         {list.map((item, i) => (
           <li key={i}>{inline(item)}</li>
         ))}
@@ -105,7 +108,10 @@ export function Markdown({ source }: { source: string }) {
   flushList();
   if (code?.length)
     blocks.push(
-      <pre key="code-tail" className="overflow-x-auto rounded-lg bg-accent/60 p-3 text-[12px] whitespace-pre-wrap">
+      <pre
+        key="code-tail"
+        className="overflow-x-auto rounded-lg bg-accent/60 p-3 text-[12px] whitespace-pre-wrap"
+      >
         <code>{code.join("\n")}</code>
       </pre>,
     );

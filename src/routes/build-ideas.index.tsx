@@ -109,7 +109,10 @@ function BuildIdeasIndex() {
     filters.types.length +
     filters.suitable.length;
 
-  function toggle<K extends keyof Omit<IdeaFilters, "query">>(key: K, value: IdeaFilters[K][number]) {
+  function toggle<K extends keyof Omit<IdeaFilters, "query">>(
+    key: K,
+    value: IdeaFilters[K][number],
+  ) {
     setVisible(PAGE);
     setFilters((prev) => {
       const list = prev[key] as string[];
@@ -208,7 +211,11 @@ function BuildIdeasIndex() {
             onToggle={(v) => toggle("suitable", v)}
           />
           {activeCount ? (
-            <Button variant="ghost" size="sm" onClick={() => setFilters({ ...EMPTY_FILTERS, query: filters.query })}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setFilters({ ...EMPTY_FILTERS, query: filters.query })}
+            >
               <X className="size-4" /> Clear filters
             </Button>
           ) : null}
@@ -226,7 +233,12 @@ function BuildIdeasIndex() {
           <p className="mt-1 text-sm text-muted-foreground">
             Try a broader search term, or clear a filter or two.
           </p>
-          <Button className="mt-4" variant="secondary" size="sm" onClick={() => setFilters(EMPTY_FILTERS)}>
+          <Button
+            className="mt-4"
+            variant="secondary"
+            size="sm"
+            onClick={() => setFilters(EMPTY_FILTERS)}
+          >
             Reset everything
           </Button>
         </div>

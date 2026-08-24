@@ -53,9 +53,7 @@ export function useYouTubePlayer(onEnded: () => void) {
         return;
       }
       const info = payload.info as
-        | { playerState?: number; currentTime?: number; duration?: number }
-        | number
-        | undefined;
+        { playerState?: number; currentTime?: number; duration?: number } | number | undefined;
 
       if (payload.event === "onStateChange") {
         const raw = typeof info === "number" ? info : info?.playerState;

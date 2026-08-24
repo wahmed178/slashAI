@@ -68,9 +68,17 @@ export const PART_2: RawIdea[] = [
       "SSL and domain expiry warnings",
     ],
     mvp: ["Five monitors at 5-minute intervals", "Email alerts", "Public status page"],
-    future: ["Cron job heartbeat monitoring", "Response-time SLO tracking", "Team on-call rotation"],
+    future: [
+      "Cron job heartbeat monitoring",
+      "Response-time SLO tracking",
+      "Team on-call rotation",
+    ],
     stack: ["Node.js workers", "Postgres", "Next.js", "Cloudflare Workers", "Stripe"],
-    money: ["Freemium", "Subscription by monitor count and interval", "Status page branding add-on"],
+    money: [
+      "Freemium",
+      "Subscription by monitor count and interval",
+      "Status page branding add-on",
+    ],
     pricing: "Free 5 monitors at 5 min, Pro $9/mo (50 monitors at 1 min), Team $29/mo.",
     acquisition:
       "Indie hacker communities, an honest pricing comparison page, and a generous free tier that gets embedded on public status pages linking back.",
@@ -113,7 +121,11 @@ export const PART_2: RawIdea[] = [
       "Segment tagging by plan or revenue",
     ],
     mvp: ["Post and vote board", "Status changes", "Email on ship"],
-    future: ["Revenue-weighted prioritisation", "Private boards per customer", "Integrations with issue trackers"],
+    future: [
+      "Revenue-weighted prioritisation",
+      "Private boards per customer",
+      "Integrations with issue trackers",
+    ],
     stack: ["Next.js", "Supabase", "Resend", "Stripe"],
     money: ["Freemium", "Subscription by board count and branding removal"],
     pricing: "Free one public board, Pro $15/mo (branding removal, widget), Business $49/mo.",
@@ -248,7 +260,11 @@ export const PART_2: RawIdea[] = [
       "Auditor-ready export pack",
     ],
     mvp: ["Two connectors", "Ten controls with evidence collection", "Export to PDF"],
-    future: ["Policy templates and staff attestation", "Vendor risk register", "Questionnaire autofill"],
+    future: [
+      "Policy templates and staff attestation",
+      "Vendor risk register",
+      "Questionnaire autofill",
+    ],
     stack: ["Next.js", "Postgres", "Cloud provider SDKs", "Claude for explanations", "Stripe"],
     money: ["Annual subscription", "Per-framework add-on", "Implementation service"],
     pricing: "$3,000/year starter framework, $6,000/year for two frameworks, services extra.",
@@ -295,8 +311,13 @@ export const PART_2: RawIdea[] = [
     mvp: ["Import list", "Compose and send", "Basic open and click stats"],
     future: ["Drip automations", "Ad marketplace for sponsors", "Web archive with SEO"],
     stack: ["Next.js", "Postgres", "Amazon SES or Resend", "Stripe", "Cloudflare"],
-    money: ["Freemium under 1,000 subscribers", "Per-email-sent pricing", "Cut of paid subscriptions"],
-    pricing: "Free under 1,000 subscribers, then $1 per 1,000 emails sent; 3% on paid subscriptions.",
+    money: [
+      "Freemium under 1,000 subscribers",
+      "Per-email-sent pricing",
+      "Cut of paid subscriptions",
+    ],
+    pricing:
+      "Free under 1,000 subscribers, then $1 per 1,000 emails sent; 3% on paid subscriptions.",
     acquisition:
       "Pricing comparison content, migration tooling from the big platforms, and writer communities.",
     first10:
@@ -383,7 +404,11 @@ export const PART_2: RawIdea[] = [
       "Shared vendor notes and history",
     ],
     mvp: ["Upload contract", "Manual or extracted key dates", "Email reminders"],
-    future: ["Spend anomaly detection", "Approval workflow for new contracts", "Accounting integration"],
+    future: [
+      "Spend anomaly detection",
+      "Approval workflow for new contracts",
+      "Accounting integration",
+    ],
     stack: ["Next.js", "Supabase", "Claude for extraction", "Resend", "Stripe"],
     money: ["Subscription by contract count", "Per-seat team plan"],
     pricing: "$29/mo up to 50 contracts, $99/mo up to 300, unlimited $249/mo.",
@@ -472,7 +497,10 @@ export const PART_2: RawIdea[] = [
       "Rules dashboard per product category",
       "A/B test of localised versus base pricing",
     ],
-    mvp: ["JS snippet showing localised total for five countries", "Dashboard with rate management"],
+    mvp: [
+      "JS snippet showing localised total for five countries",
+      "Dashboard with rate management",
+    ],
     future: ["Full checkout integration", "Automated rate updates", "Compliance reporting"],
     stack: ["Cloudflare Workers", "Next.js dashboard", "Postgres", "Exchange rate API", "Stripe"],
     money: ["Subscription by traffic volume", "Enterprise plan with SLAs"],
@@ -743,8 +771,16 @@ export const PART_2: RawIdea[] = [
       "Attendee-count recommendations",
       "Quarterly meeting audit report",
     ],
-    mvp: ["Google Calendar connect", "Cost per meeting", "Top 10 most expensive recurring meetings"],
-    future: ["Agenda quality scoring", "No-meeting-day enforcement", "Slack nudges before big meetings"],
+    mvp: [
+      "Google Calendar connect",
+      "Cost per meeting",
+      "Top 10 most expensive recurring meetings",
+    ],
+    future: [
+      "Agenda quality scoring",
+      "No-meeting-day enforcement",
+      "Slack nudges before big meetings",
+    ],
     stack: ["Next.js", "Google Calendar API", "Supabase", "Stripe"],
     money: ["Freemium for individuals", "Per-company subscription"],
     pricing: "Free for one calendar, Team $49/mo up to 50 people, $149/mo up to 200.",
@@ -834,7 +870,11 @@ export const PART_2: RawIdea[] = [
       "Shareable summary for a manager",
     ],
     mvp: ["Manual review flow with prompts", "History", "Email reminder"],
-    future: ["Calendar and task integrations", "Team rollup for managers", "Quarterly retrospectives"],
+    future: [
+      "Calendar and task integrations",
+      "Team rollup for managers",
+      "Quarterly retrospectives",
+    ],
     stack: ["Next.js", "Supabase", "Google Calendar and GitHub APIs", "Resend", "Stripe"],
     money: ["Subscription", "Annual plan", "Team plan for managers"],
     pricing: "$5/mo or $45/year; Team $8/user/mo with manager rollups.",
@@ -879,7 +919,11 @@ export const PART_2: RawIdea[] = [
       "Move-in and move-out balance summary",
     ],
     mvp: ["Chore rota with completion", "Expense split and balances", "Push reminders"],
-    future: ["Bank payment links for settle-up", "Landlord and co-living operator dashboards", "Recurring bill splitting"],
+    future: [
+      "Bank payment links for settle-up",
+      "Landlord and co-living operator dashboards",
+      "Recurring bill splitting",
+    ],
     stack: ["React Native or Capacitor", "Supabase", "Push notifications", "RevenueCat"],
     money: ["Freemium", "Small household subscription", "Co-living operator licensing"],
     pricing: "Free for up to 3 people, House Plus $3/mo per household, operator plans custom.",
@@ -958,7 +1002,8 @@ export const PART_2: RawIdea[] = [
     short: "Streaks plus a paired partner who is notified when you skip.",
     problem:
       "Solo habit trackers are easy to ignore because nothing happens when you break a streak.",
-    targetUsers: "People building fitness, study or writing habits; accountability pairs and small groups.",
+    targetUsers:
+      "People building fitness, study or writing habits; accountability pairs and small groups.",
     solution:
       "Track habits with streaks, but pair each user with a partner or small group who sees misses and can send a nudge, plus optional stake-based commitment.",
     key: [
@@ -1048,7 +1093,8 @@ export const PART_2: RawIdea[] = [
     short: "Async written standups in Slack, summarised into one readable digest.",
     problem:
       "Daily standup meetings cost every participant a context switch and produce information most attendees do not need.",
-    targetUsers: "Remote and hybrid engineering teams, distributed agencies, managers of async teams.",
+    targetUsers:
+      "Remote and hybrid engineering teams, distributed agencies, managers of async teams.",
     solution:
       "Scheduled prompts in Slack collect each person's update, and the bot posts a single digest highlighting blockers and changes since yesterday.",
     key: [
@@ -1105,7 +1151,12 @@ export const PART_2: RawIdea[] = [
     ],
     mvp: ["Index one folder", "Search with citations", "PDF and text support"],
     future: ["Email archive support", "Encrypted multi-device sync", "Team edition"],
-    stack: ["Tauri or Electron", "SQLite with vector extension", "Local embedding model", "Optional API fallback"],
+    stack: [
+      "Tauri or Electron",
+      "SQLite with vector extension",
+      "Local embedding model",
+      "Optional API fallback",
+    ],
     money: ["One-time licence", "Paid major version upgrades", "Team licences"],
     pricing: "$49 one-time personal licence, $99 for team of five, paid upgrades yearly.",
     acquisition:
@@ -1149,8 +1200,17 @@ export const PART_2: RawIdea[] = [
       "Packing and document checklist",
     ],
     mvp: ["Shared itinerary with invites", "Activity proposals and votes", "Offline view"],
-    future: ["Booking integrations and affiliate links", "Live location sharing", "Trip journal export"],
-    stack: ["React Native or Capacitor", "Supabase", "Map tiles with offline caching", "RevenueCat"],
+    future: [
+      "Booking integrations and affiliate links",
+      "Live location sharing",
+      "Trip journal export",
+    ],
+    stack: [
+      "React Native or Capacitor",
+      "Supabase",
+      "Map tiles with offline caching",
+      "RevenueCat",
+    ],
     money: ["Freemium", "Per-trip unlock", "Affiliate booking commissions"],
     pricing: "Free for trips up to 4 people, $8 per-trip unlock for larger groups.",
     acquisition:

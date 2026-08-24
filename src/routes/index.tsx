@@ -21,8 +21,6 @@ import {
   Bot,
   Film,
   Youtube,
-
-
 } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
@@ -230,7 +228,11 @@ function HomePage() {
             </span>
           </span>
         </Link>
-        <Link to="/find" search={{ q: "" }} className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
+        <Link
+          to="/find"
+          search={{ q: "" }}
+          className="panel lift flex items-center gap-2.5 rounded-xl p-3.5"
+        >
           <Wand2 className="size-5 shrink-0 text-primary" aria-hidden />
           <span className="min-w-0">
             <span className="block text-sm font-semibold text-foreground">Advanced search</span>
@@ -248,22 +250,14 @@ function HomePage() {
             </span>
           </span>
         </Link>
-        <Link
-          to="/youtube"
-          className="panel lift flex items-center gap-2.5 rounded-xl p-3.5"
-        >
+        <Link to="/youtube" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
           <Youtube className="size-5 shrink-0 text-primary" aria-hidden />
           <span className="min-w-0">
             <span className="block text-sm font-semibold text-foreground">YouTube & Music</span>
-            <span className="block truncate text-xs text-muted-foreground">
-              Search and play
-            </span>
+            <span className="block truncate text-xs text-muted-foreground">Search and play</span>
           </span>
         </Link>
-        <Link
-          to="/live"
-          className="panel lift flex items-center gap-2.5 rounded-xl p-3.5"
-        >
+        <Link to="/live" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
           <Radio className="size-5 shrink-0 text-primary" aria-hidden />
           <span className="min-w-0">
             <span className="block text-sm font-semibold text-foreground">Live</span>
@@ -272,10 +266,7 @@ function HomePage() {
             </span>
           </span>
         </Link>
-        <Link
-          to="/play"
-          className="panel lift flex items-center gap-2.5 rounded-xl p-3.5"
-        >
+        <Link to="/play" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
           <Dices className="size-5 shrink-0 text-primary" aria-hidden />
           <span className="min-w-0">
             <span className="block text-sm font-semibold text-foreground">Play</span>
@@ -284,7 +275,6 @@ function HomePage() {
             </span>
           </span>
         </Link>
-
 
         <Link
           to="/whats-new"
