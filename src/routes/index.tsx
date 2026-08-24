@@ -88,7 +88,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-9">
+    <section className="mt-9 animate-fade-in-up">
       <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
         <div className="min-w-0">
           <h2 className="truncate text-lg font-bold tracking-tight text-foreground">{title}</h2>
@@ -111,7 +111,7 @@ function greeting() {
 
 function CommandRow({ commands }: { commands: SlashCommand[] }) {
   return (
-    <div className="grid gap-2 sm:grid-cols-2">
+    <div className="stagger-children grid gap-2 sm:grid-cols-2">
       {commands.map((c) => {
         const Icon = categoryIcon(CATEGORY_ICONS[c.category]);
         return (
@@ -119,7 +119,7 @@ function CommandRow({ commands }: { commands: SlashCommand[] }) {
             key={c.id}
             to="/c/$slug"
             params={{ slug: c.id }}
-            className="flex min-h-14 items-center gap-3 rounded-xl border border-border bg-surface px-3 transition-colors hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="ripple-press flex min-h-14 items-center gap-3 rounded-xl border border-border bg-surface px-3 transition-colors hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <Icon className="size-4.5 shrink-0 text-primary" aria-hidden />
             <span className="min-w-0 flex-1">

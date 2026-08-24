@@ -15,6 +15,40 @@ import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm";
 export type Density = "comfortable" | "compact";
 export type Accent = "teal" | "violet" | "amber" | "rose" | "blue" | "lime";
+export type AppIcon =
+  | "terminal"
+  | "zap"
+  | "sparkles"
+  | "rocket"
+  | "diamond"
+  | "crown"
+  | "flame"
+  | "star"
+  | "globe"
+  | "brain"
+  | "sword"
+  | "infinity"
+  | "wand"
+  | "target"
+  | "bolt";
+
+export const ICONS: { id: AppIcon; label: string; emoji: string }[] = [
+  { id: "terminal", label: "Terminal", emoji: ">_" },
+  { id: "zap", label: "Zap", emoji: "⚡" },
+  { id: "sparkles", label: "Sparkles", emoji: "✨" },
+  { id: "rocket", label: "Rocket", emoji: "🚀" },
+  { id: "diamond", label: "Diamond", emoji: "💎" },
+  { id: "crown", label: "Crown", emoji: "👑" },
+  { id: "flame", label: "Flame", emoji: "🔥" },
+  { id: "star", label: "Star", emoji: "⭐" },
+  { id: "globe", label: "Globe", emoji: "🌍" },
+  { id: "brain", label: "Brain", emoji: "🧠" },
+  { id: "sword", label: "Sword", emoji: "⚔️" },
+  { id: "infinity", label: "Infinity", emoji: "♾️" },
+  { id: "wand", label: "Wand", emoji: "🪄" },
+  { id: "target", label: "Target", emoji: "🎯" },
+  { id: "bolt", label: "Bolt", emoji: "🔩" },
+];
 
 /** every theme except the default dark maps 1:1 to a class on <html> */
 export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[] = [
@@ -81,6 +115,8 @@ interface Settings {
   persona: string;
   /** which home surface the user prefers: calm sections or the scroll feed */
   homeMode: HomeMode;
+  /** app icon theme */
+  appIcon: AppIcon;
 }
 
 const DEFAULT_SETTINGS: Settings = {
@@ -94,6 +130,7 @@ const DEFAULT_SETTINGS: Settings = {
   onboarded: false,
   persona: "",
   homeMode: "calm",
+  appIcon: "terminal",
 };
 
 export interface Stats {

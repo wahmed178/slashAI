@@ -13,12 +13,13 @@ import {
   Zap,
   LayoutGrid,
   List,
+  Palette,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/library/AppShell";
-import { useLibrary, ACCENTS, THEMES, FIXED_ACCENT_THEMES } from "@/hooks/use-library";
+import { useLibrary, ACCENTS, THEMES, FIXED_ACCENT_THEMES, ICONS } from "@/hooks/use-library";
 import { CATEGORY_TREE, VERIFIED_TOTAL } from "@/lib/commands";
 import { INTERESTS } from "@/lib/collections";
 import { APP_DETAILS, CHANGELOG } from "@/lib/app-meta";
@@ -136,6 +137,34 @@ function SettingsPage() {
                   <span className="block truncate text-xs text-muted-foreground">{t.hint}</span>
                 </span>
                 {active && <Check className="size-4 shrink-0 text-primary" aria-hidden />}
+              </button>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section title="App icon">
+        <p className="mb-2 text-xs text-muted-foreground">
+          Choose your slash icon — it appears in the sidebar header.
+        </p>
+        <div className="grid grid-cols-5 gap-2 sm:grid-cols-8">
+          {ICONS.map((icon) => {
+            const active = settings.appIcon === icon.id;
+            return (
+              <button
+                key={icon.id}
+                type="button"
+                aria-label={icon.label}
+                aria-pressed={active}
+                onClick={() => updateSettings({ appIcon: icon.id })}
+                className={cn(
+                  "flex size-12 items-center justify-center rounded-xl border-2 text-lg transition-all active:scale-95",
+                  active
+                    ? "border-primary bg-accent shadow-md shadow-primary/20"
+                    : "border-border bg-surface hover:border-primary/40",
+                )}
+              >
+                {icon.emoji}
               </button>
             );
           })}

@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -15,6 +15,7 @@ import { registerServiceWorker } from "../lib/register-sw";
 import { LibraryProvider } from "@/hooks/use-library";
 import { Toaster } from "@/components/ui/sonner";
 import { WhatsNewDialog } from "@/components/library/WhatsNewDialog";
+import { SplashScreen } from "@/components/library/SplashScreen";
 
 function NotFoundComponent() {
   return (
@@ -136,6 +137,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     registerServiceWorker();
@@ -144,6 +146,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <LibraryProvider>
+        {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <WhatsNewDialog />

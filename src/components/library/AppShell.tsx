@@ -40,7 +40,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { useLibrary } from "@/hooks/use-library";
+import { useLibrary, ICONS } from "@/hooks/use-library";
 import { cn } from "@/lib/utils";
 import { SearchBox } from "./SearchBox";
 import { OfflineBadge } from "./OfflineBadge";
@@ -291,6 +291,8 @@ function NavList({
 export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { settings } = useLibrary();
+  const currentIcon = ICONS.find((i) => i.id === settings.appIcon) ?? ICONS[0]!;
 
   return (
     <div className="flex min-h-screen w-full bg-background">
@@ -300,8 +302,8 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
           to="/"
           className="flex items-center gap-2.5 px-4 py-4 focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none"
         >
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Terminal className="size-5" aria-hidden />
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground text-lg font-bold">
+            {currentIcon.emoji}
           </span>
           <span className="min-w-0">
             <span className="block truncate text-sm font-semibold text-sidebar-foreground">
@@ -379,7 +381,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
 
         <main
           className={cn(
-            "mx-auto w-full flex-1 px-4 pt-5 pb-28 md:pb-10",
+            "mx-auto w-full flex-1 px-4 pt-5 pb-28 md:pb-10 animate-slide-in-up",
             wide ? "max-w-6xl" : "max-w-5xl",
           )}
         >
@@ -399,11 +401,17 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
               key={item.to}
               to={item.to}
               className={cn(
-                "flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors",
+                "ripple-press flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors",
                 active ? "text-primary" : "text-muted-foreground",
               )}
             >
-              <item.icon className={cn("size-5", active && "stroke-[2.4]")} aria-hidden />
+              <item.icon
+                className={cn(
+                  "size-5 transition-transform duration-200",
+                  active && "stroke-[2.4] scale-110",
+                )}
+                aria-hidden
+              />
               {item.label}
             </Link>
           );

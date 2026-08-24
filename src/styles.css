@@ -500,3 +500,133 @@ mark {
     animation: none;
   }
 }
+
+/* ──────────── splash screen animations ──────────── */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 500ms ease-out both;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 1.5s ease-in-out infinite;
+}
+
+/* ──────────── page transition animations ──────────── */
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 300ms ease-out both;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 300ms ease-out both;
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 300ms ease-out both;
+}
+
+.animate-scale-in {
+  animation: scale-in 250ms ease-out both;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  animation: slide-in-up 300ms ease-out both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 40ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 120ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 280ms; }
+
+/* Ripple press effect for interactive cards */
+.ripple-press {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.ripple-press:active {
+  transform: scale(0.97);
+}
+
+:root[data-motion="reduced"] .animate-fade-in-up,
+:root[data-motion="reduced"] .animate-spin-slow,
+:root[data-motion="reduced"] .animate-loading-bar,
+:root[data-motion="reduced"] .animate-slide-in-right,
+:root[data-motion="reduced"] .animate-slide-in-left,
+:root[data-motion="reduced"] .animate-slide-in-up,
+:root[data-motion="reduced"] .animate-scale-in,
+:root[data-motion="reduced"] .stagger-children > * {
+  animation: none;
+}
