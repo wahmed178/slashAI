@@ -18,6 +18,10 @@ import {
   Wand2,
   Radio,
   Dices,
+  Bot,
+  Film,
+  Youtube,
+
 
 } from "lucide-react";
 
