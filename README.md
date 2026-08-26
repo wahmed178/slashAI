@@ -356,9 +356,9 @@ No license file is currently present in this repository. Licensing information s
 
 <div align="center">
 
-Deployed on [Vercel](https://slashai-nu.vercel.app) — Vercel keeps the app live 24/7, Lovable sirf editor hai jo kab ruk sakta hai.
+Deployed on [Vercel](https://slashai-nu.vercel.app) — the app is hosted independently so it stays live even if Lovable shuts down.
 
-> **Note:** Lovable kab band ho sakta hai, lekin Vercel ka deployment permanent hai — app hamesha online rahega.
+> **Why Vercel?** Lovable is used for building, but Lovable's hosting can go down or shut down anytime. Vercel ensures the app is always available as the permanent source.
 
 Built with Lovable · Hosted on Vercel
 
