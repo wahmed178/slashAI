@@ -145,7 +145,7 @@ function IdeaDetail() {
           <strong className="text-foreground">Difficulty:</strong> {idea.difficulty}
         </p>
         <div className="flex flex-wrap gap-1.5">
-          {idea.techStack.map((tech) => (
+          {idea.techStack.map((tech: string) => (
             <Badge key={tech} variant="outline">
               {tech}
             </Badge>
@@ -172,7 +172,7 @@ function IdeaDetail() {
         icon={<ListChecks className="size-4 text-primary" aria-hidden />}
       >
         <ol className="ml-4 list-decimal space-y-1">
-          {idea.buildSteps.map((step) => (
+          {idea.buildSteps.map((step: string) => (
             <li key={step}>{step}</li>
           ))}
         </ol>

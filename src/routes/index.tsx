@@ -2,6 +2,9 @@ import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
+  Activity,
+  Copy,
+  NotebookPen,
   Sparkles,
   Star,
   History,
@@ -40,6 +43,69 @@ import {
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
 import { personaGreetingName } from "@/lib/personas";
+
+/** Compact weekly digest: local activity stats plus one-tap links into the toolkit. */
+function YourWeekDigest() {
+  const { streak, stats, favorites, journal } = useLibrary();
+  const weekAgo = useMemo(() => {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() - 7);
+    return d.toISOString().slice(0, 10);
+  }, []);
+  const entriesThisWeek = journal.filter((e) => e.date >= weekAgo).length;
+
+  const tiles = [
+    { icon: Flame, label: "Day streak", value: streak.count, to: "/journal" },
+    { icon: Copy, label: "Copied", value: stats.copies, to: "/recent" },
+    { icon: Star, label: "Saved", value: favorites.length, to: "/favorites" },
+    { icon: NotebookPen, label: "Logs this week", value: entriesThisWeek, to: "/journal" },
+  ] as const;
+
+  return (
+    <section className="panel mt-6 rounded-2xl p-4">
+      <header className="flex items-center justify-between gap-2">
+        <h2 className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          <Activity className="size-3.5 text-primary" aria-hidden /> Your week
+        </h2>
+        <Link
+          to="/glossary"
+          className="hidden items-center gap-1 text-sm font-medium text-primary hover:underline sm:flex"
+        >
+          Learn a term <ArrowRight className="size-4" aria-hidden />
+        </Link>
+      </header>
+      <div className="mt-3 grid grid-cols-4 gap-2">
+        {tiles.map((t) => (
+          <Link
+            key={t.label}
+            to={t.to}
+            className="rounded-xl bg-surface-elevated p-2.5 text-center transition-colors hover:bg-accent"
+          >
+            <t.icon className="mx-auto size-4 text-primary" aria-hidden />
+            <span className="mt-1 block text-lg font-black leading-none text-foreground">
+              {t.value}
+            </span>
+            <span className="mt-1 block truncate text-[11px] text-muted-foreground">{t.label}</span>
+          </Link>
+        ))}
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2">
+ {([
+          ["/roadmaps", "Founder roadmaps"],
+          ["/generators", "Founder tools"],
+          ["/live", "Live dashboard"],
+        ] as const).map(([to, label]) => (
+          <Link
+            key={to}
+            to={to}
+            className="min-h-9 rounded-full border border-border bg-surface px-3 text-sm leading-9 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {label}
+          </Link>
+        ))}
+      </div>
+    </section>
+  );}
 
 /** plain-language entry points — each one is just a good search */
 const INTENTS = [
@@ -345,6 +411,8 @@ function HomePage() {
         >
           <Discover />
         </Section>
+
+        <YourWeekDigest />
 
         <Section
           title="This week's free finds"

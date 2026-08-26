@@ -128,7 +128,7 @@ function ResourcePage() {
             <ListChecks className="size-4 text-primary" aria-hidden /> How to do it
           </h2>
           <ol className="mt-2 space-y-2">
-            {resource.steps.map((s, i) => (
+            {resource.steps.map((s: string, i: number) => (
               <li key={s} className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent text-[11px] font-bold text-primary">
                   {i + 1}
@@ -179,7 +179,7 @@ function ResourcePage() {
       </section>
 
       <div className="mt-4 flex flex-wrap gap-1.5">
-        {resource.tags.map((t) => (
+        {resource.tags.map((t: string) => (
           <span
             key={t}
             className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2.5 py-0.5 text-[11px] text-muted-foreground"

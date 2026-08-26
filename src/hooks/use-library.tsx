@@ -140,6 +140,38 @@ export interface Stats {
 
 const DEFAULT_STATS: Stats = { copies: 0, opens: 0 };
 
+/** One build-in-public progress note, stored locally. */
+export interface JournalEntry {
+  id: string;
+  /** UTC date the entry was written, e.g. 2026-08-26 */
+  date: string;
+  mood: "win" | "progress" | "struggle" | "idea";
+  title: string;
+  body: string;
+}
+
+const MOODS = ["win", "progress", "struggle", "idea"] as const;
+
+const DEFAULT_JOURNAL: JournalEntry[] = [];
+
+function readJournal(): JournalEntry[] {
+  try {
+    const raw = localStorage.getItem(KEYS.journal);
+    const parsed = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (e): e is JournalEntry =>
+        typeof e?.id === "string" &&
+        typeof e?.date === "string" &&
+        typeof e?.title === "string" &&
+        typeof e?.body === "string" &&
+        MOODS.includes(e?.mood),
+    );
+  } catch {
+    return [];
+  }
+}
+
 const KEYS = {
   favorites: "slashai.favorites",
   recents: "slashai.recents",
@@ -148,6 +180,7 @@ const KEYS = {
   seenVersion: "slashai.seenVersion",
   streak: "slashai.streak",
   stats: "slashai.stats",
+  journal: "slashai.journal",
 };
 
 export interface BackupPayload {
@@ -160,6 +193,7 @@ export interface BackupPayload {
   settings: Settings;
   streak?: Streak;
   stats?: Stats;
+  journal?: JournalEntry[];
 }
 
 interface LibraryValue {
@@ -170,6 +204,10 @@ interface LibraryValue {
   settings: Settings;
   streak: Streak;
   stats: Stats;
+  journal: JournalEntry[];
+  addJournal: (draft: Omit<JournalEntry, "id" | "date">) => void;
+  updateJournal: (id: string, patch: Partial<Pick<JournalEntry, "title" | "body" | "mood">>) => void;
+  deleteJournal: (id: string) => void;
   /** true when the app was updated since the user last saw the release notes */
   showWhatsNew: boolean;
   dismissWhatsNew: () => void;
@@ -216,6 +254,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [streak, setStreak] = useState<Streak>(EMPTY_STREAK);
   const [stats, setStats] = useState<Stats>(DEFAULT_STATS);
+  const [journal, setJournal] = useState<JournalEntry[]>(DEFAULT_JOURNAL);
   const [showWhatsNew, setShowWhatsNew] = useState(false);
 
   useEffect(() => {
@@ -224,6 +263,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     setRecentSearches(readArray(KEYS.searches));
     setSettings(read<Settings>(KEYS.settings, DEFAULT_SETTINGS));
     setStats(read<Stats>(KEYS.stats, DEFAULT_STATS));
+    setJournal(readJournal());
 
     // one streak transition per app open
     const nextStreak = advanceStreak(read<Streak>(KEYS.streak, EMPTY_STREAK), todayKey());
@@ -310,6 +350,38 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(KEYS.searches, "[]");
   }, []);
 
+  const addJournal = useCallback((draft: Omit<JournalEntry, "id" | "date">) => {
+    const entry: JournalEntry = {
+      id: `j${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`,
+      date: new Date().toISOString().slice(0, 10),
+      ...draft,
+    };
+    setJournal((prev) => {
+      const next = [entry, ...prev];
+      localStorage.setItem(KEYS.journal, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  const updateJournal = useCallback(
+    (id: string, patch: Partial<Pick<JournalEntry, "title" | "body" | "mood">>) => {
+      setJournal((prev) => {
+        const next = prev.map((e) => (e.id === id ? { ...e, ...patch } : e));
+        localStorage.setItem(KEYS.journal, JSON.stringify(next));
+        return next;
+      });
+    },
+    [],
+  );
+
+  const deleteJournal = useCallback((id: string) => {
+    setJournal((prev) => {
+      const next = prev.filter((e) => e.id !== id);
+      localStorage.setItem(KEYS.journal, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const clearAllData = useCallback(() => {
     for (const key of Object.values(KEYS)) localStorage.removeItem(key);
     setFavorites([]);
@@ -318,6 +390,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     setStats(DEFAULT_STATS);
     setStreak(EMPTY_STREAK);
     setSettings(DEFAULT_SETTINGS);
+    setJournal(DEFAULT_JOURNAL);
   }, []);
 
   const updateSettings = useCallback((patch: Partial<Settings>) => {
@@ -335,8 +408,9 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       settings,
       streak,
       stats,
+      journal,
     }),
-    [favorites, recents, recentSearches, settings, streak, stats],
+    [favorites, recents, recentSearches, settings, streak, stats, journal],
   );
 
   const importBackup = useCallback((raw: string) => {
@@ -352,6 +426,12 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       const nextSettings = { ...DEFAULT_SETTINGS, ...(data.settings ?? {}) };
       const nextStats = { ...DEFAULT_STATS, ...(data.stats ?? {}) };
       const nextStreak = { ...EMPTY_STREAK, ...(data.streak ?? {}) };
+      const nextJournal = readJournal().length === 0 && Array.isArray(data.journal)
+        ? data.journal.filter(
+            (e): e is JournalEntry =>
+              typeof e?.id === "string" && typeof e?.date === "string" && MOODS.includes(e?.mood),
+          )
+        : readJournal();
 
       setFavorites(nextFav);
       setRecents(nextRec);
@@ -359,6 +439,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       setSettings(nextSettings);
       setStats(nextStats);
       setStreak(nextStreak);
+      if (Array.isArray(data.journal)) {
+        setJournal(nextJournal);
+        localStorage.setItem(KEYS.journal, JSON.stringify(nextJournal));
+      }
       localStorage.setItem(KEYS.favorites, JSON.stringify(nextFav));
       localStorage.setItem(KEYS.recents, JSON.stringify(nextRec));
       localStorage.setItem(KEYS.searches, JSON.stringify(nextSearch));
@@ -384,6 +468,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       settings,
       streak,
       stats,
+      journal,
+      addJournal,
+      updateJournal,
+      deleteJournal,
       showWhatsNew,
       dismissWhatsNew,
       openWhatsNew,
@@ -407,10 +495,14 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       settings,
       streak,
       stats,
+      journal,
       showWhatsNew,
       dismissWhatsNew,
       openWhatsNew,
       toggleFavorite,
+      addJournal,
+      updateJournal,
+      deleteJournal,
       recordUse,
       recordSearch,
       recordCopy,

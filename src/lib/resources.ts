@@ -11,11 +11,15 @@
  */
 
 import { EXTRA_RESOURCES } from "./resources-extra";
+import { API_RESOURCES } from "./resources-catalog/apis";
+import { COURSE_EXTRA } from "./resources-catalog/courses";
+import { YOUTUBE_EXTRA } from "./resources-catalog/youtube";
 
 export type ResourceSection =
   | "ai"
   | "free-ai"
   | "free-tools"
+  | "free-apis"
   | "github"
   | "learn"
   | "resources"
@@ -46,7 +50,8 @@ export type ResourceType =
   | "Tutorial"
   | "Trick"
   | "Subreddit"
-  | "Wiki";
+  | "Wiki"
+  | "API";
 
 export type Audience =
   | "Everyone"
@@ -166,6 +171,26 @@ export const SECTIONS: SectionDef[] = [
     blurb: "Assistants, answer engines and open models you can use for nothing.",
     icon: "Bot",
     categories: ["Free AI Chat", "AI Search", "Open Models", "AI Comparison", "AI Coding"],
+  },
+
+  {
+    id: "free-apis",
+    label: "Free APIs",
+    blurb: "Keyless and free-tier public APIs you can call from any project today.",
+    icon: "Plug",
+    categories: [
+      "Weather & Climate",
+      "Finance",
+      "AI & Data",
+      "News",
+      "Geolocation",
+      "Space",
+      "Entertainment",
+      "Food & Recipes",
+      "Government & India",
+      "Testing",
+      "Utilities",
+    ],
   },
 
   {
@@ -1494,7 +1519,13 @@ const BASE_RESOURCES: Resource[] = [
   }),
 ];
 
-export const RESOURCES: Resource[] = [...BASE_RESOURCES, ...EXTRA_RESOURCES];
+export const RESOURCES: Resource[] = [
+  ...BASE_RESOURCES,
+  ...EXTRA_RESOURCES,
+  ...API_RESOURCES,
+  ...COURSE_EXTRA,
+  ...YOUTUBE_EXTRA,
+];
 
 // ------------------------------------------------------------- selectors
 

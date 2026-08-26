@@ -99,7 +99,8 @@ function SectionPage() {
   const { cat = "all", price = "all" } = Route.useSearch();
   const navigate = useNavigate({ from: "/discover/$section" });
 
-  const set = (patch: Search) => void navigate({ search: (p) => ({ ...p, ...patch }) });
+  const set = (patch: Search) =>
+    void navigate({ search: (p: Search) => ({ ...p, ...patch }) });
 
   const all = resourcesBySection(def.id as ResourceSection);
   const cats = sectionCategories(def.id as ResourceSection);

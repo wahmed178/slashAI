@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronRight, Radar, Repeat2, Sparkles } from "lucide-react";
+import { ChevronRight, Lightbulb, Radar, Repeat2, Sparkles } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { ResourceGrid } from "@/components/library/ResourceCard";
@@ -77,6 +77,30 @@ function DiscoverIndex() {
       </div>
 
       <div className="mt-5 grid gap-2.5 sm:grid-cols-3">
+        <Link
+          to="/generators"
+          className="panel flex min-h-14 items-center gap-2.5 rounded-xl px-3.5 text-sm font-medium text-foreground transition-colors hover:border-primary/50"
+        >
+          <Sparkles className="size-4 text-primary" aria-hidden /> Founder generators — 10 AI business tools
+        </Link>
+        <Link
+          to="/roadmaps"
+          className="panel flex min-h-14 items-center gap-2.5 rounded-xl px-3.5 text-sm font-medium text-foreground transition-colors hover:border-primary/50"
+        >
+          <Radar className="size-4 text-primary" aria-hidden /> Founder roadmaps — step-by-step journeys
+        </Link>
+        <Link
+          to="/glossary"
+          className="panel flex min-h-14 items-center gap-2.5 rounded-xl px-3.5 text-sm font-medium text-foreground transition-colors hover:border-primary/50"
+        >
+          <Repeat2 className="size-4 text-primary" aria-hidden /> AI glossary — every term, explained simply
+        </Link>
+        <Link
+          to="/journal"
+          className="panel flex min-h-14 items-center gap-2.5 rounded-xl px-3.5 text-sm font-medium text-foreground transition-colors hover:border-primary/50"
+        >
+          <Lightbulb className="size-4 text-primary" aria-hidden /> Build journal & achievements
+        </Link>
         <Link
           to="/radar"
           className="panel flex items-center gap-3 rounded-xl p-4 transition-colors hover:border-primary/50"

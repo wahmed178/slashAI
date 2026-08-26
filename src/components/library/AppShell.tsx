@@ -30,6 +30,10 @@ import {
   Radio,
   Wand2,
   Film,
+  Rocket,
+  BookOpen,
+  Route as RouteIcon,
+  NotebookPen,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -71,6 +75,11 @@ const DISCOVER_CHILDREN = [
 const SECONDARY = [
   { to: "/explore", label: "Commands", icon: Terminal },
   { to: "/assistant", label: "Assistant", icon: Bot },
+  { to: "/generators", label: "Founder tools", icon: Rocket },
+  { to: "/roadmaps", label: "Founder roadmaps", icon: RouteIcon },
+  { to: "/journal", label: "Build journal", icon: NotebookPen },
+  { to: "/tools", label: "AI tools directory", icon: Wrench },
+  { to: "/glossary", label: "AI Glossary", icon: BookOpen },
   { to: "/find", label: "Advanced search", icon: Wand2 },
   { to: "/live", label: "Live", icon: Radio },
   { to: "/youtube", label: "YouTube & Music", icon: Youtube },

@@ -103,7 +103,7 @@ function SearchPage() {
   const page = search.page ?? 1;
 
   const set = (patch: Partial<SearchParams>) =>
-    void navigate({ search: (prev) => ({ ...prev, page: 1, ...patch }) });
+    void navigate({ search: (prev: SearchParams) => ({ ...prev, page: 1, ...patch }) });
 
   const results = useMemo(() => {
     const state: FilterState = {
@@ -232,7 +232,7 @@ function SearchPage() {
             variant="outline"
             size="sm"
             disabled={current <= 1}
-            onClick={() => void navigate({ search: (p) => ({ ...p, page: current - 1 }) })}
+            onClick={() => void navigate({ search: (p: SearchParams) => ({ ...p, page: current - 1 }) })}
           >
             Previous
           </Button>
@@ -243,7 +243,7 @@ function SearchPage() {
             variant="outline"
             size="sm"
             disabled={current >= pages}
-            onClick={() => void navigate({ search: (p) => ({ ...p, page: current + 1 }) })}
+            onClick={() => void navigate({ search: (p: SearchParams) => ({ ...p, page: current + 1 }) })}
           >
             Next
           </Button>

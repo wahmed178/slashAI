@@ -15,12 +15,15 @@ import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
+import { Route as GlossaryRouteImport } from './routes/glossary'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as MeRouteImport } from './routes/me'
 import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as PlayRouteImport } from './routes/play'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RecentRouteImport } from './routes/recent'
+import { Route as RoadmapsRouteImport } from './routes/roadmaps'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ToolsRouteImport } from './routes/tools'
@@ -36,6 +39,8 @@ import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
 import { Route as DiscoverIndexRouteImport } from './routes/discover.index'
 import { Route as DiscoverSectionRouteImport } from './routes/discover.$section'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
+import { Route as GeneratorsIndexRouteImport } from './routes/generators.index'
+import { Route as GeneratorsIdRouteImport } from './routes/generators.$id'
 import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
@@ -71,6 +76,16 @@ const FindRoute = FindRouteImport.update({
   path: '/find',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GlossaryRoute = GlossaryRouteImport.update({
+  id: '/glossary',
+  path: '/glossary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LiveRoute = LiveRouteImport.update({
   id: '/live',
   path: '/live',
@@ -99,6 +114,11 @@ const RadarRoute = RadarRouteImport.update({
 const RecentRoute = RecentRouteImport.update({
   id: '/recent',
   path: '/recent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapsRoute = RoadmapsRouteImport.update({
+  id: '/roadmaps',
+  path: '/roadmaps',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchRoute = SearchRouteImport.update({
@@ -176,6 +196,16 @@ const ExploreIndexRoute = ExploreIndexRouteImport.update({
   path: '/explore/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GeneratorsIndexRoute = GeneratorsIndexRouteImport.update({
+  id: '/generators/',
+  path: '/generators/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GeneratorsIdRoute = GeneratorsIdRouteImport.update({
+  id: '/generators/$id',
+  path: '/generators/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HubAudienceRoute = HubAudienceRouteImport.update({
   id: '/hub/$audience',
   path: '/hub/$audience',
@@ -205,12 +235,15 @@ export interface FileRoutesByFullPath {
   '/assistant': typeof AssistantRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
+  '/glossary': typeof GlossaryRoute
+  '/journal': typeof JournalRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
+  '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
@@ -222,12 +255,14 @@ export interface FileRoutesByFullPath {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/generators/$id': typeof GeneratorsIdRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
+  '/generators/': typeof GeneratorsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
@@ -238,12 +273,15 @@ export interface FileRoutesByTo {
   '/assistant': typeof AssistantRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
+  '/glossary': typeof GlossaryRoute
+  '/journal': typeof JournalRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
+  '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
@@ -255,12 +293,14 @@ export interface FileRoutesByTo {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/generators/$id': typeof GeneratorsIdRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
+  '/generators': typeof GeneratorsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
 }
@@ -272,12 +312,15 @@ export interface FileRoutesById {
   '/assistant': typeof AssistantRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
+  '/glossary': typeof GlossaryRoute
+  '/journal': typeof JournalRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
+  '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
@@ -289,12 +332,14 @@ export interface FileRoutesById {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/generators/$id': typeof GeneratorsIdRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/r/$id': typeof RIdRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
+  '/generators/': typeof GeneratorsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
@@ -307,12 +352,15 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/favorites'
     | '/find'
+    | '/glossary'
+    | '/journal'
     | '/live'
     | '/me'
     | '/movies'
     | '/play'
     | '/radar'
     | '/recent'
+    | '/roadmaps'
     | '/search'
     | '/settings'
     | '/tools'
@@ -324,12 +372,14 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/generators/$id'
     | '/hub/$audience'
     | '/r/$id'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
+    | '/generators/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesByTo: FileRoutesByTo
@@ -340,12 +390,15 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/favorites'
     | '/find'
+    | '/glossary'
+    | '/journal'
     | '/live'
     | '/me'
     | '/movies'
     | '/play'
     | '/radar'
     | '/recent'
+    | '/roadmaps'
     | '/search'
     | '/settings'
     | '/tools'
@@ -357,12 +410,14 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/generators/$id'
     | '/hub/$audience'
     | '/r/$id'
     | '/build-ideas'
     | '/collections'
     | '/discover'
     | '/explore'
+    | '/generators'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
   id:
@@ -373,12 +428,15 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/favorites'
     | '/find'
+    | '/glossary'
+    | '/journal'
     | '/live'
     | '/me'
     | '/movies'
     | '/play'
     | '/radar'
     | '/recent'
+    | '/roadmaps'
     | '/search'
     | '/settings'
     | '/tools'
@@ -390,12 +448,14 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/generators/$id'
     | '/hub/$audience'
     | '/r/$id'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
+    | '/generators/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesById: FileRoutesById
@@ -407,12 +467,15 @@ export interface RootRouteChildren {
   AssistantRoute: typeof AssistantRoute
   FavoritesRoute: typeof FavoritesRoute
   FindRoute: typeof FindRoute
+  GlossaryRoute: typeof GlossaryRoute
+  JournalRoute: typeof JournalRoute
   LiveRoute: typeof LiveRoute
   MeRoute: typeof MeRoute
   MoviesRoute: typeof MoviesRoute
   PlayRoute: typeof PlayRoute
   RadarRoute: typeof RadarRoute
   RecentRoute: typeof RecentRoute
+  RoadmapsRoute: typeof RoadmapsRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   ToolsRoute: typeof ToolsRoute
@@ -424,12 +487,14 @@ export interface RootRouteChildren {
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   DiscoverSectionRoute: typeof DiscoverSectionRoute
+  GeneratorsIdRoute: typeof GeneratorsIdRoute
   HubAudienceRoute: typeof HubAudienceRoute
   RIdRoute: typeof RIdRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
+  GeneratorsIndexRoute: typeof GeneratorsIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
 }
@@ -478,6 +543,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FindRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/glossary': {
+      id: '/glossary'
+      path: '/glossary'
+      fullPath: '/glossary'
+      preLoaderRoute: typeof GlossaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/live': {
       id: '/live'
       path: '/live'
@@ -518,6 +597,13 @@ declare module '@tanstack/react-router' {
       path: '/recent'
       fullPath: '/recent'
       preLoaderRoute: typeof RecentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmaps': {
+      id: '/roadmaps'
+      path: '/roadmaps'
+      fullPath: '/roadmaps'
+      preLoaderRoute: typeof RoadmapsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search': {
@@ -625,6 +711,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/generators/': {
+      id: '/generators/'
+      path: '/generators'
+      fullPath: '/generators/'
+      preLoaderRoute: typeof GeneratorsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/generators/$id': {
+      id: '/generators/$id'
+      path: '/generators/$id'
+      fullPath: '/generators/$id'
+      preLoaderRoute: typeof GeneratorsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hub/$audience': {
       id: '/hub/$audience'
       path: '/hub/$audience'
@@ -663,12 +763,15 @@ const rootRouteChildren: RootRouteChildren = {
   AssistantRoute: AssistantRoute,
   FavoritesRoute: FavoritesRoute,
   FindRoute: FindRoute,
+  GlossaryRoute: GlossaryRoute,
+  JournalRoute: JournalRoute,
   LiveRoute: LiveRoute,
   MeRoute: MeRoute,
   MoviesRoute: MoviesRoute,
   PlayRoute: PlayRoute,
   RadarRoute: RadarRoute,
   RecentRoute: RecentRoute,
+  RoadmapsRoute: RoadmapsRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   ToolsRoute: ToolsRoute,
@@ -680,12 +783,14 @@ const rootRouteChildren: RootRouteChildren = {
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   DiscoverSectionRoute: DiscoverSectionRoute,
+  GeneratorsIdRoute: GeneratorsIdRoute,
   HubAudienceRoute: HubAudienceRoute,
   RIdRoute: RIdRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
+  GeneratorsIndexRoute: GeneratorsIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
 }

@@ -156,6 +156,393 @@ export const getWeather = createServerFn({ method: "GET" })
     }
   });
 
+// ------------------------------------------------------------------ markets
+
+export interface IndexQuote {
+  symbol: string;
+  name: string;
+  value: number;
+  previousClose: number;
+  changePct: number;
+}
+
+export interface MarketMover {
+  symbol: string;
+  name: string;
+  price: number;
+  changePct: number;
+}
+
+export interface StocksData {
+  indices: IndexQuote[];
+  movers: MarketMover[];
+  fetchedAt: string;
+}
+
+const INDEX_SYMBOLS: [string, string][] = [
+  ["^NSEI", "NIFTY 50"],
+  ["^BSESN", "SENSEX"],
+];
+
+/** Liquid large caps used to derive real gainers/losers without Yahoo's authed screener. */
+const WATCHLIST: [string, string][] = [
+  ["RELIANCE.NS", "Reliance"],
+  ["TCS.NS", "TCS"],
+  ["HDFCBANK.NS", "HDFC Bank"],
+  ["ICICIBANK.NS", "ICICI Bank"],
+  ["INFY.NS", "Infosys"],
+  ["SBIN.NS", "SBI"],
+  ["BHARTIARTL.NS", "Bharti Airtel"],
+  ["LT.NS", "Larsen & Toubro"],
+  ["ITC.NS", "ITC"],
+  ["AXISBANK.NS", "Axis Bank"],
+];
+
+interface YahooChart {
+  chart?: {
+    result?: {
+      meta?: { symbol?: string; regularMarketPrice?: number; chartPreviousClose?: number } | null;
+    }[] | null;
+  } | null;
+}
+
+async function yahooQuote(symbol: string) {
+  const res = await fetch(
+    `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=1d&interval=1d`,
+    { headers: { accept: "application/json", "user-agent": "Mozilla/5.0 SlashAI" } },
+  );
+  if (!res.ok) return null;
+  const json = (await res.json()) as YahooChart;
+  const meta = json.chart?.result?.[0]?.meta;
+  if (!meta || typeof meta.regularMarketPrice !== "number") return null;
+  return {
+    symbol,
+    price: meta.regularMarketPrice,
+    prev: meta.chartPreviousClose ?? meta.regularMarketPrice,
+  };
+}
+
+/** NIFTY 50 + SENSEX levels and real large-cap movers from Yahoo Finance (keyless). */
+export const getStocks = createServerFn({ method: "GET" }).handler(async (): Promise<StocksData | null> => {
+  try {
+    const symbols = [...INDEX_SYMBOLS, ...WATCHLIST].map(([s]) => s);
+    const quotes = await Promise.all(symbols.map((s) => yahooQuote(s)));
+    const bySymbol = new Map(quotes.filter((q): q is NonNullable<typeof q> => q !== null).map((q) => [q.symbol, q]));
+
+    const indices: IndexQuote[] = [];
+    for (const [symbol, name] of INDEX_SYMBOLS) {
+      const q = bySymbol.get(symbol);
+      if (!q || q.prev === 0) continue;
+      indices.push({
+        symbol,
+        name,
+        value: q.price,
+        previousClose: q.prev,
+        changePct: ((q.price - q.prev) / q.prev) * 100,
+      });
+    }
+
+    const movers: MarketMover[] = WATCHLIST.filter(([s]) => bySymbol.has(s))
+      .map(([s, name]) => {
+        const q = bySymbol.get(s)!;
+        return { symbol: s, name, price: q.price, changePct: q.prev ? ((q.price - q.prev) / q.prev) * 100 : 0 };
+      })
+      .sort((a, b) => b.changePct - a.changePct);
+
+    if (indices.length === 0 && movers.length === 0) return null;
+    return { indices, movers, fetchedAt: new Date().toISOString() };
+  } catch {
+    return null;
+  }
+});
+
+export interface CryptoCoin {
+  id: string;
+  inr: number;
+  usd: number;
+  change24h: number;
+}
+
+/** BTC/ETH/SOL/BNB prices in ₹ and $ from CoinGecko (free, no key). */
+export const getCrypto = createServerFn({ method: "GET" }).handler(async (): Promise<CryptoCoin[]> => {
+  try {
+    const res = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,binancecoin&vs_currencies=inr,usd&include_24hr_change=true",
+    );
+    if (!res.ok) return [];
+    const json = (await res.json()) as Record<
+      string,
+      { inr?: number; usd?: number; inr_24h_change?: number; usd_24h_change?: number }
+    >;
+    return Object.entries(json)
+      .filter(([, v]) => typeof v.inr === "number")
+      .map(([id, v]) => ({
+        id,
+        inr: v.inr as number,
+        usd: v.usd ?? 0,
+        change24h: v.inr_24h_change ?? v.usd_24h_change ?? 0,
+      }));
+  } catch {
+    return [];
+  }
+});
+
+export interface ForexRate {
+  pair: string;
+  flag: string;
+  rate: number;
+}
+
+/** USD/EUR/GBP/AED/SAR → INR from open.er-api.com (completely free, no key). */
+export const getForex = createServerFn({ method: "GET" }).handler(async (): Promise<ForexRate[]> => {
+  try {
+    const res = await fetch("https://open.er-api.com/v6/latest/USD");
+    if (!res.ok) return [];
+    const json = (await res.json()) as { rates?: Record<string, number> };
+    const rates = json.rates;
+    if (!rates) return [];
+    const inr = rates["INR"];
+    if (!inr) return [];
+    const cross = (code: string) => {
+      const v = rates[code];
+      return v ? inr / v : NaN;
+    };
+    const rows: [string, string, number][] = [
+      ["USD → INR", "🇺🇸", inr],
+      ["EUR → INR", "🇪🇺", cross("EUR")],
+      ["GBP → INR", "🇬🇧", cross("GBP")],
+      ["AED → INR", "🇦🇪", cross("AED")],
+      ["SAR → INR", "🇸🇦", cross("SAR")],
+    ];
+    return rows
+      .filter(([, , rate]) => Number.isFinite(rate))
+      .map(([pair, flag, rate]) => ({ pair, flag, rate }));
+  } catch {
+    return [];
+  }
+});
+
+// --------------------------------------------------------------------- news
+
+export interface IndiaNewsItem {
+  id: string;
+  title: string;
+  url: string;
+  source: string;
+  published: string;
+  thumbnail: string | null;
+}
+
+const INDIA_FEEDS: Record<string, { url: string; label: string }> = {
+  india: { url: "https://feeds.feedburner.com/ndtvnews-india-news", label: "NDTV" },
+  business: { url: "https://feeds.feedburner.com/ndtvprofit-latest", label: "NDTV Profit" },
+  tech: { url: "https://feeds.feedburner.com/gadgets360-latest", label: "Gadgets360" },
+  sports: { url: "https://feeds.feedburner.com/ndtvnews-sports-news", label: "NDTV Sports" },
+};
+
+/** Top India headlines via rss2json over public NDTV/Gadgets360 feeds (no key). */
+export const getIndiaNews = createServerFn({ method: "GET" })
+  .inputValidator((data) => z.object({ category: z.enum(["india", "business", "tech", "sports"]) }).parse(data))
+  .handler(async ({ data }): Promise<IndiaNewsItem[]> => {
+    try {
+      const feed = INDIA_FEEDS[data.category] ?? INDIA_FEEDS["india"]!;
+      const res = await fetch(
+        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=12`,
+      );
+      if (!res.ok) return [];
+      const json = (await res.json()) as {
+        status?: string;
+        items?: { title: string; link: string; pubDate: string; guid?: string; thumbnail?: string; enclosure?: { link?: string }; description?: string }[];
+      };
+      if (json.status !== "ok") return [];
+      return (json.items ?? []).slice(0, 8).map((item, i) => ({
+        id: item.guid ?? `${data.category}-${i}-${item.link}`,
+        title: item.title,
+        url: item.link,
+        source: feed.label,
+        published: item.pubDate ?? "",
+        thumbnail:
+          item.thumbnail ??
+          item.enclosure?.link ??
+          // fall back to the first image inside the HTML description
+          (item.description?.match(/<img[^>]+src="([^"]+)"/)?.[1] ?? null),
+      }));
+    } catch {
+      return [];
+    }
+  });
+
+// -------------------------------------------------------------- prayer times
+
+export interface PrayerTimesData {
+  city: string;
+  timings: { name: string; time: string }[];
+  hijri: string;
+  gregorian: string;
+  tomorrowFajr: string | null;
+}
+
+const PRAYER_ORDER = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] as const;
+
+/** Prayer times + Hijri date from Aladhan (completely free, no key). */
+export const getPrayerTimes = createServerFn({ method: "GET" })
+  .inputValidator((data) =>
+    z.object({ city: z.string().trim().min(1).max(60), country: z.string().trim().min(1).max(60) }).parse(data),
+  )
+  .handler(async ({ data }): Promise<PrayerTimesData | null> => {
+    try {
+      const res = await fetch(
+        `https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(data.city)}&country=${encodeURIComponent(data.country)}&method=1`,
+      );
+      if (!res.ok) return null;
+      const json = (await res.json()) as {
+        data?: {
+          timings?: Record<string, string>;
+          date?: {
+            hijri?: { day?: string; month?: { en?: string }; year?: string };
+            gregorian?: { date?: string };
+          };
+        };
+      };
+      const d = json.data;
+      if (!d?.timings) return null;
+      const clean = (t: string | undefined) => (t ?? "").split(" ")[0] ?? "";
+      const timings = PRAYER_ORDER.map((name) => ({ name, time: clean(d.timings?.[name]) })).filter(
+        (x) => /^\d{1,2}:\d{2}$/.test(x.time),
+      );
+      if (timings.length < 5) return null;
+      const h = d.date?.hijri;
+      return {
+        city: data.city,
+        timings,
+        hijri: h?.day && h.month?.en && h.year ? `${h.day} ${h.month.en} ${h.year} AH` : "",
+        gregorian: d.date?.gregorian?.date ?? "",
+        tomorrowFajr: null,
+      };
+    } catch {
+      return null;
+    }
+  });
+
+// ------------------------------------------------------------ air quality
+
+export interface AirQualityData {
+  place: string;
+  aqi: number | null;
+  pm25: number | null;
+  pm10: number | null;
+}
+
+function aqiCategory(aqi: number): string {
+  if (aqi <= 50) return "Good";
+  if (aqi <= 100) return "Moderate";
+  if (aqi <= 150) return "Unhealthy (sensitive)";
+  if (aqi <= 200) return "Unhealthy";
+  if (aqi <= 300) return "Very Unhealthy";
+  return "Hazardous";
+}
+
+export interface AirQualityResult extends AirQualityData {
+  category: string;
+}
+
+/** US AQI + particulates from Open-Meteo's air-quality API (same provider as weather). */
+export const getAirQuality = createServerFn({ method: "GET" })
+  .inputValidator((data) => z.object({ place: z.string().trim().min(1).max(60) }).parse(data))
+  .handler(async ({ data }): Promise<AirQualityResult | null> => {
+    try {
+      const geoRes = await fetch(
+        `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(data.place)}&count=1&language=en&format=json`,
+      );
+      const geo = (await geoRes.json()) as {
+        results?: { latitude: number; longitude: number; name: string; country?: string }[];
+      };
+      const hit = geo.results?.[0];
+      if (!hit) return null;
+
+      const res = await fetch(
+        `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${hit.latitude}&longitude=${hit.longitude}&current=pm10,pm2_5,us_aqi&timezone=auto`,
+      );
+      if (!res.ok) return null;
+      const json = (await res.json()) as {
+        current?: { pm10?: number; pm2_5?: number; us_aqi?: number };
+      };
+      const cur = json.current;
+      if (!cur) return null;
+      const aqi = typeof cur.us_aqi === "number" ? Math.round(cur.us_aqi) : null;
+      return {
+        place: hit.country ? `${hit.name}, ${hit.country}` : hit.name,
+        aqi,
+        category: aqi === null ? "Unknown" : aqiCategory(aqi),
+        pm25: cur.pm2_5 ?? null,
+        pm10: cur.pm10 ?? null,
+      };
+    } catch {
+      return null;
+    }
+  });
+
+// ------------------------------------------------------------------- space
+
+export interface SpaceData {
+  apod: { title: string; explanation: string; imageUrl: string; date: string } | null;
+  iss: { latitude: number; longitude: number; altitudeKm: number; velocityKph: number } | null;
+}
+
+/** NASA Astronomy Picture of the Day + live ISS position (both free). */
+export const getSpace = createServerFn({ method: "GET" }).handler(async (): Promise<SpaceData> => {
+  const out: SpaceData = { apod: null, iss: null };
+  const results = await Promise.allSettled([
+    fetch("https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&thumbs=true"),
+    fetch("https://api.wheretheiss.at/v1/satellites/25544"),
+  ]);
+
+  const [apodRes, issRes] = results;
+  if (apodRes.status === "fulfilled" && apodRes.value.ok) {
+    try {
+      const j = (await apodRes.value.json()) as {
+        title?: string;
+        explanation?: string;
+        url?: string;
+        thumbnail_url?: string;
+        media_type?: string;
+        date?: string;
+      };
+      if (j.title && j.explanation) {
+        out.apod = {
+          title: j.title,
+          explanation: j.explanation,
+          imageUrl: (j.media_type === "image" ? j.url : j.thumbnail_url) ?? "",
+          date: j.date ?? "",
+        };
+      }
+    } catch {
+      /* leave null */
+    }
+  }
+  if (issRes.status === "fulfilled" && issRes.value.ok) {
+    try {
+      const j = (await issRes.value.json()) as {
+        latitude?: number;
+        longitude?: number;
+        altitude?: number;
+        velocity?: number;
+      };
+      if (typeof j.latitude === "number" && typeof j.longitude === "number") {
+        out.iss = {
+          latitude: j.latitude,
+          longitude: j.longitude,
+          altitudeKm: Math.round(j.altitude ?? 0),
+          velocityKph: Math.round(j.velocity ?? 0),
+        };
+      }
+    } catch {
+      /* leave null */
+    }
+  }
+  return out;
+});
+
 /** Fixtures and scores for a sport on a given day from TheSportsDB's free tier. */
 export const getMatches = createServerFn({ method: "GET" })
   .inputValidator((data) =>

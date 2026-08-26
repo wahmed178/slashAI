@@ -28,6 +28,49 @@ export function Markdown({ source }: { source: string }) {
   const blocks: React.ReactNode[] = [];
   let list: string[] = [];
   let code: string[] | null = null;
+  let table: string[][] | null = null;
+
+  const flushTable = () => {
+    if (!table || !table.length) {
+      table = null;
+      return;
+    }
+    const [header, ...rows] = table;
+    blocks.push(
+      <div key={`tbl-${blocks.length}`} className="overflow-x-auto">
+        <table className="w-full border-collapse text-left text-sm">
+          <thead>
+            <tr>
+              {(header ?? []).map((cell, i) => (
+                <th key={i} className="border-b border-border px-2 py-1.5 font-semibold text-foreground">
+                  {inline(cell)}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, r) => (
+              <tr key={r}>
+                {row.map((cell, i) => (
+                  <td key={i} className="border-b border-border/50 px-2 py-1.5 align-top text-muted-foreground">
+                    {inline(cell)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>,
+    );
+    table = null;
+  };
+
+  const splitRow = (line: string) =>
+    line
+      .trim()
+      .replace(/^\||\|$/g, "")
+      .split("|")
+      .map((c) => c.trim());
 
   const flushList = () => {
     if (!list.length) return;
@@ -93,6 +136,17 @@ export function Markdown({ source }: { source: string }) {
       continue;
     }
 
+    if (/^\|.*\|/.test(line.trim())) {
+      flushList();
+      const cells = splitRow(line);
+      // skip the |---|---| separator row
+      if (cells.every((c) => /^:?-{2,}:?$/.test(c))) continue;
+      table = table ?? [];
+      table.push(cells);
+      continue;
+    }
+    flushTable();
+
     if (!line.trim()) {
       flushList();
       continue;
@@ -106,6 +160,7 @@ export function Markdown({ source }: { source: string }) {
     );
   }
   flushList();
+  flushTable();
   if (code?.length)
     blocks.push(
       <pre
