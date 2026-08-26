@@ -20,6 +20,8 @@ import {
   CATEGORY_EMOJI,
   type PromptCategory,
 } from "@/lib/viral-prompts";
+import { SOUTH_ASIA_RESOURCES } from "@/lib/south-asia-resources";
+import { NEW_APIS } from "@/lib/new-apis";
 import {
   SECTIONS,
   resourcesBySection,
@@ -78,6 +80,7 @@ const FILTER_TABS = [
   "🎓 Students",
   "💼 Founders",
   "🎨 Designers",
+  "🌍 South Asia",
 ] as const;
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -359,6 +362,32 @@ function DiscoverPage() {
         });
       });
     }
+
+    // South Asia resources → Type B
+    SOUTH_ASIA_RESOURCES.forEach((r) => {
+      cards.push({
+        id: `southasia-${r.id}`,
+        type: "resource",
+        title: r.flag + " " + r.name,
+        description: r.description,
+        category: "South Asia",
+        url: r.url,
+        pricing: r.freeTier,
+      });
+    });
+
+    // New free APIs → Type B
+    NEW_APIS.forEach((api) => {
+      cards.push({
+        id: `api-${api.id}`,
+        type: "resource",
+        title: "📡 " + api.name,
+        description: api.description,
+        category: "Free APIs",
+        url: api.url,
+        pricing: api.auth,
+      });
+    });
 
     return cards;
   }, []);
