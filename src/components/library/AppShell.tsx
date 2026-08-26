@@ -34,6 +34,7 @@ import {
   BookOpen,
   Route as RouteIcon,
   NotebookPen,
+  Flame,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -52,9 +53,9 @@ import { OfflineBadge } from "./OfflineBadge";
 /** mobile bottom bar — four essentials only */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
+  { to: "/trending", label: "Trending", icon: Flame, exact: false },
   { to: "/discover", label: "Discover", icon: Compass, exact: false },
   { to: "/favorites", label: "Saved", icon: Heart, exact: false },
-  { to: "/search", label: "Search", icon: SearchIcon, exact: false },
 ] as const;
 
 /** nested under Discover in the sidebar and the drawer */
@@ -157,7 +158,7 @@ function NavList({
 
   return (
     <nav className="space-y-1" aria-label="Primary">
-      {PRIMARY.filter((item) => item.to !== "/search").map((item) => (
+      {PRIMARY.map((item) => (
         <div key={item.to}>
           <div className="flex items-center gap-1">
             <Link
