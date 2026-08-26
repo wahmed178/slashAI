@@ -50,12 +50,13 @@ import { cn } from "@/lib/utils";
 import { SearchBox } from "./SearchBox";
 import { OfflineBadge } from "./OfflineBadge";
 
-/** mobile bottom bar — four essentials only */
+/** mobile bottom bar — five essentials */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/trending", label: "Trending", icon: Flame, exact: false },
+  { to: "/explore", label: "Commands", icon: Terminal, exact: false },
   { to: "/discover", label: "Discover", icon: Compass, exact: false },
-  { to: "/favorites", label: "Saved", icon: Heart, exact: false },
+  { to: "/trending", label: "Tools", icon: Sparkles, exact: false },
+  { to: "/hub", label: "Hubs", icon: Globe, exact: false },
 ] as const;
 
 /** nested under Discover in the sidebar and the drawer */
@@ -92,6 +93,10 @@ const SECONDARY = [
   { to: "/me", label: "Me", icon: UserRound },
   { to: "/settings", label: "Settings", icon: SettingsIcon },
   { to: "/about", label: "About", icon: Info },
+  { to: "/trending", label: "Trending /commands", icon: Flame },
+  { to: "/changelog", label: "Changelog", icon: Info },
+  { to: "/glass", label: "✦ Glass", icon: Sparkles },
+  { to: "/hub", label: "Hubs", icon: Globe },
 ] as const;
 
 interface Props {
