@@ -6,13 +6,13 @@
 
 A searchable library of copy-ready slash commands for writing, research, coding, design, documents, data, productivity and more. Find a strong starting point, tune it to your task, and get back to the work.
 
-[![Status](https://img.shields.io/badge/status-live-2dd4bf)](https://slashai.lovable.app)
+[![Status](https://img.shields.io/badge/status-live-2dd4bf)](https://slashai-nu.vercel.app)
 [![Commands](https://img.shields.io/badge/commands-1%2C499-0ea5e9)](#-command-categories)
 [![PWA](https://img.shields.io/badge/PWA-offline--ready-8b5cf6)](#-pwa--offline)
 [![Android](https://img.shields.io/badge/Android-APK-3ddc84)](#-android)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](#-tech-stack)
 
-**[Live app](https://slashai.lovable.app)** · **[Android APK](https://github.com/wahmed178/slashAI/releases/latest/download/slash-command-vault.apk)** · **[GitHub](https://github.com/wahmed178/slashAI)**
+**[Live app](https://slashai-nu.vercel.app)** · **[Android APK](https://github.com/wahmed178/slashAI/releases/latest/download/slash-command-vault.apk)** · **[GitHub](https://github.com/wahmed178/slashAI)**
 
 </div>
 
@@ -356,6 +356,10 @@ No license file is currently present in this repository. Licensing information s
 
 <div align="center">
 
-Built with [Lovable](https://lovable.dev) · [Open in the Lovable editor](https://lovable.dev/projects/7a5be5ac-220c-4f10-9f55-0a591e7f0b40)
+Deployed on [Vercel](https://slashai-nu.vercel.app) — Vercel keeps the app live 24/7, Lovable sirf editor hai jo kab ruk sakta hai.
+
+> **Note:** Lovable kab band ho sakta hai, lekin Vercel ka deployment permanent hai — app hamesha online rahega.
+
+Built with Lovable · Hosted on Vercel
 
 </div>
