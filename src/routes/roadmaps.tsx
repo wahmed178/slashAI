@@ -4,7 +4,7 @@ import { ChevronDown, Route as RouteIcon, Timer, Users } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import {
-  ROADMAPS,
+  ALL_ROADMAPS as ROADMAPS,
   ROADMAP_TOTAL,
   type Roadmap,
 } from "@/lib/roadmaps";

@@ -63,7 +63,11 @@ export type Audience =
   | "Professionals"
   | "Job Seekers"
   | "Entrepreneurs"
-  | "Teachers";
+  | "Teachers"
+  | "Founders"
+  | "India"
+  | "Finance"
+  | "Health";
 
 export type Platform = "Web" | "Windows" | "macOS" | "Linux" | "Android" | "iOS" | "CLI";
 

@@ -5,9 +5,15 @@
  * so instead of pretending it is precise.
  */
 
+import { EXTRA_GLOSSARY } from "./glossary-extra";
+
 export const GLOSSARY_CATEGORIES = [
   "Foundations",
   "Models",
+  "SaaS & Startup",
+  "No-Code",
+  "Design & UI",
+  "Data & Analytics",
   "Training",
   "Prompting",
   "Agents",
@@ -180,7 +186,8 @@ export const GLOSSARY: GlossaryTerm[] = [
   { term: "BYOK", category: "Shipping", def: "'Bring Your Own Key' — users supply their own API keys so your costs stay near zero while they pay their provider directly." },
 ];
 
-export const GLOSSARY_TOTAL = GLOSSARY.length;
+export const ALL_GLOSSARY: GlossaryTerm[] = [...GLOSSARY, ...EXTRA_GLOSSARY];
+export const GLOSSARY_TOTAL = ALL_GLOSSARY.length;
 
 /** Alphabetical index helper: first letter → terms. */
 export function glossaryByLetter(): Map<string, GlossaryTerm[]> {

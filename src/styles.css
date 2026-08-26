@@ -630,3 +630,81 @@ mark {
 :root[data-motion="reduced"] .stagger-children > * {
   animation: none;
 }
+
+/* ──────────── search bar glow ──────────── */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.79 0.15 178 / 0%); }
+  50% { box-shadow: 0 0 24px 4px oklch(0.79 0.15 178 / 18%); }
+}
+.search-glow:focus-within {
+  animation: glow-pulse 2s ease-in-out infinite;
+  border-color: oklch(0.79 0.15 178 / 50%) !important;
+}
+
+/* ──────────── count-up animation ──────────── */
+@keyframes count-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.count-reveal {
+  animation: count-reveal 400ms ease-out both;
+}
+
+/* ──────────── bottom tab bar (mobile) ──────────── */
+.bottom-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 56px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  background: color-mix(in oklab, var(--background) 88%, transparent);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border-top: 1px solid var(--border);
+}
+@media (min-width: 768px) {
+  .bottom-tab-bar { display: none; }
+}
+.bottom-tab-bar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 12px;
+  font-size: 10px;
+  color: var(--muted-foreground);
+  transition: color 0.15s ease;
+}
+.bottom-tab-bar a.active,
+.bottom-tab-bar a[data-active="true"] {
+  color: var(--primary);
+}
+.bottom-tab-bar a svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ──────────── hero dot grid background ──────────── */
+.hero-dots {
+  background-image: radial-gradient(circle, oklch(1 0 0 / 6%) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ──────────── stats counter ──────────── */
+@keyframes counter-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: none; }
+}
+.stat-card {
+  animation: counter-in 350ms ease-out both;
+}
+.stat-card:nth-child(1) { animation-delay: 0ms; }
+.stat-card:nth-child(2) { animation-delay: 60ms; }
+.stat-card:nth-child(3) { animation-delay: 120ms; }
+.stat-card:nth-child(4) { animation-delay: 180ms; }
+.stat-card:nth-child(5) { animation-delay: 240ms; }

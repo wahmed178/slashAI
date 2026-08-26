@@ -4,6 +4,8 @@
  * Static data, opinionated by design.
  */
 
+import { EXTRA_ROADMAPS } from "./roadmaps-extra";
+
 export interface RoadmapStep {
   title: string;
   detail: string;
@@ -232,7 +234,8 @@ export const ROADMAPS: Roadmap[] = [
   },
 ];
 
-export const ROADMAP_TOTAL = ROADMAPS.length;
+export const ALL_ROADMAPS: Roadmap[] = [...ROADMAPS, ...EXTRA_ROADMAPS];
+export const ROADMAP_TOTAL = ALL_ROADMAPS.length;
 
 export function roadmapById(id: string): Roadmap | undefined {
   return ROADMAPS.find((r) => r.id === id);

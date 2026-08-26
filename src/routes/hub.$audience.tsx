@@ -45,6 +45,31 @@ const HUBS: Record<
     title: "Job Seeker Hub",
     blurb: "Resume building, salary research and interview preparation.",
   },
+  founders: {
+    audience: "Founders",
+    title: "Founders Hub",
+    blurb: "Everything to go from idea to first paying customer.",
+  },
+  india: {
+    audience: "India",
+    title: "India Hub",
+    blurb: "Free tools, courses and resources for Indian builders.",
+  },
+  finance: {
+    audience: "Finance",
+    title: "Finance Hub",
+    blurb: "Free tools for investors, traders and money-minded builders.",
+  },
+  designers: {
+    audience: "Designers",
+    title: "Designers Hub",
+    blurb: "Free design tools, assets and learning for UI/UX designers.",
+  },
+  health: {
+    audience: "Health",
+    title: "Health Hub",
+    blurb: "Evidence-based free tools for fitness, nutrition and wellbeing.",
+  },
 };
 
 export const Route = createFileRoute("/hub/$audience")({

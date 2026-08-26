@@ -5,7 +5,7 @@ import { BookOpen, Search } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import { EmptyState } from "@/components/library/CommandGrid";
 import {
-  GLOSSARY,
+  ALL_GLOSSARY as GLOSSARY,
   GLOSSARY_CATEGORIES,
   GLOSSARY_TOTAL,
   type GlossaryCategory,
