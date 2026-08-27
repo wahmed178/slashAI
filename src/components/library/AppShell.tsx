@@ -99,6 +99,7 @@ const SECONDARY = [
   { to: "/changelog", label: "Changelog", icon: Info },
   { to: "/glass", label: "✦ Glass", icon: Sparkles },
   { to: "/hub", label: "Hubs", icon: Globe },
+  { to: "/hub/islam", label: "Islam Hub", icon: Globe },
 ] as const;
 
 interface Props {

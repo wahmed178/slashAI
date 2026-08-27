@@ -22,6 +22,7 @@ const HUBS = [
   { audience: "finance", label: "Finance Hub", icon: TrendingUp, desc: "Investing, personal finance, and crypto tools", count: "20+", built: true },
   { audience: "designers", label: "Designers Hub", icon: Paintbrush, desc: "Free design tools, assets and learning", count: "15+", built: true },
   { audience: "health", label: "Health Hub", icon: Stethoscope, desc: "Fitness, nutrition and wellbeing tools", count: "10+", built: true },
+  { audience: "islam", label: "Islam Hub", icon: Globe, desc: "Quran, Hadith, prayer, learning and daily tools — all free", count: "53", built: true },
 ];
 
 function HubIndexPage() {

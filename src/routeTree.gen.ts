@@ -13,8 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as AssistantRouteImport } from './routes/assistant'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
+import { Route as GlassRouteImport } from './routes/glass'
 import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as LiveRouteImport } from './routes/live'
@@ -27,6 +29,7 @@ import { Route as RoadmapsRouteImport } from './routes/roadmaps'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as YoutubeRouteImport } from './routes/youtube'
 import { Route as BuildIdeasIndexRouteImport } from './routes/build-ideas.index'
@@ -38,10 +41,13 @@ import { Route as CollectionsIndexRouteImport } from './routes/collections.index
 import { Route as CollectionsIdRouteImport } from './routes/collections.$id'
 import { Route as DiscoverIndexRouteImport } from './routes/discover.index'
 import { Route as DiscoverSectionRouteImport } from './routes/discover.$section'
+import { Route as DiscoverReelsRouteImport } from './routes/discover.reels'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
 import { Route as GeneratorsIndexRouteImport } from './routes/generators.index'
 import { Route as GeneratorsIdRouteImport } from './routes/generators.$id'
+import { Route as HubIndexRouteImport } from './routes/hub.index'
 import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
+import { Route as HubIslamRouteImport } from './routes/hub.islam'
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -66,6 +72,11 @@ const AssistantRoute = AssistantRouteImport.update({
   path: '/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavoritesRoute = FavoritesRouteImport.update({
   id: '/favorites',
   path: '/favorites',
@@ -74,6 +85,11 @@ const FavoritesRoute = FavoritesRouteImport.update({
 const FindRoute = FindRouteImport.update({
   id: '/find',
   path: '/find',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlassRoute = GlassRouteImport.update({
+  id: '/glass',
+  path: '/glass',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GlossaryRoute = GlossaryRouteImport.update({
@@ -136,6 +152,11 @@ const ToolsRoute = ToolsRouteImport.update({
   path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrendingRoute = TrendingRouteImport.update({
+  id: '/trending',
+  path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WhatsNewRoute = WhatsNewRouteImport.update({
   id: '/whats-new',
   path: '/whats-new',
@@ -191,6 +212,11 @@ const DiscoverSectionRoute = DiscoverSectionRouteImport.update({
   path: '/discover/$section',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DiscoverReelsRoute = DiscoverReelsRouteImport.update({
+  id: '/discover/reels',
+  path: '/discover/reels',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreIndexRoute = ExploreIndexRouteImport.update({
   id: '/explore/',
   path: '/explore/',
@@ -206,9 +232,19 @@ const GeneratorsIdRoute = GeneratorsIdRouteImport.update({
   path: '/generators/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HubIndexRoute = HubIndexRouteImport.update({
+  id: '/hub/',
+  path: '/hub/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HubAudienceRoute = HubAudienceRouteImport.update({
   id: '/hub/$audience',
   path: '/hub/$audience',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HubIslamRoute = HubIslamRouteImport.update({
+  id: '/hub/islam',
+  path: '/hub/islam',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RIdRoute = RIdRouteImport.update({
@@ -233,8 +269,10 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
+  '/changelog': typeof ChangelogRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
+  '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/journal': typeof JournalRoute
   '/live': typeof LiveRoute
@@ -247,6 +285,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -255,14 +294,17 @@ export interface FileRoutesByFullPath {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/discover/reels': typeof DiscoverReelsRoute
   '/generators/$id': typeof GeneratorsIdRoute
   '/hub/$audience': typeof HubAudienceRoute
+  '/hub/islam': typeof HubIslamRoute
   '/r/$id': typeof RIdRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/generators/': typeof GeneratorsIndexRoute
+  '/hub/': typeof HubIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
@@ -271,8 +313,10 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
+  '/changelog': typeof ChangelogRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
+  '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/journal': typeof JournalRoute
   '/live': typeof LiveRoute
@@ -285,6 +329,7 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -293,14 +338,17 @@ export interface FileRoutesByTo {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/discover/reels': typeof DiscoverReelsRoute
   '/generators/$id': typeof GeneratorsIdRoute
   '/hub/$audience': typeof HubAudienceRoute
+  '/hub/islam': typeof HubIslamRoute
   '/r/$id': typeof RIdRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
   '/generators': typeof GeneratorsIndexRoute
+  '/hub': typeof HubIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
 }
@@ -310,8 +358,10 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
+  '/changelog': typeof ChangelogRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
+  '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/journal': typeof JournalRoute
   '/live': typeof LiveRoute
@@ -324,6 +374,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/tools': typeof ToolsRoute
+  '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -332,14 +383,17 @@ export interface FileRoutesById {
   '/c/$slug': typeof CSlugRoute
   '/collections/$id': typeof CollectionsIdRoute
   '/discover/$section': typeof DiscoverSectionRoute
+  '/discover/reels': typeof DiscoverReelsRoute
   '/generators/$id': typeof GeneratorsIdRoute
   '/hub/$audience': typeof HubAudienceRoute
+  '/hub/islam': typeof HubIslamRoute
   '/r/$id': typeof RIdRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/generators/': typeof GeneratorsIndexRoute
+  '/hub/': typeof HubIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
@@ -350,8 +404,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/alternatives'
     | '/assistant'
+    | '/changelog'
     | '/favorites'
     | '/find'
+    | '/glass'
     | '/glossary'
     | '/journal'
     | '/live'
@@ -364,6 +420,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/tools'
+    | '/trending'
     | '/whats-new'
     | '/youtube'
     | '/build-ideas/$slug'
@@ -372,14 +429,17 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/discover/reels'
     | '/generators/$id'
     | '/hub/$audience'
+    | '/hub/islam'
     | '/r/$id'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
     | '/generators/'
+    | '/hub/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesByTo: FileRoutesByTo
@@ -388,8 +448,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/alternatives'
     | '/assistant'
+    | '/changelog'
     | '/favorites'
     | '/find'
+    | '/glass'
     | '/glossary'
     | '/journal'
     | '/live'
@@ -402,6 +464,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/tools'
+    | '/trending'
     | '/whats-new'
     | '/youtube'
     | '/build-ideas/$slug'
@@ -410,14 +473,17 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/discover/reels'
     | '/generators/$id'
     | '/hub/$audience'
+    | '/hub/islam'
     | '/r/$id'
     | '/build-ideas'
     | '/collections'
     | '/discover'
     | '/explore'
     | '/generators'
+    | '/hub'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
   id:
@@ -426,8 +492,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/alternatives'
     | '/assistant'
+    | '/changelog'
     | '/favorites'
     | '/find'
+    | '/glass'
     | '/glossary'
     | '/journal'
     | '/live'
@@ -440,6 +508,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/tools'
+    | '/trending'
     | '/whats-new'
     | '/youtube'
     | '/build-ideas/$slug'
@@ -448,14 +517,17 @@ export interface FileRouteTypes {
     | '/c/$slug'
     | '/collections/$id'
     | '/discover/$section'
+    | '/discover/reels'
     | '/generators/$id'
     | '/hub/$audience'
+    | '/hub/islam'
     | '/r/$id'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
     | '/generators/'
+    | '/hub/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesById: FileRoutesById
@@ -465,8 +537,10 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AlternativesRoute: typeof AlternativesRoute
   AssistantRoute: typeof AssistantRoute
+  ChangelogRoute: typeof ChangelogRoute
   FavoritesRoute: typeof FavoritesRoute
   FindRoute: typeof FindRoute
+  GlassRoute: typeof GlassRoute
   GlossaryRoute: typeof GlossaryRoute
   JournalRoute: typeof JournalRoute
   LiveRoute: typeof LiveRoute
@@ -479,6 +553,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   ToolsRoute: typeof ToolsRoute
+  TrendingRoute: typeof TrendingRoute
   WhatsNewRoute: typeof WhatsNewRoute
   YoutubeRoute: typeof YoutubeRoute
   BuildIdeasSlugRoute: typeof BuildIdeasSlugRoute
@@ -487,14 +562,17 @@ export interface RootRouteChildren {
   CSlugRoute: typeof CSlugRoute
   CollectionsIdRoute: typeof CollectionsIdRoute
   DiscoverSectionRoute: typeof DiscoverSectionRoute
+  DiscoverReelsRoute: typeof DiscoverReelsRoute
   GeneratorsIdRoute: typeof GeneratorsIdRoute
   HubAudienceRoute: typeof HubAudienceRoute
+  HubIslamRoute: typeof HubIslamRoute
   RIdRoute: typeof RIdRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
   GeneratorsIndexRoute: typeof GeneratorsIndexRoute
+  HubIndexRoute: typeof HubIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
 }
@@ -529,6 +607,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favorites': {
       id: '/favorites'
       path: '/favorites'
@@ -541,6 +626,13 @@ declare module '@tanstack/react-router' {
       path: '/find'
       fullPath: '/find'
       preLoaderRoute: typeof FindRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glass': {
+      id: '/glass'
+      path: '/glass'
+      fullPath: '/glass'
+      preLoaderRoute: typeof GlassRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/glossary': {
@@ -627,6 +719,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trending': {
+      id: '/trending'
+      path: '/trending'
+      fullPath: '/trending'
+      preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/whats-new': {
       id: '/whats-new'
       path: '/whats-new'
@@ -704,6 +803,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DiscoverSectionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/discover/reels': {
+      id: '/discover/reels'
+      path: '/discover/reels'
+      fullPath: '/discover/reels'
+      preLoaderRoute: typeof DiscoverReelsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore/': {
       id: '/explore/'
       path: '/explore'
@@ -725,11 +831,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GeneratorsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hub/': {
+      id: '/hub/'
+      path: '/hub'
+      fullPath: '/hub/'
+      preLoaderRoute: typeof HubIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hub/$audience': {
       id: '/hub/$audience'
       path: '/hub/$audience'
       fullPath: '/hub/$audience'
       preLoaderRoute: typeof HubAudienceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hub/islam': {
+      id: '/hub/islam'
+      path: '/hub/islam'
+      fullPath: '/hub/islam'
+      preLoaderRoute: typeof HubIslamRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/r/$id': {
@@ -761,8 +881,10 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AlternativesRoute: AlternativesRoute,
   AssistantRoute: AssistantRoute,
+  ChangelogRoute: ChangelogRoute,
   FavoritesRoute: FavoritesRoute,
   FindRoute: FindRoute,
+  GlassRoute: GlassRoute,
   GlossaryRoute: GlossaryRoute,
   JournalRoute: JournalRoute,
   LiveRoute: LiveRoute,
@@ -775,6 +897,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   ToolsRoute: ToolsRoute,
+  TrendingRoute: TrendingRoute,
   WhatsNewRoute: WhatsNewRoute,
   YoutubeRoute: YoutubeRoute,
   BuildIdeasSlugRoute: BuildIdeasSlugRoute,
@@ -783,14 +906,17 @@ const rootRouteChildren: RootRouteChildren = {
   CSlugRoute: CSlugRoute,
   CollectionsIdRoute: CollectionsIdRoute,
   DiscoverSectionRoute: DiscoverSectionRoute,
+  DiscoverReelsRoute: DiscoverReelsRoute,
   GeneratorsIdRoute: GeneratorsIdRoute,
   HubAudienceRoute: HubAudienceRoute,
+  HubIslamRoute: HubIslamRoute,
   RIdRoute: RIdRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
   GeneratorsIndexRoute: GeneratorsIndexRoute,
+  HubIndexRoute: HubIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
 }
