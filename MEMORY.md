@@ -26,24 +26,24 @@ Built on Lovable, deployed on Vercel.
 - Android app: Capacitor (loads Vercel URL in WebView)
 
 ## Pages (as of Aug 2026)
-/ — Homepage with hero, stats bar, feature cards, viral prompt carousel, identity chips, weekly digest, footer
+/ — Homepage with hero, stats bar, feature cards, icon card grid, emoji chips, collection cards, hub cards, weekly digest, footer
 /search — Full command search (5,635 commands)
 /find — Advanced keyword search
 /explore — 45 categories, 379 subcategories
-/discover — Instagram Explore-style masonry grid (prompts + resources + commands + South Asia + 40 new APIs)
+/discover — Category grid with icons, inline search, recently added section with enhanced resource cards
 /discover/reels — TikTok-style full-screen vertical prompt scroll
-/trending — 80 viral /commands with Command of the Week hero, category filters, detail drawer
+/trending — All-in-one trending: 80 /commands, resources, generators, roadmaps, glossary spotlight, collections, live dashboard preview — with filter tabs
 /live — Live dashboard (markets, gold/silver, global indices, earthquakes, weather, cricket, prayer, space, word of day)
 /generators — 25 AI generators across 4 categories (Business, Content, Legal & Ops, Growth)
 /roadmaps — 20 founder roadmaps with step completion tracking
 /glossary — 560+ AI/SaaS/startup/design/data terms across 8 categories
 /journal — Build journal with mood chips, streaks + 12 achievement badges
 /collections — 16 curated command collections
-/hub — Hub listing page (all 9 hubs)
-/hub/students — Student Hub
-/hub/developers — Developer Hub
-/hub/creators — Creator Hub
-/hub/professionals — Professional Hub
+/hub — Hub listing page with visual emoji cards (all 9 hubs)
+/hub/students — Student Hub (grouped into 8 named sections with section headers)
+/hub/developers — Developer Hub (grouped into 8 named sections with section headers)
+/hub/creators — Creator Hub (grouped into 6 named sections with section headers)
+/hub/professionals — Professional Hub (grouped into 6 named sections with section headers)
 /hub/founders — Founder Hub
 /hub/india — India Hub
 /hub/finance — Finance Hub
@@ -62,8 +62,10 @@ Built on Lovable, deployed on Vercel.
 /keyboard — Keyboard shortcuts (planned)
 
 ## Navigation
-- Bottom tab bar: Home | Commands | Discover | Tools | Hubs (5 tabs)
+- Bottom tab bar: Home | Commands | Discover | Trending | Saved (5 tabs)
 - Sidebar: Commands, Assistant, Founder tools, Roadmaps, Journal, AI tools, Glossary, Live, YouTube, Movies, Collections, Play, Recent, Me, Settings, About, Trending, Changelog, Glass, Hubs
+- ResourceCardEnhanced component: favicon + pricing badge + save button, used on Discover, hubs, trending
+- Hub pages: resources grouped into named sections with section headers
 - Keyboard shortcuts: / (search), ? (guide), G+H/D/T/L (go to), Escape (close)
 
 ## Free APIs Integrated (100+)

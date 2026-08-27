@@ -51,6 +51,24 @@ bg: #0d1117 | surface: #161b22 | surface-raised: #21262d
 border: #30363d | text: #e6edf3 | muted: #8b949e
 accent: #58a6ff | green: #3fb950 | red: #f85149 | yellow: #d29922
 
+Card radius: 10px | Button radius: 6px | Badge radius: 4px
+Transitions: 150ms ease | Hover: translateY(-2px) + border lightens
+ResourceCardEnhanced: src/components/library/ResourceCardEnhanced.tsx
+- Favicon (40x40, Google Favicon API with letter fallback)
+- Pricing badge: green (Completely Free), blue (Free Tier), yellow (Open Source)
+- Save button: localStorage bookmark toggle
+
+Hub section grouping: HUB_SECTION_MAP in src/routes/hub.$audience.tsx
+- Each hub has named sections with icon + title + match function
+- Unmatched resources go into "More Resources" fallback
+
+## Motion & Animation
+- page-enter: 200ms fade+slide on main content wrappers
+- shimmer: skeleton loading blocks with gradient animation
+- smooth scroll: scroll-behavior: smooth on html
+- copy-feedback: green flash + "Copied" text, self-resets after 2s
+- stagger-children: cascade animation for card grids (up to 8 items)
+
 ## Next Agent Instructions
 Read this file first. Read memory.md. Check /changelog.
 Then proceed with the task described. Commit after every page built.
