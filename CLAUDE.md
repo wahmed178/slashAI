@@ -17,7 +17,7 @@ August 2026
   crypto, forex, weather, AQI, prayer times, cricket, football, NASA APOD,
   ISS location, word of day
 - Hubs: Students, Developers, Creators, Professionals, Founders,
-  India, Finance, Designers, Health
+  India, Finance, Designers, Health, Islam (53 resources, live widgets)
 - 16 curated command collections
 - 32 South Asia resources (India, Pakistan, Bangladesh, Arab)
 - About page with editorial content
@@ -39,7 +39,7 @@ August 2026
 ## Free APIs Currently Integrated
 Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD (DEMO_KEY),
 TheSportsDB, HackerNews, Yahoo Finance unofficial, USGS Earthquakes,
-OpenAQ, WhereTheISS.at, ExchangeRate-API, AMFI NAV India,
+OpenAQ, WhereTheISS.at, ExchangeRate-API, AMFI NAV India, AlQuran.cloud,
 data.gov.in, data.gov, data.europa.eu, World Bank, UN Data,
 IMF Data, WHO GHO, OECD Data, Calendarific, TimeZoneDB, MediaStack,
 NewsData.io, GDELT, Polygon.io, Alpha Vantage, Art Institute Chicago,

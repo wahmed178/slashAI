@@ -4,7 +4,8 @@
 SlashAI (https://slashai-nu.vercel.app/) is a free, offline-first,
 no-account AI command and resource library. 5,635 commands, 317+ curated
 resources, 50+ viral prompts, 80 trending /commands, 25 generators,
-20 roadmaps, 560+ glossary terms, 32 South Asia resources, 40+ new APIs.
+20 roadmaps, 560+ glossary terms, 32 South Asia resources, 40+ new APIs,
+53 Islam Hub resources (Quran, Hadith, prayer, scholars, daily tools).
 Built on Lovable, deployed on Vercel.
 
 ## Design Identity
@@ -22,7 +23,7 @@ Built on Lovable, deployed on Vercel.
 - Data: static TS files + JSON for commands, resources, prompts
 - APIs used: Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD,
   TheSportsDB, HackerNews, Yahoo Finance (unofficial), USGS, OpenAQ,
-  WhereTheISS.at, ExchangeRate-API, Free Dictionary API
+  WhereTheISS.at, ExchangeRate-API, Free Dictionary API, AlQuran.cloud
 - Android app: Capacitor (loads Vercel URL in WebView)
 
 ## Pages (as of Aug 2026)
@@ -49,6 +50,7 @@ Built on Lovable, deployed on Vercel.
 /hub/finance — Finance Hub
 /hub/designers — Designers Hub
 /hub/health — Health Hub
+/hub/islam — Islam Hub (53 resources, 10 sections, live prayer + Quran widgets)
 /movies — Regional film finder
 /youtube — YouTube search
 /play — Toss, dice, random
