@@ -60,11 +60,23 @@ export function SplashScreen({ onDone, minDuration = 2200 }: SplashScreenProps) 
   // Auto-dismiss after minDuration
   useEffect(() => {
     const timer = setTimeout(() => {
+      try { localStorage.setItem("slashai-visited", "true"); } catch {}
       setExiting(true);
       setTimeout(() => onDone(), 400);
     }, minDuration);
     return () => clearTimeout(timer);
   }, [onDone, minDuration]);
+
+  // Early dismiss if splash was already dismissed (safety net)
+  useEffect(() => {
+    if (!visible) return;
+    try {
+      if (localStorage.getItem("slashai-visited") === "true") {
+        setExiting(true);
+        setTimeout(() => onDone(), 200);
+      }
+    } catch {}
+  }, []);
 
   if (!visible) return null;
 

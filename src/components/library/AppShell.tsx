@@ -37,6 +37,9 @@ import {
   Flame,
   TrendingUp,
   Bookmark,
+  LayoutGrid,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -57,7 +60,7 @@ const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
   { to: "/discover", label: "Discover", icon: Compass, exact: false },
-  { to: "/trending", label: "Trending", icon: TrendingUp, exact: false },
+  { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
   { to: "/favorites", label: "Saved", icon: Bookmark, exact: false },
 ] as const;
 
@@ -306,6 +309,26 @@ function NavList({
   );
 }
 
+function ThemeToggleButton() {
+  const { settings, updateSettings } = useLibrary();
+  const isLight = settings.theme === "light";
+
+  const toggle = () => {
+    updateSettings({ theme: isLight ? "dark" : "light" });
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={`Switch to ${isLight ? 'dark' : 'light'} mode`}
+      className="hidden md:flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-[#21262d] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+    >
+      {isLight ? <Moon className="size-[18px]" /> : <Sun className="size-[18px]" />}
+    </button>
+  );
+}
+
 export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -383,6 +406,9 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
               <SearchBox placeholder="Search commands…" />
             )}
 
+            {/* Theme toggle — desktop header only */}
+            <ThemeToggleButton />
+
             {back && (
               <Button
                 variant="ghost"
@@ -407,29 +433,41 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
         </main>
       </div>
 
-      {/* mobile bottom navigation — four essential destinations only */}
+      {/* mobile bottom navigation — five essential destinations */}
       <nav
         aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-border bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-[#30363d] bg-[rgba(13,17,23,0.97)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
+        style={{ height: 'calc(56px + env(safe-area-inset-bottom))' }}
       >
         {PRIMARY.map((item) => {
-          const active = item.exact ? pathname === item.to : pathname.startsWith(item.to);
+          // Route-based active state — derived from current pathname, not internal state
+          const active = (() => {
+            if (item.exact) return pathname === item.to;
+            const p = item.to;
+            if (p === "/hub") return pathname.startsWith("/hub");
+            if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
+            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar");
+            if (p === "/favorites") return pathname.startsWith("/favorites") || pathname.startsWith("/recent");
+            return pathname.startsWith(p);
+          })();
           return (
             <Link
               key={item.to}
               to={item.to}
-              className={cn(
-                "ripple-press flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors",
-                active ? "text-primary" : "text-muted-foreground",
-              )}
+              className="ripple-press flex min-h-[56px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium transition-colors"
+              style={{ color: active ? '#58a6ff' : '#8b949e' }}
             >
-              <item.icon
-                className={cn(
-                  "size-5 transition-transform duration-200",
-                  active && "stroke-[2.4] scale-110",
+              {/* Active dot indicator */}
+              <div className="relative flex flex-col items-center">
+                {active && (
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-[#58a6ff]" />
                 )}
-                aria-hidden
-              />
+                <item.icon
+                  className="size-[22px]"
+                  aria-hidden
+                  strokeWidth={active ? 2.4 : 1.8}
+                />
+              </div>
               {item.label}
             </Link>
           );

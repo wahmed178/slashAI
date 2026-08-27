@@ -4,10 +4,11 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -126,6 +127,12 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {/* FOUC prevention: apply theme before any paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('slashai-theme');var p=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='light'||(!t&&!p)){document.documentElement.classList.add('light')}}catch(e){}`,
+          }}
+        />
         <HeadContent />
       </head>
       <body>
@@ -138,11 +145,24 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => {
+    try { return localStorage.getItem("slashai-visited") !== "true"; }
+    catch { return true; }
+  });
 
   useEffect(() => {
     registerServiceWorker();
   }, []);
+
+  // Scroll to top on every route change
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const prevPathname = useRef(pathname);
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      window.scrollTo(0, 0);
+      prevPathname.current = pathname;
+    }
+  }, [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>

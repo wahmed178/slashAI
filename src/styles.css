@@ -778,3 +778,72 @@ section[id], [id] {
 .copy-feedback {
   transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
 }
+
+/* ──────────── smooth scroll & anchor targets ──────────── */
+html {
+  scroll-behavior: smooth;
+}
+a[id], section[id], [id^="section"] {
+  scroll-margin-top: 80px;
+}
+
+/* ──────────── page enter animation ──────────── */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-content {
+  animation: pageEnter 200ms ease forwards;
+}
+
+/* ──────────── skeleton shimmer ──────────── */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+.skeleton-block {
+  background: linear-gradient(90deg, #21262d 25%, #30363d 50%, #21262d 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+/* ──────────── card stagger animation ──────────── */
+@keyframes cardStaggerIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stagger-in > * {
+  animation: cardStaggerIn 200ms ease forwards;
+  opacity: 0;
+}
+.stagger-in > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-in > *:nth-child(2) { animation-delay: 40ms; }
+.stagger-in > *:nth-child(3) { animation-delay: 80ms; }
+.stagger-in > *:nth-child(4) { animation-delay: 120ms; }
+.stagger-in > *:nth-child(5) { animation-delay: 160ms; }
+.stagger-in > *:nth-child(6) { animation-delay: 200ms; }
+.stagger-in > *:nth-child(n+7) { animation-delay: 200ms; }
+
+/* ──────────── ticker ──────────── */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker 40s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* ──────────── live dot ──────────── */
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.live-dot {
+  animation: livePulse 1.5s ease infinite;
+}

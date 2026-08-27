@@ -64,11 +64,18 @@ Built on Lovable, deployed on Vercel.
 /keyboard — Keyboard shortcuts (planned)
 
 ## Navigation
-- Bottom tab bar: Home | Commands | Discover | Trending | Saved (5 tabs)
+- Bottom tab bar: Home | Commands | Discover | Hubs | Saved (5 tabs, route-based active states)
 - Sidebar: Commands, Assistant, Founder tools, Roadmaps, Journal, AI tools, Glossary, Live, YouTube, Movies, Collections, Play, Recent, Me, Settings, About, Trending, Changelog, Glass, Hubs
 - ResourceCardEnhanced component: favicon + pricing badge + save button, used on Discover, hubs, trending
 - Hub pages: resources grouped into named sections with section headers
 - Keyboard shortcuts: / (search), ? (guide), G+H/D/T/L (go to), Escape (close)
+- Theme toggle: Sun/Moon icon in desktop header only
+- Splash screen: first-visit only via localStorage "slashai-visited"
+- SITE_VERSION: 2.7.0 (used by WhatsNewDialog popup)
+- FOUC prevention: inline script in <head> applies theme before paint
+- Scroll reset: to top on every route change
+- Smooth scroll: scroll-behavior: smooth + 80px scroll-margin-top
+- Global motion: page-enter (200ms fade+slide), shimmer skeleton, card stagger
 
 ## Free APIs Integrated (100+)
 Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD (DEMO_KEY),

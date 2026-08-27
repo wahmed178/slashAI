@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "1.4.0";
+export const APP_VERSION = "2.7.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,26 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.7.0",
+    date: "2026-08-27",
+    title: "Navigation, live ticker, version popup and polish",
+    changes: [
+      "Bottom navigation updated to 5 tabs: Home, Commands, Discover, Hubs, Saved",
+      "Live ticker added to homepage top with markets, crypto, forex, prayer and weather data",
+      "What's New popup shows on first visit after each update",
+      "Loading tagline skipped on return visits for faster startup",
+      "Theme toggle consolidated to desktop header only (Sun/Moon icon)",
+      "FOUC prevention: inline theme script in <head> eliminates flash",
+      "Scroll position resets to top on every route change",
+      "Global smooth scroll with 80px scroll-margin-top on anchor targets",
+      "Skeleton shimmer loading on all async content sections",
+      "Page enter animation: 200ms fade+slide on route changes",
+      "Homepage Hubs section redesigned as visual icon cards",
+      "Homepage quick tool links replaced with clean 3×3 icon grid",
+      "About page simplified and decluttered",
+    ],
+  },
   {
     version: "1.4.0",
     date: "2026-08-24",

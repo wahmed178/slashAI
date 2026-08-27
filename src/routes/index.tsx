@@ -172,6 +172,8 @@ function YourWeekDigest() {
     { icon: NotebookPen, label: "Logs", value: entriesThisWeek, to: "/journal" },
   ] as const;
 
+  const allZero = tiles.every((t) => t.value === 0);
+
   return (
     <section className="panel mt-6 rounded-2xl p-4">
       <header className="flex items-center justify-between gap-2">
@@ -185,6 +187,11 @@ function YourWeekDigest() {
           Learn a term <ArrowRight className="size-4" aria-hidden />
         </Link>
       </header>
+      {allZero ? (
+        <p className="mt-3 text-center text-[13px] text-muted-foreground">
+          Start by copying a command — your stats appear here.
+        </p>
+      ) : (
       <div className="mt-3 grid grid-cols-4 gap-2">
         {tiles.map((t) => (
           <Link
@@ -200,6 +207,7 @@ function YourWeekDigest() {
           </Link>
         ))}
       </div>
+      )}
       <div className="mt-3 flex flex-wrap gap-2">
         {([
           ["/roadmaps", "Founder roadmaps"],
@@ -549,30 +557,34 @@ function HomePage() {
       </Section>
 
       <Section title="Hubs" hint="Everything gathered for one kind of person.">
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
           {([
-            ["students", "\u{1F393}", "Student Hub", "Courses & tools"],
-            ["developers", "\u{1F4BB}", "Developer Hub", "APIs & open-source"],
-            ["creators", "\u{1F3A8}", "Creator Hub", "Design & content"],
-            ["professionals", "\u{1F4BC}", "Professional Hub", "Productivity"],
-            ["founders", "\u{1F680}", "Founders Hub", "Idea to revenue"],
-            ["india", "\u{1F1EE}\u{1F1F3}", "India Hub", "Indian builders"],
-            ["finance", "\u{1F4C8}", "Finance Hub", "Investing & crypto"],
-            ["designers", "\u{1F58C}\u{FE0F}", "Designers Hub", "Free design tools"],
-            ["health", "\u{1F3C3}", "Health Hub", "Fitness & wellbeing"],
-          ] as const).map(([id, emoji, title, blurb]) => (
+            { to: "/hub/students", emoji: "\u{1F393}", title: "Student Hub", desc: "Courses & tools" },
+            { to: "/hub/developers", emoji: "\u{1F4BB}", title: "Developer Hub", desc: "APIs & open-source" },
+            { to: "/hub/creators", emoji: "\u{1F3A8}", title: "Creator Hub", desc: "Design & content" },
+            { to: "/hub/professionals", emoji: "\u{1F4BC}", title: "Professional Hub", desc: "Productivity" },
+            { to: "/hub/islam", emoji: "\u262A\uFE0F", title: "Islam Hub", desc: "Quran, Hadith & learning" },
+          ]).map((hub) => (
             <Link
-              key={id}
-              to="/hub/$audience"
-              params={{ audience: id }}
-              className="group flex flex-col items-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/30"
+              key={hub.to}
+              to={hub.to}
+              className="group flex items-center gap-3 rounded-[10px] border border-[#30363d] bg-[#161b22] p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
             >
-              <span className="text-[28px]" aria-hidden>{emoji}</span>
-              <span className="mt-2 block text-[14px] font-semibold text-foreground group-hover:text-primary">{title}</span>
-              <span className="mt-0.5 block text-[12px] text-muted-foreground">{blurb}</span>
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#21262d] text-[22px]" aria-hidden>{hub.emoji}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[13px] font-semibold text-[#e6edf3]">{hub.title}</span>
+                <span className="block text-[11px] text-[#8b949e] truncate">{hub.desc}</span>
+              </span>
+              <ArrowRight className="size-4 shrink-0 text-[#8b949e] transition-transform duration-150 group-hover:translate-x-1 group-hover:text-[#e6edf3]" aria-hidden />
             </Link>
           ))}
         </div>
+        <Link
+          to="/hub"
+          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#58a6ff] transition-colors hover:text-[#79c0ff]"
+        >
+          See all hubs <ArrowRight className="size-4" aria-hidden />
+        </Link>
       </Section>
 
       {/* ─── Footer ─── */}
@@ -621,25 +633,7 @@ function HomePage() {
         </p>
       </footer>
 
-      {/* ─── Bottom Tab Bar (mobile) ─── */}
-      <nav className="bottom-tab-bar md:hidden" aria-label="Main navigation">
-        <Link to="/" activeProps={{ "data-active": "true" }} className="[&[data-active='true']]:text-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          Home
-        </Link>
-        <Link to="/search" activeProps={{ "data-active": "true" }}>
-          <SearchIcon className="size-5" />
-          Search
-        </Link>
-        <Link to="/discover" activeProps={{ "data-active": "true" }}>
-          <Compass className="size-5" />
-          Discover
-        </Link>
-        <Link to="/favorites" activeProps={{ "data-active": "true" }}>
-          <Star className="size-5" />
-          Saved
-        </Link>
-      </nav>
+
     </AppShell>
   );
 }
