@@ -708,3 +708,73 @@ mark {
 .stat-card:nth-child(3) { animation-delay: 120ms; }
 .stat-card:nth-child(4) { animation-delay: 180ms; }
 .stat-card:nth-child(5) { animation-delay: 240ms; }
+
+/* ──────────── page enter (content wrapper) ──────────── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: page-enter 200ms ease forwards;
+}
+:root[data-motion="reduced"] .page-enter {
+  animation: none;
+}
+
+/* ──────────── skeleton shimmer ──────────── */
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+.skeleton-block {
+  background: linear-gradient(90deg, var(--surface-elevated) 25%, var(--border) 50%, var(--surface-elevated) 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-sm);
+}
+:root[data-motion="reduced"] .skeleton-block {
+  animation: none;
+}
+
+/* ──────────── smooth scroll + scroll margin ──────────── */
+html {
+  scroll-behavior: smooth;
+}
+section[id], [id] {
+  scroll-margin-top: 80px;
+}
+
+/* ──────────── hub section header ──────────── */
+.hub-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+.hub-section-header:first-of-type {
+  margin-top: 0;
+}
+
+/* ──────────── resource card (enhanced) ──────────── */
+.resource-card-enhanced {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+.resource-card-enhanced:hover {
+  border-color: color-mix(in oklab, var(--primary) 50%, var(--border));
+  transform: translateY(-2px);
+}
+
+/* ──────────── copy feedback button ──────────── */
+.copy-feedback {
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}

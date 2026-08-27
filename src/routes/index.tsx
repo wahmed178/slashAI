@@ -221,14 +221,14 @@ function YourWeekDigest() {
 
 /* ─────────────── Intent chips ─────────────── */
 const INTENTS = [
-  { label: "Write something", q: "write draft", icon: PenLine },
-  { label: "Study or revise", q: "study explain", icon: GraduationCap },
-  { label: "Write or fix code", q: "code debug", icon: Code2 },
-  { label: "Work with an image", q: "image edit", icon: ImageIcon },
-  { label: "Handle a document", q: "document summarize", icon: FileText },
-  { label: "Do research", q: "research sources", icon: SearchIcon },
-  { label: "Get work done", q: "email plan meeting", icon: Briefcase },
-  { label: "Make something creative", q: "creative idea", icon: Wand2 },
+  { label: "Write something", q: "write draft", emoji: "\u{270D}\u{FE0F}" },
+  { label: "Study or revise", q: "study explain", emoji: "\u{1F4DA}" },
+  { label: "Write or fix code", q: "code debug", emoji: "\u{1F4BB}" },
+  { label: "Work with an image", q: "image edit", emoji: "\u{1F5BC}\u{FE0F}" },
+  { label: "Handle a document", q: "document summarize", emoji: "\u{1F4C4}" },
+  { label: "Do research", q: "research sources", emoji: "\u{1F50D}" },
+  { label: "Get work done", q: "email plan meeting", emoji: "\u{1F4BC}" },
+  { label: "Make something creative", q: "creative idea", emoji: "\u{1F3A8}" },
 ] as const;
 
 /* ─────────────── Route ─────────────── */
@@ -395,86 +395,44 @@ function HomePage() {
         <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
           I want to…
         </h2>
-        <div className="mt-2.5 grid gap-2 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-2.5 flex flex-wrap gap-2">
           {INTENTS.map((intent) => (
             <Link
               key={intent.label}
               to="/search"
               search={{ q: intent.q }}
-              className="panel flex items-center gap-2.5 rounded-xl p-3 transition-colors hover:border-primary/50"
+              className="flex items-center gap-1.5 rounded-full border border-border bg-surface-elevated px-3.5 py-2 text-[13px] text-foreground transition-all duration-150 hover:border-primary/60 hover:text-white"
             >
-              <intent.icon className="size-4 shrink-0 text-primary" aria-hidden />
-              <span className="truncate text-sm font-medium text-foreground">{intent.label}</span>
+              <span className="text-[14px]" aria-hidden>{intent.emoji}</span>
+              {intent.label}
             </Link>
           ))}
         </div>
       </section>
 
-      {/* ─── Quick Links Grid ─── */}
-      <div className="mt-6 grid gap-2.5 sm:grid-cols-3">
-        <Link to="/assistant" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Bot className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Assistant</span>
-            <span className="block truncate text-xs text-muted-foreground">Workflows and tasks</span>
-          </span>
-        </Link>
-        <Link to="/find" search={{ q: "" }} className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Wand2 className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Advanced search</span>
-            <span className="block truncate text-xs text-muted-foreground">Keywords to shortlist</span>
-          </span>
-        </Link>
-        <Link to="/generators" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Zap className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Generators</span>
-            <span className="block truncate text-xs text-muted-foreground">25 AI-powered tools</span>
-          </span>
-        </Link>
-        <Link to="/roadmaps" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Map className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Roadmaps</span>
-            <span className="block truncate text-xs text-muted-foreground">20 visual guides</span>
-          </span>
-        </Link>
-        <Link to="/live" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Radio className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Live</span>
-            <span className="block truncate text-xs text-muted-foreground">News, weather, scores</span>
-          </span>
-        </Link>
-        <Link to="/glossary" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <BookOpen className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Glossary</span>
-            <span className="block truncate text-xs text-muted-foreground">{GLOSSARY_TOTAL}+ terms explained</span>
-          </span>
-        </Link>
-        <Link to="/movies" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Film className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Movies</span>
-            <span className="block truncate text-xs text-muted-foreground">Regional film finder</span>
-          </span>
-        </Link>
-        <Link to="/youtube" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Youtube className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">YouTube & Music</span>
-            <span className="block truncate text-xs text-muted-foreground">Search and play</span>
-          </span>
-        </Link>
-        <Link to="/discover" className="panel lift flex items-center gap-2.5 rounded-xl p-3.5">
-          <Globe className="size-5 shrink-0 text-primary" aria-hidden />
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">Discover</span>
-            <span className="block truncate text-xs text-muted-foreground">Tools, GitHub, learning</span>
-          </span>
-        </Link>
+      {/* ─── Quick Links Grid (icon cards) ─── */}
+      <div className="mt-6 grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-5">
+        {([
+          ["/assistant", "\u{1F916}", "Assistant", "Workflows"],
+          ["/find", "\u{1F50D}", "Search", "Advanced"],
+          ["/generators", "\u{26A1}", "Generators", "25 AI tools"],
+          ["/roadmaps", "\u{1F5FA}\u{FE0F}", "Roadmaps", "20 guides"],
+          ["/live", "\u{1F4E1}", "Live", "News & scores"],
+          ["/glossary", "\u{1F4D6}", "Glossary", `${GLOSSARY_TOTAL}+ terms`],
+          ["/movies", "\u{1F3AC}", "Movies", "Film finder"],
+          ["/youtube", "\u{25B6}\u{FE0F}", "YouTube", "Search & play"],
+          ["/discover", "\u{1F9ED}", "Discover", "Tools & APIs"],
+        ] as const).map(([to, emoji, label, sub]) => (
+          <Link
+            key={to}
+            to={to as string}
+            className="group flex flex-col items-center rounded-[10px] border border-border bg-surface p-3.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+          >
+            <span className="text-[24px]" aria-hidden>{emoji}</span>
+            <span className="mt-2 block text-[13px] font-semibold text-foreground group-hover:text-primary">{label}</span>
+            <span className="mt-0.5 block text-[11px] text-muted-foreground">{sub}</span>
+          </Link>
+        ))}
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">
@@ -574,56 +532,44 @@ function HomePage() {
           </Link>
         }
       >
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {COLLECTIONS.slice(0, 6).map((c) => {
-            const Icon = categoryIcon(c.icon);
-            return (
-              <Link
-                key={c.id}
-                to="/collections/$id"
-                params={{ id: c.id }}
-                className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
-              >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-                  <Icon className="size-4.5" aria-hidden />
-                </span>
-                <span className="min-w-0">
-                  <span className="block truncate text-sm font-semibold text-foreground">
-                    {c.title}
-                  </span>
-                  <span className="block truncate text-xs text-muted-foreground">
-                    {c.count} commands
-                  </span>
-                </span>
-              </Link>
-            );
-          })}
+        <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+          {COLLECTIONS.slice(0, 6).map((c) => (
+            <Link
+              key={c.id}
+              to="/collections/$id"
+              params={{ id: c.id }}
+              className="flex shrink-0 flex-col items-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/30 sm:w-[calc(33.333%-7px)]"
+            >
+              <span className="text-[28px]">{c.icon}</span>
+              <span className="mt-2 block text-[14px] font-semibold text-foreground">{c.title}</span>
+              <span className="mt-0.5 block text-[12px] text-muted-foreground">{c.count} commands</span>
+            </Link>
+          ))}
         </div>
       </Section>
 
       <Section title="Hubs" hint="Everything gathered for one kind of person.">
-        <div className="grid gap-2 sm:grid-cols-2">
-          {[
-            ["students", "Student Hub", "Free software, study tools and student offers"],
-            ["professionals", "Professional Hub", "Work, writing, planning and research"],
-            ["developers", "Developer Hub", "APIs, editors and open-source picks"],
-            ["creators", "Creator Hub", "Capture, edit and design without watermarks"],
-            ["founders", "Founders Hub", "Idea to first paying customer"],
-            ["india", "India Hub", "Free tools, courses and resources for Indian builders"],
-            ["finance", "Finance Hub", "Free tools for investors and traders"],
-            ["designers", "Designers Hub", "Free design tools, assets and learning"],
-            ["health", "Health Hub", "Evidence-based tools for fitness and wellbeing"],
-          ].map(([id, title, blurb]) => (
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+          {([
+            ["students", "\u{1F393}", "Student Hub", "Courses & tools"],
+            ["developers", "\u{1F4BB}", "Developer Hub", "APIs & open-source"],
+            ["creators", "\u{1F3A8}", "Creator Hub", "Design & content"],
+            ["professionals", "\u{1F4BC}", "Professional Hub", "Productivity"],
+            ["founders", "\u{1F680}", "Founders Hub", "Idea to revenue"],
+            ["india", "\u{1F1EE}\u{1F1F3}", "India Hub", "Indian builders"],
+            ["finance", "\u{1F4C8}", "Finance Hub", "Investing & crypto"],
+            ["designers", "\u{1F58C}\u{FE0F}", "Designers Hub", "Free design tools"],
+            ["health", "\u{1F3C3}", "Health Hub", "Fitness & wellbeing"],
+          ] as const).map(([id, emoji, title, blurb]) => (
             <Link
               key={id}
               to="/hub/$audience"
-              params={{ audience: id! }}
-              className="panel flex min-h-16 items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/50"
+              params={{ audience: id }}
+              className="group flex flex-col items-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/30"
             >
-              <span className="min-w-0">
-                <span className="block truncate text-sm font-semibold text-foreground">{title}</span>
-                <span className="block truncate text-xs text-muted-foreground">{blurb}</span>
-              </span>
+              <span className="text-[28px]" aria-hidden>{emoji}</span>
+              <span className="mt-2 block text-[14px] font-semibold text-foreground group-hover:text-primary">{title}</span>
+              <span className="mt-0.5 block text-[12px] text-muted-foreground">{blurb}</span>
             </Link>
           ))}
         </div>

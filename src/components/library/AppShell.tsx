@@ -35,6 +35,8 @@ import {
   Route as RouteIcon,
   NotebookPen,
   Flame,
+  TrendingUp,
+  Bookmark,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -55,8 +57,8 @@ const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
   { to: "/discover", label: "Discover", icon: Compass, exact: false },
-  { to: "/trending", label: "Tools", icon: Sparkles, exact: false },
-  { to: "/hub", label: "Hubs", icon: Globe, exact: false },
+  { to: "/trending", label: "Trending", icon: TrendingUp, exact: false },
+  { to: "/favorites", label: "Saved", icon: Bookmark, exact: false },
 ] as const;
 
 /** nested under Discover in the sidebar and the drawer */
