@@ -7,6 +7,7 @@ resources, 50+ viral prompts, 80 trending /commands, 25 generators,
 20 roadmaps, 560+ glossary terms, 32 South Asia resources, 40+ new APIs,
 53 Islam Hub resources (Quran, Hadith, prayer, scholars, daily tools).
 Daily Quiz with 24 categories, streaks, and timer.
+Content auto-update: GitHub Actions fetch trending tools (Mon), news (daily), prompts (Wed)
 Built on Lovable, deployed on Vercel.
 
 ## Design Identity

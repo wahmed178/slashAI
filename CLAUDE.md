@@ -56,6 +56,13 @@ Library of Congress, Gutendex, Open Trivia DB, The Trivia API, Quotable, Affirma
 - Timer: 25s (easy), 20s (medium), 15s (hard) — pauses on tab hidden
 - All API text decoded via textarea.innerHTML (HTML entities)
 
+## Content Automation (GitHub Actions)
+- 3 workflows: weekly trending tools (Mon 6am), daily news (7am), weekly prompts (Wed 6am)
+- Scripts: scripts/fetch-trending-tools.cjs, scripts/fetch-daily-news.cjs, scripts/fetch-trending-prompts.cjs
+- Data files: src/data/trending-tools.json, src/data/daily-news.json, src/data/trending-prompts.json, src/data/changelog.json
+- Homepage reads trending-tools.json for "This week's free finds" (fallback to DROPS if empty)
+- All workflows support workflow_dispatch for manual triggers
+
 ## Design Tokens
 bg: #0d1117 | surface: #161b22 | surface-raised: #21262d
 border: #30363d | text: #e6edf3 | muted: #8b949e
