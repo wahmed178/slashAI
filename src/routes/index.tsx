@@ -214,6 +214,7 @@ function YourWeekDigest() {
           ["/roadmaps", "Founder roadmaps"],
           ["/generators", "Founder tools"],
           ["/live", "Live dashboard"],
+          ["/quiz", "Daily Quiz"],
         ] as const).map(([to, label]) => (
           <Link
             key={to}
@@ -432,7 +433,7 @@ function HomePage() {
           ["/live", "\u{1F4E1}", "Live", "News & scores"],
           ["/glossary", "\u{1F4D6}", "Glossary", `${GLOSSARY_TOTAL}+ terms`],
           ["/movies", "\u{1F3AC}", "Movies", "Film finder"],
-          ["/youtube", "\u{25B6}\u{FE0F}", "YouTube", "Search & play"],
+          ["/quiz", "\u{1F9E0}", "Quiz", "Daily brain challenge"],
           ["/discover", "\u{1F9ED}", "Discover", "Tools & APIs"],
         ] as const).map(([to, emoji, label, sub]) => (
           <Link

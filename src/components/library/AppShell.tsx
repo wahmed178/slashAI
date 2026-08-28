@@ -120,6 +120,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     icon: BookOpen,
     children: [
       { to: "/glossary", label: "AI Glossary", icon: BookOpen },
+      { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
       { to: "/collections", label: "Collections", icon: Layers },
       { to: "/alternatives", label: "Free alternatives", icon: Wand2 },
     ],

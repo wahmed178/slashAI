@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.7.0";
+export const APP_VERSION = "2.8.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,17 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.8.0",
+    date: "2026-08-28",
+    title: "Daily Quiz",
+    changes: [
+      "Daily Quiz launched at /quiz with 24 trivia categories",
+      "Fresh questions every calendar day per category (Open Trivia Database)",
+      "Timer, streaks, score review, and share your score",
+      "Open Trivia DB and The Trivia API added to Discover",
+    ],
+  },
   {
     version: "2.7.0",
     date: "2026-08-27",

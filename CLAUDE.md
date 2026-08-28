@@ -44,7 +44,17 @@ data.gov.in, data.gov, data.europa.eu, World Bank, UN Data,
 IMF Data, WHO GHO, OECD Data, Calendarific, TimeZoneDB, MediaStack,
 NewsData.io, GDELT, Polygon.io, Alpha Vantage, Art Institute Chicago,
 Metropolitan Museum, Harvard Art Museums, NASA Images, Smithsonian OA,
-Library of Congress, Gutendex, Open Trivia, Quotable, Affirmations.dev
+Library of Congress, Gutendex, Open Trivia DB, The Trivia API, Quotable, Affirmations.dev
+
+## Daily Quiz
+- Route: /quiz (3 views: category picker, quiz in progress, results)
+- API: Open Trivia Database (opentdb.com) — free, no key, 24 categories
+- Fallback API: The Trivia API (the-trivia-api.com)
+- Session token: localStorage "quiz-session-token"
+- Daily cache: localStorage "quiz-cache-{categoryId}-{difficulty}" — same questions all day, fresh at midnight
+- Streak: localStorage "quiz-streak", "quiz-best-streak", "quiz-last-date"
+- Timer: 25s (easy), 20s (medium), 15s (hard) — pauses on tab hidden
+- All API text decoded via textarea.innerHTML (HTML entities)
 
 ## Design Tokens
 bg: #0d1117 | surface: #161b22 | surface-raised: #21262d

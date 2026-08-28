@@ -6,6 +6,7 @@ no-account AI command and resource library. 5,635 commands, 317+ curated
 resources, 50+ viral prompts, 80 trending /commands, 25 generators,
 20 roadmaps, 560+ glossary terms, 32 South Asia resources, 40+ new APIs,
 53 Islam Hub resources (Quran, Hadith, prayer, scholars, daily tools).
+Daily Quiz with 24 categories, streaks, and timer.
 Built on Lovable, deployed on Vercel.
 
 ## Design Identity
@@ -38,6 +39,7 @@ Built on Lovable, deployed on Vercel.
 /generators — 25 AI generators across 4 categories (Business, Content, Legal & Ops, Growth)
 /roadmaps — 20 founder roadmaps with step completion tracking
 /glossary — 560+ AI/SaaS/startup/design/data terms across 8 categories
+/quiz — Daily Quiz (24 categories, Open TDB API, streaks, timer, share score)
 /journal — Build journal with mood chips, streaks + 12 achievement badges
 /collections — 16 curated command collections
 /hub — Hub listing page with visual emoji cards (all 9 hubs)
@@ -71,7 +73,7 @@ Built on Lovable, deployed on Vercel.
 - Keyboard shortcuts: / (search), ? (guide), G+H/D/T/L (go to), Escape (close)
 - Theme toggle: Sun/Moon icon in desktop header only
 - Splash screen: first-visit only via localStorage "slashai-visited"
-- SITE_VERSION: 2.7.0 (used by WhatsNewDialog popup)
+- SITE_VERSION: 2.8.0 (used by WhatsNewDialog popup)
 - LiveTicker: src/components/library/LiveTicker.tsx — fetches NIFTY, SENSEX, BTC, ETH, USD/INR, prayer, weather with localStorage caching
 - FOUC prevention: inline script in <head> applies theme before paint
 - Scroll reset: to top on every route change
@@ -86,7 +88,7 @@ OpenAQ, WhereTheISS.at, ExchangeRate-API, AMFI NAV India,
   IMF Data, WHO GHO, OECD Data, Calendarific, TimeZoneDB, MediaStack,
   NewsData.io, GDELT, Polygon.io, Alpha Vantage, Art Institute Chicago,
   Metropolitan Museum, Harvard Art Museums, NASA Images, Smithsonian OA,
-  Library of Congress, Gutendex, Open Trivia, Quotable, Affirmations.dev
+  Library of Congress, Gutendex, Open Trivia DB, The Trivia API, Quotable, Affirmations.dev
 
 ## Monetisation Strategy
 Currently: 100% free, no account required.
