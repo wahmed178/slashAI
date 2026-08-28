@@ -8,6 +8,8 @@ resources, 50+ viral prompts, 80 trending /commands, 25 generators,
 53 Islam Hub resources (Quran, Hadith, prayer, scholars, daily tools).
 Daily Quiz with 24 categories, streaks, and timer.
 Content auto-update: GitHub Actions fetch trending tools (Mon), news (daily), prompts (Wed)
+22 browser tools at /tools (image compress/convert, PDF, calculators, timers, screensavers)
+Daily content automation: quotes, artwork via GitHub Actions
 Built on Lovable, deployed on Vercel.
 
 ## Design Identity
@@ -41,6 +43,7 @@ Built on Lovable, deployed on Vercel.
 /roadmaps — 20 founder roadmaps with step completion tracking
 /glossary — 560+ AI/SaaS/startup/design/data terms across 8 categories
 /quiz — Daily Quiz (24 categories, Open TDB API, streaks, timer, share score)
+/tools — 22 browser tools: image compress/convert, PDF generators, SIP/EMI/GST/BMI calculators, world clock, pomodoro, flip clock, focus/rain/starfield screens, new tab, quote screen
 /journal — Build journal with mood chips, streaks + 12 achievement badges
 /collections — 16 curated command collections
 /hub — Hub listing page with visual emoji cards (all 9 hubs)

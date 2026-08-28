@@ -62,6 +62,17 @@ Library of Congress, Gutendex, Open Trivia DB, The Trivia API, Quotable, Affirma
 - Data files: src/data/trending-tools.json, src/data/daily-news.json, src/data/trending-prompts.json, src/data/changelog.json
 - Homepage reads trending-tools.json for "This week's free finds" (fallback to DROPS if empty)
 - All workflows support workflow_dispatch for manual triggers
+- daily-content.yml: fetches ZenQuotes + Art Institute Chicago artwork daily
+
+## Free Tools (/tools)
+- 22 browser-based utility tools, all client-side, no uploads
+- File tools: image-compress, image-convert, images-to-pdf (jsPDF), html-to-pdf, markdown-to-html, csv-to-json
+- Calculators: sip-calculator, emi-calculator, gst-calculator, bmi-calculator, percentage, age-calculator
+- Time: world-clock (12 cities), pomodoro (25/5/15), countdown (save up to 5)
+- Screens: flip-clock, focus-screen, rain-screen, starfield, new-tab, quote-screen
+- Index page at /tools with 4 grouped sections and "No upload" badges
+- Tool routes: /tools/[slug] — each a separate static route file
+- jsPDF library used for images-to-pdf (installed via bun)
 
 ## Design Tokens
 bg: #0d1117 | surface: #161b22 | surface-raised: #21262d
