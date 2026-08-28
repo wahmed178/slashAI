@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -57,15 +57,17 @@ export function SplashScreen({ onDone, minDuration = 2200 }: SplashScreenProps) 
     return () => clearInterval(interval);
   }, []);
 
-  // Auto-dismiss after minDuration
+  // Auto-dismiss after minDuration — use ref to avoid timer reset on re-render
+  const onDoneRef = useRef(onDone);
+  onDoneRef.current = onDone;
   useEffect(() => {
     const timer = setTimeout(() => {
       try { localStorage.setItem("slashai-visited", "true"); } catch {}
       setExiting(true);
-      setTimeout(() => onDone(), 400);
+      setTimeout(() => onDoneRef.current(), 400);
     }, minDuration);
     return () => clearTimeout(timer);
-  }, [onDone, minDuration]);
+  }, [minDuration]);
 
   // Early dismiss if splash was already dismissed (safety net)
   useEffect(() => {
