@@ -1,0 +1,22 @@
+name: Daily News Update
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run fetch script
+        run: node scripts/fetch-daily-news.cjs
+      - name: Commit and push
+        run: |
+          git config user.name "SlashAI Bot"
+          git config user.email "bot@slashai.app"
+          git add src/data/daily-news.json
+          git diff --staged --quiet || git commit -m "chore(data): daily news $(date +%Y-%m-%d)"
+          git push

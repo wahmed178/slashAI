@@ -1,0 +1,38 @@
+{
+  "updated": "2026-08-28",
+  "week": "2026-W35",
+  "items": [
+    {
+      "name": "Gemini Omni 1.1 Flash",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-omni-1-1-flash/",
+      "description": "294 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Anthropic's best AI model struggles to attract users as chea",
+      "url": "https://www.ft.com/content/5ee49718-c258-4f01-aa32-7e5b76ae5245",
+      "description": "818 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Show HN: OzBrain, a shared brain for knowledge between agent",
+      "url": "https://ozbrain.com",
+      "description": "92 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "GLM-5.3 (open-weight) beat Anthropic/OpenAI models – for 1/5",
+      "url": "https://reinvently.co.uk/tools/ed-o-meter/",
+      "description": "239 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    }
+  ]
+}

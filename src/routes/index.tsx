@@ -47,6 +47,7 @@ import {
 } from "@/lib/commands";
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
+import trendingToolsData from "@/../src/data/trending-tools.json";
 import { personaGreetingName } from "@/lib/personas";
 import { GLOSSARY_TOTAL } from "@/lib/glossary";
 
@@ -361,6 +362,13 @@ function HomePage() {
     return weekly ? dropItems(weekly).slice(0, 6) : [];
   }, []);
 
+  // Auto-updated trending tools from GitHub Actions
+  const trendingTools = useMemo(() => {
+    const items = (trendingToolsData as any).items || [];
+    return items.slice(0, 5);
+  }, []);
+  const trendingUpdated = (trendingToolsData as any).updated || '';
+
   return (
     <AppShell hideHeaderSearch title="SlashAI">
       {showOnboarding && <Onboarding />}
@@ -482,7 +490,7 @@ function HomePage() {
 
       <Section
         title="This week's free finds"
-        hint="Hand-picked, with a last-checked date on every entry."
+        hint={trendingUpdated ? `Auto-updated ${trendingUpdated}` : "Hand-picked, with a last-checked date on every entry."}
         action={
           <Link
             to="/whats-new"
@@ -492,7 +500,32 @@ function HomePage() {
           </Link>
         }
       >
-        <ResourceGrid resources={weeklyFinds} />
+        {trendingTools.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            {trendingTools.map((tool: any, i: number) => (
+              <a
+                key={i}
+                href={tool.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+              >
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-sm font-bold text-primary">
+                  {tool.name?.[0] || '?'}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-semibold text-foreground">{tool.name}</span>
+                  <span className="block truncate text-xs text-muted-foreground">{tool.description}</span>
+                </span>
+                <span className="shrink-0 rounded border border-border bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">
+                  {tool.source}
+                </span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <ResourceGrid resources={weeklyFinds} />
+        )}
       </Section>
 
       {recentCommands.length > 0 && (

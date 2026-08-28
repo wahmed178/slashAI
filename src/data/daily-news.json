@@ -1,0 +1,61 @@
+{
+  "updated": "2026-08-28T21:47:56.578Z",
+  "articles": [
+    {
+      "title": "GLM-5.3 is now open-weight",
+      "url": "https://huggingface.co/zai-org/GLM-5.3",
+      "source": "HackerNews",
+      "score": 490,
+      "publishedAt": "2026-08-28"
+    },
+    {
+      "title": "GUIs should be fully keyboard-driven",
+      "url": "https://ckardaris.com/blog/2026/08/28/keyboard-driven-guis.html",
+      "source": "HackerNews",
+      "score": 447,
+      "publishedAt": "2026-08-28"
+    },
+    {
+      "title": "Htmx 4.0",
+      "url": "https://four.htmx.org/announcements/2026-08-28-htmx-4.0.0-is-released",
+      "source": "HackerNews",
+      "score": 410,
+      "publishedAt": "2026-08-28"
+    },
+    {
+      "title": "U.S. sanctions against the A/I Collective",
+      "url": "https://www.inventati.org/",
+      "source": "HackerNews",
+      "score": 405,
+      "publishedAt": "2026-08-28"
+    },
+    {
+      "title": "Inception-style curved map for turn-by-turn directions",
+      "url": "https://www.orbify.eu/demo/",
+      "source": "HackerNews",
+      "score": 363,
+      "publishedAt": "2026-08-28"
+    },
+    {
+      "title": "Just the rumour of a bug is enough to find an exploit these days",
+      "url": "https://anil.recoil.org/notes/rumour-is-the-exploit",
+      "source": "HackerNews",
+      "score": 188,
+      "publishedAt": "2026-08-28"
+    },
+    {
+      "title": "25,000 Lbs. Of Chicken Products Recalled in 5 States: USDA",
+      "url": "https://www.thehealthy.com/news/chicken-recall-fsis-august-2026/",
+      "source": "HackerNews",
+      "score": 147,
+      "publishedAt": "2026-08-28"
+    },
+    {
+      "title": "Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment",
+      "url": "https://arxiv.org/abs/2608.23691",
+      "source": "HackerNews",
+      "score": 60,
+      "publishedAt": "2026-08-28"
+    }
+  ]
+}
