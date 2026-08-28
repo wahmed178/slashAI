@@ -1,0 +1,63 @@
+name: Daily Content Update
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Fetch daily content
+        run: |
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+          async function main() {
+            let quote = { q: '', a: '' };
+            let advice = '';
+            let artwork = { title: '', artist: '', image_id: '' };
+            try {
+              const r = await fetch('https://zenquotes.io/api/random', { signal: AbortSignal.timeout(8000) });
+              const d = await r.json();
+              if (d?.[0]) { quote = d[0]; }
+            } catch (e) { console.log('Quote fetch failed:', e.message); }
+            try {
+              const r = await fetch('https://api.adviceslip.com/advice', { signal: AbortSignal.timeout(8000) });
+              const d = await r.json();
+              advice = d.slip?.advice || '';
+            } catch (e) { console.log('Advice fetch failed:', e.message); }
+            try {
+              const page = Math.floor(Date.now() / 86400000) % 1000 + 1;
+              const r = await fetch(
+                'https://api.artic.edu/api/v1/artworks?limit=1&page=' + page +
+                '&fields=id,title,artist_display,image_id',
+                { signal: AbortSignal.timeout(8000) }
+              );
+              const d = await r.json();
+              if (d.data?.[0]) artwork = d.data[0];
+            } catch (e) { console.log('Art fetch failed:', e.message); }
+            const data = {
+              updated: new Date().toISOString().split('T')[0],
+              quote: { text: quote.q || '', author: quote.a || '' },
+              advice: advice,
+              artwork: { title: artwork.title || '', artist: artwork.artist_display || '', imageId: artwork.image_id || '' }
+            };
+            fs.writeFileSync(
+              path.join(__dirname, '../../src/data/daily-content.json'),
+              JSON.stringify(data, null, 2)
+            );
+            console.log('Done:', (quote.q || '').slice(0, 60));
+          }
+          main();
+          "
+      - name: Commit
+        run: |
+          git config user.name "SlashAI Bot"
+          git config user.email "bot@slashai.app"
+          git add src/data/daily-content.json
+          git diff --staged --quiet || git commit -m "chore(data): daily content $(date +%Y-%m-%d)"
+          git push

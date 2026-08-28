@@ -440,7 +440,7 @@ function HomePage() {
           ["/roadmaps", "\u{1F5FA}\u{FE0F}", "Roadmaps", "20 guides"],
           ["/live", "\u{1F4E1}", "Live", "News & scores"],
           ["/glossary", "\u{1F4D6}", "Glossary", `${GLOSSARY_TOTAL}+ terms`],
-          ["/movies", "\u{1F3AC}", "Movies", "Film finder"],
+          ["/tools", "\u{1F527}", "Tools", "22 free browser utilities"],
           ["/quiz", "\u{1F9E0}", "Quiz", "Daily brain challenge"],
           ["/discover", "\u{1F9ED}", "Discover", "Tools & APIs"],
         ] as const).map(([to, emoji, label, sub]) => (

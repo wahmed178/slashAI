@@ -110,7 +110,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
       { to: "/generators", label: "Founder tools", icon: Rocket },
       { to: "/roadmaps", label: "Founder roadmaps", icon: RouteIcon },
       { to: "/journal", label: "Build journal", icon: NotebookPen },
-      { to: "/tools", label: "AI tools directory", icon: Wrench },
+      { to: "/tools", label: "Free Tools", icon: Wrench },
       { to: "/assistant", label: "Assistant", icon: Bot },
     ],
   },
