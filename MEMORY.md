@@ -27,7 +27,7 @@ Built on Lovable, deployed on Vercel.
 - Android app: Capacitor (loads Vercel URL in WebView)
 
 ## Pages (as of Aug 2026)
-/ — Homepage with hero, stats bar, feature cards, icon card grid, emoji chips, collection cards, hub cards, weekly digest, footer
+/ — Homepage with live ticker (NIFTY/SENSEX/BTC/ETH/USD/prayer/weather), hero, stats bar, feature cards, icon card grid, emoji chips, collection cards, hub cards, weekly digest, footer
 /search — Full command search (5,635 commands)
 /find — Advanced keyword search
 /explore — 45 categories, 379 subcategories
@@ -72,6 +72,7 @@ Built on Lovable, deployed on Vercel.
 - Theme toggle: Sun/Moon icon in desktop header only
 - Splash screen: first-visit only via localStorage "slashai-visited"
 - SITE_VERSION: 2.7.0 (used by WhatsNewDialog popup)
+- LiveTicker: src/components/library/LiveTicker.tsx — fetches NIFTY, SENSEX, BTC, ETH, USD/INR, prayer, weather with localStorage caching
 - FOUC prevention: inline script in <head> applies theme before paint
 - Scroll reset: to top on every route change
 - Smooth scroll: scroll-behavior: smooth + 80px scroll-margin-top

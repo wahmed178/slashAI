@@ -62,6 +62,12 @@ Hub section grouping: HUB_SECTION_MAP in src/routes/hub.$audience.tsx
 - Each hub has named sections with icon + title + match function
 - Unmatched resources go into "More Resources" fallback
 
+LiveTicker: src/components/library/LiveTicker.tsx
+- Client-side fetch: NIFTY (Yahoo), SENSEX (Yahoo), BTC/ETH (CoinGecko), USD/INR (open.er-api), Prayer (Aladhan), Weather (Open-Meteo)
+- Each data point cached in localStorage with different TTLs
+- CSS ticker animation: 40s linear infinite, pauses on hover
+- Skeleton shimmer while loading, fails gracefully (skips missing items)
+
 ## Motion & Animation
 - page-enter: 200ms fade+slide on main content wrappers
 - shimmer: skeleton loading blocks with gradient animation
