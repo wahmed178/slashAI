@@ -172,7 +172,7 @@ function HubPage() {
         tags: r.tags,
       }))
     : audienceResources(hub.audience);
-  const sectionDefs = HUB_SECTION_MAP[hub.audience] || [];
+  const sectionDefs = HUB_SECTION_MAP[slug] || [];
 
   /* group resources into sections, with an "Other" fallback */
   const grouped = useMemo(() => {
