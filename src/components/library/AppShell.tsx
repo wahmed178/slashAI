@@ -14,7 +14,6 @@ import {
   Menu,
   ChevronLeft,
   ChevronDown,
-  FolderKanban,
   Terminal,
   Layers,
   Wrench,
@@ -79,30 +78,96 @@ const DISCOVER_CHILDREN = [
   { section: "tips", label: "Tips & Tricks", icon: Lightbulb },
 ] as const;
 
-const SECONDARY = [
-  { to: "/explore", label: "Commands", icon: Terminal },
-  { to: "/assistant", label: "Assistant", icon: Bot },
-  { to: "/generators", label: "Founder tools", icon: Rocket },
-  { to: "/roadmaps", label: "Founder roadmaps", icon: RouteIcon },
-  { to: "/journal", label: "Build journal", icon: NotebookPen },
-  { to: "/tools", label: "AI tools directory", icon: Wrench },
-  { to: "/glossary", label: "AI Glossary", icon: BookOpen },
-  { to: "/find", label: "Advanced search", icon: Wand2 },
-  { to: "/live", label: "Live", icon: Radio },
-  { to: "/youtube", label: "YouTube & Music", icon: Youtube },
-  { to: "/movies", label: "Movies", icon: Film },
-  { to: "/collections", label: "Collections", icon: Layers },
-  { to: "/play", label: "Play", icon: Dices },
+/** Sidebar groups — organized into collapsible sections */
+interface SidebarItem {
+  to: string;
+  label: string;
+  icon: typeof Terminal;
+}
+interface SidebarGroup {
+  id: string;
+  label: string;
+  icon: typeof Terminal;
+  children: SidebarItem[];
+}
 
-  { to: "/recent", label: "Recent", icon: History },
-  { to: "/me", label: "Me", icon: UserRound },
-  { to: "/settings", label: "Settings", icon: SettingsIcon },
-  { to: "/about", label: "About", icon: Info },
-  { to: "/trending", label: "Trending /commands", icon: Flame },
-  { to: "/changelog", label: "Changelog", icon: Info },
-  { to: "/glass", label: "✦ Glass", icon: Sparkles },
-  { to: "/hub", label: "Hubs", icon: Globe },
-  { to: "/hub/islam", label: "Islam Hub", icon: Globe },
+const SIDEBAR_GROUPS: SidebarGroup[] = [
+  {
+    id: "commands",
+    label: "Commands",
+    icon: Terminal,
+    children: [
+      { to: "/explore", label: "Explore all", icon: SearchIcon },
+      { to: "/trending", label: "Trending /commands", icon: Flame },
+      { to: "/find", label: "Advanced search", icon: Wand2 },
+    ],
+  },
+  {
+    id: "build",
+    label: "Build",
+    icon: Rocket,
+    children: [
+      { to: "/generators", label: "Founder tools", icon: Rocket },
+      { to: "/roadmaps", label: "Founder roadmaps", icon: RouteIcon },
+      { to: "/journal", label: "Build journal", icon: NotebookPen },
+      { to: "/tools", label: "AI tools directory", icon: Wrench },
+      { to: "/assistant", label: "Assistant", icon: Bot },
+    ],
+  },
+  {
+    id: "learn",
+    label: "Learn",
+    icon: BookOpen,
+    children: [
+      { to: "/glossary", label: "AI Glossary", icon: BookOpen },
+      { to: "/collections", label: "Collections", icon: Layers },
+      { to: "/alternatives", label: "Free alternatives", icon: Wand2 },
+    ],
+  },
+  {
+    id: "hubs",
+    label: "Hubs",
+    icon: LayoutGrid,
+    children: [
+      { to: "/hub/students", label: "Students", icon: GraduationCap },
+      { to: "/hub/developers", label: "Developers", icon: Terminal },
+      { to: "/hub/creators", label: "Creators", icon: Sparkles },
+      { to: "/hub/professionals", label: "Professionals", icon: UserRound },
+      { to: "/hub/islam", label: "Islam Hub", icon: Globe },
+    ],
+  },
+  {
+    id: "live",
+    label: "Live & Media",
+    icon: Radio,
+    children: [
+      { to: "/live", label: "Live dashboard", icon: Radio },
+      { to: "/youtube", label: "YouTube & Music", icon: Youtube },
+      { to: "/movies", label: "Movies", icon: Film },
+      { to: "/play", label: "Play", icon: Dices },
+    ],
+  },
+  {
+    id: "profile",
+    label: "Profile",
+    icon: UserRound,
+    children: [
+      { to: "/me", label: "Me", icon: UserRound },
+      { to: "/recent", label: "Recent", icon: History },
+      { to: "/favorites", label: "Saved", icon: Bookmark },
+    ],
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    icon: SettingsIcon,
+    children: [
+      { to: "/settings", label: "Settings", icon: SettingsIcon },
+      { to: "/about", label: "About", icon: Info },
+      { to: "/changelog", label: "Changelog", icon: Info },
+      { to: "/glass", label: "✦ Glass", icon: Sparkles },
+    ],
+  },
 ] as const;
 
 interface Props {
@@ -139,140 +204,84 @@ function BackButton({ to, label }: { to: string; label: string }) {
   );
 }
 
-const IDEA_CHILDREN = [
-  { to: "/build-ideas", label: "Browse ideas", icon: Lightbulb },
-  { to: "/build-ideas/validate", label: "Validate an idea", icon: Sparkles },
-  { to: "/build-ideas/projects", label: "My projects", icon: FolderKanban },
-] as const;
-
 const subLinkCls =
   "flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground";
 
 function NavList({
   onNavigate,
-  showSecondary = true,
 }: {
   onNavigate?: () => void;
-  showSecondary?: boolean;
 }) {
   const { favorites, recents } = useLibrary();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [discoverOpen, setDiscoverOpen] = useState(() => pathname.startsWith("/discover"));
-  const [ideasOpen, setIdeasOpen] = useState(() => pathname.startsWith("/build-ideas"));
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const g of SIDEBAR_GROUPS) {
+      // Auto-expand groups that contain the current route
+      if (g.children.some((c) => pathname.startsWith(c.to))) {
+        initial[g.id] = true;
+      }
+    }
+    return initial;
+  });
   const counts: Record<string, number> = {
     "/favorites": favorites.length,
     "/recent": recents.length,
   };
+
+  const toggleGroup = (id: string) => setOpenGroups((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const cls =
     "flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none";
 
   return (
     <nav className="space-y-1" aria-label="Primary">
-      {PRIMARY.map((item) => (
-        <div key={item.to}>
-          <div className="flex items-center gap-1">
-            <Link
-              to={item.to}
-              activeOptions={{ exact: item.exact, includeSearch: false }}
-              activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-              onClick={onNavigate}
-              className={cn(cls, "flex-1")}
-            >
-              <item.icon className="size-4.5 shrink-0" aria-hidden />
-              {item.label}
-              {counts[item.to] ? (
-                <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
-              ) : null}
-            </Link>
-            {item.to === "/discover" && (
-              <button
-                type="button"
-                aria-expanded={discoverOpen}
-                aria-controls="discover-subnav"
-                aria-label={discoverOpen ? "Collapse Discover" : "Expand Discover"}
-                onClick={() => setDiscoverOpen((v) => !v)}
-                className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none"
-              >
-                <ChevronDown
-                  className={cn(
-                    "size-4 transition-transform duration-200",
-                    !discoverOpen && "-rotate-90",
-                  )}
-                  aria-hidden
-                />
-              </button>
-            )}
-          </div>
-          {item.to === "/discover" && discoverOpen && (
-            <div
-              id="discover-subnav"
-              className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2"
-            >
-              {DISCOVER_CHILDREN.map((child) => (
-                <Link
-                  key={child.section}
-                  to="/discover/$section"
-                  params={{ section: child.section }}
-                  activeProps={{ className: "text-sidebar-accent-foreground" }}
-                  onClick={onNavigate}
-                  className={subLinkCls}
-                >
-                  <child.icon className="size-4 shrink-0" aria-hidden />
-                  {child.label}
-                </Link>
-              ))}
-              <Link
-                to="/radar"
-                activeProps={{ className: "text-sidebar-accent-foreground" }}
-                onClick={onNavigate}
-                className={subLinkCls}
-              >
-                <Radar className="size-4 shrink-0" aria-hidden />
-                Free Radar
-              </Link>
-            </div>
-          )}
-        </div>
-      ))}
+      {/* ── Home ── */}
+      <Link
+        to="/"
+        activeOptions={{ exact: true, includeSearch: false }}
+        activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
+        onClick={onNavigate}
+        className={cls}
+      >
+        <Home className="size-4.5 shrink-0" aria-hidden />
+        Home
+      </Link>
 
-      {/* Build Ideas — its own collapsible group */}
+      {/* ── Discover (top-level, collapsible categories) ── */}
       <div>
         <div className="flex items-center gap-1">
           <Link
-            to="/build-ideas"
+            to="/discover"
             activeOptions={{ exact: true, includeSearch: false }}
             activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
             onClick={onNavigate}
             className={cn(cls, "flex-1")}
           >
-            <Lightbulb className="size-4.5 shrink-0" aria-hidden />
-            Build Ideas
+            <Compass className="size-4.5 shrink-0" aria-hidden />
+            Discover
           </Link>
           <button
             type="button"
-            aria-expanded={ideasOpen}
-            aria-controls="ideas-subnav"
-            aria-label={ideasOpen ? "Collapse Build Ideas" : "Expand Build Ideas"}
-            onClick={() => setIdeasOpen((v) => !v)}
+            aria-expanded={discoverOpen}
+            aria-label={discoverOpen ? "Collapse Discover" : "Expand Discover"}
+            onClick={() => setDiscoverOpen((v) => !v)}
             className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none"
           >
             <ChevronDown
-              className={cn("size-4 transition-transform duration-200", !ideasOpen && "-rotate-90")}
+              className={cn("size-4 transition-transform duration-200", !discoverOpen && "-rotate-90")}
               aria-hidden
             />
           </button>
         </div>
-        {ideasOpen && (
-          <div
-            id="ideas-subnav"
-            className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2"
-          >
-            {IDEA_CHILDREN.map((child) => (
+        {discoverOpen && (
+          <div className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
+            {DISCOVER_CHILDREN.map((child) => (
               <Link
-                key={child.to}
-                to={child.to}
-                activeOptions={{ exact: true, includeSearch: false }}
+                key={child.section}
+                to="/discover/$section"
+                params={{ section: child.section }}
                 activeProps={{ className: "text-sidebar-accent-foreground" }}
                 onClick={onNavigate}
                 className={subLinkCls}
@@ -281,30 +290,85 @@ function NavList({
                 {child.label}
               </Link>
             ))}
+            <Link
+              to="/radar"
+              activeProps={{ className: "text-sidebar-accent-foreground" }}
+              onClick={onNavigate}
+              className={subLinkCls}
+            >
+              <Radar className="size-4 shrink-0" aria-hidden />
+              Free Radar
+            </Link>
           </div>
         )}
       </div>
 
-      {showSecondary && (
-        <>
-          <div className="my-2 border-t border-sidebar-border" role="presentation" />
-          {SECONDARY.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-              onClick={onNavigate}
-              className={cls}
+      {/* ── Saved ── */}
+      <Link
+        to="/favorites"
+        activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
+        onClick={onNavigate}
+        className={cls}
+      >
+        <Bookmark className="size-4.5 shrink-0" aria-hidden />
+        Saved
+        {counts["/favorites"] ? (
+          <span className="ml-auto text-xs text-muted-foreground">{counts["/favorites"]}</span>
+        ) : null}
+      </Link>
+
+      <div className="my-1.5 border-t border-sidebar-border" role="presentation" />
+
+      {/* ── Grouped sections ── */}
+      {SIDEBAR_GROUPS.map((group) => {
+        const isOpen = openGroups[group.id] ?? false;
+        const isGroupActive = group.children.some((c) =>
+          c.to === "/" ? pathname === "/" : pathname.startsWith(c.to),
+        );
+        return (
+          <div key={group.id}>
+            <button
+              type="button"
+              onClick={() => toggleGroup(group.id)}
+              className={cn(
+                "flex min-h-10 w-full items-center gap-2.5 rounded-lg px-3 text-xs font-semibold uppercase tracking-wider transition-colors hover:bg-sidebar-accent/40",
+                isGroupActive ? "text-sidebar-accent-foreground" : "text-muted-foreground/70",
+              )}
             >
-              <item.icon className="size-4.5 shrink-0" aria-hidden />
-              {item.label}
-              {counts[item.to] ? (
-                <span className="ml-auto text-xs text-muted-foreground">{counts[item.to]}</span>
-              ) : null}
-            </Link>
-          ))}
-        </>
-      )}
+              <group.icon className="size-3.5 shrink-0" aria-hidden />
+              <span className="flex-1 text-left">{group.label}</span>
+              <ChevronDown
+                className={cn("size-3.5 transition-transform duration-200", !isOpen && "-rotate-90")}
+                aria-hidden
+              />
+            </button>
+            {isOpen && (
+              <div className="mt-0.5 ml-3 space-y-0.5 border-l border-sidebar-border pl-2">
+                {group.children.map((child) => (
+                  <Link
+                    key={child.to}
+                    to={child.to}
+                    activeProps={{ className: "text-sidebar-accent-foreground" }}
+                    onClick={onNavigate}
+                    className={cn(
+                      subLinkCls,
+                      counts[child.to] && "justify-between",
+                    )}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <child.icon className="size-4 shrink-0" aria-hidden />
+                      {child.label}
+                    </span>
+                    {counts[child.to] ? (
+                      <span className="text-xs text-muted-foreground">{counts[child.to]}</span>
+                    ) : null}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </nav>
   );
 }
