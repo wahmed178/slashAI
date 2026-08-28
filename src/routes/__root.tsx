@@ -8,7 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -17,7 +17,7 @@ import { LibraryProvider } from "@/hooks/use-library";
 import { KeyboardShortcutsProvider } from "@/lib/keyboard-shortcuts.tsx";
 import { Toaster } from "@/components/ui/sonner";
 import { WhatsNewDialog } from "@/components/library/WhatsNewDialog";
-import { SplashScreen } from "@/components/library/SplashScreen";
+
 
 function NotFoundComponent() {
   return (
@@ -145,10 +145,6 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [showSplash, setShowSplash] = useState(() => {
-    try { return localStorage.getItem("slashai-visited") !== "true"; }
-    catch { return true; }
-  });
 
   useEffect(() => {
     registerServiceWorker();
@@ -168,7 +164,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LibraryProvider>
         <KeyboardShortcutsProvider>
-        {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
+        {/* Splash removed — was causing infinite loading */}
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <WhatsNewDialog />
