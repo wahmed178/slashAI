@@ -6,6 +6,11 @@ import { EmptyState } from "@/components/library/CommandGrid";
 import { ResourceCardEnhanced } from "@/components/library/ResourceCardEnhanced";
 import { Button } from "@/components/ui/button";
 import { audienceResources, type Audience, type Resource } from "@/lib/resources";
+import { FOUNDERS_RESOURCES } from "@/lib/hub-founders";
+import { INDIA_RESOURCES } from "@/lib/hub-india";
+import { FINANCE_RESOURCES } from "@/lib/hub-finance";
+import { HEALTH_RESOURCES } from "@/lib/hub-health";
+import type { HubResource } from "@/lib/hub-founders";
 
 /* ──────────── section grouping for each hub ──────────── */
 interface HubSection {
@@ -143,7 +148,30 @@ function HubNotFound() {
 
 function HubPage() {
   const { hub } = Route.useLoaderData();
-  const allResources = audienceResources(hub.audience);
+  const slug = hub.audience.toLowerCase();
+  // Use dedicated data files for new hubs, audienceResources for existing ones
+  const dedicatedMap: Record<string, HubResource[]> = {
+    founders: FOUNDERS_RESOURCES,
+    india: INDIA_RESOURCES,
+    finance: FINANCE_RESOURCES,
+    health: HEALTH_RESOURCES,
+  };
+  const dedicated = dedicatedMap[slug];
+  const allResources: Resource[] = dedicated
+    ? dedicated.map((r) => ({
+        ...r,
+        type: r.type as Resource["type"],
+        section: "resources" as const,
+        subcategory: r.category,
+        audience: [hub.audience as Audience],
+        platform: [],
+        addedDate: "2026-08-27",
+        lastUpdated: "2026-08-27",
+        lastVerified: r.lastVerified,
+        status: "Active" as const,
+        tags: r.tags,
+      }))
+    : audienceResources(hub.audience);
   const sectionDefs = HUB_SECTION_MAP[hub.audience] || [];
 
   /* group resources into sections, with an "Other" fallback */
