@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
+import { LiveTicker } from "@/components/library/LiveTicker";
 import { SearchBox } from "@/components/library/SearchBox";
 import { Discover } from "@/components/library/Discover";
 import { Onboarding } from "@/components/library/Onboarding";
@@ -362,6 +363,9 @@ function HomePage() {
   return (
     <AppShell hideHeaderSearch title="SlashAI">
       {showOnboarding && <Onboarding />}
+
+      {/* ─── Live Ticker ─── */}
+      <LiveTicker />
 
       {/* ─── Hero Section ─── */}
       <section className="relative overflow-hidden rounded-2xl bg-surface p-6 pt-8 sm:p-8 hero-dots">
