@@ -59,7 +59,7 @@ const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
   { to: "/discover", label: "Discover", icon: Compass, exact: false },
-  { to: "/tools", label: "Tools", icon: Wrench, exact: false },
+  { to: "/tools", label: "SlashKits", icon: Wrench, exact: false },
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
 ] as const;
 
