@@ -594,6 +594,52 @@ function HomePage() {
         </div>
       </Section>
 
+      {/* ─── SlashAI Tools (Free) ─── */}
+      <Section
+        title="SlashAI Tools"
+        hint="22 free browser tools — calculators, converters, screensavers. No upload, no account."
+        action={
+          <Link
+            to="/tools"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            All tools <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
+      >
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+          {([
+            { to: "/tools/image-compress", emoji: "\u{1F5BC}\u{FE0F}", title: "Image Compressor", desc: "Reduce image size" },
+            { to: "/tools/sip-calculator", emoji: "\u{1F4B0}", title: "SIP Calculator", desc: "Mutual fund returns" },
+            { to: "/tools/gst-calculator", emoji: "\u{1F9FE}", title: "GST Calculator", desc: "Add/remove GST" },
+            { to: "/tools/world-clock", emoji: "\u{1F30D}", title: "World Clock", desc: "12 cities live" },
+            { to: "/tools/pomodoro", emoji: "\u{1F345}", title: "Pomodoro Timer", desc: "25/5/15 focus" },
+            { to: "/tools/flip-clock", emoji: "\u{23F1}\u{FE0F}", title: "Flip Clock", desc: "Full-screen retro" },
+            { to: "/tools/csv-to-json", emoji: "\u{1F4CA}", title: "CSV \u2194 JSON", desc: "Bi-directional" },
+            { to: "/tools/new-tab", emoji: "\u{1F3E0}", title: "New Tab", desc: "Beautiful homepage" },
+          ]).map((tool) => (
+            <Link
+              key={tool.to}
+              to={tool.to}
+              className="group flex items-center gap-3 rounded-[10px] border border-[#30363d] bg-[#161b22] p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+            >
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#21262d] text-[22px]" aria-hidden>{tool.emoji}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[13px] font-semibold text-[#e6edf3]">{tool.title}</span>
+                <span className="block text-[11px] text-[#8b949e] truncate">{tool.desc}</span>
+              </span>
+              <ArrowRight className="size-4 shrink-0 text-[#8b949e] transition-transform duration-150 group-hover:translate-x-1 group-hover:text-[#e6edf3]" aria-hidden />
+            </Link>
+          ))}
+        </div>
+        <Link
+          to="/tools"
+          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#58a6ff] transition-colors hover:text-[#79c0ff]"
+        >
+          See all 22 tools <ArrowRight className="size-4" aria-hidden />
+        </Link>
+      </Section>
+
       <Section title="Hubs" hint="Everything gathered for one kind of person.">
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
           {([
