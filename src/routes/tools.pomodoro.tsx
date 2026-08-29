@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Play, Pause, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/tools/pomodoro")({
-  head: () => ({ meta: [{ title: "Pomodoro Timer \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Pomodoro Timer — SlashAI" }] }),
   component: Pomodoro,
 });
 

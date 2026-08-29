@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Download, RotateCcw, GripVertical, X } from "lucide-react";
 
 export const Route = createFileRoute("/tools/images-to-pdf")({
-  head: () => ({ meta: [{ title: "Images to PDF \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Images to PDF — SlashAI" }] }),
   component: ImagesToPdf,
 });
 

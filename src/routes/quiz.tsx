@@ -241,7 +241,7 @@ async function fetchCategories(): Promise<{ id: number; name: string }[]> {
 export const Route = createFileRoute("/quiz")({
   head: () => ({
     meta: [
-      { title: "Daily Quiz \u2014 SlashAI" },
+      { title: "Daily Quiz — SlashAI" },
       { name: "description", content: "Test your knowledge with daily trivia quizzes across 24 categories. Fresh questions every day." },
     ],
   }),
@@ -613,7 +613,7 @@ function CategoryPicker({
           Daily Quiz
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          Pick a category \u2014 fresh questions every day.
+          Pick a category — fresh questions every day.
         </p>
         <span className="mt-2 inline-flex items-center rounded border border-border bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">
           Questions reset daily at midnight
@@ -628,7 +628,7 @@ function CategoryPicker({
             {streak.count} day streak
           </span>
         ) : (
-          <span className="text-sm text-muted-foreground">Start your streak today \u2192</span>
+          <span className="text-sm text-muted-foreground">Start your streak today →</span>
         )}
         {streak.best > 0 && (
           <span className="text-[11px] text-muted-foreground">Best: {streak.best} days</span>
@@ -868,7 +868,7 @@ function QuizInProgress({
               onClick={onNext}
               className="min-h-[36px] rounded-lg border border-border bg-surface-elevated px-4 text-sm font-medium text-foreground transition-colors hover:text-primary"
             >
-              {currentQ + 1 >= questions.length ? "See results" : "Next \u2192"}
+              {currentQ + 1 >= questions.length ? "See results" : "Next →"}
             </button>
           </div>
         )}
@@ -1001,7 +1001,7 @@ function ResultsScreen({
           className="min-h-[44px] rounded-lg border border-primary bg-accent px-5 text-sm font-medium text-foreground transition-colors hover:text-primary"
         >
           <RotateCcw className="mr-1.5 inline size-4" aria-hidden />
-          Play again \u2014 same category
+          Play again — same category
         </button>
         <button
           type="button"

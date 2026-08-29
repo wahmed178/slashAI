@@ -10,7 +10,7 @@ const TEMPLATES: Record<string, string> = {
 };
 
 export const Route = createFileRoute("/tools/html-to-pdf")({
-  head: () => ({ meta: [{ title: "HTML to PDF \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "HTML to PDF — SlashAI" }] }),
   component: HtmlToPdf,
 });
 
@@ -51,7 +51,7 @@ function HtmlToPdf() {
       </div>
       {showPreview && html && (
         <div className="mt-4 rounded-xl border border-border bg-surface p-2">
-          <p className="mb-2 text-[11px] text-muted-foreground">Preview \u2014 Use browser print dialog to save as PDF</p>
+          <p className="mb-2 text-[11px] text-muted-foreground">Preview — Use browser print dialog to save as PDF</p>
           <iframe ref={iframeRef} srcDoc={html} className="h-[500px] w-full rounded-lg border border-border bg-white" title="Preview" />
         </div>
       )}

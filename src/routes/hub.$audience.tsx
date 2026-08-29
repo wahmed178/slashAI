@@ -112,14 +112,14 @@ export const Route = createFileRoute("/hub/$audience")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Unavailable \u2014 SlashAI" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Unavailable — SlashAI" }, { name: "robots", content: "noindex" }] };
     }
     const { hub } = loaderData;
     return {
       meta: [
-        { title: `${hub.title} \u2014 free curated resources | SlashAI` },
+        { title: `${hub.title} — free curated resources | SlashAI` },
         { name: "description", content: hub.blurb },
-        { property: "og:title", content: `${hub.title} \u2014 SlashAI` },
+        { property: "og:title", content: `${hub.title} — SlashAI` },
         { property: "og:description", content: hub.blurb },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary" },

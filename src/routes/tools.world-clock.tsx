@@ -18,7 +18,7 @@ const CITIES = [
 ];
 
 export const Route = createFileRoute("/tools/world-clock")({
-  head: () => ({ meta: [{ title: "World Clock \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "World Clock — SlashAI" }] }),
   component: WorldClock,
 });
 

@@ -9,7 +9,7 @@ Bob,35,Delhi
 Charlie,22,Bangalore`;
 
 export const Route = createFileRoute("/tools/csv-to-json")({
-  head: () => ({ meta: [{ title: "CSV to JSON \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "CSV to JSON — SlashAI" }] }),
   component: CsvToJson,
 });
 
@@ -69,12 +69,12 @@ function CsvToJson() {
         <button type="button" onClick={() => setMode("csv-to-json")}
           className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium transition-colors"
           style={{ background: mode === "csv-to-json" ? "#58a6ff" : "#21262d", borderColor: mode === "csv-to-json" ? "transparent" : "#30363d", color: mode === "csv-to-json" ? "#0d1117" : "#8b949e" }}>
-          CSV \u2192 JSON
+          CSV → JSON
         </button>
         <button type="button" onClick={() => setMode("json-to-csv")}
           className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium transition-colors"
           style={{ background: mode === "json-to-csv" ? "#58a6ff" : "#21262d", borderColor: mode === "json-to-csv" ? "transparent" : "#30363d", color: mode === "json-to-csv" ? "#0d1117" : "#8b949e" }}>
-          JSON \u2192 CSV
+          JSON → CSV
         </button>
       </div>
       {mode === "csv-to-json" && (

@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/bmi-calculator")({
-  head: () => ({ meta: [{ title: "BMI Calculator \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "BMI Calculator — SlashAI" }] }),
   component: BmiCalculator,
 });
 

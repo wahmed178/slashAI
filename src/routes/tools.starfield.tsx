@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/tools/starfield")({
-  head: () => ({ meta: [{ title: "Starfield \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Starfield — SlashAI" }] }),
   component: Starfield,
 });
 

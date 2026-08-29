@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/tools/focus-screen")({
-  head: () => ({ meta: [{ title: "Focus Screen \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Focus Screen — SlashAI" }] }),
   component: FocusScreen,
 });
 
@@ -67,7 +67,7 @@ function FocusScreen() {
       {quote && (
         <div className="mt-6 max-w-md text-center px-8">
           <p className="text-base italic text-muted-foreground">"{quote.text}"</p>
-          <p className="mt-2 text-sm text-muted-foreground/60">\u2014 {quote.author}</p>
+          <p className="mt-2 text-sm text-muted-foreground/60">— {quote.author}</p>
         </div>
       )}
 

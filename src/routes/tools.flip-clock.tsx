@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/flip-clock")({
-  head: () => ({ meta: [{ title: "Flip Clock \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Flip Clock — SlashAI" }] }),
   component: FlipClock,
 });
 

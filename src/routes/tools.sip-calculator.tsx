@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/sip-calculator")({
-  head: () => ({ meta: [{ title: "SIP Calculator \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "SIP Calculator — SlashAI" }] }),
   component: SipCalculator,
 });
 

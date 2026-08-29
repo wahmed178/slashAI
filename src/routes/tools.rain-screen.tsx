@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/tools/rain-screen")({
-  head: () => ({ meta: [{ title: "Rain Screen \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Rain Screen — SlashAI" }] }),
   component: RainScreen,
 });
 

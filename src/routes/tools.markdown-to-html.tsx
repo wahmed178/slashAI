@@ -6,7 +6,7 @@ import { Copy, Download, Check } from "lucide-react";
 const EXAMPLE = `# Hello World\n\nThis is **bold** and this is *italic*.\n\n- Item 1\n- Item 2\n- Item 3\n\n> A blockquote\n\n\`\`\`js\nconsole.log("Hello");\n\`\`\``;
 
 export const Route = createFileRoute("/tools/markdown-to-html")({
-  head: () => ({ meta: [{ title: "Markdown to HTML \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Markdown to HTML — SlashAI" }] }),
   component: MarkdownToHtml,
 });
 

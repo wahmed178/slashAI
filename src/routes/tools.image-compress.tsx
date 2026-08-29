@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Download, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/tools/image-compress")({
-  head: () => ({ meta: [{ title: "Image Compressor \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Image Compressor — SlashAI" }] }),
   component: ImageCompress,
 });
 

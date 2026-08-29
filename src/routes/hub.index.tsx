@@ -5,7 +5,7 @@ import { AppShell } from "@/components/library/AppShell";
 export const Route = createFileRoute("/hub/")({
   head: () => ({
     meta: [
-      { title: "Hubs \u2014 SlashAI" },
+      { title: "Hubs — SlashAI" },
       { name: "description", content: "Role-based hubs with curated resources for every type of builder." },
     ],
   }),
@@ -17,7 +17,7 @@ const HUBS = [
   { audience: "developers", label: "Developer Hub", icon: Code, desc: "APIs, tools, and tutorials for devs", count: "80+", built: true },
   { audience: "creators", label: "Creator Hub", icon: Paintbrush, desc: "Content creation tools and channels", count: "40+", built: true },
   { audience: "professionals", label: "Professional Hub", icon: Briefcase, desc: "Productivity tools for working professionals", count: "50+", built: true },
-  { audience: "founders", label: "Founder Hub", icon: Rocket, desc: "Validate, build, ship, grow \u2014 from idea to revenue", count: "30+", built: true },
+  { audience: "founders", label: "Founder Hub", icon: Rocket, desc: "Validate, build, ship, grow — from idea to revenue", count: "30+", built: true },
   { audience: "india", label: "India Hub", icon: IndianRupee, desc: "Free tools, courses and APIs for Indian builders", count: "25+", built: true },
   { audience: "finance", label: "Finance Hub", icon: TrendingUp, desc: "Investing, personal finance, and crypto tools", count: "20+", built: true },
   { audience: "designers", label: "Designers Hub", icon: Paintbrush, desc: "Free design tools, assets and learning", count: "15+", built: true },

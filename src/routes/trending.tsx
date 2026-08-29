@@ -127,7 +127,7 @@ export const Route = createFileRoute("/trending")({
       { title: "Trending on SlashAI" },
       {
         name: "description",
-        content: "What people are copying, saving and building with right now \u2014 commands, resources, generators, roadmaps, glossary.",
+        content: "What people are copying, saving and building with right now — commands, resources, generators, roadmaps, glossary.",
       },
     ],
   }),
@@ -198,7 +198,7 @@ function TrendingPage() {
         <section className="mt-5">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Trending /commands</h2>
-            <Link to="/trending" className="text-xs font-medium text-primary hover:underline">See all \u2192</Link>
+            <Link to="/trending" className="text-xs font-medium text-primary hover:underline">See all →</Link>
           </div>
 
           {/* Category filter pills */}
@@ -249,7 +249,7 @@ function TrendingPage() {
         <section className="mt-7">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Trending Resources</h2>
-            <Link to="/discover" className="text-xs font-medium text-primary hover:underline">See all resources \u2192</Link>
+            <Link to="/discover" className="text-xs font-medium text-primary hover:underline">See all resources →</Link>
           </div>
           <div className="mt-3 flex flex-col gap-2">
             {popularResources.map((r) => (
@@ -264,7 +264,7 @@ function TrendingPage() {
         <section className="mt-7">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Founder Generators</h2>
-            <Link to="/generators" className="text-xs font-medium text-primary hover:underline">Use a generator \u2192</Link>
+            <Link to="/generators" className="text-xs font-medium text-primary hover:underline">Use a generator →</Link>
           </div>
           <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
             {GENERATORS.slice(0, 10).map((gen) => (
@@ -278,7 +278,7 @@ function TrendingPage() {
                 <p className="mt-2 text-[14px] font-semibold text-foreground group-hover:text-primary">{gen.title}</p>
                 <p className="mt-0.5 line-clamp-1 text-[12px] text-muted-foreground">{gen.tagline}</p>
                 <span className="mt-auto pt-3 inline-flex h-8 items-center justify-center rounded-md border text-[11px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "#58a6ff" }}>
-                  Use \u2192
+                  Use →
                 </span>
               </Link>
             ))}
@@ -291,7 +291,7 @@ function TrendingPage() {
         <section className="mt-7">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Founder Roadmaps</h2>
-            <Link to="/roadmaps" className="text-xs font-medium text-primary hover:underline">See all roadmaps \u2192</Link>
+            <Link to="/roadmaps" className="text-xs font-medium text-primary hover:underline">See all roadmaps →</Link>
           </div>
           <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {ALL_ROADMAPS.slice(0, 6).map((rm) => {
@@ -308,7 +308,7 @@ function TrendingPage() {
                     {totalSteps} steps \u00b7 {rm.phases.length} phases \u00b7 {rm.duration}
                   </p>
                   <span className="mt-3 inline-flex h-9 items-center justify-center rounded-md border text-[12px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "#58a6ff" }}>
-                    Follow \u2192
+                    Follow →
                   </span>
                 </Link>
               );
@@ -322,7 +322,7 @@ function TrendingPage() {
         <section className="mt-7">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Glossary Spotlight</h2>
-            <Link to="/glossary" className="text-xs font-medium text-primary hover:underline">Explore all {ALL_GLOSSARY.length} terms \u2192</Link>
+            <Link to="/glossary" className="text-xs font-medium text-primary hover:underline">Explore all {ALL_GLOSSARY.length} terms →</Link>
           </div>
           <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {glossarySpotlight.map((term) => (
@@ -345,7 +345,7 @@ function TrendingPage() {
         <section className="mt-7">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Popular Collections</h2>
-            <Link to="/collections" className="text-xs font-medium text-primary hover:underline">See all collections \u2192</Link>
+            <Link to="/collections" className="text-xs font-medium text-primary hover:underline">See all collections →</Link>
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
             {COLLECTIONS.slice(0, 6).map((col) => (
@@ -370,7 +370,7 @@ function TrendingPage() {
         <section className="mt-7 mb-8">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">From the Live Dashboard</h2>
-            <Link to="/live" className="text-xs font-medium text-primary hover:underline">Open Live Dashboard \u2192</Link>
+            <Link to="/live" className="text-xs font-medium text-primary hover:underline">Open Live Dashboard →</Link>
           </div>
           <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {[

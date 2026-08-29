@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/emi-calculator")({
-  head: () => ({ meta: [{ title: "EMI Calculator \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "EMI Calculator — SlashAI" }] }),
   component: EmiCalculator,
 });
 

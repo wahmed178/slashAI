@@ -52,7 +52,7 @@ const TOOL_SECTIONS = [
 export const Route = createFileRoute("/tools/")({
   head: () => ({
     meta: [
-      { title: "SlashKit \u2014 Free browser utilities, calculators, screens | SlashAI" },
+      { title: "SlashKit — Free browser utilities, calculators, screens | SlashAI" },
       {      name: "description", content: "SlashKit: 22 free browser tools — image compress, calculators, timers, screensavers. No upload, no account." },
     ],
   }),
@@ -102,7 +102,7 @@ function ToolsIndex() {
                   </span>
                 </span>
                 <span className="mt-1 shrink-0 text-[13px] text-muted-foreground transition-colors group-hover:text-primary">
-                  \u2192
+                  →
                 </span>
               </Link>
             ))}

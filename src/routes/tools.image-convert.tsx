@@ -12,7 +12,7 @@ const FORMATS: { label: string; mime: Format }[] = [
 const EXT: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
 
 export const Route = createFileRoute("/tools/image-convert")({
-  head: () => ({ meta: [{ title: "Image Converter \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Image Converter — SlashAI" }] }),
   component: ImageConvert,
 });
 

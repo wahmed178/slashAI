@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { RefreshCw, Copy, Check } from "lucide-react";
 
 export const Route = createFileRoute("/tools/quote-screen")({
-  head: () => ({ meta: [{ title: "Quote of the Day \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Quote of the Day — SlashAI" }] }),
   component: QuoteScreen,
 });
 
@@ -32,7 +32,7 @@ function QuoteScreen() {
 
   const copy = () => {
     if (!quote) return;
-    navigator.clipboard.writeText(`"${quote.text}" \u2014 ${quote.author}`);
+    navigator.clipboard.writeText(`"${quote.text}" — ${quote.author}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -54,7 +54,7 @@ function QuoteScreen() {
           <p className="text-2xl sm:text-3xl italic text-foreground leading-relaxed" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
             "{quote.text}"
           </p>
-          <p className="mt-4 text-base text-muted-foreground">\u2014 {quote.author}</p>
+          <p className="mt-4 text-base text-muted-foreground">— {quote.author}</p>
         </div>
       ) : null}
 

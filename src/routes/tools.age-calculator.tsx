@@ -20,7 +20,7 @@ const ZODIAC = [
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 export const Route = createFileRoute("/tools/age-calculator")({
-  head: () => ({ meta: [{ title: "Age Calculator \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Age Calculator — SlashAI" }] }),
   component: AgeCalculator,
 });
 

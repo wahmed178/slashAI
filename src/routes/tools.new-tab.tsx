@@ -18,7 +18,7 @@ function getGreeting(hour: number) {
 }
 
 export const Route = createFileRoute("/tools/new-tab")({
-  head: () => ({ meta: [{ title: "New Tab Screen \u2014 SlashAI" }] }),
+  head: () => ({ meta: [{ title: "New Tab Screen — SlashAI" }] }),
   component: NewTabScreen,
 });
 
@@ -91,12 +91,12 @@ function NewTabScreen() {
       .then(r => r.json()).then(d => {
         const price = d.chart?.result?.[0]?.meta?.regularMarketPrice;
         if (price) setNifty(`\u{1F1EE}\u{1F1F3} NIFTY ${Math.round(price).toLocaleString("en-IN")}`);
-      }).catch(() => setNifty("\u{1F1EE}\u{1F1F3} NIFTY \u2014"));
+      }).catch(() => setNifty("\u{1F1EE}\u{1F1F3} NIFTY —"));
     // BTC from CoinGecko
     fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd")
       .then(r => r.json()).then(d => {
         if (d.bitcoin?.usd) setBtc(`\u{26A1} BTC $${d.bitcoin.usd.toLocaleString()}`);
-      }).catch(() => setBtc("\u{26A1} BTC \u2014"));
+      }).catch(() => setBtc("\u{26A1} BTC —"));
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -161,8 +161,8 @@ function NewTabScreen() {
         </div>
         <div className="rounded-lg border border-border bg-surface p-3 text-center">
           <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Markets</p>
-          <p className="mt-1 text-xs font-medium text-foreground">{nifty || "\u2014"}</p>
-          <p className="mt-1 text-xs font-medium" style={{ color: "#d29922" }}>{btc || "\u2014"}</p>
+          <p className="mt-1 text-xs font-medium text-foreground">{nifty || "—"}</p>
+          <p className="mt-1 text-xs font-medium" style={{ color: "#d29922" }}>{btc || "—"}</p>
         </div>
       </div>
 
