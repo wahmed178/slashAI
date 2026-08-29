@@ -23,6 +23,7 @@ import { Route as LiveRouteImport } from './routes/live'
 import { Route as MeRouteImport } from './routes/me'
 import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as PlayRouteImport } from './routes/play'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as RoadmapsRouteImport } from './routes/roadmaps'
@@ -49,6 +50,28 @@ import { Route as HubIndexRouteImport } from './routes/hub.index'
 import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
 import { Route as HubIslamRouteImport } from './routes/hub.islam'
 import { Route as RIdRouteImport } from './routes/r.$id'
+import { Route as ToolsIndexRouteImport } from './routes/tools.index'
+import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
+import { Route as ToolsBmiCalculatorRouteImport } from './routes/tools.bmi-calculator'
+import { Route as ToolsCountdownRouteImport } from './routes/tools.countdown'
+import { Route as ToolsCsvToJsonRouteImport } from './routes/tools.csv-to-json'
+import { Route as ToolsEmiCalculatorRouteImport } from './routes/tools.emi-calculator'
+import { Route as ToolsFlipClockRouteImport } from './routes/tools.flip-clock'
+import { Route as ToolsFocusScreenRouteImport } from './routes/tools.focus-screen'
+import { Route as ToolsGstCalculatorRouteImport } from './routes/tools.gst-calculator'
+import { Route as ToolsHtmlToPdfRouteImport } from './routes/tools.html-to-pdf'
+import { Route as ToolsImageCompressRouteImport } from './routes/tools.image-compress'
+import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-convert'
+import { Route as ToolsImagesToPdfRouteImport } from './routes/tools.images-to-pdf'
+import { Route as ToolsMarkdownToHtmlRouteImport } from './routes/tools.markdown-to-html'
+import { Route as ToolsNewTabRouteImport } from './routes/tools.new-tab'
+import { Route as ToolsPercentageRouteImport } from './routes/tools.percentage'
+import { Route as ToolsPomodoroRouteImport } from './routes/tools.pomodoro'
+import { Route as ToolsQuoteScreenRouteImport } from './routes/tools.quote-screen'
+import { Route as ToolsRainScreenRouteImport } from './routes/tools.rain-screen'
+import { Route as ToolsSipCalculatorRouteImport } from './routes/tools.sip-calculator'
+import { Route as ToolsStarfieldRouteImport } from './routes/tools.starfield'
+import { Route as ToolsWorldClockRouteImport } from './routes/tools.world-clock'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 
@@ -120,6 +143,11 @@ const MoviesRoute = MoviesRouteImport.update({
 const PlayRoute = PlayRouteImport.update({
   id: '/play',
   path: '/play',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RadarRoute = RadarRouteImport.update({
@@ -252,6 +280,116 @@ const RIdRoute = RIdRouteImport.update({
   path: '/r/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsIndexRoute = ToolsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsAgeCalculatorRoute = ToolsAgeCalculatorRouteImport.update({
+  id: '/age-calculator',
+  path: '/age-calculator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsBmiCalculatorRoute = ToolsBmiCalculatorRouteImport.update({
+  id: '/bmi-calculator',
+  path: '/bmi-calculator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsCountdownRoute = ToolsCountdownRouteImport.update({
+  id: '/countdown',
+  path: '/countdown',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsCsvToJsonRoute = ToolsCsvToJsonRouteImport.update({
+  id: '/csv-to-json',
+  path: '/csv-to-json',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsEmiCalculatorRoute = ToolsEmiCalculatorRouteImport.update({
+  id: '/emi-calculator',
+  path: '/emi-calculator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsFlipClockRoute = ToolsFlipClockRouteImport.update({
+  id: '/flip-clock',
+  path: '/flip-clock',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsFocusScreenRoute = ToolsFocusScreenRouteImport.update({
+  id: '/focus-screen',
+  path: '/focus-screen',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsGstCalculatorRoute = ToolsGstCalculatorRouteImport.update({
+  id: '/gst-calculator',
+  path: '/gst-calculator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsHtmlToPdfRoute = ToolsHtmlToPdfRouteImport.update({
+  id: '/html-to-pdf',
+  path: '/html-to-pdf',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsImageCompressRoute = ToolsImageCompressRouteImport.update({
+  id: '/image-compress',
+  path: '/image-compress',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsImageConvertRoute = ToolsImageConvertRouteImport.update({
+  id: '/image-convert',
+  path: '/image-convert',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsImagesToPdfRoute = ToolsImagesToPdfRouteImport.update({
+  id: '/images-to-pdf',
+  path: '/images-to-pdf',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsMarkdownToHtmlRoute = ToolsMarkdownToHtmlRouteImport.update({
+  id: '/markdown-to-html',
+  path: '/markdown-to-html',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsNewTabRoute = ToolsNewTabRouteImport.update({
+  id: '/new-tab',
+  path: '/new-tab',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsPercentageRoute = ToolsPercentageRouteImport.update({
+  id: '/percentage',
+  path: '/percentage',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsPomodoroRoute = ToolsPomodoroRouteImport.update({
+  id: '/pomodoro',
+  path: '/pomodoro',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsQuoteScreenRoute = ToolsQuoteScreenRouteImport.update({
+  id: '/quote-screen',
+  path: '/quote-screen',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsRainScreenRoute = ToolsRainScreenRouteImport.update({
+  id: '/rain-screen',
+  path: '/rain-screen',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsSipCalculatorRoute = ToolsSipCalculatorRouteImport.update({
+  id: '/sip-calculator',
+  path: '/sip-calculator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsStarfieldRoute = ToolsStarfieldRouteImport.update({
+  id: '/starfield',
+  path: '/starfield',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsWorldClockRoute = ToolsWorldClockRouteImport.update({
+  id: '/world-clock',
+  path: '/world-clock',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ExploreCategoryIndexRoute = ExploreCategoryIndexRouteImport.update({
   id: '/explore/$category/',
   path: '/explore/$category/',
@@ -279,12 +417,13 @@ export interface FileRoutesByFullPath {
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
+  '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
-  '/tools': typeof ToolsRoute
+  '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -299,12 +438,34 @@ export interface FileRoutesByFullPath {
   '/hub/$audience': typeof HubAudienceRoute
   '/hub/islam': typeof HubIslamRoute
   '/r/$id': typeof RIdRoute
+  '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
+  '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
+  '/tools/countdown': typeof ToolsCountdownRoute
+  '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
+  '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
+  '/tools/flip-clock': typeof ToolsFlipClockRoute
+  '/tools/focus-screen': typeof ToolsFocusScreenRoute
+  '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
+  '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
+  '/tools/image-compress': typeof ToolsImageCompressRoute
+  '/tools/image-convert': typeof ToolsImageConvertRoute
+  '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
+  '/tools/new-tab': typeof ToolsNewTabRoute
+  '/tools/percentage': typeof ToolsPercentageRoute
+  '/tools/pomodoro': typeof ToolsPomodoroRoute
+  '/tools/quote-screen': typeof ToolsQuoteScreenRoute
+  '/tools/rain-screen': typeof ToolsRainScreenRoute
+  '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
+  '/tools/starfield': typeof ToolsStarfieldRoute
+  '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/generators/': typeof GeneratorsIndexRoute
   '/hub/': typeof HubIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
@@ -323,12 +484,12 @@ export interface FileRoutesByTo {
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
+  '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
-  '/tools': typeof ToolsRoute
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -343,12 +504,34 @@ export interface FileRoutesByTo {
   '/hub/$audience': typeof HubAudienceRoute
   '/hub/islam': typeof HubIslamRoute
   '/r/$id': typeof RIdRoute
+  '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
+  '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
+  '/tools/countdown': typeof ToolsCountdownRoute
+  '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
+  '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
+  '/tools/flip-clock': typeof ToolsFlipClockRoute
+  '/tools/focus-screen': typeof ToolsFocusScreenRoute
+  '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
+  '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
+  '/tools/image-compress': typeof ToolsImageCompressRoute
+  '/tools/image-convert': typeof ToolsImageConvertRoute
+  '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
+  '/tools/new-tab': typeof ToolsNewTabRoute
+  '/tools/percentage': typeof ToolsPercentageRoute
+  '/tools/pomodoro': typeof ToolsPomodoroRoute
+  '/tools/quote-screen': typeof ToolsQuoteScreenRoute
+  '/tools/rain-screen': typeof ToolsRainScreenRoute
+  '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
+  '/tools/starfield': typeof ToolsStarfieldRoute
+  '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/explore': typeof ExploreIndexRoute
   '/generators': typeof GeneratorsIndexRoute
   '/hub': typeof HubIndexRoute
+  '/tools': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
 }
@@ -368,12 +551,13 @@ export interface FileRoutesById {
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
+  '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
-  '/tools': typeof ToolsRoute
+  '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -388,12 +572,34 @@ export interface FileRoutesById {
   '/hub/$audience': typeof HubAudienceRoute
   '/hub/islam': typeof HubIslamRoute
   '/r/$id': typeof RIdRoute
+  '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
+  '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
+  '/tools/countdown': typeof ToolsCountdownRoute
+  '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
+  '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
+  '/tools/flip-clock': typeof ToolsFlipClockRoute
+  '/tools/focus-screen': typeof ToolsFocusScreenRoute
+  '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
+  '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
+  '/tools/image-compress': typeof ToolsImageCompressRoute
+  '/tools/image-convert': typeof ToolsImageConvertRoute
+  '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
+  '/tools/new-tab': typeof ToolsNewTabRoute
+  '/tools/percentage': typeof ToolsPercentageRoute
+  '/tools/pomodoro': typeof ToolsPomodoroRoute
+  '/tools/quote-screen': typeof ToolsQuoteScreenRoute
+  '/tools/rain-screen': typeof ToolsRainScreenRoute
+  '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
+  '/tools/starfield': typeof ToolsStarfieldRoute
+  '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/explore/': typeof ExploreIndexRoute
   '/generators/': typeof GeneratorsIndexRoute
   '/hub/': typeof HubIndexRoute
+  '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
@@ -414,6 +620,7 @@ export interface FileRouteTypes {
     | '/me'
     | '/movies'
     | '/play'
+    | '/quiz'
     | '/radar'
     | '/recent'
     | '/roadmaps'
@@ -434,12 +641,34 @@ export interface FileRouteTypes {
     | '/hub/$audience'
     | '/hub/islam'
     | '/r/$id'
+    | '/tools/age-calculator'
+    | '/tools/bmi-calculator'
+    | '/tools/countdown'
+    | '/tools/csv-to-json'
+    | '/tools/emi-calculator'
+    | '/tools/flip-clock'
+    | '/tools/focus-screen'
+    | '/tools/gst-calculator'
+    | '/tools/html-to-pdf'
+    | '/tools/image-compress'
+    | '/tools/image-convert'
+    | '/tools/images-to-pdf'
+    | '/tools/markdown-to-html'
+    | '/tools/new-tab'
+    | '/tools/percentage'
+    | '/tools/pomodoro'
+    | '/tools/quote-screen'
+    | '/tools/rain-screen'
+    | '/tools/sip-calculator'
+    | '/tools/starfield'
+    | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
     | '/generators/'
     | '/hub/'
+    | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesByTo: FileRoutesByTo
@@ -458,12 +687,12 @@ export interface FileRouteTypes {
     | '/me'
     | '/movies'
     | '/play'
+    | '/quiz'
     | '/radar'
     | '/recent'
     | '/roadmaps'
     | '/search'
     | '/settings'
-    | '/tools'
     | '/trending'
     | '/whats-new'
     | '/youtube'
@@ -478,12 +707,34 @@ export interface FileRouteTypes {
     | '/hub/$audience'
     | '/hub/islam'
     | '/r/$id'
+    | '/tools/age-calculator'
+    | '/tools/bmi-calculator'
+    | '/tools/countdown'
+    | '/tools/csv-to-json'
+    | '/tools/emi-calculator'
+    | '/tools/flip-clock'
+    | '/tools/focus-screen'
+    | '/tools/gst-calculator'
+    | '/tools/html-to-pdf'
+    | '/tools/image-compress'
+    | '/tools/image-convert'
+    | '/tools/images-to-pdf'
+    | '/tools/markdown-to-html'
+    | '/tools/new-tab'
+    | '/tools/percentage'
+    | '/tools/pomodoro'
+    | '/tools/quote-screen'
+    | '/tools/rain-screen'
+    | '/tools/sip-calculator'
+    | '/tools/starfield'
+    | '/tools/world-clock'
     | '/build-ideas'
     | '/collections'
     | '/discover'
     | '/explore'
     | '/generators'
     | '/hub'
+    | '/tools'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
   id:
@@ -502,6 +753,7 @@ export interface FileRouteTypes {
     | '/me'
     | '/movies'
     | '/play'
+    | '/quiz'
     | '/radar'
     | '/recent'
     | '/roadmaps'
@@ -522,12 +774,34 @@ export interface FileRouteTypes {
     | '/hub/$audience'
     | '/hub/islam'
     | '/r/$id'
+    | '/tools/age-calculator'
+    | '/tools/bmi-calculator'
+    | '/tools/countdown'
+    | '/tools/csv-to-json'
+    | '/tools/emi-calculator'
+    | '/tools/flip-clock'
+    | '/tools/focus-screen'
+    | '/tools/gst-calculator'
+    | '/tools/html-to-pdf'
+    | '/tools/image-compress'
+    | '/tools/image-convert'
+    | '/tools/images-to-pdf'
+    | '/tools/markdown-to-html'
+    | '/tools/new-tab'
+    | '/tools/percentage'
+    | '/tools/pomodoro'
+    | '/tools/quote-screen'
+    | '/tools/rain-screen'
+    | '/tools/sip-calculator'
+    | '/tools/starfield'
+    | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
     | '/explore/'
     | '/generators/'
     | '/hub/'
+    | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesById: FileRoutesById
@@ -547,12 +821,13 @@ export interface RootRouteChildren {
   MeRoute: typeof MeRoute
   MoviesRoute: typeof MoviesRoute
   PlayRoute: typeof PlayRoute
+  QuizRoute: typeof QuizRoute
   RadarRoute: typeof RadarRoute
   RecentRoute: typeof RecentRoute
   RoadmapsRoute: typeof RoadmapsRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
-  ToolsRoute: typeof ToolsRoute
+  ToolsRoute: typeof ToolsRouteWithChildren
   TrendingRoute: typeof TrendingRoute
   WhatsNewRoute: typeof WhatsNewRoute
   YoutubeRoute: typeof YoutubeRoute
@@ -675,6 +950,13 @@ declare module '@tanstack/react-router' {
       path: '/play'
       fullPath: '/play'
       preLoaderRoute: typeof PlayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/radar': {
@@ -859,6 +1141,160 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/': {
+      id: '/tools/'
+      path: '/'
+      fullPath: '/tools/'
+      preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/age-calculator': {
+      id: '/tools/age-calculator'
+      path: '/age-calculator'
+      fullPath: '/tools/age-calculator'
+      preLoaderRoute: typeof ToolsAgeCalculatorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/bmi-calculator': {
+      id: '/tools/bmi-calculator'
+      path: '/bmi-calculator'
+      fullPath: '/tools/bmi-calculator'
+      preLoaderRoute: typeof ToolsBmiCalculatorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/countdown': {
+      id: '/tools/countdown'
+      path: '/countdown'
+      fullPath: '/tools/countdown'
+      preLoaderRoute: typeof ToolsCountdownRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/csv-to-json': {
+      id: '/tools/csv-to-json'
+      path: '/csv-to-json'
+      fullPath: '/tools/csv-to-json'
+      preLoaderRoute: typeof ToolsCsvToJsonRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/emi-calculator': {
+      id: '/tools/emi-calculator'
+      path: '/emi-calculator'
+      fullPath: '/tools/emi-calculator'
+      preLoaderRoute: typeof ToolsEmiCalculatorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/flip-clock': {
+      id: '/tools/flip-clock'
+      path: '/flip-clock'
+      fullPath: '/tools/flip-clock'
+      preLoaderRoute: typeof ToolsFlipClockRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/focus-screen': {
+      id: '/tools/focus-screen'
+      path: '/focus-screen'
+      fullPath: '/tools/focus-screen'
+      preLoaderRoute: typeof ToolsFocusScreenRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/gst-calculator': {
+      id: '/tools/gst-calculator'
+      path: '/gst-calculator'
+      fullPath: '/tools/gst-calculator'
+      preLoaderRoute: typeof ToolsGstCalculatorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/html-to-pdf': {
+      id: '/tools/html-to-pdf'
+      path: '/html-to-pdf'
+      fullPath: '/tools/html-to-pdf'
+      preLoaderRoute: typeof ToolsHtmlToPdfRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/image-compress': {
+      id: '/tools/image-compress'
+      path: '/image-compress'
+      fullPath: '/tools/image-compress'
+      preLoaderRoute: typeof ToolsImageCompressRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/image-convert': {
+      id: '/tools/image-convert'
+      path: '/image-convert'
+      fullPath: '/tools/image-convert'
+      preLoaderRoute: typeof ToolsImageConvertRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/images-to-pdf': {
+      id: '/tools/images-to-pdf'
+      path: '/images-to-pdf'
+      fullPath: '/tools/images-to-pdf'
+      preLoaderRoute: typeof ToolsImagesToPdfRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/markdown-to-html': {
+      id: '/tools/markdown-to-html'
+      path: '/markdown-to-html'
+      fullPath: '/tools/markdown-to-html'
+      preLoaderRoute: typeof ToolsMarkdownToHtmlRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/new-tab': {
+      id: '/tools/new-tab'
+      path: '/new-tab'
+      fullPath: '/tools/new-tab'
+      preLoaderRoute: typeof ToolsNewTabRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/percentage': {
+      id: '/tools/percentage'
+      path: '/percentage'
+      fullPath: '/tools/percentage'
+      preLoaderRoute: typeof ToolsPercentageRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/pomodoro': {
+      id: '/tools/pomodoro'
+      path: '/pomodoro'
+      fullPath: '/tools/pomodoro'
+      preLoaderRoute: typeof ToolsPomodoroRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/quote-screen': {
+      id: '/tools/quote-screen'
+      path: '/quote-screen'
+      fullPath: '/tools/quote-screen'
+      preLoaderRoute: typeof ToolsQuoteScreenRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/rain-screen': {
+      id: '/tools/rain-screen'
+      path: '/rain-screen'
+      fullPath: '/tools/rain-screen'
+      preLoaderRoute: typeof ToolsRainScreenRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/sip-calculator': {
+      id: '/tools/sip-calculator'
+      path: '/sip-calculator'
+      fullPath: '/tools/sip-calculator'
+      preLoaderRoute: typeof ToolsSipCalculatorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/starfield': {
+      id: '/tools/starfield'
+      path: '/starfield'
+      fullPath: '/tools/starfield'
+      preLoaderRoute: typeof ToolsStarfieldRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/world-clock': {
+      id: '/tools/world-clock'
+      path: '/world-clock'
+      fullPath: '/tools/world-clock'
+      preLoaderRoute: typeof ToolsWorldClockRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/explore/$category/': {
       id: '/explore/$category/'
       path: '/explore/$category'
@@ -876,6 +1312,58 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ToolsRouteChildren {
+  ToolsAgeCalculatorRoute: typeof ToolsAgeCalculatorRoute
+  ToolsBmiCalculatorRoute: typeof ToolsBmiCalculatorRoute
+  ToolsCountdownRoute: typeof ToolsCountdownRoute
+  ToolsCsvToJsonRoute: typeof ToolsCsvToJsonRoute
+  ToolsEmiCalculatorRoute: typeof ToolsEmiCalculatorRoute
+  ToolsFlipClockRoute: typeof ToolsFlipClockRoute
+  ToolsFocusScreenRoute: typeof ToolsFocusScreenRoute
+  ToolsGstCalculatorRoute: typeof ToolsGstCalculatorRoute
+  ToolsHtmlToPdfRoute: typeof ToolsHtmlToPdfRoute
+  ToolsImageCompressRoute: typeof ToolsImageCompressRoute
+  ToolsImageConvertRoute: typeof ToolsImageConvertRoute
+  ToolsImagesToPdfRoute: typeof ToolsImagesToPdfRoute
+  ToolsMarkdownToHtmlRoute: typeof ToolsMarkdownToHtmlRoute
+  ToolsNewTabRoute: typeof ToolsNewTabRoute
+  ToolsPercentageRoute: typeof ToolsPercentageRoute
+  ToolsPomodoroRoute: typeof ToolsPomodoroRoute
+  ToolsQuoteScreenRoute: typeof ToolsQuoteScreenRoute
+  ToolsRainScreenRoute: typeof ToolsRainScreenRoute
+  ToolsSipCalculatorRoute: typeof ToolsSipCalculatorRoute
+  ToolsStarfieldRoute: typeof ToolsStarfieldRoute
+  ToolsWorldClockRoute: typeof ToolsWorldClockRoute
+  ToolsIndexRoute: typeof ToolsIndexRoute
+}
+
+const ToolsRouteChildren: ToolsRouteChildren = {
+  ToolsAgeCalculatorRoute: ToolsAgeCalculatorRoute,
+  ToolsBmiCalculatorRoute: ToolsBmiCalculatorRoute,
+  ToolsCountdownRoute: ToolsCountdownRoute,
+  ToolsCsvToJsonRoute: ToolsCsvToJsonRoute,
+  ToolsEmiCalculatorRoute: ToolsEmiCalculatorRoute,
+  ToolsFlipClockRoute: ToolsFlipClockRoute,
+  ToolsFocusScreenRoute: ToolsFocusScreenRoute,
+  ToolsGstCalculatorRoute: ToolsGstCalculatorRoute,
+  ToolsHtmlToPdfRoute: ToolsHtmlToPdfRoute,
+  ToolsImageCompressRoute: ToolsImageCompressRoute,
+  ToolsImageConvertRoute: ToolsImageConvertRoute,
+  ToolsImagesToPdfRoute: ToolsImagesToPdfRoute,
+  ToolsMarkdownToHtmlRoute: ToolsMarkdownToHtmlRoute,
+  ToolsNewTabRoute: ToolsNewTabRoute,
+  ToolsPercentageRoute: ToolsPercentageRoute,
+  ToolsPomodoroRoute: ToolsPomodoroRoute,
+  ToolsQuoteScreenRoute: ToolsQuoteScreenRoute,
+  ToolsRainScreenRoute: ToolsRainScreenRoute,
+  ToolsSipCalculatorRoute: ToolsSipCalculatorRoute,
+  ToolsStarfieldRoute: ToolsStarfieldRoute,
+  ToolsWorldClockRoute: ToolsWorldClockRoute,
+  ToolsIndexRoute: ToolsIndexRoute,
+}
+
+const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -891,12 +1379,13 @@ const rootRouteChildren: RootRouteChildren = {
   MeRoute: MeRoute,
   MoviesRoute: MoviesRoute,
   PlayRoute: PlayRoute,
+  QuizRoute: QuizRoute,
   RadarRoute: RadarRoute,
   RecentRoute: RecentRoute,
   RoadmapsRoute: RoadmapsRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
-  ToolsRoute: ToolsRoute,
+  ToolsRoute: ToolsRouteWithChildren,
   TrendingRoute: TrendingRoute,
   WhatsNewRoute: WhatsNewRoute,
   YoutubeRoute: YoutubeRoute,
