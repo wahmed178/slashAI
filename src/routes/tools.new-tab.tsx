@@ -47,7 +47,7 @@ function NewTabScreen() {
       .then(r => r.json()).then(d => {
         const w = d.current_weather;
         const codes: Record<number, string> = { 0: "\u{2600}\u{FE0F}", 1: "\u{1F324}\u{FE0F}", 2: "\u{26C5}", 3: "\u{2601}\u{FE0F}", 45: "\u{1F32B}\u{FE0F}", 51: "\u{1F326}\u{FE0F}", 61: "\u{1F327}\u{FE0F}", 71: "\u{2744}\u{FE0F}", 80: "\u{1F326}\u{FE0F}" };
-        const item = { temp: `${Math.round(w.temperature)}\u00B0C`, icon: codes[w.weathercode] || "\u{1F324}\u{FE0F}", city: "Hyderabad" };
+        const item = { temp: `${Math.round(w.temperature)}°C`, icon: codes[w.weathercode] || "\u{1F324}\u{FE0F}", city: "Hyderabad" };
         setWeather(item);
         localStorage.setItem("newtab-weather", JSON.stringify(item));
       }).catch(() => {});
@@ -133,7 +133,7 @@ function NewTabScreen() {
       {/* Search */}
       <form onSubmit={handleSearch} className="mt-8 w-full max-w-md">
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search the web or /command\u2026"
+          placeholder="Search the web or /command…"
           className="w-full rounded-xl border border-border bg-surface px-5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none" />
       </form>
 
@@ -147,7 +147,7 @@ function NewTabScreen() {
               <p className="text-xs font-medium text-foreground">{weather.temp}</p>
               <p className="text-[10px] text-muted-foreground">{weather.city}</p>
             </>
-          ) : <p className="mt-2 text-xs text-muted-foreground">Loading\u2026</p>}
+          ) : <p className="mt-2 text-xs text-muted-foreground">Loading…</p>}
         </div>
         <div className="rounded-lg border border-border bg-surface p-3 text-center">
           <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Prayer</p>
@@ -157,7 +157,7 @@ function NewTabScreen() {
               <p className="text-[11px]" style={{ color: "#d29922" }}>{prayer.remaining}</p>
               <p className="text-[10px] text-muted-foreground">{prayer.time}</p>
             </>
-          ) : <p className="mt-2 text-xs text-muted-foreground">Loading\u2026</p>}
+          ) : <p className="mt-2 text-xs text-muted-foreground">Loading…</p>}
         </div>
         <div className="rounded-lg border border-border bg-surface p-3 text-center">
           <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Markets</p>

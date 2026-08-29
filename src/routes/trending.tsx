@@ -305,7 +305,7 @@ function TrendingPage() {
                   <p className="text-[15px] font-semibold text-foreground group-hover:text-primary">{rm.title}</p>
                   <p className="mt-1 line-clamp-2 text-[12px] text-muted-foreground">{rm.tagline}</p>
                   <p className="mt-2 text-[12px] text-muted-foreground">
-                    {totalSteps} steps \u00b7 {rm.phases.length} phases \u00b7 {rm.duration}
+                    {totalSteps} steps · {rm.phases.length} phases · {rm.duration}
                   </p>
                   <span className="mt-3 inline-flex h-9 items-center justify-center rounded-md border text-[12px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "#58a6ff" }}>
                     Follow →
@@ -374,8 +374,8 @@ function TrendingPage() {
           </div>
           <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {[
-              { label: "NIFTY 50", value: "Loading\u2026", color: "#3fb950" },
-              { label: "BTC/INR", value: "Loading\u2026", color: "#f0b90b" },
+              { label: "NIFTY 50", value: "Loading…", color: "#3fb950" },
+              { label: "BTC/INR", value: "Loading…", color: "#f0b90b" },
               { label: "Next Prayer", value: "Fajr", color: "#58a6ff" },
               { label: "Weather", value: "Hyderabad", color: "#d29922" },
             ].map((stat) => (

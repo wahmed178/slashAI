@@ -106,7 +106,7 @@ function ImagesToPdf() {
 
           <button type="button" onClick={createPDF} disabled={creating}
             className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50">
-            <Download className="size-4" /> {creating ? "Creating PDF\u2026" : `Create PDF (${images.length} images)`}
+            <Download className="size-4" /> {creating ? "Creating PDF…" : `Create PDF (${images.length} images)`}
           </button>
         </div>
       )}

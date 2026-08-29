@@ -615,7 +615,7 @@ function HomePage() {
             { to: "/tools/world-clock", emoji: "\u{1F30D}", title: "World Clock", desc: "12 cities live" },
             { to: "/tools/pomodoro", emoji: "\u{1F345}", title: "Pomodoro Timer", desc: "25/5/15 focus" },
             { to: "/tools/flip-clock", emoji: "\u{23F1}\u{FE0F}", title: "Flip Clock", desc: "Full-screen retro" },
-            { to: "/tools/csv-to-json", emoji: "\u{1F4CA}", title: "CSV \u2194 JSON", desc: "Bi-directional" },
+            { to: "/tools/csv-to-json", emoji: "\u{1F4CA}", title: "CSV ↔ JSON", desc: "Bi-directional" },
             { to: "/tools/new-tab", emoji: "\u{1F3E0}", title: "New Tab", desc: "Beautiful homepage" },
           ]).map((tool) => (
             <Link
@@ -647,7 +647,7 @@ function HomePage() {
             { to: "/hub/developers", emoji: "\u{1F4BB}", title: "Developer Hub", desc: "APIs & open-source" },
             { to: "/hub/creators", emoji: "\u{1F3A8}", title: "Creator Hub", desc: "Design & content" },
             { to: "/hub/professionals", emoji: "\u{1F4BC}", title: "Professional Hub", desc: "Productivity" },
-            { to: "/hub/islam", emoji: "\u262A\uFE0F", title: "Islam Hub", desc: "Quran, Hadith & learning" },
+            { to: "/hub/islam", emoji: "☪", title: "Islam Hub", desc: "Quran, Hadith & learning" },
           ]).map((hub) => (
             <Link
               key={hub.to}

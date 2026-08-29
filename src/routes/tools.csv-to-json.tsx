@@ -64,7 +64,7 @@ function CsvToJson() {
   };
 
   return (
-    <AppShell title="CSV \u2194 JSON" back={{ to: "/tools", label: "SlashKits" }}>
+    <AppShell title="CSV ↔ JSON" back={{ to: "/tools", label: "SlashKits" }}>
       <div className="mt-4 flex gap-2">
         <button type="button" onClick={() => setMode("csv-to-json")}
           className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium transition-colors"
@@ -88,7 +88,7 @@ function CsvToJson() {
           <p className="mb-1 text-[11px] text-muted-foreground">Input</p>
           <textarea value={input} onChange={(e) => setInput(e.target.value)}
             className="min-h-[300px] w-full resize-y rounded-xl border border-border bg-surface p-4 font-mono text-sm text-foreground focus:border-primary focus:outline-none"
-            placeholder={mode === "csv-to-json" ? "Paste CSV here\u2026" : "Paste JSON here\u2026"} />
+            placeholder={mode === "csv-to-json" ? "Paste CSV here…" : "Paste JSON here…"} />
         </div>
         <div>
           <p className="mb-1 text-[11px] text-muted-foreground">Output</p>

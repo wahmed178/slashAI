@@ -7,7 +7,7 @@ export const Route = createFileRoute("/tools/gst-calculator")({
   component: GstCalculator,
 });
 
-function formatINR(n: number) { return "\u20b9" + n.toFixed(2); }
+function formatINR(n: number) { return "₹" + n.toFixed(2); }
 
 function GstCalculator() {
   const [mode, setMode] = useState<"add" | "remove">("add");

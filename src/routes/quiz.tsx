@@ -11,9 +11,9 @@ import { AppShell } from "@/components/library/AppShell";
 const CATEGORY_EMOJIS: Record<number, string> = {
   9: "\u{1F30D}", 10: "\u{1F4DA}", 11: "\u{1F3AC}", 12: "\u{1F3B5}",
   13: "\u{1F3AD}", 14: "\u{1F4FA}", 15: "\u{1F3AE}", 16: "\u{1F579}\u{FE0F}",
-  17: "\u{1F52C}", 18: "\u{1F4BB}", 19: "\u{1F522}", 20: "\u26A1",
-  21: "\u26BD", 22: "\u{1F5FA}\u{FE0F}", 23: "\u{1F3DB}\u{FE0F}", 24: "\u{1F3DB}\u{FE0F}",
-  25: "\u{1F3A8}", 26: "\u2B50", 27: "\u{1F43E}", 28: "\u{1F697}",
+  17: "\u{1F52C}", 18: "\u{1F4BB}", 19: "\u{1F522}", 20: "⚡",
+  21: "⚽", 22: "\u{1F5FA}\u{FE0F}", 23: "\u{1F3DB}\u{FE0F}", 24: "\u{1F3DB}\u{FE0F}",
+  25: "\u{1F3A8}", 26: "⭐", 27: "\u{1F43E}", 28: "\u{1F697}",
   29: "\u{1F4A5}", 30: "\u{1F4F1}", 31: "\u{1F1EF}\u{1F1F5}", 32: "\u{1F3A0}",
 };
 
@@ -341,7 +341,7 @@ function QuizPage() {
     }
 
     if (!fetched.length) {
-      setError("Questions couldn\u2019t load. Try again in a moment.");
+      setError("Questions couldn't load. Try again in a moment.");
       setLoading(false);
       return;
     }
@@ -526,7 +526,7 @@ function QuizPage() {
                     />
                   ))}
                 </div>
-                <p className="mt-4 text-sm text-muted-foreground">Loading questions\u2026</p>
+                <p className="mt-4 text-sm text-muted-foreground">Loading questions…</p>
                 <style>{`@keyframes pulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }`}</style>
               </div>
             ) : error ? (
@@ -795,8 +795,8 @@ function QuizInProgress({
 
         {/* Score tracker */}
         <div className="mt-1.5 flex justify-between text-[11px]">
-          <span className="text-green">\u2713 {score} correct</span>
-          <span className="text-red">\u2717 {answered - score} wrong</span>
+          <span className="text-green">✓ {score} correct</span>
+          <span className="text-red">✗ {answered - score} wrong</span>
         </div>
       </div>
 
@@ -861,7 +861,7 @@ function QuizInProgress({
               className="text-[13px] font-medium"
               style={{ color: isCorrect ? "#3fb950" : "#f85149" }}
             >
-              {isCorrect ? "\u2713 Correct!" : "\u2717 Wrong"}
+              {isCorrect ? "✓ Correct!" : "✗ Wrong"}
             </span>
             <button
               type="button"
@@ -943,7 +943,7 @@ function ResultsScreen({
         {score} out of {total} correct
       </p>
       <p className="mt-1 text-[13px] text-muted-foreground">
-        {selectedCategory.name} \u2022 {difficulty}
+        {selectedCategory.name} • {difficulty}
       </p>
 
       {/* Streak */}
@@ -981,7 +981,7 @@ function ResultsScreen({
                 className="mt-1 text-[13px] font-medium"
                 style={{ color: a.wasCorrect ? "#3fb950" : "#f85149" }}
               >
-                {a.wasCorrect ? "\u2713" : "\u2717"} {a.userAnswer}
+                {a.wasCorrect ? "✓" : "✗"} {a.userAnswer}
               </p>
               {!a.wasCorrect && (
                 <p className="mt-0.5 text-[12px] text-green">

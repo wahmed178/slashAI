@@ -3,18 +3,18 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 const ZODIAC = [
-  { start: [1, 20], end: [2, 18], name: "Aquarius", sign: "\u2652" },
-  { start: [2, 19], end: [3, 20], name: "Pisces", sign: "\u2653" },
-  { start: [3, 21], end: [4, 19], name: "Aries", sign: "\u2648" },
-  { start: [4, 20], end: [5, 20], name: "Taurus", sign: "\u2649" },
-  { start: [5, 21], end: [6, 20], name: "Gemini", sign: "\u264A" },
-  { start: [6, 21], end: [7, 22], name: "Cancer", sign: "\u264B" },
-  { start: [7, 23], end: [8, 22], name: "Leo", sign: "\u264C" },
-  { start: [8, 23], end: [9, 22], name: "Virgo", sign: "\u264D" },
-  { start: [9, 23], end: [10, 22], name: "Libra", sign: "\u264E" },
-  { start: [10, 23], end: [11, 21], name: "Scorpio", sign: "\u264F" },
-  { start: [11, 22], end: [12, 21], name: "Sagittarius", sign: "\u2650" },
-  { start: [12, 22], end: [1, 19], name: "Capricorn", sign: "\u2651" },
+  { start: [1, 20], end: [2, 18], name: "Aquarius", sign: "♒" },
+  { start: [2, 19], end: [3, 20], name: "Pisces", sign: "♓" },
+  { start: [3, 21], end: [4, 19], name: "Aries", sign: "♈" },
+  { start: [4, 20], end: [5, 20], name: "Taurus", sign: "♉" },
+  { start: [5, 21], end: [6, 20], name: "Gemini", sign: "♊" },
+  { start: [6, 21], end: [7, 22], name: "Cancer", sign: "♋" },
+  { start: [7, 23], end: [8, 22], name: "Leo", sign: "♌" },
+  { start: [8, 23], end: [9, 22], name: "Virgo", sign: "♍" },
+  { start: [9, 23], end: [10, 22], name: "Libra", sign: "♎" },
+  { start: [10, 23], end: [11, 21], name: "Scorpio", sign: "♏" },
+  { start: [11, 22], end: [12, 21], name: "Sagittarius", sign: "♐" },
+  { start: [12, 22], end: [1, 19], name: "Capricorn", sign: "♑" },
 ];
 
 const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

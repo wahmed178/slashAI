@@ -96,7 +96,7 @@ function DiscoverPage() {
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search tools, APIs, courses, channels\u2026"
+          placeholder="Search tools, APIs, courses, channels…"
           className="h-11 w-full rounded-lg border border-border bg-surface pl-10 pr-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
         />
         {search && (

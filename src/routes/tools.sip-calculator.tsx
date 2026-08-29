@@ -8,7 +8,7 @@ export const Route = createFileRoute("/tools/sip-calculator")({
 });
 
 function formatINR(n: number): string {
-  return "\u20b9" + Math.round(n).toLocaleString("en-IN");
+  return "₹" + Math.round(n).toLocaleString("en-IN");
 }
 
 function SipCalculator() {

@@ -7,7 +7,7 @@ export const Route = createFileRoute("/tools/emi-calculator")({
   component: EmiCalculator,
 });
 
-function formatINR(n: number) { return "\u20b9" + Math.round(n).toLocaleString("en-IN"); }
+function formatINR(n: number) { return "₹" + Math.round(n).toLocaleString("en-IN"); }
 
 function EmiCalculator() {
   const [principal, setPrincipal] = useState(1000000);

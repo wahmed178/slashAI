@@ -96,7 +96,7 @@ function MePage() {
             {persona ? persona.label : "Your profile"}
           </h1>
           <p className="text-sm text-muted-foreground">
-            {hydrated ? `${favorites.length} saved · ${stats.copies} copied` : "\u00a0"}
+            {hydrated ? `${favorites.length} saved · ${stats.copies} copied` : " "}
           </p>
         </div>
       </header>

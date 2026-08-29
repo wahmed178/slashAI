@@ -52,7 +52,7 @@ function PercentageCalc() {
           <p className="text-3xl font-bold text-primary">{mode === 1 ? `${result.toFixed(2)}%` : result.toFixed(2)}</p>
           {mode === 2 && (
             <p className="mt-1 text-sm" style={{ color: result >= 0 ? "#3fb950" : "#f85149" }}>
-              {result >= 0 ? "\u25B2 Increase" : "\u25BC Decrease"}
+              {result >= 0 ? "▲ Increase" : "▼ Decrease"}
             </p>
           )}
         </div>

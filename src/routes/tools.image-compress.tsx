@@ -79,7 +79,7 @@ function ImageCompress() {
         >
           <span className="text-4xl">{"\u{1F5BC}\u{FE0F}"}</span>
           <p className="mt-3 text-sm text-foreground">Drag image here or click to upload</p>
-          <p className="mt-1 text-xs text-muted-foreground">JPG, PNG, WebP, GIF \u2022 Max 10MB</p>
+          <p className="mt-1 text-xs text-muted-foreground">JPG, PNG, WebP, GIF • Max 10MB</p>
           <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} />
         </div>
       ) : (
