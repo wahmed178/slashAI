@@ -32,7 +32,7 @@ function BmiCalculator() {
   const barPct = Math.min(Math.max((bmi - 15) / 25 * 100, 0), 100);
 
   return (
-    <AppShell title="BMI Calculator" back={{ to: "/tools", label: "SlashKit" }}>
+    <AppShell title="BMI Calculator" back={{ to: "/tools", label: "SlashKits" }}>
       <div className="mt-4 space-y-4">
         <div className="flex gap-2">
           {(["metric", "imperial"] as const).map((u) => (

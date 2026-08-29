@@ -67,7 +67,7 @@ function Pomodoro() {
   const circumference = 2 * Math.PI * 70;
 
   return (
-    <AppShell title="Pomodoro Timer" back={{ to: "/tools", label: "SlashKit" }}>
+    <AppShell title="Pomodoro Timer" back={{ to: "/tools", label: "SlashKits" }}>
       <div className="mt-4 flex flex-col items-center">
         {/* Mode tabs */}
         <div className="flex gap-2 mb-6">

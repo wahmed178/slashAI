@@ -47,7 +47,7 @@ function MarkdownToHtml() {
   };
 
   return (
-    <AppShell title="Markdown to HTML" back={{ to: "/tools", label: "SlashKit" }}>
+    <AppShell title="Markdown to HTML" back={{ to: "/tools", label: "SlashKits" }}>
       <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <div>
           <p className="mb-1 text-[11px] text-muted-foreground">Markdown</p>

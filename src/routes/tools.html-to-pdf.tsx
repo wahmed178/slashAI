@@ -26,7 +26,7 @@ function HtmlToPdf() {
   };
 
   return (
-    <AppShell title="HTML to PDF" back={{ to: "/tools", label: "SlashKit" }}>
+    <AppShell title="HTML to PDF" back={{ to: "/tools", label: "SlashKits" }}>
       <div className="mt-4 flex gap-2">
         {Object.keys(TEMPLATES).map((t) => (
           <button key={t} type="button" onClick={() => { setHtml(TEMPLATES[t] ?? ''); setShowPreview(true); }}

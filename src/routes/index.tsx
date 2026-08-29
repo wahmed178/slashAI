@@ -596,7 +596,7 @@ function HomePage() {
 
       {/* ─── SlashAI Tools (Free) ─── */}
       <Section
-        title="SlashKit"
+        title="SlashKits"
         hint="22 free browser tools — calculators, converters, screensavers. Runs in-browser. No upload."
         action={
           <Link

@@ -57,7 +57,7 @@ function ImageConvert() {
   };
 
   return (
-    <AppShell title="Image Converter" back={{ to: "/tools", label: "SlashKit" }}>
+    <AppShell title="Image Converter" back={{ to: "/tools", label: "SlashKits" }}>
       {!file ? (
         <div onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); e.dataTransfer.files[0] && handleFile(e.dataTransfer.files[0]); }}
           onClick={() => inputRef.current?.click()}
