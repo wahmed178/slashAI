@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.8.0";
+export const APP_VERSION = "2.9.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,19 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.9.0",
+    date: "2026-08-29",
+    title: "Free Tools — 22 browser utilities",
+    changes: [
+      "22 browser-based tools at /tools — all run in your browser, nothing uploaded",
+      "File tools: Image Compressor, Image Converter, Images to PDF, HTML to PDF, Markdown to HTML, CSV to JSON",
+      "Calculators: SIP, EMI, GST, BMI, Percentage, Age — with charts and live results",
+      "Time tools: World Clock (12 cities), Pomodoro Timer, Countdown Timer",
+      "Screens: Flip Clock, Focus Screen, Rain Screen, Starfield, New Tab, Quote of the Day",
+      "Tools added to bottom nav bar, homepage grid, and sidebar",
+    ],
+  },
   {
     version: "2.8.0",
     date: "2026-08-28",
