@@ -1,0 +1,34 @@
+{
+  "updated": "",
+  "updatedTime": "",
+  "total": 0,
+  "featured": null,
+  "trending": [],
+  "bigDiscounts": [],
+  "byPrice": {
+    "under_499": [],
+    "under_999": [],
+    "under_1999": []
+  },
+  "categories": {
+    "phones": [],
+    "computers": [],
+    "gaming": [],
+    "books": [],
+    "audio": [],
+    "fashion": [],
+    "home": [],
+    "tv": [],
+    "camera": [],
+    "fitness": [],
+    "beauty": [],
+    "deals": []
+  },
+  "platforms": {
+    "amazon": [],
+    "flipkart": [],
+    "meesho": [],
+    "other": []
+  },
+  "sources": []
+}

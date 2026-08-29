@@ -15,6 +15,7 @@ import { Route as AiToolsRouteImport } from './routes/ai-tools'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as DealsRouteImport } from './routes/deals'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
 import { Route as GlassRouteImport } from './routes/glass'
@@ -104,6 +105,11 @@ const AssistantRoute = AssistantRouteImport.update({
 const ChangelogRoute = ChangelogRouteImport.update({
   id: '/changelog',
   path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DealsRoute = DealsRouteImport.update({
+  id: '/deals',
+  path: '/deals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -415,6 +421,7 @@ export interface FileRoutesByFullPath {
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
+  '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
@@ -483,6 +490,7 @@ export interface FileRoutesByTo {
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
+  '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
@@ -551,6 +559,7 @@ export interface FileRoutesById {
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
+  '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
@@ -621,6 +630,7 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/assistant'
     | '/changelog'
+    | '/deals'
     | '/favorites'
     | '/find'
     | '/glass'
@@ -689,6 +699,7 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/assistant'
     | '/changelog'
+    | '/deals'
     | '/favorites'
     | '/find'
     | '/glass'
@@ -756,6 +767,7 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/assistant'
     | '/changelog'
+    | '/deals'
     | '/favorites'
     | '/find'
     | '/glass'
@@ -825,6 +837,7 @@ export interface RootRouteChildren {
   AlternativesRoute: typeof AlternativesRoute
   AssistantRoute: typeof AssistantRoute
   ChangelogRoute: typeof ChangelogRoute
+  DealsRoute: typeof DealsRoute
   FavoritesRoute: typeof FavoritesRoute
   FindRoute: typeof FindRoute
   GlassRoute: typeof GlassRoute
@@ -907,6 +920,13 @@ declare module '@tanstack/react-router' {
       path: '/changelog'
       fullPath: '/changelog'
       preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/deals': {
+      id: '/deals'
+      path: '/deals'
+      fullPath: '/deals'
+      preLoaderRoute: typeof DealsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -1391,6 +1411,7 @@ const rootRouteChildren: RootRouteChildren = {
   AlternativesRoute: AlternativesRoute,
   AssistantRoute: AssistantRoute,
   ChangelogRoute: ChangelogRoute,
+  DealsRoute: DealsRoute,
   FavoritesRoute: FavoritesRoute,
   FindRoute: FindRoute,
   GlassRoute: GlassRoute,

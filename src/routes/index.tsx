@@ -442,6 +442,7 @@ function HomePage() {
           ["/glossary", "\u{1F4D6}", "Glossary", `${GLOSSARY_TOTAL}+ terms`],
           ["/tools", "\u{1F527}", "Tools", "22 free browser utilities"],
           ["/quiz", "\u{1F9E0}", "Quiz", "Daily brain challenge"],
+          ["/deals", "\u{1F6CD}\u{FE0F}", "Deals", "Daily Indian deals"],
           ["/discover", "\u{1F9ED}", "Discover", "Tools & APIs"],
         ] as const).map(([to, emoji, label, sub]) => (
           <Link
