@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AiToolsRouteImport } from './routes/ai-tools'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as ChangelogRouteImport } from './routes/changelog'
@@ -50,7 +51,6 @@ import { Route as HubIndexRouteImport } from './routes/hub.index'
 import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
 import { Route as HubIslamRouteImport } from './routes/hub.islam'
 import { Route as RIdRouteImport } from './routes/r.$id'
-import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as ToolsBmiCalculatorRouteImport } from './routes/tools.bmi-calculator'
 import { Route as ToolsCountdownRouteImport } from './routes/tools.countdown'
@@ -83,6 +83,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiToolsRoute = AiToolsRouteImport.update({
+  id: '/ai-tools',
+  path: '/ai-tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AlternativesRoute = AlternativesRouteImport.update({
@@ -280,11 +285,6 @@ const RIdRoute = RIdRouteImport.update({
   path: '/r/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ToolsIndexRoute = ToolsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ToolsRoute,
-} as any)
 const ToolsAgeCalculatorRoute = ToolsAgeCalculatorRouteImport.update({
   id: '/age-calculator',
   path: '/age-calculator',
@@ -405,6 +405,7 @@ const ExploreCategorySubcategoryRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
@@ -465,13 +466,13 @@ export interface FileRoutesByFullPath {
   '/explore/': typeof ExploreIndexRoute
   '/generators/': typeof GeneratorsIndexRoute
   '/hub/': typeof HubIndexRoute
-  '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
@@ -490,6 +491,7 @@ export interface FileRoutesByTo {
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -531,7 +533,6 @@ export interface FileRoutesByTo {
   '/explore': typeof ExploreIndexRoute
   '/generators': typeof GeneratorsIndexRoute
   '/hub': typeof HubIndexRoute
-  '/tools': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
 }
@@ -539,6 +540,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
@@ -599,7 +601,6 @@ export interface FileRoutesById {
   '/explore/': typeof ExploreIndexRoute
   '/generators/': typeof GeneratorsIndexRoute
   '/hub/': typeof HubIndexRoute
-  '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
@@ -608,6 +609,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/ai-tools'
     | '/alternatives'
     | '/assistant'
     | '/changelog'
@@ -668,13 +670,13 @@ export interface FileRouteTypes {
     | '/explore/'
     | '/generators/'
     | '/hub/'
-    | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/ai-tools'
     | '/alternatives'
     | '/assistant'
     | '/changelog'
@@ -693,6 +695,7 @@ export interface FileRouteTypes {
     | '/roadmaps'
     | '/search'
     | '/settings'
+    | '/tools'
     | '/trending'
     | '/whats-new'
     | '/youtube'
@@ -734,13 +737,13 @@ export interface FileRouteTypes {
     | '/explore'
     | '/generators'
     | '/hub'
-    | '/tools'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/ai-tools'
     | '/alternatives'
     | '/assistant'
     | '/changelog'
@@ -801,7 +804,6 @@ export interface FileRouteTypes {
     | '/explore/'
     | '/generators/'
     | '/hub/'
-    | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
   fileRoutesById: FileRoutesById
@@ -809,6 +811,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AiToolsRoute: typeof AiToolsRoute
   AlternativesRoute: typeof AlternativesRoute
   AssistantRoute: typeof AssistantRoute
   ChangelogRoute: typeof ChangelogRoute
@@ -866,6 +869,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-tools': {
+      id: '/ai-tools'
+      path: '/ai-tools'
+      fullPath: '/ai-tools'
+      preLoaderRoute: typeof AiToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/alternatives': {
@@ -1141,13 +1151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tools/': {
-      id: '/tools/'
-      path: '/'
-      fullPath: '/tools/'
-      preLoaderRoute: typeof ToolsIndexRouteImport
-      parentRoute: typeof ToolsRoute
-    }
     '/tools/age-calculator': {
       id: '/tools/age-calculator'
       path: '/age-calculator'
@@ -1334,7 +1337,6 @@ interface ToolsRouteChildren {
   ToolsSipCalculatorRoute: typeof ToolsSipCalculatorRoute
   ToolsStarfieldRoute: typeof ToolsStarfieldRoute
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
-  ToolsIndexRoute: typeof ToolsIndexRoute
 }
 
 const ToolsRouteChildren: ToolsRouteChildren = {
@@ -1359,7 +1361,6 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsSipCalculatorRoute: ToolsSipCalculatorRoute,
   ToolsStarfieldRoute: ToolsStarfieldRoute,
   ToolsWorldClockRoute: ToolsWorldClockRoute,
-  ToolsIndexRoute: ToolsIndexRoute,
 }
 
 const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)
@@ -1367,6 +1368,7 @@ const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AiToolsRoute: AiToolsRoute,
   AlternativesRoute: AlternativesRoute,
   AssistantRoute: AssistantRoute,
   ChangelogRoute: ChangelogRoute,
@@ -1412,13 +1414,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
