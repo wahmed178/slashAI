@@ -347,7 +347,7 @@ export const getIndiaNews = createServerFn({ method: "GET" })
     try {
       const feed = INDIA_FEEDS[data.category] ?? INDIA_FEEDS["india"]!;
       const res = await fetch(
-        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=12`,
+        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`,
       );
       if (!res.ok) return [];
       const json = (await res.json()) as {
