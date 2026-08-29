@@ -59,8 +59,8 @@ const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
   { to: "/discover", label: "Discover", icon: Compass, exact: false },
+  { to: "/tools", label: "Tools", icon: Wrench, exact: false },
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
-  { to: "/favorites", label: "Saved", icon: Bookmark, exact: false },
 ] as const;
 
 /** nested under Discover in the sidebar and the drawer */
@@ -512,7 +512,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             if (p === "/hub") return pathname.startsWith("/hub");
             if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
             if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar");
-            if (p === "/favorites") return pathname.startsWith("/favorites") || pathname.startsWith("/recent");
+            if (p === "/tools") return pathname.startsWith("/tools");
             return pathname.startsWith(p);
           })();
           return (
