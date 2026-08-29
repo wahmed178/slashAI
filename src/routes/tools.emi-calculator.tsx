@@ -24,7 +24,7 @@ function EmiCalculator() {
   const principalPct = result.total > 0 ? (principal / result.total) * 100 : 50;
 
   return (
-    <AppShell title="EMI Calculator" back={{ to: "/tools", label: "Tools" }}>
+    <AppShell title="EMI Calculator" back={{ to: "/tools", label: "SlashKit" }}>
       <div className="mt-4 space-y-5">
         <div className="rounded-xl border border-border bg-surface p-4 space-y-4">
           <div>

@@ -21,7 +21,7 @@ function PercentageCalc() {
   const labels = ["What is X% of Y?", "X is what % of Y?", "% change from X to Y"];
 
   return (
-    <AppShell title="Percentage Calculator" back={{ to: "/tools", label: "Tools" }}>
+    <AppShell title="Percentage Calculator" back={{ to: "/tools", label: "SlashKit" }}>
       <div className="mt-4 space-y-4">
         <div className="flex gap-1 overflow-x-auto">
           {labels.map((l, i) => (

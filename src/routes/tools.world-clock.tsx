@@ -27,7 +27,7 @@ function WorldClock() {
   useEffect(() => { const id = setInterval(() => setNow(new Date()), 1000); return () => clearInterval(id); }, []);
 
   return (
-    <AppShell title="World Clock" back={{ to: "/tools", label: "Tools" }}>
+    <AppShell title="World Clock" back={{ to: "/tools", label: "SlashKit" }}>
       <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
         {CITIES.map((city) => {
           const time = now.toLocaleTimeString("en-US", { timeZone: city.tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });

@@ -61,7 +61,7 @@ function CountdownTimer() {
   );
 
   return (
-    <AppShell title="Countdown Timer" back={{ to: "/tools", label: "Tools" }}>
+    <AppShell title="Countdown Timer" back={{ to: "/tools", label: "SlashKit" }}>
       <div className="mt-4 space-y-5">
         {active && (
           <div className="flex justify-center gap-2">

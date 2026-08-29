@@ -67,7 +67,7 @@ const PRIMARY = [
 const DISCOVER_CHILDREN = [
   { section: "ai", label: "AI", icon: Sparkles },
   { section: "free-ai", label: "Free AI", icon: Bot },
-  { section: "free-tools", label: "Free Tools", icon: Wrench },
+  { section: "slashkit", label: "SlashKit", icon: Wrench },
   { section: "github", label: "GitHub", icon: Github },
   { section: "learn", label: "Learn", icon: GraduationCap },
   { section: "resources", label: "Resources", icon: Layers },
@@ -110,7 +110,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
       { to: "/generators", label: "Founder tools", icon: Rocket },
       { to: "/roadmaps", label: "Founder roadmaps", icon: RouteIcon },
       { to: "/journal", label: "Build journal", icon: NotebookPen },
-      { to: "/tools", label: "Free Tools", icon: Wrench },
+      { to: "/tools", label: "SlashKit", icon: Wrench },
       { to: "/assistant", label: "Assistant", icon: Bot },
     ],
   },

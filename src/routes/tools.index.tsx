@@ -52,8 +52,8 @@ const TOOL_SECTIONS = [
 export const Route = createFileRoute("/tools/")({
   head: () => ({
     meta: [
-      { title: "Free Tools \u2014 Browser utilities, calculators, screens | SlashAI" },
-      { name: "description", content: "22 free browser tools: image compress, calculators, timers, screensavers. No upload, no account, runs in your browser." },
+      { title: "SlashKit \u2014 Free browser utilities, calculators, screens | SlashAI" },
+      {      name: "description", content: "SlashKit: 22 free browser tools — image compress, calculators, timers, screensavers. No upload, no account." },
     ],
   }),
   component: ToolsIndex,
@@ -61,13 +61,13 @@ export const Route = createFileRoute("/tools/")({
 
 function ToolsIndex() {
   return (
-    <AppShell wide title="Free Tools">
+    <AppShell wide title="SlashKit">
       <header className="page-enter pt-2">
         <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-          Free Tools
+          SlashKit
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          All tools run in your browser. Nothing is uploaded anywhere.
+          22 browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
 

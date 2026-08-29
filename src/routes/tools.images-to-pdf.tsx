@@ -53,7 +53,7 @@ function ImagesToPdf() {
   };
 
   return (
-    <AppShell title="Images to PDF" back={{ to: "/tools", label: "Tools" }}>
+    <AppShell title="Images to PDF" back={{ to: "/tools", label: "SlashKit" }}>
       <div onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); addFiles(e.dataTransfer.files); }}
         onClick={() => inputRef.current?.click()}
         className="mt-4 flex min-h-[120px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-surface p-6 text-center transition-colors hover:border-primary/50">
