@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import {
   ArrowDownRight,
   ArrowUpRight,
+  BarChart3,
   CloudSun,
   Coins,
   Compass,
@@ -27,6 +28,7 @@ import {
   getAirQuality,
   getCrypto,
   getForex,
+  getCommodities,
   getIndiaNews,
   getMatches,
   getNews,
@@ -749,6 +751,52 @@ function ForexCard() {
   );
 }
 
+// ------------------------------------------------------------------ commodities
+
+function CommoditiesCard() {
+  const fetchCommodities = useServerFn(getCommodities);
+  const { data, isFetching, refetch } = useQuery({
+    queryKey: ["commodities"],
+    queryFn: () => fetchCommodities(),
+    staleTime: 5 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000,
+  });
+
+  return (
+    <Card title="Commodities" icon={BarChart3} action={<RefreshButton label="Refresh commodity prices" spinning={isFetching} onClick={() => void refetch()} />}>
+      {!data ? (
+        <Skeleton rows={5} />
+      ) : data.length === 0 ? (
+        <p className="text-sm text-muted-foreground">Commodity prices are unavailable right now.</p>
+      ) : (
+        <ul className="space-y-1.5">
+          {data.map((c) => {
+            const change = c.price - c.prev;
+            const pct = c.prev > 0 ? ((change / c.prev) * 100) : 0;
+            const up = change >= 0;
+            return (
+              <li key={c.symbol} className="panel flex items-center justify-between rounded-xl px-3 py-2">
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-medium text-foreground">{c.name}</span>
+                  <span className="text-[11px] text-muted-foreground">{c.unit}</span>
+                </span>
+                <span className="text-right">
+                  <span className="block font-mono text-sm font-semibold text-foreground tabular-nums">
+                    ${c.price.toFixed(2)}
+                  </span>
+                  <span className={`block text-[11px] font-medium tabular-nums ${up ? "text-green" : "text-red"}`}>
+                    {up ? "+" : ""}{change.toFixed(2)} ({up ? "+" : ""}{pct.toFixed(1)}%)
+                  </span>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Card>
+  );
+}
+
 // ------------------------------------------------------------------- scores
 
 function MatchRow({ m }: { m: MatchItem }) {
@@ -994,6 +1042,7 @@ function LivePage() {
         <StocksCard />
         <CryptoCard />
         <ForexCard />
+        <CommoditiesCard />
         <ScoresCard sport="Cricket" title="Cricket" />
         <ScoresCard sport="Soccer" title="Football" />
         <ApodCard />

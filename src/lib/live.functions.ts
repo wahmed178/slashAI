@@ -287,6 +287,40 @@ export const getCrypto = createServerFn({ method: "GET" }).handler(async (): Pro
   }
 });
 
+// -------------------------------------------------------------- commodities
+
+export interface CommodityItem {
+  name: string;
+  symbol: string;
+  price: number;
+  prev: number;
+  unit: string;
+}
+
+const COMMODITY_TICKERS: [string, string, string][] = [
+  ["GC=F", "Gold", "$ / oz"],
+  ["SI=F", "Silver", "$ / oz"],
+  ["CL=F", "Crude Oil (WTI)", "$ / bbl"],
+  ["NG=F", "Natural Gas", "$ / MMBtu"],
+  ["HG=F", "Copper", "$ / lb"],
+  ["PL=F", "Platinum", "$ / oz"],
+];
+
+/** Gold, silver, crude oil, natural gas, copper, platinum from Yahoo Finance (keyless). */
+export const getCommodities = createServerFn({ method: "GET" }).handler(async (): Promise<CommodityItem[]> => {
+  try {
+    const quotes = await Promise.all(COMMODITY_TICKERS.map(([sym]) => yahooQuote(sym)));
+    return quotes
+      .filter((q): q is NonNullable<typeof q> => q !== null)
+      .map((q) => {
+        const def = COMMODITY_TICKERS.find(([s]) => s === q.symbol)!;
+        return { name: def[1], symbol: q.symbol, price: q.price, prev: q.prev, unit: def[2] };
+      });
+  } catch {
+    return [];
+  }
+});
+
 export interface ForexRate {
   pair: string;
   flag: string;
