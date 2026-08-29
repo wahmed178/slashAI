@@ -24,7 +24,8 @@ August 2026
 - Changelog page with timeline layout (v2.0-v2.5)
 - Glass tier waitlist page (/glass)
 - Hub listing page (/hub)
-- Bottom tab bar: Home | Commands | Discover | Tools | Hubs
+- Bottom tab bar: Home | Commands | Discover | Tools | Hubs (5 tabs, route-based active states)
+- Saved accessible from sidebar + /favorites route
 - Global keyboard shortcuts: /, ?, G+H/D/T/L, Escape
 - PWA (offline, installable)
 
