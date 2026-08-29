@@ -98,7 +98,7 @@ export const getNews = createServerFn({ method: "GET" }).handler(async (): Promi
 
 /** Current conditions + 4-day outlook from Open-Meteo (no API key required). */
 export const getWeather = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ place: z.string().trim().min(1).max(60) }).parse(data))
+  .validator((data) => z.object({ place: z.string().trim().min(1).max(60) }).parse(data))
   .handler(async ({ data }): Promise<WeatherNow | null> => {
     try {
       const geoRes = await fetch(
@@ -342,7 +342,7 @@ const INDIA_FEEDS: Record<string, { url: string; label: string }> = {
 
 /** Top India headlines via rss2json over public NDTV/Gadgets360 feeds (no key). */
 export const getIndiaNews = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ category: z.enum(["india", "business", "tech", "sports"]) }).parse(data))
+  .validator((data) => z.object({ category: z.enum(["india", "business", "tech", "sports"]) }).parse(data))
   .handler(async ({ data }): Promise<IndiaNewsItem[]> => {
     try {
       const feed = INDIA_FEEDS[data.category] ?? INDIA_FEEDS["india"]!;
@@ -386,7 +386,7 @@ const PRAYER_ORDER = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] as const;
 
 /** Prayer times + Hijri date from Aladhan (completely free, no key). */
 export const getPrayerTimes = createServerFn({ method: "GET" })
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({ city: z.string().trim().min(1).max(60), country: z.string().trim().min(1).max(60) }).parse(data),
   )
   .handler(async ({ data }): Promise<PrayerTimesData | null> => {
@@ -448,7 +448,7 @@ export interface AirQualityResult extends AirQualityData {
 
 /** US AQI + particulates from Open-Meteo's air-quality API (same provider as weather). */
 export const getAirQuality = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ place: z.string().trim().min(1).max(60) }).parse(data))
+  .validator((data) => z.object({ place: z.string().trim().min(1).max(60) }).parse(data))
   .handler(async ({ data }): Promise<AirQualityResult | null> => {
     try {
       const geoRes = await fetch(
@@ -545,7 +545,7 @@ export const getSpace = createServerFn({ method: "GET" }).handler(async (): Prom
 
 /** Fixtures and scores for a sport on a given day from TheSportsDB's free tier. */
 export const getMatches = createServerFn({ method: "GET" })
-  .inputValidator((data) =>
+  .validator((data) =>
     z
       .object({ sport: z.enum(["Soccer", "Cricket"]), offsetDays: z.number().min(-3).max(3) })
       .parse(data),

@@ -14,6 +14,9 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    build: {
+      chunkSizeWarningLimit: 1000,
+    },
     plugins: [
       VitePWA({
         // The app shell + the whole static command catalog are cached for offline use.
@@ -24,7 +27,7 @@ export default defineConfig({
         devOptions: { enabled: false },
         manifest: false,
         workbox: {
-          globPatterns: ["**/*.{js,css,html,svg,png,ico,webmanifest,woff2}"],
+          globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
           // the command catalog chunk is large; keep it precached for offline use
           maximumFileSizeToCacheInBytes: 12 * 1024 * 1024,
           navigateFallback: "/",

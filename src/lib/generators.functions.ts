@@ -4,7 +4,7 @@ import { z } from "zod";
 import { runGeneratorOnServer } from "@/lib/generators.server";
 
 export const runGenerator = createServerFn({ method: "POST" })
-  .inputValidator((data) =>
+  .validator((data) =>
     z
       .object({
         id: z.string().min(1),

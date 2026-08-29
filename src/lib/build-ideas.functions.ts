@@ -4,7 +4,7 @@ import { z } from "zod";
 import { askOpenRouter, SPEC_SYSTEM, VALIDATE_SYSTEM, specPrompt } from "@/lib/build-ideas.server";
 
 export const generateSpec = createServerFn({ method: "POST" })
-  .inputValidator((data) =>
+  .validator((data) =>
     z
       .object({
         title: z.string().min(1),
@@ -23,7 +23,7 @@ export const generateSpec = createServerFn({ method: "POST" })
   .handler(async ({ data }) => ({ markdown: await askOpenRouter(SPEC_SYSTEM, specPrompt(data)) }));
 
 export const validateIdea = createServerFn({ method: "POST" })
-  .inputValidator((data) => z.object({ idea: z.string().min(20).max(4000) }).parse(data))
+  .validator((data) => z.object({ idea: z.string().min(20).max(4000) }).parse(data))
   .handler(async ({ data }) => ({
     json: await askOpenRouter(VALIDATE_SYSTEM, `Evaluate this startup idea:\n\n${data.idea}`),
   }));

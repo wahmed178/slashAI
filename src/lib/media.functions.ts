@@ -7,7 +7,7 @@ export type { MovieHit, VideoHit };
 
 /** Keyless YouTube/music search, played back through youtube-nocookie embeds. */
 export const searchVideos = createServerFn({ method: "GET" })
-  .inputValidator((data) =>
+  .validator((data) =>
     z.object({ q: z.string().trim().min(1).max(120), music: z.boolean() }).parse(data),
   )
   .handler(async ({ data }): Promise<{ hits: VideoHit[]; degraded: boolean }> => {
@@ -17,7 +17,7 @@ export const searchVideos = createServerFn({ method: "GET" })
 
 /** Free-text movie search across IMDb metadata. */
 export const searchMovies = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ q: z.string().trim().max(120) }).parse(data))
+  .validator((data) => z.object({ q: z.string().trim().max(120) }).parse(data))
   .handler(async ({ data }): Promise<MovieHit[]> => {
     const { runMovieSearch } = await import("./media.server");
     return data.q ? runMovieSearch(data.q) : [];
@@ -25,7 +25,7 @@ export const searchMovies = createServerFn({ method: "GET" })
 
 /** Curated regional shelf (Hindi, Telugu, Urdu, Nepali, …). */
 export const regionalMovies = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ lang: z.string().trim().max(20) }).parse(data))
+  .validator((data) => z.object({ lang: z.string().trim().max(20) }).parse(data))
   .handler(async ({ data }): Promise<MovieHit[]> => {
     const { runRegionalShelf } = await import("./media.server");
     return runRegionalShelf(data.lang);
@@ -33,7 +33,7 @@ export const regionalMovies = createServerFn({ method: "GET" })
 
 /** Full detail for one title. */
 export const movieDetail = createServerFn({ method: "GET" })
-  .inputValidator((data) => z.object({ id: z.string().trim().max(20) }).parse(data))
+  .validator((data) => z.object({ id: z.string().trim().max(20) }).parse(data))
   .handler(async ({ data }): Promise<MovieHit | null> => {
     const { runMovieDetail } = await import("./media.server");
     return runMovieDetail(data.id);
