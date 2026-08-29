@@ -67,7 +67,6 @@ const PRIMARY = [
 const DISCOVER_CHILDREN = [
   { section: "ai", label: "AI", icon: Sparkles },
   { section: "free-ai", label: "Free AI", icon: Bot },
-  { section: "slashkits", label: "SlashKits", icon: Wrench },
   { section: "github", label: "GitHub", icon: Github },
   { section: "learn", label: "Learn", icon: GraduationCap },
   { section: "resources", label: "Resources", icon: Layers },
