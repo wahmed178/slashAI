@@ -45,6 +45,7 @@ const TOOL_SECTIONS = [
       { slug: "starfield", name: "Starfield", desc: "Warp speed stars screensaver", icon: "\u{2B50}" },
       { slug: "new-tab", name: "New Tab Screen", desc: "Beautiful homepage / new tab replacement", icon: "\u{1F3E0}" },
       { slug: "quote-screen", name: "Quote of the Day", desc: "Inspirational quotes with daily refresh", icon: "\u{1F4DD}" },
+      { slug: "one-liner", name: "OneLiner Quotes", desc: "500+ aesthetic quotes. Copy or download as PNG.", icon: "\u{2728}" },
     ],
   },
 ] as const;
@@ -67,7 +68,7 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          22 browser-based tools. Nothing uploaded. All client-side.
+          23 browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
 

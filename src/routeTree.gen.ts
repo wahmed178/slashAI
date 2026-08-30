@@ -70,6 +70,7 @@ import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-conv
 import { Route as ToolsImagesToPdfRouteImport } from './routes/tools.images-to-pdf'
 import { Route as ToolsMarkdownToHtmlRouteImport } from './routes/tools.markdown-to-html'
 import { Route as ToolsNewTabRouteImport } from './routes/tools.new-tab'
+import { Route as ToolsOneLinerRouteImport } from './routes/tools.one-liner'
 import { Route as ToolsPercentageRouteImport } from './routes/tools.percentage'
 import { Route as ToolsPomodoroRouteImport } from './routes/tools.pomodoro'
 import { Route as ToolsQuoteScreenRouteImport } from './routes/tools.quote-screen'
@@ -385,6 +386,11 @@ const ToolsNewTabRoute = ToolsNewTabRouteImport.update({
   path: '/new-tab',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsOneLinerRoute = ToolsOneLinerRouteImport.update({
+  id: '/one-liner',
+  path: '/one-liner',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsPercentageRoute = ToolsPercentageRouteImport.update({
   id: '/percentage',
   path: '/percentage',
@@ -487,6 +493,7 @@ export interface FileRoutesByFullPath {
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
   '/tools/new-tab': typeof ToolsNewTabRoute
+  '/tools/one-liner': typeof ToolsOneLinerRoute
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
@@ -558,6 +565,7 @@ export interface FileRoutesByTo {
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
   '/tools/new-tab': typeof ToolsNewTabRoute
+  '/tools/one-liner': typeof ToolsOneLinerRoute
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
@@ -631,6 +639,7 @@ export interface FileRoutesById {
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
   '/tools/new-tab': typeof ToolsNewTabRoute
+  '/tools/one-liner': typeof ToolsOneLinerRoute
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
@@ -705,6 +714,7 @@ export interface FileRouteTypes {
     | '/tools/images-to-pdf'
     | '/tools/markdown-to-html'
     | '/tools/new-tab'
+    | '/tools/one-liner'
     | '/tools/percentage'
     | '/tools/pomodoro'
     | '/tools/quote-screen'
@@ -776,6 +786,7 @@ export interface FileRouteTypes {
     | '/tools/images-to-pdf'
     | '/tools/markdown-to-html'
     | '/tools/new-tab'
+    | '/tools/one-liner'
     | '/tools/percentage'
     | '/tools/pomodoro'
     | '/tools/quote-screen'
@@ -848,6 +859,7 @@ export interface FileRouteTypes {
     | '/tools/images-to-pdf'
     | '/tools/markdown-to-html'
     | '/tools/new-tab'
+    | '/tools/one-liner'
     | '/tools/percentage'
     | '/tools/pomodoro'
     | '/tools/quote-screen'
@@ -1345,6 +1357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsNewTabRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/one-liner': {
+      id: '/tools/one-liner'
+      path: '/one-liner'
+      fullPath: '/tools/one-liner'
+      preLoaderRoute: typeof ToolsOneLinerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/percentage': {
       id: '/tools/percentage'
       path: '/percentage'
@@ -1438,6 +1457,7 @@ interface ToolsRouteChildren {
   ToolsImagesToPdfRoute: typeof ToolsImagesToPdfRoute
   ToolsMarkdownToHtmlRoute: typeof ToolsMarkdownToHtmlRoute
   ToolsNewTabRoute: typeof ToolsNewTabRoute
+  ToolsOneLinerRoute: typeof ToolsOneLinerRoute
   ToolsPercentageRoute: typeof ToolsPercentageRoute
   ToolsPomodoroRoute: typeof ToolsPomodoroRoute
   ToolsQuoteScreenRoute: typeof ToolsQuoteScreenRoute
@@ -1463,6 +1483,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsImagesToPdfRoute: ToolsImagesToPdfRoute,
   ToolsMarkdownToHtmlRoute: ToolsMarkdownToHtmlRoute,
   ToolsNewTabRoute: ToolsNewTabRoute,
+  ToolsOneLinerRoute: ToolsOneLinerRoute,
   ToolsPercentageRoute: ToolsPercentageRoute,
   ToolsPomodoroRoute: ToolsPomodoroRoute,
   ToolsQuoteScreenRoute: ToolsQuoteScreenRoute,
@@ -1527,13 +1548,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
