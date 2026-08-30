@@ -99,6 +99,23 @@ function NewTabScreen() {
       }).catch(() => setBtc("\u{26A1} BTC —"));
   }, []);
 
+  const [showControls, setShowControls] = useState(false);
+
+  useEffect(() => {
+    const show = () => {
+      setShowControls(true);
+    };
+    const hide = setTimeout(() => setShowControls(false), 3000);
+    window.addEventListener("mousemove", show);
+    window.addEventListener("touchstart", show);
+    return () => {
+      window.removeEventListener("mousemove", show);
+      window.removeEventListener("touchstart", show);
+      clearTimeout(hide);
+    };
+  }, [showControls]);
+
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!search) return;
@@ -112,22 +129,20 @@ function NewTabScreen() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4" style={{ background: "#0d1117" }}>
 
-      {/* Back button */}
-      <button
-        type="button"
-        onClick={() => window.history.back()}
-        className="fixed top-4 left-4 z-50 h-10 w-10 rounded-full border flex items-center justify-center transition-all duration-150 active:scale-95"
-        style={{
-          borderColor: "rgba(255,255,255,0.12)",
-          background: "rgba(255,255,255,0.06)",
-          color: "rgba(255,255,255,0.6)",
-          backdropFilter: "blur(8px)",
-        }}
+      {/* Auto-dismiss close button */}
+      <div
+        className={`fixed bottom-4 right-4 z-50 transition-opacity duration-500 ${
+          showControls ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="m15 18-6-6 6-6"/>
-        </svg>
-      </button>
+        <button
+          type="button"
+          onClick={() => window.history.back()}
+          className="rounded-lg border border-border bg-surface/80 backdrop-blur px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Close
+        </button>
+      </div>
 
       {/* Greeting */}
       <p className="text-lg text-muted-foreground">

@@ -836,6 +836,7 @@ function OneLiner() {
   const [fading, setFading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const filtered = useMemo(
@@ -931,6 +932,19 @@ function OneLiner() {
     return () => window.removeEventListener("keydown", handler);
   }, [goNext, goPrev]);
 
+  // Auto-dismiss close button
+  useEffect(() => {
+    const show = () => setShowControls(true);
+    const hide = setTimeout(() => setShowControls(false), 3000);
+    window.addEventListener("mousemove", show);
+    window.addEventListener("touchstart", show);
+    return () => {
+      window.removeEventListener("mousemove", show);
+      window.removeEventListener("touchstart", show);
+      clearTimeout(hide);
+    };
+  }, [showControls]);
+
   const copyQuote = async () => {
     if (!current) return;
     try {
@@ -994,17 +1008,14 @@ function OneLiner() {
       y += lh;
     }
 
-    canvas.toBlob((blob: Blob | null) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `oneliner-${category.toLowerCase().replace(/\s+/g, "-")}-${String(pos + 1).padStart(3, "0")}.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }, "image/png");
+    // Use toDataURL instead of toBlob for Android WebView compatibility
+    const dataUrl = canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = `oneliner-${category.toLowerCase().replace(/\s+/g, "-")}-${String(pos + 1).padStart(3, "0")}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
@@ -1015,27 +1026,25 @@ function OneLiner() {
   const atEnd = pos >= total - 1;
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden" style={{ background: "#0d1117" }}>
+    <div className="flex flex-col h-screen overflow-hidden bg-background">
 
-      {/* Back button */}
-      <button
-        type="button"
-        onClick={() => window.history.back()}
-        className="fixed top-4 left-4 z-50 h-10 w-10 rounded-full border flex items-center justify-center transition-all duration-150 active:scale-95"
-        style={{
-          borderColor: "rgba(255,255,255,0.12)",
-          background: "rgba(255,255,255,0.06)",
-          color: "rgba(255,255,255,0.6)",
-          backdropFilter: "blur(8px)",
-        }}
+      {/* Auto-dismiss close button */}
+      <div
+        className={`fixed bottom-4 right-4 z-50 transition-opacity duration-500 ${
+          showControls ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="m15 18-6-6 6-6"/>
-        </svg>
-      </button>
+        <button
+          type="button"
+          onClick={() => window.history.back()}
+          className="rounded-lg border border-border bg-surface/80 backdrop-blur px-4 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          Close
+        </button>
+      </div>
 
       {/* Category pills — fixed top */}
-      <div className="shrink-0 w-full overflow-x-auto pb-2 pt-2 px-4 scrollbar-none" style={{ background: "#0d1117" }}>
+      <div className="shrink-0 w-full overflow-x-auto pb-2 pt-2 px-4 scrollbar-none bg-background">
         <div className="flex items-center gap-2 w-max pr-4">
           {CATEGORIES.map((cat) => {
             const active = cat === category;
@@ -1092,7 +1101,7 @@ function OneLiner() {
 
       {/* Quote display */}
       <div
-        className="flex-1 flex flex-col items-center justify-center cursor-pointer w-full overflow-hidden px-6" style={{ background: "#0d1117" }}
+        className="flex-1 flex flex-col items-center justify-center cursor-pointer w-full overflow-hidden px-6 bg-background"
         onClick={goNext}
       >
         <div className="w-full max-w-[720px] flex flex-col items-center justify-center">
@@ -1135,7 +1144,7 @@ function OneLiner() {
       </div>
 
       {/* Bottom controls */}
-      <div className="shrink-0 fixed bottom-0 left-0 right-0 z-20 border-t border-border" style={{ background: "rgba(13,17,23,0.92)", backdropFilter: "blur(16px)" }}>
+      <div className="shrink-0 fixed bottom-0 left-0 right-0 z-20 border-t border-border bg-background/90 backdrop-blur-xl">
         <div className="mx-auto max-w-[980px] px-4 md:px-8 py-3.5 flex flex-col gap-3.5">
           {/* Nav row */}
           <div className="flex items-center justify-between md:justify-center gap-4">
