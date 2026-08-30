@@ -35,6 +35,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as YoutubeRouteImport } from './routes/youtube'
+import { Route as AssistantAboutRouteImport } from './routes/assistant.about'
 import { Route as BuildIdeasIndexRouteImport } from './routes/build-ideas.index'
 import { Route as BuildIdeasSlugRouteImport } from './routes/build-ideas.$slug'
 import { Route as BuildIdeasProjectsRouteImport } from './routes/build-ideas.projects'
@@ -206,6 +207,11 @@ const YoutubeRoute = YoutubeRouteImport.update({
   id: '/youtube',
   path: '/youtube',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AssistantAboutRoute = AssistantAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => AssistantRoute,
 } as any)
 const BuildIdeasIndexRoute = BuildIdeasIndexRouteImport.update({
   id: '/build-ideas/',
@@ -419,7 +425,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
-  '/assistant': typeof AssistantRoute
+  '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
@@ -441,6 +447,7 @@ export interface FileRoutesByFullPath {
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
+  '/assistant/about': typeof AssistantAboutRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -488,7 +495,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
-  '/assistant': typeof AssistantRoute
+  '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
@@ -509,6 +516,7 @@ export interface FileRoutesByTo {
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
+  '/assistant/about': typeof AssistantAboutRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -557,7 +565,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
-  '/assistant': typeof AssistantRoute
+  '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
@@ -579,6 +587,7 @@ export interface FileRoutesById {
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
+  '/assistant/about': typeof AssistantAboutRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -650,6 +659,7 @@ export interface FileRouteTypes {
     | '/trending'
     | '/whats-new'
     | '/youtube'
+    | '/assistant/about'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -718,6 +728,7 @@ export interface FileRouteTypes {
     | '/trending'
     | '/whats-new'
     | '/youtube'
+    | '/assistant/about'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -787,6 +798,7 @@ export interface FileRouteTypes {
     | '/trending'
     | '/whats-new'
     | '/youtube'
+    | '/assistant/about'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -835,7 +847,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AiToolsRoute: typeof AiToolsRoute
   AlternativesRoute: typeof AlternativesRoute
-  AssistantRoute: typeof AssistantRoute
+  AssistantRoute: typeof AssistantRouteWithChildren
   ChangelogRoute: typeof ChangelogRoute
   DealsRoute: typeof DealsRoute
   FavoritesRoute: typeof FavoritesRoute
@@ -1061,6 +1073,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/youtube'
       preLoaderRoute: typeof YoutubeRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/assistant/about': {
+      id: '/assistant/about'
+      path: '/about'
+      fullPath: '/assistant/about'
+      preLoaderRoute: typeof AssistantAboutRouteImport
+      parentRoute: typeof AssistantRoute
     }
     '/build-ideas/': {
       id: '/build-ideas/'
@@ -1352,6 +1371,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AssistantRouteChildren {
+  AssistantAboutRoute: typeof AssistantAboutRoute
+}
+
+const AssistantRouteChildren: AssistantRouteChildren = {
+  AssistantAboutRoute: AssistantAboutRoute,
+}
+
+const AssistantRouteWithChildren = AssistantRoute._addFileChildren(
+  AssistantRouteChildren,
+)
+
 interface ToolsRouteChildren {
   ToolsAgeCalculatorRoute: typeof ToolsAgeCalculatorRoute
   ToolsBmiCalculatorRoute: typeof ToolsBmiCalculatorRoute
@@ -1409,7 +1440,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AiToolsRoute: AiToolsRoute,
   AlternativesRoute: AlternativesRoute,
-  AssistantRoute: AssistantRoute,
+  AssistantRoute: AssistantRouteWithChildren,
   ChangelogRoute: ChangelogRoute,
   DealsRoute: DealsRoute,
   FavoritesRoute: FavoritesRoute,

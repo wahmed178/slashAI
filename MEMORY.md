@@ -63,7 +63,7 @@ Built on Lovable, deployed on Vercel.
 /whats-new — Weekly free finds
 /radar — Free offers
 /alternatives — Free alternatives list
-/assistant — Workflow assistant
+/assistant — Local browser AI (WebLLM, Llama models, private, no API keys)
 /about — About SlashAI (editorial, real content)
 /changelog — Version history timeline (v2.0-v2.5)
 /glass — Premium waitlist page (email capture, localStorage)

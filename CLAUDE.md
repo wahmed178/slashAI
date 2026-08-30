@@ -29,6 +29,18 @@ August 2026
 - Global keyboard shortcuts: /, ?, G+H/D/T/L, Escape
 - PWA (offline, installable)
 
+## Local AI Assistant (/assistant)
+- Local browser AI powered by WebLLM (@mlc-ai/web-llm)
+- 3 models: Fast (1B, 760MB), Balanced (3B, 1.8GB), Quality (8B, 4.9GB)
+- WebGPU required — Chrome/Edge/Brave recommended
+- States: Welcome (model picker), Loading (download progress), Chat (streaming), Unsupported
+- Features: streaming tokens, markdown rendering, code blocks with copy, file attachments (PDF/DOCX/TXT)
+- COOP/COEP headers in vite.config.ts and vercel.json for SharedArrayBuffer support
+- /assistant/about: instructions page with browser compat, model comparison, troubleshooting
+- Worker: src/workers/ai-worker.ts (WebLLM in background thread)
+- Model preference saved in localStorage, conversation history (last 50 messages)
+- 100% private, no API keys, no cloud, no tracking
+
 ## In Progress / Planned
 - Top nav dropdown menus (desktop)
 - Persona onboarding overlay (first visit)
