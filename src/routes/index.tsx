@@ -51,48 +51,25 @@ import trendingToolsData from "@/../src/data/trending-tools.json";
 import { personaGreetingName } from "@/lib/personas";
 import { GLOSSARY_TOTAL } from "@/lib/glossary";
 
-/* ─────────────── animated counter hook ─────────────── */
-function useCountUp(target: number, duration = 1200) {
-  const [value, setValue] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const start = performance.now();
-    const animate = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * target));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [target, duration]);
-  return { value, ref };
-}
-
-/* ─────────────── Stats Bar ─────────────── */
+/* ─────────────── Stats Bar (static — cannot fail) ─────────────── */
 function StatsBar() {
-  const cmds = useCountUp(VERIFIED_TOTAL);
-  const resources = useCountUp(RESOURCE_TOTAL);
-  const generators = useCountUp(25);
-  const roadmaps = useCountUp(20);
-  const terms = useCountUp(GLOSSARY_TOTAL);
-
   const stats = [
-    { label: "Commands", ...cmds },
-    { label: "Resources", ...resources },
-    { label: "Generators", ...generators },
-    { label: "Roadmaps", ...roadmaps },
-    { label: "Glossary", ...terms },
+    { number: "5,635", label: "Commands" },
+    { number: "319", label: "Resources" },
+    { number: "25", label: "Generators" },
+    { number: "20", label: "Roadmaps" },
+    { number: "138", label: "Glossary" },
   ];
-
   return (
-    <div ref={cmds.ref} className="mt-8 grid grid-cols-5 gap-2">
-      {stats.map((s) => (
-        <div key={s.label} className="stat-card rounded-xl bg-surface p-3 text-center">
-          <span ref={s.ref} className="block text-xl font-black text-primary sm:text-2xl">
-            {s.value.toLocaleString()}
-          </span>
-          <span className="mt-0.5 block text-[11px] text-muted-foreground">{s.label}</span>
-        </div>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 0, padding: "20px 0", borderTop: "1px solid #30363d", borderBottom: "1px solid #30363d", margin: "24px 0" }}>
+      {stats.map((stat, i) => (
+        <span key={stat.label} style={{ display: "contents" }}>
+          {i > 0 && <div style={{ width: "1px", height: "32px", background: "#30363d", flexShrink: 0 }} />}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 28px" }}>
+            <span style={{ fontSize: "22px", fontWeight: "700", color: "#e6edf3", fontFamily: "var(--font-mono, monospace)", lineHeight: 1 }}>{stat.number}</span>
+            <span style={{ fontSize: "11px", color: "#8b949e", marginTop: "4px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{stat.label}</span>
+          </div>
+        </span>
       ))}
     </div>
   );
@@ -133,14 +110,14 @@ function FeatureHighlights() {
         <Link
           key={f.title}
           to={f.to}
-          className="group panel relative overflow-hidden rounded-2xl p-4 transition-all hover:-translate-y-0.5 hover:border-primary/50"
+          className="group panel relative overflow-hidden rounded-2xl p-5 transition-all hover:-translate-y-0.5 hover:border-primary/50"
         >
           <f.icon className="size-6 text-primary" aria-hidden />
           <h3 className="mt-3 text-sm font-bold text-foreground group-hover:text-primary">
             {f.title}
           </h3>
           <p className="mt-1 text-xs text-muted-foreground">{f.desc}</p>
-          <ArrowRight className="absolute right-3 bottom-3 size-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+          <ArrowRight className="absolute right-3 bottom-3 size-4 text-muted-foreground opacity-0 transition-all duration-150 group-hover:translate-x-1 group-hover:opacity-100" />
         </Link>
       ))}
     </div>
@@ -172,17 +149,17 @@ function YourWeekDigest() {
         <h2 className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
           <Activity className="size-3.5 text-primary" aria-hidden /> Your week
         </h2>
-        <Link
-          to="/glossary"
-          className="hidden items-center gap-1 text-sm font-medium text-primary hover:underline sm:flex"
-        >
-          Learn a term <ArrowRight className="size-4" aria-hidden />
-        </Link>
+
       </header>
       {allZero ? (
-        <p className="mt-3 text-center text-[13px] text-muted-foreground">
-          Start by copying a command — your stats appear here.
-        </p>
+        <div className="mt-3 rounded-[10px] border border-[#30363d] bg-[#161b22] p-5 text-center">
+          <div className="text-[32px]">⚡</div>
+          <p className="mt-2 text-[15px] font-semibold text-[#e6edf3]">Your stats appear here</p>
+          <p className="mt-1 text-[13px] text-[#8b949e]">Copy a command to start your streak</p>
+          <Link to="/search" className="mt-3 inline-block rounded-[6px] border border-[#30363d] bg-[#21262d] px-5 py-2 text-[13px] text-[#58a6ff] no-underline transition-colors hover:border-[#484f58]">
+            Browse commands →
+          </Link>
+        </div>
       ) : (
       <div className="mt-3 grid grid-cols-4 gap-2">
         {tiles.map((t) => (
@@ -200,22 +177,7 @@ function YourWeekDigest() {
         ))}
       </div>
       )}
-      <div className="mt-3 flex flex-wrap gap-2">
-        {([
-          ["/roadmaps", "Founder roadmaps"],
-          ["/generators", "Founder tools"],
-          ["/live", "Live dashboard"],
-          ["/quiz", "Daily Quiz"],
-        ] as const).map(([to, label]) => (
-          <Link
-            key={to}
-            to={to}
-            className="min-h-9 rounded-full border border-border bg-surface px-3 text-sm leading-9 text-muted-foreground transition-colors hover:text-foreground"
-          >
-            {label}
-          </Link>
-        ))}
-      </div>
+
     </section>
   );
 }
@@ -223,9 +185,7 @@ function YourWeekDigest() {
 /* ─────────────── Intent chips ─────────────── */
 const INTENTS = [
   { label: "Write something", q: "write draft", emoji: "\u{270D}\u{FE0F}" },
-  { label: "Study or revise", q: "study explain", emoji: "\u{1F4DA}" },
   { label: "Write or fix code", q: "code debug", emoji: "\u{1F4BB}" },
-  { label: "Work with an image", q: "image edit", emoji: "\u{1F5BC}\u{FE0F}" },
   { label: "Handle a document", q: "document summarize", emoji: "\u{1F4C4}" },
   { label: "Do research", q: "research sources", emoji: "\u{1F50D}" },
   { label: "Get work done", q: "email plan meeting", emoji: "\u{1F4BC}" },
@@ -268,25 +228,20 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-9 animate-fade-in-up">
+    <section className="mt-12 animate-fade-in-up sm:mt-12">
       <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
-        <div className="min-w-0">
-          <h2 className="truncate text-lg font-bold tracking-tight text-foreground">{title}</h2>
-          {hint && <p className="mt-0.5 truncate text-xs text-muted-foreground">{hint}</p>}
+        <div className="flex min-w-0 items-center gap-2.5">
+          <span className="inline-block h-[18px] w-[3px] shrink-0 rounded-[2px] bg-[#58a6ff]" />
+          <div className="min-w-0">
+            <h2 className="truncate text-lg font-semibold tracking-tight text-[#e6edf3]">{title}</h2>
+            {hint && <p className="mt-0.5 truncate text-xs text-[#8b949e]">{hint}</p>}
+          </div>
         </div>
         {action}
       </div>
       {children}
     </section>
   );
-}
-
-function greeting() {
-  const hour = new Date().getHours();
-  if (hour < 5) return "Working late";
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
-  return "Good evening";
 }
 
 function CommandRow({ commands }: { commands: SlashCommand[] }) {
@@ -316,10 +271,6 @@ function CommandRow({ commands }: { commands: SlashCommand[] }) {
 function HomePage() {
   const { hydrated, favorites, recents, settings } = useLibrary();
 
-  const quickCategories = useMemo(
-    () => [...CATEGORY_TREE].sort((a, b) => b.count - a.count).slice(0, 6),
-    [],
-  );
 
   const recentCommands = useMemo(
     () =>
@@ -346,7 +297,7 @@ function HomePage() {
 
   const { streak } = useLibrary();
   const showOnboarding = hydrated && !settings.onboarded;
-  const name = personaGreetingName(settings.persona);
+
   const weeklyFinds = useMemo(() => {
     const weekly = DROPS.find((d) => d.cadence === "Weekly");
     return weekly ? dropItems(weekly).slice(0, 6) : [];
@@ -367,30 +318,43 @@ function HomePage() {
       <LiveTicker />
 
       {/* ─── Hero Section ─── */}
-      <section className="relative overflow-hidden rounded-2xl bg-surface p-6 pt-8 sm:p-8 hero-dots">
+      <section
+        className="relative overflow-hidden rounded-2xl bg-surface p-6 pt-8 sm:p-8 hero-dots"
+        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(88,166,255,0.04) 0%, transparent 70%), var(--color-surface, #161b22)' }}
+      >
         <div className="relative z-10">
-          <p className="flex items-center gap-2 text-sm text-muted-foreground">
-            {greeting()}
-            {name ? `, ${name}` : ""}
-            {hydrated && streak.count > 1 && (
-              <span className="flex items-center gap-1 text-primary">
-                <Flame className="size-3.5" aria-hidden /> {streak.count}-day streak
-              </span>
-            )}
+          <p className="text-center text-[12px] uppercase tracking-[0.1em] text-muted-foreground">
+            Your AI command vault — free forever
           </p>
-          <h1 className="mt-2 text-3xl font-black tracking-tight text-foreground sm:text-4xl">
+          <h1 className="mt-3 text-center text-3xl font-black tracking-tight text-foreground sm:text-4xl">
             Find the right AI command
             <br />
             <span className="text-primary">in seconds</span>
           </h1>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="mt-2 text-center text-sm text-muted-foreground">
             {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · free forever
           </p>
-          <div className="mt-5 flex search-glow rounded-xl">
-            <SearchBox size="lg" placeholder="Describe the task, or type a command…" />
-          </div>
-          <p className="mt-2 text-xs text-muted-foreground">
-            Press <kbd className="rounded border border-border bg-muted px-1 font-mono">/</kbd> anywhere to search
+
+          {/* Search bar */}
+          <form
+            className="mx-auto mt-5 flex h-[52px] max-w-[560px] items-center gap-3 rounded-[10px] border border-border bg-surface px-4 transition-colors focus-within:border-[#58a6ff]"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const q = new FormData(e.currentTarget).get("q") as string;
+              if (q?.trim()) window.location.href = `/search?q=${encodeURIComponent(q.trim())}`;
+            }}
+          >
+            <SearchIcon className="size-[18px] shrink-0 text-muted-foreground" aria-hidden />
+            <input
+              name="q"
+              type="text"
+              placeholder="Search 5,635 commands..."
+              className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
+            />
+          </form>
+
+          <p className="mt-2.5 text-center text-xs text-muted-foreground">
+            Press <kbd className="inline-flex h-5 min-w-[24px] items-center justify-center rounded border border-border border-b-2 border-b-[#484f58] bg-[#21262d] px-1.5 font-mono text-[12px] text-muted-foreground">/</kbd> anywhere to search
           </p>
         </div>
       </section>
@@ -412,7 +376,7 @@ function HomePage() {
               key={intent.label}
               to="/search"
               search={{ q: intent.q }}
-              className="flex items-center gap-1.5 rounded-full border border-border bg-surface-elevated px-3.5 py-2 text-[13px] text-foreground transition-all duration-150 hover:border-primary/60 hover:text-white"
+              className="flex min-h-[44px] items-center gap-1.5 rounded-[20px] border border-[#30363d] bg-[#161b22] px-4 py-2.5 text-[13px] text-[#e6edf3] transition-all duration-150 hover:border-[#484f58] hover:bg-[#21262d]"
             >
               <span className="text-[14px]" aria-hidden>{intent.emoji}</span>
               {intent.label}
@@ -422,53 +386,30 @@ function HomePage() {
       </section>
 
       {/* ─── Quick Links Grid (icon cards) ─── */}
-      <div className="mt-6 grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-5">
+      <div className="mt-6 grid grid-cols-4 gap-2.5 sm:grid-cols-4 lg:grid-cols-4">
         {([
-          ["/assistant", "\u{1F9E0}", "AI Assistant", "Free providers available"],
-          ["/find", "\u{1F50D}", "Search", "Advanced"],
+          ["/assistant", "\u{1F916}", "AI Assistant", "Free providers available"],
           ["/generators", "\u{26A1}", "Generators", "25 AI tools"],
           ["/roadmaps", "\u{1F5FA}\u{FE0F}", "Roadmaps", "20 guides"],
-          ["/live", "\u{1F4E1}", "Live", "News & scores"],
+          ["/live", "\u{1F4E1}", "Live", "Markets & more"],
           ["/glossary", "\u{1F4D6}", "Glossary", `${GLOSSARY_TOTAL}+ terms`],
-          ["/tools", "\u{1F527}", "Tools", "22 free browser utilities"],
-          ["/quiz", "\u{1F9E0}", "Quiz", "Daily brain challenge"],
-          ["/deals", "\u{1F6CD}\u{FE0F}", "Deals", "Daily Indian deals"],
+          ["/quiz", "\u{1F9E0}", "Quiz", "Daily challenge"],
+          ["/deals", "\u{1F6CD}\u{FE0F}", "Deals", "Daily deals"],
           ["/discover", "\u{1F9ED}", "Discover", "Tools & APIs"],
         ] as const).map(([to, emoji, label, sub]) => (
           <Link
             key={to}
             to={to as string}
-            className="group flex flex-col items-center rounded-[10px] border border-border bg-surface p-3.5 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+            className="group flex flex-col items-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
           >
-            <span className="text-[24px]" aria-hidden>{emoji}</span>
-            <span className="mt-2 block text-[13px] font-semibold text-foreground group-hover:text-primary">{label}</span>
-            <span className="mt-0.5 block text-[11px] text-muted-foreground">{sub}</span>
+            <span className="text-[26px]" aria-hidden>{emoji}</span>
+            <span className="mt-2 block text-[13px] font-semibold text-[#e6edf3] group-hover:text-[#58a6ff]">{label}</span>
+            <span className="mt-0.5 block text-[11px] text-[#8b949e]">{sub}</span>
           </Link>
         ))}
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2">
-        {quickCategories.map((c) => {
-          const Icon = categoryIcon(c.icon);
-          return (
-            <Link
-              key={c.category}
-              to="/explore/$category"
-              params={{ category: c.category }}
-              className="flex min-h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-            >
-              <Icon className="size-4 shrink-0 text-primary" aria-hidden />
-              <span className="truncate">{c.category}</span>
-            </Link>
-          );
-        })}
-        <Link
-          to="/explore"
-          className="flex min-h-10 items-center gap-1.5 rounded-full border border-primary/40 bg-accent px-3.5 text-sm font-medium text-foreground"
-        >
-          All categories <ArrowRight className="size-4" aria-hidden />
-        </Link>
-      </div>
+
 
       <Section
         title="Command of the day"
@@ -570,18 +511,21 @@ function HomePage() {
         }
       >
         <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
-          {COLLECTIONS.slice(0, 6).map((c) => (
-            <Link
-              key={c.id}
-              to="/collections/$id"
-              params={{ id: c.id }}
-              className="flex shrink-0 flex-col items-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/30 sm:w-[calc(33.333%-7px)]"
-            >
-              <span className="text-[28px]">{c.icon}</span>
-              <span className="mt-2 block text-[14px] font-semibold text-foreground">{c.title}</span>
-              <span className="mt-0.5 block text-[12px] text-muted-foreground">{c.count} commands</span>
-            </Link>
-          ))}
+          {COLLECTIONS.slice(0, 6).map((c) => {
+            const iconMap: Record<string, string> = { "For Women": "👩", "For Men": "👨", "For Students": "🎓", "For Creators": "🎨", "For Professionals": "💼", "For Entrepreneurs": "🚀" };
+            return (
+              <Link
+                key={c.id}
+                to="/collections/$id"
+                params={{ id: c.id }}
+                className="flex shrink-0 flex-col items-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] sm:w-[calc(33.333%-7px)]"
+              >
+                <span className="text-[28px]">{iconMap[c.title] || c.icon}</span>
+                <span className="mt-2 block text-[14px] font-semibold text-[#e6edf3]">{c.title}</span>
+                <span className="mt-0.5 block text-[12px] text-[#8b949e]">{c.count} commands</span>
+              </Link>
+            );
+          })}
         </div>
       </Section>
 
@@ -671,6 +615,7 @@ function HomePage() {
               <li><Link to="/search" className="text-muted-foreground hover:text-foreground">Commands</Link></li>
               <li><Link to="/discover" className="text-muted-foreground hover:text-foreground">Discover</Link></li>
               <li><Link to="/generators" className="text-muted-foreground hover:text-foreground">Generators</Link></li>
+              <li><Link to="/tools" className="text-muted-foreground hover:text-foreground">SlashKits</Link></li>
               <li><Link to="/roadmaps" className="text-muted-foreground hover:text-foreground">Roadmaps</Link></li>
               <li><Link to="/glossary" className="text-muted-foreground hover:text-foreground">Glossary</Link></li>
             </ul>

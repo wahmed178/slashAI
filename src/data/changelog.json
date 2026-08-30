@@ -1,6 +1,24 @@
 {
-  "version": "2.11.1",
+  "version": "2.12.0",
   "entries": [
+    {
+      "version": "2.12.0",
+      "date": "2026-08-30",
+      "changes": [
+        "Homepage redesigned: static tagline, inline search bar, reduced clutter",
+        "Stats bar: pure static JSX, guaranteed to show real numbers",
+        "Intent chips reduced to 6 most universal options",
+        "Tool grid reduced to 8 items, no duplicate icons",
+        "Category links removed from homepage",
+        "Your Week: better zero state with invite card",
+        "Section headings: blue accent left bar visual anchor",
+        "Ambient hero glow for premium feel",
+        "Cards standardized: consistent bg, border, radius, hover states",
+        "Mobile: 44px touch targets, safe area padding",
+        "Footer: SlashKits added to Product section",
+        "Keyboard shortcut styled as kbd element"
+      ]
+    },
     {
       "version": "2.11.1",
       "date": "2026-08-28",
