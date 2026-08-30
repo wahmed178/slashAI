@@ -1012,16 +1012,27 @@ function OneLiner() {
 
     // Convert canvas to base64 data URL — most compatible with Android WebView
     const dataUrl = canvas.toDataURL("image/png");
-    const a = document.createElement("a");
-    a.href = dataUrl;
-    a.download = fileName;
-    a.style.cssText = "position:fixed;left:-9999px;top:-9999px;opacity:0";
-    document.body.appendChild(a);
-    // Small delay to ensure the element is rendered before click
-    requestAnimationFrame(() => {
-      a.click();
-      setTimeout(() => document.body.removeChild(a), 200);
-    });
+    const isAndroid = /android/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+      // Android: open image in new tab — user long-presses to save
+      window.open(dataUrl, "_blank");
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } else {
+      // Desktop: direct download via hidden link
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = fileName;
+      a.style.cssText = "position:fixed;left:-9999px;top:-9999px;opacity:0";
+      document.body.appendChild(a);
+      requestAnimationFrame(() => {
+        a.click();
+        setTimeout(() => document.body.removeChild(a), 200);
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    }
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
