@@ -39,51 +39,59 @@ function FlipCard({
     };
   }, [value, displayed]);
 
-  const d0 = displayed[0] ?? "0";
-  const d1 = displayed[1] ?? "0";
-  const p0 = prev[0] ?? "0";
-  const p1 = prev[1] ?? "0";
+  const digitStyle = {
+    fontFamily: '"Inter", system-ui, sans-serif',
+    fontSize: "clamp(64px, 18vw, 180px)",
+    fontWeight: 700,
+    lineHeight: 1,
+  };
 
   return (
     <div className="relative w-full" style={{ aspectRatio: "1.4" }}>
-      {/* Card background */}
+      {/* Card shell */}
       <div
         className="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden"
         style={{ background: "#1a1a1a" }}
       >
-        {/* Top half — static current digit */}
-        <div className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden flex items-end justify-center"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-          <span
-            className="font-bold text-white/90 select-none leading-none"
-            style={{
-              fontFamily: '"Inter", system-ui, sans-serif',
-              fontSize: "clamp(64px, 18vw, 180px)",
-              transform: "translateY(25%)",
-            }}
+        {/* ── TOP HALF ── clips the top portion of the number */}
+        <div
+          className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+        >
+          {/* Number sits at 50% from top of this half → bottom of number visible */}
+          <div
+            className="absolute inset-x-0 flex items-end justify-center"
+            style={{ bottom: 0 }}
           >
-            {flipping ? p0 : d0}
-            {flipping ? p1 : d1}
-          </span>
+            <span
+              className="select-none"
+              style={{ ...digitStyle, color: "rgba(255,255,255,0.9)" }}
+            >
+              {flipping ? prev : displayed}
+            </span>
+          </div>
         </div>
 
-        {/* Bottom half — static current digit */}
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden flex items-start justify-center"
-          style={{ borderTop: "1px solid rgba(0,0,0,0.4)" }}>
-          <span
-            className="font-bold select-none leading-none"
-            style={{
-              fontFamily: '"Inter", system-ui, sans-serif',
-              fontSize: "clamp(64px, 18vw, 180px)",
-              color: "rgba(255,255,255,0.7)",
-              transform: "translateY(-25%)",
-            }}
+        {/* ── BOTTOM HALF ── clips the bottom portion of the number */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden"
+          style={{ borderTop: "1px solid rgba(0,0,0,0.5)" }}
+        >
+          {/* Number sits at 0% from top of this half → top of number visible */}
+          <div
+            className="absolute inset-x-0 flex items-start justify-center"
+            style={{ top: 0 }}
           >
-            {d0}{d1}
-          </span>
+            <span
+              className="select-none"
+              style={{ ...digitStyle, color: "rgba(255,255,255,0.65)" }}
+            >
+              {displayed}
+            </span>
+          </div>
         </div>
 
-        {/* Flip animation — top flap falling */}
+        {/* ── FLIP TOP FLAP (old number folding away) ── */}
         {flipping && (
           <div
             className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden origin-bottom"
@@ -93,23 +101,22 @@ function FlipCard({
               zIndex: 10,
             }}
           >
-            <div className="absolute inset-0 flex items-end justify-center"
-              style={{ background: "#1a1a1a", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <span
-                className="font-bold text-white/90 select-none leading-none"
-                style={{
-                  fontFamily: '"Inter", system-ui, sans-serif',
-                  fontSize: "clamp(64px, 18vw, 180px)",
-                  transform: "translateY(25%)",
-                }}
-              >
-                {p0}{p1}
+            <div
+              className="absolute inset-x-0 flex items-end justify-center"
+              style={{
+                bottom: 0,
+                background: "#1a1a1a",
+                borderBottom: "1px solid rgba(255,255,255,0.05)",
+              }}
+            >
+              <span className="select-none" style={{ ...digitStyle, color: "rgba(255,255,255,0.9)" }}>
+                {prev}
               </span>
             </div>
           </div>
         )}
 
-        {/* Flip animation — bottom flap appearing */}
+        {/* ── FLIP BOTTOM FLAP (new number appearing) ── */}
         {flipping && (
           <div
             className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden origin-top"
@@ -120,32 +127,26 @@ function FlipCard({
               zIndex: 10,
             }}
           >
-            <div className="absolute inset-0 flex items-start justify-center"
-              style={{ background: "#1a1a1a", borderTop: "1px solid rgba(0,0,0,0.4)" }}>
-              <span
-                className="font-bold select-none leading-none"
-                style={{
-                  fontFamily: '"Inter", system-ui, sans-serif',
-                  fontSize: "clamp(64px, 18vw, 180px)",
-                  color: "rgba(255,255,255,0.7)",
-                  transform: "translateY(-25%)",
-                }}
-              >
-                {d0}{d1}
+            <div
+              className="absolute inset-x-0 flex items-start justify-center"
+              style={{
+                top: 0,
+                background: "#1a1a1a",
+                borderTop: "1px solid rgba(0,0,0,0.5)",
+              }}
+            >
+              <span className="select-none" style={{ ...digitStyle, color: "rgba(255,255,255,0.65)" }}>
+                {displayed}
               </span>
             </div>
           </div>
         )}
 
-        {/* Center line */}
-        <div className="absolute left-0 right-0 top-1/2 -translate-y-px h-px z-20"
-          style={{ background: "rgba(0,0,0,0.6)" }} />
-
-        {/* Notch marks on left edge */}
-        <div className="absolute left-0 top-1/2 -translate-y-px w-1.5 h-px z-20"
-          style={{ background: "rgba(0,0,0,0.8)" }} />
-        <div className="absolute right-0 top-1/2 -translate-y-px w-1.5 h-px z-20"
-          style={{ background: "rgba(0,0,0,0.8)" }} />
+        {/* Center split line */}
+        <div
+          className="absolute left-0 right-0 top-1/2 -translate-y-px h-px z-20"
+          style={{ background: "rgba(0,0,0,0.7)" }}
+        />
       </div>
 
       {/* AM/PM badge */}
@@ -160,7 +161,7 @@ function FlipCard({
         </div>
       )}
 
-      {/* Label (optional) */}
+      {/* Label */}
       {label && (
         <div className="absolute top-3 right-4 sm:top-4 sm:right-5 z-30">
           <span
@@ -235,15 +236,12 @@ function FlipClock() {
 
       {/* Date */}
       <div className="shrink-0 pb-8 sm:pb-12 text-center">
-        <p
-          className="text-xs sm:text-sm tracking-wider"
-          style={{ color: "rgba(255,255,255,0.3)" }}
-        >
+        <p className="text-xs sm:text-sm tracking-wider" style={{ color: "rgba(255,255,255,0.3)" }}>
           {dateStr}
         </p>
       </div>
 
-      {/* Controls — minimal, bottom */}
+      {/* Controls */}
       <div className="shrink-0 fixed bottom-0 left-0 right-0 flex items-center justify-center pb-4 gap-3 z-20">
         <button
           type="button"
@@ -259,7 +257,6 @@ function FlipClock() {
         </button>
       </div>
 
-      {/* CSS animations */}
       <style>{`
         @keyframes flipTop {
           0% { transform: rotateX(0deg); }
