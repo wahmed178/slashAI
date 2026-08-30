@@ -7,8 +7,6 @@ import {
   Coffee,
   Home,
   Compass,
-  Heart,
-  History,
   Settings as SettingsIcon,
   Info,
   Menu,
@@ -35,11 +33,11 @@ import {
   Route as RouteIcon,
   NotebookPen,
   Flame,
-  TrendingUp,
   Bookmark,
   LayoutGrid,
-  Sun,
   Moon,
+  Sun,
+  History as HistoryIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -50,7 +48,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
-import { useLibrary, ICONS } from "@/hooks/use-library";
+import { useLibrary } from "@/hooks/use-library";
 import { cn } from "@/lib/utils";
 import { SearchBox } from "./SearchBox";
 import { OfflineBadge } from "./OfflineBadge";
@@ -156,7 +154,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     icon: UserRound,
     children: [
       { to: "/me", label: "Me", icon: UserRound },
-      { to: "/recent", label: "Recent", icon: History },
+      { to: "/recent", label: "Recent", icon: HistoryIcon },
       { to: "/favorites", label: "Saved", icon: Bookmark },
     ],
   },
@@ -402,7 +400,6 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { settings } = useLibrary();
-  const currentIcon = ICONS.find((i) => i.id === settings.appIcon) ?? ICONS[0]!;
 
   return (
     <div className="flex min-h-screen w-full" style={{ background: "var(--background)" }}>
