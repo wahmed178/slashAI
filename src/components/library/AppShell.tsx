@@ -424,7 +424,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 border-b border-sidebar-border bg-[rgba(10,10,15,0.8)] backdrop-blur-[10px]">
-          <div className="mx-auto flex h-[52px] items-center gap-3 px-4 md:px-6">
+          <div className="flex h-[52px] items-center gap-3 px-4 md:px-8">
             {/* Mobile: hamburger */}
             <Button
               variant="ghost"
@@ -477,7 +477,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
         </header>
 
         <main className="flex-1 overflow-y-auto animate-slide-in-up">
-          <div className="mx-auto max-w-[900px] px-4 py-6 md:px-6 md:py-8 pb-28 md:pb-10">
+          <div className="mx-auto w-full px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-10" style={{ maxWidth: wide ? '1400px' : '1200px' }}>
             {children}
           </div>
         </main>
