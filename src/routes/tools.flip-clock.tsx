@@ -39,59 +39,59 @@ function FlipCard({
     };
   }, [value, displayed]);
 
+  const digitCls =
+    "absolute inset-0 flex items-center justify-center select-none pointer-events-none";
   const digitStyle = {
     fontFamily: '"Inter", system-ui, sans-serif',
-    fontSize: "clamp(64px, 18vw, 180px)",
+    fontSize: "clamp(72px, 20vw, 200px)",
     fontWeight: 700,
     lineHeight: 1,
   };
 
   return (
     <div className="relative w-full" style={{ aspectRatio: "1.4" }}>
-      {/* Card shell */}
+      {/* Card background */}
       <div
         className="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden"
         style={{ background: "#1a1a1a" }}
       >
-        {/* ── TOP HALF ── clips the top portion of the number */}
+        {/* ── TOP HALF ── shows top portion of current digit */}
         <div
           className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}
+          style={{ clipPath: "inset(0 0 0 0)" }}
         >
-          {/* Number sits at 50% from top of this half → bottom of number visible */}
-          <div
-            className="absolute inset-x-0 flex items-end justify-center"
-            style={{ bottom: 0 }}
-          >
+          <div className={digitCls}>
             <span
-              className="select-none"
-              style={{ ...digitStyle, color: "rgba(255,255,255,0.9)" }}
+              style={{
+                ...digitStyle,
+                color: "rgba(255,255,255,0.92)",
+                clipPath: "inset(0 0 50% 0)",
+              }}
             >
               {flipping ? prev : displayed}
             </span>
           </div>
         </div>
 
-        {/* ── BOTTOM HALF ── clips the bottom portion of the number */}
+        {/* ── BOTTOM HALF ── shows bottom portion of current digit */}
         <div
           className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden"
-          style={{ borderTop: "1px solid rgba(0,0,0,0.5)" }}
+          style={{ clipPath: "inset(0 0 0 0)" }}
         >
-          {/* Number sits at 0% from top of this half → top of number visible */}
-          <div
-            className="absolute inset-x-0 flex items-start justify-center"
-            style={{ top: 0 }}
-          >
+          <div className={digitCls}>
             <span
-              className="select-none"
-              style={{ ...digitStyle, color: "rgba(255,255,255,0.65)" }}
+              style={{
+                ...digitStyle,
+                color: "rgba(255,255,255,0.6)",
+                clipPath: "inset(50% 0 0 0)",
+              }}
             >
               {displayed}
             </span>
           </div>
         </div>
 
-        {/* ── FLIP TOP FLAP (old number folding away) ── */}
+        {/* ── FLIP: top flap (old value folding away) ── */}
         {flipping && (
           <div
             className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden origin-bottom"
@@ -102,21 +102,25 @@ function FlipCard({
             }}
           >
             <div
-              className="absolute inset-x-0 flex items-end justify-center"
-              style={{
-                bottom: 0,
-                background: "#1a1a1a",
-                borderBottom: "1px solid rgba(255,255,255,0.05)",
-              }}
+              className="absolute inset-0"
+              style={{ background: "#1a1a1a" }}
             >
-              <span className="select-none" style={{ ...digitStyle, color: "rgba(255,255,255,0.9)" }}>
-                {prev}
-              </span>
+              <div className={digitCls}>
+                <span
+                  style={{
+                    ...digitStyle,
+                    color: "rgba(255,255,255,0.92)",
+                    clipPath: "inset(0 0 50% 0)",
+                  }}
+                >
+                  {prev}
+                </span>
+              </div>
             </div>
           </div>
         )}
 
-        {/* ── FLIP BOTTOM FLAP (new number appearing) ── */}
+        {/* ── FLIP: bottom flap (new value appearing) ── */}
         {flipping && (
           <div
             className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden origin-top"
@@ -128,16 +132,20 @@ function FlipCard({
             }}
           >
             <div
-              className="absolute inset-x-0 flex items-start justify-center"
-              style={{
-                top: 0,
-                background: "#1a1a1a",
-                borderTop: "1px solid rgba(0,0,0,0.5)",
-              }}
+              className="absolute inset-0"
+              style={{ background: "#1a1a1a" }}
             >
-              <span className="select-none" style={{ ...digitStyle, color: "rgba(255,255,255,0.65)" }}>
-                {displayed}
-              </span>
+              <div className={digitCls}>
+                <span
+                  style={{
+                    ...digitStyle,
+                    color: "rgba(255,255,255,0.6)",
+                    clipPath: "inset(50% 0 0 0)",
+                  }}
+                >
+                  {displayed}
+                </span>
+              </div>
             </div>
           </div>
         )}
@@ -221,7 +229,6 @@ function FlipClock() {
       className="flex flex-col h-screen w-full overflow-hidden select-none"
       style={{ background: "#000000" }}
     >
-
       {/* Back button */}
       <button
         type="button"
