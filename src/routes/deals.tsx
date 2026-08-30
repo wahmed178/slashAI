@@ -63,6 +63,9 @@ const PLATFORM_STYLES: Record<string, string> = {
   other: "bg-[#21262d] border-[#30363d] text-muted-foreground",
 };
 
+// Use allorigins proxy to bypass Reddit CORS
+const PROXY = "https://api.allorigins.win/raw?url=";
+
 const SUBREDDITS: { name: string; url: string; defaultCategory?: string }[] = [
   { name: "DesiDeal", url: "https://www.reddit.com/r/DesiDeal/top.json?t=day&limit=25" },
   { name: "IndianGaming", url: "https://www.reddit.com/r/IndianGaming/top.json?t=day&limit=15", defaultCategory: "gaming" },
@@ -130,7 +133,7 @@ function extractDiscount(title: string): number {
 }
 
 function formatINR(n: number): string {
-  return "\u20b9" + n.toLocaleString("en-IN");
+  return "₹" + n.toLocaleString("en-IN");
 }
 
 /* ─── fetch + parse ─── */
@@ -140,9 +143,8 @@ async function fetchDeals(): Promise<Deal[]> {
 
   const fetches = SUBREDDITS.map(async (sub) => {
     try {
-      const res = await fetch(sub.url, {
-        headers: { "User-Agent": "SlashAI-Bot/1.0" },
-      });
+      const proxyUrl = PROXY + encodeURIComponent(sub.url);
+      const res = await fetch(proxyUrl);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const children = data?.data?.children || [];
@@ -167,7 +169,7 @@ async function fetchDeals(): Promise<Deal[]> {
           return {
             id: `reddit-${post.id}`,
             title: post.title.slice(0, 90),
-            description: post.selftext?.slice(0, 120) || `${post.score} upvotes \u00b7 r/${sub.name}`,
+            description: post.selftext?.slice(0, 120) || `${post.score} upvotes · r/${sub.name}`,
             price,
             discount,
             votes: post.score,
@@ -181,9 +183,9 @@ async function fetchDeals(): Promise<Deal[]> {
               discount > 40
                 ? `${discount}% OFF`
                 : price > 0 && price < 500
-                ? "Under \u20b9500"
+                ? "Under ₹500"
                 : price > 0 && price < 999
-                ? "Under \u20b9999"
+                ? "Under ₹999"
                 : "Community Deal",
           };
         });
@@ -230,7 +232,7 @@ function DealCard({ deal }: { deal: Deal }) {
         {deal.image ? (
           <img src={deal.image} alt="" loading="lazy" className="size-full object-contain" />
         ) : (
-          <span className="text-[40px]">{CATEGORY_EMOJIS[deal.category] || "\ud83c\udff7\ufe0f"}</span>
+          <span className="text-[40px]">{CATEGORY_EMOJIS[deal.category] || "🏷️"}</span>
         )}
         {deal.discount > 0 && (
           <span className="absolute top-2 left-2 rounded-full bg-red/90 px-2 py-0.5 text-[10px] font-bold text-white">
@@ -252,7 +254,7 @@ function DealCard({ deal }: { deal: Deal }) {
           </div>
         )}
         <div className="mt-1 flex items-center gap-2">
-          <span className="text-[11px] text-muted-foreground">\u25b2 {deal.votes}</span>
+          <span className="text-[11px] text-muted-foreground">▲ {deal.votes}</span>
           <span className={`rounded border px-1.5 py-0.5 text-[10px] font-medium ${PLATFORM_STYLES[deal.platform] || PLATFORM_STYLES["other"]}`}>
             {deal.platform.charAt(0).toUpperCase() + deal.platform.slice(1)}
           </span>
@@ -287,13 +289,13 @@ function FeaturedDeal({ deal }: { deal: Deal }) {
   const isSameUrl = deal.url === deal.redditUrl;
   return (
     <div className="rounded-[10px] border border-border border-l-[3px] border-l-primary bg-surface p-5">
-      <span className="text-[11px] font-semibold text-primary">\ud83d\udd25 Deal of the Day</span>
+      <span className="text-[11px] font-semibold text-primary">🔥 Deal of the Day</span>
       <div className="mt-3 flex gap-4">
         <div className="flex size-[100px] shrink-0 items-center justify-center rounded-lg bg-[#21262d]">
           {deal.image ? (
             <img src={deal.image} alt="" className="size-full rounded-lg object-contain" />
           ) : (
-            <span className="text-[48px]">{CATEGORY_EMOJIS[deal.category] || "\ud83c\udff7\ufe0f"}</span>
+            <span className="text-[48px]">{CATEGORY_EMOJIS[deal.category] || "🏷️"}</span>
           )}
         </div>
         <div className="min-w-0 flex-1">
@@ -302,7 +304,7 @@ function FeaturedDeal({ deal }: { deal: Deal }) {
             {deal.price > 0 && <span className="text-base font-bold text-green">{formatINR(deal.price)}</span>}
             {deal.discount > 0 && <span className="rounded bg-red/15 px-2 py-0.5 text-xs font-semibold text-red">{deal.discount}% OFF</span>}
           </div>
-          <p className="mt-1 text-xs text-muted-foreground">\u25b2 {deal.votes} upvotes \u00b7 {deal.source}</p>
+          <p className="mt-1 text-xs text-muted-foreground">▲ {deal.votes} upvotes · {deal.source}</p>
           <div className="mt-3 flex items-center gap-2">
             <a
               href={deal.url}
@@ -335,7 +337,7 @@ function SectionHeader({ title, count, onSeeAll }: { title: string; count: numbe
       <h2 className="text-lg font-bold text-foreground">{title} <span className="text-sm font-normal text-muted-foreground">({count})</span></h2>
       {onSeeAll && (
         <button onClick={onSeeAll} className="text-xs font-medium text-primary hover:underline">
-          See all \u2192
+          See all →
         </button>
       )}
     </div>
@@ -436,7 +438,7 @@ function DealsPage() {
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Deals & Products</h1>
             <p className="mt-1 text-[15px] text-muted-foreground">
-              Best deals from Indian communities \u2014 updated daily.
+              Best deals from Indian communities — updated daily.
             </p>
           </div>
           <button
@@ -451,7 +453,7 @@ function DealsPage() {
         <div className="mt-2 flex flex-wrap items-center gap-2">
           {updatedAt && (
             <span className="rounded-full bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">
-              Updated {updatedAt} IST \u00b7 {deals.length} deals
+              Updated {updatedAt} IST · {deals.length} deals
             </span>
           )}
           <span className="text-[12px] text-muted-foreground">
@@ -472,7 +474,7 @@ function DealsPage() {
       {/* Empty state */}
       {!loading && deals.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <span className="text-4xl">\ud83d\udd04</span>
+          <span className="text-4xl">🔄</span>
           <h2 className="mt-4 text-lg font-semibold text-foreground">No deals found</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             Reddit may be temporarily unavailable. Try refreshing.
@@ -564,7 +566,7 @@ function DealsPage() {
             <div className="mt-8 space-y-8">
               {showSection(getSection("phones")) && (
                 <div>
-                  <SectionHeader title="\ud83d\udcf1 Phone Deals" count={getSection("phones").length} onSeeAll={() => setCategory("phones")} />
+                  <SectionHeader title="📱 Phone Deals" count={getSection("phones").length} onSeeAll={() => setCategory("phones")} />
                   <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                     {getSection("phones").slice(0, 4).map((deal: Deal) => (
                       <DealCard key={deal.id} deal={deal} />
@@ -575,7 +577,7 @@ function DealsPage() {
 
               {showSection(getSection("computers")) && (
                 <div>
-                  <SectionHeader title="\ud83d\udcbb PC & Computers" count={getSection("computers").length} onSeeAll={() => setCategory("computers")} />
+                  <SectionHeader title="💻 PC & Computers" count={getSection("computers").length} onSeeAll={() => setCategory("computers")} />
                   <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                     {getSection("computers").slice(0, 4).map((deal: Deal) => (
                       <DealCard key={deal.id} deal={deal} />
@@ -586,7 +588,7 @@ function DealsPage() {
 
               {showSection(getSection("gaming")) && (
                 <div>
-                  <SectionHeader title="\ud83c\udfae Gaming Deals" count={getSection("gaming").length} onSeeAll={() => setCategory("gaming")} />
+                  <SectionHeader title="🎮 Gaming Deals" count={getSection("gaming").length} onSeeAll={() => setCategory("gaming")} />
                   <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                     {getSection("gaming").slice(0, 4).map((deal: Deal) => (
                       <DealCard key={deal.id} deal={deal} />
@@ -597,7 +599,7 @@ function DealsPage() {
 
               {showSection(getSection("books")) && (
                 <div>
-                  <SectionHeader title="\ud83d\udcda Book Deals" count={getSection("books").length} onSeeAll={() => setCategory("books")} />
+                  <SectionHeader title="📚 Book Deals" count={getSection("books").length} onSeeAll={() => setCategory("books")} />
                   <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                     {getSection("books").slice(0, 4).map((deal: Deal) => (
                       <DealCard key={deal.id} deal={deal} />
@@ -608,7 +610,7 @@ function DealsPage() {
 
               {showSection(getSection("audio")) && (
                 <div>
-                  <SectionHeader title="\ud83c\udfa7 Audio Deals" count={getSection("audio").length} onSeeAll={() => setCategory("audio")} />
+                  <SectionHeader title="🎧 Audio Deals" count={getSection("audio").length} onSeeAll={() => setCategory("audio")} />
                   <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                     {getSection("audio").slice(0, 4).map((deal: Deal) => (
                       <DealCard key={deal.id} deal={deal} />
@@ -619,7 +621,7 @@ function DealsPage() {
 
               {showSection(getSection("home")) && (
                 <div>
-                  <SectionHeader title="\ud83c\udfe0 Home & Kitchen" count={getSection("home").length} onSeeAll={() => setCategory("home")} />
+                  <SectionHeader title="🏠 Home & Kitchen" count={getSection("home").length} onSeeAll={() => setCategory("home")} />
                   <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                     {getSection("home").slice(0, 4).map((deal: Deal) => (
                       <DealCard key={deal.id} deal={deal} />
