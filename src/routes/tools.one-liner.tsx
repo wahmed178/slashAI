@@ -1263,23 +1263,6 @@ function OneLiner() {
                 {size}px
               </span>
 
-              {/* Copy */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  copyQuote();
-                }}
-                className="h-8 w-8 rounded-full border border-border bg-surface flex items-center justify-center hover:bg-surface-elevated active:scale-95"
-                title="Copy quote"
-              >
-                {copied ? (
-                  <span className="text-green text-xs">✓</span>
-                ) : (
-                  <span className="text-muted-foreground text-xs">📋</span>
-                )}
-              </button>
-
               {/* Download */}
               <button
                 type="button"
@@ -1294,6 +1277,23 @@ function OneLiner() {
                   <span className="text-green text-xs">✓</span>
                 ) : (
                   <span className="text-muted-foreground text-xs">⬇</span>
+                )}
+              </button>
+
+              {/* Copy */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  copyQuote();
+                }}
+                className="h-8 w-8 rounded-full border border-border bg-surface flex items-center justify-center hover:bg-surface-elevated active:scale-95"
+                title="Copy quote"
+              >
+                {copied ? (
+                  <span className="text-green text-xs">✓</span>
+                ) : (
+                  <span className="text-muted-foreground text-xs">📋</span>
                 )}
               </button>
             </div>
