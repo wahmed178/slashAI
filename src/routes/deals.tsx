@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink, MessageSquare, RefreshCw, Flame, Tag, DollarSign, Clock } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
-import productsData from "@/data/products.json";
+import seededData from "@/data/products.json";
 
 interface Deal {
   id: string;
@@ -64,8 +64,115 @@ const PLATFORM_STYLES: Record<string, string> = {
   other: "bg-[#21262d] border-[#30363d] text-muted-foreground",
 };
 
+const SUBREDDITS: { name: string; path: string; defaultCategory?: string }[] = [
+  { name: "DesiDeal", path: "r/DesiDeal/top.json?t=day&limit=25" },
+  { name: "IndianGaming", path: "r/IndianGaming/top.json?t=day&limit=15", defaultCategory: "gaming" },
+  { name: "AmazonIndia", path: "r/AmazonIndia/top.json?t=day&limit=20" },
+  { name: "PhoneDealsIndia", path: "r/PhoneDealsIndia/top.json?t=day&limit=15", defaultCategory: "phones" },
+  { name: "Frugal_in", path: "r/Frugal_in/top.json?t=day&limit=15" },
+  { name: "booksofindia", path: "r/booksofindia/top.json?t=day&limit=10", defaultCategory: "books" },
+];
+
+const CACHE_KEY = "slashai-deals-live";
+const CACHE_TTL = 60 * 60 * 1000;
+
 function formatINR(n: number): string {
   return "₹" + n.toLocaleString("en-IN");
+}
+
+function detectCategory(title: string): string {
+  const t = title.toLowerCase();
+  if (/phone|mobile|iphone|samsung|redmi|realme|oneplus|poco|vivo|oppo/.test(t)) return "phones";
+  if (/laptop|pc|computer|processor|gpu|ram|ssd|monitor|keyboard|mouse/.test(t)) return "computers";
+  if (/tv|television|led|oled/.test(t)) return "tv";
+  if (/book|kindle|novel|textbook/.test(t)) return "books";
+  if (/headphone|earphone|speaker|audio|bluetooth|tws|airpod/.test(t)) return "audio";
+  if (/shoe|shirt|dress|clothing|fashion|sneaker/.test(t)) return "fashion";
+  if (/kitchen|cooker|mixer|microwave|refrigerator/.test(t)) return "home";
+  if (/game|gaming|ps5|xbox|nintendo|steam|console/.test(t)) return "gaming";
+  if (/camera|lens|gopro|dslr/.test(t)) return "camera";
+  if (/protein|gym|fitness|yoga/.test(t)) return "fitness";
+  if (/skincare|beauty|makeup|perfume/.test(t)) return "beauty";
+  return "deals";
+}
+
+function extractPrice(title: string): number {
+  const patterns = [/₹\s*(\d[\d,]+)/, /Rs\.?\s*(\d[\d,]+)/i, /at\s+(\d[\d,]+)/i];
+  for (const p of patterns) {
+    const m = title.match(p);
+    if (m?.[1]) return parseInt(m[1].replace(/,/g, ""));
+  }
+  return 0;
+}
+
+function detectPlatform(title: string, url: string): string {
+  const t = (title + url).toLowerCase();
+  if (t.includes("amazon")) return "amazon";
+  if (t.includes("flipkart")) return "flipkart";
+  if (t.includes("meesho")) return "meesho";
+  return "other";
+}
+
+function extractDiscount(title: string): number {
+  const m = title.match(/(\d+)\s*%\s*off/i);
+  return m?.[1] ? parseInt(m[1]) : 0;
+}
+
+function parseRedditPosts(data: any, subName: string, defaultCategory?: string): Deal[] {
+  const children = data?.data?.children || [];
+  return children
+    .filter((p: any) => {
+      const post = p.data;
+      return post.score > 5 && !post.stickied && post.title?.length > 10;
+    })
+    .map((p: any) => {
+      const post = p.data;
+      const price = extractPrice(post.title);
+      const discount = extractDiscount(post.title);
+      const category = defaultCategory || detectCategory(post.title);
+      const platform = detectPlatform(post.title, post.url || "");
+      const hasImage = post.thumbnail?.startsWith("http") && !post.thumbnail.includes("self") && !post.thumbnail.includes("default");
+      return {
+        id: `reddit-${post.id}`,
+        title: post.title.slice(0, 90),
+        description: post.selftext?.slice(0, 120) || `${post.score} upvotes · r/${subName}`,
+        price,
+        discount,
+        votes: post.score,
+        image: hasImage ? post.thumbnail : "",
+        url: post.url?.startsWith("http") ? post.url : `https://reddit.com${post.permalink}`,
+        redditUrl: `https://reddit.com${post.permalink}`,
+        platform,
+        category,
+        source: `r/${subName}`,
+        badge: discount > 40 ? `${discount}% OFF` : price > 0 && price < 500 ? "Under ₹500" : "Community Deal",
+      };
+    });
+}
+
+async function fetchLiveDeals(): Promise<Deal[]> {
+  const all: Deal[] = [];
+  const fetches = SUBREDDITS.map(async (sub) => {
+    try {
+      const res = await fetch(`https://www.reddit.com/${sub.path}`, {
+        headers: { "User-Agent": "SlashAI/1.0" },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      return parseRedditPosts(data, sub.name, sub.defaultCategory);
+    } catch {
+      return [];
+    }
+  });
+  const results = await Promise.all(fetches);
+  for (const r of results) all.push(...r);
+  const seen = new Set<string>();
+  return all.filter((item) => {
+    const key = item.title.toLowerCase().slice(0, 40);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 export const Route = createFileRoute("/deals")({
@@ -104,9 +211,7 @@ function DealCard({ deal }: { deal: Deal }) {
         {deal.price > 0 && (
           <div className="mt-1.5 flex items-center gap-2">
             <span className="text-base font-bold text-green">{formatINR(deal.price)}</span>
-            {deal.discount > 0 && (
-              <span className="text-[11px] font-medium text-red">({deal.discount}% off)</span>
-            )}
+            {deal.discount > 0 && <span className="text-[11px] font-medium text-red">({deal.discount}% off)</span>}
           </div>
         )}
         <div className="mt-1 flex items-center gap-2">
@@ -116,22 +221,14 @@ function DealCard({ deal }: { deal: Deal }) {
           </span>
         </div>
         <div className="mt-2.5 flex items-center gap-2">
-          <a
-            href={deal.url}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="flex h-8 flex-1 items-center justify-center gap-1 rounded-md border border-primary/40 text-xs font-medium text-primary transition-colors hover:bg-primary/10"
-          >
+          <a href={deal.url} target="_blank" rel="noreferrer noopener"
+            className="flex h-8 flex-1 items-center justify-center gap-1 rounded-md border border-primary/40 text-xs font-medium text-primary transition-colors hover:bg-primary/10">
             Deal <ExternalLink className="size-3" />
           </a>
           {!isSameUrl && (
-            <a
-              href={deal.redditUrl}
-              target="_blank"
-              rel="noreferrer noopener"
+            <a href={deal.redditUrl} target="_blank" rel="noreferrer noopener"
               className="flex size-8 items-center justify-center rounded-md border border-border text-muted-foreground transition-colors hover:bg-accent"
-              title="View discussion"
-            >
+              title="View discussion">
               <MessageSquare className="size-3.5" />
             </a>
           )}
@@ -162,21 +259,13 @@ function FeaturedDeal({ deal }: { deal: Deal }) {
           </div>
           <p className="mt-1 text-xs text-muted-foreground">▲ {deal.votes} upvotes · {deal.source}</p>
           <div className="mt-3 flex items-center gap-2">
-            <a
-              href={deal.url}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="flex h-8 items-center gap-1.5 rounded-md border border-primary/40 px-3 text-xs font-medium text-primary transition-colors hover:bg-primary/10"
-            >
+            <a href={deal.url} target="_blank" rel="noreferrer noopener"
+              className="flex h-8 items-center gap-1.5 rounded-md border border-primary/40 px-3 text-xs font-medium text-primary transition-colors hover:bg-primary/10">
               View Deal <ExternalLink className="size-3" />
             </a>
             {!isSameUrl && (
-              <a
-                href={deal.redditUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="flex h-8 items-center gap-1.5 rounded-md border border-border px-3 text-xs text-muted-foreground transition-colors hover:bg-accent"
-              >
+              <a href={deal.redditUrl} target="_blank" rel="noreferrer noopener"
+                className="flex h-8 items-center gap-1.5 rounded-md border border-border px-3 text-xs text-muted-foreground transition-colors hover:bg-accent">
                 Discussion <MessageSquare className="size-3" />
               </a>
             )}
@@ -191,11 +280,7 @@ function SectionHeader({ title, count, onSeeAll }: { title: string; count: numbe
   return (
     <div className="mb-3 flex items-center justify-between">
       <h2 className="text-lg font-bold text-foreground">{title} <span className="text-sm font-normal text-muted-foreground">({count})</span></h2>
-      {onSeeAll && (
-        <button onClick={onSeeAll} className="text-xs font-medium text-primary hover:underline">
-          See all →
-        </button>
-      )}
+      {onSeeAll && <button onClick={onSeeAll} className="text-xs font-medium text-primary hover:underline">See all →</button>}
     </div>
   );
 }
@@ -203,68 +288,118 @@ function SectionHeader({ title, count, onSeeAll }: { title: string; count: numbe
 /* ─── main page ─── */
 
 function DealsPage() {
+  const [deals, setDeals] = useState<Deal[]>([]);
+  const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState<SortKey>("trending");
   const [category, setCategory] = useState("all");
   const [priceFilter, setPriceFilter] = useState("any");
+  const [updatedAt, setUpdatedAt] = useState("");
+  const [dataSource, setDataSource] = useState<"live" | "seeded">("seeded");
 
-  // Use seeded data directly from products.json
-  const data = productsData as any;
-  const allDeals: Deal[] = data.trending || [];
-  const updatedTime = data.updatedTime || "";
-  const totalCount = data.total || allDeals.length;
+  const loadDeals = useCallback(async (force = false) => {
+    // Check cache first
+    if (!force) {
+      try {
+        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+        if (cached && Date.now() - cached.ts < CACHE_TTL && cached.deals?.length > 0) {
+          setDeals(cached.deals);
+          setUpdatedAt(cached.time);
+          setDataSource("live");
+          setLoading(false);
+          return;
+        }
+      } catch { /* ignore */ }
+    }
+
+    setLoading(true);
+
+    // Show seeded data immediately while fetching live
+    const seeded = (seededData as any).trending || [];
+    if (seeded.length > 0) {
+      setDeals(seeded);
+      setUpdatedAt((seededData as any).updatedTime || "seeded");
+      setDataSource("seeded");
+      setLoading(false);
+    }
+
+    // Fetch live from Reddit
+    try {
+      const live = await fetchLiveDeals();
+      if (live.length > 0) {
+        const time = new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" });
+        setDeals(live);
+        setUpdatedAt(time);
+        setDataSource("live");
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ deals: live, time, ts: Date.now() }));
+      }
+    } catch {
+      // Keep seeded data
+    }
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    loadDeals();
+  }, [loadDeals]);
 
   const filtered = useMemo(() => {
-    let items = [...allDeals];
+    let items = [...deals];
     if (category !== "all") items = items.filter((d) => d.category === category);
     if (priceFilter === "499") items = items.filter((d) => d.price > 0 && d.price < 499);
     else if (priceFilter === "999") items = items.filter((d) => d.price > 0 && d.price < 999);
     else if (priceFilter === "1999") items = items.filter((d) => d.price > 0 && d.price < 1999);
-
     if (sort === "trending") items.sort((a, b) => b.votes - a.votes);
     else if (sort === "discount") items.sort((a, b) => b.discount - a.discount);
     else if (sort === "price") items.sort((a, b) => (a.price || Infinity) - (b.price || Infinity));
     else if (sort === "latest") items.reverse();
     return items;
-  }, [allDeals, sort, category, priceFilter]);
+  }, [deals, sort, category, priceFilter]);
 
   const featured: Deal | null = useMemo(() => {
     if (category !== "all" || priceFilter !== "any") return null;
-    return data.featured || allDeals[0] || null;
-  }, [allDeals, category, priceFilter, data.featured]);
+    return deals[0] || null;
+  }, [deals, category, priceFilter]);
 
   const sectionData = useMemo(() => {
     const grouped: Record<string, Deal[]> = {
       phones: [], computers: [], gaming: [], books: [], audio: [], home: [],
     };
-    for (const d of allDeals) {
+    for (const d of deals) {
       const cat = d.category;
       if (!grouped[cat]) grouped[cat] = [];
       grouped[cat].push(d);
     }
     return grouped;
-  }, [allDeals]);
+  }, [deals]);
 
   const getSection = (key: string): Deal[] => sectionData[key] || [];
   const showSection = (items: Deal[]) => items.length >= 2;
 
   return (
     <AppShell wide title="Deals & Products">
-      {/* Header */}
       <header className="page-enter pt-2">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Deals & Products</h1>
-          <p className="mt-1 text-[15px] text-muted-foreground">
-            Best deals from Indian communities — updated daily.
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Deals & Products</h1>
+            <p className="mt-1 text-[15px] text-muted-foreground">Best deals from Indian communities — updated daily.</p>
+          </div>
+          <button
+            onClick={() => loadDeals(true)}
+            disabled={loading}
+            className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
+            title="Refresh deals"
+          >
+            <RefreshCw className={`size-4 ${loading ? "animate-spin" : ""}`} />
+          </button>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          {updatedTime && (
-            <span className="rounded-full bg-surface-elevated px-2.5 py-1 text-[11px] text-green">
-              Updated {updatedTime} IST · {totalCount} deals
+          {updatedAt && (
+            <span className={`rounded-full px-2.5 py-1 text-[11px] ${dataSource === "live" ? "bg-green/10 text-green" : "bg-surface-elevated text-muted-foreground"}`}>
+              {dataSource === "live" ? `Live · ${updatedAt} IST` : `Sample · Showing curated picks`} · {deals.length} deals
             </span>
           )}
           <span className="text-[12px] text-muted-foreground">
-            Sourced from r/DesiDeal, r/AmazonIndia and more
+            {dataSource === "live" ? "Sourced from r/DesiDeal, r/AmazonIndia and more" : "Refresh for live Reddit deals"}
           </span>
         </div>
       </header>
@@ -272,15 +407,8 @@ function DealsPage() {
       {/* Sort tabs */}
       <div className="mt-5 flex gap-1.5 overflow-x-auto pb-1">
         {SORT_OPTIONS.map(({ key, label, icon: Icon }) => (
-          <button
-            key={key}
-            onClick={() => setSort(key)}
-            className={`flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
-              sort === key
-                ? "border-primary/50 bg-primary/10 text-primary"
-                : "border-border bg-surface text-muted-foreground hover:text-foreground"
-            }`}
-          >
+          <button key={key} onClick={() => setSort(key)}
+            className={`flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${sort === key ? "border-primary/50 bg-primary/10 text-primary" : "border-border bg-surface text-muted-foreground hover:text-foreground"}`}>
             <Icon className="size-3.5" /> {label}
           </button>
         ))}
@@ -289,15 +417,8 @@ function DealsPage() {
       {/* Category tabs */}
       <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
         {CATEGORIES.map(({ key, label }) => (
-          <button
-            key={key}
-            onClick={() => setCategory(key)}
-            className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
-              category === key
-                ? "border-primary/50 bg-primary/10 text-primary"
-                : "border-border bg-surface text-muted-foreground hover:text-foreground"
-            }`}
-          >
+          <button key={key} onClick={() => setCategory(key)}
+            className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${category === key ? "border-primary/50 bg-primary/10 text-primary" : "border-border bg-surface text-muted-foreground hover:text-foreground"}`}>
             {label}
           </button>
         ))}
@@ -306,35 +427,24 @@ function DealsPage() {
       {/* Price tabs */}
       <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
         {PRICE_FILTERS.map(({ key, label }) => (
-          <button
-            key={key}
-            onClick={() => setPriceFilter(key)}
-            className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
-              priceFilter === key
-                ? "border-primary/50 bg-primary/10 text-primary"
-                : "border-border bg-surface text-muted-foreground hover:text-foreground"
-            }`}
-          >
+          <button key={key} onClick={() => setPriceFilter(key)}
+            className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${priceFilter === key ? "border-primary/50 bg-primary/10 text-primary" : "border-border bg-surface text-muted-foreground hover:text-foreground"}`}>
             {label}
           </button>
         ))}
       </div>
 
-      {/* Featured deal */}
+      {/* Featured */}
       {featured && category === "all" && priceFilter === "any" && (
-        <div className="mt-5">
-          <FeaturedDeal deal={featured} />
-        </div>
+        <div className="mt-5"><FeaturedDeal deal={featured} /></div>
       )}
 
       {/* Filtered grid */}
       {filtered.length > 0 && (
         <div className="mt-5">
-          <SectionHeader title="Filtered Results" count={filtered.length} />
+          <SectionHeader title="All Deals" count={filtered.length} />
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-            {filtered.slice(0, 20).map((deal) => (
-              <DealCard key={deal.id} deal={deal} />
-            ))}
+            {filtered.slice(0, 20).map((deal) => <DealCard key={deal.id} deal={deal} />)}
           </div>
         </div>
       )}
@@ -346,64 +456,39 @@ function DealsPage() {
             <div>
               <SectionHeader title="📱 Phone Deals" count={getSection("phones").length} onSeeAll={() => setCategory("phones")} />
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                {getSection("phones").slice(0, 4).map((deal: Deal) => (
-                  <DealCard key={deal.id} deal={deal} />
-                ))}
+                {getSection("phones").slice(0, 4).map((d) => <DealCard key={d.id} deal={d} />)}
               </div>
             </div>
           )}
-
           {showSection(getSection("computers")) && (
             <div>
-              <SectionHeader title="💻 PC & Computers" count={getSection("computers").length} onSeeAll={() => setCategory("computers")} />
+              <SectionHeader title="💻 Computers" count={getSection("computers").length} onSeeAll={() => setCategory("computers")} />
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                {getSection("computers").slice(0, 4).map((deal: Deal) => (
-                  <DealCard key={deal.id} deal={deal} />
-                ))}
+                {getSection("computers").slice(0, 4).map((d) => <DealCard key={d.id} deal={d} />)}
               </div>
             </div>
           )}
-
           {showSection(getSection("gaming")) && (
             <div>
-              <SectionHeader title="🎮 Gaming Deals" count={getSection("gaming").length} onSeeAll={() => setCategory("gaming")} />
+              <SectionHeader title="🎮 Gaming" count={getSection("gaming").length} onSeeAll={() => setCategory("gaming")} />
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                {getSection("gaming").slice(0, 4).map((deal: Deal) => (
-                  <DealCard key={deal.id} deal={deal} />
-                ))}
+                {getSection("gaming").slice(0, 4).map((d) => <DealCard key={d.id} deal={d} />)}
               </div>
             </div>
           )}
-
           {showSection(getSection("books")) && (
             <div>
-              <SectionHeader title="📚 Book Deals" count={getSection("books").length} onSeeAll={() => setCategory("books")} />
+              <SectionHeader title="📚 Books" count={getSection("books").length} onSeeAll={() => setCategory("books")} />
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                {getSection("books").slice(0, 4).map((deal: Deal) => (
-                  <DealCard key={deal.id} deal={deal} />
-                ))}
+                {getSection("books").slice(0, 4).map((d) => <DealCard key={d.id} deal={d} />)}
               </div>
             </div>
           )}
-
           {showSection(getSection("audio")) && (
             <div>
-              <SectionHeader title="🎧 Audio Deals" count={getSection("audio").length} onSeeAll={() => setCategory("audio")} />
+              <SectionHeader title="🎧 Audio" count={getSection("audio").length} onSeeAll={() => setCategory("audio")} />
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                {getSection("audio").slice(0, 4).map((deal: Deal) => (
-                  <DealCard key={deal.id} deal={deal} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {showSection(getSection("home")) && (
-            <div>
-              <SectionHeader title="🏠 Home & Kitchen" count={getSection("home").length} onSeeAll={() => setCategory("home")} />
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                {getSection("home").slice(0, 4).map((deal: Deal) => (
-                  <DealCard key={deal.id} deal={deal} />
-                ))}
+                {getSection("audio").slice(0, 4).map((d) => <DealCard key={d.id} deal={d} />)}
               </div>
             </div>
           )}
@@ -411,7 +496,9 @@ function DealsPage() {
       )}
 
       <p className="mt-6 text-[11px] text-muted-foreground">
-        All deals sourced from Reddit communities. Prices and availability may change. Not affiliated with any retailer.
+        {dataSource === "live"
+          ? "Live deals from Reddit communities. Prices and availability may change."
+          : "Showing curated deals. Tap refresh for live Reddit deals."}
       </p>
     </AppShell>
   );
