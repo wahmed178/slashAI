@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Home,
@@ -60,6 +61,13 @@ function isActive(pathname: string, to: string, exact?: boolean) {
 
 export function DesktopSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [isGlass, setIsGlass] = useState(false);
+
+  useEffect(() => {
+    try {
+      setIsGlass(localStorage.getItem("slashai-glass-user") === "true");
+    } catch { /* ignore */ }
+  }, []);
 
   return (
     <aside className="sticky top-0 hidden h-screen w-[220px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex">
@@ -134,21 +142,33 @@ export function DesktopSidebar() {
         })}
       </nav>
 
-      {/* Upgrade to Pro card */}
+      {/* Upgrade to Pro / Glass Member card */}
       <div className="mx-3 mb-3">
-        <div className="rounded-[10px] border border-primary/20 bg-gradient-to-br from-surface to-primary/5 p-3.5">
-          <span className="text-[20px]">👑</span>
-          <p className="mt-1.5 text-[13px] font-bold text-foreground">Upgrade to Pro</p>
-          <p className="mt-1 text-[11px] leading-tight text-muted-foreground">
-            Unlock premium tools, unlimited access & more.
-          </p>
-          <Link
-            to="/glass"
-            className="mt-2.5 flex h-[32px] w-full items-center justify-center rounded-[6px] bg-primary text-[12px] font-bold text-background transition-colors hover:bg-primary/90"
-          >
-            Upgrade Now
-          </Link>
-        </div>
+        {isGlass ? (
+          <div className="rounded-[10px] border border-primary/30 bg-primary/[0.06] p-3.5">
+            <div className="flex items-center gap-2">
+              <span className="text-[16px]">✦</span>
+              <p className="text-[13px] font-bold text-primary">Glass Member</p>
+            </div>
+            <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground">
+              Active — enjoy unlimited access.
+            </p>
+          </div>
+        ) : (
+          <div className="rounded-[10px] border border-primary/20 bg-gradient-to-br from-surface to-primary/5 p-3.5">
+            <span className="text-[20px]">👑</span>
+            <p className="mt-1.5 text-[13px] font-bold text-foreground">Upgrade to Pro</p>
+            <p className="mt-1 text-[11px] leading-tight text-muted-foreground">
+              Unlock premium tools, unlimited access & more.
+            </p>
+            <Link
+              to="/glass"
+              className="mt-2.5 flex h-[32px] w-full items-center justify-center rounded-[6px] bg-primary text-[12px] font-bold text-background transition-colors hover:bg-primary/90"
+            >
+              Upgrade Now
+            </Link>
+          </div>
+        )}
       </div>
 
       {/* User indicator */}
@@ -158,9 +178,11 @@ export function DesktopSidebar() {
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-[13px] text-foreground">Slash User</p>
-          <p className="text-[11px] text-muted-foreground">Free Plan</p>
+          <p className="text-[11px] text-muted-foreground">{isGlass ? "✦ Glass Plan" : "Free Plan"}</p>
         </div>
-        <Settings className="size-4 shrink-0 text-muted-foreground" />
+        <Link to="/settings">
+          <Settings className="size-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors" />
+        </Link>
       </div>
     </aside>
   );

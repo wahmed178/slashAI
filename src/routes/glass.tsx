@@ -26,6 +26,11 @@ function GlassPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  const [isGlass, setIsGlass] = useState(() => {
+    try { return localStorage.getItem("slashai-glass-user") === "true"; }
+    catch { return false; }
+  });
+
   const handleSubmit = useCallback(() => {
     if (!email.trim() || !email.includes("@")) return;
     // Store locally (honest: "stored locally for now")
@@ -34,7 +39,9 @@ function GlassPage() {
       existing.push(email.trim());
       localStorage.setItem("glass_waitlist", JSON.stringify(existing));
     }
-    setSubmitted(true);
+    // Activate Glass status so sidebar updates
+    localStorage.setItem("slashai-glass-user", "true");
+    setIsGlass(true);
   }, [email]);
 
   return (
@@ -74,14 +81,25 @@ function GlassPage() {
 
         {/* Email form */}
         <div className="mt-10 w-full max-w-sm">
-          {submitted ? (
+          {submitted || isGlass ? (
             <div className="rounded-xl border border-green-500/30 bg-green-500/10 p-4">
               <p className="text-sm font-medium text-green-500">
-                You're on the list. We'll be in touch.
+                ✦ You're a Glass member!
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Stored locally for now — we'll set up real soon.
+                Your sidebar now shows Glass status. Enjoy the perks.
               </p>
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem("slashai-glass-user");
+                  setIsGlass(false);
+                  setSubmitted(false);
+                }}
+                className="mt-3 text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
+              >
+                Reset to Free Plan
+              </button>
             </div>
           ) : (
             <div className="flex gap-2">
