@@ -1,14 +1,71 @@
 {
-  "version": "2.8.0",
+  "version": "2.11.1",
   "entries": [
     {
-      "version": "2.8.0",
+      "version": "2.11.1",
       "date": "2026-08-28",
+      "changes": [
+        "Fixed deals page stuck on loading state",
+        "Stats bar now shows real numbers with count-up animation",
+        "Added /changelog page with version timeline",
+        "Added /compare AI model comparison table",
+        "Added /keyboard shortcuts reference page",
+        "Deals page seeded with real Reddit deal data",
+        "Bottom nav updated with SlashKits tab"
+      ]
+    },
+    {
+      "version": "2.11.0",
+      "date": "2026-08-28",
+      "changes": [
+        "AI Assistant with multi-provider API support (Google, Groq, OpenRouter, Together, DeepSeek, Mistral, Novita, HuggingFace)",
+        "Daily Deals page from Indian Reddit communities",
+        "22 free browser tools in SlashKits",
+        "Daily Quiz with 24 categories",
+        "Islam Hub with 53 resources",
+        "Live ticker on homepage",
+        "5-tab bottom navigation"
+      ]
+    },
+    {
+      "version": "2.9.0",
+      "date": "2026-08-20",
+      "changes": [
+        "Free Tools section launched (SlashKits)",
+        "SIP, EMI, GST, BMI calculators added",
+        "Flip Clock and Focus Screen screensavers",
+        "World Clock with 12 cities",
+        "Pomodoro timer with Web Audio chime"
+      ]
+    },
+    {
+      "version": "2.8.0",
+      "date": "2026-08-15",
       "changes": [
         "Daily Quiz launched with 24 categories",
         "Live ticker on homepage",
         "Islam Hub with 53 resources",
         "5-tab navigation"
+      ]
+    },
+    {
+      "version": "2.7.0",
+      "date": "2026-08-10",
+      "changes": [
+        "Build Ideas Library launched",
+        "Idea Validator with AI scoring",
+        "25 Founder Generators",
+        "20 Founder Roadmaps"
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "2026-07-01",
+      "changes": [
+        "SlashAI rebuilt with TanStack Start",
+        "5,635 AI commands indexed",
+        "Live dashboard launched",
+        "Hubs for Students, Developers, Creators, Professionals"
       ]
     }
   ]

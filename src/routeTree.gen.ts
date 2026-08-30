@@ -15,12 +15,14 @@ import { Route as AiToolsRouteImport } from './routes/ai-tools'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
 import { Route as GlassRouteImport } from './routes/glass'
 import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as JournalRouteImport } from './routes/journal'
+import { Route as KeyboardRouteImport } from './routes/keyboard'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as MeRouteImport } from './routes/me'
 import { Route as MoviesRouteImport } from './routes/movies'
@@ -108,6 +110,11 @@ const ChangelogRoute = ChangelogRouteImport.update({
   path: '/changelog',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DealsRoute = DealsRouteImport.update({
   id: '/deals',
   path: '/deals',
@@ -136,6 +143,11 @@ const GlossaryRoute = GlossaryRouteImport.update({
 const JournalRoute = JournalRouteImport.update({
   id: '/journal',
   path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KeyboardRoute = KeyboardRouteImport.update({
+  id: '/keyboard',
+  path: '/keyboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -427,12 +439,14 @@ export interface FileRoutesByFullPath {
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
+  '/compare': typeof CompareRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/journal': typeof JournalRoute
+  '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
@@ -497,12 +511,14 @@ export interface FileRoutesByTo {
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
+  '/compare': typeof CompareRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/journal': typeof JournalRoute
+  '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
@@ -567,12 +583,14 @@ export interface FileRoutesById {
   '/alternatives': typeof AlternativesRoute
   '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
+  '/compare': typeof CompareRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/journal': typeof JournalRoute
+  '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
@@ -639,12 +657,14 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/assistant'
     | '/changelog'
+    | '/compare'
     | '/deals'
     | '/favorites'
     | '/find'
     | '/glass'
     | '/glossary'
     | '/journal'
+    | '/keyboard'
     | '/live'
     | '/me'
     | '/movies'
@@ -709,12 +729,14 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/assistant'
     | '/changelog'
+    | '/compare'
     | '/deals'
     | '/favorites'
     | '/find'
     | '/glass'
     | '/glossary'
     | '/journal'
+    | '/keyboard'
     | '/live'
     | '/me'
     | '/movies'
@@ -778,12 +800,14 @@ export interface FileRouteTypes {
     | '/alternatives'
     | '/assistant'
     | '/changelog'
+    | '/compare'
     | '/deals'
     | '/favorites'
     | '/find'
     | '/glass'
     | '/glossary'
     | '/journal'
+    | '/keyboard'
     | '/live'
     | '/me'
     | '/movies'
@@ -849,12 +873,14 @@ export interface RootRouteChildren {
   AlternativesRoute: typeof AlternativesRoute
   AssistantRoute: typeof AssistantRouteWithChildren
   ChangelogRoute: typeof ChangelogRoute
+  CompareRoute: typeof CompareRoute
   DealsRoute: typeof DealsRoute
   FavoritesRoute: typeof FavoritesRoute
   FindRoute: typeof FindRoute
   GlassRoute: typeof GlassRoute
   GlossaryRoute: typeof GlossaryRoute
   JournalRoute: typeof JournalRoute
+  KeyboardRoute: typeof KeyboardRoute
   LiveRoute: typeof LiveRoute
   MeRoute: typeof MeRoute
   MoviesRoute: typeof MoviesRoute
@@ -934,6 +960,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangelogRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/deals': {
       id: '/deals'
       path: '/deals'
@@ -974,6 +1007,13 @@ declare module '@tanstack/react-router' {
       path: '/journal'
       fullPath: '/journal'
       preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/keyboard': {
+      id: '/keyboard'
+      path: '/keyboard'
+      fullPath: '/keyboard'
+      preLoaderRoute: typeof KeyboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -1442,12 +1482,14 @@ const rootRouteChildren: RootRouteChildren = {
   AlternativesRoute: AlternativesRoute,
   AssistantRoute: AssistantRouteWithChildren,
   ChangelogRoute: ChangelogRoute,
+  CompareRoute: CompareRoute,
   DealsRoute: DealsRoute,
   FavoritesRoute: FavoritesRoute,
   FindRoute: FindRoute,
   GlassRoute: GlassRoute,
   GlossaryRoute: GlossaryRoute,
   JournalRoute: JournalRoute,
+  KeyboardRoute: KeyboardRoute,
   LiveRoute: LiveRoute,
   MeRoute: MeRoute,
   MoviesRoute: MoviesRoute,
