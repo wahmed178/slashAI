@@ -48,7 +48,6 @@ import {
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
 import trendingToolsData from "@/../src/data/trending-tools.json";
-import { personaGreetingName } from "@/lib/personas";
 import { GLOSSARY_TOTAL } from "@/lib/glossary";
 
 /* ─────────────── Stats Bar (static — cannot fail) ─────────────── */
@@ -61,16 +60,18 @@ function StatsBar() {
     { number: "138", label: "Glossary" },
   ];
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flexWrap: "wrap", gap: 0, padding: "20px 0", borderTop: "1px solid #30363d", borderBottom: "1px solid #30363d", margin: "24px 0" }}>
-      {stats.map((stat, i) => (
-        <span key={stat.label} style={{ display: "contents" }}>
-          {i > 0 && <div style={{ width: "1px", height: "32px", background: "#30363d", flexShrink: 0 }} />}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 28px" }}>
-            <span style={{ fontSize: "22px", fontWeight: "700", color: "#e6edf3", fontFamily: "var(--font-mono, monospace)", lineHeight: 1 }}>{stat.number}</span>
-            <span style={{ fontSize: "11px", color: "#8b949e", marginTop: "4px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{stat.label}</span>
-          </div>
-        </span>
-      ))}
+    <div className="overflow-x-auto scrollbar-none" style={{ borderTop: "1px solid #30363d", borderBottom: "1px solid #30363d", margin: "24px 0" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, padding: "16px 0", minWidth: "min-content" }}>
+        {stats.map((stat, i) => (
+          <span key={stat.label} style={{ display: "contents" }}>
+            {i > 0 && <div style={{ width: "1px", height: "28px", background: "#30363d", flexShrink: 0 }} />}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 16px", flexShrink: 0 }}>
+              <span className="text-[16px] sm:text-[22px]" style={{ fontWeight: "700", color: "#e6edf3", fontFamily: "var(--font-mono, monospace)", lineHeight: 1 }}>{stat.number}</span>
+              <span className="text-[9px] sm:text-[11px]" style={{ color: "#8b949e", marginTop: "4px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{stat.label}</span>
+            </div>
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -386,9 +387,9 @@ function HomePage() {
       </section>
 
       {/* ─── Quick Links Grid (icon cards) ─── */}
-      <div className="mt-6 grid grid-cols-4 gap-2.5 sm:grid-cols-4 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-4 items-stretch gap-2.5">
         {([
-          ["/assistant", "\u{1F916}", "AI Assistant", "Free providers available"],
+          ["/assistant", "\u{1F916}", "AI Assistant", "OpenRouter powered"],
           ["/generators", "\u{26A1}", "Generators", "25 AI tools"],
           ["/roadmaps", "\u{1F5FA}\u{FE0F}", "Roadmaps", "20 guides"],
           ["/live", "\u{1F4E1}", "Live", "Markets & more"],
@@ -400,7 +401,7 @@ function HomePage() {
           <Link
             key={to}
             to={to as string}
-            className="group flex flex-col items-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+            className="group flex flex-col items-center justify-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
           >
             <span className="text-[26px]" aria-hidden>{emoji}</span>
             <span className="mt-2 block text-[13px] font-semibold text-[#e6edf3] group-hover:text-[#58a6ff]">{label}</span>
@@ -542,7 +543,7 @@ function HomePage() {
           </Link>
         }
       >
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
           {([
             { to: "/tools/image-compress", emoji: "\u{1F5BC}\u{FE0F}", title: "Image Compressor", desc: "Reduce image size" },
             { to: "/tools/sip-calculator", emoji: "\u{1F4B0}", title: "SIP Calculator", desc: "Mutual fund returns" },
@@ -556,14 +557,11 @@ function HomePage() {
             <Link
               key={tool.to}
               to={tool.to}
-              className="group flex items-center gap-3 rounded-[10px] border border-[#30363d] bg-[#161b22] p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+              className="group flex flex-col items-center justify-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
             >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#21262d] text-[22px]" aria-hidden>{tool.emoji}</span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[13px] font-semibold text-[#e6edf3]">{tool.title}</span>
-                <span className="block text-[11px] text-[#8b949e] truncate">{tool.desc}</span>
-              </span>
-              <ArrowRight className="size-4 shrink-0 text-[#8b949e] transition-transform duration-150 group-hover:translate-x-1 group-hover:text-[#e6edf3]" aria-hidden />
+              <span className="text-[24px]" aria-hidden>{tool.emoji}</span>
+              <span className="mt-2 block text-[14px] font-semibold text-[#e6edf3]">{tool.title}</span>
+              <span className="mt-0.5 block text-[12px] text-[#8b949e]">{tool.desc}</span>
             </Link>
           ))}
         </div>
