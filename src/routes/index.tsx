@@ -566,11 +566,16 @@ function HomePage() {
       {/* ─── Footer ─── */}
       <footer className="mt-12 border-t border-sidebar-border py-5">
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <p className="text-[12px] text-muted-foreground">© 2024 SlashAI. All rights reserved.</p>
+          <p className="text-[12px] text-muted-foreground">© {new Date().getFullYear()} SlashAI. All rights reserved.</p>
           <div className="flex gap-4">
-            {["About", "Privacy", "Terms", "Contact"].map((link) => (
-              <Link key={link} to="/about" className="text-[12px] text-muted-foreground hover:text-foreground transition-colors">
-                {link}
+            {([
+              { label: "About", to: "/about" },
+              { label: "Privacy", to: "/privacy" },
+              { label: "Terms", to: "/terms" },
+              { label: "Contact", to: "/contact" },
+            ] as const).map((link) => (
+              <Link key={link.label} to={link.to} className="text-[12px] text-muted-foreground hover:text-foreground transition-colors">
+                {link.label}
               </Link>
             ))}
           </div>

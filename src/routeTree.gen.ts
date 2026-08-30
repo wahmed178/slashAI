@@ -16,6 +16,7 @@ import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
@@ -27,12 +28,14 @@ import { Route as LiveRouteImport } from './routes/live'
 import { Route as MeRouteImport } from './routes/me'
 import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as PlayRouteImport } from './routes/play'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as RoadmapsRouteImport } from './routes/roadmaps'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
@@ -116,6 +119,11 @@ const CompareRoute = CompareRouteImport.update({
   path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DealsRoute = DealsRouteImport.update({
   id: '/deals',
   path: '/deals',
@@ -171,6 +179,11 @@ const PlayRoute = PlayRouteImport.update({
   path: '/play',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
@@ -199,6 +212,11 @@ const SearchRoute = SearchRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsRoute = ToolsRouteImport.update({
@@ -446,6 +464,7 @@ export interface FileRoutesByFullPath {
   '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
@@ -457,12 +476,14 @@ export interface FileRoutesByFullPath {
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
+  '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
@@ -519,6 +540,7 @@ export interface FileRoutesByTo {
   '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
@@ -530,12 +552,14 @@ export interface FileRoutesByTo {
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
+  '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -592,6 +616,7 @@ export interface FileRoutesById {
   '/assistant': typeof AssistantRouteWithChildren
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
+  '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
@@ -603,12 +628,14 @@ export interface FileRoutesById {
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRoute
+  '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
@@ -667,6 +694,7 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/changelog'
     | '/compare'
+    | '/contact'
     | '/deals'
     | '/favorites'
     | '/find'
@@ -678,12 +706,14 @@ export interface FileRouteTypes {
     | '/me'
     | '/movies'
     | '/play'
+    | '/privacy'
     | '/quiz'
     | '/radar'
     | '/recent'
     | '/roadmaps'
     | '/search'
     | '/settings'
+    | '/terms'
     | '/tools'
     | '/trending'
     | '/whats-new'
@@ -740,6 +770,7 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/changelog'
     | '/compare'
+    | '/contact'
     | '/deals'
     | '/favorites'
     | '/find'
@@ -751,12 +782,14 @@ export interface FileRouteTypes {
     | '/me'
     | '/movies'
     | '/play'
+    | '/privacy'
     | '/quiz'
     | '/radar'
     | '/recent'
     | '/roadmaps'
     | '/search'
     | '/settings'
+    | '/terms'
     | '/trending'
     | '/whats-new'
     | '/youtube'
@@ -812,6 +845,7 @@ export interface FileRouteTypes {
     | '/assistant'
     | '/changelog'
     | '/compare'
+    | '/contact'
     | '/deals'
     | '/favorites'
     | '/find'
@@ -823,12 +857,14 @@ export interface FileRouteTypes {
     | '/me'
     | '/movies'
     | '/play'
+    | '/privacy'
     | '/quiz'
     | '/radar'
     | '/recent'
     | '/roadmaps'
     | '/search'
     | '/settings'
+    | '/terms'
     | '/tools'
     | '/trending'
     | '/whats-new'
@@ -886,6 +922,7 @@ export interface RootRouteChildren {
   AssistantRoute: typeof AssistantRouteWithChildren
   ChangelogRoute: typeof ChangelogRoute
   CompareRoute: typeof CompareRoute
+  ContactRoute: typeof ContactRoute
   DealsRoute: typeof DealsRoute
   FavoritesRoute: typeof FavoritesRoute
   FindRoute: typeof FindRoute
@@ -897,12 +934,14 @@ export interface RootRouteChildren {
   MeRoute: typeof MeRoute
   MoviesRoute: typeof MoviesRoute
   PlayRoute: typeof PlayRoute
+  PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
   RadarRoute: typeof RadarRoute
   RecentRoute: typeof RecentRoute
   RoadmapsRoute: typeof RoadmapsRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
+  TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRouteWithChildren
   TrendingRoute: typeof TrendingRoute
   WhatsNewRoute: typeof WhatsNewRoute
@@ -977,6 +1016,13 @@ declare module '@tanstack/react-router' {
       path: '/compare'
       fullPath: '/compare'
       preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -1056,6 +1102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz': {
       id: '/quiz'
       path: '/quiz'
@@ -1096,6 +1149,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools': {
@@ -1504,6 +1564,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssistantRoute: AssistantRouteWithChildren,
   ChangelogRoute: ChangelogRoute,
   CompareRoute: CompareRoute,
+  ContactRoute: ContactRoute,
   DealsRoute: DealsRoute,
   FavoritesRoute: FavoritesRoute,
   FindRoute: FindRoute,
@@ -1515,12 +1576,14 @@ const rootRouteChildren: RootRouteChildren = {
   MeRoute: MeRoute,
   MoviesRoute: MoviesRoute,
   PlayRoute: PlayRoute,
+  PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
   RadarRoute: RadarRoute,
   RecentRoute: RecentRoute,
   RoadmapsRoute: RoadmapsRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
+  TermsRoute: TermsRoute,
   ToolsRoute: ToolsRouteWithChildren,
   TrendingRoute: TrendingRoute,
   WhatsNewRoute: WhatsNewRoute,
@@ -1548,3 +1611,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
