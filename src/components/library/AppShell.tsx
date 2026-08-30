@@ -169,7 +169,7 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
       { to: "/about", label: "About", icon: Info },
       { to: "/compare", label: "Compare Models", icon: Info },
       { to: "/keyboard", label: "Keyboard Shortcuts", icon: Info },
-      { to: "/changelog", label: "Changelog", icon: Info },
+
       { to: "/glass", label: "✦ Glass", icon: Sparkles },
     ],
   },
@@ -462,16 +462,16 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             {/* Right side */}
             <div className="ml-auto flex items-center gap-3">
               <div className="hidden md:flex items-center gap-2">
-                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground">
+                <Link to="/changelog" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Notifications & updates">
                   <span className="text-[18px]">🔔</span>
-                </button>
-                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground">
+                </Link>
+                <Link to="/favorites" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Saved items">
                   <Bookmark className="size-[18px]" />
-                </button>
+                </Link>
               </div>
-              <div className="flex size-8 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background">
+              <Link to="/me" className="flex size-8 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background transition-opacity hover:opacity-90" aria-label="Profile">
                 S
-              </div>
+              </Link>
             </div>
           </div>
         </header>
