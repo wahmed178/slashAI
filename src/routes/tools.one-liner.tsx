@@ -1016,6 +1016,24 @@ function OneLiner() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden" style={{ background: "#0d1117" }}>
+
+      {/* Back button */}
+      <button
+        type="button"
+        onClick={() => window.history.back()}
+        className="fixed top-4 left-4 z-50 h-10 w-10 rounded-full border flex items-center justify-center transition-all duration-150 active:scale-95"
+        style={{
+          borderColor: "rgba(255,255,255,0.12)",
+          background: "rgba(255,255,255,0.06)",
+          color: "rgba(255,255,255,0.6)",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </button>
+
       {/* Category pills — fixed top */}
       <div className="shrink-0 w-full overflow-x-auto pb-2 pt-2 px-4 scrollbar-none" style={{ background: "#0d1117" }}>
         <div className="flex items-center gap-2 w-max pr-4">

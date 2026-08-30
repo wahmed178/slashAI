@@ -40,6 +40,24 @@ function QuoteScreen() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center"
       style={{ background: "linear-gradient(135deg, #0d1117, #0a1628, #1a0d28, #0d1117)", backgroundSize: "400% 400%", animation: "gradientShift 60s ease infinite" }}>
+
+      {/* Back button */}
+      <button
+        type="button"
+        onClick={() => window.history.back()}
+        className="fixed top-4 left-4 z-50 h-10 w-10 rounded-full border flex items-center justify-center transition-all duration-150 active:scale-95"
+        style={{
+          borderColor: "rgba(255,255,255,0.12)",
+          background: "rgba(255,255,255,0.06)",
+          color: "rgba(255,255,255,0.6)",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+      </button>
+
       <style>{`@keyframes gradientShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }`}</style>
 
       {loading ? (
