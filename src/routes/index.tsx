@@ -51,23 +51,25 @@ import trendingToolsData from "@/../src/data/trending-tools.json";
 import { GLOSSARY_TOTAL } from "@/lib/glossary";
 
 /* ─────────────── Stats Bar (static — cannot fail) ─────────────── */
+/* ─────────────── Stats Bar ─────────────── */
 function StatsBar() {
   const stats = [
-    { number: "5,635", label: "Commands" },
-    { number: "319", label: "Resources" },
-    { number: "25", label: "Generators" },
-    { number: "20", label: "Roadmaps" },
-    { number: "138", label: "Glossary" },
+    { number: "5,635", label: "COMMANDS", color: "#2dd4bf", icon: "📊" },
+    { number: "319", label: "RESOURCES", color: "#58a6ff", icon: "📦" },
+    { number: "25", label: "GENERATORS", color: "#d29922", icon: "⚡" },
+    { number: "20", label: "ROADMAPS", color: "#3fb950", icon: "🗺️" },
+    { number: "138", label: "GLOSSARY", color: "#a78bfa", icon: "📖" },
   ];
   return (
-    <div className="overflow-x-auto scrollbar-none" style={{ borderTop: "1px solid #30363d", borderBottom: "1px solid #30363d", margin: "24px 0" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, padding: "16px 0", minWidth: "min-content" }}>
+    <div className="mt-6 rounded-[10px] border border-[#21262d] bg-[#161b22] px-4 py-4 sm:px-6">
+      <div className="flex items-center justify-between overflow-x-auto scrollbar-none gap-4 sm:gap-6" style={{ minWidth: "min-content" }}>
         {stats.map((stat, i) => (
-          <span key={stat.label} style={{ display: "contents" }}>
-            {i > 0 && <div style={{ width: "1px", height: "28px", background: "#30363d", flexShrink: 0 }} />}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0 16px", flexShrink: 0 }}>
-              <span className="text-[16px] sm:text-[22px]" style={{ fontWeight: "700", color: "#e6edf3", fontFamily: "var(--font-mono, monospace)", lineHeight: 1 }}>{stat.number}</span>
-              <span className="text-[9px] sm:text-[11px]" style={{ color: "#8b949e", marginTop: "4px", textTransform: "uppercase", letterSpacing: "0.06em" }}>{stat.label}</span>
+          <span key={stat.label} className="flex items-center gap-2.5 flex-shrink-0">
+            {i > 0 && <div className="hidden sm:block h-[24px] w-px bg-[#21262d]" />}
+            <span className="text-[18px]">{stat.icon}</span>
+            <div>
+              <span className="block text-[18px] sm:text-[22px] font-bold text-[#f0f6fc]" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
+              <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.06em] text-[#8b949e]">{stat.label}</span>
             </div>
           </span>
         ))}
@@ -319,45 +321,90 @@ function HomePage() {
       <LiveTicker />
 
       {/* ─── Hero Section ─── */}
-      <section
-        className="relative overflow-hidden rounded-2xl bg-surface p-6 pt-8 sm:p-8 hero-dots"
-        style={{ background: 'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(88,166,255,0.04) 0%, transparent 70%), var(--color-surface, #161b22)' }}
-      >
-        <div className="relative z-10">
-          <p className="text-center text-[12px] uppercase tracking-[0.1em] text-muted-foreground">
-            Your AI command vault — free forever
-          </p>
-          <h1 className="mt-3 text-center text-3xl font-black tracking-tight text-foreground sm:text-4xl">
-            Find the right AI command
-            <br />
-            <span className="text-primary">in seconds</span>
-          </h1>
-          <p className="mt-2 text-center text-sm text-muted-foreground">
-            {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · free forever
-          </p>
+      <section className="relative overflow-hidden rounded-2xl bg-[#161b22] border border-[#21262d] p-6 pt-8 sm:p-8">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          {/* Left: text */}
+          <div className="flex-1">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-[#2dd4bf]">
+              YOUR AI COMMAND VAULT — FREE FOREVER
+            </span>
+            <h1 className="mt-4 text-[32px] font-bold leading-[1.15] tracking-tight text-[#f0f6fc] sm:text-[36px]">
+              Find the right AI command
+              <br />
+              <span className="text-[#2dd4bf]">in seconds</span>
+            </h1>
+            <p className="mt-3 text-[14px] text-[#8b949e]">
+              {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · Free forever
+            </p>
 
-          {/* Search bar */}
-          <form
-            className="mx-auto mt-5 flex h-[52px] max-w-[560px] items-center gap-3 rounded-[10px] border border-border bg-surface px-4 transition-colors focus-within:border-[#58a6ff]"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const q = new FormData(e.currentTarget).get("q") as string;
-              if (q?.trim()) window.location.href = `/search?q=${encodeURIComponent(q.trim())}`;
-            }}
-          >
-            <SearchIcon className="size-[18px] shrink-0 text-muted-foreground" aria-hidden />
-            <input
-              name="q"
-              type="text"
-              placeholder="Search 5,635 commands..."
-              className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
-            />
-          </form>
+            {/* Search bar */}
+            <form
+              className="mt-5 flex h-[48px] max-w-[460px] items-center gap-3 rounded-[8px] border border-[#21262d] bg-[#161b22] px-4 transition-colors focus-within:border-[#2dd4bf]"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const q = new FormData(e.currentTarget).get("q") as string;
+                if (q?.trim()) window.location.href = `/search?q=${encodeURIComponent(q.trim())}`;
+              }}
+            >
+              <SearchIcon className="size-[16px] shrink-0 text-[#8b949e]" aria-hidden />
+              <input
+                name="q"
+                type="text"
+                placeholder="Search commands, tools, topics..."
+                className="flex-1 bg-transparent text-[14px] text-[#f0f6fc] outline-none placeholder:text-[#8b949e]"
+              />
+              <span className="flex h-5 items-center rounded border border-[#30363d] bg-[#21262d] px-1.5 font-mono text-[10px] text-[#8b949e]">
+                ⌘K
+              </span>
+            </form>
 
-          <p className="mt-2.5 text-center text-xs text-muted-foreground">
-            Press <kbd className="inline-flex h-5 min-w-[24px] items-center justify-center rounded border border-border border-b-2 border-b-[#484f58] bg-[#21262d] px-1.5 font-mono text-[12px] text-muted-foreground">/</kbd> anywhere to search
-          </p>
+            {/* Intent chips */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {[
+                { emoji: "✍️", label: "Write something" },
+                { emoji: "💻", label: "Code something" },
+                { emoji: "🔍", label: "Do research" },
+                { emoji: "💼", label: "Get work done" },
+              ].map((chip) => (
+                <Link
+                  key={chip.label}
+                  to="/search"
+                  search={{ q: chip.label.toLowerCase() }}
+                  className="flex items-center gap-1.5 rounded-full border border-[#21262d] bg-[#161b22] px-3.5 py-1.5 text-[12px] text-[#8b949e] transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-[#f0f6fc]"
+                >
+                  <span>{chip.emoji}</span>
+                  {chip.label}
+                </Link>
+              ))}
+              <button
+                type="button"
+                className="flex items-center gap-1 rounded-full border border-[#21262d] bg-[#161b22] px-3.5 py-1.5 text-[12px] text-[#8b949e] transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-[#f0f6fc]"
+              >
+                More ↓
+              </button>
+            </div>
+          </div>
+
+          {/* Right: 3D CSS cube (desktop only) */}
+          <div className="hidden md:flex items-center justify-center">
+            <div
+              className="flex items-center justify-center"
+              style={{
+                width: "180px",
+                height: "180px",
+                background: "radial-gradient(circle at 30% 30%, rgba(45,212,191,0.3) 0%, rgba(88,166,255,0.15) 40%, rgba(45,212,191,0.05) 70%, transparent 100%)",
+                border: "1px solid rgba(45,212,191,0.2)",
+                borderRadius: "24px",
+                transform: "rotate(15deg)",
+                boxShadow: "0 0 60px rgba(45,212,191,0.15), inset 0 0 40px rgba(45,212,191,0.05)",
+                animation: "float 4s ease-in-out infinite",
+              }}
+            >
+              <span style={{ fontSize: "64px", filter: "drop-shadow(0 0 20px #2dd4bf)" }}>⚡</span>
+            </div>
+          </div>
         </div>
+        <style>{`@keyframes float { 0%, 100% { transform: rotate(15deg) translateY(0px); } 50% { transform: rotate(15deg) translateY(-10px); } }`}</style>
       </section>
 
       {/* ─── Stats Bar ─── */}
@@ -411,6 +458,35 @@ function HomePage() {
       </div>
 
 
+
+      {/* ─── Explore more ─── */}
+      <section className="mt-10">
+        <h2 className="text-[22px] font-semibold text-[#f0f6fc]">Explore more</h2>
+        <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {[
+            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available", bg: "linear-gradient(135deg, #1a1f2e, #0f1929)" },
+            { to: "/generators", emoji: "⚡", title: "Generators", desc: "25 AI tools", bg: "linear-gradient(135deg, #1a1f14, #0f1a0a)" },
+            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: "20 guides", bg: "linear-gradient(135deg, #1a1428, #0f0a1a)" },
+            { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", bg: "linear-gradient(135deg, #1a1a14, #1a0f0a)", badge: "Hot" },
+          ].map((card) => (
+            <Link
+              key={card.to}
+              to={card.to}
+              className="group relative flex flex-col justify-end rounded-[12px] border border-[#21262d] p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[140px]"
+              style={{ background: card.bg }}
+            >
+              {card.badge && (
+                <span className="absolute top-3 right-3 rounded-full bg-[#f85149] px-2 py-0.5 text-[10px] font-bold text-white">
+                  {card.badge}
+                </span>
+              )}
+              <span className="text-[36px]">{card.emoji}</span>
+              <span className="mt-2 block text-[16px] font-bold text-[#f0f6fc]">{card.title}</span>
+              <span className="mt-0.5 block text-[12px] text-[#8b949e]">{card.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <Section
         title="Command of the day"
@@ -513,57 +589,29 @@ function HomePage() {
       >
         <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
           {COLLECTIONS.slice(0, 6).map((c) => {
+            const borderColors: Record<string, string> = {
+              "For Women": "rgba(244,114,182,0.4)",
+              "For Men": "rgba(96,165,250,0.4)",
+              "For Students": "rgba(251,191,36,0.4)",
+              "For Creators": "rgba(251,146,60,0.4)",
+              "For Professionals": "rgba(52,211,153,0.4)",
+              "For Entrepreneurs": "rgba(167,139,250,0.4)",
+            };
             const iconMap: Record<string, string> = { "For Women": "👩", "For Men": "👨", "For Students": "🎓", "For Creators": "🎨", "For Professionals": "💼", "For Entrepreneurs": "🚀" };
             return (
               <Link
                 key={c.id}
                 to="/collections/$id"
                 params={{ id: c.id }}
-                className="flex shrink-0 flex-col items-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] sm:w-[calc(33.333%-7px)]"
+                className="flex shrink-0 flex-col items-center rounded-[12px] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 w-[150px] sm:w-auto"
+                style={{ border: `1px solid ${borderColors[c.title] || "#21262d"}` }}
               >
-                <span className="text-[28px]">{iconMap[c.title] || c.icon}</span>
-                <span className="mt-2 block text-[14px] font-semibold text-[#e6edf3]">{c.title}</span>
-                <span className="mt-0.5 block text-[12px] text-[#8b949e]">{c.count} commands</span>
+                <span className="text-[32px]">{iconMap[c.title] || c.icon}</span>
+                <span className="mt-2 block text-[13px] font-semibold text-[#f0f6fc]">{c.title}</span>
+                <span className="mt-0.5 block text-[11px] text-[#8b949e]">{c.count} commands</span>
               </Link>
             );
           })}
-        </div>
-      </Section>
-
-      {/* ─── SlashAI Tools (Free) ─── */}
-      <Section
-        title="SlashKits"
-        hint="22 free browser tools — calculators, converters, screensavers. Runs in-browser. No upload."
-        action={
-          <Link
-            to="/tools"
-            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-          >
-            All tools <ArrowRight className="size-4" aria-hidden />
-          </Link>
-        }
-      >
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-          {([
-            { to: "/tools/image-compress", emoji: "\u{1F5BC}\u{FE0F}", title: "Image Compressor", desc: "Reduce image size" },
-            { to: "/tools/sip-calculator", emoji: "\u{1F4B0}", title: "SIP Calculator", desc: "Mutual fund returns" },
-            { to: "/tools/gst-calculator", emoji: "\u{1F9FE}", title: "GST Calculator", desc: "Add/remove GST" },
-            { to: "/tools/world-clock", emoji: "\u{1F30D}", title: "World Clock", desc: "12 cities live" },
-            { to: "/tools/pomodoro", emoji: "\u{1F345}", title: "Pomodoro Timer", desc: "25/5/15 focus" },
-            { to: "/tools/flip-clock", emoji: "\u{23F1}\u{FE0F}", title: "Flip Clock", desc: "Full-screen retro" },
-            { to: "/tools/csv-to-json", emoji: "\u{1F4CA}", title: "CSV ↔ JSON", desc: "Bi-directional" },
-            { to: "/tools/new-tab", emoji: "\u{1F3E0}", title: "New Tab", desc: "Beautiful homepage" },
-          ]).map((tool) => (
-            <Link
-              key={tool.to}
-              to={tool.to}
-              className="group flex flex-col items-center justify-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
-            >
-              <span className="text-[24px]" aria-hidden>{tool.emoji}</span>
-              <span className="mt-2 block text-[14px] font-semibold text-[#e6edf3]">{tool.title}</span>
-              <span className="mt-0.5 block text-[12px] text-[#8b949e]">{tool.desc}</span>
-            </Link>
-          ))}
         </div>
         <Link
           to="/tools"
@@ -604,51 +652,51 @@ function HomePage() {
         </Link>
       </Section>
 
-      {/* ─── Footer ─── */}
-      <footer className="mt-12 border-t border-border pt-6 pb-24 md:pb-6">
-        <div className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
-          <div>
-            <h3 className="font-semibold text-foreground">Product</h3>
-            <ul className="mt-2 space-y-1.5">
-              <li><Link to="/search" className="text-muted-foreground hover:text-foreground">Commands</Link></li>
-              <li><Link to="/discover" className="text-muted-foreground hover:text-foreground">Discover</Link></li>
-              <li><Link to="/generators" className="text-muted-foreground hover:text-foreground">Generators</Link></li>
-              <li><Link to="/tools" className="text-muted-foreground hover:text-foreground">SlashKits</Link></li>
-              <li><Link to="/roadmaps" className="text-muted-foreground hover:text-foreground">Roadmaps</Link></li>
-              <li><Link to="/glossary" className="text-muted-foreground hover:text-foreground">Glossary</Link></li>
-            </ul>
+      {/* ─── Stay in the loop ─── */}
+      <section className="mt-10 overflow-hidden rounded-[12px] border border-[#21262d] bg-[#161b22]">
+        <div className="flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+          <div className="flex-1">
+            <h2 className="text-[24px] font-bold text-[#f0f6fc]">Stay in the loop</h2>
+            <p className="mt-2 text-[14px] text-[#8b949e]">
+              Get the best AI commands, tools & resources straight to your inbox.
+            </p>
+            <div className="mt-4 flex gap-2">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex h-10 flex-1 rounded-[6px] border border-[#21262d] bg-[#0a0a0f] px-3 text-[13px] text-[#f0f6fc] outline-none placeholder:text-[#8b949e] focus:border-[#2dd4bf]"
+              />
+              <button
+                type="button"
+                className="h-10 rounded-[6px] bg-[#2dd4bf] px-5 text-[13px] font-bold text-[#0a0a0f] transition-colors hover:bg-[#25b8a6]"
+              >
+                Subscribe
+              </button>
+            </div>
           </div>
-          <div>
-            <h3 className="font-semibold text-foreground">Live</h3>
-            <ul className="mt-2 space-y-1.5">
-              <li><Link to="/live" className="text-muted-foreground hover:text-foreground">Dashboard</Link></li>
-              <li><Link to="/journal" className="text-muted-foreground hover:text-foreground">Journal</Link></li>
-              <li><Link to="/collections" className="text-muted-foreground hover:text-foreground">Collections</Link></li>
-              <li><Link to="/favorites" className="text-muted-foreground hover:text-foreground">Favorites</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-foreground">Learn</h3>
-            <ul className="mt-2 space-y-1.5">
-              <li><Link to="/explore" className="text-muted-foreground hover:text-foreground">Explore</Link></li>
-              <li><Link to="/hub/$audience" params={{ audience: "students" }} className="text-muted-foreground hover:text-foreground">Student Hub</Link></li>
-              <li><Link to="/hub/$audience" params={{ audience: "developers" }} className="text-muted-foreground hover:text-foreground">Developer Hub</Link></li>
-              <li><Link to="/hub/$audience" params={{ audience: "founders" }} className="text-muted-foreground hover:text-foreground">Founders Hub</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-foreground">Info</h3>
-            <ul className="mt-2 space-y-1.5">
-              <li><Link to="/about" className="text-muted-foreground hover:text-foreground">About</Link></li>
-              <li><Link to="/whats-new" className="text-muted-foreground hover:text-foreground">What's New</Link></li>
-              <li><Link to="/settings" className="text-muted-foreground hover:text-foreground">Settings</Link></li>
-              <li><a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener" className="text-muted-foreground hover:text-foreground">GitHub</a></li>
-            </ul>
+          <div className="hidden md:flex items-center justify-center">
+            <span style={{ fontSize: "80px", filter: "drop-shadow(0 0 30px rgba(45,212,191,0.3))", animation: "float 4s ease-in-out infinite" }}>📬</span>
           </div>
         </div>
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          Built with ❤️ — free forever, no account needed. Everything stays on this device.
-        </p>
+      </section>
+
+      {/* ─── Footer ─── */}
+      <footer className="mt-12 border-t border-[#21262d] py-5">
+        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+          <p className="text-[12px] text-[#8b949e]">© 2024 SlashAI. All rights reserved.</p>
+          <div className="flex gap-4">
+            {["About", "Privacy", "Terms", "Contact"].map((link) => (
+              <Link key={link} to="/about" className="text-[12px] text-[#8b949e] hover:text-[#f0f6fc] transition-colors">
+                {link}
+              </Link>
+            ))}
+          </div>
+          <div className="flex gap-3">
+            <a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener" className="text-[18px] text-[#8b949e] hover:text-[#f0f6fc] transition-colors">
+              🐙
+            </a>
+          </div>
+        </div>
       </footer>
 
 

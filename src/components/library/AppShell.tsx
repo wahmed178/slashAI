@@ -54,6 +54,7 @@ import { useLibrary, ICONS } from "@/hooks/use-library";
 import { cn } from "@/lib/utils";
 import { SearchBox } from "./SearchBox";
 import { OfflineBadge } from "./OfflineBadge";
+import { DesktopSidebar } from "./DesktopSidebar";
 
 /** mobile bottom bar — five essentials */
 const PRIMARY = [
@@ -404,32 +405,9 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   const currentIcon = ICONS.find((i) => i.id === settings.appIcon) ?? ICONS[0]!;
 
   return (
-    <div className="flex min-h-screen w-full bg-background">
-      {/* desktop / tablet sidebar */}
-      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex xl:w-64">
-        <Link
-          to="/"
-          className="flex items-center gap-2.5 px-4 py-4 focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none"
-        >
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground text-lg font-bold">
-            {currentIcon.emoji}
-          </span>
-          <span className="min-w-0">
-            <span className="block truncate text-sm font-semibold text-sidebar-foreground">
-              SlashAI
-            </span>
-            <span className="block truncate text-xs text-muted-foreground">
-              Curated AI & free finds
-            </span>
-          </span>
-        </Link>
-        <div className="flex-1 overflow-y-auto px-2 pb-4">
-          <NavList />
-        </div>
-        <div className="border-t border-sidebar-border px-4 py-3">
-          <OfflineBadge />
-        </div>
-      </aside>
+    <div className="flex min-h-screen w-full" style={{ background: "#0a0a0f" }}>
+      {/* desktop sidebar */}
+      <DesktopSidebar />
 
       {/* mobile drawer holds the secondary destinations */}
       <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
@@ -445,66 +423,70 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-border bg-background/90 backdrop-blur-md">
-          <div
-            className={cn(
-              "mx-auto flex items-center gap-2 px-4 py-2.5",
-              wide ? "max-w-6xl" : "max-w-5xl",
-            )}
-          >
-            {back ? (
-              <BackButton to={back.to} label={back.label} />
-            ) : (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="-ml-1 md:hidden"
-                aria-label="Open menu"
-                onClick={() => setMenuOpen(true)}
-              >
-                <Menu className="size-5" />
-              </Button>
-            )}
+        <header className="sticky top-0 z-30 border-b border-[#21262d] bg-[rgba(10,10,15,0.8)] backdrop-blur-[10px]">
+          <div className="mx-auto flex h-[52px] items-center gap-3 px-4 md:px-6">
+            {/* Mobile: hamburger */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="-ml-1 md:hidden"
+              aria-label="Open menu"
+              onClick={() => setMenuOpen(true)}
+            >
+              <Menu className="size-5" />
+            </Button>
 
-            {hideHeaderSearch ? (
-              <p className="min-w-0 flex-1 truncate text-sm font-semibold text-foreground">
-                {title ?? "SlashAI"}
-              </p>
-            ) : (
-              <SearchBox placeholder="Search commands…" />
-            )}
+            {/* Mobile: logo */}
+            <Link to="/" className="md:hidden flex items-center gap-2">
+              <span className="text-[18px]">⚡</span>
+              <span className="text-[16px] font-bold text-[#f0f6fc]">SlashAI</span>
+            </Link>
 
-            {/* Theme toggle — desktop header only */}
-            <ThemeToggleButton />
+            {/* Desktop: search bar */}
+            <div className="hidden md:flex flex-1 justify-center">
+              <div className="flex h-[36px] w-[320px] items-center gap-2 rounded-[6px] border border-[#21262d] bg-[#161b22] px-3 transition-colors focus-within:border-[#2dd4bf]">
+                <SearchIcon className="size-[14px] shrink-0 text-[#8b949e]" />
+                <input
+                  type="text"
+                  placeholder="Search 5,635 commands..."
+                  className="flex-1 bg-transparent text-[13px] text-[#f0f6fc] outline-none placeholder:text-[#8b949e]"
+                  onFocus={() => window.location.href = '/search'}
+                  readOnly
+                />
+                <span className="flex h-5 items-center rounded border border-[#30363d] bg-[#21262d] px-1.5 font-mono text-[10px] text-[#8b949e]">
+                  ⌘K
+                </span>
+              </div>
+            </div>
 
-            {back && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden"
-                aria-label="Open menu"
-                onClick={() => setMenuOpen(true)}
-              >
-                <Menu className="size-5" />
-              </Button>
-            )}
+            {/* Right side */}
+            <div className="ml-auto flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-2">
+                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-[#8b949e] transition-colors hover:bg-[#1c2128] hover:text-[#f0f6fc]">
+                  <span className="text-[18px]">🔔</span>
+                </button>
+                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-[#8b949e] transition-colors hover:bg-[#1c2128] hover:text-[#f0f6fc]">
+                  <Bookmark className="size-[18px]" />
+                </button>
+              </div>
+              <div className="flex size-8 items-center justify-center rounded-full bg-[#2dd4bf] text-[14px] font-bold text-[#0a0a0f]">
+                S
+              </div>
+            </div>
           </div>
         </header>
 
-        <main
-          className={cn(
-            "mx-auto w-full flex-1 px-4 pt-5 pb-28 md:pb-10 animate-slide-in-up",
-            wide ? "max-w-6xl" : "max-w-5xl",
-          )}
-        >
-          {children}
+        <main className="flex-1 overflow-y-auto animate-slide-in-up">
+          <div className="mx-auto max-w-[900px] px-4 py-6 md:px-6 md:py-8 pb-28 md:pb-10">
+            {children}
+          </div>
         </main>
       </div>
 
       {/* mobile bottom navigation — five essential destinations */}
       <nav
         aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-[#30363d] bg-[rgba(13,17,23,0.97)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-[#21262d] bg-[rgba(10,10,15,0.97)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
         style={{ height: 'calc(56px + env(safe-area-inset-bottom))' }}
       >
         {PRIMARY.map((item) => {
