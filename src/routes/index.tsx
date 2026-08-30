@@ -48,7 +48,6 @@ import {
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
 import trendingToolsData from "@/../src/data/trending-tools.json";
-import { GLOSSARY_TOTAL } from "@/lib/glossary";
 
 /* ─────────────── Stats Bar (static — cannot fail) ─────────────── */
 /* ─────────────── Stats Bar ─────────────── */
@@ -184,16 +183,6 @@ function YourWeekDigest() {
     </section>
   );
 }
-
-/* ─────────────── Intent chips ─────────────── */
-const INTENTS = [
-  { label: "Write something", q: "write draft", emoji: "\u{270D}\u{FE0F}" },
-  { label: "Write or fix code", q: "code debug", emoji: "\u{1F4BB}" },
-  { label: "Handle a document", q: "document summarize", emoji: "\u{1F4C4}" },
-  { label: "Do research", q: "research sources", emoji: "\u{1F50D}" },
-  { label: "Get work done", q: "email plan meeting", emoji: "\u{1F4BC}" },
-  { label: "Make something creative", q: "creative idea", emoji: "\u{1F3A8}" },
-] as const;
 
 /* ─────────────── Route ─────────────── */
 export const Route = createFileRoute("/")({
@@ -412,52 +401,6 @@ function HomePage() {
 
       {/* ─── Feature Highlights ─── */}
       <FeatureHighlights />
-
-      {/* ─── I want to… ─── */}
-      <section className="mt-8">
-        <h2 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-          I want to…
-        </h2>
-        <div className="mt-2.5 flex flex-wrap gap-2">
-          {INTENTS.map((intent) => (
-            <Link
-              key={intent.label}
-              to="/search"
-              search={{ q: intent.q }}
-              className="flex min-h-[44px] items-center gap-1.5 rounded-[20px] border border-border bg-surface px-4 py-2.5 text-[13px] text-foreground transition-all duration-150 hover:border-border hover:bg-surface-elevated"
-            >
-              <span className="text-[14px]" aria-hidden>{intent.emoji}</span>
-              {intent.label}
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── Quick Links Grid (icon cards) ─── */}
-      <div className="mt-6 grid grid-cols-4 items-stretch gap-2.5">
-        {([
-          ["/assistant", "\u{1F916}", "AI Assistant", "OpenRouter powered"],
-          ["/generators", "\u{26A1}", "Generators", "25 AI tools"],
-          ["/roadmaps", "\u{1F5FA}\u{FE0F}", "Roadmaps", "20 guides"],
-          ["/live", "\u{1F4E1}", "Live", "Markets & more"],
-          ["/glossary", "\u{1F4D6}", "Glossary", `${GLOSSARY_TOTAL}+ terms`],
-          ["/quiz", "\u{1F9E0}", "Quiz", "Daily challenge"],
-          ["/deals", "\u{1F6CD}\u{FE0F}", "Deals", "Daily deals"],
-          ["/discover", "\u{1F9ED}", "Discover", "Tools & APIs"],
-        ] as const).map(([to, emoji, label, sub]) => (
-          <Link
-            key={to}
-            to={to as string}
-            className="group flex flex-col items-center justify-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-border"
-          >
-            <span className="text-[26px]" aria-hidden>{emoji}</span>
-            <span className="mt-2 block text-[13px] font-semibold text-foreground group-hover:text-primary">{label}</span>
-            <span className="mt-0.5 block text-[11px] text-muted-foreground">{sub}</span>
-          </Link>
-        ))}
-      </div>
-
-
 
       {/* ─── Explore more ─── */}
       <section className="mt-10">
