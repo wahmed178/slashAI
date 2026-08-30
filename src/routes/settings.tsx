@@ -13,13 +13,12 @@ import {
   Zap,
   LayoutGrid,
   List,
-  Palette,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/library/AppShell";
-import { useLibrary, ACCENTS, THEMES, FIXED_ACCENT_THEMES, ICONS } from "@/hooks/use-library";
+import { useLibrary, THEMES } from "@/hooks/use-library";
 import { CATEGORY_TREE, VERIFIED_TOTAL } from "@/lib/commands";
 import { INTERESTS } from "@/lib/collections";
 import { APP_DETAILS, CHANGELOG } from "@/lib/app-meta";
@@ -72,7 +71,12 @@ function SettingsPage() {
     openWhatsNew,
   } = useLibrary();
   const fileRef = useRef<HTMLInputElement>(null);
-  const accentLocked = FIXED_ACCENT_THEMES.includes(settings.theme);
+  const isGlassMember = (() => { try { return localStorage.getItem("slashai-glass-user") === "true"; } catch { return false; } })();
+  const visibleThemes = THEMES.filter((t) => {
+    if (t.id === "glass") return isGlassMember;
+    if (["batman", "ocean", "moonlight", "warm"].includes(t.id)) return isGlassMember;
+    return true;
+  });
 
   const download = () => {
     const blob = new Blob([JSON.stringify(exportBackup(), null, 2)], { type: "application/json" });
@@ -112,13 +116,7 @@ function SettingsPage() {
 
       <Section title="Theme">
         <div className="grid gap-2 sm:grid-cols-2">
-          {THEMES.filter((t) => {
-            if (t.id === "glass") {
-              try { return localStorage.getItem("slashai-glass-user") === "true"; }
-              catch { return false; }
-            }
-            return true;
-          }).map((t) => {
+          {visibleThemes.map((t) => {
             const active = settings.theme === t.id;
             return (
               <button
@@ -149,62 +147,7 @@ function SettingsPage() {
         </div>
       </Section>
 
-      <Section title="App icon">
-        <p className="mb-2 text-xs text-muted-foreground">
-          Choose your slash icon — it appears in the sidebar header.
-        </p>
-        <div className="grid grid-cols-5 gap-2 sm:grid-cols-8">
-          {ICONS.map((icon) => {
-            const active = settings.appIcon === icon.id;
-            return (
-              <button
-                key={icon.id}
-                type="button"
-                aria-label={icon.label}
-                aria-pressed={active}
-                onClick={() => updateSettings({ appIcon: icon.id })}
-                className={cn(
-                  "flex size-12 items-center justify-center rounded-xl border-2 text-lg transition-all active:scale-95",
-                  active
-                    ? "border-primary bg-accent shadow-md shadow-primary/20"
-                    : "border-border bg-surface hover:border-primary/40",
-                )}
-              >
-                {icon.emoji}
-              </button>
-            );
-          })}
-        </div>
-      </Section>
 
-      <Section title="Accent colour">
-        <div className="flex flex-wrap gap-2.5">
-          {ACCENTS.map((a) => (
-            <button
-              key={a.id}
-              type="button"
-              aria-label={a.label}
-              aria-pressed={settings.accent === a.id}
-              disabled={accentLocked}
-              onClick={() => updateSettings({ accent: a.id })}
-              className={cn(
-                "flex size-10 items-center justify-center rounded-full border-2 transition-transform active:scale-95",
-                settings.accent === a.id ? "border-foreground" : "border-transparent",
-                accentLocked && "cursor-not-allowed opacity-40",
-              )}
-              style={{ backgroundColor: a.swatch }}
-            >
-              {settings.accent === a.id && <Check className="size-4 text-background" aria-hidden />}
-            </button>
-          ))}
-        </div>
-        {accentLocked && (
-          <p className="mt-2 text-xs text-muted-foreground">
-            The {THEMES.find((t) => t.id === settings.theme)?.label} theme brings its own colour.
-            Switch to Dark, Light or AMOLED to pick an accent.
-          </p>
-        )}
-      </Section>
 
       <Section title="Layout">
         <div className="grid grid-cols-2 gap-2">
