@@ -60,15 +60,15 @@ function StatsBar() {
     { number: "138", label: "GLOSSARY", color: "#a78bfa", icon: "📖" },
   ];
   return (
-    <div className="mt-6 rounded-[10px] border border-sidebar-border bg-surface px-4 py-4 sm:px-6">
-      <div className="flex items-center justify-between overflow-x-auto scrollbar-none gap-4 sm:gap-6" style={{ minWidth: "min-content" }}>
+    <div className="mt-6 rounded-[10px] border border-sidebar-border bg-surface px-3 py-3 sm:px-6 sm:py-4">
+      <div className="grid grid-cols-5 items-center gap-1 sm:flex sm:items-center sm:justify-between sm:gap-6">
         {stats.map((stat, i) => (
-          <span key={stat.label} className="flex items-center gap-2.5 flex-shrink-0">
+          <span key={stat.label} className="flex items-center gap-1 sm:gap-2.5 justify-center">
             {i > 0 && <div className="hidden sm:block h-[24px] w-px bg-surface-elevated" />}
-            <span className="text-[18px]">{stat.icon}</span>
-            <div>
-              <span className="block text-[18px] sm:text-[22px] font-bold text-foreground" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
-              <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.06em] text-muted-foreground">{stat.label}</span>
+            <span className="text-[14px] sm:text-[18px]">{stat.icon}</span>
+            <div className="text-center">
+              <span className="block text-[14px] sm:text-[22px] font-bold text-foreground leading-tight" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
+              <span className="block text-[7px] sm:text-[10px] uppercase tracking-[0.04em] sm:tracking-[0.06em] text-muted-foreground leading-tight">{stat.label}</span>
             </div>
           </span>
         ))}
@@ -310,19 +310,19 @@ function HomePage() {
       <LiveTicker />
 
       {/* ─── Hero Section ─── */}
-      <section className="relative overflow-hidden rounded-2xl bg-surface border border-sidebar-border p-6 pt-8 sm:p-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <section className="relative overflow-hidden rounded-2xl bg-surface border border-sidebar-border p-4 pt-6 sm:p-8">
+        <div className="flex flex-col gap-4 overflow-hidden md:flex-row md:items-center md:justify-between md:gap-6">
           {/* Left: text */}
-          <div className="flex-1">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-primary">
+          <div className="min-w-0 flex-1">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[9px] sm:text-[11px] uppercase tracking-[0.05em] sm:tracking-[0.08em] text-primary">
               YOUR AI COMMAND VAULT — FREE FOREVER
             </span>
-            <h1 className="mt-4 text-[32px] font-bold leading-[1.15] tracking-tight text-foreground sm:text-[36px]">
+            <h1 className="mt-3 text-[26px] font-bold leading-[1.15] tracking-tight text-foreground sm:mt-4 sm:text-[36px]">
               Find the right AI command
               <br />
               <span className="text-primary">in seconds</span>
             </h1>
-            <p className="mt-3 text-[14px] text-muted-foreground">
+            <p className="mt-2 text-[13px] text-muted-foreground sm:mt-3 sm:text-[14px]">
               {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · Free forever
             </p>
 
