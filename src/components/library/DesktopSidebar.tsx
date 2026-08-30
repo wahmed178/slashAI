@@ -16,24 +16,33 @@ import {
   Settings,
   NotebookPen,
   Sparkles,
+  Flame,
+  Youtube,
+  Layers,
+  History,
 } from "lucide-react";
 
 const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Commands", icon: Terminal },
+  { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
   { to: "/discover", label: "Discover", icon: Compass },
-  { to: "/tools", label: "SlashKits", icon: Wrench, badge: "New" },
+  { to: "/tools", label: "SlashKits", icon: Wrench },
   { to: "/hub", label: "Hubs", icon: LayoutGrid },
   { to: "/assistant", label: "AI Assistant", icon: Bot },
   { to: "/generators", label: "Generators", icon: Zap },
   { to: "/roadmaps", label: "Roadmaps", icon: Map },
   { to: "/live", label: "Live", icon: Radio, badge: "Hot" },
+  { to: "/youtube", label: "YouTube", icon: Youtube },
+  { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
   { to: "/glossary", label: "Glossary", icon: BookOpen },
+  { to: "/collections", label: "Collections", icon: Layers },
   { to: "/deals", label: "Deals", icon: Tag },
 ];
 
 const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any }> = [
   { to: "/journal", label: "Journal", icon: NotebookPen },
+  { to: "/recent", label: "Recent", icon: History },
   { to: "/favorites", label: "Saved", icon: Bookmark },
   { to: "/me", label: "Profile & Settings", icon: Settings },
 ];
