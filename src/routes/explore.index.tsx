@@ -126,12 +126,12 @@ function CommandCard({ cmd, desc }: { cmd: string; desc: string }) {
       <div className="flex items-center gap-2">
         <code
           className="min-w-0 flex-1 truncate text-[13px] font-semibold"
-          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: copied ? "#3fb950" : "#e6edf3" }}
+          style={{ fontFamily: "Geist Mono, ui-monospace, monospace", color: copied ? "#3fb950" : "var(--foreground)" }}
         >
           {cmd}
         </code>
         {copied ? (
-          <Check className="size-3.5 shrink-0 text-[#3fb950]" />
+          <Check className="size-3.5 shrink-0 text-green-500" />
         ) : (
           <Copy className="size-3.5 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
         )}

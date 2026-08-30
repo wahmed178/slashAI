@@ -59,8 +59,8 @@ function ComparePage() {
         <div className="mt-6 overflow-x-auto rounded-[10px] border border-border">
           <table className="w-full min-w-[700px] text-sm">
             <thead>
-              <tr className="border-b border-border bg-[#21262d]">
-                <th className="sticky left-0 z-10 bg-[#21262d] px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Model</th>
+              <tr className="border-b border-border bg-surface-elevated">
+                <th className="sticky left-0 z-10 bg-surface-elevated px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Model</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Free Tier</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Context</th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground">Coding</th>
@@ -74,7 +74,7 @@ function ComparePage() {
               {MODELS.map((m, i) => (
                 <tr
                   key={m.name}
-                  className={`border-b border-border/50 transition-colors hover:bg-[#21262d] ${i % 2 === 0 ? "bg-surface" : "bg-[#1c2128]"}`}
+                  className={`border-b border-border/50 transition-colors hover:bg-surface-elevated ${i % 2 === 0 ? "bg-surface" : "bg-surface-elevated"}`}
                 >
                   <td className="sticky left-0 z-10 bg-inherit px-4 py-3">
                     <div className="font-semibold text-foreground">{m.name}</div>

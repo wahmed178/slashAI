@@ -56,7 +56,7 @@ function QuoteScreen() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center"
-      style={{ background: "linear-gradient(135deg, #0d1117, #0a1628, #1a0d28, #0d1117)", backgroundSize: "400% 400%", animation: "gradientShift 60s ease infinite" }}>
+      style={{ background: "linear-gradient(135deg, var(--background), rgba(10,22,40,1), rgba(26,13,40,1), var(--background))", backgroundSize: "400% 400%", animation: "gradientShift 60s ease infinite" }}>
 
       {/* Auto-dismiss close button */}
       <div

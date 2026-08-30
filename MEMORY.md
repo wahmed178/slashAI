@@ -13,12 +13,17 @@ Daily content automation: quotes, artwork via GitHub Actions
 Built on Lovable, deployed on Vercel.
 
 ## Design Identity
-- Dark theme: #0d1117 background, #161b22 surface, #30363d border
-- Accent: #58a6ff (blue). No loud gradients. No emoji spam.
-- Font: Inter (body), Geist or Cal Sans (headings)
-- Feel: Linear.app meets Vercel.com — calm, premium, fast
+- Dark theme: near-black navy background (#0a0a0f via oklch), darker sidebar, layered surfaces
+- Primary accent: electric cyan/teal (#2dd4bf via oklch)
+- Background: oklch(0.135 0.014 255) | Surface: oklch(0.175 0.016 253) | Sidebar: oklch(0.12 0.012 255)
+- Border: subtle blue-gray oklch(0.265 0.016 254) | Text: near-white oklch(0.965 0.004 250)
+- Font: Space Grotesk (body), JetBrains Mono (code/commands)
+- Semantic tokens: all colors via CSS custom properties — no hard-coded hex in components
+- Feel: premium AI command vault — calm, polished, fast
 - Subtle glass morphism, micro-interactions, skeleton loading, snap scroll
+- Ambient radial glow on body background
 - Mobile-first, 375px minimum width
+- Light and AMOLED themes preserved with semantic token overrides
 
 ## Architecture
 - Framework: React (via Lovable) + TanStack Start (SSR, but deployed as static SPA on Freebuff)

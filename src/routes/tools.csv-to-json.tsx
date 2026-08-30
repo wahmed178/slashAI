@@ -68,18 +68,18 @@ function CsvToJson() {
       <div className="mt-4 flex gap-2">
         <button type="button" onClick={() => setMode("csv-to-json")}
           className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium transition-colors"
-          style={{ background: mode === "csv-to-json" ? "#58a6ff" : "#21262d", borderColor: mode === "csv-to-json" ? "transparent" : "#30363d", color: mode === "csv-to-json" ? "#0d1117" : "#8b949e" }}>
+          style={{ background: mode === "csv-to-json" ? "var(--primary)" : "var(--surface-elevated)", borderColor: mode === "csv-to-json" ? "transparent" : "var(--border)", color: mode === "csv-to-json" ? "var(--background)" : "var(--muted-foreground)" }}>
           CSV → JSON
         </button>
         <button type="button" onClick={() => setMode("json-to-csv")}
           className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium transition-colors"
-          style={{ background: mode === "json-to-csv" ? "#58a6ff" : "#21262d", borderColor: mode === "json-to-csv" ? "transparent" : "#30363d", color: mode === "json-to-csv" ? "#0d1117" : "#8b949e" }}>
+          style={{ background: mode === "json-to-csv" ? "var(--primary)" : "var(--surface-elevated)", borderColor: mode === "json-to-csv" ? "transparent" : "var(--border)", color: mode === "json-to-csv" ? "var(--background)" : "var(--muted-foreground)" }}>
           JSON → CSV
         </button>
       </div>
       {mode === "csv-to-json" && (
         <label className="mt-3 flex items-center gap-2 text-sm text-foreground">
-          <input type="checkbox" checked={hasHeader} onChange={(e) => setHasHeader(e.target.checked)} className="accent-[#58a6ff]" />
+          <input type="checkbox" checked={hasHeader} onChange={(e) => setHasHeader(e.target.checked)} className="accent-primary" />
           First row is header
         </label>
       )}

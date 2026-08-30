@@ -29,7 +29,7 @@ function ChangelogPage() {
           {entries.map((entry: any) => (
             <div key={entry.version} className="relative flex gap-5 pb-10 last:pb-0">
               <div className="relative z-10 mt-1 flex shrink-0 items-start">
-                <div className="size-[10px] rounded-full border-2 border-primary bg-[#0d1117]" />
+                <div className="size-[10px] rounded-full border-2 border-primary bg-background" />
               </div>
 
               <div className="min-w-0 flex-1">

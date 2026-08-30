@@ -27,7 +27,7 @@ function PercentageCalc() {
           {labels.map((l, i) => (
             <button key={i} type="button" onClick={() => setMode(i)}
               className="min-h-[40px] shrink-0 rounded-lg border px-3 text-xs font-medium transition-colors"
-              style={{ background: mode === i ? "#58a6ff" : "#21262d", borderColor: mode === i ? "transparent" : "#30363d", color: mode === i ? "#0d1117" : "#8b949e" }}>
+              style={{ background: mode === i ? "var(--primary)" : "var(--surface-elevated)", borderColor: mode === i ? "transparent" : "var(--border)", color: mode === i ? "var(--background)" : "var(--muted-foreground)" }}>
               {l}
             </button>
           ))}

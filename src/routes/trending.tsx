@@ -41,9 +41,9 @@ function CopyBtn({ text, className = "" }: { text: string; className?: string })
       onClick={(e) => { e.stopPropagation(); copy(); }}
       className={`copy-feedback flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium ${className}`}
       style={{
-        background: copied ? "rgba(63,185,80,0.15)" : "#21262d",
-        border: `1px solid ${copied ? "rgba(63,185,80,0.3)" : "#30363d"}`,
-        color: copied ? "#3fb950" : "#e6edf3",
+        background: copied ? "rgba(63,185,80,0.15)" : "var(--surface-elevated)",
+        border: `1px solid ${copied ? "rgba(63,185,80,0.3)" : "var(--border)"}`,
+        color: copied ? "#3fb950" : "var(--foreground)",
       }}
     >
       {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
@@ -58,20 +58,20 @@ function CopyBtn({ text, className = "" }: { text: string; className?: string })
 function CommandOfTheWeek() {
   const cmd = getCommandOfWeek();
   return (
-    <div className="relative overflow-hidden rounded-xl border border-[#30363d] bg-[#161b22] p-6 sm:p-8">
+    <div className="relative overflow-hidden rounded-xl border border-border bg-surface p-6 sm:p-8">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0 flex-1">
-          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-[#21262d] px-2.5 py-1 text-[11px] font-medium text-[#8b949e]">
+          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-surface-elevated px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
             <span className="inline-block size-2 rounded-full" style={{ background: CATEGORY_DOT_COLORS[cmd.category] }} />
             Command of the Week
           </span>
-          <h2 className="mt-3 font-mono text-4xl font-bold tracking-tight text-[#e6edf3] sm:text-5xl">
+          <h2 className="mt-3 font-mono text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
             {cmd.command}
           </h2>
-          <p className="mt-3 max-w-lg text-sm leading-relaxed text-[#8b949e]">{cmd.description}</p>
+          <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">{cmd.description}</p>
           <div className="mt-4 flex flex-wrap gap-1.5">
             {cmd.worksIn.map((w) => (
-              <span key={w} className="rounded-md border border-[#30363d] bg-[#21262d] px-2 py-0.5 text-[11px] text-[#8b949e]">{w}</span>
+              <span key={w} className="rounded-md border border-border bg-surface-elevated px-2 py-0.5 text-[11px] text-muted-foreground">{w}</span>
             ))}
           </div>
         </div>
@@ -82,7 +82,7 @@ function CommandOfTheWeek() {
               href={`https://chatgpt.com/?q=${encodeURIComponent(cmd.command)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-9 items-center gap-1.5 rounded-md bg-[#58a6ff]/15 px-3 text-xs font-medium text-[#58a6ff] transition-colors hover:bg-[#58a6ff]/25"
+              className="flex h-9 items-center gap-1.5 rounded-md bg-primary/15 px-3 text-xs font-medium text-primary transition-colors hover:bg-primary/25"
               onClick={(e) => e.stopPropagation()}
             >
               Try it <ExternalLink className="size-3" />
@@ -99,16 +99,16 @@ function CommandOfTheWeek() {
    ═══════════════════════════════════════════════════════════════════ */
 function CommandCard({ cmd }: { cmd: TrendingCommand }) {
   return (
-    <article className="flex flex-col rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]">
+    <article className="flex flex-col rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-border">
       <div className="mb-3 flex items-center gap-2">
         <span className="size-2.5 shrink-0 rounded-full" style={{ background: CATEGORY_DOT_COLORS[cmd.category] }} />
-        <span className="text-[11px] text-[#8b949e]">{cmd.category}</span>
+        <span className="text-[11px] text-muted-foreground">{cmd.category}</span>
       </div>
-      <code className="font-mono text-[20px] font-bold tracking-tight text-[#e6edf3]">{cmd.command}</code>
-      <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-[#8b949e]">{cmd.description}</p>
+      <code className="font-mono text-[20px] font-bold tracking-tight text-foreground">{cmd.command}</code>
+      <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-muted-foreground">{cmd.description}</p>
       <div className="mt-auto flex flex-wrap gap-1 pt-2">
         {cmd.worksIn.map((w) => (
-          <span key={w} className="rounded-md border border-[#30363d] bg-[#21262d] px-1.5 py-0.5 text-[10px] text-[#8b949e]">{w}</span>
+          <span key={w} className="rounded-md border border-border bg-surface-elevated px-1.5 py-0.5 text-[10px] text-muted-foreground">{w}</span>
         ))}
       </div>
       <div className="mt-3">
@@ -182,9 +182,9 @@ function TrendingPage() {
               onClick={() => setActiveTab(tab)}
               className="shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors duration-150"
               style={{
-                borderColor: activeTab === tab ? "rgba(88,166,255,0.4)" : "#30363d",
-                background: activeTab === tab ? "rgba(88,166,255,0.15)" : "#21262d",
-                color: activeTab === tab ? "#58a6ff" : "#8b949e",
+                borderColor: activeTab === tab ? "rgba(88,166,255,0.4)" : "var(--border)",
+                background: activeTab === tab ? "rgba(88,166,255,0.15)" : "var(--surface-elevated)",
+                color: activeTab === tab ? "var(--primary)" : "var(--muted-foreground)",
               }}
             >
               {tab}
@@ -208,9 +208,9 @@ function TrendingPage() {
               onClick={() => setActiveCategory("All")}
               className="shrink-0 rounded-full border px-3 py-1 text-[11px] font-medium transition-colors duration-150"
               style={{
-                borderColor: activeCategory === "All" ? "rgba(88,166,255,0.4)" : "#30363d",
-                background: activeCategory === "All" ? "rgba(88,166,255,0.15)" : "#21262d",
-                color: activeCategory === "All" ? "#58a6ff" : "#8b949e",
+                borderColor: activeCategory === "All" ? "rgba(88,166,255,0.4)" : "var(--border)",
+                background: activeCategory === "All" ? "rgba(88,166,255,0.15)" : "var(--surface-elevated)",
+                color: activeCategory === "All" ? "var(--primary)" : "var(--muted-foreground)",
               }}
             >
               All ({TRENDING_COMMANDS.length})
@@ -224,9 +224,9 @@ function TrendingPage() {
                   onClick={() => setActiveCategory(cat)}
                   className="flex shrink-0 items-center gap-1 rounded-full border px-3 py-1 text-[11px] font-medium transition-colors duration-150"
                   style={{
-                    borderColor: activeCategory === cat ? "rgba(88,166,255,0.4)" : "#30363d",
-                    background: activeCategory === cat ? "rgba(88,166,255,0.15)" : "#21262d",
-                    color: activeCategory === cat ? "#58a6ff" : "#8b949e",
+                    borderColor: activeCategory === cat ? "rgba(88,166,255,0.4)" : "var(--border)",
+                    background: activeCategory === cat ? "rgba(88,166,255,0.15)" : "var(--surface-elevated)",
+                    color: activeCategory === cat ? "var(--primary)" : "var(--muted-foreground)",
                   }}
                 >
                   <span className="size-2 rounded-full" style={{ background: CATEGORY_DOT_COLORS[cat] }} />
@@ -277,7 +277,7 @@ function TrendingPage() {
                 <span className="text-[24px]">{gen.emoji}</span>
                 <p className="mt-2 text-[14px] font-semibold text-foreground group-hover:text-primary">{gen.title}</p>
                 <p className="mt-0.5 line-clamp-1 text-[12px] text-muted-foreground">{gen.tagline}</p>
-                <span className="mt-auto pt-3 inline-flex h-8 items-center justify-center rounded-md border text-[11px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "#58a6ff" }}>
+                <span className="mt-auto pt-3 inline-flex h-8 items-center justify-center rounded-md border text-[11px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "var(--primary)" }}>
                   Use →
                 </span>
               </Link>
@@ -307,7 +307,7 @@ function TrendingPage() {
                   <p className="mt-2 text-[12px] text-muted-foreground">
                     {totalSteps} steps · {rm.phases.length} phases · {rm.duration}
                   </p>
-                  <span className="mt-3 inline-flex h-9 items-center justify-center rounded-md border text-[12px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "#58a6ff" }}>
+                  <span className="mt-3 inline-flex h-9 items-center justify-center rounded-md border text-[12px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "var(--primary)" }}>
                     Follow →
                   </span>
                 </Link>
@@ -331,7 +331,7 @@ function TrendingPage() {
                 to="/glossary"
                 className="group rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
               >
-                <code className="font-mono text-[16px] font-bold text-[#58a6ff]">{term.term}</code>
+                <code className="font-mono text-[16px] font-bold text-primary">{term.term}</code>
                 <p className="mt-0.5 text-[11px] text-muted-foreground">{term.category}</p>
                 <p className="mt-1.5 line-clamp-2 text-[12px] text-muted-foreground">{term.def}</p>
               </Link>
@@ -353,12 +353,12 @@ function TrendingPage() {
                 key={col.id}
                 to="/collections/$id"
                 params={{ id: col.id }}
-                className="flex items-center gap-2 rounded-md border bg-[#21262d] px-4 py-2.5 text-[13px] font-medium text-[#e6edf3] transition-colors hover:border-[#58a6ff40]"
-                style={{ borderColor: "#30363d" }}
+                className="flex items-center gap-2 rounded-md border bg-surface-elevated px-4 py-2.5 text-[13px] font-medium text-foreground transition-colors hover:border-primary/25"
+                style={{ borderColor: "var(--border)" }}
               >
                 <span className="text-[18px]">{col.icon}</span>
                 {col.title}
-                <span className="ml-1 rounded bg-[#30363d] px-1.5 py-0.5 text-[10px] text-[#8b949e]">{col.count}</span>
+                <span className="ml-1 rounded bg-border px-1.5 py-0.5 text-[10px] text-muted-foreground">{col.count}</span>
               </Link>
             ))}
           </div>
@@ -376,11 +376,11 @@ function TrendingPage() {
             {[
               { label: "NIFTY 50", value: "Loading…", color: "#3fb950" },
               { label: "BTC/INR", value: "Loading…", color: "#f0b90b" },
-              { label: "Next Prayer", value: "Fajr", color: "#58a6ff" },
+              { label: "Next Prayer", value: "Fajr", color: "var(--primary)" },
               { label: "Weather", value: "Hyderabad", color: "#d29922" },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center">
-                <p className="text-[11px] text-[#8b949e]">{stat.label}</p>
+              <div key={stat.label} className="rounded-[10px] border border-border bg-surface p-4 text-center">
+                <p className="text-[11px] text-muted-foreground">{stat.label}</p>
                 <p className="mt-1 text-[20px] font-bold" style={{ color: stat.color }}>{stat.value}</p>
               </div>
             ))}

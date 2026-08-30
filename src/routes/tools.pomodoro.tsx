@@ -74,7 +74,7 @@ function Pomodoro() {
           {([["work", `${workMin}m Work`], ["short", `${shortMin}m Break`], ["long", `${longMin}m Long`] as const]).map(([m, label]) => (
             <button key={m} type="button" onClick={() => switchMode(m as Mode)}
               className="min-h-[36px] rounded-full border px-4 text-xs font-medium transition-colors"
-              style={{ background: mode === m ? "#58a6ff" : "#21262d", borderColor: mode === m ? "transparent" : "#30363d", color: mode === m ? "#0d1117" : "#8b949e" }}>
+              style={{ background: mode === m ? "var(--primary)" : "var(--surface-elevated)", borderColor: mode === m ? "transparent" : "var(--border)", color: mode === m ? "var(--background)" : "var(--muted-foreground)" }}>
               {label}
             </button>
           ))}
@@ -83,8 +83,8 @@ function Pomodoro() {
         {/* Timer circle */}
         <div className="relative size-[200px]">
           <svg viewBox="0 0 160 160" className="size-full -rotate-90">
-            <circle cx="80" cy="80" r="70" fill="none" stroke="#21262d" strokeWidth="6" />
-            <circle cx="80" cy="80" r="70" fill="none" stroke="#58a6ff" strokeWidth="6"
+            <circle cx="80" cy="80" r="70" fill="none" stroke="var(--surface-elevated)" strokeWidth="6" />
+            <circle cx="80" cy="80" r="70" fill="none" stroke="var(--primary)" strokeWidth="6"
               strokeDasharray={circumference} strokeDashoffset={circumference * (1 - pct / 100)}
               strokeLinecap="round" style={{ transition: "stroke-dashoffset 1s linear" }} />
           </svg>
@@ -119,7 +119,7 @@ function Pomodoro() {
               <span className="text-sm text-foreground">{item.label}</span>
               <div className="flex items-center gap-2">
                 <input type="range" min={item.min} max={item.max} value={item.val}
-                  onChange={(e) => item.set(Number(e.target.value))} className="w-24 accent-[#58a6ff]" />
+                  onChange={(e) => item.set(Number(e.target.value))} className="w-24 accent-primary" />
                 <span className="w-8 text-right text-sm font-mono text-primary">{item.val}m</span>
               </div>
             </div>

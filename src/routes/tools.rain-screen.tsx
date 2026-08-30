@@ -76,7 +76,7 @@ function RainScreen() {
   const dateStr = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
   return (
-    <div className="relative min-h-screen overflow-hidden" style={{ background: "#0d1117" }}>
+    <div className="relative min-h-screen overflow-hidden" style={{ background: "var(--background)" }}>
 
       {/* Auto-dismiss close button */}
       <div

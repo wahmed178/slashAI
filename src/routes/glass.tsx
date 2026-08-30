@@ -53,10 +53,10 @@ function GlassPage() {
         </div>
 
         {/* Heading */}
-        <h1 className="text-3xl font-bold tracking-tight text-[#e6edf3] sm:text-4xl">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           SlashAI Glass
         </h1>
-        <p className="mt-3 max-w-md text-base text-[#8b949e]">
+        <p className="mt-3 max-w-md text-base text-muted-foreground">
           More power, same calm.
         </p>
 
@@ -65,7 +65,7 @@ function GlassPage() {
           {BENEFITS.map((b) => (
             <p
               key={b}
-              className="text-sm text-[#8b949e]"
+              className="text-sm text-muted-foreground"
             >
               {b}
             </p>
@@ -75,11 +75,11 @@ function GlassPage() {
         {/* Email form */}
         <div className="mt-10 w-full max-w-sm">
           {submitted ? (
-            <div className="rounded-xl border border-[#3fb950]/30 bg-[#3fb950]/10 p-4">
-              <p className="text-sm font-medium text-[#3fb950]">
+            <div className="rounded-xl border border-green-500/30 bg-green-500/10 p-4">
+              <p className="text-sm font-medium text-green-500">
                 You're on the list. We'll be in touch.
               </p>
-              <p className="mt-1 text-xs text-[#8b949e]">
+              <p className="mt-1 text-xs text-muted-foreground">
                 Stored locally for now — we'll set up real soon.
               </p>
             </div>
@@ -90,14 +90,14 @@ function GlassPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
-                className="flex-1 rounded-lg border border-[#30363d] bg-[#161b22] px-4 py-2.5 text-sm text-[#e6edf3] placeholder:text-[#8b949e]/50 focus:border-[#58a6ff]/50 focus:outline-none focus:ring-1 focus:ring-[#58a6ff]/30"
+                className="flex-1 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:border-primary/50 focus:outline-none focus:ring-1 focus:ring-primary/30"
                 onKeyDown={(e) => { if (e.key === "Enter") handleSubmit(); }}
               />
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={!email.trim() || !email.includes("@")}
-                className="shrink-0 rounded-lg bg-[#58a6ff] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#58a6ff]/90 disabled:opacity-40"
+                className="shrink-0 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary/90 disabled:opacity-40"
               >
                 Join waitlist
               </button>
@@ -106,7 +106,7 @@ function GlassPage() {
         </div>
 
         {/* Price hint */}
-        <p className="mt-6 text-xs text-[#8b949e]/60">
+        <p className="mt-6 text-xs text-muted-foreground/60">
           Planned from ₹299/month · $4/month — early access will be cheaper.
         </p>
       </div>

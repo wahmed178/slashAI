@@ -127,7 +127,7 @@ function NewTabScreen() {
   const saveBookmarks = () => { localStorage.setItem("newtab-bookmarks", JSON.stringify(bookmarks)); setEditMode(false); };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4" style={{ background: "#0d1117" }}>
+    <div className="flex min-h-screen flex-col items-center justify-center px-4" style={{ background: "var(--background)" }}>
 
       {/* Auto-dismiss close button */}
       <div

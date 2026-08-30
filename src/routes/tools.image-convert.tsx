@@ -73,7 +73,7 @@ function ImageConvert() {
             {FORMATS.map((f) => (
               <button key={f.mime} type="button" onClick={() => { setFormat(f.mime); if (file) convert(file, f.mime, quality); }}
                 className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium transition-colors"
-                style={{ background: format === f.mime ? "#58a6ff" : "#21262d", borderColor: format === f.mime ? "transparent" : "#30363d", color: format === f.mime ? "#0d1117" : "#8b949e" }}>
+                style={{ background: format === f.mime ? "var(--primary)" : "var(--surface-elevated)", borderColor: format === f.mime ? "transparent" : "var(--border)", color: format === f.mime ? "var(--background)" : "var(--muted-foreground)" }}>
                 {f.label}
               </button>
             ))}
@@ -83,7 +83,7 @@ function ImageConvert() {
               <label className="flex items-center justify-between text-sm text-foreground"><span>Quality</span><span className="font-mono text-primary">{quality}%</span></label>
               <input type="range" min={10} max={100} value={quality}
                 onChange={(e) => { const q = Number(e.target.value); setQuality(q); if (file) convert(file, format, q); }}
-                className="mt-2 w-full accent-[#58a6ff]" />
+                className="mt-2 w-full accent-primary" />
             </div>
           )}
           {result && (

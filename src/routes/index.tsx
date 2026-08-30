@@ -54,22 +54,22 @@ import { GLOSSARY_TOTAL } from "@/lib/glossary";
 /* ─────────────── Stats Bar ─────────────── */
 function StatsBar() {
   const stats = [
-    { number: "5,635", label: "COMMANDS", color: "#2dd4bf", icon: "📊" },
-    { number: "319", label: "RESOURCES", color: "#58a6ff", icon: "📦" },
+    { number: "5,635", label: "COMMANDS", color: "var(--primary)", icon: "📊" },
+    { number: "319", label: "RESOURCES", color: "var(--primary)", icon: "📦" },
     { number: "25", label: "GENERATORS", color: "#d29922", icon: "⚡" },
     { number: "20", label: "ROADMAPS", color: "#3fb950", icon: "🗺️" },
     { number: "138", label: "GLOSSARY", color: "#a78bfa", icon: "📖" },
   ];
   return (
-    <div className="mt-6 rounded-[10px] border border-[#21262d] bg-[#161b22] px-4 py-4 sm:px-6">
+    <div className="mt-6 rounded-[10px] border border-sidebar-border bg-surface px-4 py-4 sm:px-6">
       <div className="flex items-center justify-between overflow-x-auto scrollbar-none gap-4 sm:gap-6" style={{ minWidth: "min-content" }}>
         {stats.map((stat, i) => (
           <span key={stat.label} className="flex items-center gap-2.5 flex-shrink-0">
-            {i > 0 && <div className="hidden sm:block h-[24px] w-px bg-[#21262d]" />}
+            {i > 0 && <div className="hidden sm:block h-[24px] w-px bg-surface-elevated" />}
             <span className="text-[18px]">{stat.icon}</span>
             <div>
-              <span className="block text-[18px] sm:text-[22px] font-bold text-[#f0f6fc]" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
-              <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.06em] text-[#8b949e]">{stat.label}</span>
+              <span className="block text-[18px] sm:text-[22px] font-bold text-foreground" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
+              <span className="block text-[9px] sm:text-[10px] uppercase tracking-[0.06em] text-muted-foreground">{stat.label}</span>
             </div>
           </span>
         ))}
@@ -155,11 +155,11 @@ function YourWeekDigest() {
 
       </header>
       {allZero ? (
-        <div className="mt-3 rounded-[10px] border border-[#30363d] bg-[#161b22] p-5 text-center">
+        <div className="mt-3 rounded-[10px] border border-border bg-surface p-5 text-center">
           <div className="text-[32px]">⚡</div>
-          <p className="mt-2 text-[15px] font-semibold text-[#e6edf3]">Your stats appear here</p>
-          <p className="mt-1 text-[13px] text-[#8b949e]">Copy a command to start your streak</p>
-          <Link to="/search" className="mt-3 inline-block rounded-[6px] border border-[#30363d] bg-[#21262d] px-5 py-2 text-[13px] text-[#58a6ff] no-underline transition-colors hover:border-[#484f58]">
+          <p className="mt-2 text-[15px] font-semibold text-foreground">Your stats appear here</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">Copy a command to start your streak</p>
+          <Link to="/search" className="mt-3 inline-block rounded-[6px] border border-border bg-surface-elevated px-5 py-2 text-[13px] text-primary no-underline transition-colors hover:border-border">
             Browse commands →
           </Link>
         </div>
@@ -234,10 +234,10 @@ function Section({
     <section className="mt-12 animate-fade-in-up sm:mt-12">
       <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
         <div className="flex min-w-0 items-center gap-2.5">
-          <span className="inline-block h-[18px] w-[3px] shrink-0 rounded-[2px] bg-[#58a6ff]" />
+          <span className="inline-block h-[18px] w-[3px] shrink-0 rounded-[2px] bg-primary" />
           <div className="min-w-0">
-            <h2 className="truncate text-lg font-semibold tracking-tight text-[#e6edf3]">{title}</h2>
-            {hint && <p className="mt-0.5 truncate text-xs text-[#8b949e]">{hint}</p>}
+            <h2 className="truncate text-lg font-semibold tracking-tight text-foreground">{title}</h2>
+            {hint && <p className="mt-0.5 truncate text-xs text-muted-foreground">{hint}</p>}
           </div>
         </div>
         {action}
@@ -321,39 +321,39 @@ function HomePage() {
       <LiveTicker />
 
       {/* ─── Hero Section ─── */}
-      <section className="relative overflow-hidden rounded-2xl bg-[#161b22] border border-[#21262d] p-6 pt-8 sm:p-8">
+      <section className="relative overflow-hidden rounded-2xl bg-surface border border-sidebar-border p-6 pt-8 sm:p-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           {/* Left: text */}
           <div className="flex-1">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-[#2dd4bf]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-primary">
               YOUR AI COMMAND VAULT — FREE FOREVER
             </span>
-            <h1 className="mt-4 text-[32px] font-bold leading-[1.15] tracking-tight text-[#f0f6fc] sm:text-[36px]">
+            <h1 className="mt-4 text-[32px] font-bold leading-[1.15] tracking-tight text-foreground sm:text-[36px]">
               Find the right AI command
               <br />
-              <span className="text-[#2dd4bf]">in seconds</span>
+              <span className="text-primary">in seconds</span>
             </h1>
-            <p className="mt-3 text-[14px] text-[#8b949e]">
+            <p className="mt-3 text-[14px] text-muted-foreground">
               {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · Free forever
             </p>
 
             {/* Search bar */}
             <form
-              className="mt-5 flex h-[48px] max-w-[460px] items-center gap-3 rounded-[8px] border border-[#21262d] bg-[#161b22] px-4 transition-colors focus-within:border-[#2dd4bf]"
+              className="mt-5 flex h-[48px] max-w-[460px] items-center gap-3 rounded-[8px] border border-sidebar-border bg-surface px-4 transition-colors focus-within:border-primary"
               onSubmit={(e) => {
                 e.preventDefault();
                 const q = new FormData(e.currentTarget).get("q") as string;
                 if (q?.trim()) window.location.href = `/search?q=${encodeURIComponent(q.trim())}`;
               }}
             >
-              <SearchIcon className="size-[16px] shrink-0 text-[#8b949e]" aria-hidden />
+              <SearchIcon className="size-[16px] shrink-0 text-muted-foreground" aria-hidden />
               <input
                 name="q"
                 type="text"
                 placeholder="Search commands, tools, topics..."
-                className="flex-1 bg-transparent text-[14px] text-[#f0f6fc] outline-none placeholder:text-[#8b949e]"
+                className="flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground"
               />
-              <span className="flex h-5 items-center rounded border border-[#30363d] bg-[#21262d] px-1.5 font-mono text-[10px] text-[#8b949e]">
+              <span className="flex h-5 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] text-muted-foreground">
                 ⌘K
               </span>
             </form>
@@ -370,7 +370,7 @@ function HomePage() {
                   key={chip.label}
                   to="/search"
                   search={{ q: chip.label.toLowerCase() }}
-                  className="flex items-center gap-1.5 rounded-full border border-[#21262d] bg-[#161b22] px-3.5 py-1.5 text-[12px] text-[#8b949e] transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-[#f0f6fc]"
+                  className="flex items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-3.5 py-1.5 text-[12px] text-muted-foreground transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-foreground"
                 >
                   <span>{chip.emoji}</span>
                   {chip.label}
@@ -378,7 +378,7 @@ function HomePage() {
               ))}
               <button
                 type="button"
-                className="flex items-center gap-1 rounded-full border border-[#21262d] bg-[#161b22] px-3.5 py-1.5 text-[12px] text-[#8b949e] transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-[#f0f6fc]"
+                className="flex items-center gap-1 rounded-full border border-sidebar-border bg-surface px-3.5 py-1.5 text-[12px] text-muted-foreground transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-foreground"
               >
                 More ↓
               </button>
@@ -424,7 +424,7 @@ function HomePage() {
               key={intent.label}
               to="/search"
               search={{ q: intent.q }}
-              className="flex min-h-[44px] items-center gap-1.5 rounded-[20px] border border-[#30363d] bg-[#161b22] px-4 py-2.5 text-[13px] text-[#e6edf3] transition-all duration-150 hover:border-[#484f58] hover:bg-[#21262d]"
+              className="flex min-h-[44px] items-center gap-1.5 rounded-[20px] border border-border bg-surface px-4 py-2.5 text-[13px] text-foreground transition-all duration-150 hover:border-border hover:bg-surface-elevated"
             >
               <span className="text-[14px]" aria-hidden>{intent.emoji}</span>
               {intent.label}
@@ -448,11 +448,11 @@ function HomePage() {
           <Link
             key={to}
             to={to as string}
-            className="group flex flex-col items-center justify-center rounded-[10px] border border-[#30363d] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+            className="group flex flex-col items-center justify-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-border"
           >
             <span className="text-[26px]" aria-hidden>{emoji}</span>
-            <span className="mt-2 block text-[13px] font-semibold text-[#e6edf3] group-hover:text-[#58a6ff]">{label}</span>
-            <span className="mt-0.5 block text-[11px] text-[#8b949e]">{sub}</span>
+            <span className="mt-2 block text-[13px] font-semibold text-foreground group-hover:text-primary">{label}</span>
+            <span className="mt-0.5 block text-[11px] text-muted-foreground">{sub}</span>
           </Link>
         ))}
       </div>
@@ -461,7 +461,7 @@ function HomePage() {
 
       {/* ─── Explore more ─── */}
       <section className="mt-10">
-        <h2 className="text-[22px] font-semibold text-[#f0f6fc]">Explore more</h2>
+        <h2 className="text-[22px] font-semibold text-foreground">Explore more</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available", bg: "linear-gradient(135deg, #1a1f2e, #0f1929)" },
@@ -472,7 +472,7 @@ function HomePage() {
             <Link
               key={card.to}
               to={card.to}
-              className="group relative flex flex-col justify-end rounded-[12px] border border-[#21262d] p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[140px]"
+              className="group relative flex flex-col justify-end rounded-[12px] border border-sidebar-border p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-border min-h-[140px]"
               style={{ background: card.bg }}
             >
               {card.badge && (
@@ -481,8 +481,8 @@ function HomePage() {
                 </span>
               )}
               <span className="text-[36px]">{card.emoji}</span>
-              <span className="mt-2 block text-[16px] font-bold text-[#f0f6fc]">{card.title}</span>
-              <span className="mt-0.5 block text-[12px] text-[#8b949e]">{card.desc}</span>
+              <span className="mt-2 block text-[16px] font-bold text-foreground">{card.title}</span>
+              <span className="mt-0.5 block text-[12px] text-muted-foreground">{card.desc}</span>
             </Link>
           ))}
         </div>
@@ -603,19 +603,19 @@ function HomePage() {
                 key={c.id}
                 to="/collections/$id"
                 params={{ id: c.id }}
-                className="flex shrink-0 flex-col items-center rounded-[12px] bg-[#161b22] p-4 text-center transition-all duration-150 hover:-translate-y-0.5 w-[150px] sm:w-auto"
+                className="flex shrink-0 flex-col items-center rounded-[12px] bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 w-[150px] sm:w-auto"
                 style={{ border: `1px solid ${borderColors[c.title] || "#21262d"}` }}
               >
                 <span className="text-[32px]">{iconMap[c.title] || c.icon}</span>
-                <span className="mt-2 block text-[13px] font-semibold text-[#f0f6fc]">{c.title}</span>
-                <span className="mt-0.5 block text-[11px] text-[#8b949e]">{c.count} commands</span>
+                <span className="mt-2 block text-[13px] font-semibold text-foreground">{c.title}</span>
+                <span className="mt-0.5 block text-[11px] text-muted-foreground">{c.count} commands</span>
               </Link>
             );
           })}
         </div>
         <Link
           to="/tools"
-          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#58a6ff] transition-colors hover:text-[#79c0ff]"
+          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80"
         >
           See all 22 tools <ArrowRight className="size-4" aria-hidden />
         </Link>
@@ -633,42 +633,42 @@ function HomePage() {
             <Link
               key={hub.to}
               to={hub.to}
-              className="group flex items-center gap-3 rounded-[10px] border border-[#30363d] bg-[#161b22] p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+              className="group flex items-center gap-3 rounded-[10px] border border-border bg-surface p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-border"
             >
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-[#21262d] text-[22px]" aria-hidden>{hub.emoji}</span>
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[22px]" aria-hidden>{hub.emoji}</span>
               <span className="min-w-0 flex-1">
-                <span className="block text-[13px] font-semibold text-[#e6edf3]">{hub.title}</span>
-                <span className="block text-[11px] text-[#8b949e] truncate">{hub.desc}</span>
+                <span className="block text-[13px] font-semibold text-foreground">{hub.title}</span>
+                <span className="block text-[11px] text-muted-foreground truncate">{hub.desc}</span>
               </span>
-              <ArrowRight className="size-4 shrink-0 text-[#8b949e] transition-transform duration-150 group-hover:translate-x-1 group-hover:text-[#e6edf3]" aria-hidden />
+              <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-150 group-hover:translate-x-1 group-hover:text-foreground" aria-hidden />
             </Link>
           ))}
         </div>
         <Link
           to="/hub"
-          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-[#58a6ff] transition-colors hover:text-[#79c0ff]"
+          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80"
         >
           See all hubs <ArrowRight className="size-4" aria-hidden />
         </Link>
       </Section>
 
       {/* ─── Stay in the loop ─── */}
-      <section className="mt-10 overflow-hidden rounded-[12px] border border-[#21262d] bg-[#161b22]">
+      <section className="mt-10 overflow-hidden rounded-[12px] border border-sidebar-border bg-surface">
         <div className="flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div className="flex-1">
-            <h2 className="text-[24px] font-bold text-[#f0f6fc]">Stay in the loop</h2>
-            <p className="mt-2 text-[14px] text-[#8b949e]">
+            <h2 className="text-[24px] font-bold text-foreground">Stay in the loop</h2>
+            <p className="mt-2 text-[14px] text-muted-foreground">
               Get the best AI commands, tools & resources straight to your inbox.
             </p>
             <div className="mt-4 flex gap-2">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex h-10 flex-1 rounded-[6px] border border-[#21262d] bg-[#0a0a0f] px-3 text-[13px] text-[#f0f6fc] outline-none placeholder:text-[#8b949e] focus:border-[#2dd4bf]"
+                className="flex h-10 flex-1 rounded-[6px] border border-sidebar-border bg-background px-3 text-[13px] text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
               />
               <button
                 type="button"
-                className="h-10 rounded-[6px] bg-[#2dd4bf] px-5 text-[13px] font-bold text-[#0a0a0f] transition-colors hover:bg-[#25b8a6]"
+                className="h-10 rounded-[6px] bg-primary px-5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90"
               >
                 Subscribe
               </button>
@@ -681,18 +681,18 @@ function HomePage() {
       </section>
 
       {/* ─── Footer ─── */}
-      <footer className="mt-12 border-t border-[#21262d] py-5">
+      <footer className="mt-12 border-t border-sidebar-border py-5">
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <p className="text-[12px] text-[#8b949e]">© 2024 SlashAI. All rights reserved.</p>
+          <p className="text-[12px] text-muted-foreground">© 2024 SlashAI. All rights reserved.</p>
           <div className="flex gap-4">
             {["About", "Privacy", "Terms", "Contact"].map((link) => (
-              <Link key={link} to="/about" className="text-[12px] text-[#8b949e] hover:text-[#f0f6fc] transition-colors">
+              <Link key={link} to="/about" className="text-[12px] text-muted-foreground hover:text-foreground transition-colors">
                 {link}
               </Link>
             ))}
           </div>
           <div className="flex gap-3">
-            <a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener" className="text-[18px] text-[#8b949e] hover:text-[#f0f6fc] transition-colors">
+            <a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener" className="text-[18px] text-muted-foreground hover:text-foreground transition-colors">
               🐙
             </a>
           </div>

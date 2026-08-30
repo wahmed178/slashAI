@@ -97,7 +97,7 @@ function ImageCompress() {
                 setQuality(q);
                 if (file) compress(file, q);
               }}
-              className="mt-2 w-full accent-[#58a6ff]"
+              className="mt-2 w-full accent-primary"
             />
           </div>
 

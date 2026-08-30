@@ -37,7 +37,7 @@ function SipCalculator() {
               <span className="font-mono font-medium text-primary">{formatINR(monthly)}</span>
             </label>
             <input type="range" min={500} max={100000} step={500} value={monthly}
-              onChange={(e) => setMonthly(Number(e.target.value))} className="mt-2 w-full accent-[#58a6ff]" />
+              onChange={(e) => setMonthly(Number(e.target.value))} className="mt-2 w-full accent-primary" />
           </div>
           <div>
             <label className="flex items-center justify-between text-sm text-foreground">
@@ -45,7 +45,7 @@ function SipCalculator() {
               <span className="font-mono font-medium text-primary">{rate}%</span>
             </label>
             <input type="range" min={1} max={30} value={rate}
-              onChange={(e) => setRate(Number(e.target.value))} className="mt-2 w-full accent-[#58a6ff]" />
+              onChange={(e) => setRate(Number(e.target.value))} className="mt-2 w-full accent-primary" />
           </div>
           <div>
             <label className="flex items-center justify-between text-sm text-foreground">
@@ -53,7 +53,7 @@ function SipCalculator() {
               <span className="font-mono font-medium text-primary">{years} years</span>
             </label>
             <input type="range" min={1} max={40} value={years}
-              onChange={(e) => setYears(Number(e.target.value))} className="mt-2 w-full accent-[#58a6ff]" />
+              onChange={(e) => setYears(Number(e.target.value))} className="mt-2 w-full accent-primary" />
           </div>
         </div>
 
@@ -62,8 +62,8 @@ function SipCalculator() {
           {/* Donut chart */}
           <div className="relative mx-auto size-40">
             <svg viewBox="0 0 120 120" className="size-full -rotate-90">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#21262d" strokeWidth="14" />
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#58a6ff" strokeWidth="14"
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--surface-elevated)" strokeWidth="14" />
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--primary)" strokeWidth="14"
                 strokeDasharray={`${invPct * 3.14} ${(100 - invPct) * 3.14}`} strokeLinecap="round" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">

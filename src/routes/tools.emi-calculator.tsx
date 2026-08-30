@@ -32,29 +32,29 @@ function EmiCalculator() {
               <span>Loan amount</span><span className="font-mono font-medium text-primary">{formatINR(principal)}</span>
             </label>
             <input type="range" min={10000} max={10000000} step={10000} value={principal}
-              onChange={(e) => setPrincipal(Number(e.target.value))} className="mt-2 w-full accent-[#58a6ff]" />
+              onChange={(e) => setPrincipal(Number(e.target.value))} className="mt-2 w-full accent-primary" />
           </div>
           <div>
             <label className="flex items-center justify-between text-sm text-foreground">
               <span>Annual interest rate</span><span className="font-mono font-medium text-primary">{rate}%</span>
             </label>
             <input type="range" min={1} max={24} step={0.5} value={rate}
-              onChange={(e) => setRate(Number(e.target.value))} className="mt-2 w-full accent-[#58a6ff]" />
+              onChange={(e) => setRate(Number(e.target.value))} className="mt-2 w-full accent-primary" />
           </div>
           <div>
             <label className="flex items-center justify-between text-sm text-foreground">
               <span>Loan tenure</span><span className="font-mono font-medium text-primary">{tenure} years</span>
             </label>
             <input type="range" min={1} max={30} value={tenure}
-              onChange={(e) => setTenure(Number(e.target.value))} className="mt-2 w-full accent-[#58a6ff]" />
+              onChange={(e) => setTenure(Number(e.target.value))} className="mt-2 w-full accent-primary" />
           </div>
         </div>
 
         <div className="rounded-xl border border-border bg-surface p-5 text-center">
           <div className="relative mx-auto size-40">
             <svg viewBox="0 0 120 120" className="size-full -rotate-90">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#21262d" strokeWidth="14" />
-              <circle cx="60" cy="60" r="50" fill="none" stroke="#58a6ff" strokeWidth="14"
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--surface-elevated)" strokeWidth="14" />
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--primary)" strokeWidth="14"
                 strokeDasharray={`${principalPct * 3.14} ${(100 - principalPct) * 3.14}`} strokeLinecap="round" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">

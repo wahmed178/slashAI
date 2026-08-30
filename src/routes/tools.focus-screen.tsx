@@ -58,7 +58,7 @@ function FocusScreen() {
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #0d1117, #0a1628, #1a0d28, #0d1117)", backgroundSize: "400% 400%", animation: "gradientShift 60s ease infinite" }}>
+      style={{ background: "linear-gradient(135deg, var(--background), rgba(10,22,40,1), rgba(26,13,40,1), var(--background))", backgroundSize: "400% 400%", animation: "gradientShift 60s ease infinite" }}>
       <style>{`@keyframes gradientShift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }`}</style>
 
       <p className="text-6xl sm:text-8xl font-bold font-mono text-foreground tracking-tight">{timeStr}</p>

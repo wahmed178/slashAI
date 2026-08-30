@@ -96,7 +96,7 @@ export function ResourceCardEnhanced({
       {/* LEFT: favicon block */}
       <div
         className="flex size-10 shrink-0 items-center justify-center rounded-lg text-[18px] font-bold"
-        style={{ background: "#21262d", color: "#8b949e", fontFamily: "var(--font-mono)" }}
+        style={{ background: "var(--surface-elevated)", color: "var(--muted-foreground)", fontFamily: "var(--font-mono)" }}
       >
         {domain ? (
           <img
@@ -123,17 +123,17 @@ export function ResourceCardEnhanced({
 
       {/* CENTER: text column */}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[14px] font-semibold text-[#e6edf3]">
+        <p className="truncate text-[14px] font-semibold text-foreground">
           {resource.name}
         </p>
         {!compact && (
-          <p className="mt-0.5 line-clamp-2 text-[13px] text-[#8b949e]">
+          <p className="mt-0.5 line-clamp-2 text-[13px] text-muted-foreground">
             {resource.description}
           </p>
         )}
         {/* Tag row */}
         <div className="mt-1.5 flex items-center gap-1.5">
-          <span className="inline-flex items-center rounded border px-1.5 py-0.5 text-[10px]" style={{ background: "#21262d", borderColor: "#30363d", color: "#8b949e" }}>
+          <span className="inline-flex items-center rounded border px-1.5 py-0.5 text-[10px]" style={{ background: "var(--surface-elevated)", borderColor: "var(--border)", color: "var(--muted-foreground)" }}>
             {resource.category}
           </span>
           <span
@@ -142,7 +142,7 @@ export function ResourceCardEnhanced({
           >
             {resource.pricing}
           </span>
-          <span className="text-[10px] text-[#8b949e]">
+          <span className="text-[10px] text-muted-foreground">
             Last checked {resource.lastVerified}
           </span>
         </div>
@@ -157,17 +157,17 @@ export function ResourceCardEnhanced({
           onClick={(e) => e.stopPropagation()}
           className="flex h-8 items-center gap-1 rounded-md border px-2.5 text-[10px] font-medium transition-all duration-150"
           style={{
-            background: "#21262d",
-            borderColor: "#30363d",
-            color: "#58a6ff",
+            background: "var(--surface-elevated)",
+            borderColor: "var(--border)",
+            color: "var(--primary)",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = "rgba(88,166,255,0.08)";
-            e.currentTarget.style.borderColor = "#58a6ff";
+            e.currentTarget.style.borderColor = "var(--primary)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = "#21262d";
-            e.currentTarget.style.borderColor = "#30363d";
+            e.currentTarget.style.background = "var(--surface-elevated)";
+            e.currentTarget.style.borderColor = "var(--border)";
           }}
         >
           Visit <ExternalLink className="size-3" />
@@ -176,10 +176,10 @@ export function ResourceCardEnhanced({
           type="button"
           onClick={toggleSave}
           className="rounded p-1 transition-colors duration-150"
-          style={{ color: isSaved ? "#58a6ff" : "#8b949e" }}
+          style={{ color: isSaved ? "var(--primary)" : "var(--muted-foreground)" }}
           aria-label={isSaved ? "Unsave" : "Save"}
         >
-          <Bookmark className="size-4" fill={isSaved ? "#58a6ff" : "none"} />
+          <Bookmark className="size-4" fill={isSaved ? "var(--primary)" : "none"} />
         </button>
       </div>
     </Link>

@@ -391,7 +391,7 @@ function ThemeToggleButton() {
       type="button"
       onClick={toggle}
       aria-label={`Switch to ${isLight ? 'dark' : 'light'} mode`}
-      className="hidden md:flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-[#21262d] hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      className="hidden md:flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
       {isLight ? <Moon className="size-[18px]" /> : <Sun className="size-[18px]" />}
     </button>
@@ -405,7 +405,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   const currentIcon = ICONS.find((i) => i.id === settings.appIcon) ?? ICONS[0]!;
 
   return (
-    <div className="flex min-h-screen w-full" style={{ background: "#0a0a0f" }}>
+    <div className="flex min-h-screen w-full" style={{ background: "var(--background)" }}>
       {/* desktop sidebar */}
       <DesktopSidebar />
 
@@ -423,7 +423,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-[#21262d] bg-[rgba(10,10,15,0.8)] backdrop-blur-[10px]">
+        <header className="sticky top-0 z-30 border-b border-sidebar-border bg-[rgba(10,10,15,0.8)] backdrop-blur-[10px]">
           <div className="mx-auto flex h-[52px] items-center gap-3 px-4 md:px-6">
             {/* Mobile: hamburger */}
             <Button
@@ -439,21 +439,21 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             {/* Mobile: logo */}
             <Link to="/" className="md:hidden flex items-center gap-2">
               <span className="text-[18px]">⚡</span>
-              <span className="text-[16px] font-bold text-[#f0f6fc]">SlashAI</span>
+              <span className="text-[16px] font-bold text-foreground">SlashAI</span>
             </Link>
 
             {/* Desktop: search bar */}
             <div className="hidden md:flex flex-1 justify-center">
-              <div className="flex h-[36px] w-[320px] items-center gap-2 rounded-[6px] border border-[#21262d] bg-[#161b22] px-3 transition-colors focus-within:border-[#2dd4bf]">
-                <SearchIcon className="size-[14px] shrink-0 text-[#8b949e]" />
+              <div className="flex h-[36px] w-[320px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 transition-colors focus-within:border-primary">
+                <SearchIcon className="size-[14px] shrink-0 text-muted-foreground" />
                 <input
                   type="text"
                   placeholder="Search 5,635 commands..."
-                  className="flex-1 bg-transparent text-[13px] text-[#f0f6fc] outline-none placeholder:text-[#8b949e]"
+                  className="flex-1 bg-transparent text-[13px] text-foreground outline-none placeholder:text-muted-foreground"
                   onFocus={() => window.location.href = '/search'}
                   readOnly
                 />
-                <span className="flex h-5 items-center rounded border border-[#30363d] bg-[#21262d] px-1.5 font-mono text-[10px] text-[#8b949e]">
+                <span className="flex h-5 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] text-muted-foreground">
                   ⌘K
                 </span>
               </div>
@@ -462,14 +462,14 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             {/* Right side */}
             <div className="ml-auto flex items-center gap-3">
               <div className="hidden md:flex items-center gap-2">
-                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-[#8b949e] transition-colors hover:bg-[#1c2128] hover:text-[#f0f6fc]">
+                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground">
                   <span className="text-[18px]">🔔</span>
                 </button>
-                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-[#8b949e] transition-colors hover:bg-[#1c2128] hover:text-[#f0f6fc]">
+                <button type="button" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground">
                   <Bookmark className="size-[18px]" />
                 </button>
               </div>
-              <div className="flex size-8 items-center justify-center rounded-full bg-[#2dd4bf] text-[14px] font-bold text-[#0a0a0f]">
+              <div className="flex size-8 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background">
                 S
               </div>
             </div>
@@ -486,7 +486,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
       {/* mobile bottom navigation — five essential destinations */}
       <nav
         aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-[#21262d] bg-[rgba(10,10,15,0.97)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-sidebar-border bg-[rgba(10,10,15,0.97)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
         style={{ height: 'calc(56px + env(safe-area-inset-bottom))' }}
       >
         {PRIMARY.map((item) => {
@@ -505,12 +505,12 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
               key={item.to}
               to={item.to}
               className="ripple-press flex min-h-[56px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium transition-colors"
-              style={{ color: active ? '#58a6ff' : '#8b949e' }}
+              style={{ color: active ? 'var(--primary)' : 'var(--muted-foreground)' }}
             >
               {/* Active dot indicator */}
               <div className="relative flex flex-col items-center">
                 {active && (
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-[#58a6ff]" />
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-primary" />
                 )}
                 <item.icon
                   className="size-[22px]"

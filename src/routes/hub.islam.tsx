@@ -198,7 +198,7 @@ function IslamResourceCard({ resource }: { resource: IslamResource }) {
       rel="noopener noreferrer"
       className="resource-card-enhanced group"
     >
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg text-[18px] font-bold" style={{ background: "#21262d", color: "#8b949e", fontFamily: "var(--font-mono)" }}>
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg text-[18px] font-bold" style={{ background: "var(--surface-elevated)", color: "var(--muted-foreground)", fontFamily: "var(--font-mono)" }}>
         {domain ? (
           <img src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`} alt="" className="size-6 rounded" loading="lazy" onError={(e) => { e.currentTarget.style.display = "none"; const p = e.currentTarget.parentElement; if (p && !p.querySelector(".fallback-letter")) { const s = document.createElement("span"); s.className = "fallback-letter"; s.textContent = resource.name.charAt(0).toUpperCase(); p.appendChild(s); } }} />
         ) : (
@@ -206,16 +206,16 @@ function IslamResourceCard({ resource }: { resource: IslamResource }) {
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[14px] font-semibold text-[#e6edf3]">{resource.name}</p>
-        <p className="mt-0.5 line-clamp-2 text-[13px] text-[#8b949e]">{resource.description}</p>
+        <p className="truncate text-[14px] font-semibold text-foreground">{resource.name}</p>
+        <p className="mt-0.5 line-clamp-2 text-[13px] text-muted-foreground">{resource.description}</p>
         <div className="mt-1.5 flex items-center gap-1.5">
-          <span className="inline-flex items-center rounded border px-1.5 py-0.5 text-[10px]" style={{ background: "#21262d", borderColor: "#30363d", color: "#8b949e" }}>{resource.category}</span>
+          <span className="inline-flex items-center rounded border px-1.5 py-0.5 text-[10px]" style={{ background: "var(--surface-elevated)", borderColor: "var(--border)", color: "var(--muted-foreground)" }}>{resource.category}</span>
           <span className="inline-flex items-center rounded border px-1.5 py-0.5 text-[10px]" style={{ background: ps.bg, borderColor: ps.border, color: ps.text }}>{resource.pricing}</span>
-          <span className="text-[10px] text-[#8b949e]">Last checked {resource.lastVerified}</span>
+          <span className="text-[10px] text-muted-foreground">Last checked {resource.lastVerified}</span>
         </div>
       </div>
       <div className="flex shrink-0 flex-col items-center gap-1.5">
-        <span className="flex h-8 items-center gap-1 rounded-md border px-2.5 text-[10px] font-medium transition-all duration-150" style={{ background: "#21262d", borderColor: "#30363d", color: "#58a6ff" }}>Visit →</span>
+        <span className="flex h-8 items-center gap-1 rounded-md border px-2.5 text-[10px] font-medium transition-all duration-150" style={{ background: "var(--surface-elevated)", borderColor: "var(--border)", color: "var(--primary)" }}>Visit →</span>
         <button type="button" onClick={toggleSave} className="rounded p-1 transition-colors duration-150" style={{ color: isSaved ? "#58a6ff" : "#8b949e" }} aria-label={isSaved ? "Unsave" : "Save"}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill={isSaved ? "#58a6ff" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
         </button>
@@ -312,7 +312,7 @@ function LiveWidgetBar() {
     return (
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="rounded-[10px] border border-[#30363d] bg-[#161b22] p-4">
+          <div key={i} className="rounded-[10px] border border-border bg-surface p-4">
             <div className="h-3 w-1/2 rounded skeleton-block" />
             <div className="mt-3 h-5 w-3/4 rounded skeleton-block" />
             <div className="mt-2 h-3 w-full rounded skeleton-block" />
@@ -325,27 +325,27 @@ function LiveWidgetBar() {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
       {/* Prayer Times Widget */}
-      <div className="rounded-[10px] border border-[#30363d] bg-[#161b22] p-4">
-        <p className="text-[11px] uppercase tracking-wide text-[#8b949e]">Next Prayer • {city}</p>
+      <div className="rounded-[10px] border border-border bg-surface p-4">
+        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Next Prayer • {city}</p>
         {nextPrayer ? (
-          <p className="mt-1.5 text-[20px] font-bold text-[#e6edf3]">{nextPrayer.name} <span className="text-[14px] font-normal text-[#8b949e]">{nextPrayer.time}</span></p>
+          <p className="mt-1.5 text-[20px] font-bold text-foreground">{nextPrayer.name} <span className="text-[14px] font-normal text-muted-foreground">{nextPrayer.time}</span></p>
         ) : (
-          <p className="mt-1.5 text-[14px] text-[#8b949e]">
-            <Link to="/live" className="text-[#58a6ff] hover:underline">Set your city on Live page →</Link>
+          <p className="mt-1.5 text-[14px] text-muted-foreground">
+            <Link to="/live" className="text-primary hover:underline">Set your city on Live page →</Link>
           </p>
         )}
-        <div className="mt-2 flex gap-2 text-[11px] text-[#8b949e]">
+        <div className="mt-2 flex gap-2 text-[11px] text-muted-foreground">
           {prayer && ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"].map((p) => (
-            <span key={p} className={nextPrayer?.name === p ? "font-semibold text-[#58a6ff]" : ""}>{p}: {prayer[p.toLowerCase() as keyof PrayerData]}</span>
+            <span key={p} className={nextPrayer?.name === p ? "font-semibold text-primary" : ""}>{p}: {prayer[p.toLowerCase() as keyof PrayerData]}</span>
           ))}
         </div>
       </div>
 
       {/* Hijri Date Widget */}
-      <div className="rounded-[10px] border border-[#30363d] bg-[#161b22] p-4">
-        <p className="text-[11px] uppercase tracking-wide text-[#8b949e]">Hijri Date</p>
+      <div className="rounded-[10px] border border-border bg-surface p-4">
+        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Hijri Date</p>
         {hijri?.data?.hijri ? (
-          <p className="mt-1.5 text-[20px] font-bold text-[#e6edf3]">
+          <p className="mt-1.5 text-[20px] font-bold text-foreground">
             {hijri.data.hijri.day} {hijri.data.hijri.month.en} {hijri.data.hijri.year} AH
           </p>
         ) : (
@@ -354,13 +354,13 @@ function LiveWidgetBar() {
       </div>
 
       {/* Quran Verse of the Day Widget */}
-      <div className="rounded-[10px] border border-[#30363d] bg-[#161b22] p-4">
-        <p className="text-[11px] uppercase tracking-wide text-[#8b949e]">Verse of the Day</p>
+      <div className="rounded-[10px] border border-border bg-surface p-4">
+        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Verse of the Day</p>
         {verse ? (
           <>
-            <p className="mt-1.5 text-[18px] leading-relaxed text-[#e6edf3]" dir="rtl" style={{ fontFamily: "serif" }}>{verse.arabic}</p>
-            <p className="mt-1.5 line-clamp-2 text-[13px] text-[#8b949e]">{verse.english}</p>
-            <p className="mt-1 text-[11px] text-[#8b949e]">{verse.ref}</p>
+            <p className="mt-1.5 text-[18px] leading-relaxed text-foreground" dir="rtl" style={{ fontFamily: "serif" }}>{verse.arabic}</p>
+            <p className="mt-1.5 line-clamp-2 text-[13px] text-muted-foreground">{verse.english}</p>
+            <p className="mt-1 text-[11px] text-muted-foreground">{verse.ref}</p>
           </>
         ) : (
           <div className="mt-3 space-y-2">

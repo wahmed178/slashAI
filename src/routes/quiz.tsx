@@ -664,9 +664,9 @@ function CategoryPicker({
             onClick={() => setDifficulty(d)}
             className="min-h-[40px] flex-1 rounded-lg border px-3 py-2 text-sm font-medium capitalize transition-colors"
             style={{
-              background: difficulty === d ? "#58a6ff" : "#21262d",
-              borderColor: difficulty === d ? "transparent" : "#30363d",
-              color: difficulty === d ? "#0d1117" : "#8b949e",
+              background: difficulty === d ? "var(--primary)" : "var(--surface-elevated)",
+              borderColor: difficulty === d ? "transparent" : "var(--border)",
+              color: difficulty === d ? "var(--background)" : "var(--muted-foreground)",
             }}
           >
             {d}
@@ -688,7 +688,7 @@ function CategoryPicker({
               onClick={() => onSelect(cat.id, cat.name)}
               className="group relative rounded-[10px] border bg-surface p-4 text-left transition-all duration-150 hover:-translate-y-0.5"
               style={{
-                borderColor: completed ? "rgba(63,185,80,0.3)" : "#30363d",
+                borderColor: completed ? "rgba(63,185,80,0.3)" : "var(--border)",
               }}
             >
               <div className="flex items-start justify-between">
@@ -765,7 +765,7 @@ function QuizInProgress({
           {/* Timer circle */}
           <div className="relative size-[50px]">
             <svg className="size-full -rotate-90" viewBox="0 0 60 60">
-              <circle cx="30" cy="30" r="26" fill="none" stroke="#21262d" strokeWidth="3" />
+              <circle cx="30" cy="30" r="26" fill="none" stroke="var(--surface-elevated)" strokeWidth="3" />
               <circle
                 cx="30" cy="30" r="26" fill="none"
                 stroke={timerColor}
@@ -810,7 +810,7 @@ function QuizInProgress({
             className="shrink-0 rounded px-2 py-0.5 text-[10px] font-medium capitalize"
             style={{
               background: q.difficulty === "easy" ? "rgba(63,185,80,0.1)" : q.difficulty === "hard" ? "rgba(248,81,73,0.1)" : "rgba(88,166,255,0.1)",
-              color: q.difficulty === "easy" ? "#3fb950" : q.difficulty === "hard" ? "#f85149" : "#58a6ff",
+              color: q.difficulty === "easy" ? "#3fb950" : q.difficulty === "hard" ? "#f85149" : "var(--primary)",
             }}
           >
             {q.difficulty}
@@ -825,9 +825,9 @@ function QuizInProgress({
             const showCorrect = selectedAnswer !== null && isCorrectAnswer;
             const showWrong = selectedAnswer !== null && isSelected && !isCorrectAnswer;
 
-            let bg = "#21262d";
-            let borderColor = "#30363d";
-            let textColor = "#e6edf3";
+            let bg = "var(--surface-elevated)";
+            let borderColor = "var(--border)";
+            let textColor = "var(--foreground)";
 
             if (showCorrect) {
               bg = "rgba(63,185,80,0.15)";
@@ -911,8 +911,8 @@ function ResultsScreen({
   let color: string;
   if (pct >= 90) { emoji = "\u{1F3C6}"; msg = "Perfect!"; color = "#d29922"; }
   else if (pct >= 70) { emoji = "\u{1F389}"; msg = "Great job!"; color = "#3fb950"; }
-  else if (pct >= 50) { emoji = "\u{1F4AA}"; msg = "Good try!"; color = "#58a6ff"; }
-  else { emoji = "\u{1F4DA}"; msg = "Keep learning!"; color = "#8b949e"; }
+  else if (pct >= 50) { emoji = "\u{1F4AA}"; msg = "Good try!"; color = "var(--primary)"; }
+  else { emoji = "\u{1F4DA}"; msg = "Keep learning!"; color = "var(--muted-foreground)"; }
 
   const circumference = 2 * Math.PI * 52;
   const pctOffset = circumference * (1 - pct / 100);
@@ -922,7 +922,7 @@ function ResultsScreen({
       {/* Score circle */}
       <div className="relative size-[120px]">
         <svg className="size-full -rotate-90" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="52" fill="none" stroke="#21262d" strokeWidth="6" />
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--surface-elevated)" strokeWidth="6" />
           <circle
             cx="60" cy="60" r="52" fill="none"
             stroke={color}

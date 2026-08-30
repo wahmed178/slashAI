@@ -1,6 +1,19 @@
 {
-  "version": "2.13.0",
+  "version": "2.14.0",
   "entries": [
+    {
+      "version": "2.14.0",
+      "date": "2026-08-30",
+      "changes": [
+        "Global visual redesign: near-black navy background with electric cyan primary accent",
+        "All hard-coded hex colors replaced with semantic CSS custom properties",
+        "Dark theme refined: cooler background, darker sidebar, subtle ambient radial glow",
+        "Consistent design system across all 33+ pages and components",
+        "Sidebar, cards, inputs, buttons, toggles all use unified token system",
+        "Light and AMOLED themes preserved with semantic overrides",
+        "Improved contrast and readability with refined oklch color values"
+      ]
+    },
     {
       "version": "2.13.0",
       "date": "2026-08-30",

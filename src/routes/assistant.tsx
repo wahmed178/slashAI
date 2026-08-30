@@ -203,8 +203,8 @@ const STARTER_PROMPTS = [
 
 function renderMarkdown(text: string): string {
   let html = text;
-  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="bg-[#21262d] rounded-md p-3 my-2 overflow-x-auto text-sm font-mono"><code>$2</code></pre>');
-  html = html.replace(/`([^`]+)`/g, '<code class="bg-[#21262d] rounded px-1.5 py-0.5 text-sm font-mono text-accent">$1</code>');
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre class="bg-surface-elevated rounded-md p-3 my-2 overflow-x-auto text-sm font-mono"><code>$2</code></pre>');
+  html = html.replace(/`([^`]+)`/g, '<code class="bg-surface-elevated rounded px-1.5 py-0.5 text-sm font-mono text-accent">$1</code>');
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>');
   html = html.replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>');
   html = html.replace(/\n/g, "<br/>");
@@ -520,7 +520,7 @@ function AssistantPage() {
                     "rounded-lg border p-3 text-left transition-all duration-150",
                     selectedProvider === p.id
                       ? "border-primary/50 bg-[rgba(88,166,255,0.05)]"
-                      : "border-border bg-surface hover:border-[#484f58]"
+                      : "border-border bg-surface hover:border-border"
                   )}
                 >
                   <span className="text-xl">{p.icon}</span>
@@ -626,7 +626,7 @@ function AssistantPage() {
             disabled={provider.needsKey && !apiKey}
             className={cn(
               "mt-6 flex h-[48px] w-full items-center justify-center rounded-lg text-sm font-bold transition-opacity",
-              provider.needsKey && !apiKey ? "bg-[#21262d] text-muted-foreground cursor-not-allowed" : "bg-primary text-[#0d1117] hover:opacity-90"
+              provider.needsKey && !apiKey ? "bg-surface-elevated text-muted-foreground cursor-not-allowed" : "bg-primary text-background hover:opacity-90"
             )}
           >
             Start chatting
@@ -640,8 +640,8 @@ function AssistantPage() {
 
   /* ─── CHAT STATE ─── */
   return (
-    <div className="flex h-screen flex-col bg-[#0d1117]">
-      <header className="sticky top-0 z-10 flex h-12 items-center justify-between border-b border-border bg-[#0d1117] px-3">
+    <div className="flex h-screen flex-col bg-background">
+      <header className="sticky top-0 z-10 flex h-12 items-center justify-between border-b border-border bg-background px-3">
         <Link to="/" className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">← Back</Link>
         <div className="flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-green" />
@@ -676,7 +676,7 @@ function AssistantPage() {
             <p className="mt-1 text-sm text-muted-foreground">Powered by {provider.name}. Your key stays on your device.</p>
             <div className="mt-4 flex flex-wrap justify-center gap-2">
               {STARTER_PROMPTS.map((p) => (
-                <button key={p} onClick={() => setInputText(p)} className="rounded-full border border-border bg-[#21262d] px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:border-[#484f58] hover:text-foreground">{p}</button>
+                <button key={p} onClick={() => setInputText(p)} className="rounded-full border border-border bg-surface-elevated px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:border-border hover:text-foreground">{p}</button>
               ))}
             </div>
           </div>
@@ -721,7 +721,7 @@ function AssistantPage() {
               </div>
             )}
             {error && (
-              <div className="rounded-lg border border-[rgba(248,81,73,0.3)] bg-[rgba(248,81,73,0.08)] p-3 text-sm text-[#f85149]">
+              <div className="rounded-lg border border-[rgba(248,81,73,0.3)] bg-red-500/10 p-3 text-sm text-red-500">
                 {error} <button onClick={() => setError("")} className="ml-2 text-xs underline">Dismiss</button>
               </div>
             )}
@@ -730,17 +730,17 @@ function AssistantPage() {
         )}
       </div>
 
-      <div className="border-t border-border bg-[#0d1117] px-4 py-3" style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}>
+      <div className="border-t border-border bg-background px-4 py-3" style={{ paddingBottom: "max(12px, env(safe-area-inset-bottom))" }}>
         <div className="mx-auto max-w-2xl">
           {attachedFile && (
-            <div className="mb-2 flex items-center gap-2 rounded-md border border-border bg-[#21262d] px-3 py-1.5">
+            <div className="mb-2 flex items-center gap-2 rounded-md border border-border bg-surface-elevated px-3 py-1.5">
               <FileText className="size-3.5 text-muted-foreground" />
               <span className="flex-1 truncate text-xs text-muted-foreground">{attachedFile.name}</span>
               <button onClick={() => setAttachedFile(null)} className="text-muted-foreground hover:text-foreground"><X className="size-3.5" /></button>
             </div>
           )}
           <div className="flex items-end gap-2">
-            <label className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-[#21262d] text-muted-foreground transition-colors hover:text-foreground">
+            <label className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-border bg-surface-elevated text-muted-foreground transition-colors hover:text-foreground">
               <Paperclip className="size-4" />
               <input type="file" className="hidden" accept=".pdf,.docx,.txt,.md,.csv,.json" onChange={handleFileAttach} />
             </label>
@@ -753,7 +753,7 @@ function AssistantPage() {
             <button onClick={() => { if (isGenerating) abortRef.current?.abort(); else sendMessage(); }}
               disabled={!inputText.trim() && !isGenerating}
               className={cn("flex size-10 shrink-0 items-center justify-center rounded-full transition-colors",
-                isGenerating ? "bg-red text-white" : inputText.trim() ? "bg-primary text-[#0d1117]" : "bg-[#21262d] text-muted-foreground"
+                isGenerating ? "bg-red text-white" : inputText.trim() ? "bg-primary text-background" : "bg-surface-elevated text-muted-foreground"
               )}>
               {isGenerating ? <X className="size-4" /> : <ArrowUp className="size-4" />}
             </button>

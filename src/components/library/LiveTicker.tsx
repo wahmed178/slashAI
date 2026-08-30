@@ -288,7 +288,7 @@ export function LiveTicker() {
 
   return (
     <div
-      className="relative overflow-hidden border-b border-[#30363d] bg-[#161b22]"
+      className="relative overflow-hidden border-b border-border bg-surface"
       style={{ height: 36 }}
       onMouseEnter={(e) => {
         const track = e.currentTarget.querySelector("[data-ticker-track]");
@@ -307,22 +307,22 @@ export function LiveTicker() {
         }}
       >
         {/* LIVE dot */}
-        <span className="mr-3 inline-flex items-center gap-1 px-3 text-[11px] font-semibold text-[#f85149]">
+        <span className="mr-3 inline-flex items-center gap-1 px-3 text-[11px] font-semibold text-red-500">
           <span className="inline-block size-1.5 animate-pulse rounded-full bg-[#f85149]" />
           LIVE
         </span>
 
         {allItems.map((item, i) => (
           <span key={`${item.label}-${i}`} className="inline-flex items-center gap-2 px-3">
-            <span className="text-[11px] text-[#8b949e]">{item.label}</span>
-            <span className="text-[12px] font-semibold text-[#e6edf3]">{item.value}</span>
+            <span className="text-[11px] text-muted-foreground">{item.label}</span>
+            <span className="text-[12px] font-semibold text-foreground">{item.value}</span>
             {item.change && (
               <span className="text-[11px] font-medium" style={{ color: item.color ?? "#8b949e" }}>
                 {item.change}
               </span>
             )}
             {i < allItems.length - 1 && (
-              <span className="mx-2 text-[#30363d]">·</span>
+              <span className="mx-2 text-border">·</span>
             )}
           </span>
         ))}

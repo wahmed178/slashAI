@@ -8,7 +8,7 @@ export const Route = createFileRoute("/tools/bmi-calculator")({
 });
 
 function getBmiCategory(bmi: number) {
-  if (bmi < 18.5) return { label: "Underweight", color: "#58a6ff", note: "Consider consulting a nutritionist for a balanced diet plan." };
+  if (bmi < 18.5) return { label: "Underweight", color: "var(--primary)", note: "Consider consulting a nutritionist for a balanced diet plan." };
   if (bmi < 25) return { label: "Normal", color: "#3fb950", note: "Great job! Maintain your healthy lifestyle with regular exercise." };
   if (bmi < 30) return { label: "Overweight", color: "#d29922", note: "Light exercise and dietary changes can help bring BMI to normal range." };
   return { label: "Obese", color: "#f85149", note: "Please consult a healthcare professional for personalized guidance." };
@@ -38,7 +38,7 @@ function BmiCalculator() {
           {(["metric", "imperial"] as const).map((u) => (
             <button key={u} type="button" onClick={() => setUnit(u)}
               className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium capitalize transition-colors"
-              style={{ background: unit === u ? "#58a6ff" : "#21262d", borderColor: unit === u ? "transparent" : "#30363d", color: unit === u ? "#0d1117" : "#8b949e" }}>
+              style={{ background: unit === u ? "var(--primary)" : "var(--surface-elevated)", borderColor: unit === u ? "transparent" : "var(--border)", color: unit === u ? "var(--background)" : "var(--muted-foreground)" }}>
               {u === "metric" ? "Metric (kg/cm)" : "Imperial (lbs/in)"}
             </button>
           ))}

@@ -41,7 +41,7 @@ function Starfield() {
         const sy = (star.y / star.z) * 300 + cy;
         const size = Math.max(0.5, (1 - star.z / 1000) * 3);
         ctx.globalAlpha = 1 - star.z / 1000;
-        ctx.fillStyle = "#e6edf3";
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--foreground").trim() || "#e6edf3";
         ctx.beginPath();
         ctx.arc(sx, sy, size, 0, Math.PI * 2);
         ctx.fill();
@@ -78,7 +78,7 @@ function Starfield() {
   const dateStr = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
   return (
-    <div className="relative min-h-screen overflow-hidden" style={{ background: "#0d1117" }}>
+    <div className="relative min-h-screen overflow-hidden" style={{ background: "var(--background)" }}>
 
       {/* Auto-dismiss close button */}
       <div

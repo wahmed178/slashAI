@@ -53,7 +53,7 @@ const SECTIONS: Section[] = [
 
 function KbdKey({ children }: { children: string }) {
   return (
-    <kbd className="inline-block rounded border border-border border-b-2 border-b-[#484f58] bg-[#21262d] px-2 py-0.5 font-mono text-[13px] text-foreground">
+    <kbd className="inline-block rounded border border-border border-b-2 border-b-[#484f58] bg-surface-elevated px-2 py-0.5 font-mono text-[13px] text-foreground">
       {children}
     </kbd>
   );

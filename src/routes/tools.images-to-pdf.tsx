@@ -84,7 +84,7 @@ function ImagesToPdf() {
                 {(["a4", "letter", "square"] as const).map((s) => (
                   <button key={s} type="button" onClick={() => setPageSize(s)}
                     className="min-h-[36px] rounded-lg border px-3 text-xs font-medium capitalize transition-colors"
-                    style={{ background: pageSize === s ? "#58a6ff" : "#21262d", borderColor: pageSize === s ? "transparent" : "#30363d", color: pageSize === s ? "#0d1117" : "#8b949e" }}>
+                    style={{ background: pageSize === s ? "var(--primary)" : "var(--surface-elevated)", borderColor: pageSize === s ? "transparent" : "var(--border)", color: pageSize === s ? "var(--background)" : "var(--muted-foreground)" }}>
                     {s}
                   </button>
                 ))}
@@ -96,7 +96,7 @@ function ImagesToPdf() {
                 {(["portrait", "landscape"] as const).map((o) => (
                   <button key={o} type="button" onClick={() => setOrientation(o)}
                     className="min-h-[36px] rounded-lg border px-3 text-xs font-medium capitalize transition-colors"
-                    style={{ background: orientation === o ? "#58a6ff" : "#21262d", borderColor: orientation === o ? "transparent" : "#30363d", color: orientation === o ? "#0d1117" : "#8b949e" }}>
+                    style={{ background: orientation === o ? "var(--primary)" : "var(--surface-elevated)", borderColor: orientation === o ? "transparent" : "var(--border)", color: orientation === o ? "var(--background)" : "var(--muted-foreground)" }}>
                     {o}
                   </button>
                 ))}

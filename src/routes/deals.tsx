@@ -61,7 +61,7 @@ const PLATFORM_STYLES: Record<string, string> = {
   amazon: "bg-[rgba(255,153,0,0.12)] border-[rgba(255,153,0,0.4)] text-[#ff9900]",
   flipkart: "bg-[rgba(40,116,240,0.12)] border-[rgba(40,116,240,0.4)] text-[#2874f0]",
   meesho: "bg-[rgba(151,71,255,0.12)] border-[rgba(151,71,255,0.4)] text-[#9747ff]",
-  other: "bg-[#21262d] border-[#30363d] text-muted-foreground",
+  other: "bg-surface-elevated border-border text-muted-foreground",
 };
 
 const SUBREDDITS: { name: string; path: string; defaultCategory?: string }[] = [
@@ -190,8 +190,8 @@ export const Route = createFileRoute("/deals")({
 function DealCard({ deal }: { deal: Deal }) {
   const isSameUrl = deal.url === deal.redditUrl;
   return (
-    <article className="group overflow-hidden rounded-[10px] border border-border bg-surface transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]">
-      <div className="relative flex h-[140px] items-center justify-center bg-[#21262d]">
+    <article className="group overflow-hidden rounded-[10px] border border-border bg-surface transition-all duration-150 hover:-translate-y-0.5 hover:border-border">
+      <div className="relative flex h-[140px] items-center justify-center bg-surface-elevated">
         {deal.image ? (
           <img src={deal.image} alt="" loading="lazy" className="size-full object-contain" />
         ) : (
@@ -244,7 +244,7 @@ function FeaturedDeal({ deal }: { deal: Deal }) {
     <div className="rounded-[10px] border border-border border-l-[3px] border-l-primary bg-surface p-5">
       <span className="text-[11px] font-semibold text-primary">🔥 Deal of the Day</span>
       <div className="mt-3 flex gap-4">
-        <div className="flex size-[100px] shrink-0 items-center justify-center rounded-lg bg-[#21262d]">
+        <div className="flex size-[100px] shrink-0 items-center justify-center rounded-lg bg-surface-elevated">
           {deal.image ? (
             <img src={deal.image} alt="" className="size-full rounded-lg object-contain" />
           ) : (

@@ -132,7 +132,7 @@ function DiscoverPage() {
               <p className="mt-0.5 line-clamp-1 text-[13px] text-muted-foreground">
                 {section.blurb}
               </p>
-              <span className="mt-3 inline-flex items-center rounded border px-2 py-0.5 text-[11px]" style={{ background: "#21262d", borderColor: "#30363d", color: "#8b949e" }}>
+              <span className="mt-3 inline-flex items-center rounded border px-2 py-0.5 text-[11px]" style={{ background: "var(--surface-elevated)", borderColor: "var(--border)", color: "var(--muted-foreground)" }}>
                 {section.count} resources
               </span>
             </Link>

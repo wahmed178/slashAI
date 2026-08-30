@@ -87,10 +87,14 @@ Library of Congress, Gutendex, Open Trivia DB, The Trivia API, Quotable, Affirma
 - Tool routes: /tools/[slug] — each a separate static route file
 - jsPDF library used for images-to-pdf (installed via bun)
 
-## Design Tokens
-bg: #0d1117 | surface: #161b22 | surface-raised: #21262d
-border: #30363d | text: #e6edf3 | muted: #8b949e
-accent: #58a6ff | green: #3fb950 | red: #f85149 | yellow: #d29922
+## Design Tokens (semantic CSS variables)
+All colors are defined as CSS custom properties in src/styles.css.
+Use Tailwind semantic classes (bg-background, bg-surface, text-foreground, etc.)
+instead of hard-coded hex values.
+
+Dark theme: oklch-based near-black navy with electric cyan/teal primary
+Light theme: preserved via .light class override
+AMOLED theme: preserved via .amoled class override
 
 Card radius: 10px | Button radius: 6px | Badge radius: 4px
 Transitions: 150ms ease | Hover: translateY(-2px) + border lightens

@@ -34,7 +34,7 @@ function GstCalculator() {
           {(["add", "remove"] as const).map((m) => (
             <button key={m} type="button" onClick={() => setMode(m)}
               className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium capitalize transition-colors"
-              style={{ background: mode === m ? "#58a6ff" : "#21262d", borderColor: mode === m ? "transparent" : "#30363d", color: mode === m ? "#0d1117" : "#8b949e" }}>
+              style={{ background: mode === m ? "var(--primary)" : "var(--surface-elevated)", borderColor: mode === m ? "transparent" : "var(--border)", color: mode === m ? "var(--background)" : "var(--muted-foreground)" }}>
               {m === "add" ? "Add GST" : "Remove GST"}
             </button>
           ))}
@@ -52,7 +52,7 @@ function GstCalculator() {
               {[5, 12, 18, 28].map((r) => (
                 <button key={r} type="button" onClick={() => { setRate(r); setCustomRate(""); }}
                   className="min-h-[36px] rounded-lg border px-3 text-xs font-medium transition-colors"
-                  style={{ background: !customRate && rate === r ? "#58a6ff" : "#21262d", borderColor: !customRate && rate === r ? "transparent" : "#30363d", color: !customRate && rate === r ? "#0d1117" : "#8b949e" }}>
+                  style={{ background: !customRate && rate === r ? "var(--primary)" : "var(--surface-elevated)", borderColor: !customRate && rate === r ? "transparent" : "var(--border)", color: !customRate && rate === r ? "var(--background)" : "var(--muted-foreground)" }}>
                   {r}%
                 </button>
               ))}
