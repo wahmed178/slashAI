@@ -35,7 +35,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
 const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any }> = [
   { to: "/journal", label: "Journal", icon: NotebookPen },
   { to: "/favorites", label: "Saved", icon: Bookmark },
-  { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/me", label: "Profile & Settings", icon: Settings },
 ];
 
 function isActive(pathname: string, to: string, exact?: boolean) {
@@ -180,7 +180,7 @@ export function DesktopSidebar() {
           <p className="truncate text-[13px] text-foreground">Slash User</p>
           <p className="text-[11px] text-muted-foreground">{isGlass ? "✦ Glass Plan" : "Free Plan"}</p>
         </div>
-        <Link to="/settings">
+        <Link to="/me">
           <Settings className="size-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors" />
         </Link>
       </div>
