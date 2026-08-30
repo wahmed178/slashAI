@@ -477,7 +477,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
         </header>
 
         <main className="flex-1 overflow-y-auto animate-slide-in-up">
-          <div className="mx-auto w-full px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-10" style={{ maxWidth: wide ? '1400px' : '1200px' }}>
+          <div className="w-full px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-10">
             {children}
           </div>
         </main>
