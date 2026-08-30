@@ -6,7 +6,7 @@ export const Route = createFileRoute("/assistant/about")({
   head: () => ({
     meta: [
       { title: "How SlashAI Assistant Works" },
-      { name: "description", content: "Learn how the local AI assistant works in your browser." },
+      { name: "description", content: "Learn how the SlashAI assistant works with free AI providers." },
     ],
   }),
   component: AboutPage,
@@ -25,85 +25,77 @@ function AboutPage() {
         <section className="mt-6 space-y-4">
           <h2 className="text-lg font-semibold text-foreground">What is it?</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            SlashAI Assistant runs an AI model directly inside your web browser using your device's GPU.
-            Unlike ChatGPT or Claude, nothing you type is ever sent to any server.
-            Your conversations are 100% private and stored only on your device.
+            SlashAI Assistant connects to free AI providers like Google AI Studio, Groq, OpenRouter, and Together AI.
+            You bring your own API key — it stays stored only in your browser and is never sent to any server except the AI provider you choose.
           </p>
         </section>
 
         <section className="mt-6 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">The first download</h2>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            The first time you use it, the AI model downloads from{" "}
-            <a href="https://huggingface.co" target="_blank" rel="noreferrer" className="text-primary hover:underline">Hugging Face</a>{" "}
-            (a free, open AI platform). The Fast Model is about 760MB — similar to a medium-sized app install.
-            This happens once. After that, it loads from your device in seconds, even offline.
-          </p>
-        </section>
-
-        <section className="mt-6 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Which browser?</h2>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            Works best on: <strong className="text-foreground">Google Chrome, Microsoft Edge, Brave</strong>.
-            These browsers support WebGPU — the technology that makes local AI fast.
-            Firefox and Safari have limited support and may be slower.
-          </p>
-        </section>
-
-        <section className="mt-6 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Which model should I pick?</h2>
+          <h2 className="text-lg font-semibold text-foreground">Free providers</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="pb-2 pr-4 text-left text-muted-foreground">Model</th>
-                  <th className="pb-2 pr-4 text-left text-muted-foreground">Size</th>
+                  <th className="pb-2 pr-4 text-left text-muted-foreground">Provider</th>
+                  <th className="pb-2 pr-4 text-left text-muted-foreground">Free tier</th>
                   <th className="pb-2 pr-4 text-left text-muted-foreground">Speed</th>
-                  <th className="pb-2 pr-4 text-left text-muted-foreground">Quality</th>
-                  <th className="pb-2 text-left text-muted-foreground">Good for</th>
+                  <th className="pb-2 text-left text-muted-foreground">Get key</th>
                 </tr>
               </thead>
               <tbody className="text-foreground">
                 <tr className="border-b border-border/50">
-                  <td className="py-2 pr-4 font-medium">Fast</td>
-                  <td className="py-2 pr-4 text-muted-foreground">760MB</td>
-                  <td className="py-2 pr-4">⚡⚡⚡</td>
-                  <td className="py-2 pr-4">⭐⭐</td>
-                  <td className="py-2 text-muted-foreground">Quick chat, simple tasks</td>
+                  <td className="py-2 pr-4 font-medium">🟢 Google AI Studio</td>
+                  <td className="py-2 pr-4 text-green">Generous</td>
+                  <td className="py-2 pr-4">Fast</td>
+                  <td className="py-2"><a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer" className="text-primary hover:underline">Get key</a></td>
                 </tr>
                 <tr className="border-b border-border/50">
-                  <td className="py-2 pr-4 font-medium">Balanced</td>
-                  <td className="py-2 pr-4 text-muted-foreground">1.8GB</td>
-                  <td className="py-2 pr-4">⚡⚡</td>
-                  <td className="py-2 pr-4">⭐⭐⭐</td>
-                  <td className="py-2 text-muted-foreground">Writing, analysis</td>
+                  <td className="py-2 pr-4 font-medium">⚡ Groq</td>
+                  <td className="py-2 pr-4 text-green">Generous</td>
+                  <td className="py-2 pr-4">Very fast</td>
+                  <td className="py-2"><a href="https://console.groq.com/keys" target="_blank" rel="noreferrer" className="text-primary hover:underline">Get key</a></td>
+                </tr>
+                <tr className="border-b border-border/50">
+                  <td className="py-2 pr-4 font-medium">🔀 OpenRouter</td>
+                  <td className="py-2 pr-4 text-green">Some free models</td>
+                  <td className="py-2 pr-4">Varies</td>
+                  <td className="py-2"><a href="https://openrouter.ai/keys" target="_blank" rel="noreferrer" className="text-primary hover:underline">Get key</a></td>
                 </tr>
                 <tr>
-                  <td className="py-2 pr-4 font-medium">Quality</td>
-                  <td className="py-2 pr-4 text-muted-foreground">4.9GB</td>
-                  <td className="py-2 pr-4">⚡</td>
-                  <td className="py-2 pr-4">⭐⭐⭐⭐</td>
-                  <td className="py-2 text-muted-foreground">Complex reasoning</td>
+                  <td className="py-2 pr-4 font-medium">🤝 Together AI</td>
+                  <td className="py-2 pr-4 text-green">Free credits</td>
+                  <td className="py-2 pr-4">Fast</td>
+                  <td className="py-2"><a href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer" className="text-primary hover:underline">Get key</a></td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p className="text-sm text-muted-foreground">Start with Fast. You can switch later.</p>
+          <p className="text-sm text-muted-foreground">
+            All providers offer free tiers. Start with Google AI Studio or Groq — they're the most generous.
+          </p>
+        </section>
+
+        <section className="mt-6 space-y-4">
+          <h2 className="text-lg font-semibold text-foreground">Your API key</h2>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Your API key is stored in your browser's localStorage. It is only sent directly to the AI provider you choose.
+            SlashAI never sees, stores, or transmits your key. Clearing your browser data removes it.
+          </p>
         </section>
 
         <section className="mt-6 space-y-4">
           <h2 className="text-lg font-semibold text-foreground">Uploading documents</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
             You can upload PDF, Word (DOCX), or text files. The Assistant reads the content and you can ask
-            questions about it. Files are never uploaded anywhere — they're read entirely within your browser.
+            questions about it. Files are read entirely within your browser — never uploaded anywhere.
           </p>
         </section>
 
         <section className="mt-6 space-y-4">
           <h2 className="text-lg font-semibold text-foreground">Privacy promise</h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
-            Zero telemetry. Zero tracking. No account. Your messages exist only on your device.
-            Clearing your browser cache removes everything.
+            Zero telemetry. Zero tracking. No account. Your messages go only to the AI provider you configured.
+            Your API key stays in your browser. Clearing cache removes everything.
           </p>
         </section>
 
@@ -111,20 +103,16 @@ function AboutPage() {
           <h2 className="text-lg font-semibold text-foreground">Troubleshooting</h2>
           <div className="space-y-3 text-sm text-muted-foreground">
             <div>
-              <p className="font-medium text-foreground">Model won't load</p>
-              <p>Try Chrome instead of Firefox. Enable hardware acceleration in browser settings.</p>
+              <p className="font-medium text-foreground">"Unauthorized" or "Invalid API key"</p>
+              <p>Double-check your API key. Make sure it's active and has free tier credits.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground">Very slow</p>
-              <p>Use the Fast model. Close other tabs to free up GPU memory.</p>
+              <p className="font-medium text-foreground">"Rate limited"</p>
+              <p>You've hit the free tier limit. Wait a minute or switch to another provider.</p>
             </div>
             <div>
-              <p className="font-medium text-foreground">Download stops</p>
-              <p>Refresh and try again — the download resumes from cache.</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground">Black screen</p>
-              <p>Enable hardware acceleration: Chrome → Settings → System → Use hardware acceleration.</p>
+              <p className="font-medium text-foreground">"Model not found"</p>
+              <p>The model ID may have changed. Try selecting a different model from the dropdown.</p>
             </div>
           </div>
         </section>
