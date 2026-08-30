@@ -9,22 +9,16 @@ import {
   Star,
   History,
   Flame,
-  Compass,
   Radar as RadarIcon,
-  PenLine,
   GraduationCap,
-  Code2,
-  Image as ImageIcon,
   FileText,
   Briefcase,
   Search as SearchIcon,
   Wand2,
-  Radio,
   Dices,
   Bot,
   Film,
   Youtube,
-  Zap,
   Globe,
   BookOpen,
   Map,
@@ -73,55 +67,6 @@ function StatsBar() {
           </span>
         ))}
       </div>
-    </div>
-  );
-}
-
-/* ─────────────── Feature Highlight Cards ─────────────── */
-const FEATURES = [
-  {
-    icon: SearchIcon,
-    title: "AI Commands",
-    desc: "5,635 copy-ready slash prompts",
-    to: "/search",
-  },
-  {
-    icon: Zap,
-    title: "Founder Tools",
-    desc: "25 AI-powered generators",
-    to: "/generators",
-  },
-  {
-    icon: Radio,
-    title: "Live Dashboard",
-    desc: "Markets, news, weather & more",
-    to: "/live",
-  },
-  {
-    icon: Compass,
-    title: "Free Resources",
-    desc: "317+ curated tools & APIs",
-    to: "/discover",
-  },
-] as const;
-
-function FeatureHighlights() {
-  return (
-    <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-      {FEATURES.map((f) => (
-        <Link
-          key={f.title}
-          to={f.to}
-          className="group panel relative overflow-hidden rounded-2xl p-5 transition-all hover:-translate-y-0.5 hover:border-primary/50"
-        >
-          <f.icon className="size-6 text-primary" aria-hidden />
-          <h3 className="mt-3 text-sm font-bold text-foreground group-hover:text-primary">
-            {f.title}
-          </h3>
-          <p className="mt-1 text-xs text-muted-foreground">{f.desc}</p>
-          <ArrowRight className="absolute right-3 bottom-3 size-4 text-muted-foreground opacity-0 transition-all duration-150 group-hover:translate-x-1 group-hover:opacity-100" />
-        </Link>
-      ))}
     </div>
   );
 }
@@ -399,16 +344,13 @@ function HomePage() {
       {/* ─── Stats Bar ─── */}
       <StatsBar />
 
-      {/* ─── Feature Highlights ─── */}
-      <FeatureHighlights />
-
       {/* ─── Explore more ─── */}
       <section className="mt-10">
         <h2 className="text-[22px] font-semibold text-foreground">Explore more</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available", bg: "linear-gradient(135deg, #1a1f2e, #0f1929)" },
-            { to: "/generators", emoji: "⚡", title: "Generators", desc: "25 AI tools", bg: "linear-gradient(135deg, #1a1f14, #0f1a0a)" },
+            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge", bg: "linear-gradient(135deg, #1a1a2e, #0f0a1a)" },
             { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: "20 guides", bg: "linear-gradient(135deg, #1a1428, #0f0a1a)" },
             { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", bg: "linear-gradient(135deg, #1a1a14, #1a0f0a)", badge: "Hot" },
           ].map((card) => (
