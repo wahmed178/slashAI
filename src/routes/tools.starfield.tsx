@@ -82,7 +82,7 @@ function Starfield() {
 
       {/* Auto-dismiss close button */}
       <div
-        className={`fixed bottom-4 right-4 z-50 transition-opacity duration-500 ${
+        className={`fixed top-4 left-4 z-50 transition-opacity duration-500 ${
           showControls ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
