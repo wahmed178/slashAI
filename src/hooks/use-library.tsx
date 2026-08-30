@@ -12,7 +12,7 @@ import { APP_VERSION } from "@/lib/app-meta";
 import { todayKey } from "@/lib/commands";
 import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 
-export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm";
+export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm" | "glass";
 export type Density = "comfortable" | "compact";
 export type Accent = "teal" | "violet" | "amber" | "rose" | "blue" | "lime";
 export type AppIcon =
@@ -84,10 +84,16 @@ export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[
     hint: "Sepia tones for night reading",
     swatch: "oklch(0.81 0.14 65)",
   },
+  {
+    id: "glass",
+    label: "✦ Glass",
+    hint: "Premium dark with violet tint",
+    swatch: "oklch(0.78 0.16 178)",
+  },
 ];
 
 /** themes that fix their own primary colour, so the accent picker is inert */
-export const FIXED_ACCENT_THEMES: Theme[] = ["batman", "ocean", "moonlight", "warm"];
+export const FIXED_ACCENT_THEMES: Theme[] = ["batman", "ocean", "moonlight", "warm", "glass"];
 
 export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
   { id: "teal", label: "Teal", swatch: "oklch(0.79 0.15 178)" },

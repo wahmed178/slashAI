@@ -42,6 +42,8 @@ function GlassPage() {
     // Activate Glass status so sidebar updates
     localStorage.setItem("slashai-glass-user", "true");
     setIsGlass(true);
+    // Apply Glass theme across the entire app
+    document.documentElement.classList.add("glass");
   }, [email]);
 
   return (
@@ -95,6 +97,8 @@ function GlassPage() {
                   localStorage.removeItem("slashai-glass-user");
                   setIsGlass(false);
                   setSubmitted(false);
+                  // Remove Glass theme
+                  document.documentElement.classList.remove("glass");
                 }}
                 className="mt-3 text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
               >

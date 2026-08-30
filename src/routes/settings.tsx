@@ -112,7 +112,13 @@ function SettingsPage() {
 
       <Section title="Theme">
         <div className="grid gap-2 sm:grid-cols-2">
-          {THEMES.map((t) => {
+          {THEMES.filter((t) => {
+            if (t.id === "glass") {
+              try { return localStorage.getItem("slashai-glass-user") === "true"; }
+              catch { return false; }
+            }
+            return true;
+          }).map((t) => {
             const active = settings.theme === t.id;
             return (
               <button

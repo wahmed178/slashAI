@@ -130,7 +130,7 @@ function RootShell({ children }: { children: ReactNode }) {
         {/* FOUC prevention: apply theme before any paint */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem('slashai-theme');var p=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='light'||(!t&&!p)){document.documentElement.classList.add('light')}}catch(e){}`,
+            __html: `try{var t=localStorage.getItem('slashai-theme');var p=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='light'||(!t&&!p)){document.documentElement.classList.add('light')}var g=localStorage.getItem('slashai-glass-user');if(g==='true'){document.documentElement.classList.add('glass')}}catch(e){}`,
           }}
         />
         <HeadContent />
