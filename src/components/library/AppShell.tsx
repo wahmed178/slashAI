@@ -166,6 +166,8 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     children: [
       { to: "/settings", label: "Settings", icon: SettingsIcon },
       { to: "/about", label: "About", icon: Info },
+      { to: "/compare", label: "Compare Models", icon: Info },
+      { to: "/keyboard", label: "Keyboard Shortcuts", icon: Info },
       { to: "/changelog", label: "Changelog", icon: Info },
       { to: "/glass", label: "✦ Glass", icon: Sparkles },
     ],

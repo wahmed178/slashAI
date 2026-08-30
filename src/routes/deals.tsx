@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink, MessageSquare, RefreshCw, Flame, Tag, DollarSign, Clock } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
+import productsData from "@/data/products.json";
 
 interface Deal {
   id: string;
@@ -63,22 +64,9 @@ const PLATFORM_STYLES: Record<string, string> = {
   other: "bg-[#21262d] border-[#30363d] text-muted-foreground",
 };
 
-// Use allorigins proxy to bypass Reddit CORS
-const PROXY = "https://api.allorigins.win/raw?url=";
-
-const SUBREDDITS: { name: string; url: string; defaultCategory?: string }[] = [
-  { name: "DesiDeal", url: "https://www.reddit.com/r/DesiDeal/top.json?t=day&limit=25" },
-  { name: "IndianGaming", url: "https://www.reddit.com/r/IndianGaming/top.json?t=day&limit=15", defaultCategory: "gaming" },
-  { name: "AmazonIndia", url: "https://www.reddit.com/r/AmazonIndia/top.json?t=day&limit=20" },
-  { name: "PhoneDealsIndia", url: "https://www.reddit.com/r/PhoneDealsIndia/top.json?t=day&limit=15", defaultCategory: "phones" },
-  { name: "Frugal_in", url: "https://www.reddit.com/r/Frugal_in/top.json?t=day&limit=15" },
-  { name: "booksofindia", url: "https://www.reddit.com/r/booksofindia/top.json?t=day&limit=10", defaultCategory: "books" },
-  { name: "buildapc", url: "https://www.reddit.com/r/buildapc/top.json?t=day&limit=10", defaultCategory: "computers" },
-  { name: "india", url: "https://www.reddit.com/r/india/search.json?q=deal+discount+sale&sort=top&t=day&limit=15" },
-];
-
-const CACHE_KEY = "slashai-deals-cache";
-const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+function formatINR(n: number): string {
+  return "₹" + n.toLocaleString("en-IN");
+}
 
 export const Route = createFileRoute("/deals")({
   head: () => ({
@@ -89,138 +77,6 @@ export const Route = createFileRoute("/deals")({
   }),
   component: DealsPage,
 });
-
-/* ─── helpers ─── */
-
-function detectCategory(title: string): string {
-  const t = title.toLowerCase();
-  if (/phone|mobile|iphone|samsung|redmi|realme|oneplus|poco|vivo|oppo/.test(t)) return "phones";
-  if (/laptop|pc|computer|processor|gpu|ram|ssd|monitor|keyboard|mouse/.test(t)) return "computers";
-  if (/tv|television|led|oled|smart tv/.test(t)) return "tv";
-  if (/book|kindle|novel|textbook|epub/.test(t)) return "books";
-  if (/headphone|earphone|speaker|audio|bluetooth|tws|airpod/.test(t)) return "audio";
-  if (/shoe|shirt|dress|clothing|fashion|apparel|sneaker|jacket/.test(t)) return "fashion";
-  if (/kitchen|cooker|mixer|microwave|refrigerator|washing/.test(t)) return "home";
-  if (/game|gaming|ps5|xbox|nintendo|steam|console/.test(t)) return "gaming";
-  if (/camera|lens|gopro|dslr|mirrorless|tripod/.test(t)) return "camera";
-  if (/supplement|protein|gym|fitness|yoga|dumbbell/.test(t)) return "fitness";
-  if (/skincare|beauty|makeup|perfume|lotion|shampoo/.test(t)) return "beauty";
-  return "deals";
-}
-
-function extractPrice(title: string): number {
-  const patterns = [/₹\s*(\d[\d,]+)/, /Rs\.?\s*(\d[\d,]+)/i, /INR\s*(\d[\d,]+)/i, /at\s+(\d[\d,]+)/i];
-  for (const p of patterns) {
-    const m = title.match(p);
-    if (m?.[1]) return parseInt(m[1].replace(/,/g, ""));
-  }
-  return 0;
-}
-
-function detectPlatform(title: string, url: string): string {
-  const t = (title + url).toLowerCase();
-  if (t.includes("amazon")) return "amazon";
-  if (t.includes("flipkart")) return "flipkart";
-  if (t.includes("meesho")) return "meesho";
-  if (t.includes("myntra") || t.includes("ajio")) return "fashion";
-  if (t.includes("croma") || t.includes("reliance")) return "other";
-  return "other";
-}
-
-function extractDiscount(title: string): number {
-  const m = title.match(/(\d+)\s*%\s*off/i);
-  return m?.[1] ? parseInt(m[1]) : 0;
-}
-
-function formatINR(n: number): string {
-  return "₹" + n.toLocaleString("en-IN");
-}
-
-/* ─── fetch + parse ─── */
-
-async function fetchDeals(): Promise<Deal[]> {
-  const all: Deal[] = [];
-
-  const fetches = SUBREDDITS.map(async (sub) => {
-    try {
-      const proxyUrl = PROXY + encodeURIComponent(sub.url);
-      const res = await fetch(proxyUrl);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      const children = data?.data?.children || [];
-
-      return children
-        .filter((p: any) => {
-          const post = p.data;
-          return post.score > 5 && !post.stickied && post.title?.length > 10;
-        })
-        .map((p: any) => {
-          const post = p.data;
-          const price = extractPrice(post.title);
-          const discount = extractDiscount(post.title);
-          const category = sub.defaultCategory || detectCategory(post.title);
-          const platform = detectPlatform(post.title, post.url || "");
-          const hasImage =
-            post.thumbnail &&
-            post.thumbnail.startsWith("http") &&
-            !post.thumbnail.includes("self") &&
-            !post.thumbnail.includes("default");
-
-          return {
-            id: `reddit-${post.id}`,
-            title: post.title.slice(0, 90),
-            description: post.selftext?.slice(0, 120) || `${post.score} upvotes · r/${sub.name}`,
-            price,
-            discount,
-            votes: post.score,
-            image: hasImage ? post.thumbnail : "",
-            url: post.url?.startsWith("http") ? post.url : `https://reddit.com${post.permalink}`,
-            redditUrl: `https://reddit.com${post.permalink}`,
-            platform,
-            category,
-            source: `r/${sub.name}`,
-            badge:
-              discount > 40
-                ? `${discount}% OFF`
-                : price > 0 && price < 500
-                ? "Under ₹500"
-                : price > 0 && price < 999
-                ? "Under ₹999"
-                : "Community Deal",
-          };
-        });
-    } catch {
-      return [];
-    }
-  });
-
-  const results = await Promise.all(fetches);
-  for (const r of results) all.push(...r);
-
-  // Deduplicate
-  const seen = new Set<string>();
-  return all.filter((item) => {
-    const key = item.title.toLowerCase().slice(0, 40);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
-
-/* ─── skeleton ─── */
-
-function CardSkeleton() {
-  return (
-    <div className="overflow-hidden rounded-[10px] border border-border bg-surface animate-pulse">
-      <div className="h-[140px] bg-[#21262d]" />
-      <div className="space-y-2 p-3">
-        <div className="h-3 w-3/4 rounded bg-[#21262d]" />
-        <div className="h-3 w-1/2 rounded bg-[#21262d]" />
-        <div className="h-2 w-1/3 rounded bg-[#21262d]" />
-      </div>
-    </div>
-  );
-}
 
 /* ─── card components ─── */
 
@@ -347,56 +203,18 @@ function SectionHeader({ title, count, onSeeAll }: { title: string; count: numbe
 /* ─── main page ─── */
 
 function DealsPage() {
-  const [deals, setDeals] = useState<Deal[]>([]);
-  const [loading, setLoading] = useState(true);
   const [sort, setSort] = useState<SortKey>("trending");
   const [category, setCategory] = useState("all");
   const [priceFilter, setPriceFilter] = useState("any");
-  const [updatedAt, setUpdatedAt] = useState("");
 
-  const loadDeals = useCallback(async (force = false) => {
-    // Check cache first
-    if (!force) {
-      try {
-        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
-        if (cached && Date.now() - cached.ts < CACHE_TTL && cached.deals?.length > 0) {
-          setDeals(cached.deals);
-          setUpdatedAt(cached.time || "recently");
-          setLoading(false);
-          return;
-        }
-      } catch { /* ignore */ }
-    }
-
-    setLoading(true);
-    try {
-      const fetched = await fetchDeals();
-      const time = new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" });
-      setDeals(fetched);
-      setUpdatedAt(time);
-      // Cache
-      try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ deals: fetched, time, ts: Date.now() }));
-      } catch { /* quota */ }
-    } catch {
-      // Try stale cache
-      try {
-        const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
-        if (cached?.deals?.length) {
-          setDeals(cached.deals);
-          setUpdatedAt(cached.time || "earlier");
-        }
-      } catch { /* ignore */ }
-    }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    loadDeals();
-  }, [loadDeals]);
+  // Use seeded data directly from products.json
+  const data = productsData as any;
+  const allDeals: Deal[] = data.trending || [];
+  const updatedTime = data.updatedTime || "";
+  const totalCount = data.total || allDeals.length;
 
   const filtered = useMemo(() => {
-    let items = [...deals];
+    let items = [...allDeals];
     if (category !== "all") items = items.filter((d) => d.category === category);
     if (priceFilter === "499") items = items.filter((d) => d.price > 0 && d.price < 499);
     else if (priceFilter === "999") items = items.filter((d) => d.price > 0 && d.price < 999);
@@ -407,25 +225,24 @@ function DealsPage() {
     else if (sort === "price") items.sort((a, b) => (a.price || Infinity) - (b.price || Infinity));
     else if (sort === "latest") items.reverse();
     return items;
-  }, [deals, sort, category, priceFilter]);
+  }, [allDeals, sort, category, priceFilter]);
 
   const featured: Deal | null = useMemo(() => {
     if (category !== "all" || priceFilter !== "any") return null;
-    const sorted = [...deals].sort((a, b) => b.votes - a.votes);
-    return sorted[0] || null;
-  }, [deals, category, priceFilter]);
+    return data.featured || allDeals[0] || null;
+  }, [allDeals, category, priceFilter, data.featured]);
 
   const sectionData = useMemo(() => {
     const grouped: Record<string, Deal[]> = {
       phones: [], computers: [], gaming: [], books: [], audio: [], home: [],
     };
-    for (const d of deals) {
+    for (const d of allDeals) {
       const cat = d.category;
       if (!grouped[cat]) grouped[cat] = [];
       grouped[cat].push(d);
     }
     return grouped;
-  }, [deals]);
+  }, [allDeals]);
 
   const getSection = (key: string): Deal[] => sectionData[key] || [];
   const showSection = (items: Deal[]) => items.length >= 2;
@@ -434,26 +251,16 @@ function DealsPage() {
     <AppShell wide title="Deals & Products">
       {/* Header */}
       <header className="page-enter pt-2">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Deals & Products</h1>
-            <p className="mt-1 text-[15px] text-muted-foreground">
-              Best deals from Indian communities — updated daily.
-            </p>
-          </div>
-          <button
-            onClick={() => loadDeals(true)}
-            disabled={loading}
-            className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-muted-foreground transition-colors hover:text-foreground disabled:opacity-50"
-            title="Refresh deals"
-          >
-            <RefreshCw className={`size-4 ${loading ? "animate-spin" : ""}`} />
-          </button>
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Deals & Products</h1>
+          <p className="mt-1 text-[15px] text-muted-foreground">
+            Best deals from Indian communities — updated daily.
+          </p>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          {updatedAt && (
-            <span className="rounded-full bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">
-              Updated {updatedAt} IST · {deals.length} deals
+          {updatedTime && (
+            <span className="rounded-full bg-surface-elevated px-2.5 py-1 text-[11px] text-green">
+              Updated {updatedTime} IST · {totalCount} deals
             </span>
           )}
           <span className="text-[12px] text-muted-foreground">
@@ -462,182 +269,150 @@ function DealsPage() {
         </div>
       </header>
 
-      {/* Loading skeleton */}
-      {loading && deals.length === 0 && (
-        <div className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <CardSkeleton key={i} />
-          ))}
-        </div>
-      )}
-
-      {/* Empty state */}
-      {!loading && deals.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <span className="text-4xl">🔄</span>
-          <h2 className="mt-4 text-lg font-semibold text-foreground">No deals found</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Reddit may be temporarily unavailable. Try refreshing.
-          </p>
+      {/* Sort tabs */}
+      <div className="mt-5 flex gap-1.5 overflow-x-auto pb-1">
+        {SORT_OPTIONS.map(({ key, label, icon: Icon }) => (
           <button
-            onClick={() => loadDeals(true)}
-            className="mt-4 flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20"
+            key={key}
+            onClick={() => setSort(key)}
+            className={`flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+              sort === key
+                ? "border-primary/50 bg-primary/10 text-primary"
+                : "border-border bg-surface text-muted-foreground hover:text-foreground"
+            }`}
           >
-            <RefreshCw className="size-4" /> Retry
+            <Icon className="size-3.5" /> {label}
           </button>
+        ))}
+      </div>
+
+      {/* Category tabs */}
+      <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
+        {CATEGORIES.map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => setCategory(key)}
+            className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+              category === key
+                ? "border-primary/50 bg-primary/10 text-primary"
+                : "border-border bg-surface text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Price tabs */}
+      <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
+        {PRICE_FILTERS.map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => setPriceFilter(key)}
+            className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+              priceFilter === key
+                ? "border-primary/50 bg-primary/10 text-primary"
+                : "border-border bg-surface text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Featured deal */}
+      {featured && category === "all" && priceFilter === "any" && (
+        <div className="mt-5">
+          <FeaturedDeal deal={featured} />
         </div>
       )}
 
-      {/* Filters + content (only when we have data) */}
-      {deals.length > 0 && (
-        <>
-          {/* Sort tabs */}
-          <div className="mt-5 flex gap-1.5 overflow-x-auto pb-1">
-            {SORT_OPTIONS.map(({ key, label, icon: Icon }) => (
-              <button
-                key={key}
-                onClick={() => setSort(key)}
-                className={`flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
-                  sort === key
-                    ? "border-primary/50 bg-primary/10 text-primary"
-                    : "border-border bg-surface text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <Icon className="size-3.5" /> {label}
-              </button>
+      {/* Filtered grid */}
+      {filtered.length > 0 && (
+        <div className="mt-5">
+          <SectionHeader title="Filtered Results" count={filtered.length} />
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+            {filtered.slice(0, 20).map((deal) => (
+              <DealCard key={deal.id} deal={deal} />
             ))}
           </div>
+        </div>
+      )}
 
-          {/* Category tabs */}
-          <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
-            {CATEGORIES.map(({ key, label }) => (
-              <button
-                key={key}
-                onClick={() => setCategory(key)}
-                className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
-                  category === key
-                    ? "border-primary/50 bg-primary/10 text-primary"
-                    : "border-border bg-surface text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          {/* Price tabs */}
-          <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
-            {PRICE_FILTERS.map(({ key, label }) => (
-              <button
-                key={key}
-                onClick={() => setPriceFilter(key)}
-                className={`shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
-                  priceFilter === key
-                    ? "border-primary/50 bg-primary/10 text-primary"
-                    : "border-border bg-surface text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          {/* Featured deal */}
-          {featured && category === "all" && priceFilter === "any" && (
-            <div className="mt-5">
-              <FeaturedDeal deal={featured} />
-            </div>
-          )}
-
-          {/* Filtered grid */}
-          {filtered.length > 0 && (
-            <div className="mt-5">
-              <SectionHeader title="Filtered Results" count={filtered.length} />
+      {/* Category sections */}
+      {category === "all" && priceFilter === "any" && (
+        <div className="mt-8 space-y-8">
+          {showSection(getSection("phones")) && (
+            <div>
+              <SectionHeader title="📱 Phone Deals" count={getSection("phones").length} onSeeAll={() => setCategory("phones")} />
               <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                {filtered.slice(0, 20).map((deal) => (
+                {getSection("phones").slice(0, 4).map((deal: Deal) => (
                   <DealCard key={deal.id} deal={deal} />
                 ))}
               </div>
             </div>
           )}
 
-          {/* Category sections (only in "All" view) */}
-          {category === "all" && priceFilter === "any" && (
-            <div className="mt-8 space-y-8">
-              {showSection(getSection("phones")) && (
-                <div>
-                  <SectionHeader title="📱 Phone Deals" count={getSection("phones").length} onSeeAll={() => setCategory("phones")} />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                    {getSection("phones").slice(0, 4).map((deal: Deal) => (
-                      <DealCard key={deal.id} deal={deal} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {showSection(getSection("computers")) && (
-                <div>
-                  <SectionHeader title="💻 PC & Computers" count={getSection("computers").length} onSeeAll={() => setCategory("computers")} />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                    {getSection("computers").slice(0, 4).map((deal: Deal) => (
-                      <DealCard key={deal.id} deal={deal} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {showSection(getSection("gaming")) && (
-                <div>
-                  <SectionHeader title="🎮 Gaming Deals" count={getSection("gaming").length} onSeeAll={() => setCategory("gaming")} />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                    {getSection("gaming").slice(0, 4).map((deal: Deal) => (
-                      <DealCard key={deal.id} deal={deal} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {showSection(getSection("books")) && (
-                <div>
-                  <SectionHeader title="📚 Book Deals" count={getSection("books").length} onSeeAll={() => setCategory("books")} />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                    {getSection("books").slice(0, 4).map((deal: Deal) => (
-                      <DealCard key={deal.id} deal={deal} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {showSection(getSection("audio")) && (
-                <div>
-                  <SectionHeader title="🎧 Audio Deals" count={getSection("audio").length} onSeeAll={() => setCategory("audio")} />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                    {getSection("audio").slice(0, 4).map((deal: Deal) => (
-                      <DealCard key={deal.id} deal={deal} />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {showSection(getSection("home")) && (
-                <div>
-                  <SectionHeader title="🏠 Home & Kitchen" count={getSection("home").length} onSeeAll={() => setCategory("home")} />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                    {getSection("home").slice(0, 4).map((deal: Deal) => (
-                      <DealCard key={deal.id} deal={deal} />
-                    ))}
-                  </div>
-                </div>
-              )}
+          {showSection(getSection("computers")) && (
+            <div>
+              <SectionHeader title="💻 PC & Computers" count={getSection("computers").length} onSeeAll={() => setCategory("computers")} />
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+                {getSection("computers").slice(0, 4).map((deal: Deal) => (
+                  <DealCard key={deal.id} deal={deal} />
+                ))}
+              </div>
             </div>
           )}
 
-          {/* Footer note */}
-          <p className="mt-6 text-[11px] text-muted-foreground">
-            All deals sourced from Reddit communities. Prices and availability may change. Not affiliated with any retailer.
-          </p>
-        </>
+          {showSection(getSection("gaming")) && (
+            <div>
+              <SectionHeader title="🎮 Gaming Deals" count={getSection("gaming").length} onSeeAll={() => setCategory("gaming")} />
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+                {getSection("gaming").slice(0, 4).map((deal: Deal) => (
+                  <DealCard key={deal.id} deal={deal} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {showSection(getSection("books")) && (
+            <div>
+              <SectionHeader title="📚 Book Deals" count={getSection("books").length} onSeeAll={() => setCategory("books")} />
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+                {getSection("books").slice(0, 4).map((deal: Deal) => (
+                  <DealCard key={deal.id} deal={deal} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {showSection(getSection("audio")) && (
+            <div>
+              <SectionHeader title="🎧 Audio Deals" count={getSection("audio").length} onSeeAll={() => setCategory("audio")} />
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+                {getSection("audio").slice(0, 4).map((deal: Deal) => (
+                  <DealCard key={deal.id} deal={deal} />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {showSection(getSection("home")) && (
+            <div>
+              <SectionHeader title="🏠 Home & Kitchen" count={getSection("home").length} onSeeAll={() => setCategory("home")} />
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+                {getSection("home").slice(0, 4).map((deal: Deal) => (
+                  <DealCard key={deal.id} deal={deal} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       )}
+
+      <p className="mt-6 text-[11px] text-muted-foreground">
+        All deals sourced from Reddit communities. Prices and availability may change. Not affiliated with any retailer.
+      </p>
     </AppShell>
   );
 }

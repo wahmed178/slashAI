@@ -424,7 +424,7 @@ function HomePage() {
       {/* ─── Quick Links Grid (icon cards) ─── */}
       <div className="mt-6 grid grid-cols-3 gap-2.5 sm:grid-cols-4 lg:grid-cols-5">
         {([
-          ["/assistant", "\u{1F9E0}", "Local AI", "Private \u00b7 No key needed"],
+          ["/assistant", "\u{1F9E0}", "AI Assistant", "Free providers available"],
           ["/find", "\u{1F50D}", "Search", "Advanced"],
           ["/generators", "\u{26A1}", "Generators", "25 AI tools"],
           ["/roadmaps", "\u{1F5FA}\u{FE0F}", "Roadmaps", "20 guides"],
