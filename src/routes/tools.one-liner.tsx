@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/one-liner")({
   head: () => ({
@@ -952,26 +951,26 @@ function OneLiner() {
     if (!current) return;
     const canvas = document.createElement("canvas");
     canvas.width = 1080;
-    canvas.height = 1080;
+    canvas.height = 1920;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, 1080, 1080);
+    ctx.fillRect(0, 0, 1080, 1920);
 
     const fontStr = FONT_MAP[font];
-    let fontSize = (size / 28) * 52;
-    fontSize = Math.max(32, Math.min(84, fontSize));
+    let fontSize = Math.round((size / 28) * 58);
+    fontSize = Math.max(36, Math.min(80, fontSize));
     const len = current.text.length;
-    if (len > 60) fontSize *= 0.75;
-    else if (len > 45) fontSize *= 0.82;
-    else if (len > 30) fontSize *= 0.9;
-    fontSize = Math.max(28, fontSize);
+    if (len > 70) fontSize = Math.round(fontSize * 0.7);
+    else if (len > 50) fontSize = Math.round(fontSize * 0.8);
+    else if (len > 30) fontSize = Math.round(fontSize * 0.9);
+    fontSize = Math.max(30, fontSize);
 
     ctx.fillStyle = "#FFFFFF";
     ctx.textAlign = "center";
-    ctx.textBaseline = "alphabetic";
+    ctx.textBaseline = "middle";
 
-    const maxW = 820;
+    const maxW = 900;
     ctx.font = `400 ${fontSize}px ${fontStr}`;
     const words = current.text.split(" ");
     const lines: string[] = [];
@@ -987,8 +986,9 @@ function OneLiner() {
     }
     if (line) lines.push(line);
 
-    const lh = fontSize * 1.32;
-    let y = 540 - (lines.length * lh) / 2 + fontSize * 0.75;
+    const lh = fontSize * 1.4;
+    const totalH = lines.length * lh;
+    let y = 960 - totalH / 2 + lh / 2;
     for (const l of lines) {
       ctx.fillText(l, 540, y);
       y += lh;
@@ -1015,9 +1015,9 @@ function OneLiner() {
   const atEnd = pos >= total - 1;
 
   return (
-    <AppShell wide title="OneLiner Quotes">
-      {/* Category pills */}
-      <div className="w-full overflow-x-auto pb-2 scrollbar-none">
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: "#0d1117" }}>
+      {/* Category pills — fixed top */}
+      <div className="shrink-0 w-full overflow-x-auto pb-2 pt-2 px-4 scrollbar-none" style={{ background: "#0d1117" }}>
         <div className="flex items-center gap-2 w-max pr-4">
           {CATEGORIES.map((cat) => {
             const active = cat === category;
@@ -1053,7 +1053,7 @@ function OneLiner() {
       </div>
 
       {/* Toasts */}
-      <div className="pointer-events-none fixed top-24 right-5 z-30 flex flex-col items-end gap-2">
+      <div className="pointer-events-none fixed top-20 right-5 z-30 flex flex-col items-end gap-2">
         <div
           className="transition-all duration-200"
           style={{ opacity: copied ? 1 : 0, transform: `translateY(${copied ? 0 : -6}px)` }}
@@ -1067,14 +1067,14 @@ function OneLiner() {
           style={{ opacity: saved ? 1 : 0, transform: `translateY(${saved ? 0 : -6}px)` }}
         >
           <div className="rounded-full bg-foreground text-background px-3.5 py-1.5 text-[11px] font-medium">
-            saved · clean black image
+            saved · AMOLED black
           </div>
         </div>
       </div>
 
       {/* Quote display */}
       <div
-        className="relative flex-1 flex flex-col items-center justify-center cursor-pointer w-full overflow-hidden pt-6 pb-56"
+        className="flex-1 flex flex-col items-center justify-center cursor-pointer w-full overflow-hidden px-6" style={{ background: "#0d1117" }}
         onClick={goNext}
       >
         <div className="w-full max-w-[720px] flex flex-col items-center justify-center">
@@ -1094,7 +1094,7 @@ function OneLiner() {
             className="text-center max-w-[720px] px-2 text-foreground"
             style={{
               fontFamily: FONT_MAP[font],
-              fontSize: `clamp(18px, 2.8vw, ${size}px)`,
+              fontSize: `clamp(20px, 3vw, ${size}px)`,
               fontWeight: font === "sans" ? 300 : 400,
               lineHeight: font === "mono" ? 1.35 : 1.2,
               opacity: fading ? 0 : 1,
@@ -1117,7 +1117,7 @@ function OneLiner() {
       </div>
 
       {/* Bottom controls */}
-      <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-border bg-background/80 backdrop-blur-xl">
+      <div className="shrink-0 fixed bottom-0 left-0 right-0 z-20 border-t border-border" style={{ background: "rgba(13,17,23,0.92)", backdropFilter: "blur(16px)" }}>
         <div className="mx-auto max-w-[980px] px-4 md:px-8 py-3.5 flex flex-col gap-3.5">
           {/* Nav row */}
           <div className="flex items-center justify-between md:justify-center gap-4">
@@ -1273,6 +1273,6 @@ function OneLiner() {
           </div>
         </div>
       </div>
-    </AppShell>
+    </div>
   );
 }
