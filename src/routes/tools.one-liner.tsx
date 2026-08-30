@@ -1010,38 +1010,18 @@ function OneLiner() {
 
     const fileName = `oneliner-${category.toLowerCase().replace(/\s+/g, "-")}-${String(pos + 1).padStart(3, "0")}.png`;
 
-    // Multi-approach download for Android WebView + browser compatibility
-    const isAndroid = /android/i.test(navigator.userAgent);
-
-    if (isAndroid) {
-      // Android WebView: use blob URL + window.open (most reliable)
-      canvas.toBlob((blob: Blob | null) => {
-        if (!blob) return;
-        const url = URL.createObjectURL(blob);
-        // Method 1: window.open triggers Android download manager
-        const w = window.open(url, "_blank");
-        if (!w) {
-          // Method 2: fallback to link click
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = fileName;
-          a.target = "_blank";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        }
-        setTimeout(() => URL.revokeObjectURL(url), 5000);
-      }, "image/png");
-    } else {
-      // Desktop/browser: standard link download
-      const dataUrl = canvas.toDataURL("image/png");
-      const a = document.createElement("a");
-      a.href = dataUrl;
-      a.download = fileName;
-      document.body.appendChild(a);
+    // Convert canvas to base64 data URL — most compatible with Android WebView
+    const dataUrl = canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = dataUrl;
+    a.download = fileName;
+    a.style.cssText = "position:fixed;left:-9999px;top:-9999px;opacity:0";
+    document.body.appendChild(a);
+    // Small delay to ensure the element is rendered before click
+    requestAnimationFrame(() => {
       a.click();
-      document.body.removeChild(a);
-    }
+      setTimeout(() => document.body.removeChild(a), 200);
+    });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
