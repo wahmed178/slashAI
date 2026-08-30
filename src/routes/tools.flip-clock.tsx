@@ -32,58 +32,60 @@ function FlipCard({
       timeoutRef.current = setTimeout(() => {
         setDisplayed(value);
         setFlipping(false);
-      }, 300);
+      }, 350);
     }
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [value, displayed]);
 
-  const digitCls =
-    "absolute inset-0 flex items-center justify-center select-none pointer-events-none";
-  const digitStyle = {
-    fontFamily: '"Inter", system-ui, sans-serif',
-    fontSize: "clamp(72px, 20vw, 200px)",
-    fontWeight: 700,
-    lineHeight: 1,
-  };
+  // The number to show in the static halves
+  const staticNum = flipping ? prev : displayed;
 
   return (
-    <div className="relative w-full" style={{ aspectRatio: "1.4" }}>
+    <div className="relative w-full" style={{ aspectRatio: "1.35" }}>
       {/* Card background */}
       <div
-        className="absolute inset-0 rounded-2xl sm:rounded-3xl overflow-hidden"
-        style={{ background: "#1a1a1a" }}
+        className="absolute inset-0 rounded-[18px] sm:rounded-[24px]"
+        style={{ background: "#1c1c1c" }}
       >
-        {/* ── TOP HALF ── shows top portion of current digit */}
+        {/* ── TOP HALF ── bright, clipped to top 50% */}
         <div
-          className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden"
-          style={{ clipPath: "inset(0 0 0 0)" }}
+          className="absolute inset-0"
+          style={{ clipPath: "inset(0 0 50% 0)" }}
         >
-          <div className={digitCls}>
+          <div className="absolute inset-0 flex items-center justify-center">
             <span
+              className="select-none pointer-events-none"
               style={{
-                ...digitStyle,
-                color: "rgba(255,255,255,0.92)",
-                clipPath: "inset(0 0 50% 0)",
+                fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
+                fontSize: "clamp(80px, 22vw, 220px)",
+                fontWeight: 600,
+                lineHeight: 1,
+                color: "#d4d4d4",
+                letterSpacing: "-0.02em",
               }}
             >
-              {flipping ? prev : displayed}
+              {staticNum}
             </span>
           </div>
         </div>
 
-        {/* ── BOTTOM HALF ── shows bottom portion of current digit */}
+        {/* ── BOTTOM HALF ── dimmer, clipped to bottom 50% */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden"
-          style={{ clipPath: "inset(0 0 0 0)" }}
+          className="absolute inset-0"
+          style={{ clipPath: "inset(50% 0 0 0)" }}
         >
-          <div className={digitCls}>
+          <div className="absolute inset-0 flex items-center justify-center">
             <span
+              className="select-none pointer-events-none"
               style={{
-                ...digitStyle,
-                color: "rgba(255,255,255,0.6)",
-                clipPath: "inset(50% 0 0 0)",
+                fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
+                fontSize: "clamp(80px, 22vw, 220px)",
+                fontWeight: 600,
+                lineHeight: 1,
+                color: "#9a9a9a",
+                letterSpacing: "-0.02em",
               }}
             >
               {displayed}
@@ -91,90 +93,100 @@ function FlipCard({
           </div>
         </div>
 
-        {/* ── FLIP: top flap (old value folding away) ── */}
+        {/* ── FLIP: top flap folding down (shows OLD value) ── */}
         {flipping && (
           <div
-            className="absolute top-0 left-0 right-0 h-1/2 overflow-hidden origin-bottom"
+            className="absolute inset-0 origin-bottom"
             style={{
-              animation: "flipTop 0.3s ease-in forwards",
+              clipPath: "inset(0 0 50% 0)",
+              animation: "flipDown 0.35s ease-in forwards",
               backfaceVisibility: "hidden",
               zIndex: 10,
             }}
           >
-            <div
-              className="absolute inset-0"
-              style={{ background: "#1a1a1a" }}
-            >
-              <div className={digitCls}>
-                <span
-                  style={{
-                    ...digitStyle,
-                    color: "rgba(255,255,255,0.92)",
-                    clipPath: "inset(0 0 50% 0)",
-                  }}
-                >
-                  {prev}
-                </span>
-              </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span
+                className="select-none pointer-events-none"
+                style={{
+                  fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
+                  fontSize: "clamp(80px, 22vw, 220px)",
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  color: "#d4d4d4",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {prev}
+              </span>
             </div>
           </div>
         )}
 
-        {/* ── FLIP: bottom flap (new value appearing) ── */}
+        {/* ── FLIP: bottom flap rotating in (shows NEW value) ── */}
         {flipping && (
           <div
-            className="absolute bottom-0 left-0 right-0 h-1/2 overflow-hidden origin-top"
+            className="absolute inset-0 origin-top"
             style={{
-              animation: "flipBottom 0.3s ease-out 0.15s forwards",
+              clipPath: "inset(50% 0 0 0)",
+              transform: "rotateX(180deg)",
+              animation: "flipUp 0.35s ease-out 0.175s forwards",
               backfaceVisibility: "hidden",
-              transform: "rotateX(90deg)",
               zIndex: 10,
             }}
           >
-            <div
-              className="absolute inset-0"
-              style={{ background: "#1a1a1a" }}
-            >
-              <div className={digitCls}>
-                <span
-                  style={{
-                    ...digitStyle,
-                    color: "rgba(255,255,255,0.6)",
-                    clipPath: "inset(50% 0 0 0)",
-                  }}
-                >
-                  {displayed}
-                </span>
-              </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span
+                className="select-none pointer-events-none"
+                style={{
+                  fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
+                  fontSize: "clamp(80px, 22vw, 220px)",
+                  fontWeight: 600,
+                  lineHeight: 1,
+                  color: "#9a9a9a",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {displayed}
+              </span>
             </div>
           </div>
         )}
 
         {/* Center split line */}
         <div
-          className="absolute left-0 right-0 top-1/2 -translate-y-px h-px z-20"
-          style={{ background: "rgba(0,0,0,0.7)" }}
+          className="absolute left-0 right-0 top-1/2 z-20"
+          style={{
+            height: "1px",
+            marginTop: "-0.5px",
+            background: "rgba(0,0,0,0.6)",
+          }}
         />
       </div>
 
-      {/* AM/PM badge */}
+      {/* AM/PM badge — bottom-left of card */}
       {showAmPm && (
-        <div className="absolute bottom-3 left-4 sm:bottom-4 sm:left-5 z-30">
+        <div
+          className="absolute z-30"
+          style={{ bottom: "12%", left: "8%" }}
+        >
           <span
-            className="text-xs sm:text-sm font-semibold tracking-wider"
-            style={{ color: "rgba(255,255,255,0.35)" }}
+            className="text-[11px] sm:text-sm font-semibold tracking-wider"
+            style={{ color: "rgba(255,255,255,0.3)" }}
           >
             {isPm ? "PM" : "AM"}
           </span>
         </div>
       )}
 
-      {/* Label */}
+      {/* Label — top-right of card */}
       {label && (
-        <div className="absolute top-3 right-4 sm:top-4 sm:right-5 z-30">
+        <div
+          className="absolute z-30"
+          style={{ top: "10%", right: "6%" }}
+        >
           <span
-            className="text-[10px] sm:text-xs font-medium tracking-widest uppercase"
-            style={{ color: "rgba(255,255,255,0.2)" }}
+            className="text-[9px] sm:text-[11px] font-medium tracking-[0.15em] uppercase"
+            style={{ color: "rgba(255,255,255,0.18)" }}
           >
             {label}
           </span>
@@ -217,13 +229,6 @@ function FlipClock() {
   const mStr = String(minutes).padStart(2, "0");
   const sStr = String(seconds).padStart(2, "0");
 
-  const dateStr = now.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <div
       className="flex flex-col h-screen w-full overflow-hidden select-none"
@@ -246,36 +251,35 @@ function FlipClock() {
         </svg>
       </button>
 
+      {/* Vertical center line behind cards */}
+      <div
+        className="absolute left-1/2 top-0 bottom-0 -translate-x-px z-0"
+        style={{ width: "1px", background: "rgba(255,255,255,0.04)" }}
+      />
+
       {/* Flip cards — vertical stack, centered */}
-      <div className="flex-1 flex flex-col items-center justify-center gap-3 sm:gap-4 px-6 sm:px-10 py-4">
-        <div className="w-full max-w-[280px] sm:max-w-[340px]">
+      <div className="flex-1 flex flex-col items-center justify-center gap-3 sm:gap-4 px-8 sm:px-12 relative z-10">
+        <div className="w-full max-w-[260px] sm:max-w-[320px]">
           <FlipCard value={hStr} showAmPm={!h24} isPm={isPm} />
         </div>
-        <div className="w-full max-w-[280px] sm:max-w-[340px]">
+        <div className="w-full max-w-[260px] sm:max-w-[320px]">
           <FlipCard value={mStr} label="MINUTES" />
         </div>
-        <div className="w-full max-w-[280px] sm:max-w-[340px]">
+        <div className="w-full max-w-[260px] sm:max-w-[320px]">
           <FlipCard value={sStr} label="SECONDS" />
         </div>
       </div>
 
-      {/* Date */}
-      <div className="shrink-0 pb-8 sm:pb-12 text-center">
-        <p className="text-xs sm:text-sm tracking-wider" style={{ color: "rgba(255,255,255,0.3)" }}>
-          {dateStr}
-        </p>
-      </div>
-
       {/* Controls */}
-      <div className="shrink-0 fixed bottom-0 left-0 right-0 flex items-center justify-center pb-4 gap-3 z-20">
+      <div className="shrink-0 fixed bottom-0 left-0 right-0 flex items-center justify-center pb-5 gap-3 z-20">
         <button
           type="button"
           onClick={() => setH24(!h24)}
           className="h-8 px-3 rounded-full border text-[11px] tracking-wider transition-all duration-150"
           style={{
-            borderColor: "rgba(255,255,255,0.1)",
-            color: "rgba(255,255,255,0.4)",
-            background: "rgba(255,255,255,0.04)",
+            borderColor: "rgba(255,255,255,0.08)",
+            color: "rgba(255,255,255,0.35)",
+            background: "rgba(255,255,255,0.03)",
           }}
         >
           {h24 ? "24H" : "12H"}
@@ -283,12 +287,12 @@ function FlipClock() {
       </div>
 
       <style>{`
-        @keyframes flipTop {
-          0% { transform: rotateX(0deg); }
+        @keyframes flipDown {
+          0%   { transform: rotateX(0deg); }
           100% { transform: rotateX(-90deg); }
         }
-        @keyframes flipBottom {
-          0% { transform: rotateX(90deg); }
+        @keyframes flipUp {
+          0%   { transform: rotateX(180deg); }
           100% { transform: rotateX(0deg); }
         }
       `}</style>
