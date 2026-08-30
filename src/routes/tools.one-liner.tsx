@@ -836,7 +836,10 @@ function OneLiner() {
   const [fading, setFading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [downloading, setDownloading] = useState(false);
   const [showControls, setShowControls] = useState(false);
+  const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad/i.test(navigator.userAgent);
+  const isWebView = typeof navigator !== 'undefined' && (/wv/.test(navigator.userAgent) || /Android.*Version\/[\d.]+.*Chrome\/[\d.]+/.test(navigator.userAgent));
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const filtered = useMemo(
@@ -943,7 +946,7 @@ function OneLiner() {
       window.removeEventListener("touchstart", show);
       clearTimeout(hide);
     };
-  }, [showControls]);
+  }, []);
 
   const copyQuote = async () => {
     if (!current) return;
@@ -961,13 +964,13 @@ function OneLiner() {
     setTimeout(() => setCopied(false), 1600);
   };
 
-  const downloadPNG = () => {
-    if (!current) return;
+  const renderCanvas = (): HTMLCanvasElement | null => {
+    if (!current) return null;
     const canvas = document.createElement("canvas");
     canvas.width = 1080;
     canvas.height = 1920;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) return null;
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, 1080, 1920);
 
@@ -1008,34 +1011,98 @@ function OneLiner() {
       y += lh;
     }
 
+    return canvas;
+  };
+
+  const downloadPNG = async () => {
+    if (!current) return;
+    setDownloading(true);
     const fileName = `oneliner-${category.toLowerCase().replace(/\s+/g, "-")}-${String(pos + 1).padStart(3, "0")}.png`;
 
-    // Convert canvas to base64 data URL — most compatible with Android WebView
-    const dataUrl = canvas.toDataURL("image/png");
-    const isAndroid = /android/i.test(navigator.userAgent);
+    try {
+      const canvas = renderCanvas();
+      if (!canvas) {
+        alert("Could not generate image. Please try again.");
+        return;
+      }
+      const dataUrl = canvas.toDataURL("image/png");
 
-    if (isAndroid) {
-      // Android: open image in new tab — user long-presses to save
-      window.open(dataUrl, "_blank");
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
-    } else {
-      // Desktop: direct download via hidden link
+      // METHOD 1: Web Share API (best for mobile — native share sheet)
+      if (navigator.canShare && navigator.share) {
+        try {
+          const response = await fetch(dataUrl);
+          const blob = await response.blob();
+          const file = new File([blob], fileName, { type: "image/png" });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: "SlashAI Quote",
+              text: current.text,
+            });
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
+            return;
+          }
+        } catch (err) {
+          if ((err as Error).name === "AbortError") {
+            setDownloading(false);
+            return;
+          }
+        }
+      }
+
+      // METHOD 2: Android WebView bridge
+      if ((window as any).Android?.downloadImage) {
+        try {
+          (window as any).Android.downloadImage(dataUrl, fileName);
+          setSaved(true);
+          setTimeout(() => setSaved(false), 2000);
+          return;
+        } catch { /* fall through */ }
+      }
+
+      // METHOD 3: WebView — open in new tab for long-press save
+      if (isWebView) {
+        const w = window.open();
+        if (w) {
+          w.document.write(
+            `<html><head><title>Save Quote</title>` +
+            `<meta name="viewport" content="width=device-width,initial-scale=1">` +
+            `<style>body{margin:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif}img{max-width:100%;border-radius:8px}p{color:#fff;font-size:14px;margin:16px;text-align:center;opacity:0.7}</style></head>` +
+            `<body><p>Long press the image and tap "Save image"</p>` +
+            `<img src="${dataUrl}" alt="Quote" />` +
+            `<p>Tap back when done</p></body></html>`
+          );
+          w.document.close();
+          setSaved(true);
+          setTimeout(() => setSaved(false), 2000);
+          return;
+        }
+      }
+
+      // METHOD 4: Standard browser download
       const a = document.createElement("a");
       a.href = dataUrl;
       a.download = fileName;
       a.style.cssText = "position:fixed;left:-9999px;top:-9999px;opacity:0";
       document.body.appendChild(a);
-      requestAnimationFrame(() => {
-        a.click();
-        setTimeout(() => document.body.removeChild(a), 200);
+      await new Promise<void>((resolve) => {
+        requestAnimationFrame(() => {
+          a.click();
+          setTimeout(() => { document.body.removeChild(a); resolve(); }, 300);
+        });
       });
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
+
+    } catch (err) {
+      console.error("Download failed:", err);
+      alert("Download failed. Try long-pressing the image to save.");
+    } finally {
+      setDownloading(false);
     }
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
   };
+;
 
   const total = filtered.length;
   const cur = String(pos + 1).padStart(2, "0");
@@ -1159,6 +1226,13 @@ function OneLiner() {
           </p>
         </div>
       </div>
+
+      {/* WebView download instruction */}
+      {isWebView && (
+        <div className="fixed bottom-[140px] left-4 right-4 z-30 rounded-lg border border-accent/20 bg-accent/5 px-4 py-2.5 text-[11px] text-muted-foreground text-center">
+          On the Android app: tap Save → choose "Save to Photos" or "Download"
+        </div>
+      )}
 
       {/* Bottom controls */}
       <div className="shrink-0 fixed bottom-0 left-0 right-0 z-20 border-t border-border bg-background/90 backdrop-blur-xl">
@@ -1287,14 +1361,18 @@ function OneLiner() {
                   e.stopPropagation();
                   downloadPNG();
                 }}
-                className="h-8 w-8 rounded-full border border-border bg-surface flex items-center justify-center hover:bg-surface-elevated active:scale-95"
-                title="Download PNG"
+                disabled={downloading}
+                className="h-8 px-3 rounded-full border border-border bg-surface flex items-center justify-center gap-1.5 hover:bg-surface-elevated active:scale-95 disabled:opacity-50"
+                title={isMobile ? "Save / Share" : "Download PNG"}
               >
-                {saved ? (
+                {downloading ? (
+                  <span className="text-muted-foreground text-xs">⏳</span>
+                ) : saved ? (
                   <span className="text-green text-xs">✓</span>
                 ) : (
                   <span className="text-muted-foreground text-xs">⬇</span>
                 )}
+                <span className="text-[11px] text-muted-foreground">{isMobile ? "Save" : "Download"}</span>
               </button>
 
               {/* Copy */}
