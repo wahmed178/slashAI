@@ -346,27 +346,25 @@ function HomePage() {
 
       {/* ─── Explore more ─── */}
       <section className="mt-10">
-        <h2 className="text-[22px] font-semibold text-foreground">Explore more</h2>
-        <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
-            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available", bg: "linear-gradient(135deg, #1a1f2e, #0f1929)" },
-            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge", bg: "linear-gradient(135deg, #1a1a2e, #0f0a1a)" },
-            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: "20 guides", bg: "linear-gradient(135deg, #1a1428, #0f0a1a)" },
-            { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", bg: "linear-gradient(135deg, #1a1a14, #1a0f0a)", badge: "Hot" },
+            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available" },
+            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge" },
+            { to: "/tools", emoji: "🔧", title: "SlashKits", desc: "22 free browser tools" },
+            { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", badge: "Hot" },
           ].map((card) => (
             <Link
               key={card.to}
               to={card.to}
-              className="group relative flex flex-col justify-end rounded-[12px] border border-sidebar-border p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-border min-h-[140px]"
-              style={{ background: card.bg }}
+              className="group relative flex flex-col justify-end rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-border min-h-[130px]"
             >
               {card.badge && (
-                <span className="absolute top-3 right-3 rounded-full bg-[#f85149] px-2 py-0.5 text-[10px] font-bold text-white">
+                <span className="absolute top-2.5 right-2.5 rounded-full bg-[#f85149] px-2 py-0.5 text-[10px] font-bold text-white">
                   {card.badge}
                 </span>
               )}
-              <span className="text-[36px]">{card.emoji}</span>
-              <span className="mt-2 block text-[16px] font-bold text-foreground">{card.title}</span>
+              <span className="text-[32px]">{card.emoji}</span>
+              <span className="mt-2 block text-[15px] font-bold text-foreground">{card.title}</span>
               <span className="mt-0.5 block text-[12px] text-muted-foreground">{card.desc}</span>
             </Link>
           ))}
