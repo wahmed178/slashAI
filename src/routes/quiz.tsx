@@ -153,63 +153,115 @@ function markCategoryCompleted(categoryId: number) {
 }
 
 /* ═══════════════════════════════════════════════
-   API
+   API — with timeouts, fallback, and retries
    ═══════════════════════════════════════════════ */
+
+const FETCH_TIMEOUT_MS = 10000; // 10s timeout for all API calls
+
+async function fetchWithTimeout(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// ── Fallback API: the-trivia-api.com (free, no key) ──
+interface TheTriviaAPIQuestion {
+  question: { text: string };
+  correctAnswer: string;
+  incorrectAnswers: string[];
+  category: string;
+  difficulty: string;
+}
+
+const TRIVIA_CATEGORY_MAP: Record<number, string> = {
+  9: "General Knowledge", 10: "Arts & Literature", 11: "Film & TV",
+  12: "Music", 15: "Video Games", 17: "Science",
+  18: "Technology", 19: "Mathematics", 21: "Sports",
+  22: "Geography", 23: "History",
+};
+
+async function fetchFromFallbackAPI(
+  categoryId: number,
+  difficulty: string,
+): Promise<{ questions: QuizQuestion[]; responseCode: number }> {
+  const categoryName = TRIVIA_CATEGORY_MAP[categoryId];
+  if (!categoryName) return { questions: [], responseCode: 3 };
+
+  const limit = 10;
+  const url = `https://the-trivia-api.com/v2/questions?limit=${limit}&categories=${encodeURIComponent(categoryName)}&difficulties=${difficulty}`;
+
+  try {
+    const res = await fetchWithTimeout(url);
+    if (!res.ok) return { questions: [], responseCode: -1 };
+    const data: TheTriviaAPIQuestion[] = await res.json();
+
+    if (!data.length) return { questions: [], responseCode: 1 };
+
+    const questions: QuizQuestion[] = data.map((q) => ({
+      question: q.question.text,
+      correctAnswer: q.correctAnswer,
+      answers: shuffleArray([q.correctAnswer, ...q.incorrectAnswers]),
+      category: categoryName,
+      difficulty: q.difficulty,
+    }));
+
+    return { questions, responseCode: 0 };
+  } catch {
+    return { questions: [], responseCode: -1 };
+  }
+}
 
 async function ensureToken(): Promise<string> {
   let token = getSessionToken();
   if (token) return token;
   try {
-    const res = await fetch("https://opentdb.com/api_token.php?command=request");
+    const res = await fetchWithTimeout("https://opentdb.com/api_token.php?command=request");
     const data = await res.json();
     token = data.token;
     if (token) setSessionToken(token);
-  } catch { /* ignore */ }
+  } catch { /* token unavailable — continue without it */ }
   return token || "";
 }
 
 async function fetchQuestions(
   categoryId: number,
   difficulty: string,
+  _retryCount = 0,
 ): Promise<{ questions: QuizQuestion[]; responseCode: number }> {
   const token = await ensureToken();
   const url = `https://opentdb.com/api.php?amount=10&category=${categoryId}&difficulty=${difficulty}&type=multiple${token ? `&token=${token}` : ""}`;
 
   try {
-    const res = await fetch(url);
+    const res = await fetchWithTimeout(url);
     const data: OpenTDBResponse = await res.json();
 
-    // Token exhausted — reset and retry once
-    if (data.response_code === 4 && token) {
-      try { await fetch(`https://opentdb.com/api_token.php?command=reset&token=${token}`); } catch { /* ignore */ }
+    // Token exhausted — reset and retry ONCE
+    if (data.response_code === 4 && token && _retryCount < 1) {
+      try {
+        await fetchWithTimeout(`https://opentdb.com/api_token.php?command=reset&token=${token}`);
+      } catch { /* ignore reset failure */ }
       localStorage.removeItem("quiz-session-token");
-      return fetchQuestions(categoryId, difficulty);
+      return fetchQuestions(categoryId, difficulty, _retryCount + 1);
     }
 
-    // Rate limited — wait and retry once
-    if (data.response_code === 5) {
-      await new Promise((r) => setTimeout(r, 6000));
-      const retryRes = await fetch(url);
-      const retryData: OpenTDBResponse = await retryRes.json();
-      if (retryData.response_code !== 0 || !retryData.results?.length) {
-        return { questions: [], responseCode: retryData.response_code };
-      }
-      return {
-        questions: retryData.results.map(parseQuestion),
-        responseCode: 0,
-      };
+    // Rate limited — wait and retry ONCE
+    if (data.response_code === 5 && _retryCount < 1) {
+      await new Promise((r) => setTimeout(r, 5000));
+      return fetchQuestions(categoryId, difficulty, _retryCount + 1);
     }
 
-    if (data.response_code !== 0 || !data.results?.length) {
-      return { questions: [], responseCode: data.response_code };
+    if (data.response_code === 0 && data.results?.length) {
+      return { questions: data.results.map(parseQuestion), responseCode: 0 };
     }
 
-    return {
-      questions: data.results.map(parseQuestion),
-      responseCode: 0,
-    };
+    return { questions: [], responseCode: data.response_code };
   } catch {
-    return { questions: [], responseCode: -1 };
+    // OpenTDB failed — try fallback API
+    return fetchFromFallbackAPI(categoryId, difficulty);
   }
 }
 
@@ -226,12 +278,11 @@ function parseQuestion(raw: OpenTDBQuestion): QuizQuestion {
 
 async function fetchCategories(): Promise<{ id: number; name: string }[]> {
   try {
-    const res = await fetch("https://opentdb.com/api_category.php");
+    const res = await fetchWithTimeout("https://opentdb.com/api_category.php");
     const data = await res.json();
-    return data.trivia_categories || [];
-  } catch {
-    return FALLBACK_CATEGORIES;
-  }
+    if (data.trivia_categories?.length) return data.trivia_categories;
+  } catch { /* fallback below */ }
+  return FALLBACK_CATEGORIES;
 }
 
 /* ═══════════════════════════════════════════════
@@ -274,6 +325,10 @@ function QuizPage() {
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const autoAdvanceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const currentQRef = useRef(currentQ);
+  const questionsRef = useRef(questions);
+  currentQRef.current = currentQ;
+  questionsRef.current = questions;
 
   // Featured category (date-seeded rotation)
   const featuredId = useMemo(() => {
@@ -335,13 +390,13 @@ function QuizPage() {
           return;
         }
       }
-      setError("No questions available for this category and difficulty. Try another combination.");
+      setError("No questions available for this category and difficulty. Try another category or change the difficulty.");
       setLoading(false);
       return;
     }
 
     if (!fetched.length) {
-      setError("Questions couldn't load. Try again in a moment.");
+      setError("Could not load questions. Check your connection and try again.");
       setLoading(false);
       return;
     }
@@ -382,13 +437,16 @@ function QuizPage() {
     };
 
     const handleTimeout = () => {
+      const qIdx = currentQRef.current;
+      const qData = questionsRef.current[qIdx];
+      if (!qData) return;
       setSelectedAnswer("\u0000"); // sentinel
       setIsCorrect(false);
       setAnswers((prev) => [
         ...prev,
         {
-          question: questions[currentQ]!.question,
-          correct: questions[currentQ]!.correctAnswer,
+          question: qData.question,
+          correct: qData.correctAnswer,
           userAnswer: "Timed out",
           wasCorrect: false,
         },
@@ -557,7 +615,19 @@ function QuizPage() {
                 selectedCategory={selectedCategory}
                 difficulty={difficulty}
               />
-            ) : null}
+            ) : (
+              <div className="flex flex-col items-center justify-center py-24">
+                <p className="text-sm text-muted-foreground">No questions available right now.</p>
+                <p className="mt-1 text-xs text-muted-foreground/70">Try a different category or difficulty.</p>
+                <button
+                  type="button"
+                  onClick={goBackToPicker}
+                  className="mt-4 min-h-[44px] rounded-lg border border-border bg-surface px-6 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                >
+                  Back to categories
+                </button>
+              </div>
+            )}
           </>
         )}
 
