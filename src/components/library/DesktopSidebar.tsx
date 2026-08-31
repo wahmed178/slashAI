@@ -151,30 +151,29 @@ export function DesktopSidebar() {
         })}
       </nav>
 
-      {/* Upgrade to Pro / Glass Member card */}
+      {/* Glass / Upgrade card */}
       <div className="mx-3 mb-3">
         {isGlass ? (
-          <div className="rounded-[10px] border border-primary/30 bg-primary/[0.06] p-3.5">
+          <div className="rounded-[10px] border border-border bg-surface p-3">
             <div className="flex items-center gap-2">
-              <span className="text-[16px]">✦</span>
-              <p className="text-[13px] font-bold text-primary">Glass Member</p>
+              <span className="text-[14px]">✦</span>
+              <p className="text-[13px] font-semibold text-primary">Glass Member</p>
             </div>
-            <p className="mt-1.5 text-[11px] leading-tight text-muted-foreground">
-              Active — enjoy unlimited access.
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              Premium themes unlocked.
             </p>
           </div>
         ) : (
-          <div className="rounded-[10px] border border-primary/20 bg-gradient-to-br from-surface to-primary/5 p-3.5">
-            <span className="text-[20px]">👑</span>
-            <p className="mt-1.5 text-[13px] font-bold text-foreground">Upgrade to Pro</p>
-            <p className="mt-1 text-[11px] leading-tight text-muted-foreground">
-              Unlock premium tools, unlimited access & more.
+          <div className="rounded-[10px] border border-border bg-surface p-3">
+            <p className="text-[13px] font-semibold text-foreground">✦ Glass Membership</p>
+            <p className="mt-1 text-[11px] leading-snug text-muted-foreground">
+              Free for first 1,000 customers. Unlocks premium themes.
             </p>
             <Link
               to="/glass"
-              className="mt-2.5 flex h-[32px] w-full items-center justify-center rounded-[6px] bg-primary text-[12px] font-bold text-background transition-colors hover:bg-primary/90"
+              className="mt-2.5 flex h-[32px] w-full items-center justify-center rounded-[6px] bg-surface-elevated border border-border text-[12px] font-medium text-foreground transition-all duration-150 hover:bg-primary/10 hover:text-primary hover:border-primary/30"
             >
-              Upgrade Now
+              Claim Free Access
             </Link>
           </div>
         )}

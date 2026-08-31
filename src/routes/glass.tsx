@@ -9,7 +9,7 @@ export const Route = createFileRoute("/glass")({
       {
         name: "description",
         content:
-          "SlashAI Glass — more power, same calm. Premium features for builders who want more.",
+          "SlashAI Glass — free for first 1,000 members. Unlock premium dark themes.",
       },
     ],
   }),
@@ -17,9 +17,9 @@ export const Route = createFileRoute("/glass")({
 });
 
 const BENEFITS = [
-  "Unlimited AI generators — no daily cap.",
-  "Your library across every device — synced.",
-  "Team workspaces for builders — share and collaborate.",
+  "Access 8+ premium themes — Glass, Batman, Ocean, Moonlight & more.",
+  "Premium themes have built-in accent colours — no extra setup.",
+  "Free for the first 1,000 members — claim yours now.",
 ];
 
 function GlassPage() {
@@ -66,7 +66,7 @@ function GlassPage() {
           SlashAI Glass
         </h1>
         <p className="mt-3 max-w-md text-base text-muted-foreground">
-          More power, same calm.
+          Free for the first 1,000 customers. Unlocks premium themes.
         </p>
 
         {/* Benefits */}
@@ -89,7 +89,7 @@ function GlassPage() {
                 ✦ You're a Glass member!
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Your sidebar now shows Glass status. Enjoy the perks.
+                Premium themes are now unlocked. Go to Settings → Theme to try them.
               </p>
               <button
                 type="button"
@@ -127,9 +127,9 @@ function GlassPage() {
           )}
         </div>
 
-        {/* Price hint */}
+        {/* Fine print */}
         <p className="mt-6 text-xs text-muted-foreground/60">
-          Planned from ₹299/month · $4/month — early access will be cheaper.
+          Free for the first 1,000 members. One membership per email.
         </p>
       </div>
     </AppShell>
