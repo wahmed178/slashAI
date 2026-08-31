@@ -1,43 +1,31 @@
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
-  Bot,
-  MessagesSquare,
-  Globe,
-  Coffee,
   Home,
+  Terminal,
   Compass,
-  Settings as SettingsIcon,
-  Info,
+  Wrench,
+  LayoutGrid,
+  Bot,
+  Zap,
+  Map,
+  Radio,
+  BookOpen,
+  Tag,
+  Bookmark,
+  Settings,
+  NotebookPen,
+  Sparkles,
+  Flame,
+  Youtube,
+  Layers,
+  History as HistoryIcon,
   Menu,
   ChevronLeft,
-  ChevronDown,
-  Terminal,
-  Layers,
-  Tag,
-  Wrench,
-  UserRound,
-  Search as SearchIcon,
-  Sparkles,
-  Github,
-  GraduationCap,
-  Youtube,
-  Lightbulb,
-  Radar,
-  Dices,
-  Radio,
-  Wand2,
-  Film,
-  Rocket,
-  BookOpen,
-  Route as RouteIcon,
-  NotebookPen,
-  Flame,
-  Bookmark,
-  LayoutGrid,
   Moon,
   Sun,
-  History as HistoryIcon,
+  Bell,
+  Search as SearchIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -49,10 +37,35 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { useLibrary } from "@/hooks/use-library";
-import { cn } from "@/lib/utils";
 import { SearchBox } from "./SearchBox";
 import { OfflineBadge } from "./OfflineBadge";
 import { DesktopSidebar } from "./DesktopSidebar";
+
+/** Shared nav items — same as DesktopSidebar */
+const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
+  { to: "/", label: "Home", icon: Home, exact: true },
+  { to: "/explore", label: "Commands", icon: Terminal },
+  { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
+  { to: "/discover", label: "Discover", icon: Compass },
+  { to: "/tools", label: "SlashKits", icon: Wrench },
+  { to: "/hub", label: "Hubs", icon: LayoutGrid },
+  { to: "/assistant", label: "AI Assistant", icon: Bot },
+  { to: "/generators", label: "Generators", icon: Zap },
+  { to: "/roadmaps", label: "Roadmaps", icon: Map },
+  { to: "/live", label: "Live", icon: Radio, badge: "Hot" },
+  { to: "/youtube", label: "YouTube", icon: Youtube },
+  { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
+  { to: "/glossary", label: "Glossary", icon: BookOpen },
+  { to: "/collections", label: "Collections", icon: Layers },
+  { to: "/deals", label: "Deals", icon: Tag },
+];
+
+const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any }> = [
+  { to: "/journal", label: "Journal", icon: NotebookPen },
+  { to: "/recent", label: "Recent", icon: HistoryIcon },
+  { to: "/favorites", label: "Saved", icon: Bookmark },
+  { to: "/me", label: "Profile & Settings", icon: Settings },
+];
 
 /** mobile bottom bar — five essentials */
 const PRIMARY = [
@@ -63,115 +76,26 @@ const PRIMARY = [
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
 ] as const;
 
-/** nested under Discover in the sidebar and the drawer */
-const DISCOVER_CHILDREN = [
-  { section: "ai", label: "AI", icon: Sparkles },
-  { section: "free-ai", label: "Free AI", icon: Bot },
-  { section: "github", label: "GitHub", icon: Github },
-  { section: "learn", label: "Learn", icon: GraduationCap },
-  { section: "resources", label: "Resources", icon: Layers },
-  { section: "youtube", label: "YouTube", icon: Youtube },
-  { section: "reddit", label: "Reddit", icon: MessagesSquare },
-  { section: "websites", label: "Websites", icon: Globe },
-  { section: "free-time", label: "Free Time", icon: Coffee },
-  { section: "tips", label: "Tips & Tricks", icon: Lightbulb },
-] as const;
-
-/** Sidebar groups — organized into collapsible sections */
-interface SidebarItem {
-  to: string;
-  label: string;
-  icon: typeof Terminal;
+function isActive(pathname: string, to: string, exact?: boolean) {
+  if (exact) return pathname === to;
+  if (to === "/hub") return pathname.startsWith("/hub");
+  if (to === "/explore")
+    return (
+      pathname.startsWith("/explore") ||
+      pathname.startsWith("/search") ||
+      pathname.startsWith("/find") ||
+      pathname.startsWith("/c/")
+    );
+  if (to === "/discover")
+    return (
+      pathname.startsWith("/discover") ||
+      pathname.startsWith("/r/") ||
+      pathname.startsWith("/whats-new") ||
+      pathname.startsWith("/radar")
+    );
+  if (to === "/tools") return pathname.startsWith("/tools");
+  return pathname.startsWith(to);
 }
-interface SidebarGroup {
-  id: string;
-  label: string;
-  icon: typeof Terminal;
-  children: SidebarItem[];
-}
-
-const SIDEBAR_GROUPS: SidebarGroup[] = [
-  {
-    id: "commands",
-    label: "Commands",
-    icon: Terminal,
-    children: [
-      { to: "/explore", label: "Explore all", icon: SearchIcon },
-      { to: "/trending", label: "Trending /commands", icon: Flame },
-      { to: "/find", label: "Advanced search", icon: Wand2 },
-    ],
-  },
-  {
-    id: "build",
-    label: "Build",
-    icon: Rocket,
-    children: [
-      { to: "/generators", label: "Founder tools", icon: Rocket },
-      { to: "/roadmaps", label: "Founder roadmaps", icon: RouteIcon },
-      { to: "/journal", label: "Build journal", icon: NotebookPen },
-      { to: "/tools", label: "SlashKits", icon: Wrench },
-      { to: "/deals", label: "Deals", icon: Tag },
-      { to: "/assistant", label: "Assistant", icon: Bot },
-    ],
-  },
-  {
-    id: "learn",
-    label: "Learn",
-    icon: BookOpen,
-    children: [
-      { to: "/glossary", label: "AI Glossary", icon: BookOpen },
-      { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
-      { to: "/collections", label: "Collections", icon: Layers },
-      { to: "/alternatives", label: "Free alternatives", icon: Wand2 },
-    ],
-  },
-  {
-    id: "hubs",
-    label: "Hubs",
-    icon: LayoutGrid,
-    children: [
-      { to: "/hub/students", label: "Students", icon: GraduationCap },
-      { to: "/hub/developers", label: "Developers", icon: Terminal },
-      { to: "/hub/creators", label: "Creators", icon: Sparkles },
-      { to: "/hub/professionals", label: "Professionals", icon: UserRound },
-      { to: "/hub/islam", label: "Islam Hub", icon: Globe },
-    ],
-  },
-  {
-    id: "live",
-    label: "Live & Media",
-    icon: Radio,
-    children: [
-      { to: "/live", label: "Live dashboard", icon: Radio },
-      { to: "/youtube", label: "YouTube & Music", icon: Youtube },
-      { to: "/movies", label: "Movies", icon: Film },
-      { to: "/play", label: "Play", icon: Dices },
-    ],
-  },
-  {
-    id: "profile",
-    label: "Profile",
-    icon: UserRound,
-    children: [
-      { to: "/me", label: "Me", icon: UserRound },
-      { to: "/recent", label: "Recent", icon: HistoryIcon },
-      { to: "/favorites", label: "Saved", icon: Bookmark },
-    ],
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    icon: SettingsIcon,
-    children: [
-      { to: "/settings", label: "Settings", icon: SettingsIcon },
-      { to: "/about", label: "About", icon: Info },
-      { to: "/compare", label: "Compare Models", icon: Info },
-      { to: "/keyboard", label: "Keyboard Shortcuts", icon: Info },
-
-      { to: "/glass", label: "✦ Glass", icon: Sparkles },
-    ],
-  },
-] as const;
 
 interface Props {
   children: ReactNode;
@@ -207,172 +131,103 @@ function BackButton({ to, label }: { to: string; label: string }) {
   );
 }
 
-const subLinkCls =
-  "flex min-h-9 w-full items-center gap-2.5 rounded-lg px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground";
-
-function NavList({
-  onNavigate,
-}: {
-  onNavigate?: () => void;
-}) {
-  const { favorites, recents } = useLibrary();
+function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [discoverOpen, setDiscoverOpen] = useState(() => pathname.startsWith("/discover"));
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
-    const initial: Record<string, boolean> = {};
-    for (const g of SIDEBAR_GROUPS) {
-      // Auto-expand groups that contain the current route
-      if (g.children.some((c) => pathname.startsWith(c.to))) {
-        initial[g.id] = true;
-      }
-    }
-    return initial;
-  });
-  const counts: Record<string, number> = {
-    "/favorites": favorites.length,
-    "/recent": recents.length,
-  };
+  const [isGlass, setIsGlass] = useState(false);
 
-  const toggleGroup = (id: string) => setOpenGroups((prev) => ({ ...prev, [id]: !prev[id] }));
-
-  const cls =
-    "flex min-h-11 w-full items-center gap-3 rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none";
+  useEffect(() => {
+    try { setIsGlass(localStorage.getItem("slashai-glass-user") === "true"); } catch { /* ignore */ }
+  }, []);
 
   return (
-    <nav className="space-y-1" aria-label="Primary">
-      {/* ── Home ── */}
-      <Link
-        to="/"
-        activeOptions={{ exact: true, includeSearch: false }}
-        activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-        onClick={onNavigate}
-        className={cls}
-      >
-        <Home className="size-4.5 shrink-0" aria-hidden />
-        Home
-      </Link>
+    <div className="flex h-full flex-col">
+      {/* Logo */}
+      <div className="px-4 py-4">
+        <Link to="/" onClick={onNavigate} className="flex items-center gap-2.5">
+          <span className="text-[22px]">⚡</span>
+          <span className="text-[18px] font-bold text-foreground">SlashAI</span>
+        </Link>
+      </div>
+      <div className="h-px bg-surface-elevated" />
 
-      {/* ── Discover (top-level, collapsible categories) ── */}
-      <div>
-        <div className="flex items-center gap-1">
-          <Link
-            to="/discover"
-            activeOptions={{ exact: true, includeSearch: false }}
-            activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-            onClick={onNavigate}
-            className={cn(cls, "flex-1")}
-          >
-            <Compass className="size-4.5 shrink-0" aria-hidden />
-            Discover
-          </Link>
-          <button
-            type="button"
-            aria-expanded={discoverOpen}
-            aria-label={discoverOpen ? "Collapse Discover" : "Expand Discover"}
-            onClick={() => setDiscoverOpen((v) => !v)}
-            className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring focus-visible:outline-none"
-          >
-            <ChevronDown
-              className={cn("size-4 transition-transform duration-200", !discoverOpen && "-rotate-90")}
-              aria-hidden
-            />
-          </button>
-        </div>
-        {discoverOpen && (
-          <div className="mt-1 ml-4 space-y-0.5 border-l border-sidebar-border pl-2">
-            {DISCOVER_CHILDREN.map((child) => (
-              <Link
-                key={child.section}
-                to="/discover/$section"
-                params={{ section: child.section }}
-                activeProps={{ className: "text-sidebar-accent-foreground" }}
-                onClick={onNavigate}
-                className={subLinkCls}
-              >
-                <child.icon className="size-4 shrink-0" aria-hidden />
-                {child.label}
-              </Link>
-            ))}
+      {/* Main nav — same flat list as desktop */}
+      <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-0.5">
+        {NAV_ITEMS.map((item) => {
+          const active = isActive(pathname, item.to, item.exact);
+          return (
             <Link
-              to="/radar"
-              activeProps={{ className: "text-sidebar-accent-foreground" }}
+              key={item.to}
+              to={item.to}
               onClick={onNavigate}
-              className={subLinkCls}
+              className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
+                active
+                  ? "bg-primary/10 text-foreground border-l-2 border-l-primary pl-2"
+                  : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground border-l-2 border-l-transparent pl-2"
+              }`}
             >
-              <Radar className="size-4 shrink-0" aria-hidden />
-              Free Radar
+              <item.icon className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2.2 : 1.8} />
+              <span className="flex-1">{item.label}</span>
+              {item.badge && (
+                <span className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold leading-none ${item.badge === "Hot" ? "bg-red-500 text-white" : "bg-primary text-background"}`}>
+                  {item.badge}
+                </span>
+              )}
             </Link>
+          );
+        })}
+
+        <div className="my-2 h-px bg-surface-elevated" />
+
+        {SECONDARY_ITEMS.map((item) => {
+          const active = isActive(pathname, item.to);
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onNavigate}
+              className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
+                active
+                  ? "bg-primary/10 text-foreground border-l-2 border-l-primary pl-2"
+                  : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground border-l-2 border-l-transparent pl-2"
+              }`}
+            >
+              <item.icon className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2.2 : 1.8} />
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* Upgrade to Pro / Glass Member */}
+      <div className="mx-3 mb-3">
+        {isGlass ? (
+          <div className="rounded-[10px] border border-primary/30 bg-primary/[0.06] p-3.5">
+            <div className="flex items-center gap-2">
+              <span className="text-[16px]">✦</span>
+              <p className="text-[13px] font-bold text-primary">Glass Member</p>
+            </div>
           </div>
+        ) : (
+          <Link to="/glass" onClick={onNavigate} className="block rounded-[10px] border border-primary/20 bg-gradient-to-br from-surface to-primary/5 p-3.5">
+            <span className="text-[20px]">👑</span>
+            <p className="mt-1.5 text-[13px] font-bold text-foreground">Upgrade to Pro</p>
+            <p className="mt-1 text-[11px] leading-tight text-muted-foreground">Unlock premium tools & more.</p>
+          </Link>
         )}
       </div>
 
-      {/* ── Saved ── */}
-      <Link
-        to="/favorites"
-        activeProps={{ className: "bg-sidebar-accent text-sidebar-accent-foreground" }}
-        onClick={onNavigate}
-        className={cls}
-      >
-        <Bookmark className="size-4.5 shrink-0" aria-hidden />
-        Saved
-        {counts["/favorites"] ? (
-          <span className="ml-auto text-xs text-muted-foreground">{counts["/favorites"]}</span>
-        ) : null}
-      </Link>
-
-      <div className="my-1.5 border-t border-sidebar-border" role="presentation" />
-
-      {/* ── Grouped sections ── */}
-      {SIDEBAR_GROUPS.map((group) => {
-        const isOpen = openGroups[group.id] ?? false;
-        const isGroupActive = group.children.some((c) =>
-          c.to === "/" ? pathname === "/" : pathname.startsWith(c.to),
-        );
-        return (
-          <div key={group.id}>
-            <button
-              type="button"
-              onClick={() => toggleGroup(group.id)}
-              className={cn(
-                "flex min-h-10 w-full items-center gap-2.5 rounded-lg px-3 text-xs font-semibold uppercase tracking-wider transition-colors hover:bg-sidebar-accent/40",
-                isGroupActive ? "text-sidebar-accent-foreground" : "text-muted-foreground/70",
-              )}
-            >
-              <group.icon className="size-3.5 shrink-0" aria-hidden />
-              <span className="flex-1 text-left">{group.label}</span>
-              <ChevronDown
-                className={cn("size-3.5 transition-transform duration-200", !isOpen && "-rotate-90")}
-                aria-hidden
-              />
-            </button>
-            {isOpen && (
-              <div className="mt-0.5 ml-3 space-y-0.5 border-l border-sidebar-border pl-2">
-                {group.children.map((child) => (
-                  <Link
-                    key={child.to}
-                    to={child.to}
-                    activeProps={{ className: "text-sidebar-accent-foreground" }}
-                    onClick={onNavigate}
-                    className={cn(
-                      subLinkCls,
-                      counts[child.to] && "justify-between",
-                    )}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <child.icon className="size-4 shrink-0" aria-hidden />
-                      {child.label}
-                    </span>
-                    {counts[child.to] ? (
-                      <span className="text-xs text-muted-foreground">{counts[child.to]}</span>
-                    ) : null}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </nav>
+      {/* User indicator */}
+      <div className="flex items-center gap-2.5 border-t border-sidebar-border px-3 py-2.5">
+        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background">S</div>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[13px] text-foreground">Slash User</p>
+          <p className="text-[11px] text-muted-foreground">{isGlass ? "✦ Glass Plan" : "Free Plan"}</p>
+        </div>
+        <Link to="/me" onClick={onNavigate}>
+          <Settings className="size-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors" />
+        </Link>
+      </div>
+    </div>
   );
 }
 
@@ -409,13 +264,11 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
       {/* mobile drawer holds the secondary destinations */}
       <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
         <SheetContent side="left" className="w-[82vw] max-w-xs overflow-y-auto p-0">
-          <SheetHeader className="px-4 pt-4 text-left">
-            <SheetTitle>SlashAI</SheetTitle>
-            <SheetDescription>Navigate the library</SheetDescription>
+          <SheetHeader className="sr-only">
+            <SheetTitle>Navigation</SheetTitle>
+            <SheetDescription>SlashAI navigation menu</SheetDescription>
           </SheetHeader>
-          <div className="px-2 py-3">
-            <NavList onNavigate={() => setMenuOpen(false)} />
-          </div>
+          <DrawerNavList onNavigate={() => setMenuOpen(false)} />
         </SheetContent>
       </Sheet>
 
@@ -456,16 +309,14 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
               </div>
             </div>
 
-            {/* Right side */}
-            <div className="ml-auto flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-2">
-                <Link to="/changelog" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Notifications & updates">
-                  <span className="text-[18px]">🔔</span>
-                </Link>
-                <Link to="/favorites" className="flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Saved items">
-                  <Bookmark className="size-[18px]" />
-                </Link>
-              </div>
+            {/* Right side — same on mobile and desktop */}
+            <div className="ml-auto flex items-center gap-2">
+              <Link to="/changelog" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Notifications & updates">
+                <Bell className="size-[20px]" />
+              </Link>
+              <Link to="/favorites" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Saved items">
+                <Bookmark className="size-[20px]" />
+              </Link>
               <Link to="/me" className="flex size-8 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background transition-opacity hover:opacity-90" aria-label="Profile">
                 S
               </Link>
