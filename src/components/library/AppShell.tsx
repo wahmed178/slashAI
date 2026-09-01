@@ -20,6 +20,7 @@ import {
   Youtube,
   Layers,
   History as HistoryIcon,
+  Palette,
   Menu,
   ChevronLeft,
   Moon,
@@ -58,6 +59,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/glossary", label: "Glossary", icon: BookOpen },
   { to: "/collections", label: "Collections", icon: Layers },
   { to: "/deals", label: "Deals", icon: Tag },
+  { to: "/designs", label: "Designs", icon: Palette, badge: "Premium" },
 ];
 
 const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any }> = [

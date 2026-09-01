@@ -20,6 +20,7 @@ import {
   Youtube,
   Layers,
   History,
+  Palette,
 } from "lucide-react";
 
 const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
@@ -38,6 +39,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/glossary", label: "Glossary", icon: BookOpen },
   { to: "/collections", label: "Collections", icon: Layers },
   { to: "/deals", label: "Deals", icon: Tag },
+  { to: "/designs", label: "Designs", icon: Palette, badge: "Premium" },
 ];
 
 const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any }> = [
@@ -151,29 +153,23 @@ export function DesktopSidebar() {
         })}
       </nav>
 
-      {/* Glass / Upgrade card */}
-      <div className="mx-3 mb-3">
+      {/* Glass membership — flat, no card */}
+      <div className="px-3 pb-3">
+        <div className="h-px bg-surface-elevated mb-2" />
         {isGlass ? (
-          <div className="rounded-[10px] border border-border bg-surface p-3">
-            <div className="flex items-center gap-2">
-              <span className="text-[14px]">✦</span>
-              <p className="text-[13px] font-semibold text-primary">Glass Member</p>
-            </div>
-            <p className="mt-1 text-[11px] text-muted-foreground">
-              Premium themes unlocked.
-            </p>
+          <div className="px-2 py-1.5">
+            <p className="text-[12px] font-medium text-primary">✦ Glass Member</p>
+            <p className="text-[10px] text-muted-foreground">Premium themes unlocked</p>
           </div>
         ) : (
-          <div className="rounded-[10px] border border-border bg-surface p-3">
-            <p className="text-[13px] font-semibold text-foreground">✦ Glass Membership</p>
-            <p className="mt-1 text-[11px] leading-snug text-muted-foreground">
-              Free for first 1,000 customers. Unlocks premium themes.
-            </p>
+          <div className="px-2 py-1.5">
+            <p className="text-[12px] font-medium text-foreground">✦ Glass</p>
+            <p className="text-[10px] text-muted-foreground">Free for first 1,000</p>
             <Link
               to="/glass"
-              className="mt-2.5 flex h-[32px] w-full items-center justify-center rounded-[6px] bg-surface-elevated border border-border text-[12px] font-medium text-foreground transition-all duration-150 hover:bg-primary/10 hover:text-primary hover:border-primary/30"
+              className="mt-1.5 inline-block text-[11px] font-medium text-primary hover:underline"
             >
-              Claim Free Access
+              Claim access →
             </Link>
           </div>
         )}

@@ -12,7 +12,7 @@ import { APP_VERSION } from "@/lib/app-meta";
 import { todayKey } from "@/lib/commands";
 import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 
-export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm" | "glass";
+export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm" | "glass" | "linear" | "notion" | "vercel" | "stripe" | "supabase" | "framer";
 export type Density = "comfortable" | "compact";
 export type Accent = "teal" | "violet" | "amber" | "rose" | "blue" | "lime";
 export type AppIcon =
@@ -90,10 +90,46 @@ export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[
     hint: "Premium dark with violet tint",
     swatch: "oklch(0.78 0.16 178)",
   },
+  {
+    id: "linear",
+    label: "✦ Linear",
+    hint: "Ultra-minimal dark, lavender accent",
+    swatch: "oklch(0.62 0.15 275)",
+  },
+  {
+    id: "notion",
+    label: "✦ Notion",
+    hint: "Warm navy, purple accent",
+    swatch: "oklch(0.58 0.18 280)",
+  },
+  {
+    id: "vercel",
+    label: "✦ Vercel",
+    hint: "Clean light, black precision",
+    swatch: "oklch(0.13 0.005 260)",
+  },
+  {
+    id: "stripe",
+    label: "✦ Stripe",
+    hint: "White canvas, indigo primary",
+    swatch: "oklch(0.5 0.2 280)",
+  },
+  {
+    id: "supabase",
+    label: "✦ Supabase",
+    hint: "Clean white, emerald green",
+    swatch: "oklch(0.78 0.18 155)",
+  },
+  {
+    id: "framer",
+    label: "✦ Framer",
+    hint: "Pure black canvas, white pills",
+    swatch: "oklch(1 0 0)",
+  },
 ];
 
 /** themes that fix their own primary colour, so the accent picker is inert */
-export const FIXED_ACCENT_THEMES: Theme[] = ["batman", "ocean", "moonlight", "warm", "glass"];
+export const FIXED_ACCENT_THEMES: Theme[] = ["batman", "ocean", "moonlight", "warm", "glass", "linear", "notion", "vercel", "stripe", "supabase", "framer"];
 
 export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
   { id: "teal", label: "Teal", swatch: "oklch(0.79 0.15 178)" },
