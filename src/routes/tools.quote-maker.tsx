@@ -194,7 +194,7 @@ function QuoteMaker() {
     const x = alignment === "center" ? w / 2 : alignment === "right" ? w - pad : pad;
 
     ctx.font = `700 ${sz}px ${font.style}`;
-    const lines = wrapText(ctx, `"${quote}"`, maxW);
+    const lines = wrapText(ctx, quote, maxW);
     const totalH = lines.length * lh + (showAuthor ? lh : 0);
     const startY = (h - totalH) / 2;
 
