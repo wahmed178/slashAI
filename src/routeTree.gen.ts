@@ -39,6 +39,61 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as ToolsAlphabetCipherRouteImport } from './routes/tools-alphabet-cipher'
+import { Route as ToolsBinaryCalculatorRouteImport } from './routes/tools-binary-calculator'
+import { Route as ToolsBmiCalculator2RouteImport } from './routes/tools-bmi-calculator2'
+import { Route as ToolsBmiChartRouteImport } from './routes/tools-bmi-chart'
+import { Route as ToolsBorderRadiusRouteImport } from './routes/tools-border-radius'
+import { Route as ToolsBoxShadowRouteImport } from './routes/tools-box-shadow'
+import { Route as ToolsCalorieCalcRouteImport } from './routes/tools-calorie-calc'
+import { Route as ToolsCodeBeautifierRouteImport } from './routes/tools-code-beautifier'
+import { Route as ToolsCoinFlipRouteImport } from './routes/tools-coin-flip'
+import { Route as ToolsColorBlendRouteImport } from './routes/tools-color-blend'
+import { Route as ToolsColorContrastRouteImport } from './routes/tools-color-contrast'
+import { Route as ToolsCrackHashRouteImport } from './routes/tools-crack-hash'
+import { Route as ToolsCssFlexboxRouteImport } from './routes/tools-css-flexbox'
+import { Route as ToolsCssGridRouteImport } from './routes/tools-css-grid'
+import { Route as ToolsCssPlaygroundRouteImport } from './routes/tools-css-playground'
+import { Route as ToolsDailyPlannerRouteImport } from './routes/tools-daily-planner'
+import { Route as ToolsDiceRouteImport } from './routes/tools-dice'
+import { Route as ToolsDiffViewerRouteImport } from './routes/tools-diff-viewer'
+import { Route as ToolsDistanceCalcRouteImport } from './routes/tools-distance-calc'
+import { Route as ToolsFontSizeRouteImport } from './routes/tools-font-size'
+import { Route as ToolsGratitudeJournalRouteImport } from './routes/tools-gratitude-journal'
+import { Route as ToolsHeartRateRouteImport } from './routes/tools-heart-rate'
+import { Route as ToolsHtmlEntityRouteImport } from './routes/tools-html-entity'
+import { Route as ToolsHtmlPreviewRouteImport } from './routes/tools-html-preview'
+import { Route as ToolsHttpStatusRouteImport } from './routes/tools-http-status'
+import { Route as ToolsIdealWeightRouteImport } from './routes/tools-ideal-weight'
+import { Route as ToolsImageBase64RouteImport } from './routes/tools-image-base64'
+import { Route as ToolsInvoiceLookupRouteImport } from './routes/tools-invoice-lookup'
+import { Route as ToolsJsPlaygroundRouteImport } from './routes/tools-js-playground'
+import { Route as ToolsJsonTreeRouteImport } from './routes/tools-json-tree'
+import { Route as ToolsMarkdownHtml2RouteImport } from './routes/tools-markdown-html2'
+import { Route as ToolsMarkdownStatsRouteImport } from './routes/tools-markdown-stats'
+import { Route as ToolsMemoGeneratorRouteImport } from './routes/tools-memo-generator'
+import { Route as ToolsMimeTypeRouteImport } from './routes/tools-mime-type'
+import { Route as ToolsMoodTrackerRouteImport } from './routes/tools-mood-tracker'
+import { Route as ToolsNumberWordsRouteImport } from './routes/tools-number-words'
+import { Route as ToolsPomodoroAdvancedRouteImport } from './routes/tools-pomodoro-advanced'
+import { Route as ToolsRandomNumberRouteImport } from './routes/tools-random-number'
+import { Route as ToolsReadability2RouteImport } from './routes/tools-readability2'
+import { Route as ToolsRecipeScalerRouteImport } from './routes/tools-recipe-scaler'
+import { Route as ToolsRegexTesterRouteImport } from './routes/tools-regex-tester'
+import { Route as ToolsRomanNumeralRouteImport } from './routes/tools-roman-numeral'
+import { Route as ToolsSleepCalcRouteImport } from './routes/tools-sleep-calc'
+import { Route as ToolsStopwatchRouteImport } from './routes/tools-stopwatch'
+import { Route as ToolsStringHashRouteImport } from './routes/tools-string-hash'
+import { Route as ToolsSvgPreviewRouteImport } from './routes/tools-svg-preview'
+import { Route as ToolsTextStatsRouteImport } from './routes/tools-text-stats'
+import { Route as ToolsTextToSpeechRouteImport } from './routes/tools-text-to-speech'
+import { Route as ToolsTimezoneConverterRouteImport } from './routes/tools-timezone-converter'
+import { Route as ToolsTipCalculatorRouteImport } from './routes/tools-tip-calculator'
+import { Route as ToolsUnicodeLookupRouteImport } from './routes/tools-unicode-lookup'
+import { Route as ToolsUrlEncoderRouteImport } from './routes/tools-url-encoder'
+import { Route as ToolsVcardGenRouteImport } from './routes/tools-vcard-gen'
+import { Route as ToolsWaterTrackerRouteImport } from './routes/tools-water-tracker'
+import { Route as ToolsWifiQrRouteImport } from './routes/tools-wifi-qr'
 import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as YoutubeRouteImport } from './routes/youtube'
@@ -66,6 +121,7 @@ import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as ToolsAgeOfThingsRouteImport } from './routes/tools.age-of-things'
+import { Route as ToolsApiTesterRouteImport } from './routes/tools.api-tester'
 import { Route as ToolsAsciiRouteImport } from './routes/tools.ascii'
 import { Route as ToolsAspectRouteImport } from './routes/tools.aspect'
 import { Route as ToolsBase64RouteImport } from './routes/tools.base64'
@@ -73,13 +129,16 @@ import { Route as ToolsBioRouteImport } from './routes/tools.bio'
 import { Route as ToolsBmiCalculatorRouteImport } from './routes/tools.bmi-calculator'
 import { Route as ToolsBudgetRouteImport } from './routes/tools.budget'
 import { Route as ToolsChangelogMakerRouteImport } from './routes/tools.changelog-maker'
+import { Route as ToolsCoinFlipRouteImport } from './routes/tools.coin-flip'
 import { Route as ToolsColorPaletteRouteImport } from './routes/tools.color-palette'
+import { Route as ToolsColorPickerRouteImport } from './routes/tools.color-picker'
 import { Route as ToolsContractRouteImport } from './routes/tools.contract'
 import { Route as ToolsCountdownRouteImport } from './routes/tools.countdown'
 import { Route as ToolsCronRouteImport } from './routes/tools.cron'
 import { Route as ToolsCsvToJsonRouteImport } from './routes/tools.csv-to-json'
 import { Route as ToolsCurrencyHistoryRouteImport } from './routes/tools.currency-history'
 import { Route as ToolsCvRouteImport } from './routes/tools.cv'
+import { Route as ToolsDiceRouteImport } from './routes/tools.dice'
 import { Route as ToolsDiffRouteImport } from './routes/tools.diff'
 import { Route as ToolsDuaMakerRouteImport } from './routes/tools.dua-maker'
 import { Route as ToolsEmiCalculatorRouteImport } from './routes/tools.emi-calculator'
@@ -104,6 +163,7 @@ import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-conv
 import { Route as ToolsImagesToPdfRouteImport } from './routes/tools.images-to-pdf'
 import { Route as ToolsInvoiceRouteImport } from './routes/tools.invoice'
 import { Route as ToolsIpRouteImport } from './routes/tools.ip'
+import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
 import { Route as ToolsKharchRouteImport } from './routes/tools.kharch'
 import { Route as ToolsLinktreeRouteImport } from './routes/tools.linktree'
 import { Route as ToolsLoremRouteImport } from './routes/tools.lorem'
@@ -121,35 +181,48 @@ import { Route as ToolsNoiseRouteImport } from './routes/tools.noise'
 import { Route as ToolsNotesRouteImport } from './routes/tools.notes'
 import { Route as ToolsOneLinerRouteImport } from './routes/tools.one-liner'
 import { Route as ToolsPasswordRouteImport } from './routes/tools.password'
+import { Route as ToolsPasswordGenRouteImport } from './routes/tools.password-gen'
 import { Route as ToolsPercentageRouteImport } from './routes/tools.percentage'
 import { Route as ToolsPitchRouteImport } from './routes/tools.pitch'
 import { Route as ToolsPlantRouteImport } from './routes/tools.plant'
 import { Route as ToolsPollRouteImport } from './routes/tools.poll'
 import { Route as ToolsPomodoroRouteImport } from './routes/tools.pomodoro'
 import { Route as ToolsPrayerScheduleRouteImport } from './routes/tools.prayer-schedule'
+import { Route as ToolsQrCodeRouteImport } from './routes/tools.qr-code'
 import { Route as ToolsQuoteScreenRouteImport } from './routes/tools.quote-screen'
 import { Route as ToolsQuranSearchRouteImport } from './routes/tools.quran-search'
 import { Route as ToolsRainScreenRouteImport } from './routes/tools.rain-screen'
+import { Route as ToolsRandomNumberRouteImport } from './routes/tools.random-number'
 import { Route as ToolsReadabilityRouteImport } from './routes/tools.readability'
 import { Route as ToolsReadingRouteImport } from './routes/tools.reading'
 import { Route as ToolsReadingListRouteImport } from './routes/tools.reading-list'
 import { Route as ToolsRegexRouteImport } from './routes/tools.regex'
+import { Route as ToolsRomanNumeralRouteImport } from './routes/tools.roman-numeral'
 import { Route as ToolsSadaqahRouteImport } from './routes/tools.sadaqah'
 import { Route as ToolsScreenshotRouteImport } from './routes/tools.screenshot'
 import { Route as ToolsShortcutRouteImport } from './routes/tools.shortcut'
 import { Route as ToolsSipCalculatorRouteImport } from './routes/tools.sip-calculator'
 import { Route as ToolsSizeRouteImport } from './routes/tools.size'
 import { Route as ToolsSmartPasteRouteImport } from './routes/tools.smart-paste'
+import { Route as ToolsSpeechToTextRouteImport } from './routes/tools.speech-to-text'
 import { Route as ToolsSpellingRouteImport } from './routes/tools.spelling'
 import { Route as ToolsStandupRouteImport } from './routes/tools.standup'
 import { Route as ToolsStarfieldRouteImport } from './routes/tools.starfield'
+import { Route as ToolsStopwatchRouteImport } from './routes/tools.stopwatch'
 import { Route as ToolsTableRouteImport } from './routes/tools.table'
 import { Route as ToolsTasbeehRouteImport } from './routes/tools.tasbeeh'
+import { Route as ToolsTextCaseRouteImport } from './routes/tools.text-case'
+import { Route as ToolsTextStatsRouteImport } from './routes/tools.text-stats'
 import { Route as ToolsThreadMakerRouteImport } from './routes/tools.thread-maker'
 import { Route as ToolsThumbnailRouteImport } from './routes/tools.thumbnail'
+import { Route as ToolsTimestampRouteImport } from './routes/tools.timestamp'
+import { Route as ToolsTipCalculatorRouteImport } from './routes/tools.tip-calculator'
 import { Route as ToolsTypingTestRouteImport } from './routes/tools.typing-test'
+import { Route as ToolsUnitConverterRouteImport } from './routes/tools.unit-converter'
 import { Route as ToolsUpiRouteImport } from './routes/tools.upi'
+import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
+import { Route as ToolsWhitespaceRouteImport } from './routes/tools.whitespace'
 import { Route as ToolsWorldClockRouteImport } from './routes/tools.world-clock'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -304,6 +377,281 @@ const ToolsRoute = ToolsRouteImport.update({
   path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsAlphabetCipherRoute = ToolsAlphabetCipherRouteImport.update({
+  id: '/tools-alphabet-cipher',
+  path: '/tools-alphabet-cipher',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBinaryCalculatorRoute = ToolsBinaryCalculatorRouteImport.update({
+  id: '/tools-binary-calculator',
+  path: '/tools-binary-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBmiCalculator2Route = ToolsBmiCalculator2RouteImport.update({
+  id: '/tools-bmi-calculator2',
+  path: '/tools-bmi-calculator2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBmiChartRoute = ToolsBmiChartRouteImport.update({
+  id: '/tools-bmi-chart',
+  path: '/tools-bmi-chart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBorderRadiusRoute = ToolsBorderRadiusRouteImport.update({
+  id: '/tools-border-radius',
+  path: '/tools-border-radius',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBoxShadowRoute = ToolsBoxShadowRouteImport.update({
+  id: '/tools-box-shadow',
+  path: '/tools-box-shadow',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCalorieCalcRoute = ToolsCalorieCalcRouteImport.update({
+  id: '/tools-calorie-calc',
+  path: '/tools-calorie-calc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCodeBeautifierRoute = ToolsCodeBeautifierRouteImport.update({
+  id: '/tools-code-beautifier',
+  path: '/tools-code-beautifier',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCoinFlipRoute = ToolsCoinFlipRouteImport.update({
+  id: '/tools-coin-flip',
+  path: '/tools-coin-flip',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsColorBlendRoute = ToolsColorBlendRouteImport.update({
+  id: '/tools-color-blend',
+  path: '/tools-color-blend',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsColorContrastRoute = ToolsColorContrastRouteImport.update({
+  id: '/tools-color-contrast',
+  path: '/tools-color-contrast',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCrackHashRoute = ToolsCrackHashRouteImport.update({
+  id: '/tools-crack-hash',
+  path: '/tools-crack-hash',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCssFlexboxRoute = ToolsCssFlexboxRouteImport.update({
+  id: '/tools-css-flexbox',
+  path: '/tools-css-flexbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCssGridRoute = ToolsCssGridRouteImport.update({
+  id: '/tools-css-grid',
+  path: '/tools-css-grid',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCssPlaygroundRoute = ToolsCssPlaygroundRouteImport.update({
+  id: '/tools-css-playground',
+  path: '/tools-css-playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDailyPlannerRoute = ToolsDailyPlannerRouteImport.update({
+  id: '/tools-daily-planner',
+  path: '/tools-daily-planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDiceRoute = ToolsDiceRouteImport.update({
+  id: '/tools-dice',
+  path: '/tools-dice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDiffViewerRoute = ToolsDiffViewerRouteImport.update({
+  id: '/tools-diff-viewer',
+  path: '/tools-diff-viewer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDistanceCalcRoute = ToolsDistanceCalcRouteImport.update({
+  id: '/tools-distance-calc',
+  path: '/tools-distance-calc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsFontSizeRoute = ToolsFontSizeRouteImport.update({
+  id: '/tools-font-size',
+  path: '/tools-font-size',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsGratitudeJournalRoute = ToolsGratitudeJournalRouteImport.update({
+  id: '/tools-gratitude-journal',
+  path: '/tools-gratitude-journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsHeartRateRoute = ToolsHeartRateRouteImport.update({
+  id: '/tools-heart-rate',
+  path: '/tools-heart-rate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsHtmlEntityRoute = ToolsHtmlEntityRouteImport.update({
+  id: '/tools-html-entity',
+  path: '/tools-html-entity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsHtmlPreviewRoute = ToolsHtmlPreviewRouteImport.update({
+  id: '/tools-html-preview',
+  path: '/tools-html-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsHttpStatusRoute = ToolsHttpStatusRouteImport.update({
+  id: '/tools-http-status',
+  path: '/tools-http-status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsIdealWeightRoute = ToolsIdealWeightRouteImport.update({
+  id: '/tools-ideal-weight',
+  path: '/tools-ideal-weight',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageBase64Route = ToolsImageBase64RouteImport.update({
+  id: '/tools-image-base64',
+  path: '/tools-image-base64',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsInvoiceLookupRoute = ToolsInvoiceLookupRouteImport.update({
+  id: '/tools-invoice-lookup',
+  path: '/tools-invoice-lookup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJsPlaygroundRoute = ToolsJsPlaygroundRouteImport.update({
+  id: '/tools-js-playground',
+  path: '/tools-js-playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJsonTreeRoute = ToolsJsonTreeRouteImport.update({
+  id: '/tools-json-tree',
+  path: '/tools-json-tree',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsMarkdownHtml2Route = ToolsMarkdownHtml2RouteImport.update({
+  id: '/tools-markdown-html2',
+  path: '/tools-markdown-html2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsMarkdownStatsRoute = ToolsMarkdownStatsRouteImport.update({
+  id: '/tools-markdown-stats',
+  path: '/tools-markdown-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsMemoGeneratorRoute = ToolsMemoGeneratorRouteImport.update({
+  id: '/tools-memo-generator',
+  path: '/tools-memo-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsMimeTypeRoute = ToolsMimeTypeRouteImport.update({
+  id: '/tools-mime-type',
+  path: '/tools-mime-type',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsMoodTrackerRoute = ToolsMoodTrackerRouteImport.update({
+  id: '/tools-mood-tracker',
+  path: '/tools-mood-tracker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsNumberWordsRoute = ToolsNumberWordsRouteImport.update({
+  id: '/tools-number-words',
+  path: '/tools-number-words',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPomodoroAdvancedRoute = ToolsPomodoroAdvancedRouteImport.update({
+  id: '/tools-pomodoro-advanced',
+  path: '/tools-pomodoro-advanced',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRandomNumberRoute = ToolsRandomNumberRouteImport.update({
+  id: '/tools-random-number',
+  path: '/tools-random-number',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsReadability2Route = ToolsReadability2RouteImport.update({
+  id: '/tools-readability2',
+  path: '/tools-readability2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRecipeScalerRoute = ToolsRecipeScalerRouteImport.update({
+  id: '/tools-recipe-scaler',
+  path: '/tools-recipe-scaler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRegexTesterRoute = ToolsRegexTesterRouteImport.update({
+  id: '/tools-regex-tester',
+  path: '/tools-regex-tester',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRomanNumeralRoute = ToolsRomanNumeralRouteImport.update({
+  id: '/tools-roman-numeral',
+  path: '/tools-roman-numeral',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsSleepCalcRoute = ToolsSleepCalcRouteImport.update({
+  id: '/tools-sleep-calc',
+  path: '/tools-sleep-calc',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsStopwatchRoute = ToolsStopwatchRouteImport.update({
+  id: '/tools-stopwatch',
+  path: '/tools-stopwatch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsStringHashRoute = ToolsStringHashRouteImport.update({
+  id: '/tools-string-hash',
+  path: '/tools-string-hash',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsSvgPreviewRoute = ToolsSvgPreviewRouteImport.update({
+  id: '/tools-svg-preview',
+  path: '/tools-svg-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTextStatsRoute = ToolsTextStatsRouteImport.update({
+  id: '/tools-text-stats',
+  path: '/tools-text-stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTextToSpeechRoute = ToolsTextToSpeechRouteImport.update({
+  id: '/tools-text-to-speech',
+  path: '/tools-text-to-speech',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTimezoneConverterRoute = ToolsTimezoneConverterRouteImport.update({
+  id: '/tools-timezone-converter',
+  path: '/tools-timezone-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTipCalculatorRoute = ToolsTipCalculatorRouteImport.update({
+  id: '/tools-tip-calculator',
+  path: '/tools-tip-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUnicodeLookupRoute = ToolsUnicodeLookupRouteImport.update({
+  id: '/tools-unicode-lookup',
+  path: '/tools-unicode-lookup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUrlEncoderRoute = ToolsUrlEncoderRouteImport.update({
+  id: '/tools-url-encoder',
+  path: '/tools-url-encoder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsVcardGenRoute = ToolsVcardGenRouteImport.update({
+  id: '/tools-vcard-gen',
+  path: '/tools-vcard-gen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsWaterTrackerRoute = ToolsWaterTrackerRouteImport.update({
+  id: '/tools-water-tracker',
+  path: '/tools-water-tracker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsWifiQrRoute = ToolsWifiQrRouteImport.update({
+  id: '/tools-wifi-qr',
+  path: '/tools-wifi-qr',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrendingRoute = TrendingRouteImport.update({
   id: '/trending',
   path: '/trending',
@@ -439,6 +787,11 @@ const ToolsAgeOfThingsRoute = ToolsAgeOfThingsRouteImport.update({
   path: '/age-of-things',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsApiTesterRoute = ToolsApiTesterRouteImport.update({
+  id: '/api-tester',
+  path: '/api-tester',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsAsciiRoute = ToolsAsciiRouteImport.update({
   id: '/ascii',
   path: '/ascii',
@@ -474,9 +827,19 @@ const ToolsChangelogMakerRoute = ToolsChangelogMakerRouteImport.update({
   path: '/changelog-maker',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsCoinFlipRoute = ToolsCoinFlipRouteImport.update({
+  id: '/coin-flip',
+  path: '/coin-flip',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsColorPaletteRoute = ToolsColorPaletteRouteImport.update({
   id: '/color-palette',
   path: '/color-palette',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsColorPickerRoute = ToolsColorPickerRouteImport.update({
+  id: '/color-picker',
+  path: '/color-picker',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsContractRoute = ToolsContractRouteImport.update({
@@ -507,6 +870,11 @@ const ToolsCurrencyHistoryRoute = ToolsCurrencyHistoryRouteImport.update({
 const ToolsCvRoute = ToolsCvRouteImport.update({
   id: '/cv',
   path: '/cv',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsDiceRoute = ToolsDiceRouteImport.update({
+  id: '/dice',
+  path: '/dice',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsDiffRoute = ToolsDiffRouteImport.update({
@@ -629,6 +997,11 @@ const ToolsIpRoute = ToolsIpRouteImport.update({
   path: '/ip',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
+  id: '/json-formatter',
+  path: '/json-formatter',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsKharchRoute = ToolsKharchRouteImport.update({
   id: '/kharch',
   path: '/kharch',
@@ -714,6 +1087,11 @@ const ToolsPasswordRoute = ToolsPasswordRouteImport.update({
   path: '/password',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsPasswordGenRoute = ToolsPasswordGenRouteImport.update({
+  id: '/password-gen',
+  path: '/password-gen',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsPercentageRoute = ToolsPercentageRouteImport.update({
   id: '/percentage',
   path: '/percentage',
@@ -744,6 +1122,11 @@ const ToolsPrayerScheduleRoute = ToolsPrayerScheduleRouteImport.update({
   path: '/prayer-schedule',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsQrCodeRoute = ToolsQrCodeRouteImport.update({
+  id: '/qr-code',
+  path: '/qr-code',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsQuoteScreenRoute = ToolsQuoteScreenRouteImport.update({
   id: '/quote-screen',
   path: '/quote-screen',
@@ -757,6 +1140,11 @@ const ToolsQuranSearchRoute = ToolsQuranSearchRouteImport.update({
 const ToolsRainScreenRoute = ToolsRainScreenRouteImport.update({
   id: '/rain-screen',
   path: '/rain-screen',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsRandomNumberRoute = ToolsRandomNumberRouteImport.update({
+  id: '/random-number',
+  path: '/random-number',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsReadabilityRoute = ToolsReadabilityRouteImport.update({
@@ -777,6 +1165,11 @@ const ToolsReadingListRoute = ToolsReadingListRouteImport.update({
 const ToolsRegexRoute = ToolsRegexRouteImport.update({
   id: '/regex',
   path: '/regex',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsRomanNumeralRoute = ToolsRomanNumeralRouteImport.update({
+  id: '/roman-numeral',
+  path: '/roman-numeral',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsSadaqahRoute = ToolsSadaqahRouteImport.update({
@@ -809,6 +1202,11 @@ const ToolsSmartPasteRoute = ToolsSmartPasteRouteImport.update({
   path: '/smart-paste',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsSpeechToTextRoute = ToolsSpeechToTextRouteImport.update({
+  id: '/speech-to-text',
+  path: '/speech-to-text',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsSpellingRoute = ToolsSpellingRouteImport.update({
   id: '/spelling',
   path: '/spelling',
@@ -824,6 +1222,11 @@ const ToolsStarfieldRoute = ToolsStarfieldRouteImport.update({
   path: '/starfield',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsStopwatchRoute = ToolsStopwatchRouteImport.update({
+  id: '/stopwatch',
+  path: '/stopwatch',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsTableRoute = ToolsTableRouteImport.update({
   id: '/table',
   path: '/table',
@@ -832,6 +1235,16 @@ const ToolsTableRoute = ToolsTableRouteImport.update({
 const ToolsTasbeehRoute = ToolsTasbeehRouteImport.update({
   id: '/tasbeeh',
   path: '/tasbeeh',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsTextCaseRoute = ToolsTextCaseRouteImport.update({
+  id: '/text-case',
+  path: '/text-case',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsTextStatsRoute = ToolsTextStatsRouteImport.update({
+  id: '/text-stats',
+  path: '/text-stats',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsThreadMakerRoute = ToolsThreadMakerRouteImport.update({
@@ -844,9 +1257,24 @@ const ToolsThumbnailRoute = ToolsThumbnailRouteImport.update({
   path: '/thumbnail',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsTimestampRoute = ToolsTimestampRouteImport.update({
+  id: '/timestamp',
+  path: '/timestamp',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsTipCalculatorRoute = ToolsTipCalculatorRouteImport.update({
+  id: '/tip-calculator',
+  path: '/tip-calculator',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsTypingTestRoute = ToolsTypingTestRouteImport.update({
   id: '/typing-test',
   path: '/typing-test',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsUnitConverterRoute = ToolsUnitConverterRouteImport.update({
+  id: '/unit-converter',
+  path: '/unit-converter',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsUpiRoute = ToolsUpiRouteImport.update({
@@ -854,9 +1282,19 @@ const ToolsUpiRoute = ToolsUpiRouteImport.update({
   path: '/upi',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsUrlEncoderRoute = ToolsUrlEncoderRouteImport.update({
+  id: '/url-encoder',
+  path: '/url-encoder',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsWatermarkRoute = ToolsWatermarkRouteImport.update({
   id: '/watermark',
   path: '/watermark',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsWhitespaceRoute = ToolsWhitespaceRouteImport.update({
+  id: '/whitespace',
+  path: '/whitespace',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsWorldClockRoute = ToolsWorldClockRouteImport.update({
@@ -907,6 +1345,61 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
+  '/tools-alphabet-cipher': typeof ToolsAlphabetCipherRoute
+  '/tools-binary-calculator': typeof ToolsBinaryCalculatorRoute
+  '/tools-bmi-calculator2': typeof ToolsBmiCalculator2Route
+  '/tools-bmi-chart': typeof ToolsBmiChartRoute
+  '/tools-border-radius': typeof ToolsBorderRadiusRoute
+  '/tools-box-shadow': typeof ToolsBoxShadowRoute
+  '/tools-calorie-calc': typeof ToolsCalorieCalcRoute
+  '/tools-code-beautifier': typeof ToolsCodeBeautifierRoute
+  '/tools-coin-flip': typeof ToolsCoinFlipRoute
+  '/tools-color-blend': typeof ToolsColorBlendRoute
+  '/tools-color-contrast': typeof ToolsColorContrastRoute
+  '/tools-crack-hash': typeof ToolsCrackHashRoute
+  '/tools-css-flexbox': typeof ToolsCssFlexboxRoute
+  '/tools-css-grid': typeof ToolsCssGridRoute
+  '/tools-css-playground': typeof ToolsCssPlaygroundRoute
+  '/tools-daily-planner': typeof ToolsDailyPlannerRoute
+  '/tools-dice': typeof ToolsDiceRoute
+  '/tools-diff-viewer': typeof ToolsDiffViewerRoute
+  '/tools-distance-calc': typeof ToolsDistanceCalcRoute
+  '/tools-font-size': typeof ToolsFontSizeRoute
+  '/tools-gratitude-journal': typeof ToolsGratitudeJournalRoute
+  '/tools-heart-rate': typeof ToolsHeartRateRoute
+  '/tools-html-entity': typeof ToolsHtmlEntityRoute
+  '/tools-html-preview': typeof ToolsHtmlPreviewRoute
+  '/tools-http-status': typeof ToolsHttpStatusRoute
+  '/tools-ideal-weight': typeof ToolsIdealWeightRoute
+  '/tools-image-base64': typeof ToolsImageBase64Route
+  '/tools-invoice-lookup': typeof ToolsInvoiceLookupRoute
+  '/tools-js-playground': typeof ToolsJsPlaygroundRoute
+  '/tools-json-tree': typeof ToolsJsonTreeRoute
+  '/tools-markdown-html2': typeof ToolsMarkdownHtml2Route
+  '/tools-markdown-stats': typeof ToolsMarkdownStatsRoute
+  '/tools-memo-generator': typeof ToolsMemoGeneratorRoute
+  '/tools-mime-type': typeof ToolsMimeTypeRoute
+  '/tools-mood-tracker': typeof ToolsMoodTrackerRoute
+  '/tools-number-words': typeof ToolsNumberWordsRoute
+  '/tools-pomodoro-advanced': typeof ToolsPomodoroAdvancedRoute
+  '/tools-random-number': typeof ToolsRandomNumberRoute
+  '/tools-readability2': typeof ToolsReadability2Route
+  '/tools-recipe-scaler': typeof ToolsRecipeScalerRoute
+  '/tools-regex-tester': typeof ToolsRegexTesterRoute
+  '/tools-roman-numeral': typeof ToolsRomanNumeralRoute
+  '/tools-sleep-calc': typeof ToolsSleepCalcRoute
+  '/tools-stopwatch': typeof ToolsStopwatchRoute
+  '/tools-string-hash': typeof ToolsStringHashRoute
+  '/tools-svg-preview': typeof ToolsSvgPreviewRoute
+  '/tools-text-stats': typeof ToolsTextStatsRoute
+  '/tools-text-to-speech': typeof ToolsTextToSpeechRoute
+  '/tools-timezone-converter': typeof ToolsTimezoneConverterRoute
+  '/tools-tip-calculator': typeof ToolsTipCalculatorRoute
+  '/tools-unicode-lookup': typeof ToolsUnicodeLookupRoute
+  '/tools-url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools-vcard-gen': typeof ToolsVcardGenRoute
+  '/tools-water-tracker': typeof ToolsWaterTrackerRoute
+  '/tools-wifi-qr': typeof ToolsWifiQrRoute
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -927,6 +1420,7 @@ export interface FileRoutesByFullPath {
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
+  '/tools/api-tester': typeof ToolsApiTesterRoute
   '/tools/ascii': typeof ToolsAsciiRoute
   '/tools/aspect': typeof ToolsAspectRoute
   '/tools/base64': typeof ToolsBase64Route
@@ -934,13 +1428,16 @@ export interface FileRoutesByFullPath {
   '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
   '/tools/budget': typeof ToolsBudgetRoute
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
+  '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
+  '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/contract': typeof ToolsContractRoute
   '/tools/countdown': typeof ToolsCountdownRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
   '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
@@ -965,6 +1462,7 @@ export interface FileRoutesByFullPath {
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -982,35 +1480,48 @@ export interface FileRoutesByFullPath {
   '/tools/notes': typeof ToolsNotesRoute
   '/tools/one-liner': typeof ToolsOneLinerRoute
   '/tools/password': typeof ToolsPasswordRoute
+  '/tools/password-gen': typeof ToolsPasswordGenRoute
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/pitch': typeof ToolsPitchRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
   '/tools/prayer-schedule': typeof ToolsPrayerScheduleRoute
+  '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
+  '/tools/random-number': typeof ToolsRandomNumberRoute
   '/tools/readability': typeof ToolsReadabilityRoute
   '/tools/reading': typeof ToolsReadingRoute
   '/tools/reading-list': typeof ToolsReadingListRoute
   '/tools/regex': typeof ToolsRegexRoute
+  '/tools/roman-numeral': typeof ToolsRomanNumeralRoute
   '/tools/sadaqah': typeof ToolsSadaqahRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
+  '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
   '/tools/standup': typeof ToolsStandupRoute
   '/tools/starfield': typeof ToolsStarfieldRoute
+  '/tools/stopwatch': typeof ToolsStopwatchRoute
   '/tools/table': typeof ToolsTableRoute
   '/tools/tasbeeh': typeof ToolsTasbeehRoute
+  '/tools/text-case': typeof ToolsTextCaseRoute
+  '/tools/text-stats': typeof ToolsTextStatsRoute
   '/tools/thread-maker': typeof ToolsThreadMakerRoute
   '/tools/thumbnail': typeof ToolsThumbnailRoute
+  '/tools/timestamp': typeof ToolsTimestampRoute
+  '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/typing-test': typeof ToolsTypingTestRoute
+  '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
+  '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/whitespace': typeof ToolsWhitespaceRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -1052,6 +1563,61 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
+  '/tools-alphabet-cipher': typeof ToolsAlphabetCipherRoute
+  '/tools-binary-calculator': typeof ToolsBinaryCalculatorRoute
+  '/tools-bmi-calculator2': typeof ToolsBmiCalculator2Route
+  '/tools-bmi-chart': typeof ToolsBmiChartRoute
+  '/tools-border-radius': typeof ToolsBorderRadiusRoute
+  '/tools-box-shadow': typeof ToolsBoxShadowRoute
+  '/tools-calorie-calc': typeof ToolsCalorieCalcRoute
+  '/tools-code-beautifier': typeof ToolsCodeBeautifierRoute
+  '/tools-coin-flip': typeof ToolsCoinFlipRoute
+  '/tools-color-blend': typeof ToolsColorBlendRoute
+  '/tools-color-contrast': typeof ToolsColorContrastRoute
+  '/tools-crack-hash': typeof ToolsCrackHashRoute
+  '/tools-css-flexbox': typeof ToolsCssFlexboxRoute
+  '/tools-css-grid': typeof ToolsCssGridRoute
+  '/tools-css-playground': typeof ToolsCssPlaygroundRoute
+  '/tools-daily-planner': typeof ToolsDailyPlannerRoute
+  '/tools-dice': typeof ToolsDiceRoute
+  '/tools-diff-viewer': typeof ToolsDiffViewerRoute
+  '/tools-distance-calc': typeof ToolsDistanceCalcRoute
+  '/tools-font-size': typeof ToolsFontSizeRoute
+  '/tools-gratitude-journal': typeof ToolsGratitudeJournalRoute
+  '/tools-heart-rate': typeof ToolsHeartRateRoute
+  '/tools-html-entity': typeof ToolsHtmlEntityRoute
+  '/tools-html-preview': typeof ToolsHtmlPreviewRoute
+  '/tools-http-status': typeof ToolsHttpStatusRoute
+  '/tools-ideal-weight': typeof ToolsIdealWeightRoute
+  '/tools-image-base64': typeof ToolsImageBase64Route
+  '/tools-invoice-lookup': typeof ToolsInvoiceLookupRoute
+  '/tools-js-playground': typeof ToolsJsPlaygroundRoute
+  '/tools-json-tree': typeof ToolsJsonTreeRoute
+  '/tools-markdown-html2': typeof ToolsMarkdownHtml2Route
+  '/tools-markdown-stats': typeof ToolsMarkdownStatsRoute
+  '/tools-memo-generator': typeof ToolsMemoGeneratorRoute
+  '/tools-mime-type': typeof ToolsMimeTypeRoute
+  '/tools-mood-tracker': typeof ToolsMoodTrackerRoute
+  '/tools-number-words': typeof ToolsNumberWordsRoute
+  '/tools-pomodoro-advanced': typeof ToolsPomodoroAdvancedRoute
+  '/tools-random-number': typeof ToolsRandomNumberRoute
+  '/tools-readability2': typeof ToolsReadability2Route
+  '/tools-recipe-scaler': typeof ToolsRecipeScalerRoute
+  '/tools-regex-tester': typeof ToolsRegexTesterRoute
+  '/tools-roman-numeral': typeof ToolsRomanNumeralRoute
+  '/tools-sleep-calc': typeof ToolsSleepCalcRoute
+  '/tools-stopwatch': typeof ToolsStopwatchRoute
+  '/tools-string-hash': typeof ToolsStringHashRoute
+  '/tools-svg-preview': typeof ToolsSvgPreviewRoute
+  '/tools-text-stats': typeof ToolsTextStatsRoute
+  '/tools-text-to-speech': typeof ToolsTextToSpeechRoute
+  '/tools-timezone-converter': typeof ToolsTimezoneConverterRoute
+  '/tools-tip-calculator': typeof ToolsTipCalculatorRoute
+  '/tools-unicode-lookup': typeof ToolsUnicodeLookupRoute
+  '/tools-url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools-vcard-gen': typeof ToolsVcardGenRoute
+  '/tools-water-tracker': typeof ToolsWaterTrackerRoute
+  '/tools-wifi-qr': typeof ToolsWifiQrRoute
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -1072,6 +1638,7 @@ export interface FileRoutesByTo {
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
+  '/tools/api-tester': typeof ToolsApiTesterRoute
   '/tools/ascii': typeof ToolsAsciiRoute
   '/tools/aspect': typeof ToolsAspectRoute
   '/tools/base64': typeof ToolsBase64Route
@@ -1079,13 +1646,16 @@ export interface FileRoutesByTo {
   '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
   '/tools/budget': typeof ToolsBudgetRoute
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
+  '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
+  '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/contract': typeof ToolsContractRoute
   '/tools/countdown': typeof ToolsCountdownRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
   '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
@@ -1110,6 +1680,7 @@ export interface FileRoutesByTo {
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -1127,35 +1698,48 @@ export interface FileRoutesByTo {
   '/tools/notes': typeof ToolsNotesRoute
   '/tools/one-liner': typeof ToolsOneLinerRoute
   '/tools/password': typeof ToolsPasswordRoute
+  '/tools/password-gen': typeof ToolsPasswordGenRoute
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/pitch': typeof ToolsPitchRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
   '/tools/prayer-schedule': typeof ToolsPrayerScheduleRoute
+  '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
+  '/tools/random-number': typeof ToolsRandomNumberRoute
   '/tools/readability': typeof ToolsReadabilityRoute
   '/tools/reading': typeof ToolsReadingRoute
   '/tools/reading-list': typeof ToolsReadingListRoute
   '/tools/regex': typeof ToolsRegexRoute
+  '/tools/roman-numeral': typeof ToolsRomanNumeralRoute
   '/tools/sadaqah': typeof ToolsSadaqahRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
+  '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
   '/tools/standup': typeof ToolsStandupRoute
   '/tools/starfield': typeof ToolsStarfieldRoute
+  '/tools/stopwatch': typeof ToolsStopwatchRoute
   '/tools/table': typeof ToolsTableRoute
   '/tools/tasbeeh': typeof ToolsTasbeehRoute
+  '/tools/text-case': typeof ToolsTextCaseRoute
+  '/tools/text-stats': typeof ToolsTextStatsRoute
   '/tools/thread-maker': typeof ToolsThreadMakerRoute
   '/tools/thumbnail': typeof ToolsThumbnailRoute
+  '/tools/timestamp': typeof ToolsTimestampRoute
+  '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/typing-test': typeof ToolsTypingTestRoute
+  '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
+  '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/whitespace': typeof ToolsWhitespaceRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
@@ -1199,6 +1783,61 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
+  '/tools-alphabet-cipher': typeof ToolsAlphabetCipherRoute
+  '/tools-binary-calculator': typeof ToolsBinaryCalculatorRoute
+  '/tools-bmi-calculator2': typeof ToolsBmiCalculator2Route
+  '/tools-bmi-chart': typeof ToolsBmiChartRoute
+  '/tools-border-radius': typeof ToolsBorderRadiusRoute
+  '/tools-box-shadow': typeof ToolsBoxShadowRoute
+  '/tools-calorie-calc': typeof ToolsCalorieCalcRoute
+  '/tools-code-beautifier': typeof ToolsCodeBeautifierRoute
+  '/tools-coin-flip': typeof ToolsCoinFlipRoute
+  '/tools-color-blend': typeof ToolsColorBlendRoute
+  '/tools-color-contrast': typeof ToolsColorContrastRoute
+  '/tools-crack-hash': typeof ToolsCrackHashRoute
+  '/tools-css-flexbox': typeof ToolsCssFlexboxRoute
+  '/tools-css-grid': typeof ToolsCssGridRoute
+  '/tools-css-playground': typeof ToolsCssPlaygroundRoute
+  '/tools-daily-planner': typeof ToolsDailyPlannerRoute
+  '/tools-dice': typeof ToolsDiceRoute
+  '/tools-diff-viewer': typeof ToolsDiffViewerRoute
+  '/tools-distance-calc': typeof ToolsDistanceCalcRoute
+  '/tools-font-size': typeof ToolsFontSizeRoute
+  '/tools-gratitude-journal': typeof ToolsGratitudeJournalRoute
+  '/tools-heart-rate': typeof ToolsHeartRateRoute
+  '/tools-html-entity': typeof ToolsHtmlEntityRoute
+  '/tools-html-preview': typeof ToolsHtmlPreviewRoute
+  '/tools-http-status': typeof ToolsHttpStatusRoute
+  '/tools-ideal-weight': typeof ToolsIdealWeightRoute
+  '/tools-image-base64': typeof ToolsImageBase64Route
+  '/tools-invoice-lookup': typeof ToolsInvoiceLookupRoute
+  '/tools-js-playground': typeof ToolsJsPlaygroundRoute
+  '/tools-json-tree': typeof ToolsJsonTreeRoute
+  '/tools-markdown-html2': typeof ToolsMarkdownHtml2Route
+  '/tools-markdown-stats': typeof ToolsMarkdownStatsRoute
+  '/tools-memo-generator': typeof ToolsMemoGeneratorRoute
+  '/tools-mime-type': typeof ToolsMimeTypeRoute
+  '/tools-mood-tracker': typeof ToolsMoodTrackerRoute
+  '/tools-number-words': typeof ToolsNumberWordsRoute
+  '/tools-pomodoro-advanced': typeof ToolsPomodoroAdvancedRoute
+  '/tools-random-number': typeof ToolsRandomNumberRoute
+  '/tools-readability2': typeof ToolsReadability2Route
+  '/tools-recipe-scaler': typeof ToolsRecipeScalerRoute
+  '/tools-regex-tester': typeof ToolsRegexTesterRoute
+  '/tools-roman-numeral': typeof ToolsRomanNumeralRoute
+  '/tools-sleep-calc': typeof ToolsSleepCalcRoute
+  '/tools-stopwatch': typeof ToolsStopwatchRoute
+  '/tools-string-hash': typeof ToolsStringHashRoute
+  '/tools-svg-preview': typeof ToolsSvgPreviewRoute
+  '/tools-text-stats': typeof ToolsTextStatsRoute
+  '/tools-text-to-speech': typeof ToolsTextToSpeechRoute
+  '/tools-timezone-converter': typeof ToolsTimezoneConverterRoute
+  '/tools-tip-calculator': typeof ToolsTipCalculatorRoute
+  '/tools-unicode-lookup': typeof ToolsUnicodeLookupRoute
+  '/tools-url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools-vcard-gen': typeof ToolsVcardGenRoute
+  '/tools-water-tracker': typeof ToolsWaterTrackerRoute
+  '/tools-wifi-qr': typeof ToolsWifiQrRoute
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
   '/youtube': typeof YoutubeRoute
@@ -1219,6 +1858,7 @@ export interface FileRoutesById {
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
+  '/tools/api-tester': typeof ToolsApiTesterRoute
   '/tools/ascii': typeof ToolsAsciiRoute
   '/tools/aspect': typeof ToolsAspectRoute
   '/tools/base64': typeof ToolsBase64Route
@@ -1226,13 +1866,16 @@ export interface FileRoutesById {
   '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
   '/tools/budget': typeof ToolsBudgetRoute
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
+  '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
+  '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/contract': typeof ToolsContractRoute
   '/tools/countdown': typeof ToolsCountdownRoute
   '/tools/cron': typeof ToolsCronRoute
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
   '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
@@ -1257,6 +1900,7 @@ export interface FileRoutesById {
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -1274,35 +1918,48 @@ export interface FileRoutesById {
   '/tools/notes': typeof ToolsNotesRoute
   '/tools/one-liner': typeof ToolsOneLinerRoute
   '/tools/password': typeof ToolsPasswordRoute
+  '/tools/password-gen': typeof ToolsPasswordGenRoute
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/pitch': typeof ToolsPitchRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
   '/tools/prayer-schedule': typeof ToolsPrayerScheduleRoute
+  '/tools/qr-code': typeof ToolsQrCodeRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
+  '/tools/random-number': typeof ToolsRandomNumberRoute
   '/tools/readability': typeof ToolsReadabilityRoute
   '/tools/reading': typeof ToolsReadingRoute
   '/tools/reading-list': typeof ToolsReadingListRoute
   '/tools/regex': typeof ToolsRegexRoute
+  '/tools/roman-numeral': typeof ToolsRomanNumeralRoute
   '/tools/sadaqah': typeof ToolsSadaqahRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
+  '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
   '/tools/standup': typeof ToolsStandupRoute
   '/tools/starfield': typeof ToolsStarfieldRoute
+  '/tools/stopwatch': typeof ToolsStopwatchRoute
   '/tools/table': typeof ToolsTableRoute
   '/tools/tasbeeh': typeof ToolsTasbeehRoute
+  '/tools/text-case': typeof ToolsTextCaseRoute
+  '/tools/text-stats': typeof ToolsTextStatsRoute
   '/tools/thread-maker': typeof ToolsThreadMakerRoute
   '/tools/thumbnail': typeof ToolsThumbnailRoute
+  '/tools/timestamp': typeof ToolsTimestampRoute
+  '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/typing-test': typeof ToolsTypingTestRoute
+  '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
+  '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/whitespace': typeof ToolsWhitespaceRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -1347,6 +2004,61 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/tools'
+    | '/tools-alphabet-cipher'
+    | '/tools-binary-calculator'
+    | '/tools-bmi-calculator2'
+    | '/tools-bmi-chart'
+    | '/tools-border-radius'
+    | '/tools-box-shadow'
+    | '/tools-calorie-calc'
+    | '/tools-code-beautifier'
+    | '/tools-coin-flip'
+    | '/tools-color-blend'
+    | '/tools-color-contrast'
+    | '/tools-crack-hash'
+    | '/tools-css-flexbox'
+    | '/tools-css-grid'
+    | '/tools-css-playground'
+    | '/tools-daily-planner'
+    | '/tools-dice'
+    | '/tools-diff-viewer'
+    | '/tools-distance-calc'
+    | '/tools-font-size'
+    | '/tools-gratitude-journal'
+    | '/tools-heart-rate'
+    | '/tools-html-entity'
+    | '/tools-html-preview'
+    | '/tools-http-status'
+    | '/tools-ideal-weight'
+    | '/tools-image-base64'
+    | '/tools-invoice-lookup'
+    | '/tools-js-playground'
+    | '/tools-json-tree'
+    | '/tools-markdown-html2'
+    | '/tools-markdown-stats'
+    | '/tools-memo-generator'
+    | '/tools-mime-type'
+    | '/tools-mood-tracker'
+    | '/tools-number-words'
+    | '/tools-pomodoro-advanced'
+    | '/tools-random-number'
+    | '/tools-readability2'
+    | '/tools-recipe-scaler'
+    | '/tools-regex-tester'
+    | '/tools-roman-numeral'
+    | '/tools-sleep-calc'
+    | '/tools-stopwatch'
+    | '/tools-string-hash'
+    | '/tools-svg-preview'
+    | '/tools-text-stats'
+    | '/tools-text-to-speech'
+    | '/tools-timezone-converter'
+    | '/tools-tip-calculator'
+    | '/tools-unicode-lookup'
+    | '/tools-url-encoder'
+    | '/tools-vcard-gen'
+    | '/tools-water-tracker'
+    | '/tools-wifi-qr'
     | '/trending'
     | '/whats-new'
     | '/youtube'
@@ -1367,6 +2079,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
+    | '/tools/api-tester'
     | '/tools/ascii'
     | '/tools/aspect'
     | '/tools/base64'
@@ -1374,13 +2087,16 @@ export interface FileRouteTypes {
     | '/tools/bmi-calculator'
     | '/tools/budget'
     | '/tools/changelog-maker'
+    | '/tools/coin-flip'
     | '/tools/color-palette'
+    | '/tools/color-picker'
     | '/tools/contract'
     | '/tools/countdown'
     | '/tools/cron'
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
     | '/tools/emi-calculator'
@@ -1405,6 +2121,7 @@ export interface FileRouteTypes {
     | '/tools/images-to-pdf'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/json-formatter'
     | '/tools/kharch'
     | '/tools/linktree'
     | '/tools/lorem'
@@ -1422,35 +2139,48 @@ export interface FileRouteTypes {
     | '/tools/notes'
     | '/tools/one-liner'
     | '/tools/password'
+    | '/tools/password-gen'
     | '/tools/percentage'
     | '/tools/pitch'
     | '/tools/plant'
     | '/tools/poll'
     | '/tools/pomodoro'
     | '/tools/prayer-schedule'
+    | '/tools/qr-code'
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
+    | '/tools/random-number'
     | '/tools/readability'
     | '/tools/reading'
     | '/tools/reading-list'
     | '/tools/regex'
+    | '/tools/roman-numeral'
     | '/tools/sadaqah'
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
+    | '/tools/speech-to-text'
     | '/tools/spelling'
     | '/tools/standup'
     | '/tools/starfield'
+    | '/tools/stopwatch'
     | '/tools/table'
     | '/tools/tasbeeh'
+    | '/tools/text-case'
+    | '/tools/text-stats'
     | '/tools/thread-maker'
     | '/tools/thumbnail'
+    | '/tools/timestamp'
+    | '/tools/tip-calculator'
     | '/tools/typing-test'
+    | '/tools/unit-converter'
     | '/tools/upi'
+    | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/whitespace'
     | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
@@ -1492,6 +2222,61 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/terms'
+    | '/tools-alphabet-cipher'
+    | '/tools-binary-calculator'
+    | '/tools-bmi-calculator2'
+    | '/tools-bmi-chart'
+    | '/tools-border-radius'
+    | '/tools-box-shadow'
+    | '/tools-calorie-calc'
+    | '/tools-code-beautifier'
+    | '/tools-coin-flip'
+    | '/tools-color-blend'
+    | '/tools-color-contrast'
+    | '/tools-crack-hash'
+    | '/tools-css-flexbox'
+    | '/tools-css-grid'
+    | '/tools-css-playground'
+    | '/tools-daily-planner'
+    | '/tools-dice'
+    | '/tools-diff-viewer'
+    | '/tools-distance-calc'
+    | '/tools-font-size'
+    | '/tools-gratitude-journal'
+    | '/tools-heart-rate'
+    | '/tools-html-entity'
+    | '/tools-html-preview'
+    | '/tools-http-status'
+    | '/tools-ideal-weight'
+    | '/tools-image-base64'
+    | '/tools-invoice-lookup'
+    | '/tools-js-playground'
+    | '/tools-json-tree'
+    | '/tools-markdown-html2'
+    | '/tools-markdown-stats'
+    | '/tools-memo-generator'
+    | '/tools-mime-type'
+    | '/tools-mood-tracker'
+    | '/tools-number-words'
+    | '/tools-pomodoro-advanced'
+    | '/tools-random-number'
+    | '/tools-readability2'
+    | '/tools-recipe-scaler'
+    | '/tools-regex-tester'
+    | '/tools-roman-numeral'
+    | '/tools-sleep-calc'
+    | '/tools-stopwatch'
+    | '/tools-string-hash'
+    | '/tools-svg-preview'
+    | '/tools-text-stats'
+    | '/tools-text-to-speech'
+    | '/tools-timezone-converter'
+    | '/tools-tip-calculator'
+    | '/tools-unicode-lookup'
+    | '/tools-url-encoder'
+    | '/tools-vcard-gen'
+    | '/tools-water-tracker'
+    | '/tools-wifi-qr'
     | '/trending'
     | '/whats-new'
     | '/youtube'
@@ -1512,6 +2297,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
+    | '/tools/api-tester'
     | '/tools/ascii'
     | '/tools/aspect'
     | '/tools/base64'
@@ -1519,13 +2305,16 @@ export interface FileRouteTypes {
     | '/tools/bmi-calculator'
     | '/tools/budget'
     | '/tools/changelog-maker'
+    | '/tools/coin-flip'
     | '/tools/color-palette'
+    | '/tools/color-picker'
     | '/tools/contract'
     | '/tools/countdown'
     | '/tools/cron'
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
     | '/tools/emi-calculator'
@@ -1550,6 +2339,7 @@ export interface FileRouteTypes {
     | '/tools/images-to-pdf'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/json-formatter'
     | '/tools/kharch'
     | '/tools/linktree'
     | '/tools/lorem'
@@ -1567,35 +2357,48 @@ export interface FileRouteTypes {
     | '/tools/notes'
     | '/tools/one-liner'
     | '/tools/password'
+    | '/tools/password-gen'
     | '/tools/percentage'
     | '/tools/pitch'
     | '/tools/plant'
     | '/tools/poll'
     | '/tools/pomodoro'
     | '/tools/prayer-schedule'
+    | '/tools/qr-code'
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
+    | '/tools/random-number'
     | '/tools/readability'
     | '/tools/reading'
     | '/tools/reading-list'
     | '/tools/regex'
+    | '/tools/roman-numeral'
     | '/tools/sadaqah'
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
+    | '/tools/speech-to-text'
     | '/tools/spelling'
     | '/tools/standup'
     | '/tools/starfield'
+    | '/tools/stopwatch'
     | '/tools/table'
     | '/tools/tasbeeh'
+    | '/tools/text-case'
+    | '/tools/text-stats'
     | '/tools/thread-maker'
     | '/tools/thumbnail'
+    | '/tools/timestamp'
+    | '/tools/tip-calculator'
     | '/tools/typing-test'
+    | '/tools/unit-converter'
     | '/tools/upi'
+    | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/whitespace'
     | '/tools/world-clock'
     | '/build-ideas'
     | '/collections'
@@ -1638,6 +2441,61 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/tools'
+    | '/tools-alphabet-cipher'
+    | '/tools-binary-calculator'
+    | '/tools-bmi-calculator2'
+    | '/tools-bmi-chart'
+    | '/tools-border-radius'
+    | '/tools-box-shadow'
+    | '/tools-calorie-calc'
+    | '/tools-code-beautifier'
+    | '/tools-coin-flip'
+    | '/tools-color-blend'
+    | '/tools-color-contrast'
+    | '/tools-crack-hash'
+    | '/tools-css-flexbox'
+    | '/tools-css-grid'
+    | '/tools-css-playground'
+    | '/tools-daily-planner'
+    | '/tools-dice'
+    | '/tools-diff-viewer'
+    | '/tools-distance-calc'
+    | '/tools-font-size'
+    | '/tools-gratitude-journal'
+    | '/tools-heart-rate'
+    | '/tools-html-entity'
+    | '/tools-html-preview'
+    | '/tools-http-status'
+    | '/tools-ideal-weight'
+    | '/tools-image-base64'
+    | '/tools-invoice-lookup'
+    | '/tools-js-playground'
+    | '/tools-json-tree'
+    | '/tools-markdown-html2'
+    | '/tools-markdown-stats'
+    | '/tools-memo-generator'
+    | '/tools-mime-type'
+    | '/tools-mood-tracker'
+    | '/tools-number-words'
+    | '/tools-pomodoro-advanced'
+    | '/tools-random-number'
+    | '/tools-readability2'
+    | '/tools-recipe-scaler'
+    | '/tools-regex-tester'
+    | '/tools-roman-numeral'
+    | '/tools-sleep-calc'
+    | '/tools-stopwatch'
+    | '/tools-string-hash'
+    | '/tools-svg-preview'
+    | '/tools-text-stats'
+    | '/tools-text-to-speech'
+    | '/tools-timezone-converter'
+    | '/tools-tip-calculator'
+    | '/tools-unicode-lookup'
+    | '/tools-url-encoder'
+    | '/tools-vcard-gen'
+    | '/tools-water-tracker'
+    | '/tools-wifi-qr'
     | '/trending'
     | '/whats-new'
     | '/youtube'
@@ -1658,6 +2516,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
+    | '/tools/api-tester'
     | '/tools/ascii'
     | '/tools/aspect'
     | '/tools/base64'
@@ -1665,13 +2524,16 @@ export interface FileRouteTypes {
     | '/tools/bmi-calculator'
     | '/tools/budget'
     | '/tools/changelog-maker'
+    | '/tools/coin-flip'
     | '/tools/color-palette'
+    | '/tools/color-picker'
     | '/tools/contract'
     | '/tools/countdown'
     | '/tools/cron'
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
     | '/tools/emi-calculator'
@@ -1696,6 +2558,7 @@ export interface FileRouteTypes {
     | '/tools/images-to-pdf'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/json-formatter'
     | '/tools/kharch'
     | '/tools/linktree'
     | '/tools/lorem'
@@ -1713,35 +2576,48 @@ export interface FileRouteTypes {
     | '/tools/notes'
     | '/tools/one-liner'
     | '/tools/password'
+    | '/tools/password-gen'
     | '/tools/percentage'
     | '/tools/pitch'
     | '/tools/plant'
     | '/tools/poll'
     | '/tools/pomodoro'
     | '/tools/prayer-schedule'
+    | '/tools/qr-code'
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
+    | '/tools/random-number'
     | '/tools/readability'
     | '/tools/reading'
     | '/tools/reading-list'
     | '/tools/regex'
+    | '/tools/roman-numeral'
     | '/tools/sadaqah'
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
+    | '/tools/speech-to-text'
     | '/tools/spelling'
     | '/tools/standup'
     | '/tools/starfield'
+    | '/tools/stopwatch'
     | '/tools/table'
     | '/tools/tasbeeh'
+    | '/tools/text-case'
+    | '/tools/text-stats'
     | '/tools/thread-maker'
     | '/tools/thumbnail'
+    | '/tools/timestamp'
+    | '/tools/tip-calculator'
     | '/tools/typing-test'
+    | '/tools/unit-converter'
     | '/tools/upi'
+    | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/whitespace'
     | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
@@ -1785,6 +2661,61 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRouteWithChildren
+  ToolsAlphabetCipherRoute: typeof ToolsAlphabetCipherRoute
+  ToolsBinaryCalculatorRoute: typeof ToolsBinaryCalculatorRoute
+  ToolsBmiCalculator2Route: typeof ToolsBmiCalculator2Route
+  ToolsBmiChartRoute: typeof ToolsBmiChartRoute
+  ToolsBorderRadiusRoute: typeof ToolsBorderRadiusRoute
+  ToolsBoxShadowRoute: typeof ToolsBoxShadowRoute
+  ToolsCalorieCalcRoute: typeof ToolsCalorieCalcRoute
+  ToolsCodeBeautifierRoute: typeof ToolsCodeBeautifierRoute
+  ToolsCoinFlipRoute: typeof ToolsCoinFlipRoute
+  ToolsColorBlendRoute: typeof ToolsColorBlendRoute
+  ToolsColorContrastRoute: typeof ToolsColorContrastRoute
+  ToolsCrackHashRoute: typeof ToolsCrackHashRoute
+  ToolsCssFlexboxRoute: typeof ToolsCssFlexboxRoute
+  ToolsCssGridRoute: typeof ToolsCssGridRoute
+  ToolsCssPlaygroundRoute: typeof ToolsCssPlaygroundRoute
+  ToolsDailyPlannerRoute: typeof ToolsDailyPlannerRoute
+  ToolsDiceRoute: typeof ToolsDiceRoute
+  ToolsDiffViewerRoute: typeof ToolsDiffViewerRoute
+  ToolsDistanceCalcRoute: typeof ToolsDistanceCalcRoute
+  ToolsFontSizeRoute: typeof ToolsFontSizeRoute
+  ToolsGratitudeJournalRoute: typeof ToolsGratitudeJournalRoute
+  ToolsHeartRateRoute: typeof ToolsHeartRateRoute
+  ToolsHtmlEntityRoute: typeof ToolsHtmlEntityRoute
+  ToolsHtmlPreviewRoute: typeof ToolsHtmlPreviewRoute
+  ToolsHttpStatusRoute: typeof ToolsHttpStatusRoute
+  ToolsIdealWeightRoute: typeof ToolsIdealWeightRoute
+  ToolsImageBase64Route: typeof ToolsImageBase64Route
+  ToolsInvoiceLookupRoute: typeof ToolsInvoiceLookupRoute
+  ToolsJsPlaygroundRoute: typeof ToolsJsPlaygroundRoute
+  ToolsJsonTreeRoute: typeof ToolsJsonTreeRoute
+  ToolsMarkdownHtml2Route: typeof ToolsMarkdownHtml2Route
+  ToolsMarkdownStatsRoute: typeof ToolsMarkdownStatsRoute
+  ToolsMemoGeneratorRoute: typeof ToolsMemoGeneratorRoute
+  ToolsMimeTypeRoute: typeof ToolsMimeTypeRoute
+  ToolsMoodTrackerRoute: typeof ToolsMoodTrackerRoute
+  ToolsNumberWordsRoute: typeof ToolsNumberWordsRoute
+  ToolsPomodoroAdvancedRoute: typeof ToolsPomodoroAdvancedRoute
+  ToolsRandomNumberRoute: typeof ToolsRandomNumberRoute
+  ToolsReadability2Route: typeof ToolsReadability2Route
+  ToolsRecipeScalerRoute: typeof ToolsRecipeScalerRoute
+  ToolsRegexTesterRoute: typeof ToolsRegexTesterRoute
+  ToolsRomanNumeralRoute: typeof ToolsRomanNumeralRoute
+  ToolsSleepCalcRoute: typeof ToolsSleepCalcRoute
+  ToolsStopwatchRoute: typeof ToolsStopwatchRoute
+  ToolsStringHashRoute: typeof ToolsStringHashRoute
+  ToolsSvgPreviewRoute: typeof ToolsSvgPreviewRoute
+  ToolsTextStatsRoute: typeof ToolsTextStatsRoute
+  ToolsTextToSpeechRoute: typeof ToolsTextToSpeechRoute
+  ToolsTimezoneConverterRoute: typeof ToolsTimezoneConverterRoute
+  ToolsTipCalculatorRoute: typeof ToolsTipCalculatorRoute
+  ToolsUnicodeLookupRoute: typeof ToolsUnicodeLookupRoute
+  ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
+  ToolsVcardGenRoute: typeof ToolsVcardGenRoute
+  ToolsWaterTrackerRoute: typeof ToolsWaterTrackerRoute
+  ToolsWifiQrRoute: typeof ToolsWifiQrRoute
   TrendingRoute: typeof TrendingRoute
   WhatsNewRoute: typeof WhatsNewRoute
   YoutubeRoute: typeof YoutubeRoute
@@ -2024,6 +2955,391 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools-alphabet-cipher': {
+      id: '/tools-alphabet-cipher'
+      path: '/tools-alphabet-cipher'
+      fullPath: '/tools-alphabet-cipher'
+      preLoaderRoute: typeof ToolsAlphabetCipherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-binary-calculator': {
+      id: '/tools-binary-calculator'
+      path: '/tools-binary-calculator'
+      fullPath: '/tools-binary-calculator'
+      preLoaderRoute: typeof ToolsBinaryCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-bmi-calculator2': {
+      id: '/tools-bmi-calculator2'
+      path: '/tools-bmi-calculator2'
+      fullPath: '/tools-bmi-calculator2'
+      preLoaderRoute: typeof ToolsBmiCalculator2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-bmi-chart': {
+      id: '/tools-bmi-chart'
+      path: '/tools-bmi-chart'
+      fullPath: '/tools-bmi-chart'
+      preLoaderRoute: typeof ToolsBmiChartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-border-radius': {
+      id: '/tools-border-radius'
+      path: '/tools-border-radius'
+      fullPath: '/tools-border-radius'
+      preLoaderRoute: typeof ToolsBorderRadiusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-box-shadow': {
+      id: '/tools-box-shadow'
+      path: '/tools-box-shadow'
+      fullPath: '/tools-box-shadow'
+      preLoaderRoute: typeof ToolsBoxShadowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-calorie-calc': {
+      id: '/tools-calorie-calc'
+      path: '/tools-calorie-calc'
+      fullPath: '/tools-calorie-calc'
+      preLoaderRoute: typeof ToolsCalorieCalcRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-code-beautifier': {
+      id: '/tools-code-beautifier'
+      path: '/tools-code-beautifier'
+      fullPath: '/tools-code-beautifier'
+      preLoaderRoute: typeof ToolsCodeBeautifierRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-coin-flip': {
+      id: '/tools-coin-flip'
+      path: '/tools-coin-flip'
+      fullPath: '/tools-coin-flip'
+      preLoaderRoute: typeof ToolsCoinFlipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-color-blend': {
+      id: '/tools-color-blend'
+      path: '/tools-color-blend'
+      fullPath: '/tools-color-blend'
+      preLoaderRoute: typeof ToolsColorBlendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-color-contrast': {
+      id: '/tools-color-contrast'
+      path: '/tools-color-contrast'
+      fullPath: '/tools-color-contrast'
+      preLoaderRoute: typeof ToolsColorContrastRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-crack-hash': {
+      id: '/tools-crack-hash'
+      path: '/tools-crack-hash'
+      fullPath: '/tools-crack-hash'
+      preLoaderRoute: typeof ToolsCrackHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-css-flexbox': {
+      id: '/tools-css-flexbox'
+      path: '/tools-css-flexbox'
+      fullPath: '/tools-css-flexbox'
+      preLoaderRoute: typeof ToolsCssFlexboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-css-grid': {
+      id: '/tools-css-grid'
+      path: '/tools-css-grid'
+      fullPath: '/tools-css-grid'
+      preLoaderRoute: typeof ToolsCssGridRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-css-playground': {
+      id: '/tools-css-playground'
+      path: '/tools-css-playground'
+      fullPath: '/tools-css-playground'
+      preLoaderRoute: typeof ToolsCssPlaygroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-daily-planner': {
+      id: '/tools-daily-planner'
+      path: '/tools-daily-planner'
+      fullPath: '/tools-daily-planner'
+      preLoaderRoute: typeof ToolsDailyPlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-dice': {
+      id: '/tools-dice'
+      path: '/tools-dice'
+      fullPath: '/tools-dice'
+      preLoaderRoute: typeof ToolsDiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-diff-viewer': {
+      id: '/tools-diff-viewer'
+      path: '/tools-diff-viewer'
+      fullPath: '/tools-diff-viewer'
+      preLoaderRoute: typeof ToolsDiffViewerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-distance-calc': {
+      id: '/tools-distance-calc'
+      path: '/tools-distance-calc'
+      fullPath: '/tools-distance-calc'
+      preLoaderRoute: typeof ToolsDistanceCalcRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-font-size': {
+      id: '/tools-font-size'
+      path: '/tools-font-size'
+      fullPath: '/tools-font-size'
+      preLoaderRoute: typeof ToolsFontSizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-gratitude-journal': {
+      id: '/tools-gratitude-journal'
+      path: '/tools-gratitude-journal'
+      fullPath: '/tools-gratitude-journal'
+      preLoaderRoute: typeof ToolsGratitudeJournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-heart-rate': {
+      id: '/tools-heart-rate'
+      path: '/tools-heart-rate'
+      fullPath: '/tools-heart-rate'
+      preLoaderRoute: typeof ToolsHeartRateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-html-entity': {
+      id: '/tools-html-entity'
+      path: '/tools-html-entity'
+      fullPath: '/tools-html-entity'
+      preLoaderRoute: typeof ToolsHtmlEntityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-html-preview': {
+      id: '/tools-html-preview'
+      path: '/tools-html-preview'
+      fullPath: '/tools-html-preview'
+      preLoaderRoute: typeof ToolsHtmlPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-http-status': {
+      id: '/tools-http-status'
+      path: '/tools-http-status'
+      fullPath: '/tools-http-status'
+      preLoaderRoute: typeof ToolsHttpStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-ideal-weight': {
+      id: '/tools-ideal-weight'
+      path: '/tools-ideal-weight'
+      fullPath: '/tools-ideal-weight'
+      preLoaderRoute: typeof ToolsIdealWeightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-image-base64': {
+      id: '/tools-image-base64'
+      path: '/tools-image-base64'
+      fullPath: '/tools-image-base64'
+      preLoaderRoute: typeof ToolsImageBase64RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-invoice-lookup': {
+      id: '/tools-invoice-lookup'
+      path: '/tools-invoice-lookup'
+      fullPath: '/tools-invoice-lookup'
+      preLoaderRoute: typeof ToolsInvoiceLookupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-js-playground': {
+      id: '/tools-js-playground'
+      path: '/tools-js-playground'
+      fullPath: '/tools-js-playground'
+      preLoaderRoute: typeof ToolsJsPlaygroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-json-tree': {
+      id: '/tools-json-tree'
+      path: '/tools-json-tree'
+      fullPath: '/tools-json-tree'
+      preLoaderRoute: typeof ToolsJsonTreeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-markdown-html2': {
+      id: '/tools-markdown-html2'
+      path: '/tools-markdown-html2'
+      fullPath: '/tools-markdown-html2'
+      preLoaderRoute: typeof ToolsMarkdownHtml2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-markdown-stats': {
+      id: '/tools-markdown-stats'
+      path: '/tools-markdown-stats'
+      fullPath: '/tools-markdown-stats'
+      preLoaderRoute: typeof ToolsMarkdownStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-memo-generator': {
+      id: '/tools-memo-generator'
+      path: '/tools-memo-generator'
+      fullPath: '/tools-memo-generator'
+      preLoaderRoute: typeof ToolsMemoGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-mime-type': {
+      id: '/tools-mime-type'
+      path: '/tools-mime-type'
+      fullPath: '/tools-mime-type'
+      preLoaderRoute: typeof ToolsMimeTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-mood-tracker': {
+      id: '/tools-mood-tracker'
+      path: '/tools-mood-tracker'
+      fullPath: '/tools-mood-tracker'
+      preLoaderRoute: typeof ToolsMoodTrackerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-number-words': {
+      id: '/tools-number-words'
+      path: '/tools-number-words'
+      fullPath: '/tools-number-words'
+      preLoaderRoute: typeof ToolsNumberWordsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-pomodoro-advanced': {
+      id: '/tools-pomodoro-advanced'
+      path: '/tools-pomodoro-advanced'
+      fullPath: '/tools-pomodoro-advanced'
+      preLoaderRoute: typeof ToolsPomodoroAdvancedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-random-number': {
+      id: '/tools-random-number'
+      path: '/tools-random-number'
+      fullPath: '/tools-random-number'
+      preLoaderRoute: typeof ToolsRandomNumberRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-readability2': {
+      id: '/tools-readability2'
+      path: '/tools-readability2'
+      fullPath: '/tools-readability2'
+      preLoaderRoute: typeof ToolsReadability2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-recipe-scaler': {
+      id: '/tools-recipe-scaler'
+      path: '/tools-recipe-scaler'
+      fullPath: '/tools-recipe-scaler'
+      preLoaderRoute: typeof ToolsRecipeScalerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-regex-tester': {
+      id: '/tools-regex-tester'
+      path: '/tools-regex-tester'
+      fullPath: '/tools-regex-tester'
+      preLoaderRoute: typeof ToolsRegexTesterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-roman-numeral': {
+      id: '/tools-roman-numeral'
+      path: '/tools-roman-numeral'
+      fullPath: '/tools-roman-numeral'
+      preLoaderRoute: typeof ToolsRomanNumeralRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-sleep-calc': {
+      id: '/tools-sleep-calc'
+      path: '/tools-sleep-calc'
+      fullPath: '/tools-sleep-calc'
+      preLoaderRoute: typeof ToolsSleepCalcRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-stopwatch': {
+      id: '/tools-stopwatch'
+      path: '/tools-stopwatch'
+      fullPath: '/tools-stopwatch'
+      preLoaderRoute: typeof ToolsStopwatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-string-hash': {
+      id: '/tools-string-hash'
+      path: '/tools-string-hash'
+      fullPath: '/tools-string-hash'
+      preLoaderRoute: typeof ToolsStringHashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-svg-preview': {
+      id: '/tools-svg-preview'
+      path: '/tools-svg-preview'
+      fullPath: '/tools-svg-preview'
+      preLoaderRoute: typeof ToolsSvgPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-text-stats': {
+      id: '/tools-text-stats'
+      path: '/tools-text-stats'
+      fullPath: '/tools-text-stats'
+      preLoaderRoute: typeof ToolsTextStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-text-to-speech': {
+      id: '/tools-text-to-speech'
+      path: '/tools-text-to-speech'
+      fullPath: '/tools-text-to-speech'
+      preLoaderRoute: typeof ToolsTextToSpeechRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-timezone-converter': {
+      id: '/tools-timezone-converter'
+      path: '/tools-timezone-converter'
+      fullPath: '/tools-timezone-converter'
+      preLoaderRoute: typeof ToolsTimezoneConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-tip-calculator': {
+      id: '/tools-tip-calculator'
+      path: '/tools-tip-calculator'
+      fullPath: '/tools-tip-calculator'
+      preLoaderRoute: typeof ToolsTipCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-unicode-lookup': {
+      id: '/tools-unicode-lookup'
+      path: '/tools-unicode-lookup'
+      fullPath: '/tools-unicode-lookup'
+      preLoaderRoute: typeof ToolsUnicodeLookupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-url-encoder': {
+      id: '/tools-url-encoder'
+      path: '/tools-url-encoder'
+      fullPath: '/tools-url-encoder'
+      preLoaderRoute: typeof ToolsUrlEncoderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-vcard-gen': {
+      id: '/tools-vcard-gen'
+      path: '/tools-vcard-gen'
+      fullPath: '/tools-vcard-gen'
+      preLoaderRoute: typeof ToolsVcardGenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-water-tracker': {
+      id: '/tools-water-tracker'
+      path: '/tools-water-tracker'
+      fullPath: '/tools-water-tracker'
+      preLoaderRoute: typeof ToolsWaterTrackerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools-wifi-qr': {
+      id: '/tools-wifi-qr'
+      path: '/tools-wifi-qr'
+      fullPath: '/tools-wifi-qr'
+      preLoaderRoute: typeof ToolsWifiQrRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trending': {
       id: '/trending'
       path: '/trending'
@@ -2213,6 +3529,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsAgeOfThingsRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/api-tester': {
+      id: '/tools/api-tester'
+      path: '/api-tester'
+      fullPath: '/tools/api-tester'
+      preLoaderRoute: typeof ToolsApiTesterRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/ascii': {
       id: '/tools/ascii'
       path: '/ascii'
@@ -2262,11 +3585,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsChangelogMakerRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/coin-flip': {
+      id: '/tools/coin-flip'
+      path: '/coin-flip'
+      fullPath: '/tools/coin-flip'
+      preLoaderRoute: typeof ToolsCoinFlipRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/color-palette': {
       id: '/tools/color-palette'
       path: '/color-palette'
       fullPath: '/tools/color-palette'
       preLoaderRoute: typeof ToolsColorPaletteRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/color-picker': {
+      id: '/tools/color-picker'
+      path: '/color-picker'
+      fullPath: '/tools/color-picker'
+      preLoaderRoute: typeof ToolsColorPickerRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/contract': {
@@ -2309,6 +3646,13 @@ declare module '@tanstack/react-router' {
       path: '/cv'
       fullPath: '/tools/cv'
       preLoaderRoute: typeof ToolsCvRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/dice': {
+      id: '/tools/dice'
+      path: '/dice'
+      fullPath: '/tools/dice'
+      preLoaderRoute: typeof ToolsDiceRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/diff': {
@@ -2479,6 +3823,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsIpRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/json-formatter': {
+      id: '/tools/json-formatter'
+      path: '/json-formatter'
+      fullPath: '/tools/json-formatter'
+      preLoaderRoute: typeof ToolsJsonFormatterRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/kharch': {
       id: '/tools/kharch'
       path: '/kharch'
@@ -2598,6 +3949,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsPasswordRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/password-gen': {
+      id: '/tools/password-gen'
+      path: '/password-gen'
+      fullPath: '/tools/password-gen'
+      preLoaderRoute: typeof ToolsPasswordGenRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/percentage': {
       id: '/tools/percentage'
       path: '/percentage'
@@ -2640,6 +3998,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsPrayerScheduleRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/qr-code': {
+      id: '/tools/qr-code'
+      path: '/qr-code'
+      fullPath: '/tools/qr-code'
+      preLoaderRoute: typeof ToolsQrCodeRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/quote-screen': {
       id: '/tools/quote-screen'
       path: '/quote-screen'
@@ -2659,6 +4024,13 @@ declare module '@tanstack/react-router' {
       path: '/rain-screen'
       fullPath: '/tools/rain-screen'
       preLoaderRoute: typeof ToolsRainScreenRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/random-number': {
+      id: '/tools/random-number'
+      path: '/random-number'
+      fullPath: '/tools/random-number'
+      preLoaderRoute: typeof ToolsRandomNumberRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/readability': {
@@ -2687,6 +4059,13 @@ declare module '@tanstack/react-router' {
       path: '/regex'
       fullPath: '/tools/regex'
       preLoaderRoute: typeof ToolsRegexRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/roman-numeral': {
+      id: '/tools/roman-numeral'
+      path: '/roman-numeral'
+      fullPath: '/tools/roman-numeral'
+      preLoaderRoute: typeof ToolsRomanNumeralRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/sadaqah': {
@@ -2731,6 +4110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSmartPasteRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/speech-to-text': {
+      id: '/tools/speech-to-text'
+      path: '/speech-to-text'
+      fullPath: '/tools/speech-to-text'
+      preLoaderRoute: typeof ToolsSpeechToTextRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/spelling': {
       id: '/tools/spelling'
       path: '/spelling'
@@ -2752,6 +4138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsStarfieldRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/stopwatch': {
+      id: '/tools/stopwatch'
+      path: '/stopwatch'
+      fullPath: '/tools/stopwatch'
+      preLoaderRoute: typeof ToolsStopwatchRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/table': {
       id: '/tools/table'
       path: '/table'
@@ -2764,6 +4157,20 @@ declare module '@tanstack/react-router' {
       path: '/tasbeeh'
       fullPath: '/tools/tasbeeh'
       preLoaderRoute: typeof ToolsTasbeehRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/text-case': {
+      id: '/tools/text-case'
+      path: '/text-case'
+      fullPath: '/tools/text-case'
+      preLoaderRoute: typeof ToolsTextCaseRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/text-stats': {
+      id: '/tools/text-stats'
+      path: '/text-stats'
+      fullPath: '/tools/text-stats'
+      preLoaderRoute: typeof ToolsTextStatsRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/thread-maker': {
@@ -2780,11 +4187,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsThumbnailRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/timestamp': {
+      id: '/tools/timestamp'
+      path: '/timestamp'
+      fullPath: '/tools/timestamp'
+      preLoaderRoute: typeof ToolsTimestampRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/tip-calculator': {
+      id: '/tools/tip-calculator'
+      path: '/tip-calculator'
+      fullPath: '/tools/tip-calculator'
+      preLoaderRoute: typeof ToolsTipCalculatorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/typing-test': {
       id: '/tools/typing-test'
       path: '/typing-test'
       fullPath: '/tools/typing-test'
       preLoaderRoute: typeof ToolsTypingTestRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/unit-converter': {
+      id: '/tools/unit-converter'
+      path: '/unit-converter'
+      fullPath: '/tools/unit-converter'
+      preLoaderRoute: typeof ToolsUnitConverterRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/upi': {
@@ -2794,11 +4222,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsUpiRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/url-encoder': {
+      id: '/tools/url-encoder'
+      path: '/url-encoder'
+      fullPath: '/tools/url-encoder'
+      preLoaderRoute: typeof ToolsUrlEncoderRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/watermark': {
       id: '/tools/watermark'
       path: '/watermark'
       fullPath: '/tools/watermark'
       preLoaderRoute: typeof ToolsWatermarkRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/whitespace': {
+      id: '/tools/whitespace'
+      path: '/whitespace'
+      fullPath: '/tools/whitespace'
+      preLoaderRoute: typeof ToolsWhitespaceRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/world-clock': {
@@ -2840,6 +4282,7 @@ const AssistantRouteWithChildren = AssistantRoute._addFileChildren(
 interface ToolsRouteChildren {
   ToolsAgeCalculatorRoute: typeof ToolsAgeCalculatorRoute
   ToolsAgeOfThingsRoute: typeof ToolsAgeOfThingsRoute
+  ToolsApiTesterRoute: typeof ToolsApiTesterRoute
   ToolsAsciiRoute: typeof ToolsAsciiRoute
   ToolsAspectRoute: typeof ToolsAspectRoute
   ToolsBase64Route: typeof ToolsBase64Route
@@ -2847,13 +4290,16 @@ interface ToolsRouteChildren {
   ToolsBmiCalculatorRoute: typeof ToolsBmiCalculatorRoute
   ToolsBudgetRoute: typeof ToolsBudgetRoute
   ToolsChangelogMakerRoute: typeof ToolsChangelogMakerRoute
+  ToolsCoinFlipRoute: typeof ToolsCoinFlipRoute
   ToolsColorPaletteRoute: typeof ToolsColorPaletteRoute
+  ToolsColorPickerRoute: typeof ToolsColorPickerRoute
   ToolsContractRoute: typeof ToolsContractRoute
   ToolsCountdownRoute: typeof ToolsCountdownRoute
   ToolsCronRoute: typeof ToolsCronRoute
   ToolsCsvToJsonRoute: typeof ToolsCsvToJsonRoute
   ToolsCurrencyHistoryRoute: typeof ToolsCurrencyHistoryRoute
   ToolsCvRoute: typeof ToolsCvRoute
+  ToolsDiceRoute: typeof ToolsDiceRoute
   ToolsDiffRoute: typeof ToolsDiffRoute
   ToolsDuaMakerRoute: typeof ToolsDuaMakerRoute
   ToolsEmiCalculatorRoute: typeof ToolsEmiCalculatorRoute
@@ -2878,6 +4324,7 @@ interface ToolsRouteChildren {
   ToolsImagesToPdfRoute: typeof ToolsImagesToPdfRoute
   ToolsInvoiceRoute: typeof ToolsInvoiceRoute
   ToolsIpRoute: typeof ToolsIpRoute
+  ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsKharchRoute: typeof ToolsKharchRoute
   ToolsLinktreeRoute: typeof ToolsLinktreeRoute
   ToolsLoremRoute: typeof ToolsLoremRoute
@@ -2895,35 +4342,48 @@ interface ToolsRouteChildren {
   ToolsNotesRoute: typeof ToolsNotesRoute
   ToolsOneLinerRoute: typeof ToolsOneLinerRoute
   ToolsPasswordRoute: typeof ToolsPasswordRoute
+  ToolsPasswordGenRoute: typeof ToolsPasswordGenRoute
   ToolsPercentageRoute: typeof ToolsPercentageRoute
   ToolsPitchRoute: typeof ToolsPitchRoute
   ToolsPlantRoute: typeof ToolsPlantRoute
   ToolsPollRoute: typeof ToolsPollRoute
   ToolsPomodoroRoute: typeof ToolsPomodoroRoute
   ToolsPrayerScheduleRoute: typeof ToolsPrayerScheduleRoute
+  ToolsQrCodeRoute: typeof ToolsQrCodeRoute
   ToolsQuoteScreenRoute: typeof ToolsQuoteScreenRoute
   ToolsQuranSearchRoute: typeof ToolsQuranSearchRoute
   ToolsRainScreenRoute: typeof ToolsRainScreenRoute
+  ToolsRandomNumberRoute: typeof ToolsRandomNumberRoute
   ToolsReadabilityRoute: typeof ToolsReadabilityRoute
   ToolsReadingRoute: typeof ToolsReadingRoute
   ToolsReadingListRoute: typeof ToolsReadingListRoute
   ToolsRegexRoute: typeof ToolsRegexRoute
+  ToolsRomanNumeralRoute: typeof ToolsRomanNumeralRoute
   ToolsSadaqahRoute: typeof ToolsSadaqahRoute
   ToolsScreenshotRoute: typeof ToolsScreenshotRoute
   ToolsShortcutRoute: typeof ToolsShortcutRoute
   ToolsSipCalculatorRoute: typeof ToolsSipCalculatorRoute
   ToolsSizeRoute: typeof ToolsSizeRoute
   ToolsSmartPasteRoute: typeof ToolsSmartPasteRoute
+  ToolsSpeechToTextRoute: typeof ToolsSpeechToTextRoute
   ToolsSpellingRoute: typeof ToolsSpellingRoute
   ToolsStandupRoute: typeof ToolsStandupRoute
   ToolsStarfieldRoute: typeof ToolsStarfieldRoute
+  ToolsStopwatchRoute: typeof ToolsStopwatchRoute
   ToolsTableRoute: typeof ToolsTableRoute
   ToolsTasbeehRoute: typeof ToolsTasbeehRoute
+  ToolsTextCaseRoute: typeof ToolsTextCaseRoute
+  ToolsTextStatsRoute: typeof ToolsTextStatsRoute
   ToolsThreadMakerRoute: typeof ToolsThreadMakerRoute
   ToolsThumbnailRoute: typeof ToolsThumbnailRoute
+  ToolsTimestampRoute: typeof ToolsTimestampRoute
+  ToolsTipCalculatorRoute: typeof ToolsTipCalculatorRoute
   ToolsTypingTestRoute: typeof ToolsTypingTestRoute
+  ToolsUnitConverterRoute: typeof ToolsUnitConverterRoute
   ToolsUpiRoute: typeof ToolsUpiRoute
+  ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
+  ToolsWhitespaceRoute: typeof ToolsWhitespaceRoute
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
 }
@@ -2931,6 +4391,7 @@ interface ToolsRouteChildren {
 const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsAgeCalculatorRoute: ToolsAgeCalculatorRoute,
   ToolsAgeOfThingsRoute: ToolsAgeOfThingsRoute,
+  ToolsApiTesterRoute: ToolsApiTesterRoute,
   ToolsAsciiRoute: ToolsAsciiRoute,
   ToolsAspectRoute: ToolsAspectRoute,
   ToolsBase64Route: ToolsBase64Route,
@@ -2938,13 +4399,16 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsBmiCalculatorRoute: ToolsBmiCalculatorRoute,
   ToolsBudgetRoute: ToolsBudgetRoute,
   ToolsChangelogMakerRoute: ToolsChangelogMakerRoute,
+  ToolsCoinFlipRoute: ToolsCoinFlipRoute,
   ToolsColorPaletteRoute: ToolsColorPaletteRoute,
+  ToolsColorPickerRoute: ToolsColorPickerRoute,
   ToolsContractRoute: ToolsContractRoute,
   ToolsCountdownRoute: ToolsCountdownRoute,
   ToolsCronRoute: ToolsCronRoute,
   ToolsCsvToJsonRoute: ToolsCsvToJsonRoute,
   ToolsCurrencyHistoryRoute: ToolsCurrencyHistoryRoute,
   ToolsCvRoute: ToolsCvRoute,
+  ToolsDiceRoute: ToolsDiceRoute,
   ToolsDiffRoute: ToolsDiffRoute,
   ToolsDuaMakerRoute: ToolsDuaMakerRoute,
   ToolsEmiCalculatorRoute: ToolsEmiCalculatorRoute,
@@ -2969,6 +4433,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsImagesToPdfRoute: ToolsImagesToPdfRoute,
   ToolsInvoiceRoute: ToolsInvoiceRoute,
   ToolsIpRoute: ToolsIpRoute,
+  ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsKharchRoute: ToolsKharchRoute,
   ToolsLinktreeRoute: ToolsLinktreeRoute,
   ToolsLoremRoute: ToolsLoremRoute,
@@ -2986,35 +4451,48 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsNotesRoute: ToolsNotesRoute,
   ToolsOneLinerRoute: ToolsOneLinerRoute,
   ToolsPasswordRoute: ToolsPasswordRoute,
+  ToolsPasswordGenRoute: ToolsPasswordGenRoute,
   ToolsPercentageRoute: ToolsPercentageRoute,
   ToolsPitchRoute: ToolsPitchRoute,
   ToolsPlantRoute: ToolsPlantRoute,
   ToolsPollRoute: ToolsPollRoute,
   ToolsPomodoroRoute: ToolsPomodoroRoute,
   ToolsPrayerScheduleRoute: ToolsPrayerScheduleRoute,
+  ToolsQrCodeRoute: ToolsQrCodeRoute,
   ToolsQuoteScreenRoute: ToolsQuoteScreenRoute,
   ToolsQuranSearchRoute: ToolsQuranSearchRoute,
   ToolsRainScreenRoute: ToolsRainScreenRoute,
+  ToolsRandomNumberRoute: ToolsRandomNumberRoute,
   ToolsReadabilityRoute: ToolsReadabilityRoute,
   ToolsReadingRoute: ToolsReadingRoute,
   ToolsReadingListRoute: ToolsReadingListRoute,
   ToolsRegexRoute: ToolsRegexRoute,
+  ToolsRomanNumeralRoute: ToolsRomanNumeralRoute,
   ToolsSadaqahRoute: ToolsSadaqahRoute,
   ToolsScreenshotRoute: ToolsScreenshotRoute,
   ToolsShortcutRoute: ToolsShortcutRoute,
   ToolsSipCalculatorRoute: ToolsSipCalculatorRoute,
   ToolsSizeRoute: ToolsSizeRoute,
   ToolsSmartPasteRoute: ToolsSmartPasteRoute,
+  ToolsSpeechToTextRoute: ToolsSpeechToTextRoute,
   ToolsSpellingRoute: ToolsSpellingRoute,
   ToolsStandupRoute: ToolsStandupRoute,
   ToolsStarfieldRoute: ToolsStarfieldRoute,
+  ToolsStopwatchRoute: ToolsStopwatchRoute,
   ToolsTableRoute: ToolsTableRoute,
   ToolsTasbeehRoute: ToolsTasbeehRoute,
+  ToolsTextCaseRoute: ToolsTextCaseRoute,
+  ToolsTextStatsRoute: ToolsTextStatsRoute,
   ToolsThreadMakerRoute: ToolsThreadMakerRoute,
   ToolsThumbnailRoute: ToolsThumbnailRoute,
+  ToolsTimestampRoute: ToolsTimestampRoute,
+  ToolsTipCalculatorRoute: ToolsTipCalculatorRoute,
   ToolsTypingTestRoute: ToolsTypingTestRoute,
+  ToolsUnitConverterRoute: ToolsUnitConverterRoute,
   ToolsUpiRoute: ToolsUpiRoute,
+  ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
   ToolsWatermarkRoute: ToolsWatermarkRoute,
+  ToolsWhitespaceRoute: ToolsWhitespaceRoute,
   ToolsWorldClockRoute: ToolsWorldClockRoute,
   ToolsIndexRoute: ToolsIndexRoute,
 }
@@ -3052,6 +4530,61 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRouteWithChildren,
+  ToolsAlphabetCipherRoute: ToolsAlphabetCipherRoute,
+  ToolsBinaryCalculatorRoute: ToolsBinaryCalculatorRoute,
+  ToolsBmiCalculator2Route: ToolsBmiCalculator2Route,
+  ToolsBmiChartRoute: ToolsBmiChartRoute,
+  ToolsBorderRadiusRoute: ToolsBorderRadiusRoute,
+  ToolsBoxShadowRoute: ToolsBoxShadowRoute,
+  ToolsCalorieCalcRoute: ToolsCalorieCalcRoute,
+  ToolsCodeBeautifierRoute: ToolsCodeBeautifierRoute,
+  ToolsCoinFlipRoute: ToolsCoinFlipRoute,
+  ToolsColorBlendRoute: ToolsColorBlendRoute,
+  ToolsColorContrastRoute: ToolsColorContrastRoute,
+  ToolsCrackHashRoute: ToolsCrackHashRoute,
+  ToolsCssFlexboxRoute: ToolsCssFlexboxRoute,
+  ToolsCssGridRoute: ToolsCssGridRoute,
+  ToolsCssPlaygroundRoute: ToolsCssPlaygroundRoute,
+  ToolsDailyPlannerRoute: ToolsDailyPlannerRoute,
+  ToolsDiceRoute: ToolsDiceRoute,
+  ToolsDiffViewerRoute: ToolsDiffViewerRoute,
+  ToolsDistanceCalcRoute: ToolsDistanceCalcRoute,
+  ToolsFontSizeRoute: ToolsFontSizeRoute,
+  ToolsGratitudeJournalRoute: ToolsGratitudeJournalRoute,
+  ToolsHeartRateRoute: ToolsHeartRateRoute,
+  ToolsHtmlEntityRoute: ToolsHtmlEntityRoute,
+  ToolsHtmlPreviewRoute: ToolsHtmlPreviewRoute,
+  ToolsHttpStatusRoute: ToolsHttpStatusRoute,
+  ToolsIdealWeightRoute: ToolsIdealWeightRoute,
+  ToolsImageBase64Route: ToolsImageBase64Route,
+  ToolsInvoiceLookupRoute: ToolsInvoiceLookupRoute,
+  ToolsJsPlaygroundRoute: ToolsJsPlaygroundRoute,
+  ToolsJsonTreeRoute: ToolsJsonTreeRoute,
+  ToolsMarkdownHtml2Route: ToolsMarkdownHtml2Route,
+  ToolsMarkdownStatsRoute: ToolsMarkdownStatsRoute,
+  ToolsMemoGeneratorRoute: ToolsMemoGeneratorRoute,
+  ToolsMimeTypeRoute: ToolsMimeTypeRoute,
+  ToolsMoodTrackerRoute: ToolsMoodTrackerRoute,
+  ToolsNumberWordsRoute: ToolsNumberWordsRoute,
+  ToolsPomodoroAdvancedRoute: ToolsPomodoroAdvancedRoute,
+  ToolsRandomNumberRoute: ToolsRandomNumberRoute,
+  ToolsReadability2Route: ToolsReadability2Route,
+  ToolsRecipeScalerRoute: ToolsRecipeScalerRoute,
+  ToolsRegexTesterRoute: ToolsRegexTesterRoute,
+  ToolsRomanNumeralRoute: ToolsRomanNumeralRoute,
+  ToolsSleepCalcRoute: ToolsSleepCalcRoute,
+  ToolsStopwatchRoute: ToolsStopwatchRoute,
+  ToolsStringHashRoute: ToolsStringHashRoute,
+  ToolsSvgPreviewRoute: ToolsSvgPreviewRoute,
+  ToolsTextStatsRoute: ToolsTextStatsRoute,
+  ToolsTextToSpeechRoute: ToolsTextToSpeechRoute,
+  ToolsTimezoneConverterRoute: ToolsTimezoneConverterRoute,
+  ToolsTipCalculatorRoute: ToolsTipCalculatorRoute,
+  ToolsUnicodeLookupRoute: ToolsUnicodeLookupRoute,
+  ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
+  ToolsVcardGenRoute: ToolsVcardGenRoute,
+  ToolsWaterTrackerRoute: ToolsWaterTrackerRoute,
+  ToolsWifiQrRoute: ToolsWifiQrRoute,
   TrendingRoute: TrendingRoute,
   WhatsNewRoute: WhatsNewRoute,
   YoutubeRoute: YoutubeRoute,
