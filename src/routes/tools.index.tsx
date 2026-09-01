@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -184,7 +185,18 @@ export const Route = createFileRoute("/tools/")({
   component: ToolsIndex,
 });
 
+const FILTERS = ["All", ...TOOL_SECTIONS.map((s) => s.title)] as const;
+
+type FilterType = (typeof FILTERS)[number];
+
 function ToolsIndex() {
+  const [filter, setFilter] = useState<FilterType>("All");
+  const [search, setSearch] = useState("");
+
+  const visibleSections = filter === "All" ? TOOL_SECTIONS : TOOL_SECTIONS.filter((s) => s.title === filter);
+
+  const totalTools = TOOL_SECTIONS.reduce((acc, s) => acc + s.tools.length, 0);
+
   return (
     <AppShell wide title="SlashKits">
       <header className="page-enter pt-2">
@@ -192,30 +204,52 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          90+ browser-based tools. Nothing uploaded. All client-side.
+          {totalTools} browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
 
-      {/* Quick category chips for mobile */}
-      <div className="mt-4 flex gap-2 overflow-x-auto pb-2 md:hidden" style={{ scrollbarWidth: "none" }}>
-        {TOOL_SECTIONS.map((section) => (
-          <a
-            key={section.title}
-            href={`#${section.title.toLowerCase().replace(/[^a-z]/g, "")}`}
-            className="shrink-0 rounded-full border border-border bg-surface px-3 py-1.5 text-[12px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+      {/* Search */}
+      <div className="mt-4">
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search tools..."
+          className="h-10 w-full rounded-xl border border-border bg-surface px-4 text-sm focus:outline-none focus:border-primary/50"
+        />
+      </div>
+
+      {/* Filter chips */}
+      <div className="mt-3 flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
+        {FILTERS.map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] font-medium transition-colors ${
+              filter === f
+                ? "bg-primary text-background"
+                : "border border-border bg-surface text-muted-foreground hover:border-primary/40 hover:text-foreground"
+            }`}
           >
-            {section.icon} {section.title}
-          </a>
+            {f === "All" ? `All (${totalTools})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
+          </button>
         ))}
       </div>
 
-      {TOOL_SECTIONS.map((section, si) => (
-        <section key={section.title} id={section.title.toLowerCase().replace(/[^a-z]/g, "")} className={si === 0 ? "mt-6" : "mt-10"}>
+      {visibleSections.filter((section) => {
+        if (!search.trim()) return true;
+        const q = search.toLowerCase();
+        return section.tools.some((t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
+      }).map((section, si) => (
+        <section key={section.title} id={section.title.toLowerCase().replace(/[^a-z]/g, "")} className={si === 0 ? "mt-4" : "mt-10"}>
           <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
             <span className="text-lg">{section.icon}</span> {section.title}
           </h2>
           <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {[...section.tools, ...((section as any).hubTools || [])].map((tool: any) => (
+            {[...section.tools, ...((section as any).hubTools || [])].filter((tool: any) => {
+              if (!search.trim()) return true;
+              const q = search.toLowerCase();
+              return tool.name.toLowerCase().includes(q) || tool.desc.toLowerCase().includes(q);
+            }).map((tool: any) => (
               <Link
                 key={tool.slug}
                 to={tool.slug.startsWith("/") ? tool.slug : `/tools/${tool.slug}`}
