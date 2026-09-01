@@ -20,6 +20,18 @@ const THEMES = [
 
 const ICONS = ["🔗", "🌐", "📸", "🐦", "💼", "🎵", "📺", "📝", "🎮", "🛒", "📧", "📱", "💻", "🎨", "📷", "🔊", "📚", "🎯", "⚡", "🚀"];
 
+function encodeProfile(profile: Profile): string {
+  try {
+    return btoa(encodeURIComponent(JSON.stringify(profile)));
+  } catch { return ""; }
+}
+
+function getShareUrl(profile: Profile): string {
+  const base = `${window.location.origin}/l/${profile.username}`;
+  const hash = encodeProfile(profile);
+  return hash ? `${base}#${hash}` : base;
+}
+
 function LinkTreeBuilder() {
   const [profiles, setProfiles] = useState<Profile[]>(() => {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch { return []; }
@@ -86,7 +98,7 @@ function LinkTreeBuilder() {
     setActiveProfile({ ...activeProfile, links });
   };
 
-  const shareUrl = activeProfile?.username ? `${window.location.origin}/l/${activeProfile.username}` : "";
+  const shareUrl = activeProfile ? getShareUrl(activeProfile) : "";
 
   const copyShare = async () => {
     try { await navigator.clipboard.writeText(shareUrl); setCopied("share"); setTimeout(() => setCopied(""), 1200); } catch {}
@@ -113,7 +125,8 @@ function LinkTreeBuilder() {
                     <p className="text-sm font-semibold text-foreground">{p.name || p.username}</p>
                     <p className="text-[11px] text-muted-foreground">/{p.username} · {p.links.length} links</p>
                   </div>
-                  <Link to={`/l/${p.username}`} className="text-[11px] text-primary hover:underline">View</Link>
+                  <button onClick={() => { const url = getShareUrl(p); navigator.clipboard.writeText(url); setCopied(p.username); setTimeout(() => setCopied(""), 1200); }} className="text-[11px] text-primary hover:underline">{copied === p.username ? "✓ Copied" : "Share"}</button>
+                  <Link to={`/l/${p.username}`} className="text-[11px] text-muted-foreground hover:text-foreground">View</Link>
                   <button onClick={() => { setActiveProfile(p); setEditing(true); }} className="text-[11px] text-muted-foreground hover:text-foreground">Edit</button>
                   <button onClick={() => deleteProfile(p.username)} className="text-[11px] text-muted-foreground hover:text-red-400">Delete</button>
                 </div>
@@ -192,6 +205,16 @@ function LinkTreeBuilder() {
             </div>
           )}
 
+          {activeProfile.username && activeProfile.links.length > 0 && (
+            <div className="rounded-xl border border-primary/20 bg-primary/5 p-3">
+              <p className="text-[10px] text-muted-foreground mb-1">Your shareable link:</p>
+              <div className="flex items-center gap-2">
+                <code className="flex-1 text-xs text-primary break-all font-mono">{shareUrl}</code>
+                <button onClick={copyShare} className="shrink-0 rounded-lg bg-primary px-3 py-1.5 text-[11px] font-medium text-background hover:opacity-90">{copied === "share" ? "✓ Copied" : "Copy"}</button>
+              </div>
+              <p className="mt-1 text-[10px] text-muted-foreground">Anyone with this link can see your page — works on any device.</p>
+            </div>
+          )}
           <div className="flex gap-2">
             <button onClick={saveProfile} disabled={!activeProfile.username.trim()} className="flex-1 rounded-xl bg-primary py-3 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40">Save Profile</button>
             <button onClick={() => { setActiveProfile(null); setEditing(false); }} className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-muted-foreground hover:text-foreground">Cancel</button>

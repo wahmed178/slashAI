@@ -22,18 +22,34 @@ const THEMES: Record<string, { bg: string; card: string; text: string; border: s
   gradient: { bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", card: "rgba(255,255,255,0.15)", text: "#ffffff", border: "rgba(255,255,255,0.25)", accent: "#ffffff" },
 };
 
+function decodeProfile(hash: string): any | null {
+  try {
+    const decoded = decodeURIComponent(atob(hash.replace(/^#/, "")));
+    const p = JSON.parse(decoded);
+    if (p && p.username && p.links) return p;
+  } catch {}
+  return null;
+}
+
 function PublicProfile() {
   const { username } = Route.useParams();
   const [profile, setProfile] = useState<any>(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    // 1. Try URL hash first (shareable link)
+    const hash = window.location.hash;
+    if (hash && hash.length > 5) {
+      const decoded = decodeProfile(hash);
+      if (decoded) { setProfile(decoded); return; }
+    }
+    // 2. Try localStorage (owner's device)
     try {
       const profiles = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
       const found = profiles.find((p: any) => p.username === username);
-      if (found) setProfile(found);
-      else setNotFound(true);
-    } catch { setNotFound(true); }
+      if (found) { setProfile(found); return; }
+    } catch {}
+    setNotFound(true);
   }, [username]);
 
   if (notFound) {
