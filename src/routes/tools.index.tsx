@@ -16,8 +16,8 @@ const TOOL_SECTIONS = [
       { slug: "color-palette", name: "Color Palette Studio", desc: "Generate palettes from any color", icon: "🎨" },
       { slug: "password", name: "Password Manager", desc: "Encrypted local password vault", icon: "🔐" },
       { slug: "diff", name: "Text Diff Checker", desc: "Compare two texts — changes highlighted", icon: "🔀" },
-      { slug: "linktree", name: "Link in Bio Builder", desc: "Create personal link page, download as HTML", icon: "🔗" },
-      { slug: "invoice", name: "Invoice Generator", desc: "Create and download PDF invoices (GST)", icon: "🧾" },
+      { slug: "reading", name: "Speed Reading Trainer", desc: "RSVP flash-one-word technique", icon: "📖" },
+      { slug: "noise", name: "Background Noise", desc: "Synthesised ambient sounds, mix & timer", icon: "🔊" },
     ],
   },
   {
@@ -30,7 +30,7 @@ const TOOL_SECTIONS = [
       { slug: "html-to-pdf", name: "HTML to PDF", desc: "Paste HTML, download as PDF", icon: "🌐" },
       { slug: "images-to-pdf", name: "Images to PDF", desc: "Combine multiple images into one PDF", icon: "📕" },
       { slug: "table", name: "Table Maker", desc: "Create tables, export as MD/HTML/CSV/JSON", icon: "📊" },
-      { slug: "meta", name: "SEO Meta Tag Generator", desc: "OG, Twitter Card, Schema.org tags", icon: "🔍" },
+      { slug: "meta", name: "SEO Meta Tags", desc: "OG, Twitter Card, Schema.org tags", icon: "🔍" },
     ],
   },
   {
@@ -39,9 +39,11 @@ const TOOL_SECTIONS = [
     tools: [
       { slug: "image-compress", name: "Image Compressor", desc: "Reduce image file size in your browser", icon: "🖼️", noUpload: true },
       { slug: "image-convert", name: "Image Converter", desc: "Convert between JPG, PNG, WebP formats", icon: "🔄", noUpload: true },
-      { slug: "watermark", name: "Image Watermark Tool", desc: "Add text watermarks to images locally", icon: "🎨" },
+      { slug: "watermark", name: "Image Watermark", desc: "Add text watermarks to images locally", icon: "🎨" },
+      { slug: "thumbnail", name: "YouTube Thumbnail Checker", desc: "Preview thumbnails in 5 YouTube contexts", icon: "🎬" },
       { slug: "aspect", name: "Aspect Ratio Calculator", desc: "Width, height, ratio — get the third", icon: "📐" },
-      { slug: "gradient", name: "CSS Gradient Generator", desc: "Pick colors, copy as CSS/Tailwind", icon: "🎨" },
+      { slug: "gradient", name: "CSS Gradient Generator", desc: "Pick colors, copy as CSS/Tailwind", icon: "🌈" },
+      { slug: "font", name: "Font Pairing Studio", desc: "50+ Google Font combos, copy CSS", icon: "🔤" },
     ],
   },
   {
@@ -57,6 +59,8 @@ const TOOL_SECTIONS = [
       { slug: "upi", name: "UPI Link Generator", desc: "Generate UPI payment links + QR codes", icon: "💳" },
       { slug: "budget", name: "Budget Tracker", desc: "Monthly income vs expenses — Indian categories", icon: "📈" },
       { slug: "kharch", name: "Urdu/Hindi Budget", desc: "Bilingual expense tracker with Indian categories", icon: "💴" },
+      { slug: "currency-history", name: "Currency Rate History", desc: "Exchange rate charts (Frankfurter API)", icon: "💱" },
+      { slug: "size", name: "File Size Calculator", desc: "Convert units, download times, comparisons", icon: "📐" },
     ],
   },
   {
@@ -70,6 +74,8 @@ const TOOL_SECTIONS = [
       { slug: "cron", name: "Cron Explainer", desc: "Cron expressions ↔ plain English", icon: "⏱️" },
       { slug: "base64", name: "Encoders & Decoders", desc: "Base64, URL, HTML, JWT, SHA-256", icon: "🔧" },
       { slug: "readability", name: "Readability Analyser", desc: "Flesch score, grade level, passive voice", icon: "📖" },
+      { slug: "ip", name: "Network Info Tool", desc: "Your IP, location, ISP, and IP lookup", icon: "🌐" },
+      { slug: "equation", name: "Math Equation Renderer", desc: "LaTeX → beautiful equations via KaTeX", icon: "🔢" },
     ],
   },
   {
@@ -83,6 +89,10 @@ const TOOL_SECTIONS = [
       { slug: "bio", name: "Bio Generator", desc: "Twitter/LinkedIn/Website/Conference bios", icon: "✍️" },
       { slug: "notes", name: "Quick Notes", desc: "Distraction-free notepad with autosave", icon: "📝" },
       { slug: "lorem", name: "Content Generator", desc: "Random Indian names, addresses, prices", icon: "📋" },
+      { slug: "changelog-maker", name: "Changelog Generator", desc: "Markdown/HTML/text/JSON release notes", icon: "📝" },
+      { slug: "pitch", name: "Elevator Pitch Builder", desc: "60-second pitch with timer & read-aloud", icon: "🎤" },
+      { slug: "thread-maker", name: "Thread Formatter", desc: "Auto-split into Twitter/X or LinkedIn posts", icon: "🧵" },
+      { slug: "spelling", name: "Spelling Checker", desc: "Offline spell check — common mistakes", icon: "✍️" },
     ],
   },
   {
@@ -97,6 +107,7 @@ const TOOL_SECTIONS = [
       { slug: "focus-screen", name: "Focus Screen", desc: "Time, prayer, quote & weather overlay", icon: "✨" },
       { slug: "flip-clock", name: "Flip Clock", desc: "Full-screen retro flip clock", icon: "⏲️" },
       { slug: "habits", name: "Habit Tracker", desc: "GitHub-style contribution grid", icon: "📊" },
+      { slug: "habit-stack", name: "Habit Stacking Planner", desc: "Atomic Habits routine builder", icon: "📋" },
     ],
   },
   {
@@ -127,6 +138,17 @@ const TOOL_SECTIONS = [
       { slug: "plant", name: "Plant Care Tracker", desc: "Track watering schedules for plants", icon: "🌱" },
       { slug: "gift", name: "Gift Idea Generator", desc: "Curated gifts by recipient & budget", icon: "🎁" },
       { slug: "flashcard-maker", name: "Flashcard Maker", desc: "Create decks, study with spaced repetition", icon: "🧠" },
+      { slug: "reading-list", name: "Book Tracker", desc: "Private reading list with ratings & export", icon: "📚" },
+      { slug: "age-of-things", name: "How Old Is Everything?", desc: "Fun age comparisons for 30+ things", icon: "⏳" },
+      { slug: "mind-map", name: "Mind Map Builder", desc: "Visual SVG mind map with drag & keyboard", icon: "🧠" },
+    ],
+  },
+  {
+    title: "Developer Utilities",
+    icon: "🔧",
+    tools: [
+      { slug: "shortcut", name: "Keyboard Shortcuts", desc: "VS Code, Chrome, Figma, Slack, Mac & more", icon: "⌨️" },
+      { slug: "fake-email", name: "Temp Email Generator", desc: "Disposable email with real-time inbox", icon: "📧" },
     ],
   },
   {
@@ -136,10 +158,15 @@ const TOOL_SECTIONS = [
       { slug: "muhurrat", name: "Islamic Date Finder", desc: "Hijri dates, events, Ramadan info", icon: "🌙" },
       { slug: "name", name: "Islamic Baby Names", desc: "50+ curated names with meanings", icon: "🕌" },
       { slug: "dua-maker", name: "Personal Dua List", desc: "Track duas, mark answered, reading mode", icon: "🤲" },
-      { slug: "kharch", name: "Urdu/Hindi Budget", desc: "Bilingual expense tracker with Indian categories", icon: "💴" },
+      { slug: "tasbeeh", name: "Digital Tasbeeh", desc: "Tap/space to count, vibration, preloaded dhikr", icon: "📿" },
+      { slug: "hijri", name: "Hijri Calendar", desc: "Interactive monthly calendar with events", icon: "🌙" },
+      { slug: "prayer-schedule", name: "Prayer Timetable", desc: "Full month schedule + CSV export", icon: "🕌" },
+      { slug: "sadaqah", name: "Charity Tracker", desc: "Track sadaqah, zakat, fitrana donations", icon: "🤲" },
+      { slug: "quran-search", name: "Quran Word Search", desc: "Search across entire Quran (AlQuran.cloud)", icon: "📖" },
     ],
     hubTools: [
       { slug: "/hub/urdu", name: "Urdu Writers Hub", desc: "Poetry, resources, fonts for Urdu", icon: "🇵🇰" },
+      { slug: "/hub/arabic", name: "Arabic Learners Hub", desc: "Alphabet, courses, keyboard, phrases", icon: "🕌" },
     ],
   },
 ] as const;
@@ -147,10 +174,10 @@ const TOOL_SECTIONS = [
 export const Route = createFileRoute("/tools/")({
   head: () => ({
     meta: [
-      { title: "SlashKits — Free browser utilities, calculators, screens | SlashAI" },
+      { title: "SlashKits — 90+ free browser tools | SlashAI" },
       {
         name: "description",
-        content: "SlashKits: 65+ free browser tools — image compress, calculators, timers, screensavers. No upload, no account.",
+        content: "SlashKits: 90+ free browser tools — image compress, calculators, noise, tasbeeh, timers, screensavers. No upload, no account.",
       },
     ],
   }),
@@ -165,7 +192,7 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          65+ browser-based tools. Nothing uploaded. All client-side.
+          90+ browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
 
