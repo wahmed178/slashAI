@@ -31,6 +31,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/tools", label: "SlashKits", icon: Wrench },
   { to: "/hub", label: "Hubs", icon: LayoutGrid },
   { to: "/assistant", label: "AI Assistant", icon: Bot },
+  { to: "/hunyuan", label: "Hunyuan AI", icon: Zap },
   { to: "/generators", label: "Generators", icon: Zap },
   { to: "/roadmaps", label: "Roadmaps", icon: Map },
   { to: "/live", label: "Live", icon: Radio, badge: "Hot" },

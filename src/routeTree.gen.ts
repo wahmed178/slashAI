@@ -23,6 +23,7 @@ import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
 import { Route as GlassRouteImport } from './routes/glass'
 import { Route as GlossaryRouteImport } from './routes/glossary'
+import { Route as HunyuanRouteImport } from './routes/hunyuan'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as KeyboardRouteImport } from './routes/keyboard'
 import { Route as LiveRouteImport } from './routes/live'
@@ -221,6 +222,11 @@ const GlassRoute = GlassRouteImport.update({
 const GlossaryRoute = GlossaryRouteImport.update({
   id: '/glossary',
   path: '/glossary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HunyuanRoute = HunyuanRouteImport.update({
+  id: '/hunyuan',
+  path: '/hunyuan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JournalRoute = JournalRouteImport.update({
@@ -885,6 +891,7 @@ export interface FileRoutesByFullPath {
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
+  '/hunyuan': typeof HunyuanRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
@@ -1030,6 +1037,7 @@ export interface FileRoutesByTo {
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
+  '/hunyuan': typeof HunyuanRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
@@ -1175,6 +1183,7 @@ export interface FileRoutesById {
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
+  '/hunyuan': typeof HunyuanRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
@@ -1322,6 +1331,7 @@ export interface FileRouteTypes {
     | '/find'
     | '/glass'
     | '/glossary'
+    | '/hunyuan'
     | '/journal'
     | '/keyboard'
     | '/live'
@@ -1467,6 +1477,7 @@ export interface FileRouteTypes {
     | '/find'
     | '/glass'
     | '/glossary'
+    | '/hunyuan'
     | '/journal'
     | '/keyboard'
     | '/live'
@@ -1611,6 +1622,7 @@ export interface FileRouteTypes {
     | '/find'
     | '/glass'
     | '/glossary'
+    | '/hunyuan'
     | '/journal'
     | '/keyboard'
     | '/live'
@@ -1757,6 +1769,7 @@ export interface RootRouteChildren {
   FindRoute: typeof FindRoute
   GlassRoute: typeof GlassRoute
   GlossaryRoute: typeof GlossaryRoute
+  HunyuanRoute: typeof HunyuanRoute
   JournalRoute: typeof JournalRoute
   KeyboardRoute: typeof KeyboardRoute
   LiveRoute: typeof LiveRoute
@@ -1897,6 +1910,13 @@ declare module '@tanstack/react-router' {
       path: '/glossary'
       fullPath: '/glossary'
       preLoaderRoute: typeof GlossaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hunyuan': {
+      id: '/hunyuan'
+      path: '/hunyuan'
+      fullPath: '/hunyuan'
+      preLoaderRoute: typeof HunyuanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/journal': {
@@ -3016,6 +3036,7 @@ const rootRouteChildren: RootRouteChildren = {
   FindRoute: FindRoute,
   GlassRoute: GlassRoute,
   GlossaryRoute: GlossaryRoute,
+  HunyuanRoute: HunyuanRoute,
   JournalRoute: JournalRoute,
   KeyboardRoute: KeyboardRoute,
   LiveRoute: LiveRoute,
