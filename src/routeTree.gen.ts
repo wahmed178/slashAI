@@ -62,6 +62,7 @@ import { Route as HubArabicRouteImport } from './routes/hub.arabic'
 import { Route as HubIslamRouteImport } from './routes/hub.islam'
 import { Route as HubQuotesRouteImport } from './routes/hub.quotes'
 import { Route as HubUrduRouteImport } from './routes/hub.urdu'
+import { Route as LUsernameRouteImport } from './routes/l.$username'
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
@@ -482,6 +483,11 @@ const HubQuotesRoute = HubQuotesRouteImport.update({
 const HubUrduRoute = HubUrduRouteImport.update({
   id: '/hub/urdu',
   path: '/hub/urdu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LUsernameRoute = LUsernameRouteImport.update({
+  id: '/l/$username',
+  path: '/l/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RIdRoute = RIdRouteImport.update({
@@ -1314,6 +1320,7 @@ export interface FileRoutesByFullPath {
   '/hub/islam': typeof HubIslamRoute
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
+  '/l/$username': typeof LUsernameRoute
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -1524,6 +1531,7 @@ export interface FileRoutesByTo {
   '/hub/islam': typeof HubIslamRoute
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
+  '/l/$username': typeof LUsernameRoute
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -1736,6 +1744,7 @@ export interface FileRoutesById {
   '/hub/islam': typeof HubIslamRoute
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
+  '/l/$username': typeof LUsernameRoute
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -1949,6 +1958,7 @@ export interface FileRouteTypes {
     | '/hub/islam'
     | '/hub/quotes'
     | '/hub/urdu'
+    | '/l/$username'
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -2159,6 +2169,7 @@ export interface FileRouteTypes {
     | '/hub/islam'
     | '/hub/quotes'
     | '/hub/urdu'
+    | '/l/$username'
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -2370,6 +2381,7 @@ export interface FileRouteTypes {
     | '/hub/islam'
     | '/hub/quotes'
     | '/hub/urdu'
+    | '/l/$username'
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -2581,6 +2593,7 @@ export interface RootRouteChildren {
   HubIslamRoute: typeof HubIslamRoute
   HubQuotesRoute: typeof HubQuotesRoute
   HubUrduRoute: typeof HubUrduRoute
+  LUsernameRoute: typeof LUsernameRoute
   RIdRoute: typeof RIdRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
@@ -2963,6 +2976,13 @@ declare module '@tanstack/react-router' {
       path: '/hub/urdu'
       fullPath: '/hub/urdu'
       preLoaderRoute: typeof HubUrduRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/l/$username': {
+      id: '/l/$username'
+      path: '/l/$username'
+      fullPath: '/l/$username'
+      preLoaderRoute: typeof LUsernameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/r/$id': {
@@ -4433,6 +4453,7 @@ const rootRouteChildren: RootRouteChildren = {
   HubIslamRoute: HubIslamRoute,
   HubQuotesRoute: HubQuotesRoute,
   HubUrduRoute: HubUrduRoute,
+  LUsernameRoute: LUsernameRoute,
   RIdRoute: RIdRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,

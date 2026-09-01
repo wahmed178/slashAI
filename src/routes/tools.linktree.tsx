@@ -1,116 +1,203 @@
-import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect, useCallback } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/linktree")({ component: LinkTreeBuilder });
 
-interface Link { id: string; title: string; url: string }
+interface LinkItem { id: string; title: string; url: string; icon?: string; }
+interface Profile { username: string; name: string; bio: string; avatar: string; theme: string; links: LinkItem[]; }
+
+const STORAGE_KEY = "slashai-linktree-profiles";
+const THEMES = [
+  { id: "dark", label: "Dark", bg: "#0a0a0f", card: "#161b22", text: "#f0f6fc", border: "#30363d", accent: "#58a6ff" },
+  { id: "midnight", label: "Midnight", bg: "#0f172a", card: "#1e293b", text: "#f1f5f9", border: "#334155", accent: "#818cf8" },
+  { id: "ocean", label: "Ocean", bg: "#042f2e", card: "#134e4a", text: "#f0fdfa", border: "#2dd4bf", accent: "#2dd4bf" },
+  { id: "sunset", label: "Sunset", bg: "#1c1917", card: "#292524", text: "#fef3c7", border: "#f59e0b", accent: "#f59e0b" },
+  { id: "lavender", label: "Lavender", bg: "#1e1b4b", card: "#312e81", text: "#e0e7ff", border: "#818cf8", accent: "#a78bfa" },
+  { id: "light", label: "Light", bg: "#ffffff", card: "#f8fafc", text: "#0f172a", border: "#e2e8f0", accent: "#2563eb" },
+  { id: "gradient", label: "Gradient", bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", card: "rgba(255,255,255,0.15)", text: "#ffffff", border: "rgba(255,255,255,0.25)", accent: "#ffffff" },
+];
+
+const ICONS = ["🔗", "🌐", "📸", "🐦", "💼", "🎵", "📺", "📝", "🎮", "🛒", "📧", "📱", "💻", "🎨", "📷", "🔊", "📚", "🎯", "⚡", "🚀"];
 
 function LinkTreeBuilder() {
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
-  const [username, setUsername] = useState("");
-  const [links, setLinks] = useState<Link[]>([]);
-  const [title, setTitle] = useState("");
-  const [url, setUrl] = useState("");
-  const [theme, setTheme] = useState<"dark" | "light" | "gradient">("dark");
+  const [profiles, setProfiles] = useState<Profile[]>(() => {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch { return []; }
+  });
+  const [activeProfile, setActiveProfile] = useState<Profile | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [linkTitle, setLinkTitle] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
+  const [linkIcon, setLinkIcon] = useState("🔗");
+  const [copied, setCopied] = useState("");
+  const [showThemes, setShowThemes] = useState(false);
+
+  useEffect(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles)); } catch {}
+  }, [profiles]);
+
+  const createProfile = () => {
+    const p: Profile = { username: "", name: "", bio: "", avatar: "👤", theme: "dark", links: [] };
+    setActiveProfile(p);
+    setEditing(true);
+  };
+
+  const saveProfile = () => {
+    if (!activeProfile) return;
+    const p = activeProfile;
+    if (!p.username.trim()) return;
+    setProfiles((prev) => {
+      const existing = prev.findIndex((x) => x.username === p.username);
+      if (existing >= 0) { const next = [...prev]; next[existing] = p; return next; }
+      return [...prev, p];
+    });
+    setEditing(false);
+  };
+
+  const deleteProfile = (username: string) => {
+    setProfiles((prev) => prev.filter((p) => p.username !== username));
+    setActiveProfile(null);
+  };
 
   const addLink = () => {
-    if (!title.trim() || !url.trim()) return;
-    setLinks(l => [...l, { id: crypto.randomUUID(), title: title.trim(), url: url.trim() }]);
-    setTitle(""); setUrl("");
+    if (!linkTitle.trim() || !linkUrl.trim() || !activeProfile) return;
+    const url = linkUrl.startsWith("http") ? linkUrl : `https://${linkUrl}`;
+    setActiveProfile({ ...activeProfile, links: [...activeProfile.links, { id: crypto.randomUUID(), title: linkTitle.trim(), url, icon: linkIcon }] });
+    setLinkTitle(""); setLinkUrl(""); setLinkIcon("🔗");
   };
 
-  const removeLink = (id: string) => setLinks(l => l.filter(x => x.id !== id));
-
-  const themes = {
-    dark: { bg: "#0a0a0f", card: "#161b22", text: "#f0f6fc", border: "#30363d" },
-    light: { bg: "#ffffff", card: "#f6f6f6", text: "#1a1a1a", border: "#e0e0e0" },
-    gradient: { bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", card: "rgba(255,255,255,0.2)", text: "#ffffff", border: "rgba(255,255,255,0.3)" },
+  const removeLink = (id: string) => {
+    if (!activeProfile) return;
+    setActiveProfile({ ...activeProfile, links: activeProfile.links.filter((l) => l.id !== id) });
   };
 
-  const t = themes[theme];
-
-  const exportHTML = () => {
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${name || username}</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;background:${t.bg};color:${t.text};padding:2rem}.container{max-width:400px;width:100%}.name{font-size:1.5rem;font-weight:700;text-align:center}.bio{text-align:center;margin:0.5rem 0 1.5rem;opacity:0.7;font-size:0.875rem}.link{display:block;padding:0.75rem 1.5rem;background:${t.card};border:1px solid ${t.border};border-radius:0.5rem;text-decoration:none;color:${t.text};text-align:center;margin-bottom:0.75rem;font-weight:500;transition:transform 0.15s}.link:hover{transform:translateY(-2px)}</style></head><body><div class="container"><div class="name">${name}</div><div class="bio">${bio}</div>${links.map(l => `<a class="link" href="${l.url}" target="_blank">${l.title}</a>`).join("")}</div></body></html>`;
-    const blob = new Blob([html], { type: "text/html" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
-    a.download = `${username || "linktree"}.html`; a.click();
+  const moveLink = (id: string, dir: -1 | 1) => {
+    if (!activeProfile) return;
+    const idx = activeProfile.links.findIndex((l) => l.id === id);
+    if (idx < 0) return;
+    const links = [...activeProfile.links];
+    const newIdx = idx + dir;
+    if (newIdx < 0 || newIdx >= links.length) return;
+    const a = links[idx];
+    const b = links[newIdx];
+    if (!a || !b) return;
+    links[idx] = b;
+    links[newIdx] = a;
+    setActiveProfile({ ...activeProfile, links });
   };
+
+  const shareUrl = activeProfile?.username ? `${window.location.origin}/l/${activeProfile.username}` : "";
+
+  const copyShare = async () => {
+    try { await navigator.clipboard.writeText(shareUrl); setCopied("share"); setTimeout(() => setCopied(""), 1200); } catch {}
+  };
+
+  const t = THEMES.find((th) => th.id === activeProfile?.theme) || THEMES[0];
 
   return (
     <AppShell title="Link in Bio Builder">
       <header className="mb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">🔗 Free Link in Bio Builder</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Create your personal link page. Download as HTML — works offline.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">🔗 Link in Bio Builder</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Create your personal link page. Save, share, and download as HTML.</p>
       </header>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="mb-1 block text-[10px] text-muted-foreground">Your Name</label>
-              <input value={name} onChange={e => setName(e.target.value)} placeholder="Waseem Ahmed"
-                className="h-8 w-full rounded-lg border border-border bg-surface px-2.5 text-xs focus:outline-none" />
-            </div>
-            <div>
-              <label className="mb-1 block text-[10px] text-muted-foreground">Username</label>
-              <input value={username} onChange={e => setUsername(e.target.value)} placeholder="waseem"
-                className="h-8 w-full rounded-lg border border-border bg-surface px-2.5 text-xs focus:outline-none" />
-            </div>
-          </div>
-          <div>
-            <label className="mb-1 block text-[10px] text-muted-foreground">Bio</label>
-            <input value={bio} onChange={e => setBio(e.target.value)} placeholder="Developer, creator, etc."
-              className="h-8 w-full rounded-lg border border-border bg-surface px-2.5 text-xs focus:outline-none" />
-          </div>
-          <div>
-            <label className="mb-1 block text-[10px] text-muted-foreground">Theme</label>
-            <div className="flex gap-1.5">
-              {(["dark", "light", "gradient"] as const).map(th => (
-                <button key={th} onClick={() => setTheme(th)} className={`rounded-lg border px-3 py-1 text-[10px] transition-colors ${theme === th ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground"}`}>{th}</button>
-              ))}
-            </div>
-          </div>
-          <div className="rounded-xl border border-border bg-surface p-3">
-            <h3 className="mb-2 text-xs font-semibold">Add Link</h3>
-            <div className="flex gap-1.5">
-              <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" className="h-8 flex-1 rounded-lg border border-border bg-surface-elevated px-2 text-xs focus:outline-none" />
-              <input value={url} onChange={e => setUrl(e.target.value)} placeholder="URL" className="h-8 flex-1 rounded-lg border border-border bg-surface-elevated px-2 text-xs focus:outline-none" />
-              <button onClick={addLink} className="h-8 rounded-lg bg-primary px-2 text-xs text-primary-foreground">+</button>
-            </div>
-            <div className="mt-2 space-y-1">
-              {links.map(l => (
-                <div key={l.id} className="flex items-center justify-between rounded-lg bg-surface-elevated px-2.5 py-1.5 text-xs">
-                  <span className="truncate">{l.title} → {l.url}</span>
-                  <button onClick={() => removeLink(l.id)} className="ml-2 text-muted-foreground hover:text-red-400">×</button>
+      {!activeProfile ? (
+        <div className="mx-auto max-w-2xl space-y-4">
+          {profiles.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-muted-foreground">Your Profiles</p>
+              {profiles.map((p) => (
+                <div key={p.username} className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
+                  <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-lg">{p.avatar || "👤"}</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-foreground">{p.name || p.username}</p>
+                    <p className="text-[11px] text-muted-foreground">/{p.username} · {p.links.length} links</p>
+                  </div>
+                  <Link to={`/l/${p.username}`} className="text-[11px] text-primary hover:underline">View</Link>
+                  <button onClick={() => { setActiveProfile(p); setEditing(true); }} className="text-[11px] text-muted-foreground hover:text-foreground">Edit</button>
+                  <button onClick={() => deleteProfile(p.username)} className="text-[11px] text-muted-foreground hover:text-red-400">Delete</button>
                 </div>
               ))}
             </div>
-          </div>
-          <button onClick={exportHTML} disabled={!name || links.length === 0}
-            className="h-9 w-full rounded-lg bg-primary text-xs font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-40">
-            Download HTML
+          )}
+          <button onClick={createProfile} className="w-full rounded-xl border-2 border-dashed border-border bg-surface py-8 text-sm text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors">
+            + Create New Link Page
           </button>
         </div>
+      ) : editing ? (
+        <div className="mx-auto max-w-2xl space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div><label className="mb-1 block text-[10px] text-muted-foreground">Username (unique)</label>
+              <input value={activeProfile.username} onChange={(e) => setActiveProfile({ ...activeProfile, username: e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "") })} placeholder="yourname"
+                className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm" /></div>
+            <div><label className="mb-1 block text-[10px] text-muted-foreground">Display Name</label>
+              <input value={activeProfile.name} onChange={(e) => setActiveProfile({ ...activeProfile, name: e.target.value })} placeholder="Your Name"
+                className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm" /></div>
+          </div>
+          <div><label className="mb-1 block text-[10px] text-muted-foreground">Bio</label>
+            <input value={activeProfile.bio} onChange={(e) => setActiveProfile({ ...activeProfile, bio: e.target.value })} placeholder="Developer, creator, etc."
+              className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm" /></div>
 
-        <div className="flex flex-col items-center">
-          <p className="mb-2 text-[10px] text-muted-foreground">Preview — /l/{username || "username"}</p>
-          <div className="w-full max-w-sm rounded-2xl p-6" style={{ background: t.bg, color: t.text }}>
-            <p className="text-center text-lg font-bold">{name || "Your Name"}</p>
-            <p className="mt-1 text-center text-xs opacity-70">{bio || "Your bio here"}</p>
-            <div className="mt-4 space-y-2">
-              {links.length > 0 ? links.map(l => (
-                <a key={l.id} href={l.url} target="_blank" rel="noopener noreferrer"
-                  className="block rounded-lg py-2.5 text-center text-xs font-medium transition-transform hover:-translate-y-0.5"
-                  style={{ background: t.card, border: `1px solid ${t.border}`, color: t.text }}>
-                  {l.title}
-                </a>
-              )) : <p className="py-4 text-center text-xs opacity-50">Add links to see preview</p>}
+          {/* Avatar */}
+          <div><label className="mb-1 block text-[10px] text-muted-foreground">Avatar Emoji</label>
+            <div className="flex gap-1.5 flex-wrap">
+              {["👤", "👨", "👩", "🧑", "Developer", "Designer", "Creator", "Student", "🚀", "⚡", "🎨", "💼"].map((a) => (
+                <button key={a} onClick={() => setActiveProfile({ ...activeProfile, avatar: a })}
+                  className={`size-9 rounded-lg border text-sm flex items-center justify-center ${activeProfile.avatar === a ? "border-primary bg-primary/10" : "border-border bg-surface"}`}>{a}</button>
+              ))}
             </div>
           </div>
+
+          {/* Theme */}
+          <div><label className="mb-1 block text-[10px] text-muted-foreground">Theme</label>
+            <div className="flex gap-2 flex-wrap">
+              {THEMES.map((th) => (
+                <button key={th.id} onClick={() => setActiveProfile({ ...activeProfile, theme: th.id })}
+                  className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs transition-colors ${activeProfile.theme === th.id ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground"}`}>
+                  <div className="size-4 rounded" style={{ background: th.bg, border: `1px solid ${th.border}` }} />
+                  {th.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Add Link */}
+          <div className="rounded-xl border border-border bg-surface p-4 space-y-3">
+            <p className="text-xs font-semibold text-foreground">Add Link</p>
+            <div className="flex gap-2 items-center">
+              <select value={linkIcon} onChange={(e) => setLinkIcon(e.target.value)} className="h-9 w-12 rounded-lg border border-border bg-surface-elevated text-center text-sm">
+                {ICONS.map((i) => <option key={i} value={i}>{i}</option>)}
+              </select>
+              <input value={linkTitle} onChange={(e) => setLinkTitle(e.target.value)} placeholder="Link title" className="h-9 flex-1 rounded-lg border border-border bg-surface-elevated px-3 text-sm" />
+              <input value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} placeholder="https://..." className="h-9 flex-1 rounded-lg border border-border bg-surface-elevated px-3 text-sm" />
+              <button onClick={addLink} className="h-9 rounded-lg bg-primary px-4 text-sm font-medium text-background hover:opacity-90">Add</button>
+            </div>
+          </div>
+
+          {/* Links List */}
+          {activeProfile.links.length > 0 && (
+            <div className="space-y-1.5">
+              {activeProfile.links.map((l, i) => (
+                <div key={l.id} className="flex items-center gap-2 rounded-lg border border-border bg-surface p-2.5">
+                  <span className="text-lg">{l.icon}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">{l.title}</p>
+                    <p className="text-[10px] text-muted-foreground truncate">{l.url}</p>
+                  </div>
+                  <button onClick={() => moveLink(l.id, -1)} disabled={i === 0} className="text-xs text-muted-foreground hover:text-foreground disabled:opacity-30">↑</button>
+                  <button onClick={() => moveLink(l.id, 1)} disabled={i === activeProfile.links.length - 1} className="text-xs text-muted-foreground hover:text-foreground disabled:opacity-30">↓</button>
+                  <button onClick={() => removeLink(l.id)} className="text-xs text-muted-foreground hover:text-red-400">✕</button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            <button onClick={saveProfile} disabled={!activeProfile.username.trim()} className="flex-1 rounded-xl bg-primary py-3 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40">Save Profile</button>
+            <button onClick={() => { setActiveProfile(null); setEditing(false); }} className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-muted-foreground hover:text-foreground">Cancel</button>
+          </div>
         </div>
-      </div>
+      ) : null}
     </AppShell>
   );
 }
