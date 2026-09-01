@@ -170,6 +170,7 @@ import { Route as ToolsPomodoroRouteImport } from './routes/tools.pomodoro'
 import { Route as ToolsPomodoroAdvancedRouteImport } from './routes/tools.pomodoro-advanced'
 import { Route as ToolsPrayerScheduleRouteImport } from './routes/tools.prayer-schedule'
 import { Route as ToolsQrCodeRouteImport } from './routes/tools.qr-code'
+import { Route as ToolsQuoteMakerRouteImport } from './routes/tools.quote-maker'
 import { Route as ToolsQuoteScreenRouteImport } from './routes/tools.quote-screen'
 import { Route as ToolsQuranSearchRouteImport } from './routes/tools.quran-search'
 import { Route as ToolsRainScreenRouteImport } from './routes/tools.rain-screen'
@@ -1025,6 +1026,11 @@ const ToolsQrCodeRoute = ToolsQrCodeRouteImport.update({
   path: '/qr-code',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsQuoteMakerRoute = ToolsQuoteMakerRouteImport.update({
+  id: '/quote-maker',
+  path: '/quote-maker',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsQuoteScreenRoute = ToolsQuoteScreenRouteImport.update({
   id: '/quote-screen',
   path: '/quote-screen',
@@ -1427,6 +1433,7 @@ export interface FileRoutesByFullPath {
   '/tools/pomodoro-advanced': typeof ToolsPomodoroAdvancedRoute
   '/tools/prayer-schedule': typeof ToolsPrayerScheduleRoute
   '/tools/qr-code': typeof ToolsQrCodeRoute
+  '/tools/quote-maker': typeof ToolsQuoteMakerRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
@@ -1638,6 +1645,7 @@ export interface FileRoutesByTo {
   '/tools/pomodoro-advanced': typeof ToolsPomodoroAdvancedRoute
   '/tools/prayer-schedule': typeof ToolsPrayerScheduleRoute
   '/tools/qr-code': typeof ToolsQrCodeRoute
+  '/tools/quote-maker': typeof ToolsQuoteMakerRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
@@ -1851,6 +1859,7 @@ export interface FileRoutesById {
   '/tools/pomodoro-advanced': typeof ToolsPomodoroAdvancedRoute
   '/tools/prayer-schedule': typeof ToolsPrayerScheduleRoute
   '/tools/qr-code': typeof ToolsQrCodeRoute
+  '/tools/quote-maker': typeof ToolsQuoteMakerRoute
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
@@ -2065,6 +2074,7 @@ export interface FileRouteTypes {
     | '/tools/pomodoro-advanced'
     | '/tools/prayer-schedule'
     | '/tools/qr-code'
+    | '/tools/quote-maker'
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
@@ -2276,6 +2286,7 @@ export interface FileRouteTypes {
     | '/tools/pomodoro-advanced'
     | '/tools/prayer-schedule'
     | '/tools/qr-code'
+    | '/tools/quote-maker'
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
@@ -2488,6 +2499,7 @@ export interface FileRouteTypes {
     | '/tools/pomodoro-advanced'
     | '/tools/prayer-schedule'
     | '/tools/qr-code'
+    | '/tools/quote-maker'
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
@@ -3734,6 +3746,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsQrCodeRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/quote-maker': {
+      id: '/tools/quote-maker'
+      path: '/quote-maker'
+      fullPath: '/tools/quote-maker'
+      preLoaderRoute: typeof ToolsQuoteMakerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/quote-screen': {
       id: '/tools/quote-screen'
       path: '/quote-screen'
@@ -4198,6 +4217,7 @@ interface ToolsRouteChildren {
   ToolsPomodoroAdvancedRoute: typeof ToolsPomodoroAdvancedRoute
   ToolsPrayerScheduleRoute: typeof ToolsPrayerScheduleRoute
   ToolsQrCodeRoute: typeof ToolsQrCodeRoute
+  ToolsQuoteMakerRoute: typeof ToolsQuoteMakerRoute
   ToolsQuoteScreenRoute: typeof ToolsQuoteScreenRoute
   ToolsQuranSearchRoute: typeof ToolsQuranSearchRoute
   ToolsRainScreenRoute: typeof ToolsRainScreenRoute
@@ -4354,6 +4374,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsPomodoroAdvancedRoute: ToolsPomodoroAdvancedRoute,
   ToolsPrayerScheduleRoute: ToolsPrayerScheduleRoute,
   ToolsQrCodeRoute: ToolsQrCodeRoute,
+  ToolsQuoteMakerRoute: ToolsQuoteMakerRoute,
   ToolsQuoteScreenRoute: ToolsQuoteScreenRoute,
   ToolsQuranSearchRoute: ToolsQuranSearchRoute,
   ToolsRainScreenRoute: ToolsRainScreenRoute,

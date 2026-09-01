@@ -161,6 +161,7 @@ const TOOL_SECTIONS = [
       { slug: "emoji", name: "Emoji Picker", desc: "Search 3,600+ emojis, recently used", icon: "😀" },
       { slug: "vcard-gen", name: "vCard Generator", desc: "Create vCard files for contacts", icon: "📇" },
       { slug: "wifi-qr", name: "WiFi QR Generator", desc: "Generate WiFi share QR codes", icon: "📶" },
+      { slug: "quote-maker", name: "Quote Card Maker", desc: "Design quote cards with fonts, backgrounds & templates", icon: "💬" },
     ],
   },
   {
