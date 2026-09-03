@@ -33,6 +33,7 @@ const TOOL_SECTIONS = [
       { slug: "csv-to-json", name: "CSV to JSON", desc: "Convert CSV files or text to JSON and back", icon: "📊" },
       { slug: "html-to-pdf", name: "HTML to PDF", desc: "Paste HTML, download as PDF", icon: "🌐" },
       { slug: "images-to-pdf", name: "Images to PDF", desc: "Combine multiple images into one PDF", icon: "📕" },
+      { slug: "certificate", name: "Certificate Generator", desc: "Create beautiful certificates in seconds", icon: "🏆" },
       { slug: "table", name: "Table Maker", desc: "Create tables, export as MD/HTML/CSV/JSON", icon: "📊" },
       { slug: "meta", name: "SEO Meta Tags", desc: "OG, Twitter Card, Schema.org tags", icon: "🔍" },
       { slug: "json-formatter", name: "JSON Formatter", desc: "Pretty print, minify, validate JSON", icon: "🔧" },
@@ -87,6 +88,7 @@ const TOOL_SECTIONS = [
       { slug: "readability", name: "Readability Analyser", desc: "Flesch score, grade level, passive voice", icon: "📖" },
       { slug: "ip", name: "Network Info Tool", desc: "Your IP, location, ISP, and IP lookup", icon: "🌐" },
       { slug: "equation", name: "Math Equation Renderer", desc: "LaTeX → beautiful equations via KaTeX", icon: "🔢" },
+      { slug: "code-screenshot", name: "Code Screenshot Maker", desc: "Turn code into beautiful shareable images", icon: "📸" },
       { slug: "api-tester", name: "API Tester", desc: "Mini Postman — test REST APIs from browser", icon: "🔌" },
       { slug: "timestamp", name: "Timestamp Converter", desc: "Unix timestamp ↔ human readable", icon: "⏱️" },
       { slug: "binary-calculator", name: "Binary Calculator", desc: "Binary, hex, octal, decimal conversions", icon: "💻" },
@@ -116,6 +118,7 @@ const TOOL_SECTIONS = [
       { slug: "text-stats", name: "Text Statistics", desc: "Word count, reading time, char count", icon: "📊" },
       { slug: "speech-to-text", name: "Speech to Text", desc: "Real-time speech transcription", icon: "🎤" },
       { slug: "text-to-speech", name: "Text to Speech", desc: "Convert text to spoken audio", icon: "🔊" },
+      { slug: "story", name: "Story Writing Kit", desc: "Characters, plot planner & writing prompts", icon: "📖" },
     ],
   },
   {
@@ -149,6 +152,8 @@ const TOOL_SECTIONS = [
       { slug: "html-preview", name: "HTML Previewer", desc: "Preview HTML code in real-time", icon: "🌐" },
       { slug: "css-playground", name: "CSS Playground", desc: "Live CSS editor with preview", icon: "🎨" },
       { slug: "js-playground", name: "JS Playground", desc: "Run JavaScript in the browser", icon: "⚡" },
+      { slug: "meme", name: "Meme Generator", desc: "Create memes instantly — no watermark", icon: "😂" },
+      { slug: "sticker", name: "WhatsApp Sticker Maker", desc: "Turn any image into a 512×512 sticker", icon: "🎭" },
     ],
   },
   {
@@ -211,10 +216,33 @@ const TOOL_SECTIONS = [
       { slug: "prayer-schedule", name: "Prayer Timetable", desc: "Full month schedule + CSV export", icon: "🕌" },
       { slug: "sadaqah", name: "Charity Tracker", desc: "Track sadaqah, zakat, fitrana donations", icon: "🤲" },
       { slug: "quran-search", name: "Quran Word Search", desc: "Search across entire Quran (AlQuran.cloud)", icon: "📖" },
+      { slug: "qibla", name: "Qibla Compass", desc: "Find direction of Mecca with compass", icon: "🧭" },
     ],
     hubTools: [
       { slug: "/hub/urdu", name: "Urdu Writers Hub", desc: "Poetry, resources, fonts for Urdu", icon: "🇵🇰" },
       { slug: "/hub/arabic", name: "Arabic Learners Hub", desc: "Alphabet, courses, keyboard, phrases", icon: "🕌" },
+    ],
+  },
+  {
+    title: "Health & Fitness",
+    icon: "💪",
+    tools: [
+      { slug: "health-tracker", name: "Health Tracker", desc: "Track weight, BMI and health over time", icon: "💪" },
+      { slug: "calorie", name: "Calorie & Macro Tracker", desc: "Track daily calories and macros", icon: "🥗" },
+    ],
+  },
+  {
+    title: "Learning & Education",
+    icon: "🎓",
+    tools: [
+      { slug: "quiz-maker", name: "Quiz Builder", desc: "Build and share quizzes via URL", icon: "❓" },
+    ],
+  },
+  {
+    title: "Language Tools",
+    icon: "🌍",
+    tools: [
+      { slug: "arabic-keyboard", name: "Arabic Keyboard", desc: "Type in Arabic without an Arabic keyboard", icon: "⌨️" },
     ],
   },
 ] as const;
