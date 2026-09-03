@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 import { useLibrary } from "@/hooks/use-library";
 import { commandPath, commandTemplate, type SlashCommand } from "@/lib/commands";
+import { trackInteraction } from "@/lib/intelligence";
 
 /** Small, non-intrusive celebrations at the moments that matter. */
 const COPY_MILESTONES: Record<number, string> = {
@@ -25,10 +26,11 @@ export function useCommandActions() {
     }
   }, []);
 
-  /** copy + recent + milestone toast, used by every "copy" affordance */
+  /** copy + recent + milestone toast + intelligence, used by every "copy" affordance */
   const track = useCallback(
     (cmd: SlashCommand, text: string, message: string) => {
       recordUse(cmd.id);
+      trackInteraction(cmd.id, "copy");
       const total = recordCopy();
       const milestone = COPY_MILESTONES[total];
       if (milestone) window.setTimeout(() => toast(milestone), 500);
@@ -54,6 +56,12 @@ export function useCommandActions() {
     [track],
   );
 
+  /** open a command's detail page — feeds the intelligence graph + scores */
+  const openCommand = useCallback((cmd: SlashCommand) => {
+    recordUse(cmd.id);
+    trackInteraction(cmd.id, "open");
+  }, [recordUse]);
+
   const shareCommand = useCallback(
     async (cmd: SlashCommand) => {
       const url =
@@ -74,5 +82,5 @@ export function useCommandActions() {
     [copy],
   );
 
-  return { copy, copyCommand, copyPrompt, runCommand, shareCommand };
+  return { copy, copyCommand, copyPrompt, runCommand, shareCommand, openCommand };
 }

@@ -74,6 +74,21 @@ Built on Lovable, deployed on Vercel.
 /glass — Premium waitlist page (email capture, localStorage)
 /keyboard — Keyboard shortcuts (planned)
 
+## v2.15 (Sep 2026) — Intelligence, voice, workflows
+- Command Intelligence Engine (src/lib/intelligence.ts, localStorage "slashai-intelligence"):
+  tracks copy/open/save interactions (bounded log), session co-occurrence for related
+  commands, per-command personal scores
+- Search personalisation kicks in after 20 interactions: blended ranking
+  (relevance 0.7 + personal 0.3) + "Based on your usage" strip on /search
+- Homepage "Your most used" section (top 5, shown after 10 interactions; reacts to
+  window "slashai-intelligence-change" events)
+- Voice search (src/components/library/VoiceSearchButton.tsx): mic button on homepage
+  hero + SearchBox (used by /search etc.) — EN-US / hi-IN / ar-SA / ur-PK
+- /workflow — AI Workflows: chain commands into one copy-ready multi-step prompt.
+  Step picker (live search), drag + arrow reorder, per-step "uses output of step N"
+  toggle, saved workflows in localStorage "slashai-workflows", active chain autosaved
+  to sessionStorage, char/token estimate. New "New" badge nav item + homepage card.
+
 ## Navigation
 - Bottom tab bar: Home | Commands | Discover | Hubs | Saved (5 tabs, route-based active states)
 - Sidebar: Commands, Assistant, Founder tools, Roadmaps, Journal, AI tools, Glossary, Live, YouTube, Movies, Collections, Play, Recent, Me, Settings, About, Trending, Changelog, Glass, Hubs

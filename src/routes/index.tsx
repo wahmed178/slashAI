@@ -27,6 +27,7 @@ import {
 import { AppShell } from "@/components/library/AppShell";
 import { LiveTicker } from "@/components/library/LiveTicker";
 import { SearchBox } from "@/components/library/SearchBox";
+import { VoiceSearchButton } from "@/components/library/VoiceSearchButton";
 import { Discover } from "@/components/library/Discover";
 import { Onboarding } from "@/components/library/Onboarding";
 import { ResourceGrid } from "@/components/library/ResourceCard";
@@ -41,6 +42,13 @@ import {
 } from "@/lib/commands";
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
+import {
+  HOME_MOST_USED_THRESHOLD,
+  interactionCount,
+  onIntelligenceChange,
+  resolveCommands,
+  topPersonalCommands,
+} from "@/lib/intelligence";
 import trendingToolsData from "@/../src/data/trending-tools.json";
 
 /* ─────────────── Stats Bar (static — cannot fail) ─────────────── */
@@ -205,8 +213,42 @@ function CommandRow({ commands }: { commands: SlashCommand[] }) {
   );
 }
 
+/* ─────────────── Your Most Used (intelligence engine) ─────────────── */
+function MostUsedCommands() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const update = () => setCount(interactionCount());
+    update();
+    return onIntelligenceChange(update);
+  }, []);
+
+  if (count < HOME_MOST_USED_THRESHOLD) return null;
+
+  const commands = resolveCommands(topPersonalCommands(5), getCommand);
+  if (commands.length === 0) return null;
+
+  return (
+    <Section
+      title="Your most used"
+      hint="Ranked from the commands you copy, open and save on this device."
+      action={
+        <Link
+          to="/search"
+          className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+        >
+          <Sparkles className="size-4" aria-hidden /> Search
+        </Link>
+      }
+    >
+      <CommandRow commands={commands} />
+    </Section>
+  );
+}
+
 function HomePage() {
   const { hydrated, favorites, recents, settings } = useLibrary();
+  const [heroQuery, setHeroQuery] = useState("");
 
 
   const recentCommands = useMemo(
@@ -276,16 +318,24 @@ function HomePage() {
               className="mt-5 flex h-[48px] max-w-[460px] items-center gap-3 rounded-[8px] border border-sidebar-border bg-surface px-4 transition-colors focus-within:border-primary"
               onSubmit={(e) => {
                 e.preventDefault();
-                const q = new FormData(e.currentTarget).get("q") as string;
-                if (q?.trim()) window.location.href = `/search?q=${encodeURIComponent(q.trim())}`;
+                if (heroQuery.trim()) window.location.href = `/search?q=${encodeURIComponent(heroQuery.trim())}`;
               }}
             >
               <SearchIcon className="size-[16px] shrink-0 text-muted-foreground" aria-hidden />
               <input
                 name="q"
+                value={heroQuery}
+                onChange={(e) => setHeroQuery(e.target.value)}
                 type="text"
                 placeholder="Search commands, tools, topics..."
                 className="flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground"
+              />
+              <VoiceSearchButton
+                size="sm"
+                onResult={(t) => {
+                  setHeroQuery(t);
+                  window.location.href = `/search?q=${encodeURIComponent(t.trim())}`;
+                }}
               />
               <span className="flex h-5 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] text-muted-foreground">
                 ⌘K
@@ -426,9 +476,13 @@ function HomePage() {
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available", badge: "Free" },
+            { to: "/workflow", emoji: "🧩", title: "AI Workflows", desc: "Chain commands into one prompt", badge: "New" },
             { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge", badge: "Free" },
             { to: "/tools", emoji: "🔧", title: "SlashKits", desc: "160+ free browser tools", badge: "Free" },
             { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", badge: "Hot" },
+            { to: "/generators", emoji: "⚡", title: "Generators", desc: "25 founder tools", badge: "Free" },
+            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: "20 step-by-step plans", badge: "Free" },
+            { to: "/glossary", emoji: "📖", title: "Glossary", desc: "560+ AI terms", badge: "Free" },
           ].map((card) => (
             <Link
               key={card.to}
@@ -437,9 +491,9 @@ function HomePage() {
             >
               {card.badge && (
                 <span className={`absolute top-2.5 right-2.5 rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                  card.badge === "Free"
-                    ? "bg-[rgba(45,212,191,0.12)] text-primary border border-[rgba(45,212,191,0.2)]"
-                    : "bg-[#f85149] text-white"
+                  card.badge === "Hot"
+                    ? "bg-[#f85149] text-white"
+                    : "bg-[rgba(45,212,191,0.12)] text-primary border border-[rgba(45,212,191,0.2)]"
                 }`}>
                   {card.badge}
                 </span>
@@ -560,6 +614,8 @@ function HomePage() {
       </Section>
 
       <YourWeekDigest />
+
+      <MostUsedCommands />
 
       <Section
         title="This week's free finds"

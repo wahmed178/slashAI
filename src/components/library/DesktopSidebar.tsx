@@ -21,6 +21,7 @@ import {
   Layers,
   History,
   Palette,
+  Workflow,
 } from "lucide-react";
 
 const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
@@ -34,6 +35,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/hunyuan", label: "Hunyuan AI", icon: Zap },
   { to: "/generators", label: "Generators", icon: Zap },
   { to: "/roadmaps", label: "Roadmaps", icon: Map },
+  { to: "/workflow", label: "AI Workflows", icon: Workflow, badge: "New" },
   { to: "/live", label: "Live", icon: Radio, badge: "Hot" },
   { to: "/youtube", label: "YouTube", icon: Youtube },
   { to: "/quiz", label: "Daily Quiz", icon: Sparkles },

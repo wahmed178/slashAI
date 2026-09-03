@@ -16,7 +16,7 @@ interface Props {
 export function CommandGrid({ commands, query = "", className }: Props) {
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite, settings } = useLibrary();
-  const { copyCommand } = useCommandActions();
+  const { copyCommand, openCommand } = useCommandActions();
 
   return (
     <div
@@ -35,7 +35,10 @@ export function CommandGrid({ commands, query = "", className }: Props) {
           view={settings.view}
           compact={settings.density === "compact"}
           favorite={isFavorite(c.id)}
-          onOpen={(cmd) => void navigate({ to: "/c/$slug", params: { slug: cmd.id } })}
+          onOpen={(cmd) => {
+            openCommand(cmd);
+            void navigate({ to: "/c/$slug", params: { slug: cmd.id } });
+          }}
           onToggleFavorite={toggleFavorite}
           onCopy={copyCommand}
         />

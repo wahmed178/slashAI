@@ -6,6 +6,7 @@ import { useLibrary } from "@/hooks/use-library";
 import { suggestions, VERIFIED_TOTAL } from "@/lib/commands";
 import { cn } from "@/lib/utils";
 import { Highlight } from "./Highlight";
+import { VoiceSearchButton } from "./VoiceSearchButton";
 
 interface Props {
   /** current query when the box is rendered on the search page */
@@ -34,6 +35,8 @@ export function SearchBox({
   const { recentSearches, recordSearch } = useLibrary();
   const [draft, setDraft] = useState(value ?? "");
   const [open, setOpen] = useState(false);
+  const [voiceInterim, setVoiceInterim] = useState("");
+  const [voiceActive, setVoiceActive] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -79,7 +82,7 @@ export function SearchBox({
       />
       <input
         ref={inputRef}
-        value={draft}
+        value={voiceActive && voiceInterim ? voiceInterim : draft}
         onChange={(e) => update(e.target.value)}
         onFocus={() => setOpen(true)}
         onBlur={() => window.setTimeout(() => setOpen(false), 120)}
@@ -95,11 +98,25 @@ export function SearchBox({
           placeholder ?? `Search ${VERIFIED_TOTAL.toLocaleString()} commands, tags or tasks…`
         }
         className={cn(
-          "w-full rounded-xl border border-border bg-surface pr-10 text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40 focus:outline-none",
+          "w-full rounded-xl border border-border bg-surface pr-16 text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40 focus:outline-none",
           size === "lg" ? "h-14 pl-11 text-base" : "h-10 pl-9 text-sm",
         )}
       />
-      {draft && (
+      <VoiceSearchButton
+        size={size}
+        onInterim={(t) => {
+          setVoiceInterim(t);
+          setVoiceActive(true);
+        }}
+        onResult={(text) => {
+          setVoiceInterim("");
+          setVoiceActive(false);
+          update(text);
+          submit(text);
+        }}
+        className="absolute top-1/2 right-8 -translate-y-1/2"
+      />
+      {draft && !voiceActive && (
         <button
           type="button"
           aria-label="Clear search"

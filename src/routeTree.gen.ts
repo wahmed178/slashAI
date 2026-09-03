@@ -41,6 +41,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
+import { Route as WorkflowRouteImport } from './routes/workflow'
 import { Route as YoutubeRouteImport } from './routes/youtube'
 import { Route as AssistantAboutRouteImport } from './routes/assistant.about'
 import { Route as BuildIdeasIndexRouteImport } from './routes/build-ideas.index'
@@ -389,6 +390,11 @@ const TrendingRoute = TrendingRouteImport.update({
 const WhatsNewRoute = WhatsNewRouteImport.update({
   id: '/whats-new',
   path: '/whats-new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkflowRoute = WorkflowRouteImport.update({
+  id: '/workflow',
+  path: '/workflow',
   getParentRoute: () => rootRouteImport,
 } as any)
 const YoutubeRoute = YoutubeRouteImport.update({
@@ -1371,6 +1377,7 @@ export interface FileRoutesByFullPath {
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
+  '/workflow': typeof WorkflowRoute
   '/youtube': typeof YoutubeRoute
   '/assistant/about': typeof AssistantAboutRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -1593,6 +1600,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
+  '/workflow': typeof WorkflowRoute
   '/youtube': typeof YoutubeRoute
   '/assistant/about': typeof AssistantAboutRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -1817,6 +1825,7 @@ export interface FileRoutesById {
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
   '/whats-new': typeof WhatsNewRoute
+  '/workflow': typeof WorkflowRoute
   '/youtube': typeof YoutubeRoute
   '/assistant/about': typeof AssistantAboutRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -2042,6 +2051,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/trending'
     | '/whats-new'
+    | '/workflow'
     | '/youtube'
     | '/assistant/about'
     | '/build-ideas/$slug'
@@ -2264,6 +2274,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/trending'
     | '/whats-new'
+    | '/workflow'
     | '/youtube'
     | '/assistant/about'
     | '/build-ideas/$slug'
@@ -2487,6 +2498,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/trending'
     | '/whats-new'
+    | '/workflow'
     | '/youtube'
     | '/assistant/about'
     | '/build-ideas/$slug'
@@ -2711,6 +2723,7 @@ export interface RootRouteChildren {
   ToolsRoute: typeof ToolsRouteWithChildren
   TrendingRoute: typeof TrendingRoute
   WhatsNewRoute: typeof WhatsNewRoute
+  WorkflowRoute: typeof WorkflowRoute
   YoutubeRoute: typeof YoutubeRoute
   BuildIdeasSlugRoute: typeof BuildIdeasSlugRoute
   BuildIdeasProjectsRoute: typeof BuildIdeasProjectsRoute
@@ -2961,6 +2974,13 @@ declare module '@tanstack/react-router' {
       path: '/whats-new'
       fullPath: '/whats-new'
       preLoaderRoute: typeof WhatsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workflow': {
+      id: '/workflow'
+      path: '/workflow'
+      fullPath: '/workflow'
+      preLoaderRoute: typeof WorkflowRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/youtube': {
@@ -4670,6 +4690,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsRoute: ToolsRouteWithChildren,
   TrendingRoute: TrendingRoute,
   WhatsNewRoute: WhatsNewRoute,
+  WorkflowRoute: WorkflowRoute,
   YoutubeRoute: YoutubeRoute,
   BuildIdeasSlugRoute: BuildIdeasSlugRoute,
   BuildIdeasProjectsRoute: BuildIdeasProjectsRoute,

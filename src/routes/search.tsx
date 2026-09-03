@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { SlidersHorizontal, X } from "lucide-react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { SlidersHorizontal, Sparkles, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,11 +19,18 @@ import {
   CATEGORY_TREE,
   TYPES,
   filterCommands,
+  getCommand,
   type SortKey,
   type FilterState,
 } from "@/lib/commands";
 import { searchResources } from "@/lib/resources";
 import { cn } from "@/lib/utils";
+import {
+  isPersonalized,
+  personalizeResults,
+  resolveCommands,
+  topPersonalCommands,
+} from "@/lib/intelligence";
 
 interface SearchParams {
   q?: string;
@@ -116,8 +123,22 @@ function SearchPage() {
       onlyFavorites: false,
       favorites,
     };
-    return filterCommands(state);
+    const base = filterCommands(state);
+    // Blend personal usage scores into relevance ordering once the user has
+    // enough history (base relevance * 0.7 + personal score * 0.3).
+    return (search.sort ?? "relevance") === "relevance"
+      ? personalizeResults(base, q)
+      : base;
   }, [q, cat, sub, search.type, search.diff, search.sort, favorites]);
+
+  // "Based on your usage" — top personally-scored commands for this query
+  const personalPicks = useMemo(() => {
+    if (!isPersonalized()) return [];
+    const ids = topPersonalCommands(3, q);
+    const matched = resolveCommands(ids, getCommand);
+    // only surface picks that actually match the current query
+    return q ? matched.filter((c) => results.some((r) => r.id === c.id)) : matched;
+  }, [q, results]);
 
   const resourceHits = useMemo(() => searchResources(q, 6), [q]);
 
@@ -136,6 +157,29 @@ function SearchPage() {
   return (
     <AppShell wide hideHeaderSearch title="Search">
       <SearchBox size="lg" value={q} onChange={(v) => set({ q: v })} autoFocus />
+
+      {personalPicks.length > 0 && (
+        <section className="mt-5 rounded-xl border border-primary/20 bg-primary/[0.04] p-3">
+          <h2 className="flex items-center gap-1.5 px-1 text-xs font-semibold tracking-wide text-primary uppercase">
+            <Sparkles className="size-3.5" aria-hidden /> Based on your usage
+          </h2>
+          <div className="mt-2 flex flex-col gap-1.5">
+            {personalPicks.map((c) => (
+              <Link
+                key={c.id}
+                to="/c/$slug"
+                params={{ slug: c.id }}
+                className="flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors hover:bg-primary/10"
+              >
+                <span className="min-w-0 flex-1 truncate font-mono text-xs text-foreground">
+                  {c.command}
+                </span>
+                <span className="truncate text-[11px] text-muted-foreground">{c.title}</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <p className="min-w-0 truncate text-sm text-muted-foreground">

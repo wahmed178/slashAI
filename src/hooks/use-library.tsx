@@ -11,6 +11,7 @@ import {
 import { APP_VERSION } from "@/lib/app-meta";
 import { todayKey } from "@/lib/commands";
 import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
+import { trackInteraction } from "@/lib/intelligence";
 
 export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm" | "glass" | "linear" | "notion" | "vercel" | "stripe" | "supabase" | "framer";
 export type Density = "comfortable" | "compact";
@@ -338,8 +339,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
 
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((prev) => {
-      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [id, ...prev];
+      const adding = !prev.includes(id);
+      const next = adding ? [id, ...prev] : prev.filter((x) => x !== id);
       localStorage.setItem(KEYS.favorites, JSON.stringify(next));
+      if (adding) trackInteraction(id, "save");
       return next;
     });
   }, []);

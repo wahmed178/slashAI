@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.14.0";
+export const APP_VERSION = "2.15.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,19 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.15.0",
+    date: "2026-09-03",
+    title: "Smart search, voice + AI Workflows",
+    changes: [
+      "Command Intelligence Engine — SlashAI learns the commands you copy, open and save (on-device only)",
+      "Personalised search: usage-weighted results and a 'Based on your usage' section once you have history",
+      "'Your most used' on the homepage after 10+ interactions",
+      "Voice search in the homepage and search bars — English, Hindi, Arabic, Urdu",
+      "AI Workflows at /workflow — chain commands into one copy-ready multi-step prompt",
+      "Reorder steps by drag or arrows and mark a step to use the previous step's output",
+    ],
+  },
   {
     version: "2.9.0",
     date: "2026-08-29",

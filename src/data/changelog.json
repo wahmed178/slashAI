@@ -1,6 +1,19 @@
 {
-  "version": "2.14.0",
+  "version": "2.15.0",
   "entries": [
+    {
+      "version": "2.15.0",
+      "date": "2026-09-03",
+      "changes": [
+        "Command Intelligence Engine: SlashAI learns your copy/open/save habits on-device",
+        "Search personalised: results blend your usage (70/30) after 20+ interactions, with a \"Based on your usage\" section",
+        "\"Your most used\" section on the homepage — top 5 commands by personal score (appears after 10 interactions)",
+        "Voice search everywhere: tap the mic in the homepage and search bars — English, Hindi, Arabic and Urdu",
+        "AI Workflows at /workflow: chain commands into one copy-ready multi-step prompt",
+        "Workflow builder: step picker with live command search, drag / arrow reorder, and per-step \"use output of previous step\" toggle",
+        "Save and reload unlimited workflows on your device; estimated characters & tokens shown per chain"
+      ]
+    },
     {
       "version": "2.14.0",
       "date": "2026-08-30",
