@@ -344,13 +344,90 @@ function HomePage() {
       {/* ─── Stats Bar ─── */}
       <StatsBar />
 
+      {/* ─── How it works (FREEIEO-inspired) ─── */}
+      <section className="mt-10 rounded-2xl border border-sidebar-border bg-surface p-6 sm:p-8">
+        <h2 className="text-center text-lg font-bold tracking-tight text-foreground sm:text-xl">How SlashAI Works</h2>
+        <p className="mt-1 text-center text-[13px] text-muted-foreground">Three steps. No sign-up. No uploads. 100% free.</p>
+        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {[
+            {
+              step: "1",
+              emoji: "🔍",
+              title: "Search a command",
+              desc: "Type what you want to do — write, code, design, plan — and find a copy-ready AI prompt in seconds.",
+              color: "var(--primary)",
+            },
+            {
+              step: "2",
+              emoji: "📋",
+              title: "Copy to clipboard",
+              desc: "One click copies the perfect prompt. Edit it if you like, then paste it into ChatGPT, Claude, Gemini or any AI.",
+              color: "#d29922",
+            },
+            {
+              step: "3",
+              emoji: "⚡",
+              title: "Get results instantly",
+              desc: "Get expert-level output every time. Save favorites, build streaks, and explore 5,600+ commands across 30+ categories.",
+              color: "#3fb950",
+            },
+          ].map((item) => (
+            <div key={item.step} className="flex flex-col items-center text-center">
+              <div
+                className="flex size-14 items-center justify-center rounded-2xl text-2xl"
+                style={{
+                  background: `${item.color}10`,
+                  border: `1px solid ${item.color}30`,
+                }}
+              >
+                {item.emoji}
+              </div>
+              <span className="mt-3 inline-flex size-6 items-center justify-center rounded-full text-[11px] font-bold text-muted-foreground border border-border bg-surface-elevated">
+                {item.step}
+              </span>
+              <h3 className="mt-2 text-[15px] font-semibold text-foreground">{item.title}</h3>
+              <p className="mt-1 max-w-[260px] text-[13px] leading-relaxed text-muted-foreground">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── Tool of the Day (FREEIEO-inspired spotlight) ─── */}
+      <section className="mt-8 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
+        <div className="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+          <div className="flex-1">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-primary">
+              ⭐ Tool of the day
+            </span>
+            <h2 className="mt-3 text-xl font-bold text-foreground sm:text-2xl">Meme Generator</h2>
+            <p className="mt-1.5 text-[14px] text-muted-foreground">
+              Create memes instantly with 50+ templates — no watermark, completely free. Download as PNG or share directly.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="rounded-full border border-border bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">100% Free</span>
+              <span className="rounded-full border border-border bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">No watermark</span>
+              <span className="rounded-full border border-border bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">Browser only</span>
+            </div>
+            <Link
+              to="/tools/meme"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90"
+            >
+              Try it now <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+          <div className="hidden md:flex size-32 items-center justify-center rounded-2xl bg-surface-elevated text-6xl">
+            😂
+          </div>
+        </div>
+      </section>
+
       {/* ─── Explore more ─── */}
       <section className="mt-10">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
-            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available" },
-            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge" },
-            { to: "/tools", emoji: "🔧", title: "SlashKits", desc: "22 free browser tools" },
+            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available", badge: "Free" },
+            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge", badge: "Free" },
+            { to: "/tools", emoji: "🔧", title: "SlashKits", desc: "160+ free browser tools", badge: "Free" },
             { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", badge: "Hot" },
           ].map((card) => (
             <Link
@@ -359,7 +436,11 @@ function HomePage() {
               className="group relative flex flex-col justify-end rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-border min-h-[130px]"
             >
               {card.badge && (
-                <span className="absolute top-2.5 right-2.5 rounded-full bg-[#f85149] px-2 py-0.5 text-[10px] font-bold text-white">
+                <span className={`absolute top-2.5 right-2.5 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                  card.badge === "Free"
+                    ? "bg-[rgba(45,212,191,0.12)] text-primary border border-[rgba(45,212,191,0.2)]"
+                    : "bg-[#f85149] text-white"
+                }`}>
                   {card.badge}
                 </span>
               )}
@@ -500,7 +581,7 @@ function HomePage() {
           to="/tools"
           className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80"
         >
-          See all 22 tools <ArrowRight className="size-4" aria-hidden />
+          See all 160+ tools <ArrowRight className="size-4" aria-hidden />
         </Link>
       </Section>
 

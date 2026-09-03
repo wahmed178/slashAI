@@ -283,6 +283,29 @@ function ToolsIndex() {
         </p>
       </header>
 
+      {/* Tool of the Day Spotlight */}
+      <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="text-[14px]">⭐</span>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Tool of the Day</span>
+        </div>
+        <div className="mt-2.5 flex items-start gap-4">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-surface text-3xl">😂</span>
+          <div className="flex-1">
+            <span className="block text-[16px] font-bold text-foreground">Meme Generator</span>
+            <span className="mt-0.5 block text-[13px] text-muted-foreground">Create memes instantly with 50+ templates — no watermark, completely free.</span>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">🔥 Trending</span>
+              <span className="rounded-full bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">No watermark</span>
+              <span className="rounded-full bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">50+ templates</span>
+            </div>
+            <a href="/tools/meme" className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-[12px] font-bold text-background transition-colors hover:bg-primary/90">
+              Try it now →
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Search */}
       <div className="mt-4">
         <input
@@ -337,6 +360,9 @@ function ToolsIndex() {
                   <span className="flex items-center gap-2">
                     <span className="text-[15px] font-semibold text-foreground group-hover:text-primary">
                       {tool.name}
+                    </span>
+                    <span className="shrink-0 rounded-full border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.08)] px-1.5 py-0.5 text-[9px] font-semibold text-primary">
+                      Free
                     </span>
                     {"noUpload" in tool && tool.noUpload && (
                       <span className="rounded border px-1.5 py-0.5 text-[9px] font-medium text-green" style={{ background: "rgba(63,185,80,0.08)", borderColor: "rgba(63,185,80,0.3)" }}>
