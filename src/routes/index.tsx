@@ -452,6 +452,106 @@ function HomePage() {
         </div>
       </section>
 
+      {/* ─── Popular Tools (GingerBook-style horizontal showcase) ─── */}
+      <Section
+        title="Popular tools"
+        hint="Most-used SlashKits — all free, all in your browser."
+        action={
+          <Link
+            to="/tools"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            All tools <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
+      >
+        <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+          {[
+            { slug: "meme", icon: "😂", name: "Meme Generator", desc: "50+ templates, no watermark" },
+            { slug: "qr-code", icon: "📱", name: "QR Generator", desc: "URLs, WiFi, text" },
+            { slug: "image-compress", icon: "🖼️", name: "Image Compressor", desc: "Reduce size in-browser" },
+            { slug: "password-gen", icon: "🔐", name: "Password Generator", desc: "Cryptographic passwords" },
+            { slug: "json-formatter", icon: "🔧", name: "JSON Formatter", desc: "Pretty print, validate" },
+            { slug: "color-palette", icon: "🎨", name: "Color Palette", desc: "Generate palettes" },
+            { slug: "regex", icon: ".*", name: "Regex Tester", desc: "Live highlighting" },
+            { slug: "pomodoro", icon: "🍅", name: "Pomodoro Timer", desc: "25/5/15 focus" },
+            { slug: "csv-to-json", icon: "📊", name: "CSV ↔ JSON", desc: "Convert instantly" },
+            { slug: "image-convert", icon: "🔄", name: "Image Converter", desc: "JPG, PNG, WebP" },
+          ].map((tool) => (
+            <Link
+              key={tool.slug}
+              to={`/tools/${tool.slug}`}
+              className="flex shrink-0 flex-col items-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40 w-[120px] sm:w-[140px]"
+            >
+              <span className="text-[28px]">{tool.icon}</span>
+              <span className="mt-1.5 block text-[12px] font-semibold text-foreground leading-tight">{tool.name}</span>
+              <span className="mt-0.5 block text-[10px] text-muted-foreground leading-tight">{tool.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* ─── Fun Time (GingerBook-inspired engagement) ─── */}
+      <Section
+        title="Fun Time"
+        hint="Games, quizzes and creative tools — all free."
+      >
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+          {([
+            { to: "/tools/meme", emoji: "😂", title: "Meme Maker", desc: "Create memes" },
+            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories" },
+            { to: "/tools/dice", emoji: "🎲", title: "Dice Roller", desc: "D4–D100" },
+            { to: "/tools/coin-flip", emoji: "🪙", title: "Coin Flip", desc: "Virtual flip" },
+            { to: "/tools/sticker", emoji: "🎭", title: "Sticker Maker", desc: "WhatsApp stickers" },
+            { to: "/tools/quiz-maker", emoji: "❓", title: "Quiz Builder", desc: "Create & share" },
+          ]).map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="group flex flex-col items-center rounded-xl border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+            >
+              <span className="text-[32px]">{item.emoji}</span>
+              <span className="mt-2 block text-[13px] font-semibold text-foreground">{item.title}</span>
+              <span className="mt-0.5 block text-[11px] text-muted-foreground">{item.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* ─── Free Resources (GingerBook-style promo) ─── */}
+      <section className="mt-10 overflow-hidden rounded-2xl border border-sidebar-border bg-surface p-6 sm:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex-1">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(251,191,36,0.2)] bg-[rgba(251,191,36,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-[#fbbf24]">
+              🎓 Free Learning
+            </span>
+            <h2 className="mt-3 text-xl font-bold text-foreground">Free courses &amp; resources</h2>
+            <p className="mt-1.5 text-[14px] text-muted-foreground">
+              Curated free courses from top platforms — no hidden fees, no credit card required.
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {[
+                { emoji: "🎨", label: "Free Udemy Courses", to: "/hub/creators" },
+                { emoji: "💻", label: "Free Dev Courses", to: "/hub/developers" },
+                { emoji: "📈", label: "Free Business Courses", to: "/hub/professionals" },
+                { emoji: "✍️", label: "Free Writing Tools", to: "/search?q=writing" },
+                { emoji: "🔍", label: "5,600+ AI Commands", to: "/search" },
+                { emoji: "📦", label: "319+ Free Resources", to: "/discover" },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  className="flex items-center gap-2 rounded-lg border border-border bg-surface-elevated px-3 py-2.5 text-[12px] font-medium text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+                >
+                  <span>{item.emoji}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Section
         title="Command of the day"
         hint="One fresh pick a day, plus a reroll whenever you want one."
