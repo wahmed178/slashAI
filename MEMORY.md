@@ -74,6 +74,32 @@ Built on Lovable, deployed on Vercel.
 /glass — Premium waitlist page (email capture, localStorage)
 /keyboard — Keyboard shortcuts (planned)
 
+## v2.16 (Sep 2026) — Scanner, interview, graph, analyser, PWA prompts
+- /tools/scanner — Document Scanner: camera capture (rear on mobile) or file
+  upload on desktop; enhance Original/Enhanced/B&W/Grayscale; multi-page
+  session with thumbnail strip + delete; export single JPG or multi-page PDF
+  (jsPDF). Pages kept in memory, not uploaded anywhere.
+- /tools/interview — Mock Interview (src/lib/interview-questions.ts, 500+
+  questions): role/level/type/duration setup; voice (Web Speech) or typed
+  answers; per-question feedback engine (length, filler words, STAR coverage
+  for behavioral, question keywords, speaking pace) and final summary with
+  grade + jsPDF report download.
+- /tools/analyze — Website Analyser: audits any URL via allorigins CORS
+  proxy + PageSpeed Insights (no key): SEO basics, social meta, security
+  headers, robots/sitemap probes, tech fingerprinting; A–F grade + section
+  cards. Best-effort: PSI failures degrade gracefully.
+- /graph — Personal Knowledge Graph: hand-rolled force simulation (no d3
+  dependency) over saved commands, saved resources (localStorage
+  "slashai-saved-resources"), collections containing your commands and
+  journal notes. Filters, node search, zoom/reset, hover tracing, drag,
+  click-through to items. Nav: sidebar + mobile drawer (SECONDARY_ITEMS in
+  AppShell/DesktopSidebar) + CTA card on /favorites.
+- PWA UX: InstallBanner (beforeinstallprompt after 3 visits,
+  "slashai-visits"/"slashai-install-dismissed") + OfflineBanner (full-width,
+  dismissible, auto-hide on reconnect) rendered under the header in AppShell.
+  SW itself already precaches the whole catalog — no IndexedDB needed.
+- APP_VERSION/changelog bumped to 2.16.0 (app-meta.ts + changelog.json).
+
 ## v2.15 (Sep 2026) — Intelligence, voice, workflows
 - Command Intelligence Engine (src/lib/intelligence.ts, localStorage "slashai-intelligence"):
   tracks copy/open/save interactions (bounded log), session co-occurrence for related

@@ -1,6 +1,19 @@
 {
-  "version": "2.15.0",
+  "version": "2.16.0",
   "entries": [
+    {
+      "version": "2.16.0",
+      "date": "2026-09-03",
+      "changes": [
+        "Document Scanner at /tools/scanner: capture pages with your camera or upload on desktop, enhance contrast/B&W, build multi-page documents and export as JPG or PDF",
+        "Mock Interview Simulator at /tools/interview: 500+ questions by role, level and type — answer by voice or typing, get instant feedback on length, filler words, STAR coverage, keywords and pace",
+        "Mock Interview ships with a PDF report download of your full session",
+        "Website Analyser at /tools/analyze: free audit of any URL — PageSpeed mobile scores, security headers, SEO basics, social meta tags and tech-stack detection",
+        "Personal Knowledge Graph at /graph: everything you saved (commands, resources, collections, journal notes) rendered as an interactive force graph with filters, search, zoom and hover tracing",
+        "Knowledge Graph reachable from the sidebar and /favorites",
+        "Offline upgrade: dismissible offline banner + 'Install SlashAI' prompt after 3 visits (full command library already cached offline by the service worker)"
+      ]
+    },
     {
       "version": "2.15.0",
       "date": "2026-09-03",

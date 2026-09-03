@@ -22,6 +22,7 @@ import {
   History,
   Palette,
   Workflow,
+  Share2,
 } from "lucide-react";
 
 const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
@@ -45,8 +46,9 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/designs", label: "Designs", icon: Palette, badge: "Premium" },
 ];
 
-const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any }> = [
+const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: string }> = [
   { to: "/journal", label: "Journal", icon: NotebookPen },
+  { to: "/graph", label: "Knowledge Graph", icon: Share2, badge: "New" },
   { to: "/recent", label: "Recent", icon: History },
   { to: "/favorites", label: "Saved", icon: Bookmark },
   { to: "/me", label: "Profile & Settings", icon: Settings },
@@ -150,7 +152,12 @@ export function DesktopSidebar() {
                 className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`}
                 strokeWidth={active ? 2.2 : 1.8}
               />
-              {item.label}
+              <span className="flex-1">{item.label}</span>
+              {item.badge && (
+                <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
+                  {item.badge}
+                </span>
+              )}
             </Link>
           );
         })}

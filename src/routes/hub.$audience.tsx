@@ -217,6 +217,26 @@ function HubPage() {
         </p>
       </header>
 
+      {/* Featured SlashKits practice tool (Professionals hub) */}
+      {slug === "professionals" && (
+        <Link
+          to="/tools/interview"
+          className="group mt-6 flex items-center gap-3 rounded-[10px] border border-primary/20 bg-primary/[0.04] p-4 transition-all duration-150 hover:border-primary/40 hover:bg-primary/[0.08]"
+        >
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-2xl">🎤</span>
+          <span className="min-w-0 flex-1">
+            <span className="flex items-center gap-2">
+              <span className="text-[15px] font-bold text-foreground group-hover:text-primary">Mock Interview Simulator</span>
+              <span className="rounded-full border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.08)] px-1.5 py-0.5 text-[9px] font-semibold text-primary">Free</span>
+            </span>
+            <span className="mt-0.5 block text-[13px] text-muted-foreground">
+              Practice real interview questions with instant feedback on your answers — no account needed.
+            </span>
+          </span>
+          <span className="shrink-0 text-[15px] text-muted-foreground transition-colors group-hover:text-primary">→</span>
+        </Link>
+      )}
+
       {/* Grouped sections */}
       <div className="mt-6">
         {grouped.map((section, i) => (

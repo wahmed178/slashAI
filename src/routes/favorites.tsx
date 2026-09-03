@@ -36,6 +36,20 @@ function FavoritesPage() {
         </p>
       </header>
 
+      <Link
+        to="/graph"
+        className="mt-4 flex items-center gap-3 rounded-[10px] border border-primary/20 bg-primary/[0.04] p-3.5 transition-all duration-150 hover:border-primary/40 hover:bg-primary/[0.07]"
+      >
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[16px]">🕸️</span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[13.5px] font-semibold text-foreground">See these as a Knowledge Graph</span>
+          <span className="block text-[12px] text-muted-foreground">
+            Commands, resources, collections and notes mapped by how they connect.
+          </span>
+        </span>
+        <span className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary">→</span>
+      </Link>
+
       <div className="mt-5">
         {!hydrated ? (
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">

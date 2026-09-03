@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.15.0";
+export const APP_VERSION = "2.16.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,18 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.16.0",
+    date: "2026-09-03",
+    title: "Document scanner, mock interviews, knowledge graph + analyser",
+    changes: [
+      "Document Scanner at /tools/scanner — capture pages with your camera (or upload on desktop), enhance and export multi-page PDF",
+      "Mock Interview Simulator at /tools/interview — 500+ real questions with voice or typed answers and instant feedback on length, fillers, STAR and pace",
+      "Website Analyser at /tools/analyze — free PageSpeed, security headers, SEO and social-meta audit of any URL",
+      "Personal Knowledge Graph at /graph — saved commands, resources, collections and notes as an interactive force graph",
+      "Install prompt: add SlashAI to your home screen after a few visits; full offline banner when your connection drops",
+    ],
+  },
   {
     version: "2.15.0",
     date: "2026-09-03",

@@ -14,6 +14,7 @@ import {
   Tag,
   Bookmark,
   Settings,
+  Share2,
   NotebookPen,
   Sparkles,
   Flame,
@@ -39,7 +40,8 @@ import {
 } from "@/components/ui/sheet";
 import { useLibrary } from "@/hooks/use-library";
 import { SearchBox } from "./SearchBox";
-import { OfflineBadge } from "./OfflineBadge";
+import { OfflineBanner } from "./OfflineBanner";
+import { InstallBanner } from "./InstallBanner";
 import { DesktopSidebar } from "./DesktopSidebar";
 
 /** Shared nav items — same as DesktopSidebar */
@@ -63,8 +65,9 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/designs", label: "Designs", icon: Palette, badge: "Premium" },
 ];
 
-const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any }> = [
+const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: string }> = [
   { to: "/journal", label: "Journal", icon: NotebookPen },
+  { to: "/graph", label: "Knowledge Graph", icon: Share2, badge: "New" },
   { to: "/recent", label: "Recent", icon: HistoryIcon },
   { to: "/favorites", label: "Saved", icon: Bookmark },
   { to: "/me", label: "Profile & Settings", icon: Settings },
@@ -195,7 +198,12 @@ function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
               }`}
             >
               <item.icon className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2.2 : 1.8} />
-              {item.label}
+              <span className="flex-1">{item.label}</span>
+              {item.badge && (
+                <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
+                  {item.badge}
+                </span>
+              )}
             </Link>
           );
         })}
@@ -326,6 +334,10 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             </div>
           </div>
         </header>
+
+        {/* offline + install strips — dismissed installs stay gone, offline re-appears on every disconnect */}
+        <InstallBanner />
+        <OfflineBanner />
 
         <main className="flex-1 overflow-y-auto animate-slide-in-up">
           <div className="w-full px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-10">

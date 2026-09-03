@@ -23,6 +23,7 @@ import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
 import { Route as GlassRouteImport } from './routes/glass'
 import { Route as GlossaryRouteImport } from './routes/glossary'
+import { Route as GraphRouteImport } from './routes/graph'
 import { Route as HunyuanRouteImport } from './routes/hunyuan'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as KeyboardRouteImport } from './routes/keyboard'
@@ -69,6 +70,7 @@ import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as ToolsAgeOfThingsRouteImport } from './routes/tools.age-of-things'
 import { Route as ToolsAlphabetCipherRouteImport } from './routes/tools.alphabet-cipher'
+import { Route as ToolsAnalyzeRouteImport } from './routes/tools.analyze'
 import { Route as ToolsApiTesterRouteImport } from './routes/tools.api-tester'
 import { Route as ToolsArabicKeyboardRouteImport } from './routes/tools.arabic-keyboard'
 import { Route as ToolsAsciiRouteImport } from './routes/tools.ascii'
@@ -138,6 +140,7 @@ import { Route as ToolsImageBase64RouteImport } from './routes/tools.image-base6
 import { Route as ToolsImageCompressRouteImport } from './routes/tools.image-compress'
 import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-convert'
 import { Route as ToolsImagesToPdfRouteImport } from './routes/tools.images-to-pdf'
+import { Route as ToolsInterviewRouteImport } from './routes/tools.interview'
 import { Route as ToolsInvoiceRouteImport } from './routes/tools.invoice'
 import { Route as ToolsInvoiceLookupRouteImport } from './routes/tools.invoice-lookup'
 import { Route as ToolsIpRouteImport } from './routes/tools.ip'
@@ -193,6 +196,7 @@ import { Route as ToolsRegexRouteImport } from './routes/tools.regex'
 import { Route as ToolsRegexTesterRouteImport } from './routes/tools.regex-tester'
 import { Route as ToolsRomanNumeralRouteImport } from './routes/tools.roman-numeral'
 import { Route as ToolsSadaqahRouteImport } from './routes/tools.sadaqah'
+import { Route as ToolsScannerRouteImport } from './routes/tools.scanner'
 import { Route as ToolsScreenshotRouteImport } from './routes/tools.screenshot'
 import { Route as ToolsShortcutRouteImport } from './routes/tools.shortcut'
 import { Route as ToolsSipCalculatorRouteImport } from './routes/tools.sip-calculator'
@@ -300,6 +304,11 @@ const GlassRoute = GlassRouteImport.update({
 const GlossaryRoute = GlossaryRouteImport.update({
   id: '/glossary',
   path: '/glossary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GraphRoute = GraphRouteImport.update({
+  id: '/graph',
+  path: '/graph',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HunyuanRoute = HunyuanRouteImport.update({
@@ -530,6 +539,11 @@ const ToolsAgeOfThingsRoute = ToolsAgeOfThingsRouteImport.update({
 const ToolsAlphabetCipherRoute = ToolsAlphabetCipherRouteImport.update({
   id: '/alphabet-cipher',
   path: '/alphabet-cipher',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsAnalyzeRoute = ToolsAnalyzeRouteImport.update({
+  id: '/analyze',
+  path: '/analyze',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsApiTesterRoute = ToolsApiTesterRouteImport.update({
@@ -877,6 +891,11 @@ const ToolsImagesToPdfRoute = ToolsImagesToPdfRouteImport.update({
   path: '/images-to-pdf',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsInterviewRoute = ToolsInterviewRouteImport.update({
+  id: '/interview',
+  path: '/interview',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsInvoiceRoute = ToolsInvoiceRouteImport.update({
   id: '/invoice',
   path: '/invoice',
@@ -1152,6 +1171,11 @@ const ToolsSadaqahRoute = ToolsSadaqahRouteImport.update({
   path: '/sadaqah',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsScannerRoute = ToolsScannerRouteImport.update({
+  id: '/scanner',
+  path: '/scanner',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsScreenshotRoute = ToolsScreenshotRouteImport.update({
   id: '/screenshot',
   path: '/screenshot',
@@ -1359,6 +1383,7 @@ export interface FileRoutesByFullPath {
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
+  '/graph': typeof GraphRoute
   '/hunyuan': typeof HunyuanRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
@@ -1398,6 +1423,7 @@ export interface FileRoutesByFullPath {
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/alphabet-cipher': typeof ToolsAlphabetCipherRoute
+  '/tools/analyze': typeof ToolsAnalyzeRoute
   '/tools/api-tester': typeof ToolsApiTesterRoute
   '/tools/arabic-keyboard': typeof ToolsArabicKeyboardRoute
   '/tools/ascii': typeof ToolsAsciiRoute
@@ -1467,6 +1493,7 @@ export interface FileRoutesByFullPath {
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/invoice-lookup': typeof ToolsInvoiceLookupRoute
   '/tools/ip': typeof ToolsIpRoute
@@ -1522,6 +1549,7 @@ export interface FileRoutesByFullPath {
   '/tools/regex-tester': typeof ToolsRegexTesterRoute
   '/tools/roman-numeral': typeof ToolsRomanNumeralRoute
   '/tools/sadaqah': typeof ToolsSadaqahRoute
+  '/tools/scanner': typeof ToolsScannerRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
@@ -1583,6 +1611,7 @@ export interface FileRoutesByTo {
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
+  '/graph': typeof GraphRoute
   '/hunyuan': typeof HunyuanRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
@@ -1621,6 +1650,7 @@ export interface FileRoutesByTo {
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/alphabet-cipher': typeof ToolsAlphabetCipherRoute
+  '/tools/analyze': typeof ToolsAnalyzeRoute
   '/tools/api-tester': typeof ToolsApiTesterRoute
   '/tools/arabic-keyboard': typeof ToolsArabicKeyboardRoute
   '/tools/ascii': typeof ToolsAsciiRoute
@@ -1690,6 +1720,7 @@ export interface FileRoutesByTo {
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/invoice-lookup': typeof ToolsInvoiceLookupRoute
   '/tools/ip': typeof ToolsIpRoute
@@ -1745,6 +1776,7 @@ export interface FileRoutesByTo {
   '/tools/regex-tester': typeof ToolsRegexTesterRoute
   '/tools/roman-numeral': typeof ToolsRomanNumeralRoute
   '/tools/sadaqah': typeof ToolsSadaqahRoute
+  '/tools/scanner': typeof ToolsScannerRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
@@ -1807,6 +1839,7 @@ export interface FileRoutesById {
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
+  '/graph': typeof GraphRoute
   '/hunyuan': typeof HunyuanRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
@@ -1846,6 +1879,7 @@ export interface FileRoutesById {
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/alphabet-cipher': typeof ToolsAlphabetCipherRoute
+  '/tools/analyze': typeof ToolsAnalyzeRoute
   '/tools/api-tester': typeof ToolsApiTesterRoute
   '/tools/arabic-keyboard': typeof ToolsArabicKeyboardRoute
   '/tools/ascii': typeof ToolsAsciiRoute
@@ -1915,6 +1949,7 @@ export interface FileRoutesById {
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/invoice-lookup': typeof ToolsInvoiceLookupRoute
   '/tools/ip': typeof ToolsIpRoute
@@ -1970,6 +2005,7 @@ export interface FileRoutesById {
   '/tools/regex-tester': typeof ToolsRegexTesterRoute
   '/tools/roman-numeral': typeof ToolsRomanNumeralRoute
   '/tools/sadaqah': typeof ToolsSadaqahRoute
+  '/tools/scanner': typeof ToolsScannerRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
@@ -2033,6 +2069,7 @@ export interface FileRouteTypes {
     | '/find'
     | '/glass'
     | '/glossary'
+    | '/graph'
     | '/hunyuan'
     | '/journal'
     | '/keyboard'
@@ -2072,6 +2109,7 @@ export interface FileRouteTypes {
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/alphabet-cipher'
+    | '/tools/analyze'
     | '/tools/api-tester'
     | '/tools/arabic-keyboard'
     | '/tools/ascii'
@@ -2141,6 +2179,7 @@ export interface FileRouteTypes {
     | '/tools/image-compress'
     | '/tools/image-convert'
     | '/tools/images-to-pdf'
+    | '/tools/interview'
     | '/tools/invoice'
     | '/tools/invoice-lookup'
     | '/tools/ip'
@@ -2196,6 +2235,7 @@ export interface FileRouteTypes {
     | '/tools/regex-tester'
     | '/tools/roman-numeral'
     | '/tools/sadaqah'
+    | '/tools/scanner'
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/sip-calculator'
@@ -2257,6 +2297,7 @@ export interface FileRouteTypes {
     | '/find'
     | '/glass'
     | '/glossary'
+    | '/graph'
     | '/hunyuan'
     | '/journal'
     | '/keyboard'
@@ -2295,6 +2336,7 @@ export interface FileRouteTypes {
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/alphabet-cipher'
+    | '/tools/analyze'
     | '/tools/api-tester'
     | '/tools/arabic-keyboard'
     | '/tools/ascii'
@@ -2364,6 +2406,7 @@ export interface FileRouteTypes {
     | '/tools/image-compress'
     | '/tools/image-convert'
     | '/tools/images-to-pdf'
+    | '/tools/interview'
     | '/tools/invoice'
     | '/tools/invoice-lookup'
     | '/tools/ip'
@@ -2419,6 +2462,7 @@ export interface FileRouteTypes {
     | '/tools/regex-tester'
     | '/tools/roman-numeral'
     | '/tools/sadaqah'
+    | '/tools/scanner'
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/sip-calculator'
@@ -2480,6 +2524,7 @@ export interface FileRouteTypes {
     | '/find'
     | '/glass'
     | '/glossary'
+    | '/graph'
     | '/hunyuan'
     | '/journal'
     | '/keyboard'
@@ -2519,6 +2564,7 @@ export interface FileRouteTypes {
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/alphabet-cipher'
+    | '/tools/analyze'
     | '/tools/api-tester'
     | '/tools/arabic-keyboard'
     | '/tools/ascii'
@@ -2588,6 +2634,7 @@ export interface FileRouteTypes {
     | '/tools/image-compress'
     | '/tools/image-convert'
     | '/tools/images-to-pdf'
+    | '/tools/interview'
     | '/tools/invoice'
     | '/tools/invoice-lookup'
     | '/tools/ip'
@@ -2643,6 +2690,7 @@ export interface FileRouteTypes {
     | '/tools/regex-tester'
     | '/tools/roman-numeral'
     | '/tools/sadaqah'
+    | '/tools/scanner'
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/sip-calculator'
@@ -2705,6 +2753,7 @@ export interface RootRouteChildren {
   FindRoute: typeof FindRoute
   GlassRoute: typeof GlassRoute
   GlossaryRoute: typeof GlossaryRoute
+  GraphRoute: typeof GraphRoute
   HunyuanRoute: typeof HunyuanRoute
   JournalRoute: typeof JournalRoute
   KeyboardRoute: typeof KeyboardRoute
@@ -2848,6 +2897,13 @@ declare module '@tanstack/react-router' {
       path: '/glossary'
       fullPath: '/glossary'
       preLoaderRoute: typeof GlossaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/graph': {
+      id: '/graph'
+      path: '/graph'
+      fullPath: '/graph'
+      preLoaderRoute: typeof GraphRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hunyuan': {
@@ -3170,6 +3226,13 @@ declare module '@tanstack/react-router' {
       path: '/alphabet-cipher'
       fullPath: '/tools/alphabet-cipher'
       preLoaderRoute: typeof ToolsAlphabetCipherRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/analyze': {
+      id: '/tools/analyze'
+      path: '/analyze'
+      fullPath: '/tools/analyze'
+      preLoaderRoute: typeof ToolsAnalyzeRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/api-tester': {
@@ -3655,6 +3718,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsImagesToPdfRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/interview': {
+      id: '/tools/interview'
+      path: '/interview'
+      fullPath: '/tools/interview'
+      preLoaderRoute: typeof ToolsInterviewRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/invoice': {
       id: '/tools/invoice'
       path: '/invoice'
@@ -4040,6 +4110,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSadaqahRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/scanner': {
+      id: '/tools/scanner'
+      path: '/scanner'
+      fullPath: '/tools/scanner'
+      preLoaderRoute: typeof ToolsScannerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/screenshot': {
       id: '/tools/screenshot'
       path: '/screenshot'
@@ -4325,6 +4402,7 @@ interface ToolsRouteChildren {
   ToolsAgeCalculatorRoute: typeof ToolsAgeCalculatorRoute
   ToolsAgeOfThingsRoute: typeof ToolsAgeOfThingsRoute
   ToolsAlphabetCipherRoute: typeof ToolsAlphabetCipherRoute
+  ToolsAnalyzeRoute: typeof ToolsAnalyzeRoute
   ToolsApiTesterRoute: typeof ToolsApiTesterRoute
   ToolsArabicKeyboardRoute: typeof ToolsArabicKeyboardRoute
   ToolsAsciiRoute: typeof ToolsAsciiRoute
@@ -4394,6 +4472,7 @@ interface ToolsRouteChildren {
   ToolsImageCompressRoute: typeof ToolsImageCompressRoute
   ToolsImageConvertRoute: typeof ToolsImageConvertRoute
   ToolsImagesToPdfRoute: typeof ToolsImagesToPdfRoute
+  ToolsInterviewRoute: typeof ToolsInterviewRoute
   ToolsInvoiceRoute: typeof ToolsInvoiceRoute
   ToolsInvoiceLookupRoute: typeof ToolsInvoiceLookupRoute
   ToolsIpRoute: typeof ToolsIpRoute
@@ -4449,6 +4528,7 @@ interface ToolsRouteChildren {
   ToolsRegexTesterRoute: typeof ToolsRegexTesterRoute
   ToolsRomanNumeralRoute: typeof ToolsRomanNumeralRoute
   ToolsSadaqahRoute: typeof ToolsSadaqahRoute
+  ToolsScannerRoute: typeof ToolsScannerRoute
   ToolsScreenshotRoute: typeof ToolsScreenshotRoute
   ToolsShortcutRoute: typeof ToolsShortcutRoute
   ToolsSipCalculatorRoute: typeof ToolsSipCalculatorRoute
@@ -4492,6 +4572,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsAgeCalculatorRoute: ToolsAgeCalculatorRoute,
   ToolsAgeOfThingsRoute: ToolsAgeOfThingsRoute,
   ToolsAlphabetCipherRoute: ToolsAlphabetCipherRoute,
+  ToolsAnalyzeRoute: ToolsAnalyzeRoute,
   ToolsApiTesterRoute: ToolsApiTesterRoute,
   ToolsArabicKeyboardRoute: ToolsArabicKeyboardRoute,
   ToolsAsciiRoute: ToolsAsciiRoute,
@@ -4561,6 +4642,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsImageCompressRoute: ToolsImageCompressRoute,
   ToolsImageConvertRoute: ToolsImageConvertRoute,
   ToolsImagesToPdfRoute: ToolsImagesToPdfRoute,
+  ToolsInterviewRoute: ToolsInterviewRoute,
   ToolsInvoiceRoute: ToolsInvoiceRoute,
   ToolsInvoiceLookupRoute: ToolsInvoiceLookupRoute,
   ToolsIpRoute: ToolsIpRoute,
@@ -4616,6 +4698,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsRegexTesterRoute: ToolsRegexTesterRoute,
   ToolsRomanNumeralRoute: ToolsRomanNumeralRoute,
   ToolsSadaqahRoute: ToolsSadaqahRoute,
+  ToolsScannerRoute: ToolsScannerRoute,
   ToolsScreenshotRoute: ToolsScreenshotRoute,
   ToolsShortcutRoute: ToolsShortcutRoute,
   ToolsSipCalculatorRoute: ToolsSipCalculatorRoute,
@@ -4672,6 +4755,7 @@ const rootRouteChildren: RootRouteChildren = {
   FindRoute: FindRoute,
   GlassRoute: GlassRoute,
   GlossaryRoute: GlossaryRoute,
+  GraphRoute: GraphRoute,
   HunyuanRoute: HunyuanRoute,
   JournalRoute: JournalRoute,
   KeyboardRoute: KeyboardRoute,
