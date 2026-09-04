@@ -9,19 +9,12 @@ import {
   Star,
   History,
   Flame,
-  Radar as RadarIcon,
-  GraduationCap,
-  FileText,
-  Briefcase,
   Search as SearchIcon,
-  Wand2,
-  Dices,
-  Bot,
-  Film,
-  Youtube,
-  Globe,
-  BookOpen,
+  Terminal,
+  Package,
+  Zap,
   Map,
+  BookOpen,
 } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
@@ -50,30 +43,38 @@ import {
   topPersonalCommands,
 } from "@/lib/intelligence";
 import trendingToolsData from "@/../src/data/trending-tools.json";
+import { GENERATORS } from "@/lib/generators";
+import { ALL_ROADMAPS } from "@/lib/roadmaps";
+import { GLOSSARY_TOTAL } from "@/lib/glossary";
+import { toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
 
-/* ─────────────── Stats Bar (static — cannot fail) ─────────────── */
-/* ─────────────── Stats Bar ─────────────── */
+const HERO_TOOL = heroToolOfTheDay();
+
+/* ─────────────── Stats Bar (live counts, cannot fail) ─────────────── */
 function StatsBar() {
   const stats = [
-    { number: "5,635", label: "COMMANDS", color: "var(--primary)", icon: "📊" },
-    { number: "319", label: "RESOURCES", color: "var(--primary)", icon: "📦" },
-    { number: "25", label: "GENERATORS", color: "#d29922", icon: "⚡" },
-    { number: "20", label: "ROADMAPS", color: "#3fb950", icon: "🗺️" },
-    { number: "138", label: "GLOSSARY", color: "#a78bfa", icon: "📖" },
+    { number: VERIFIED_TOTAL.toLocaleString(), label: "COMMANDS", color: "var(--primary)", icon: Terminal },
+    { number: RESOURCE_TOTAL.toLocaleString(), label: "RESOURCES", color: "var(--primary)", icon: Package },
+    { number: GENERATORS.length.toLocaleString(), label: "GENERATORS", color: "#d29922", icon: Zap },
+    { number: ALL_ROADMAPS.length.toLocaleString(), label: "ROADMAPS", color: "#3fb950", icon: Map },
+    { number: GLOSSARY_TOTAL.toLocaleString(), label: "GLOSSARY", color: "#a78bfa", icon: BookOpen },
   ];
   return (
     <div className="mt-6 rounded-[10px] border border-sidebar-border bg-surface px-3 py-3 sm:px-6 sm:py-4">
       <div className="grid grid-cols-5 items-center gap-1 sm:flex sm:items-center sm:justify-between sm:gap-6">
-        {stats.map((stat, i) => (
-          <span key={stat.label} className="flex items-center gap-1 sm:gap-2.5 justify-center">
-            {i > 0 && <div className="hidden sm:block h-[24px] w-px bg-surface-elevated" />}
-            <span className="text-[14px] sm:text-[18px]">{stat.icon}</span>
-            <div className="text-center">
-              <span className="block text-[14px] sm:text-[22px] font-bold text-foreground leading-tight" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
-              <span className="block text-[7px] sm:text-[10px] uppercase tracking-[0.04em] sm:tracking-[0.06em] text-muted-foreground leading-tight">{stat.label}</span>
-            </div>
-          </span>
-        ))}
+        {stats.map((stat, i) => {
+          const Icon = stat.icon;
+          return (
+            <span key={stat.label} className="flex items-center gap-1 sm:gap-2.5 justify-center">
+              {i > 0 && <div className="hidden sm:block h-[24px] w-px bg-surface-elevated" />}
+              <Icon className="size-4 sm:size-[18px] shrink-0" style={{ color: stat.color }} aria-hidden />
+              <div className="text-center">
+                <span className="block text-[14px] sm:text-[22px] font-bold text-foreground leading-tight" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
+                <span className="block text-[7px] sm:text-[10px] uppercase tracking-[0.04em] sm:tracking-[0.06em] text-muted-foreground leading-tight">{stat.label}</span>
+              </div>
+            </span>
+          );
+        })}
       </div>
     </div>
   );
@@ -360,12 +361,6 @@ function HomePage() {
                   {chip.label}
                 </Link>
               ))}
-              <button
-                type="button"
-                className="flex items-center gap-1 rounded-full border border-sidebar-border bg-surface px-3.5 py-1.5 text-[12px] text-muted-foreground transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-foreground"
-              >
-                More ↓
-              </button>
             </div>
           </div>
 
@@ -442,105 +437,88 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ─── Tool of the Day (FREEIEO-inspired spotlight) ─── */}
+      {/* ─── Tool of the Day (rotates daily via date seed) ─── */}
       <section className="mt-8 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
         <div className="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div className="flex-1">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-primary">
               ⭐ Tool of the day
             </span>
-            <h2 className="mt-3 text-xl font-bold text-foreground sm:text-2xl">Meme Generator</h2>
-            <p className="mt-1.5 text-[14px] text-muted-foreground">
-              Create memes instantly with 50+ templates — no watermark, completely free. Download as PNG or share directly.
-            </p>
+            <h2 className="mt-3 text-xl font-bold text-foreground sm:text-2xl">{HERO_TOOL.name}</h2>
+            <p className="mt-1.5 text-[14px] text-muted-foreground">{HERO_TOOL.desc}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               <span className="rounded-full border border-border bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">100% Free</span>
-              <span className="rounded-full border border-border bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">No watermark</span>
               <span className="rounded-full border border-border bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">Browser only</span>
             </div>
             <Link
-              to="/tools/meme"
+              to={`/tools/${HERO_TOOL.slug}`}
               className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90"
             >
               Try it now <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
           <div className="hidden md:flex size-32 items-center justify-center rounded-2xl bg-surface-elevated text-6xl">
-            😂
+            {HERO_TOOL.icon}
           </div>
         </div>
       </section>
 
-      {/* ─── Explore more ─── */}
+      {/* ─── Explore more — 2×4 grid ─── */}
       <section className="mt-10">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
-            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free providers available", badge: "Free" },
-            { to: "/workflow", emoji: "🧩", title: "AI Workflows", desc: "Chain commands into one prompt", badge: "New" },
-            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge", badge: "Free" },
-            { to: "/tools", emoji: "🔧", title: "SlashKits", desc: "160+ free browser tools", badge: "Free" },
-            { to: "/ai-tools", emoji: "🧰", title: "AI Tools", desc: "100+ curated directory", badge: "New" },
-            { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", badge: "Hot" },
-            { to: "/generators", emoji: "⚡", title: "Generators", desc: "25 founder tools", badge: "Free" },
-            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: "20 step-by-step plans", badge: "Free" },
-            { to: "/glossary", emoji: "📖", title: "Glossary", desc: "560+ AI terms", badge: "Free" },
+            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free-tier AI chat — no subscription" },
+            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories, fresh daily" },
+            { to: "/live", emoji: "📡", title: "Live", desc: "Markets, prayer, cricket, weather" },
+            { to: "/deals", emoji: "🛍️", title: "Deals", desc: "Live deals from Indian communities" },
+            { to: "/generators", emoji: "⚡", title: "Generators", desc: `${GENERATORS.length} AI-powered tools` },
+            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: `${ALL_ROADMAPS.length} step-by-step guides` },
+            { to: "/glossary", emoji: "📖", title: "Glossary", desc: `${GLOSSARY_TOTAL} AI & startup terms` },
+            { to: "/discover", emoji: "🧭", title: "Discover", desc: `${RESOURCE_TOTAL}+ free tools and APIs` },
           ].map((card) => (
             <Link
               key={card.to}
               to={card.to}
-              className="group relative flex flex-col justify-end rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-border min-h-[130px]"
+              className="group flex flex-col items-center justify-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[120px]"
             >
-              {card.badge && (
-                <span className={`absolute top-2.5 right-2.5 rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                  card.badge === "Hot"
-                    ? "bg-[#f85149] text-white"
-                    : "bg-[rgba(45,212,191,0.12)] text-primary border border-[rgba(45,212,191,0.2)]"
-                }`}>
-                  {card.badge}
-                </span>
-              )}
-              <span className="text-[32px]">{card.emoji}</span>
-              <span className="mt-2 block text-[15px] font-bold text-foreground">{card.title}</span>
-              <span className="mt-0.5 block text-[12px] text-muted-foreground">{card.desc}</span>
+              <span className="text-[26px]">{card.emoji}</span>
+              <span className="mt-2 block text-[13px] font-semibold text-foreground">{card.title}</span>
+              <span className="mt-0.5 block max-w-full truncate text-[11px] text-muted-foreground">{card.desc}</span>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* ─── Popular Tools (GingerBook-style horizontal showcase) ─── */}
+      {/* ─── SlashKits preview (GingerBook-style showcase) ─── */}
       <Section
-        title="Popular tools"
-        hint="Most-used SlashKits — all free, all in your browser."
+        title="SlashKits"
+        hint="Free browser tools — nothing uploads, no account needed."
         action={
           <Link
             to="/tools"
             className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
           >
-            All tools <ArrowRight className="size-4" aria-hidden />
+            See all tools <ArrowRight className="size-4" aria-hidden />
           </Link>
         }
       >
-        <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none">
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
           {[
-            { slug: "meme", icon: "😂", name: "Meme Generator", desc: "50+ templates, no watermark" },
-            { slug: "qr-code", icon: "📱", name: "QR Generator", desc: "URLs, WiFi, text" },
             { slug: "image-compress", icon: "🖼️", name: "Image Compressor", desc: "Reduce size in-browser" },
-            { slug: "password-gen", icon: "🔐", name: "Password Generator", desc: "Cryptographic passwords" },
-            { slug: "json-formatter", icon: "🔧", name: "JSON Formatter", desc: "Pretty print, validate" },
-            { slug: "color-palette", icon: "🎨", name: "Color Palette", desc: "Generate palettes" },
-            { slug: "regex", icon: ".*", name: "Regex Tester", desc: "Live highlighting" },
+            { slug: "qr-code", icon: "📱", name: "QR Generator", desc: "URLs, WiFi, text" },
             { slug: "pomodoro", icon: "🍅", name: "Pomodoro Timer", desc: "25/5/15 focus" },
-            { slug: "csv-to-json", icon: "📊", name: "CSV ↔ JSON", desc: "Convert instantly" },
-            { slug: "image-convert", icon: "🔄", name: "Image Converter", desc: "JPG, PNG, WebP" },
+            { slug: "sip-calculator", icon: "💰", name: "SIP Calculator", desc: "Mutual fund returns" },
+            { slug: "typing-test", icon: "⌨️", name: "Typing Test", desc: "WPM & accuracy" },
+            { slug: "color-palette", icon: "🎨", name: "Color Palette", desc: "Generate palettes" },
           ].map((tool) => (
             <Link
               key={tool.slug}
               to={`/tools/${tool.slug}`}
-              className="flex shrink-0 flex-col items-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40 w-[120px] sm:w-[140px]"
+              className="group flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[110px]"
             >
-              <span className="text-[28px]">{tool.icon}</span>
+              <span className="text-[26px]">{tool.icon}</span>
               <span className="mt-1.5 block text-[12px] font-semibold text-foreground leading-tight">{tool.name}</span>
-              <span className="mt-0.5 block text-[10px] text-muted-foreground leading-tight">{tool.desc}</span>
+              <span className="mt-0.5 block max-w-full truncate text-[10px] text-muted-foreground leading-tight">{tool.desc}</span>
             </Link>
           ))}
         </div>
@@ -734,12 +712,6 @@ function HomePage() {
             );
           })}
         </div>
-        <Link
-          to="/tools"
-          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80"
-        >
-          See all 160+ tools <ArrowRight className="size-4" aria-hidden />
-        </Link>
       </Section>
 
       <Section title="Hubs" hint="Everything gathered for one kind of person.">
@@ -773,58 +745,71 @@ function HomePage() {
         </Link>
       </Section>
 
-      {/* ─── Stay in the loop ─── */}
-      <section className="mt-10 overflow-hidden rounded-[12px] border border-sidebar-border bg-surface">
-        <div className="flex flex-col gap-6 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
-          <div className="flex-1">
-            <h2 className="text-[24px] font-bold text-foreground">Stay in the loop</h2>
-            <p className="mt-2 text-[14px] text-muted-foreground">
-              Get the best AI commands, tools & resources straight to your inbox.
-            </p>
-            <div className="mt-4 flex gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex h-10 flex-1 rounded-[6px] border border-sidebar-border bg-background px-3 text-[13px] text-foreground outline-none placeholder:text-muted-foreground focus:border-primary"
-              />
-              <button
-                type="button"
-                className="h-10 rounded-[6px] bg-primary px-5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90"
-              >
-                Subscribe
-              </button>
-            </div>
-          </div>
-          <div className="hidden md:flex items-center justify-center">
-            <span style={{ fontSize: "80px", filter: "drop-shadow(0 0 30px rgba(45,212,191,0.3))", animation: "float 4s ease-in-out infinite" }}>📬</span>
-          </div>
-        </div>
-      </section>
-
       {/* ─── Footer ─── */}
-      <footer className="mt-12 border-t border-sidebar-border py-5">
-        <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <p className="text-[12px] text-muted-foreground">© {new Date().getFullYear()} SlashAI. All rights reserved.</p>
-          <div className="flex gap-4">
-            {([
-              { label: "About", to: "/about" },
-              { label: "Privacy", to: "/privacy" },
-              { label: "Terms", to: "/terms" },
-              { label: "Contact", to: "/contact" },
-            ] as const).map((link) => (
-              <Link key={link.label} to={link.to} className="text-[12px] text-muted-foreground hover:text-foreground transition-colors">
-                {link.label}
-              </Link>
-            ))}
-          </div>
-          <div className="flex gap-3">
-            <a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener" className="text-[18px] text-muted-foreground hover:text-foreground transition-colors">
-              🐙
-            </a>
-          </div>
+      <footer className="mt-14 border-t border-sidebar-border pt-8">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {[
+            {
+              title: "Commands & Tools",
+              links: [
+                { label: "Commands", to: "/explore" },
+                { label: "Generators", to: "/generators" },
+                { label: "Roadmaps", to: "/roadmaps" },
+                { label: "Glossary", to: "/glossary" },
+                { label: "SlashKits", to: "/tools" },
+              ],
+            },
+            {
+              title: "Discover & Live",
+              links: [
+                { label: "Discover", to: "/discover" },
+                { label: "Live Dashboard", to: "/live" },
+                { label: "Deals", to: "/deals" },
+                { label: "What's New", to: "/whats-new" },
+              ],
+            },
+            {
+              title: "Hubs & Collections",
+              links: [
+                { label: "All Hubs", to: "/hub" },
+                { label: "Student Hub", to: "/hub/students" },
+                { label: "Developer Hub", to: "/hub/developers" },
+                { label: "Islam Hub", to: "/hub/islam" },
+                { label: "Collections", to: "/collections" },
+                { label: "Favorites", to: "/favorites" },
+              ],
+            },
+            {
+              title: "Info",
+              links: [
+                { label: "About", to: "/about" },
+                { label: "Changelog", to: "/changelog" },
+                { label: "Journal", to: "/journal" },
+                { label: "Settings", to: "/me" },
+              ],
+            },
+          ].map((col) => (
+            <div key={col.title}>
+              <h3 className="text-[11px] font-bold uppercase tracking-[0.08em] text-muted-foreground">{col.title}</h3>
+              <ul className="mt-3 space-y-2">
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    <Link to={link.to} className="text-[13px] text-muted-foreground transition-colors hover:text-foreground">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-sidebar-border py-5 sm:flex-row">
+          <p className="text-[12px] text-muted-foreground">© {new Date().getFullYear()} SlashAI · Free forever · No account needed</p>
+          <a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener" aria-label="SlashAI on GitHub" className="text-[18px] text-muted-foreground transition-colors hover:text-foreground">
+            🐙
+          </a>
         </div>
       </footer>
-
 
     </AppShell>
   );

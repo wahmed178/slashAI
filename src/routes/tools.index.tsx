@@ -1,262 +1,21 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { X, Search } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
-
-const TOOL_SECTIONS = [
-  {
-    title: "Popular",
-    icon: "🔥",
-    tools: [
-      { slug: "smart-paste", name: "Smart Paste Bin", desc: "Detect text type and extract insights", icon: "📋" },
-      { slug: "image-compress", name: "Image Compressor", desc: "Reduce image file size in your browser", icon: "🖼️" },
-      { slug: "regex", name: "Regex Playground", desc: "Test regex with live highlighting", icon: ".*" },
-      { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test — WPM, accuracy, streaks", icon: "⌨️" },
-      { slug: "contract", name: "Contract Generator", desc: "Professional legal contracts as PDF", icon: "📄" },
-      { slug: "screenshot", name: "Screenshot to Text", desc: "Extract text from images with OCR", icon: "📸" },
-      { slug: "expense", name: "Trip Expense Splitter", desc: "Split expenses with minimum settlements", icon: "💸" },
-      { slug: "color-palette", name: "Color Palette Studio", desc: "Generate palettes from any color", icon: "🎨" },
-      { slug: "password", name: "Password Manager", desc: "Encrypted local password vault", icon: "🔐" },
-      { slug: "diff", name: "Text Diff Checker", desc: "Compare two texts — changes highlighted", icon: "🔀" },
-      { slug: "reading", name: "Speed Reading Trainer", desc: "RSVP flash-one-word technique", icon: "📖" },
-      { slug: "noise", name: "Background Noise", desc: "Synthesised ambient sounds, mix & timer", icon: "🔊" },
-      { slug: "qr-code", name: "QR Code Generator", desc: "Generate QR for URLs, WiFi, text", icon: "📱" },
-      { slug: "json-formatter", name: "JSON Formatter", desc: "Pretty print, minify, validate JSON", icon: "🔧" },
-      { slug: "password-gen", name: "Password Generator", desc: "Cryptographically secure random passwords", icon: "🔐" },
-    ],
-  },
-  {
-    title: "File & Document",
-    icon: "📄",
-    tools: [
-      { slug: "markdown-editor", name: "Markdown Editor", desc: "Split pane with live preview + toolbar", icon: "✍️" },
-      { slug: "markdown-to-html", name: "Markdown to HTML", desc: "Live preview with split pane editor", icon: "⌨️", noUpload: true },
-      { slug: "csv-to-json", name: "CSV to JSON", desc: "Convert CSV files or text to JSON and back", icon: "📊" },
-      { slug: "scanner", name: "Document Scanner", desc: "Scan pages with camera, enhance & export PDF", icon: "📷" },
-      { slug: "html-to-pdf", name: "HTML to PDF", desc: "Paste HTML, download as PDF", icon: "🌐" },
-      { slug: "images-to-pdf", name: "Images to PDF", desc: "Combine multiple images into one PDF", icon: "📕" },
-      { slug: "certificate", name: "Certificate Generator", desc: "Create beautiful certificates in seconds", icon: "🏆" },
-      { slug: "table", name: "Table Maker", desc: "Create tables, export as MD/HTML/CSV/JSON", icon: "📊" },
-      { slug: "meta", name: "SEO Meta Tags", desc: "OG, Twitter Card, Schema.org tags", icon: "🔍" },
-      { slug: "json-formatter", name: "JSON Formatter", desc: "Pretty print, minify, validate JSON", icon: "🔧" },
-      { slug: "whitespace", name: "Whitespace Remover", desc: "Clean text: spaces, tabs, line breaks", icon: "🧹" },
-      { slug: "url-encoder", name: "URL Encoder/Decoder", desc: "Encode and decode URLs", icon: "🔗" },
-    ],
-  },
-  {
-    title: "Image & Media",
-    icon: "🖼️",
-    tools: [
-      { slug: "image-compress", name: "Image Compressor", desc: "Reduce image file size in your browser", icon: "🖼️", noUpload: true },
-      { slug: "image-convert", name: "Image Converter", desc: "Convert between JPG, PNG, WebP formats", icon: "🔄", noUpload: true },
-      { slug: "watermark", name: "Image Watermark", desc: "Add text watermarks to images locally", icon: "🎨" },
-      { slug: "thumbnail", name: "YouTube Thumbnail Checker", desc: "Preview thumbnails in 5 YouTube contexts", icon: "🎬" },
-      { slug: "aspect", name: "Aspect Ratio Calculator", desc: "Width, height, ratio — get the third", icon: "📐" },
-      { slug: "gradient", name: "CSS Gradient Generator", desc: "Pick colors, copy as CSS/Tailwind", icon: "🌈" },
-      { slug: "font", name: "Font Pairing Studio", desc: "50+ Google Font combos, copy CSS", icon: "🔤" },
-      { slug: "color-picker", name: "Color Picker & Converter", desc: "HEX/RGB/HSL, contrast check, palettes", icon: "🎨" },
-      { slug: "color-contrast", name: "WCAG Contrast Checker", desc: "Accessibility contrast ratio checker", icon: "♿" },
-    ],
-  },
-  {
-    title: "Calculators & Finance",
-    icon: "🧮",
-    tools: [
-      { slug: "sip-calculator", name: "SIP Calculator", desc: "Mutual fund SIP returns with donut chart", icon: "💰" },
-      { slug: "emi-calculator", name: "EMI Calculator", desc: "Loan EMI with interest breakdown", icon: "🏦" },
-      { slug: "gst-calculator", name: "GST Calculator", desc: "Add or remove Indian GST with CGST/SGST", icon: "💵" },
-      { slug: "bmi-calculator", name: "BMI Calculator", desc: "Body mass index with health category", icon: "⚕️" },
-      { slug: "percentage", name: "Percentage Calculator", desc: "3 modes: of, what %, increase/decrease", icon: "Σ" },
-      { slug: "age-calculator", name: "Age Calculator", desc: "Exact age, zodiac, birthday countdown", icon: "🕰️" },
-      { slug: "upi", name: "UPI Link Generator", desc: "Generate UPI payment links + QR codes", icon: "💳" },
-      { slug: "budget", name: "Budget Tracker", desc: "Monthly income vs expenses — Indian categories", icon: "📈" },
-      { slug: "kharch", name: "Urdu/Hindi Budget", desc: "Bilingual expense tracker with Indian categories", icon: "💴" },
-      { slug: "currency-history", name: "Currency Rate History", desc: "Exchange rate charts (Frankfurter API)", icon: "💱" },
-      { slug: "size", name: "File Size Calculator", desc: "Convert units, download times, comparisons", icon: "📐" },
-      { slug: "unit-converter", name: "Unit Converter", desc: "Temp, length, weight, area, volume, speed", icon: "📐" },
-      { slug: "tip-calculator", name: "Tip Calculator", desc: "Split bills and calculate tips", icon: "💰" },
-    ],
-  },
-  {
-    title: "Developer",
-    icon: "💻",
-    tools: [
-      { slug: "regex", name: "Regex Playground", desc: "Test regex with live highlighting", icon: ".*" },
-      { slug: "diff", name: "Text Diff Checker", desc: "Compare two texts — changes highlighted", icon: "🔀" },
-      { slug: "password", name: "Password Manager", desc: "Encrypted local password vault", icon: "🔐" },
-      { slug: "ascii", name: "ASCII Art Generator", desc: "Convert text to block ASCII art", icon: "█" },
-      { slug: "cron", name: "Cron Explainer", desc: "Cron expressions ↔ plain English", icon: "⏱️" },
-      { slug: "base64", name: "Encoders & Decoders", desc: "Base64, URL, HTML, JWT, SHA-256", icon: "🔧" },
-      { slug: "readability", name: "Readability Analyser", desc: "Flesch score, grade level, passive voice", icon: "📖" },
-      { slug: "analyze", name: "Website Analyser", desc: "Speed, security, SEO & tech audit of any site", icon: "🔍" },
-      { slug: "ip", name: "Network Info Tool", desc: "Your IP, location, ISP, and IP lookup", icon: "🌐" },
-      { slug: "equation", name: "Math Equation Renderer", desc: "LaTeX → beautiful equations via KaTeX", icon: "🔢" },
-      { slug: "code-screenshot", name: "Code Screenshot Maker", desc: "Turn code into beautiful shareable images", icon: "📸" },
-      { slug: "api-tester", name: "API Tester", desc: "Mini Postman — test REST APIs from browser", icon: "🔌" },
-      { slug: "timestamp", name: "Timestamp Converter", desc: "Unix timestamp ↔ human readable", icon: "⏱️" },
-      { slug: "binary-calculator", name: "Binary Calculator", desc: "Binary, hex, octal, decimal conversions", icon: "💻" },
-      { slug: "regex-tester", name: "Regex Tester", desc: "Test regex with live highlighting", icon: "🔍" },
-      { slug: "string-hash", name: "Hash Generator", desc: "MD5, SHA-1, SHA-256 hash strings", icon: "🔢" },
-      { slug: "http-status", name: "HTTP Status Codes", desc: "Reference for all HTTP status codes", icon: "🌐" },
-      { slug: "unicode-lookup", name: "Unicode Lookup", desc: "Find Unicode characters by name", icon: "🔤" },
-      { slug: "html-entity", name: "HTML Entity Encoder", desc: "Encode/decode HTML entities", icon: "🏷️" },
-    ],
-  },
-  {
-    title: "Writing & Business",
-    icon: "✍️",
-    tools: [
-      { slug: "contract", name: "Contract Generator", desc: "Professional legal contracts as PDF", icon: "📄" },
-      { slug: "meeting", name: "Meeting Notes Formatter", desc: "Paste messy notes → get decisions & actions", icon: "📋" },
-      { slug: "standup", name: "Standup Generator", desc: "Daily standup in Slack/bullet/email format", icon: "📝" },
-      { slug: "cv", name: "ATS Resume Builder", desc: "ATS-optimised resume with PDF download", icon: "📃" },
-      { slug: "bio", name: "Bio Generator", desc: "Twitter/LinkedIn/Website/Conference bios", icon: "✍️" },
-      { slug: "notes", name: "Quick Notes", desc: "Distraction-free notepad with autosave", icon: "📝" },
-      { slug: "lorem", name: "Content Generator", desc: "Random Indian names, addresses, prices", icon: "📋" },
-      { slug: "changelog-maker", name: "Changelog Generator", desc: "Markdown/HTML/text/JSON release notes", icon: "📝" },
-      { slug: "pitch", name: "Elevator Pitch Builder", desc: "60-second pitch with timer & read-aloud", icon: "🎤" },
-      { slug: "thread-maker", name: "Thread Formatter", desc: "Auto-split into Twitter/X or LinkedIn posts", icon: "🧵" },
-      { slug: "spelling", name: "Spelling Checker", desc: "Offline spell check — common mistakes", icon: "✍️" },
-      { slug: "text-case", name: "Text Case Converter", desc: "UPPER, lower, camelCase, snake_case, etc.", icon: "🔄" },
-      { slug: "text-stats", name: "Text Statistics", desc: "Word count, reading time, char count", icon: "📊" },
-      { slug: "speech-to-text", name: "Speech to Text", desc: "Real-time speech transcription", icon: "🎤" },
-      { slug: "text-to-speech", name: "Text to Speech", desc: "Convert text to spoken audio", icon: "🔊" },
-      { slug: "interview", name: "Mock Interview", desc: "Practice with real questions + instant feedback", icon: "🎤" },
-      { slug: "story", name: "Story Writing Kit", desc: "Characters, plot planner & writing prompts", icon: "📖" },
-    ],
-  },
-  {
-    title: "Time & Focus",
-    icon: "⏱️",
-    tools: [
-      { slug: "world-clock", name: "World Clock", desc: "Live time in 12+ cities simultaneously", icon: "🌍" },
-      { slug: "pomodoro", name: "Pomodoro Timer", desc: "25/5/15 productivity timer with chime", icon: "🍅" },
-      { slug: "countdown", name: "Countdown Timer", desc: "Save multiple event countdowns", icon: "⏰" },
-      { slug: "multi-timer", name: "Multi Timer", desc: "Run multiple countdown timers", icon: "⏲️" },
-      { slug: "focus", name: "Deep Work Mode", desc: "Pomodoro + ambient sounds + fullscreen", icon: "🎯" },
-      { slug: "focus-screen", name: "Focus Screen", desc: "Time, prayer, quote & weather overlay", icon: "✨" },
-      { slug: "flip-clock", name: "Flip Clock", desc: "Full-screen retro flip clock", icon: "⏲️" },
-      { slug: "habits", name: "Habit Tracker", desc: "GitHub-style contribution grid", icon: "📊" },
-      { slug: "habit-stack", name: "Habit Stacking Planner", desc: "Atomic Habits routine builder", icon: "📋" },
-      { slug: "stopwatch", name: "Stopwatch & Lap Timer", desc: "Precision stopwatch with lap times", icon: "⏱️" },
-      { slug: "timezone-converter", name: "Timezone Converter", desc: "Convert times between timezones", icon: "🌍" },
-    ],
-  },
-  {
-    title: "Screens & Ambient",
-    icon: "✨",
-    tools: [
-      { slug: "rain-screen", name: "Rain Screen", desc: "Animated rain canvas screensaver", icon: "🌧️" },
-      { slug: "starfield", name: "Starfield", desc: "Warp speed stars screensaver", icon: "⭐" },
-      { slug: "new-tab", name: "New Tab Screen", desc: "Beautiful homepage / new tab replacement", icon: "🏠" },
-      { slug: "quote-screen", name: "Quote of the Day", desc: "Inspirational quotes with daily refresh", icon: "📝" },
-      { slug: "one-liner", name: "OneLiner Quotes", desc: "500+ aesthetic quotes. Copy or download as PNG.", icon: "✨" },
-      { slug: "svg-preview", name: "SVG Previewer", desc: "Preview and edit SVG code", icon: "🖼️" },
-      { slug: "code-beautifier", name: "Code Beautifier", desc: "Format HTML/CSS/JS code", icon: "✨" },
-      { slug: "html-preview", name: "HTML Previewer", desc: "Preview HTML code in real-time", icon: "🌐" },
-      { slug: "css-playground", name: "CSS Playground", desc: "Live CSS editor with preview", icon: "🎨" },
-      { slug: "js-playground", name: "JS Playground", desc: "Run JavaScript in the browser", icon: "⚡" },
-      { slug: "meme", name: "Meme Generator", desc: "Create memes instantly — no watermark", icon: "😂" },
-      { slug: "sticker", name: "WhatsApp Sticker Maker", desc: "Turn any image into a 512×512 sticker", icon: "🎭" },
-    ],
-  },
-  {
-    title: "Social & Creator",
-    icon: "🔗",
-    tools: [
-      { slug: "linktree", name: "Link in Bio Builder", desc: "Create personal link page, download as HTML", icon: "🔗" },
-      { slug: "poll", name: "Instant Poll Creator", desc: "Create polls, share links, see results", icon: "📊" },
-      { slug: "namecard", name: "Digital Business Card", desc: "Create and share a digital card", icon: "💼" },
-      { slug: "emoji", name: "Emoji Picker", desc: "Search 3,600+ emojis, recently used", icon: "😀" },
-      { slug: "vcard-gen", name: "vCard Generator", desc: "Create vCard files for contacts", icon: "📇" },
-      { slug: "wifi-qr", name: "WiFi QR Generator", desc: "Generate WiFi share QR codes", icon: "📶" },
-      { slug: "quote-maker", name: "Quote Card Maker", desc: "Design quote cards with fonts, backgrounds & templates", icon: "💬" },
-    ],
-  },
-  {
-    title: "Lifestyle",
-    icon: "🌿",
-    tools: [
-      { slug: "plant", name: "Plant Care Tracker", desc: "Track watering schedules for plants", icon: "🌱" },
-      { slug: "gift", name: "Gift Idea Generator", desc: "Curated gifts by recipient & budget", icon: "🎁" },
-      { slug: "flashcard-maker", name: "Flashcard Maker", desc: "Create decks, study with spaced repetition", icon: "🧠" },
-      { slug: "reading-list", name: "Book Tracker", desc: "Private reading list with ratings & export", icon: "📚" },
-      { slug: "age-of-things", name: "How Old Is Everything?", desc: "Fun age comparisons for 30+ things", icon: "⏳" },
-      { slug: "mind-map", name: "Mind Map Builder", desc: "Visual SVG mind map with drag & keyboard", icon: "🧠" },
-      { slug: "dice", name: "Dice Roller", desc: "Roll D4-D100 for tabletop games", icon: "🎲" },
-      { slug: "coin-flip", name: "Coin Flipper", desc: "Virtual coin flip with history", icon: "🪙" },
-      { slug: "random-number", name: "Random Number Generator", desc: "Generate numbers in any range", icon: "🔢" },
-      { slug: "roman-numeral", name: "Roman Numeral Converter", desc: "Numbers ↔ Roman numerals", icon: "🏛️" },
-      { slug: "mood-tracker", name: "Mood Tracker", desc: "Track daily mood with journal entries", icon: "😊" },
-      { slug: "gratitude-journal", name: "Gratitude Journal", desc: "Daily gratitude entries with streak", icon: "🙏" },
-      { slug: "daily-planner", name: "Daily Planner", desc: "Plan your day with time blocks", icon: "📋" },
-      { slug: "calorie-calc", name: "Calorie Calculator", desc: "Calculate daily calorie needs", icon: "🔥" },
-      { slug: "water-tracker", name: "Water Intake Calculator", desc: "Calculate daily water intake", icon: "💧" },
-      { slug: "sleep-calc", name: "Sleep Calculator", desc: "Optimal bedtime/waketime calculator", icon: "😴" },
-      { slug: "heart-rate", name: "Heart Rate Zones", desc: "Calculate target heart rate zones", icon: "❤️" },
-      { slug: "ideal-weight", name: "Ideal Body Weight", desc: "Calculate ideal weight for height", icon: "⚖️" },
-    ],
-  },
-  {
-    title: "Developer Utilities",
-    icon: "🔧",
-    tools: [
-      { slug: "shortcut", name: "Keyboard Shortcuts", desc: "VS Code, Chrome, Figma, Slack, Mac & more", icon: "⌨️" },
-      { slug: "fake-email", name: "Temp Email Generator", desc: "Disposable email with real-time inbox", icon: "📧" },
-      { slug: "json-tree", name: "JSON Tree Viewer", desc: "Visualize JSON as expandable tree", icon: "🌳" },
-      { slug: "markdown-html2", name: "Markdown to HTML", desc: "Convert markdown to styled HTML", icon: "📝" },
-      { slug: "diff-viewer", name: "Side-by-Side Diff", desc: "Compare two texts visually", icon: "🔀" },
-    ],
-  },
-  {
-    title: "Islamic & South Asia",
-    icon: "🌙",
-    tools: [
-      { slug: "muhurrat", name: "Islamic Date Finder", desc: "Hijri dates, events, Ramadan info", icon: "🌙" },
-      { slug: "name", name: "Islamic Baby Names", desc: "50+ curated names with meanings", icon: "🕌" },
-      { slug: "dua-maker", name: "Personal Dua List", desc: "Track duas, mark answered, reading mode", icon: "🤲" },
-      { slug: "tasbeeh", name: "Digital Tasbeeh", desc: "Tap/space to count, vibration, preloaded dhikr", icon: "📿" },
-      { slug: "hijri", name: "Hijri Calendar", desc: "Interactive monthly calendar with events", icon: "🌙" },
-      { slug: "prayer-schedule", name: "Prayer Timetable", desc: "Full month schedule + CSV export", icon: "🕌" },
-      { slug: "sadaqah", name: "Charity Tracker", desc: "Track sadaqah, zakat, fitrana donations", icon: "🤲" },
-      { slug: "quran-search", name: "Quran Word Search", desc: "Search across entire Quran (AlQuran.cloud)", icon: "📖" },
-      { slug: "qibla", name: "Qibla Compass", desc: "Find direction of Mecca with compass", icon: "🧭" },
-    ],
-    hubTools: [
-      { slug: "/hub/urdu", name: "Urdu Writers Hub", desc: "Poetry, resources, fonts for Urdu", icon: "🇵🇰" },
-      { slug: "/hub/arabic", name: "Arabic Learners Hub", desc: "Alphabet, courses, keyboard, phrases", icon: "🕌" },
-    ],
-  },
-  {
-    title: "Health & Fitness",
-    icon: "💪",
-    tools: [
-      { slug: "health-tracker", name: "Health Tracker", desc: "Track weight, BMI and health over time", icon: "💪" },
-      { slug: "calorie", name: "Calorie & Macro Tracker", desc: "Track daily calories and macros", icon: "🥗" },
-    ],
-  },
-  {
-    title: "Learning & Education",
-    icon: "🎓",
-    tools: [
-      { slug: "quiz-maker", name: "Quiz Builder", desc: "Build and share quizzes via URL", icon: "❓" },
-    ],
-  },
-  {
-    title: "Language Tools",
-    icon: "🌍",
-    tools: [
-      { slug: "arabic-keyboard", name: "Arabic Keyboard", desc: "Type in Arabic without an Arabic keyboard", icon: "⌨️" },
-    ],
-  },
-] as const;
+import {
+  TOOL_SECTIONS,
+  SLASH_TOOL_COUNT,
+  toolOfTheDay,
+  type SlashTool,
+} from "@/lib/slashkits";
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
     meta: [
-      { title: "SlashKits — 90+ free browser tools | SlashAI" },
+      { title: `SlashKits — ${SLASH_TOOL_COUNT} free browser tools | SlashAI` },
       {
         name: "description",
-        content: "SlashKits: 90+ free browser tools — image compress, calculators, noise, tasbeeh, timers, screensavers. No upload, no account.",
+        content: `SlashKits: ${SLASH_TOOL_COUNT} free browser tools — image compress, calculators, noise, tasbeeh, timers, screensavers. No upload, no account.`,
       },
     ],
   }),
@@ -267,13 +26,25 @@ const FILTERS = ["All", ...TOOL_SECTIONS.map((s) => s.title)] as const;
 
 type FilterType = (typeof FILTERS)[number];
 
+const DAY_TOOL = toolOfTheDay();
+
+function matches(tool: SlashTool, q: string) {
+  const text = `${tool.name} ${tool.desc}`.toLowerCase();
+  return q.split(/\s+/).every((word) => text.includes(word));
+}
+
 function ToolsIndex() {
   const [filter, setFilter] = useState<FilterType>("All");
   const [search, setSearch] = useState("");
+  const q = search.trim().toLowerCase();
 
   const visibleSections = filter === "All" ? TOOL_SECTIONS : TOOL_SECTIONS.filter((s) => s.title === filter);
 
-  const totalTools = TOOL_SECTIONS.reduce((acc, s) => acc + s.tools.length, 0);
+  // count matching tools across every visible section (or globally while searching)
+  const matchingTools = !q
+    ? visibleSections.flatMap((s) => s.tools)
+    : TOOL_SECTIONS.flatMap((s) => s.tools).filter((t) => matches(t, q));
+  const foundCount = q ? TOOL_SECTIONS.reduce((acc, s) => acc + [...s.tools, ...(s.hubTools ?? [])].filter((t) => matches(t, q)).length, 0) : matchingTools.length;
 
   return (
     <AppShell wide title="SlashKits">
@@ -282,27 +53,27 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {totalTools} browser-based tools. Nothing uploaded. All client-side.
+          {SLASH_TOOL_COUNT} browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
 
-      {/* Tool of the Day Spotlight */}
+      {/* Tool of the Day — rotates on a daily date seed */}
       <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">
         <div className="flex items-center gap-2">
           <span className="text-[14px]">⭐</span>
           <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Tool of the Day</span>
+          <span className="text-[10px] text-muted-foreground">· changes daily</span>
         </div>
         <div className="mt-2.5 flex items-start gap-4">
-          <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-surface text-3xl">😂</span>
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-surface text-3xl">{DAY_TOOL.icon}</span>
           <div className="flex-1">
-            <span className="block text-[16px] font-bold text-foreground">Meme Generator</span>
-            <span className="mt-0.5 block text-[13px] text-muted-foreground">Create memes instantly with 50+ templates — no watermark, completely free.</span>
+            <span className="block text-[16px] font-bold text-foreground">{DAY_TOOL.name}</span>
+            <span className="mt-0.5 block text-[13px] text-muted-foreground">{DAY_TOOL.desc}</span>
             <div className="mt-2 flex flex-wrap gap-1.5">
-              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">🔥 Trending</span>
-              <span className="rounded-full bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">No watermark</span>
-              <span className="rounded-full bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">50+ templates</span>
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">100% Free</span>
+              <span className="rounded-full bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">Browser only</span>
             </div>
-            <a href="/tools/meme" className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-[12px] font-bold text-background transition-colors hover:bg-primary/90">
+            <a href={`/tools/${DAY_TOOL.slug}`} className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-[12px] font-bold text-background transition-colors hover:bg-primary/90">
               Try it now →
             </a>
           </div>
@@ -310,14 +81,32 @@ function ToolsIndex() {
       </div>
 
       {/* Search */}
-      <div className="mt-4">
+      <div className="relative mt-4">
+        <Search className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search tools..."
-          className="h-10 w-full rounded-xl border border-border bg-surface px-4 text-sm focus:outline-none focus:border-primary/50"
+          placeholder="Search tools by name or use case…"
+          aria-label="Search tools"
+          className="h-11 w-full rounded-xl border border-border bg-surface pl-10 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
         />
+        {search && (
+          <button
+            type="button"
+            aria-label="Clear search"
+            onClick={() => setSearch("")}
+            className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md p-1 text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <X className="size-4" />
+          </button>
+        )}
       </div>
+      {q && (
+        <p className="mt-2 text-xs text-muted-foreground">
+          {foundCount === 1 ? "1 tool found" : `${foundCount} tools found`}
+          {filter !== "All" ? ` in ${filter}` : ""}
+        </p>
+      )}
 
       {/* Filter chips */}
       <div className="mt-3 flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
@@ -331,60 +120,78 @@ function ToolsIndex() {
                 : "border border-border bg-surface text-muted-foreground hover:border-primary/40 hover:text-foreground"
             }`}
           >
-            {f === "All" ? `All (${totalTools})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
+            {f === "All" ? `All (${SLASH_TOOL_COUNT})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
           </button>
         ))}
       </div>
 
-      {visibleSections.filter((section) => {
-        if (!search.trim()) return true;
-        const q = search.toLowerCase();
-        return section.tools.some((t) => t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
-      }).map((section, si) => (
-        <section key={section.title} id={section.title.toLowerCase().replace(/[^a-z]/g, "")} className={si === 0 ? "mt-4" : "mt-10"}>
-          <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-            <span className="text-lg">{section.icon}</span> {section.title}
-          </h2>
-          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {[...section.tools, ...((section as any).hubTools || [])].filter((tool: any) => {
-              if (!search.trim()) return true;
-              const q = search.toLowerCase();
-              return tool.name.toLowerCase().includes(q) || tool.desc.toLowerCase().includes(q);
-            }).map((tool: any) => (
-              <Link
-                key={tool.slug}
-                to={tool.slug.startsWith("/") ? tool.slug : `/tools/${tool.slug}`}
-                className="group flex items-start gap-3 rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
-              >
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[22px]">
-                  {tool.icon}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-2">
-                    <span className="text-[15px] font-semibold text-foreground group-hover:text-primary">
-                      {tool.name}
-                    </span>
-                    <span className="shrink-0 rounded-full border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.08)] px-1.5 py-0.5 text-[9px] font-semibold text-primary">
-                      Free
-                    </span>
-                    {"noUpload" in tool && tool.noUpload && (
-                      <span className="rounded border px-1.5 py-0.5 text-[9px] font-medium text-green" style={{ background: "rgba(63,185,80,0.08)", borderColor: "rgba(63,185,80,0.3)" }}>
-                        No upload
+      {/* No matches while searching */}
+      {q && foundCount === 0 && (
+        <div className="mt-8 rounded-xl border border-border bg-surface p-8 text-center">
+          <p className="text-sm font-semibold text-foreground">
+            No tools match “{search.trim()}”
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">Try: compress / calculate / timer / Islamic</p>
+          <button
+            type="button"
+            onClick={() => setSearch("")}
+            className="mt-4 inline-flex h-9 items-center rounded-lg border border-border bg-surface-elevated px-4 text-xs font-medium text-foreground transition-colors hover:border-primary/40"
+          >
+            Clear search
+          </button>
+        </div>
+      )}
+
+      {/* While searching, hide sections that have no matches; otherwise keep the normal category view */}
+      {visibleSections
+        .map((section) => {
+          const tools = q
+            ? [...section.tools, ...(section.hubTools || [])].filter((t) => matches(t, q))
+            : [...section.tools, ...(section.hubTools || [])];
+          return { section, tools };
+        })
+        .filter(({ tools }) => tools.length > 0)
+        .map(({ section, tools }, si) => (
+          <section key={section.title} id={section.title.toLowerCase().replace(/[^a-z]/g, "")} className={si === 0 ? "mt-4" : "mt-10"}>
+            <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              <span className="text-lg">{section.icon}</span> {section.title}
+            </h2>
+            <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+              {tools.map((tool) => (
+                <Link
+                  key={tool.slug}
+                  to={tool.slug.startsWith("/") ? tool.slug : `/tools/${tool.slug}`}
+                  className="group flex items-start gap-3 rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+                >
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[22px]">
+                    {tool.icon}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center gap-2">
+                      <span className="text-[15px] font-semibold text-foreground group-hover:text-primary">
+                        {tool.name}
                       </span>
-                    )}
+                      <span className="shrink-0 rounded-full border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.08)] px-1.5 py-0.5 text-[9px] font-semibold text-primary">
+                        Free
+                      </span>
+                      {tool.noUpload && (
+                        <span className="rounded border px-1.5 py-0.5 text-[9px] font-medium text-green" style={{ background: "rgba(63,185,80,0.08)", borderColor: "rgba(63,185,80,0.3)" }}>
+                          No upload
+                        </span>
+                      )}
+                    </span>
+                    <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">
+                      {tool.desc}
+                    </span>
                   </span>
-                  <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">
-                    {tool.desc}
+                  <span className="mt-1 shrink-0 text-[13px] text-muted-foreground transition-colors group-hover:text-primary">
+                    →
                   </span>
-                </span>
-                <span className="mt-1 shrink-0 text-[13px] text-muted-foreground transition-colors group-hover:text-primary">
-                  →
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ))}
+                </Link>
+              ))}
+            </div>
+          </section>
+        ))}
     </AppShell>
   );
 }

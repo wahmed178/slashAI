@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Home,
@@ -40,6 +40,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import { useLibrary } from "@/hooks/use-library";
+import { getSlashTool } from "@/lib/slashkits";
 import { SearchBox } from "./SearchBox";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
@@ -64,7 +65,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/glossary", label: "Glossary", icon: BookOpen },
   { to: "/collections", label: "Collections", icon: Layers },
   { to: "/deals", label: "Deals", icon: Tag },
-  { to: "/designs", label: "Designs", icon: Palette, badge: "Premium" },
+  { to: "/designs", label: "Designs", icon: Palette },
 ];
 
 const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: string }> = [
@@ -117,6 +118,109 @@ interface Props {
   wide?: boolean;
 }
 
+/* ─────────── Breadcrumbs — Home › Section › Page ─────────── */
+const HUB_NAMES: Record<string, string> = {
+  students: "Student Hub",
+  developers: "Developer Hub",
+  creators: "Creator Hub",
+  professionals: "Professional Hub",
+  founders: "Founders Hub",
+  india: "India Hub",
+  finance: "Finance Hub",
+  designers: "Designers Hub",
+  health: "Health Hub",
+  islam: "Islam Hub",
+  urdu: "Urdu Hub",
+  arabic: "Arabic Hub",
+};
+
+const TOP_LEVEL_NAMES: Record<string, { label: string; to?: string }> = {
+  generators: { label: "Generators", to: "/generators" },
+  roadmaps: { label: "Roadmaps", to: "/roadmaps" },
+  glossary: { label: "Glossary", to: "/glossary" },
+  quiz: { label: "Quiz", to: "/quiz" },
+  deals: { label: "Deals", to: "/deals" },
+  live: { label: "Live Dashboard", to: "/live" },
+  "ai-tools": { label: "AI Tools", to: "/ai-tools" },
+  workflow: { label: "AI Workflows", to: "/workflow" },
+};
+
+function humanize(slug: string) {
+  return slug
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((w) => (w ? w[0]!.toUpperCase() + w.slice(1) : w))
+    .join(" ");
+}
+
+interface Crumb {
+  label: string;
+  to?: string;
+}
+
+function breadcrumbsFor(pathname: string): Crumb[] | null {
+  const segs = pathname.split("/").filter(Boolean);
+  if (segs.length === 0) return null;
+  const first = segs[0]!;
+
+  if (first === "tools") {
+    const tool = segs[1] ? getSlashTool(segs[1]) : undefined;
+    if (!segs[1]) return [{ label: "Home", to: "/" }, { label: "SlashKits" }];
+    return [
+      { label: "Home", to: "/" },
+      { label: "SlashKits", to: "/tools" },
+      { label: tool?.name ?? humanize(segs[1]) },
+    ];
+  }
+  if (first === "hub") {
+    if (!segs[1]) return [{ label: "Home", to: "/" }, { label: "Hubs" }];
+    return [
+      { label: "Home", to: "/" },
+      { label: "Hubs", to: "/hub" },
+      { label: HUB_NAMES[segs[1]!] ?? humanize(segs[1]!) },
+    ];
+  }
+  if (first === "c" && segs[1]) {
+    return [
+      { label: "Home", to: "/" },
+      { label: "Commands", to: "/explore" },
+      { label: `/${humanize(segs[1])}` },
+    ];
+  }
+  if (first === "r") {
+    return [{ label: "Home", to: "/" }, { label: "Discover", to: "/discover" }, { label: "Resource" }];
+  }
+  const top = TOP_LEVEL_NAMES[first];
+  if (top && segs.length === 1) {
+    return [{ label: "Home", to: "/" }, { label: top.label }];
+  }
+  return null;
+}
+
+function Breadcrumbs({ pathname }: { pathname: string }) {
+  const crumbs = breadcrumbsFor(pathname);
+  if (!crumbs) return null;
+  return (
+    <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[12px] text-muted-foreground scrollbar-none">
+      {crumbs.map((c, i) => {
+        const last = i === crumbs.length - 1;
+        return (
+          <span key={`${c.label}-${i}`} className="flex items-center gap-1.5">
+            {i > 0 && <span aria-hidden>›</span>}
+            {c.to && !last ? (
+              <Link to={c.to} className="transition-colors hover:text-foreground">
+                {c.label}
+              </Link>
+            ) : (
+              <span className={last ? "text-foreground/80" : ""}>{c.label}</span>
+            )}
+          </span>
+        );
+      })}
+    </nav>
+  );
+}
+
 function BackButton({ to, label }: { to: string; label: string }) {
   const goBack = () => {
     // Use native browser history so the user always returns to whatever
@@ -141,11 +245,6 @@ function BackButton({ to, label }: { to: string; label: string }) {
 
 function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [isGlass, setIsGlass] = useState(false);
-
-  useEffect(() => {
-    try { setIsGlass(localStorage.getItem("slashai-glass-user") === "true"); } catch { /* ignore */ }
-  }, []);
 
   return (
     <div className="flex h-full flex-col">
@@ -211,30 +310,12 @@ function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
         })}
       </nav>
 
-      {/* Upgrade to Pro / Glass Member */}
-      <div className="mx-3 mb-3">
-        {isGlass ? (
-          <div className="rounded-[10px] border border-primary/30 bg-primary/[0.06] p-3.5">
-            <div className="flex items-center gap-2">
-              <span className="text-[16px]">✦</span>
-              <p className="text-[13px] font-bold text-primary">Glass Member</p>
-            </div>
-          </div>
-        ) : (
-          <Link to="/glass" onClick={onNavigate} className="block rounded-[10px] border border-primary/20 bg-gradient-to-br from-surface to-primary/5 p-3.5">
-            <span className="text-[20px]">👑</span>
-            <p className="mt-1.5 text-[13px] font-bold text-foreground">Upgrade to Pro</p>
-            <p className="mt-1 text-[11px] leading-tight text-muted-foreground">Unlock premium tools & more.</p>
-          </Link>
-        )}
-      </div>
-
       {/* User indicator */}
       <div className="flex items-center gap-2.5 border-t border-sidebar-border px-3 py-2.5">
         <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background">S</div>
         <div className="min-w-0 flex-1">
           <p className="truncate text-[13px] text-foreground">Slash User</p>
-          <p className="text-[11px] text-muted-foreground">{isGlass ? "✦ Glass Plan" : "Free Plan"}</p>
+          <p className="text-[11px] text-muted-foreground">No account · Local only</p>
         </div>
         <Link to="/me" onClick={onNavigate}>
           <Settings className="size-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors" />
@@ -343,6 +424,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
 
         <main className="flex-1 overflow-y-auto animate-slide-in-up">
           <div className="w-full px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-10">
+            <Breadcrumbs pathname={pathname} />
             {children}
           </div>
         </main>
@@ -361,7 +443,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             const p = item.to;
             if (p === "/hub") return pathname.startsWith("/hub");
             if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
-            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar");
+            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar") || pathname.startsWith("/deals");
             if (p === "/tools") return pathname.startsWith("/tools");
             return pathname.startsWith(p);
           })();

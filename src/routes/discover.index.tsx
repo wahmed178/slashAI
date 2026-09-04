@@ -9,6 +9,7 @@ import {
   resourcesBySection,
   RESOURCE_TOTAL,
   NEWEST_RESOURCES,
+  searchResources,
 } from "@/lib/resources";
 
 /* ──────────── category icon map ──────────── */
@@ -78,6 +79,12 @@ function DiscoverPage() {
     );
   }, [search]);
 
+  /* full catalogue matches while typing */
+  const results = useMemo(
+    () => (search.trim() ? searchResources(search.trim(), 40) : []),
+    [search],
+  );
+
   return (
     <AppShell wide hideHeaderSearch title="Discover">
       <header className="page-enter pt-2">
@@ -109,6 +116,26 @@ function DiscoverPage() {
           </button>
         )}
       </div>
+
+      {/* Live results while searching */}
+      {search.trim() && (
+        <section className="mt-5">
+          <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+            {results.length === 1 ? "1 resource found" : `${results.length} resources found`}
+          </h2>
+          {results.length > 0 ? (
+            <div className="mt-2 flex flex-col gap-2">
+              {results.map((r) => (
+                <ResourceCardEnhanced key={r.id} resource={r} />
+              ))}
+            </div>
+          ) : (
+            <p className="mt-3 text-sm text-muted-foreground">
+              No resources match “{search.trim()}”. Try a broader term like “AI”, “course” or “free”.
+            </p>
+          )}
+        </section>
+      )}
 
       {/* Category grid */}
       <section className="mt-6">

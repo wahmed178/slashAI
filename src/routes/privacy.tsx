@@ -45,8 +45,8 @@ function PrivacyPage() {
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
             <li>
               <strong className="text-foreground">Email address</strong> — only
-              if you join the Glass waitlist or contact us. Stored in your
-              browser's localStorage. We never send it to a server.
+              if you contact us. Stored in your browser's localStorage. We never
+              send it to a server.
             </li>
             <li>
               <strong className="text-foreground">Journal entries</strong> — your
@@ -96,9 +96,6 @@ function PrivacyPage() {
             </li>
             <li>
               To remember your preferences (theme, layout, city, accent colour).
-            </li>
-            <li>
-              To display your Glass membership status locally.
             </li>
             <li>
               We <strong className="text-foreground">never</strong> sell, share,

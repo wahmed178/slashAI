@@ -1,6 +1,25 @@
 {
-  "version": "2.17.0",
+  "version": "2.18.0",
   "entries": [
+    {
+      "version": "2.18.0",
+      "date": "2026-09-04",
+      "changes": [
+        "Removed the paid Glass tier app-wide — no upgrade prompts, no waitlist, every theme and design system is free",
+        "Homepage clean-up: dead email-subscribe section removed, non-working 'More' chip removed, stats bar uses live counts with unique icons",
+        "Homepage rebuilt with an 8-tool grid and a dedicated SlashKits preview section; footer rebuilt as 4 verified columns",
+        "SlashKits: duplicates removed (regex-tester, diff-viewer, markdown-html2, duplicate JSON Formatter), Developer Utilities merged into Developer, dev tools moved out of Screens",
+        "SlashKits: Health & Body (9 tools), Learning (6 tools) and Languages (5 tools) sections filled; clear category names",
+        "Tool of the Day rotates daily on the homepage and /tools",
+        "SlashKits search shows 'X tools found' and a helpful empty state",
+        "Settings: all themes free, data-clearing buttons with item counts, language 'planned' placeholder removed",
+        "Breadcrumbs added across SlashKits, hubs, commands, resources and top-level pages",
+        "About page rewritten with accurate live counts",
+        "Hub index now shows only real hubs with live resource counts (added Urdu and Arabic hubs)",
+        "Discover search returns full-catalogue matches with a count",
+        "Honest descriptions: Islamic baby names (50), temp-email note about Guerrilla Mail, age-of-things wording, fixed broken Urdu hub links"
+      ]
+    },
     {
       "version": "2.17.0",
       "date": "2026-09-04",

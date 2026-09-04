@@ -4,7 +4,25 @@ import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/fake-email")({
   component: TempEmailGenerator,
+  head: () => ({
+    meta: [
+      { title: "Temp Email Generator — SlashAI" },
+      {
+        name: "description",
+        content:
+          "Disposable email addresses with an inbox powered by Guerrilla Mail — no sign-up, nothing stored here.",
+      },
+    ],
+  }),
 });
+
+function GuerrillaNote() {
+  return (
+    <p className="mt-2 rounded-lg border border-border bg-surface px-3 py-2 text-[11px] text-muted-foreground">
+      Inbox powered by guerrillamail.com — may not always be available.
+    </p>
+  );
+}
 
 function TempEmailGenerator() {
   const [email, setEmail] = useState("");
@@ -54,8 +72,10 @@ function TempEmailGenerator() {
     <AppShell title="Temp Email">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">📧 Temporary Email</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Generate a disposable email. Incoming messages appear in real-time.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Generate a disposable email address and read incoming messages right here.</p>
       </header>
+
+      <GuerrillaNote />
 
       <div className="mx-auto max-w-2xl space-y-4">
         {!email ? (

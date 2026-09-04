@@ -1,10 +1,19 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import { useLibrary } from "@/hooks/use-library";
 import type { Theme } from "@/hooks/use-library";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/designs")({
+  head: () => ({
+    meta: [
+      { title: "Designs — SlashAI" },
+      {
+        name: "description",
+        content:
+          "Complete design systems for SlashAI — Linear, Notion, Vercel, Stripe, Supabase and Framer. Apply any one instantly, free.",
+      },
+    ],
+  }),
   component: DesignsPage,
 });
 
@@ -147,53 +156,17 @@ const DESIGNS: DesignCard[] = [
 
 function DesignsPage() {
   const { settings, updateSettings } = useLibrary();
-  const [isGlass, setIsGlass] = useState(false);
-
-  useEffect(() => {
-    try {
-      setIsGlass(localStorage.getItem("slashai-glass-user") === "true");
-    } catch {
-      setIsGlass(false);
-    }
-  }, []);
-
-  if (!isGlass) {
-    return (
-      <AppShell title="Designs">
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="mb-6 flex size-20 items-center justify-center rounded-2xl bg-surface text-4xl">
-            ✦
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">
-            Premium Designs
-          </h1>
-          <p className="mt-2 max-w-md text-sm text-muted-foreground">
-            Unlock 6 premium design systems — Linear, Notion, Vercel, Stripe,
-            Supabase, and Framer. Each transforms the entire SlashAI interface.
-          </p>
-          <Link
-            to="/glass"
-            className="mt-6 inline-flex h-10 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90"
-          >
-            ✦ Claim Glass Membership — Free
-          </Link>
-          <p className="mt-3 text-xs text-muted-foreground">
-            Free for the first 1,000 customers. Unlocks premium themes.
-          </p>
-        </div>
-      </AppShell>
-    );
-  }
 
   return (
     <AppShell title="Designs">
       <header className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-          ✦ Premium Designs
+          Designs
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Transform SlashAI with design systems from the world's best brands.
-          Click any design to apply it instantly.
+          Complete design systems inspired by the world's best products — Linear,
+          Notion, Vercel, Stripe, Supabase and Framer. Click any design to apply
+          it instantly. Every design is free.
         </p>
       </header>
 

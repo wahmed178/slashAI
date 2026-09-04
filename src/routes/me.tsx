@@ -83,6 +83,7 @@ function MePage() {
     stats,
     clearAllData,
     clearRecents,
+    clearFavorites,
     clearSearches,
     recentSearches,
     exportBackup,
@@ -93,18 +94,8 @@ function MePage() {
   const [editingPersona, setEditingPersona] = useState(false);
 
   const persona = getPersona(settings.persona);
-  const isGlassMember = (() => {
-    try {
-      return localStorage.getItem("slashai-glass-user") === "true";
-    } catch {
-      return false;
-    }
-  })();
-  const visibleThemes = THEMES.filter((t) => {
-    if (t.id === "glass") return isGlassMember;
-    if (["batman", "ocean", "moonlight", "warm"].includes(t.id)) return isGlassMember;
-    return true;
-  });
+  // every theme is free — nothing is gated
+  const visibleThemes = THEMES;
 
   const resolve = (ids: string[]) =>
     ids
@@ -424,38 +415,59 @@ function MePage() {
         />
       </Section>
 
-      {/* ── Local data ── */}
-      <Section title="Local data">
+      {/* ── Privacy & data ── */}
+      <Section title="Privacy & data">
+        <p className="mb-2 text-xs text-muted-foreground">
+          Everything lives in this browser. No account, no uploads, no tracking.
+        </p>
         <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
             size="sm"
             className="gap-1.5"
-            disabled={recents.length === 0}
-            onClick={clearRecents}
+            disabled={recentSearches.length === 0}
+            onClick={() => {
+              clearSearches();
+              toast.success("Search history cleared");
+            }}
           >
-            <Trash2 className="size-3.5" /> Clear recents
+            <Trash2 className="size-3.5" /> Clear search history ({recentSearches.length})
           </Button>
           <Button
             variant="outline"
             size="sm"
             className="gap-1.5"
-            disabled={recentSearches.length === 0}
-            onClick={clearSearches}
+            disabled={recents.length === 0}
+            onClick={() => {
+              clearRecents();
+              toast.success("Recently opened cleared");
+            }}
           >
-            <Trash2 className="size-3.5" /> Clear searches
+            <Trash2 className="size-3.5" /> Clear recently opened ({recents.length})
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5"
+            disabled={favorites.length === 0}
+            onClick={() => {
+              clearFavorites();
+              toast.success("Saved commands cleared");
+            }}
+          >
+            <Trash2 className="size-3.5" /> Clear saved commands ({favorites.length})
           </Button>
           <Button
             variant="outline"
             size="sm"
             className="gap-1.5 text-destructive"
             onClick={() => {
-              if (!confirm("Clear saved commands, history and settings on this device?")) return;
+              if (!confirm("Clear saved commands, history, journal and settings on this device? This cannot be undone.")) return;
               clearAllData();
               toast.success("All local data cleared");
             }}
           >
-            <Trash2 className="size-4" /> Clear all data
+            <Trash2 className="size-4" /> Clear everything
           </Button>
         </div>
       </Section>
@@ -478,14 +490,9 @@ function MePage() {
             </li>
           ))}
         </ul>
-      </Section>
-
-      {/* ── Language ── */}
-      <Section title="Language">
-        <p className="panel rounded-xl p-3 text-sm text-muted-foreground">
-          SlashAI is English-only today. Hindi and Urdu are planned — the commands themselves work
-          in any language: add "reply in Hindi" to any prompt.
-        </p>
+        <Button asChild variant="ghost" size="sm" className="mt-2">
+          <Link to="/keyboard">Full shortcut reference →</Link>
+        </Button>
       </Section>
 
       {/* ── Updates ── */}
@@ -534,6 +541,7 @@ function MePage() {
             ["Version", `v${APP_DETAILS.version}`],
             ["Commands", VERIFIED_TOTAL.toLocaleString()],
             ["Categories", String(CATEGORY_TREE.length)],
+            ["Model", "Free forever · No account · No tracking"],
             ["Created by", APP_DETAILS.creator],
           ].map(([k, v]) => (
             <div key={k} className="flex items-center justify-between gap-3 px-3 py-2">
@@ -543,6 +551,11 @@ function MePage() {
           ))}
         </dl>
         <p className="mt-2 text-xs text-muted-foreground">{APP_DETAILS.storage}</p>
+        <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+          <Link to="/changelog" className="text-primary hover:underline">Changelog</Link>
+          <a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">GitHub</a>
+          <Link to="/about" className="text-primary hover:underline">About</Link>
+        </div>
       </Section>
     </AppShell>
   );

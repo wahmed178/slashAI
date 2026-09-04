@@ -1,5 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { VERIFIED_TOTAL, CATEGORY_TREE } from "@/lib/commands";
+import { RESOURCE_TOTAL } from "@/lib/resources";
+import { GENERATORS } from "@/lib/generators";
+import { ALL_ROADMAPS } from "@/lib/roadmaps";
+import { GLOSSARY_TOTAL } from "@/lib/glossary";
+import { SLASH_TOOL_COUNT } from "@/lib/slashkits";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -8,7 +14,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "What SlashAI is, why it exists, and what's always free.",
+          "What SlashAI is, what you get free, how it works, and what it's built with.",
       },
     ],
   }),
@@ -19,28 +25,39 @@ function AboutPage() {
   return (
     <AppShell hideHeaderSearch title="About">
       <article className="mx-auto max-w-xl space-y-10 pt-2">
-        {/* Section 1: What SlashAI is */}
+        {/* Section 1: What it is */}
         <header>
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
             About SlashAI
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            SlashAI is a free, offline-first library of 5,635 AI commands
-            and 317+ curated resources — built for builders, students,
-            creators, and curious people everywhere. No account. No tracking.
-            Everything is stored on your device.
+            SlashAI is a free, offline-capable library of {VERIFIED_TOTAL.toLocaleString()} AI slash
+            commands and {RESOURCE_TOTAL} curated resources, built for builders, students, creators
+            and curious people everywhere.
+          </p>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            No account. No tracking. No payment.
+            Everything works. Everything is free.
           </p>
         </header>
 
-        {/* Section 2: What is always free */}
+        {/* Section 2: What you get — free, always */}
         <section>
           <h2 className="text-lg font-semibold text-foreground">
-            Always free
+            What you get — free, always
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Every command. Every resource. Every generator (within daily limits).
-            Every hub. Free forever, no credit card, no data collection.
-          </p>
+          <div className="mt-2 space-y-2 text-sm leading-relaxed text-muted-foreground">
+            <p>{VERIFIED_TOTAL.toLocaleString()} copy-ready AI slash commands</p>
+            <p>{RESOURCE_TOTAL} curated free resources — tools, APIs, channels</p>
+            <p>{SLASH_TOOL_COUNT} browser-based tools in SlashKits</p>
+            <p>{GENERATORS.length} AI-powered founder generators</p>
+            <p>{ALL_ROADMAPS.length} step-by-step founder roadmaps</p>
+            <p>{GLOSSARY_TOTAL}-term AI and startup glossary across {CATEGORY_TREE.length} categories</p>
+            <p>Live dashboard — markets, cricket, prayer, weather</p>
+            <p>Daily quiz across 24 categories</p>
+            <p>12 curated hubs — role-based and language-focused</p>
+            <p>Islam Hub — Quran, Hadith, prayer tools</p>
+          </div>
         </section>
 
         {/* Section 3: How it works */}
@@ -49,10 +66,11 @@ function AboutPage() {
             How it works
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Press <code className="rounded bg-surface-elevated px-1.5 py-0.5 font-mono text-[13px] text-foreground">/</code> anywhere to search commands. Use Discover to browse
-            free tools and APIs. Use Hubs for curated resources by role. Use
-            Generators for AI-powered founder tools. Everything works offline
-            after first load.
+            Press <code className="rounded bg-surface-elevated px-1.5 py-0.5 font-mono text-[13px] text-foreground">/</code> anywhere to search commands.
+            Use Discover to browse free tools, APIs and channels.
+            Use Hubs to find resources curated for your role.
+            Use SlashKits for {SLASH_TOOL_COUNT} browser tools — nothing uploads.
+            All your saved items stay on your device.
           </p>
         </section>
 
@@ -62,32 +80,14 @@ function AboutPage() {
             Built with
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            <a href="https://react.dev" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">React</a>{" "}·{" "}
-            <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">Vercel</a>{" "}·{" "}
-            <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">Claude API</a>{" "}·{" "}
-            <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">Open-Meteo</a>{" "}·{" "}
-            <a href="https://coingecko.com" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">CoinGecko</a>{" "}·{" "}
-            <a href="https://aladhan.com" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">Aladhan</a>{" "}·{" "}
-            <a href="https://quran.cloud" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">AlQuran.cloud</a>{" "}·{" "}
-            <a href="https://thesportsdb.com" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">TheSportsDB</a>{" "}·{" "}
-            <a href="https://news.ycombinator.com" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">Hacker News</a>{" "}·{" "}
-            <a href="https://api.nasa.gov" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">NASA APOD</a>{" "}·{" "}
-            <a href="https://earthquake.usgs.gov" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">USGS</a>{" "}·{" "}
-            <a href="https://openaq.org" target="_blank" rel="noopener noreferrer" className="text-primary transition-colors hover:text-primary/80">OpenAQ</a>
+            React · TanStack Start · Vercel · Inter font
+            Open-Meteo · CoinGecko · Aladhan · TheSportsDB
+            HackerNews · AlQuran.cloud · NASA APOD
+            Open Trivia Database · Frankfurter · OpenAQ
           </p>
         </section>
 
-        {/* Section 5: Changelog link */}
-        <section>
-          <Link
-            to="/changelog"
-            className="inline-flex items-center gap-1 text-sm font-medium text-primary transition-all hover:translate-x-[3px] hover:text-primary/80"
-          >
-            See what has changed →
-          </Link>
-        </section>
-
-        {/* Section 6: Suggest a resource */}
+        {/* Section 5: Suggest a resource */}
         <section>
           <a
             href="https://github.com/wahmed178/slashAI/issues"
@@ -98,11 +98,6 @@ function AboutPage() {
             Found something we missed? Open an issue on GitHub →
           </a>
         </section>
-
-        {/* Footer */}
-        <footer className="border-t border-border py-6 text-center text-xs text-muted-foreground/60">
-          Built with care by Waseem Ahmed · Hyderabad, India
-        </footer>
       </article>
     </AppShell>
   );

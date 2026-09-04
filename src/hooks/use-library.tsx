@@ -87,43 +87,43 @@ export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[
   },
   {
     id: "glass",
-    label: "✦ Glass",
-    hint: "Premium dark with violet tint",
+    label: "Glass",
+    hint: "Frosted violet dark",
     swatch: "oklch(0.78 0.16 178)",
   },
   {
     id: "linear",
-    label: "✦ Linear",
+    label: "Linear",
     hint: "Ultra-minimal dark, lavender accent",
     swatch: "oklch(0.62 0.15 275)",
   },
   {
     id: "notion",
-    label: "✦ Notion",
+    label: "Notion",
     hint: "Warm navy, purple accent",
     swatch: "oklch(0.58 0.18 280)",
   },
   {
     id: "vercel",
-    label: "✦ Vercel",
+    label: "Vercel",
     hint: "Clean light, black precision",
     swatch: "oklch(0.13 0.005 260)",
   },
   {
     id: "stripe",
-    label: "✦ Stripe",
+    label: "Stripe",
     hint: "White canvas, indigo primary",
     swatch: "oklch(0.5 0.2 280)",
   },
   {
     id: "supabase",
-    label: "✦ Supabase",
+    label: "Supabase",
     hint: "Clean white, emerald green",
     swatch: "oklch(0.78 0.18 155)",
   },
   {
     id: "framer",
-    label: "✦ Framer",
+    label: "Framer",
     hint: "Pure black canvas, white pills",
     swatch: "oklch(1 0 0)",
   },
@@ -261,6 +261,7 @@ interface LibraryValue {
   recordSearch: (q: string) => void;
   recordCopy: () => number;
   clearRecents: () => void;
+  clearFavorites: () => void;
   clearSearches: () => void;
   clearAllData: () => void;
   updateSettings: (patch: Partial<Settings>) => void;
@@ -388,6 +389,11 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const clearRecents = useCallback(() => {
     setRecents([]);
     localStorage.setItem(KEYS.recents, "[]");
+  }, []);
+
+  const clearFavorites = useCallback(() => {
+    setFavorites([]);
+    localStorage.setItem(KEYS.favorites, "[]");
   }, []);
 
   const clearSearches = useCallback(() => {
@@ -526,6 +532,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recordSearch,
       recordCopy,
       clearRecents,
+      clearFavorites,
       clearSearches,
       clearAllData,
       updateSettings,
@@ -552,6 +559,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       recordSearch,
       recordCopy,
       clearRecents,
+      clearFavorites,
       clearSearches,
       clearAllData,
       updateSettings,

@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.17.0";
+export const APP_VERSION = "2.18.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,24 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.18.0",
+    date: "2026-09-04",
+    title: "Clean-up release — paywalls removed, honest catalogue",
+    changes: [
+      "Removed the paid 'Glass' tier everywhere: no upgrade prompts, no waitlist, every theme and design is free",
+      "Homepage: removed the dead email-subscribe box and the non-working 'More' chip; real counts in the stats bar",
+      "Rebuilt the homepage footer into four verified link columns",
+      "SlashKits reorganisation: duplicates removed (regex, diff, markdown, JSON), developer tools grouped under Developer, thin categories filled (Health, Learning, Languages), sections renamed clearly",
+      "Tool of the Day now rotates daily on the homepage and SlashKits",
+      "SlashKits search shows a found-count and a helpful empty state",
+      "Settings: every theme is free, data-clear buttons show item counts, no more 'planned' placeholders",
+      "Breadcrumbs (Home › Section › Page) across tools, hubs, commands, resources and top-level pages",
+      "About page rewritten with accurate numbers; hub index shows only real hubs with live resource counts",
+      "Discover search now returns live matches with a count across the whole catalogue",
+      "Fixed broken Urdu-hub links and made tool descriptions honest (Islamic names count, temp-email inbox note, age-of-things)",
+    ],
+  },
   {
     version: "2.17.0",
     date: "2026-09-04",

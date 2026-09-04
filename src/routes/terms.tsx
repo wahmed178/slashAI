@@ -63,8 +63,8 @@ function TermsPage() {
         <Section title="3. Free Usage">
           <p className="mt-2 text-sm text-muted-foreground">
             SlashAI is free to use. No account is required. No credit card is
-            required. We may introduce optional premium features in the future
-            (the "Glass" tier), but the core Service will always remain free.
+            required. Every feature is free — no paid tier, no paywalls, no
+            trials.
           </p>
         </Section>
 

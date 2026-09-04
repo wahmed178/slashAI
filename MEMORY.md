@@ -100,6 +100,35 @@ Built on Lovable, deployed on Vercel.
   SW itself already precaches the whole catalog — no IndexedDB needed.
 - APP_VERSION/changelog bumped to 2.16.0 (app-meta.ts + changelog.json).
 
+## v2.18 (Sep 2026) — Clean-up release (no paywalls, honest catalogue)
+- Removed the paid "Glass" tier app-wide: /glass now redirects home, no
+  upgrade/Pro/premium prompts anywhere, sidebar/drawer user cards simplified to
+  "No account · Local only", every theme + /designs theme systems free
+  (designs.tsx gate removed, all themes visible in /me).
+- Homepage: deleted dead email-subscribe section + non-working "More ↓" chip;
+  stats bar uses live counts (VERIFIED_TOTAL / RESOURCE_TOTAL / GENERATORS /
+  ALL_ROADMAPS / GLOSSARY_TOTAL) with lucide icons; Explore grid = requested
+  8 cards; SlashKits preview section added; Collections orphan "See all tools"
+  link removed; footer rebuilt as 4 verified columns.
+- SlashKits (/tools): catalog moved to src/lib/slashkits.ts (single source of
+  truth). Removed duplicates (regex-tester, diff-viewer, markdown-html2,
+  JSON Formatter dupes), merged Developer Utilities into Developer, moved dev
+  tools out of Screens; filled Health & Body (9), Learning (6), Languages (5 +
+  Urdu/Arabic hub links); renamed sections; 152 tools. Tool of the Day rotates
+  daily (date seed). Search shows "X tools found" + empty state.
+- Settings (/me): no gated themes, clear buttons show counts (searches,
+  recents, saved commands via new clearFavorites, clear everything), removed
+  "Language — planned" placeholder, About shows "Free forever", added
+  Changelog/GitHub/About links + full /keyboard shortcut reference link.
+- Breadcrumbs auto-rendered in AppShell (Home › Section › Page) for /tools/*,
+  /hub/*, /c/*, /r/*, /generators, /roadmaps, /glossary, /quiz, /deals, /live.
+- About page rewritten with real live counts; hub index lists only real hubs
+  with runtime counts (incl. Urdu 8 + Arabic 4 hubs); Discover search shows
+  full-catalogue live matches + count.
+- Honesty: Islamic names desc (50 ✓ kept), temp-email page notes Guerrilla
+  Mail dependency, age-of-things desc reworded, Urdu hub broken URLs fixed.
+- APP_VERSION bumped to 2.18.0; changelog.json + app-meta CHANGELOG updated.
+
 ## v2.17 (Sep 2026) — AI Tools Directory (100+)
 - /ai-tools rebuilt as a full AI tools directory (src/lib/tools.ts now 107 tools, 16
   categories: General AI, Writing, Image, Video, Audio, Coding, Learning,

@@ -76,6 +76,7 @@ Every command carries a plain-language description, a "how to use" note, a worke
 
 | Feature | What it does |
 | --- | --- |
+| 🔓 **No paywalls, no account** | Every command, tool, theme and design system is free — nothing to upgrade, no subscription, no tracking |
 | 🔍 **Smart fuzzy search** | Matches command names, aliases, titles, descriptions, examples, tags, categories — with multi-word queries and typo tolerance |
 | 🗂 **Categories & subcategories** | Browse the full taxonomy from the sidebar or category chips |
 | 📄 **Command detail** | Description, how-to-use, example, tags, difficulty, and related commands |
