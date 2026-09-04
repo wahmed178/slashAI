@@ -28,6 +28,7 @@ import {
   Sun,
   Bell,
   Search as SearchIcon,
+  Cpu,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -51,6 +52,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
   { to: "/discover", label: "Discover", icon: Compass },
   { to: "/tools", label: "SlashKits", icon: Wrench },
+  { to: "/ai-tools", label: "AI Tools", icon: Cpu, badge: "100+" },
   { to: "/hub", label: "Hubs", icon: LayoutGrid },
   { to: "/assistant", label: "AI Assistant", icon: Bot },
   { to: "/hunyuan", label: "Hunyuan AI", icon: Zap },

@@ -100,6 +100,19 @@ Built on Lovable, deployed on Vercel.
   SW itself already precaches the whole catalog — no IndexedDB needed.
 - APP_VERSION/changelog bumped to 2.16.0 (app-meta.ts + changelog.json).
 
+## v2.17 (Sep 2026) — AI Tools Directory (100+)
+- /ai-tools rebuilt as a full AI tools directory (src/lib/tools.ts now 107 tools, 16
+  categories: General AI, Writing, Image, Video, Audio, Coding, Learning,
+  Productivity, Research, Design, Voice, Marketing, Data, Automation, 3D, Music).
+  Each tool: pricing (Free/Freemium/Paid/Open Source), freeTier, icon, tags,
+  trending/featured flags, and a `query` linking to matching commands on /search.
+- Page features: hero with live search, Tool of the Day spotlight, Featured +
+  Trending rows, category chips with counts, "Free first" sort, per-tool
+  Visit + Commands buttons.
+- AI Tools added to sidebar nav (DesktopSidebar + AppShell NAV_ITEMS, Cpu icon,
+  "100+" badge) and homepage Explore grid card.
+- APP_VERSION bumped to 2.17.0; changelog.json + app-meta CHANGELOG updated.
+
 ## v2.15 (Sep 2026) — Intelligence, voice, workflows
 - Command Intelligence Engine (src/lib/intelligence.ts, localStorage "slashai-intelligence"):
   tracks copy/open/save interactions (bounded log), session co-occurrence for related

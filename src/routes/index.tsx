@@ -479,6 +479,7 @@ function HomePage() {
             { to: "/workflow", emoji: "🧩", title: "AI Workflows", desc: "Chain commands into one prompt", badge: "New" },
             { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "Test your knowledge", badge: "Free" },
             { to: "/tools", emoji: "🔧", title: "SlashKits", desc: "160+ free browser tools", badge: "Free" },
+            { to: "/ai-tools", emoji: "🧰", title: "AI Tools", desc: "100+ curated directory", badge: "New" },
             { to: "/live", emoji: "📡", title: "Live", desc: "Markets & more", badge: "Hot" },
             { to: "/generators", emoji: "⚡", title: "Generators", desc: "25 founder tools", badge: "Free" },
             { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: "20 step-by-step plans", badge: "Free" },

@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.16.0";
+export const APP_VERSION = "2.17.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,18 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.17.0",
+    date: "2026-09-04",
+    title: "AI Tools Directory — 100+ curated tools",
+    changes: [
+      "Rebuilt /ai-tools as a full directory: 100+ curated AI tools across 16 categories (writing, image, video, audio, coding, design, voice, marketing, data, automation, 3D, music and more)",
+      "Every tool lists pricing (Free / Freemium / Paid / Open Source), free-tier limits, tags and a direct link to matching SlashAI commands",
+      "Search, category chips with counts, and 'Free first' sorting across the whole catalog",
+      "Featured + Trending rows and a Tool of the Day spotlight",
+      "AI Tools now lives in the sidebar navigation and on the homepage",
+    ],
+  },
   {
     version: "2.16.0",
     date: "2026-09-03",
