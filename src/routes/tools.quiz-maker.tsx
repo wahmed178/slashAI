@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/quiz-maker")({ component: QuizMaker });
+export const Route = createFileRoute("/tools/quiz-maker")({
+  head: () => ({
+    meta: [
+      { title: "Quiz Builder — SlashAI" },
+      { name: "description", content: "Build a quiz, share it as a link and let anyone play — everything runs in the browser for free." },
+    ],
+  }),
+  component: QuizMaker,
+});
 
 interface Question {
   text: string;

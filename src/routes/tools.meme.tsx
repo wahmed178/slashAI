@@ -1,7 +1,15 @@
 import { useState, useRef, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/meme")({ component: MemeGenerator });
+export const Route = createFileRoute("/tools/meme")({
+  head: () => ({
+    meta: [
+      { title: "Meme Generator — SlashAI" },
+      { name: "description", content: "Create memes in your browser with classic templates — caption, download as PNG, no watermark, nothing uploaded." },
+    ],
+  }),
+  component: MemeGenerator,
+});
 
 interface MemeTemplate {
   name: string;
@@ -11,26 +19,23 @@ interface MemeTemplate {
 }
 
 const templates: MemeTemplate[] = [
-  { name: "Drake Hotline", url: "https://i.imgflip.com/30b1gx.jpg", width: 500, height: 500 },
-  { name: "Distracted Boyfriend", url: "https://i.imgflip.com/1ur9b0.jpg", width: 600, height: 400 },
-  { name: "Two Buttons", url: "https://i.imgflip.com/1g8my4.jpg", width: 500, height: 500 },
-  { name: "Change My Mind", url: "https://i.imgflip.com/24y43o.jpg", width: 500, height: 500 },
-  { name: "Expanding Brain", url: "https://i.imgflip.com/1jwhww.jpg", width: 500, height: 500 },
-  { name: "Surprised Pikachu", url: "https://i.imgflip.com/30b1gx.jpg", width: 500, height: 500 },
-  { name: "This Is Fine", url: "https://i.imgflip.com/26am6d.jpg", width: 600, height: 400 },
-  { name: "Woman Yelling Cat", url: "https://i.imgflip.com/345v97.jpg", width: 600, height: 400 },
-  { name: "UNO Draw", url: "https://i.imgflip.com/3vzen3.jpg", width: 500, height: 500 },
-  { name: "Running Away Balloon", url: "https://i.imgflip.com/261o3j.jpg", width: 600, height: 400 },
-  { name: "Left Exit 12 Off Ramp", url: "https://i.imgflip.com/22bdq6.jpg", width: 600, height: 400 },
-  { name: "Roll Safe Think", url: "https://i.imgflip.com/1h7in3.jpg", width: 500, height: 500 },
-  { name: "Buff Doge vs Cheems", url: "https://i.imgflip.com/43a45p.jpg", width: 600, height: 400 },
-  { name: "Boardroom Meeting", url: "https://i.imgflip.com/4vz2k1.jpg", width: 500, height: 500 },
-  { name: "Bernie Sanders", url: "https://i.imgflip.com/48z2ig.jpg", width: 500, height: 500 },
-  { name: "Anakin Padme", url: "https://i.imgflip.com/4t0m60.jpg", width: 500, height: 500 },
-  { name: " expanding brain meme", url: "https://i.imgflip.com/1jwhww.jpg", width: 500, height: 500 },
-  { name: "Trade Offer", url: "https://i.imgflip.com/4x9xg0.jpg", width: 500, height: 500 },
-  { name: "My Brain After", url: "https://i.imgflip.com/46wfbm.jpg", width: 500, height: 500 },
-  { name: "Clown Putting Makeup", url: "https://i.imgflip.com/47waa6.jpg", width: 500, height: 500 },
+  { name: "Drake Hotline", url: "https://i.imgflip.com/30b1gx.jpg", width: 1200, height: 1200 },
+  { name: "Distracted Boyfriend", url: "https://i.imgflip.com/1ur9b0.jpg", width: 1200, height: 800 },
+  { name: "Two Buttons", url: "https://i.imgflip.com/1g8my4.jpg", width: 600, height: 908 },
+  { name: "Change My Mind", url: "https://i.imgflip.com/24y43o.jpg", width: 482, height: 361 },
+  { name: "Expanding Brain", url: "https://i.imgflip.com/1jwhww.jpg", width: 857, height: 1202 },
+  { name: "Surprised Pikachu", url: "https://i.imgflip.com/2kbn1e.jpg", width: 1893, height: 1893 },
+  { name: "This Is Fine", url: "https://i.imgflip.com/wxica.jpg", width: 580, height: 282 },
+  { name: "Woman Yelling Cat", url: "https://i.imgflip.com/345v97.jpg", width: 680, height: 438 },
+  { name: "UNO Draw 25", url: "https://i.imgflip.com/3lmzyx.jpg", width: 500, height: 494 },
+  { name: "Running Away Balloon", url: "https://i.imgflip.com/261o3j.jpg", width: 761, height: 1024 },
+  { name: "Left Exit 12 Off Ramp", url: "https://i.imgflip.com/22bdq6.jpg", width: 804, height: 767 },
+  { name: "Roll Safe Think", url: "https://i.imgflip.com/1h7in3.jpg", width: 702, height: 395 },
+  { name: "Buff Doge vs Cheems", url: "https://i.imgflip.com/43a45p.png", width: 937, height: 720 },
+  { name: "Boardroom Meeting", url: "https://i.imgflip.com/m78d.jpg", width: 500, height: 649 },
+  { name: "Bernie Sanders", url: "https://i.imgflip.com/3oevdk.jpg", width: 750, height: 750 },
+  { name: "Anakin Padme", url: "https://i.imgflip.com/5c7lwq.png", width: 768, height: 768 },
+  { name: "Trade Offer", url: "https://i.imgflip.com/54hjww.jpg", width: 607, height: 794 },
 ];
 
 const fonts = ["Impact", "Arial Black", "Comic Sans MS", "Courier New"];

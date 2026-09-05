@@ -1,7 +1,15 @@
 import { useState, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/arabic-keyboard")({ component: ArabicKeyboard });
+export const Route = createFileRoute("/tools/arabic-keyboard")({
+  head: () => ({
+    meta: [
+      { title: "Arabic Keyboard — SlashAI" },
+      { name: "description", content: "Type in Arabic on any device — virtual keyboard with copy, transliteration hints and instant paste." },
+    ],
+  }),
+  component: ArabicKeyboard,
+});
 
 const arabicLayout = [
   ["ض","ص","ث","ق","ف","غ","ع","ه","خ","ح","ج","ش"],

@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/story")({ component: StoryWritingKit });
+export const Route = createFileRoute("/tools/story")({
+  head: () => ({
+    meta: [
+      { title: "Story Writing Kit — SlashAI" },
+      { name: "description", content: "Plan characters, plots and settings with writing prompts — a private story studio that saves locally." },
+    ],
+  }),
+  component: StoryWritingKit,
+});
 
 const prompts: Record<string, string[]> = {
   "Romance": [

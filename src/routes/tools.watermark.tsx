@@ -11,7 +11,7 @@ type Position = "top-left" | "top-right" | "bottom-left" | "bottom-right" | "cen
 function WatermarkTool() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [text, setText] = useState("© 2026 SlashAI");
+  const [text, setText] = useState(`© ${new Date().getFullYear()} SlashAI`);
   const [position, setPosition] = useState<Position>("bottom-right");
   const [opacity, setOpacity] = useState(50);
   const [fontSize, setFontSize] = useState(24);

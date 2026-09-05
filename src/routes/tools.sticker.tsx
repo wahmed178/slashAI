@@ -1,7 +1,15 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/sticker")({ component: WhatsAppStickerMaker });
+export const Route = createFileRoute("/tools/sticker")({
+  head: () => ({
+    meta: [
+      { title: "WhatsApp Sticker Maker — SlashAI" },
+      { name: "description", content: "Turn any image into a 512×512 WhatsApp sticker right in your browser — crop, caption, border, download as PNG." },
+    ],
+  }),
+  component: WhatsAppStickerMaker,
+});
 
 function WhatsAppStickerMaker() {
   const [image, setImage] = useState<string | null>(null);

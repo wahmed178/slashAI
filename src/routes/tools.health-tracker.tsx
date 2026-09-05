@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/health-tracker")({ component: HealthTracker });
+export const Route = createFileRoute("/tools/health-tracker")({
+  head: () => ({
+    meta: [
+      { title: "Health Tracker — SlashAI" },
+      { name: "description", content: "Track weight, BMI and health stats over time — stored privately on your device, never uploaded." },
+    ],
+  }),
+  component: HealthTracker,
+});
 
 interface WeightEntry {
   id: string;

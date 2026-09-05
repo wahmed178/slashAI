@@ -142,7 +142,7 @@ function YourWeekDigest() {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: `SlashAI — find the right AI command in seconds` },
+      { title: "SlashAI — Find the Right AI Command in Seconds" },
       {
         name: "description",
         content: `A calm, searchable library of ${VERIFIED_TOTAL} AI slash commands. Search by what you want to accomplish, save favourites and work offline.`,

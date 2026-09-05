@@ -691,6 +691,11 @@
 }
 
 @layer base {
+  /* launch QA: prevent any accidental horizontal scroll on mobile */
+  html,
+  body {
+    overflow-x: hidden;
+  }
 
   * {
     border-color: var(--color-border);

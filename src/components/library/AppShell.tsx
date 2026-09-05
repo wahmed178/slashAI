@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Home,
@@ -349,6 +349,17 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { settings } = useLibrary();
+
+  // Every page must have a real browser-tab title. Pages that set `head()`
+  // meta manage their own <title>; this effect only fills the gaps (tools
+  // without head(), hubs, dynamic pages) so no route renders untitled.
+  useEffect(() => {
+    if (title) {
+      document.title = `${title} — SlashAI`;
+    } else {
+      document.title = "SlashAI — Free AI Commands, Tools & Resources";
+    }
+  }, [title, pathname]);
 
   return (
     <div className="flex min-h-screen w-full" style={{ background: "var(--background)" }}>

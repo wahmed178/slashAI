@@ -1,7 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/code-screenshot")({ component: CodeScreenshot });
+export const Route = createFileRoute("/tools/code-screenshot")({
+  head: () => ({
+    meta: [
+      { title: "Code Screenshot Maker — SlashAI" },
+      { name: "description", content: "Turn code into beautiful shareable images with themes, fonts and window controls — rendered entirely in your browser." },
+    ],
+  }),
+  component: CodeScreenshot,
+});
 
 const themes = [
   { name: "Dracula", bg: "#282a36", fg: "#f8f8f2", keyword: "#ff79c6", string: "#f1fa8c", comment: "#6272a4", number: "#bd93f9" },

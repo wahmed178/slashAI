@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/calorie")({ component: CalorieTracker });
+export const Route = createFileRoute("/tools/calorie")({
+  head: () => ({
+    meta: [
+      { title: "Calorie & Macro Tracker — SlashAI" },
+      { name: "description", content: "Track daily calories, protein, carbs and fat locally on your device — private, free, works offline." },
+    ],
+  }),
+  component: CalorieTracker,
+});
 
 const STORAGE_KEY = "slashai-calorie-log";
 const SETTINGS_KEY = "slashai-calorie-settings";

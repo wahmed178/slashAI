@@ -1,7 +1,15 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/certificate")({ component: CertificateGenerator });
+export const Route = createFileRoute("/tools/certificate")({
+  head: () => ({
+    meta: [
+      { title: "Certificate Generator — SlashAI" },
+      { name: "description", content: "Create printable certificates of completion, achievement and participation — classic, modern and Islamic templates, download as PNG or PDF." },
+    ],
+  }),
+  component: CertificateGenerator,
+});
 
 const templates = [
   { id: "classic", name: "Classic", bg: "#fffef7", text: "#1a1a1a", accent: "#d29922", border: "#d29922" },

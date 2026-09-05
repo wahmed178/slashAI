@@ -1,11 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
-export const Route = createFileRoute("/hub/urdu")({ component: UrduHub });
+export const Route = createFileRoute("/hub/urdu")({
+  head: () => ({
+    meta: [
+      { title: "Urdu Writers Hub — SlashAI" },
+      {
+        name: "description",
+        content:
+          "Free Urdu poetry, ghazals, dictionaries, fonts and learning resources — Rekhta, Aamozish, Nastaliq fonts and more in one calm hub.",
+      },
+    ],
+  }),
+  component: UrduHub,
+});
 
 const RESOURCES = [
   { name: "Rekhta", desc: "World's largest free Urdu poetry collection", url: "https://rekhta.org", emoji: "📖", category: "Poetry" },
-  { name: "Urdu Web Kosh", desc: "Online Urdu dictionary with word meanings", url: "https://urduwebkosh.com", emoji: "📕", category: "Dictionary" },
+  { name: "Urdu Word", desc: "Online Urdu-English dictionary with word meanings", url: "https://www.urduword.com", emoji: "📕", category: "Dictionary" },
   { name: "Google Noto Nastaliq", desc: "Free Urdu font — best for Nastaliq script", url: "https://fonts.google.com/noto/specimen/Noto+Nastaliq+Urdu", emoji: "🔤", category: "Fonts" },
   { name: "Google Input Tools — Urdu", desc: "Type Urdu in your browser without an Urdu keyboard", url: "https://www.google.com/inputtools/try/", emoji: "⌨️", category: "Tools" },
   { name: "Rekhta Aamozish", desc: "Learn the Urdu script and poetry online, free", url: "https://www.rekhta.org/aamozish", emoji: "🎓", category: "Learning" },

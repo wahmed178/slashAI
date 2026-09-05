@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/tools/qibla")({ component: QiblaCompass });
+export const Route = createFileRoute("/tools/qibla")({
+  head: () => ({
+    meta: [
+      { title: "Qibla Compass — SlashAI" },
+      { name: "description", content: "Find the direction of Mecca from anywhere using your device compass and location — free, private, no account." },
+    ],
+  }),
+  component: QiblaCompass,
+});
 
 const cities: Record<string, { lat: number; lng: number }> = {
   "Mecca": { lat: 21.4225, lng: 39.8262 },
