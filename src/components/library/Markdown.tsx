@@ -3,6 +3,7 @@
  * fenced code blocks, bold and paragraphs — enough for the spec format we ask
  * the model for, with no extra dependency.
  */
+import * as React from "react";
 
 function inline(text: string) {
   const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
@@ -23,9 +24,16 @@ function inline(text: string) {
   });
 }
 
-export function Markdown({ source }: { source: string }) {
+type Token =
+  | { type: "heading"; level: number; text: string }
+  | { type: "code"; code: string }
+  | { type: "list"; items: string[] }
+  | { type: "table"; header: string[]; rows: string[][] }
+  | { type: "paragraph"; text: string };
+
+function parseMarkdown(source: string): Token[] {
   const lines = source.split("\n");
-  const blocks: React.ReactNode[] = [];
+  const tokens: Token[] = [];
   let list: string[] = [];
   let code: string[] | null = null;
   let table: string[][] | null = null;
@@ -36,32 +44,7 @@ export function Markdown({ source }: { source: string }) {
       return;
     }
     const [header, ...rows] = table;
-    blocks.push(
-      <div key={`tbl-${blocks.length}`} className="overflow-x-auto">
-        <table className="w-full border-collapse text-left text-sm">
-          <thead>
-            <tr>
-              {(header ?? []).map((cell, i) => (
-                <th key={i} className="border-b border-border px-2 py-1.5 font-semibold text-foreground">
-                  {inline(cell)}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, r) => (
-              <tr key={r}>
-                {row.map((cell, i) => (
-                  <td key={i} className="border-b border-border/50 px-2 py-1.5 align-top text-muted-foreground">
-                    {inline(cell)}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>,
-    );
+    tokens.push({ type: "table", header: header ?? [], rows });
     table = null;
   };
 
@@ -74,16 +57,7 @@ export function Markdown({ source }: { source: string }) {
 
   const flushList = () => {
     if (!list.length) return;
-    blocks.push(
-      <ul
-        key={`ul-${blocks.length}`}
-        className="ml-4 list-disc space-y-1 text-sm text-muted-foreground"
-      >
-        {list.map((item, i) => (
-          <li key={i}>{inline(item)}</li>
-        ))}
-      </ul>,
-    );
+    tokens.push({ type: "list", items: list });
     list = [];
   };
 
@@ -92,14 +66,7 @@ export function Markdown({ source }: { source: string }) {
 
     if (line.trim().startsWith("```")) {
       if (code) {
-        blocks.push(
-          <pre
-            key={`code-${blocks.length}`}
-            className="overflow-x-auto rounded-lg bg-accent/60 p-3 text-[12px] whitespace-pre-wrap"
-          >
-            <code>{code.join("\n")}</code>
-          </pre>,
-        );
+        tokens.push({ type: "code", code: code.join("\n") });
         code = null;
       } else {
         flushList();
@@ -117,17 +84,7 @@ export function Markdown({ source }: { source: string }) {
       flushList();
       const level = line.match(/^#+/)![0].length;
       const text = line.replace(/^#+\s*/, "");
-      blocks.push(
-        level <= 2 ? (
-          <h3 key={`h-${blocks.length}`} className="mt-4 text-base font-bold text-foreground">
-            {text}
-          </h3>
-        ) : (
-          <h4 key={`h-${blocks.length}`} className="mt-3 text-sm font-semibold text-foreground">
-            {text}
-          </h4>
-        ),
-      );
+      tokens.push({ type: "heading", level, text });
       continue;
     }
 
@@ -153,25 +110,103 @@ export function Markdown({ source }: { source: string }) {
     }
 
     flushList();
-    blocks.push(
-      <p key={`p-${blocks.length}`} className="text-sm text-muted-foreground">
-        {inline(line)}
-      </p>,
-    );
+    tokens.push({ type: "paragraph", text: line });
   }
   flushList();
   flushTable();
-  if (code?.length)
-    blocks.push(
-      <pre
-        key="code-tail"
-        className="overflow-x-auto rounded-lg bg-accent/60 p-3 text-[12px] whitespace-pre-wrap"
-      >
-        <code>{code.join("\n")}</code>
-      </pre>,
-    );
+  if (code?.length) {
+    tokens.push({ type: "code", code: code.join("\n") });
+  }
+  return tokens;
+}
 
-  return <div className="space-y-2">{blocks}</div>;
+function MarkdownTable({ header, rows }: { header: string[]; rows: string[][] }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-left text-sm">
+        <thead>
+          <tr>
+            {header.map((cell, i) => (
+              <th
+                key={i}
+                className="border-b border-border px-2 py-1.5 font-semibold text-foreground"
+              >
+                {inline(cell)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, r) => (
+            <tr key={r}>
+              {row.map((cell, i) => (
+                <td
+                  key={i}
+                  className="border-b border-border/50 px-2 py-1.5 align-top text-muted-foreground"
+                >
+                  {inline(cell)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function MarkdownList({ items }: { items: string[] }) {
+  return (
+    <ul className="ml-4 list-disc space-y-1 text-sm text-muted-foreground">
+      {items.map((item, i) => (
+        <li key={i}>{inline(item)}</li>
+      ))}
+    </ul>
+  );
+}
+
+function MarkdownCode({ code }: { code: string }) {
+  return (
+    <pre className="overflow-x-auto rounded-lg bg-accent/60 p-3 text-[12px] whitespace-pre-wrap">
+      <code>{code}</code>
+    </pre>
+  );
+}
+
+function MarkdownHeading({ level, text }: { level: number; text: string }) {
+  return level <= 2 ? (
+    <h3 className="mt-4 text-base font-bold text-foreground">{text}</h3>
+  ) : (
+    <h4 className="mt-3 text-sm font-semibold text-foreground">{text}</h4>
+  );
+}
+
+function MarkdownParagraph({ text }: { text: string }) {
+  return <p className="text-sm text-muted-foreground">{inline(text)}</p>;
+}
+
+export function Markdown({ source }: { source: string }) {
+  const tokens = parseMarkdown(source);
+  return (
+    <div className="space-y-2">
+      {tokens.map((token, i) => {
+        switch (token.type) {
+          case "table":
+            return <MarkdownTable key={`tbl-${i}`} header={token.header} rows={token.rows} />;
+          case "list":
+            return <MarkdownList key={`ul-${i}`} items={token.items} />;
+          case "code":
+            return <MarkdownCode key={`code-${i}`} code={token.code} />;
+          case "heading":
+            return <MarkdownHeading key={`h-${i}`} level={token.level} text={token.text} />;
+          case "paragraph":
+            return <MarkdownParagraph key={`p-${i}`} text={token.text} />;
+          default:
+            return null;
+        }
+      })}
+    </div>
+  );
 }
 
 /** Pulls the first fenced code block out of a spec — that's the Lovable prompt. */
