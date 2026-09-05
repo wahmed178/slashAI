@@ -4,26 +4,117 @@ import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/linktree")({ component: LinkTreeBuilder });
 
-interface LinkItem { id: string; title: string; url: string; icon?: string; }
-interface Profile { username: string; name: string; bio: string; avatar: string; theme: string; links: LinkItem[]; }
+interface LinkItem {
+  id: string;
+  title: string;
+  url: string;
+  icon?: string;
+}
+interface Profile {
+  username: string;
+  name: string;
+  bio: string;
+  avatar: string;
+  theme: string;
+  links: LinkItem[];
+}
 
 const STORAGE_KEY = "slashai-linktree-profiles";
 const THEMES = [
-  { id: "dark", label: "Dark", bg: "#0a0a0f", card: "#161b22", text: "#f0f6fc", border: "#30363d", accent: "#58a6ff" },
-  { id: "midnight", label: "Midnight", bg: "#0f172a", card: "#1e293b", text: "#f1f5f9", border: "#334155", accent: "#818cf8" },
-  { id: "ocean", label: "Ocean", bg: "#042f2e", card: "#134e4a", text: "#f0fdfa", border: "#2dd4bf", accent: "#2dd4bf" },
-  { id: "sunset", label: "Sunset", bg: "#1c1917", card: "#292524", text: "#fef3c7", border: "#f59e0b", accent: "#f59e0b" },
-  { id: "lavender", label: "Lavender", bg: "#1e1b4b", card: "#312e81", text: "#e0e7ff", border: "#818cf8", accent: "#a78bfa" },
-  { id: "light", label: "Light", bg: "#ffffff", card: "#f8fafc", text: "#0f172a", border: "#e2e8f0", accent: "#2563eb" },
-  { id: "gradient", label: "Gradient", bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", card: "rgba(255,255,255,0.15)", text: "#ffffff", border: "rgba(255,255,255,0.25)", accent: "#ffffff" },
+  {
+    id: "dark",
+    label: "Dark",
+    bg: "#0a0a0f",
+    card: "#161b22",
+    text: "#f0f6fc",
+    border: "#30363d",
+    accent: "#58a6ff",
+  },
+  {
+    id: "midnight",
+    label: "Midnight",
+    bg: "#0f172a",
+    card: "#1e293b",
+    text: "#f1f5f9",
+    border: "#334155",
+    accent: "#818cf8",
+  },
+  {
+    id: "ocean",
+    label: "Ocean",
+    bg: "#042f2e",
+    card: "#134e4a",
+    text: "#f0fdfa",
+    border: "#2dd4bf",
+    accent: "#2dd4bf",
+  },
+  {
+    id: "sunset",
+    label: "Sunset",
+    bg: "#1c1917",
+    card: "#292524",
+    text: "#fef3c7",
+    border: "#f59e0b",
+    accent: "#f59e0b",
+  },
+  {
+    id: "lavender",
+    label: "Lavender",
+    bg: "#1e1b4b",
+    card: "#312e81",
+    text: "#e0e7ff",
+    border: "#818cf8",
+    accent: "#a78bfa",
+  },
+  {
+    id: "light",
+    label: "Light",
+    bg: "#ffffff",
+    card: "#f8fafc",
+    text: "#0f172a",
+    border: "#e2e8f0",
+    accent: "#2563eb",
+  },
+  {
+    id: "gradient",
+    label: "Gradient",
+    bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    card: "rgba(255,255,255,0.15)",
+    text: "#ffffff",
+    border: "rgba(255,255,255,0.25)",
+    accent: "#ffffff",
+  },
 ];
 
-const ICONS = ["🔗", "🌐", "📸", "🐦", "💼", "🎵", "📺", "📝", "🎮", "🛒", "📧", "📱", "💻", "🎨", "📷", "🔊", "📚", "🎯", "⚡", "🚀"];
+const ICONS = [
+  "🔗",
+  "🌐",
+  "📸",
+  "🐦",
+  "💼",
+  "🎵",
+  "📺",
+  "📝",
+  "🎮",
+  "🛒",
+  "📧",
+  "📱",
+  "💻",
+  "🎨",
+  "📷",
+  "🔊",
+  "📚",
+  "🎯",
+  "⚡",
+  "🚀",
+];
 
 function encodeProfile(profile: Profile): string {
   try {
     return btoa(encodeURIComponent(JSON.stringify(profile)));
-  } catch { return ""; }
+  } catch {
+    return "";
+  }
 }
 
 function getShareUrl(profile: Profile): string {
@@ -32,9 +123,13 @@ function getShareUrl(profile: Profile): string {
   return hash ? `${base}#${hash}` : base;
 }
 
-function LinkTreeBuilder() {
+function useLinkTree() {
   const [profiles, setProfiles] = useState<Profile[]>(() => {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); } catch { return []; }
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    } catch {
+      return [];
+    }
   });
   const [activeProfile, setActiveProfile] = useState<Profile | null>(null);
   const [editing, setEditing] = useState(false);
@@ -42,10 +137,13 @@ function LinkTreeBuilder() {
   const [linkUrl, setLinkUrl] = useState("");
   const [linkIcon, setLinkIcon] = useState("🔗");
   const [copied, setCopied] = useState("");
-  const [showThemes, setShowThemes] = useState(false);
 
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles)); } catch {}
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles));
+    } catch (e) {
+      console.error(e);
+    }
   }, [profiles]);
 
   const createProfile = () => {
@@ -60,7 +158,11 @@ function LinkTreeBuilder() {
     if (!p.username.trim()) return;
     setProfiles((prev) => {
       const existing = prev.findIndex((x) => x.username === p.username);
-      if (existing >= 0) { const next = [...prev]; next[existing] = p; return next; }
+      if (existing >= 0) {
+        const next = [...prev];
+        next[existing] = p;
+        return next;
+      }
       return [...prev, p];
     });
     setEditing(false);
@@ -74,8 +176,16 @@ function LinkTreeBuilder() {
   const addLink = () => {
     if (!linkTitle.trim() || !linkUrl.trim() || !activeProfile) return;
     const url = linkUrl.startsWith("http") ? linkUrl : `https://${linkUrl}`;
-    setActiveProfile({ ...activeProfile, links: [...activeProfile.links, { id: crypto.randomUUID(), title: linkTitle.trim(), url, icon: linkIcon }] });
-    setLinkTitle(""); setLinkUrl(""); setLinkIcon("🔗");
+    setActiveProfile({
+      ...activeProfile,
+      links: [
+        ...activeProfile.links,
+        { id: crypto.randomUUID(), title: linkTitle.trim(), url, icon: linkIcon },
+      ],
+    });
+    setLinkTitle("");
+    setLinkUrl("");
+    setLinkIcon("🔗");
   };
 
   const removeLink = (id: string) => {
@@ -98,128 +208,398 @@ function LinkTreeBuilder() {
     setActiveProfile({ ...activeProfile, links });
   };
 
-  const shareUrl = activeProfile ? getShareUrl(activeProfile) : "";
-
-  const copyShare = async () => {
-    try { await navigator.clipboard.writeText(shareUrl); setCopied("share"); setTimeout(() => setCopied(""), 1200); } catch {}
+  const copyShare = async (shareUrl: string, key: string) => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(key);
+      setTimeout(() => setCopied(""), 1200);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const t = THEMES.find((th) => th.id === activeProfile?.theme) || THEMES[0];
+  return {
+    profiles,
+    activeProfile,
+    setActiveProfile,
+    editing,
+    setEditing,
+    linkTitle,
+    setLinkTitle,
+    linkUrl,
+    setLinkUrl,
+    linkIcon,
+    setLinkIcon,
+    copied,
+    setCopied,
+    createProfile,
+    saveProfile,
+    deleteProfile,
+    addLink,
+    removeLink,
+    moveLink,
+    copyShare,
+  };
+}
+
+function ProfileList({
+  profiles,
+  createProfile,
+  setActiveProfile,
+  setEditing,
+  deleteProfile,
+  copied,
+  setCopied,
+}: {
+  profiles: Profile[];
+  createProfile: () => void;
+  setActiveProfile: (p: Profile) => void;
+  setEditing: (b: boolean) => void;
+  deleteProfile: (u: string) => void;
+  copied: string;
+  setCopied: (c: string) => void;
+}) {
+  return (
+    <div className="mx-auto max-w-2xl space-y-4">
+      {profiles.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-xs font-semibold text-muted-foreground">Your Profiles</p>
+          {profiles.map((p) => (
+            <div
+              key={p.username}
+              className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3"
+            >
+              <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-lg">
+                {p.avatar || "👤"}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-foreground">{p.name || p.username}</p>
+                <p className="text-[11px] text-muted-foreground">
+                  /{p.username} · {p.links.length} links
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  const url = getShareUrl(p);
+                  navigator.clipboard.writeText(url);
+                  setCopied(p.username);
+                  setTimeout(() => setCopied(""), 1200);
+                }}
+                className="text-[11px] text-primary hover:underline"
+              >
+                {copied === p.username ? "✓ Copied" : "Share"}
+              </button>
+              <Link
+                to={`/l/${p.username}`}
+                className="text-[11px] text-muted-foreground hover:text-foreground"
+              >
+                View
+              </Link>
+              <button
+                onClick={() => {
+                  setActiveProfile(p);
+                  setEditing(true);
+                }}
+                className="text-[11px] text-muted-foreground hover:text-foreground"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => deleteProfile(p.username)}
+                className="text-[11px] text-muted-foreground hover:text-red-400"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+      <button
+        onClick={createProfile}
+        className="w-full rounded-xl border-2 border-dashed border-border bg-surface py-8 text-sm text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors"
+      >
+        + Create New Link Page
+      </button>
+    </div>
+  );
+}
+
+function ProfileEditor({
+  activeProfile,
+  setActiveProfile,
+  linkTitle,
+  setLinkTitle,
+  linkUrl,
+  setLinkUrl,
+  linkIcon,
+  setLinkIcon,
+  addLink,
+  removeLink,
+  moveLink,
+  saveProfile,
+  setEditing,
+  copyShare,
+  copied,
+}: {
+  activeProfile: Profile;
+  setActiveProfile: (p: Profile | null) => void;
+  linkTitle: string;
+  setLinkTitle: (t: string) => void;
+  linkUrl: string;
+  setLinkUrl: (u: string) => void;
+  linkIcon: string;
+  setLinkIcon: (i: string) => void;
+  addLink: () => void;
+  removeLink: (id: string) => void;
+  moveLink: (id: string, dir: -1 | 1) => void;
+  saveProfile: () => void;
+  setEditing: (b: boolean) => void;
+  copyShare: (url: string, key: string) => void;
+  copied: string;
+}) {
+  const shareUrl = getShareUrl(activeProfile);
+
+  return (
+    <div className="mx-auto max-w-2xl space-y-4">
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="mb-1 block text-[10px] text-muted-foreground">Username (unique)</label>
+          <input
+            value={activeProfile.username}
+            onChange={(e) =>
+              setActiveProfile({
+                ...activeProfile,
+                username: e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""),
+              })
+            }
+            placeholder="yourname"
+            className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm"
+          />
+        </div>
+        <div>
+          <label className="mb-1 block text-[10px] text-muted-foreground">Display Name</label>
+          <input
+            value={activeProfile.name}
+            onChange={(e) => setActiveProfile({ ...activeProfile, name: e.target.value })}
+            placeholder="Your Name"
+            className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm"
+          />
+        </div>
+      </div>
+      <div>
+        <label className="mb-1 block text-[10px] text-muted-foreground">Bio</label>
+        <input
+          value={activeProfile.bio}
+          onChange={(e) => setActiveProfile({ ...activeProfile, bio: e.target.value })}
+          placeholder="Developer, creator, etc."
+          className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm"
+        />
+      </div>
+
+      {/* Avatar */}
+      <div>
+        <label className="mb-1 block text-[10px] text-muted-foreground">Avatar Emoji</label>
+        <div className="flex gap-1.5 flex-wrap">
+          {[
+            "👤",
+            "👨",
+            "👩",
+            "🧑",
+            "Developer",
+            "Designer",
+            "Creator",
+            "Student",
+            "🚀",
+            "⚡",
+            "🎨",
+            "💼",
+          ].map((a) => (
+            <button
+              key={a}
+              onClick={() => setActiveProfile({ ...activeProfile, avatar: a })}
+              className={`size-9 rounded-lg border text-sm flex items-center justify-center ${activeProfile.avatar === a ? "border-primary bg-primary/10" : "border-border bg-surface"}`}
+            >
+              {a}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Theme */}
+      <div>
+        <label className="mb-1 block text-[10px] text-muted-foreground">Theme</label>
+        <div className="flex gap-2 flex-wrap">
+          {THEMES.map((th) => (
+            <button
+              key={th.id}
+              onClick={() => setActiveProfile({ ...activeProfile, theme: th.id })}
+              className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs transition-colors ${activeProfile.theme === th.id ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground"}`}
+            >
+              <div
+                className="size-4 rounded"
+                style={{ background: th.bg, border: `1px solid ${th.border}` }}
+              />
+              {th.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Add Link */}
+      <div className="rounded-xl border border-border bg-surface p-4 space-y-3">
+        <p className="text-xs font-semibold text-foreground">Add Link</p>
+        <div className="flex gap-2 items-center">
+          <select
+            value={linkIcon}
+            onChange={(e) => setLinkIcon(e.target.value)}
+            className="h-9 w-12 rounded-lg border border-border bg-surface-elevated text-center text-sm"
+          >
+            {ICONS.map((i) => (
+              <option key={i} value={i}>
+                {i}
+              </option>
+            ))}
+          </select>
+          <input
+            value={linkTitle}
+            onChange={(e) => setLinkTitle(e.target.value)}
+            placeholder="Link title"
+            className="h-9 flex-1 rounded-lg border border-border bg-surface-elevated px-3 text-sm"
+          />
+          <input
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            placeholder="https://..."
+            className="h-9 flex-1 rounded-lg border border-border bg-surface-elevated px-3 text-sm"
+          />
+          <button
+            onClick={addLink}
+            className="h-9 rounded-lg bg-primary px-4 text-sm font-medium text-background hover:opacity-90"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+
+      {/* Links List */}
+      {activeProfile.links.length > 0 && (
+        <div className="space-y-1.5">
+          {activeProfile.links.map((l, i) => (
+            <div
+              key={l.id}
+              className="flex items-center gap-2 rounded-lg border border-border bg-surface p-2.5"
+            >
+              <span className="text-lg">{l.icon}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">{l.title}</p>
+                <p className="text-[10px] text-muted-foreground truncate">{l.url}</p>
+              </div>
+              <button
+                onClick={() => moveLink(l.id, -1)}
+                disabled={i === 0}
+                className="text-xs text-muted-foreground hover:text-foreground disabled:opacity-30"
+              >
+                ↑
+              </button>
+              <button
+                onClick={() => moveLink(l.id, 1)}
+                disabled={i === activeProfile.links.length - 1}
+                className="text-xs text-muted-foreground hover:text-foreground disabled:opacity-30"
+              >
+                ↓
+              </button>
+              <button
+                onClick={() => removeLink(l.id)}
+                className="text-xs text-muted-foreground hover:text-red-400"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {activeProfile.username && activeProfile.links.length > 0 && (
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-3">
+          <p className="text-[10px] text-muted-foreground mb-1">Your shareable link:</p>
+          <div className="flex items-center gap-2">
+            <code className="flex-1 text-xs text-primary break-all font-mono">{shareUrl}</code>
+            <button
+              onClick={() => copyShare(shareUrl, "share")}
+              className="shrink-0 rounded-lg bg-primary px-3 py-1.5 text-[11px] font-medium text-background hover:opacity-90"
+            >
+              {copied === "share" ? "✓ Copied" : "Copy"}
+            </button>
+          </div>
+          <p className="mt-1 text-[10px] text-muted-foreground">
+            Anyone with this link can see your page — works on any device.
+          </p>
+        </div>
+      )}
+      <div className="flex gap-2">
+        <button
+          onClick={saveProfile}
+          disabled={!activeProfile.username.trim()}
+          className="flex-1 rounded-xl bg-primary py-3 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40"
+        >
+          Save Profile
+        </button>
+        <button
+          onClick={() => {
+            setActiveProfile(null);
+            setEditing(false);
+          }}
+          className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-muted-foreground hover:text-foreground"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function LinkTreeBuilder() {
+  const tree = useLinkTree();
 
   return (
     <AppShell title="Link in Bio Builder">
       <header className="mb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">🔗 Link in Bio Builder</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Create your personal link page. Save, share, and download as HTML.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          🔗 Link in Bio Builder
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Create your personal link page. Save, share, and download as HTML.
+        </p>
       </header>
 
-      {!activeProfile ? (
-        <div className="mx-auto max-w-2xl space-y-4">
-          {profiles.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground">Your Profiles</p>
-              {profiles.map((p) => (
-                <div key={p.username} className="flex items-center gap-3 rounded-xl border border-border bg-surface p-3">
-                  <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center text-lg">{p.avatar || "👤"}</div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-foreground">{p.name || p.username}</p>
-                    <p className="text-[11px] text-muted-foreground">/{p.username} · {p.links.length} links</p>
-                  </div>
-                  <button onClick={() => { const url = getShareUrl(p); navigator.clipboard.writeText(url); setCopied(p.username); setTimeout(() => setCopied(""), 1200); }} className="text-[11px] text-primary hover:underline">{copied === p.username ? "✓ Copied" : "Share"}</button>
-                  <Link to={`/l/${p.username}`} className="text-[11px] text-muted-foreground hover:text-foreground">View</Link>
-                  <button onClick={() => { setActiveProfile(p); setEditing(true); }} className="text-[11px] text-muted-foreground hover:text-foreground">Edit</button>
-                  <button onClick={() => deleteProfile(p.username)} className="text-[11px] text-muted-foreground hover:text-red-400">Delete</button>
-                </div>
-              ))}
-            </div>
-          )}
-          <button onClick={createProfile} className="w-full rounded-xl border-2 border-dashed border-border bg-surface py-8 text-sm text-muted-foreground hover:border-primary/40 hover:text-foreground transition-colors">
-            + Create New Link Page
-          </button>
-        </div>
-      ) : editing ? (
-        <div className="mx-auto max-w-2xl space-y-4">
-          <div className="grid grid-cols-2 gap-3">
-            <div><label className="mb-1 block text-[10px] text-muted-foreground">Username (unique)</label>
-              <input value={activeProfile.username} onChange={(e) => setActiveProfile({ ...activeProfile, username: e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "") })} placeholder="yourname"
-                className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm" /></div>
-            <div><label className="mb-1 block text-[10px] text-muted-foreground">Display Name</label>
-              <input value={activeProfile.name} onChange={(e) => setActiveProfile({ ...activeProfile, name: e.target.value })} placeholder="Your Name"
-                className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm" /></div>
-          </div>
-          <div><label className="mb-1 block text-[10px] text-muted-foreground">Bio</label>
-            <input value={activeProfile.bio} onChange={(e) => setActiveProfile({ ...activeProfile, bio: e.target.value })} placeholder="Developer, creator, etc."
-              className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm" /></div>
-
-          {/* Avatar */}
-          <div><label className="mb-1 block text-[10px] text-muted-foreground">Avatar Emoji</label>
-            <div className="flex gap-1.5 flex-wrap">
-              {["👤", "👨", "👩", "🧑", "Developer", "Designer", "Creator", "Student", "🚀", "⚡", "🎨", "💼"].map((a) => (
-                <button key={a} onClick={() => setActiveProfile({ ...activeProfile, avatar: a })}
-                  className={`size-9 rounded-lg border text-sm flex items-center justify-center ${activeProfile.avatar === a ? "border-primary bg-primary/10" : "border-border bg-surface"}`}>{a}</button>
-              ))}
-            </div>
-          </div>
-
-          {/* Theme */}
-          <div><label className="mb-1 block text-[10px] text-muted-foreground">Theme</label>
-            <div className="flex gap-2 flex-wrap">
-              {THEMES.map((th) => (
-                <button key={th.id} onClick={() => setActiveProfile({ ...activeProfile, theme: th.id })}
-                  className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs transition-colors ${activeProfile.theme === th.id ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground"}`}>
-                  <div className="size-4 rounded" style={{ background: th.bg, border: `1px solid ${th.border}` }} />
-                  {th.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Add Link */}
-          <div className="rounded-xl border border-border bg-surface p-4 space-y-3">
-            <p className="text-xs font-semibold text-foreground">Add Link</p>
-            <div className="flex gap-2 items-center">
-              <select value={linkIcon} onChange={(e) => setLinkIcon(e.target.value)} className="h-9 w-12 rounded-lg border border-border bg-surface-elevated text-center text-sm">
-                {ICONS.map((i) => <option key={i} value={i}>{i}</option>)}
-              </select>
-              <input value={linkTitle} onChange={(e) => setLinkTitle(e.target.value)} placeholder="Link title" className="h-9 flex-1 rounded-lg border border-border bg-surface-elevated px-3 text-sm" />
-              <input value={linkUrl} onChange={(e) => setLinkUrl(e.target.value)} placeholder="https://..." className="h-9 flex-1 rounded-lg border border-border bg-surface-elevated px-3 text-sm" />
-              <button onClick={addLink} className="h-9 rounded-lg bg-primary px-4 text-sm font-medium text-background hover:opacity-90">Add</button>
-            </div>
-          </div>
-
-          {/* Links List */}
-          {activeProfile.links.length > 0 && (
-            <div className="space-y-1.5">
-              {activeProfile.links.map((l, i) => (
-                <div key={l.id} className="flex items-center gap-2 rounded-lg border border-border bg-surface p-2.5">
-                  <span className="text-lg">{l.icon}</span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">{l.title}</p>
-                    <p className="text-[10px] text-muted-foreground truncate">{l.url}</p>
-                  </div>
-                  <button onClick={() => moveLink(l.id, -1)} disabled={i === 0} className="text-xs text-muted-foreground hover:text-foreground disabled:opacity-30">↑</button>
-                  <button onClick={() => moveLink(l.id, 1)} disabled={i === activeProfile.links.length - 1} className="text-xs text-muted-foreground hover:text-foreground disabled:opacity-30">↓</button>
-                  <button onClick={() => removeLink(l.id)} className="text-xs text-muted-foreground hover:text-red-400">✕</button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {activeProfile.username && activeProfile.links.length > 0 && (
-            <div className="rounded-xl border border-primary/20 bg-primary/5 p-3">
-              <p className="text-[10px] text-muted-foreground mb-1">Your shareable link:</p>
-              <div className="flex items-center gap-2">
-                <code className="flex-1 text-xs text-primary break-all font-mono">{shareUrl}</code>
-                <button onClick={copyShare} className="shrink-0 rounded-lg bg-primary px-3 py-1.5 text-[11px] font-medium text-background hover:opacity-90">{copied === "share" ? "✓ Copied" : "Copy"}</button>
-              </div>
-              <p className="mt-1 text-[10px] text-muted-foreground">Anyone with this link can see your page — works on any device.</p>
-            </div>
-          )}
-          <div className="flex gap-2">
-            <button onClick={saveProfile} disabled={!activeProfile.username.trim()} className="flex-1 rounded-xl bg-primary py-3 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40">Save Profile</button>
-            <button onClick={() => { setActiveProfile(null); setEditing(false); }} className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-muted-foreground hover:text-foreground">Cancel</button>
-          </div>
-        </div>
+      {!tree.activeProfile ? (
+        <ProfileList
+          profiles={tree.profiles}
+          createProfile={tree.createProfile}
+          setActiveProfile={tree.setActiveProfile}
+          setEditing={tree.setEditing}
+          deleteProfile={tree.deleteProfile}
+          copied={tree.copied}
+          setCopied={tree.setCopied}
+        />
+      ) : tree.editing ? (
+        <ProfileEditor
+          activeProfile={tree.activeProfile}
+          setActiveProfile={tree.setActiveProfile}
+          linkTitle={tree.linkTitle}
+          setLinkTitle={tree.setLinkTitle}
+          linkUrl={tree.linkUrl}
+          setLinkUrl={tree.setLinkUrl}
+          linkIcon={tree.linkIcon}
+          setLinkIcon={tree.setLinkIcon}
+          addLink={tree.addLink}
+          removeLink={tree.removeLink}
+          moveLink={tree.moveLink}
+          saveProfile={tree.saveProfile}
+          setEditing={tree.setEditing}
+          copyShare={tree.copyShare}
+          copied={tree.copied}
+        />
       ) : null}
     </AppShell>
   );
