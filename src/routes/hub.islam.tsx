@@ -224,17 +224,11 @@ function IslamResourceCard({ resource }: { resource: IslamResource }) {
   );
 }
 
-/* ──────────── live widgets ──────────── */
-function LiveWidgetBar() {
+/* ──────────── custom hooks for widgets ──────────── */
+function usePrayerData(city: string) {
   const [prayer, setPrayer] = useState<PrayerData | null>(null);
-  const [hijri, setHijri] = useState<HijriData | null>(null);
-  const [verse, setVerse] = useState<{ arabic: string; english: string; ref: string } | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const city = localStorage.getItem("slashai-prayer-city") || "Hyderabad";
-
-    // Fetch prayer times
     fetch(`https://api.aladhan.com/v1/timingsByCity/${city}`)
       .then((r) => r.json())
       .then((d) => {
@@ -250,15 +244,31 @@ function LiveWidgetBar() {
         }
       })
       .catch(() => {});
+  }, [city]);
 
-    // Fetch Hijri date
+  return prayer;
+}
+
+function useHijriData() {
+  const [hijri, setHijri] = useState<HijriData | null>(null);
+
+  useEffect(() => {
     const today = new Date();
     fetch(`https://api.aladhan.com/v1/gToH/${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`)
       .then((r) => r.json())
       .then((d) => { if (d.data) setHijri(d); })
       .catch(() => {});
+  }, []);
 
-    // Fetch Quran verse of the day (seeded by day of year)
+  return hijri;
+}
+
+function useVerseData() {
+  const [verse, setVerse] = useState<{ arabic: string; english: string; ref: string } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const today = new Date();
     const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000);
     const ayahNum = (dayOfYear % 6236) + 1; // 6236 total ayahs
     const cacheKey = `slashai-quran-votd-${today.toISOString().slice(0, 10)}`;
@@ -283,8 +293,11 @@ function LiveWidgetBar() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Determine next prayer
-  const nextPrayer = useMemo(() => {
+  return { verse, loading };
+}
+
+function useNextPrayer(prayer: PrayerData | null) {
+  return useMemo(() => {
     if (!prayer) return null;
     const now = new Date();
     const prayers = [
@@ -305,8 +318,85 @@ function LiveWidgetBar() {
     }
     return { name: prayers[0]!.name, time: prayers[0]!.time }; // wraps to tomorrow
   }, [prayer]);
+}
 
+/* ──────────── widget components ──────────── */
+function PrayerTimesWidget({
+  city,
+  prayer,
+  nextPrayer,
+}: {
+  city: string;
+  prayer: PrayerData | null;
+  nextPrayer: { name: string; time: string } | null;
+}) {
+  return (
+    <div className="rounded-[10px] border border-border bg-surface p-4">
+      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Next Prayer • {city}</p>
+      {nextPrayer ? (
+        <p className="mt-1.5 text-[20px] font-bold text-foreground">
+          {nextPrayer.name} <span className="text-[14px] font-normal text-muted-foreground">{nextPrayer.time}</span>
+        </p>
+      ) : (
+        <p className="mt-1.5 text-[14px] text-muted-foreground">
+          <Link to="/live" className="text-primary hover:underline">Set your city on Live page →</Link>
+        </p>
+      )}
+      <div className="mt-2 flex gap-2 text-[11px] text-muted-foreground">
+        {prayer && ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"].map((p) => (
+          <span key={p} className={nextPrayer?.name === p ? "font-semibold text-primary" : ""}>
+            {p}: {prayer[p.toLowerCase() as keyof PrayerData]}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HijriDateWidget({ hijri }: { hijri: HijriData | null }) {
+  return (
+    <div className="rounded-[10px] border border-border bg-surface p-4">
+      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Hijri Date</p>
+      {hijri?.data?.hijri ? (
+        <p className="mt-1.5 text-[20px] font-bold text-foreground">
+          {hijri.data.hijri.day} {hijri.data.hijri.month.en} {hijri.data.hijri.year} AH
+        </p>
+      ) : (
+        <div className="mt-3 h-5 w-3/4 rounded skeleton-block" />
+      )}
+    </div>
+  );
+}
+
+function VerseOfTheDayWidget({ verse }: { verse: { arabic: string; english: string; ref: string } | null }) {
+  return (
+    <div className="rounded-[10px] border border-border bg-surface p-4">
+      <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Verse of the Day</p>
+      {verse ? (
+        <>
+          <p className="mt-1.5 text-[18px] leading-relaxed text-foreground" dir="rtl" style={{ fontFamily: "serif" }}>
+            {verse.arabic}
+          </p>
+          <p className="mt-1.5 line-clamp-2 text-[13px] text-muted-foreground">{verse.english}</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">{verse.ref}</p>
+        </>
+      ) : (
+        <div className="mt-3 space-y-2">
+          <div className="h-5 w-full rounded skeleton-block" />
+          <div className="h-3 w-2/3 rounded skeleton-block" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ──────────── live widgets ──────────── */
+function LiveWidgetBar() {
   const city = localStorage.getItem("slashai-prayer-city") || "Hyderabad";
+  const prayer = usePrayerData(city);
+  const hijri = useHijriData();
+  const { verse, loading } = useVerseData();
+  const nextPrayer = useNextPrayer(prayer);
 
   if (loading && !prayer && !hijri && !verse) {
     return (
@@ -324,51 +414,9 @@ function LiveWidgetBar() {
 
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-      {/* Prayer Times Widget */}
-      <div className="rounded-[10px] border border-border bg-surface p-4">
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Next Prayer • {city}</p>
-        {nextPrayer ? (
-          <p className="mt-1.5 text-[20px] font-bold text-foreground">{nextPrayer.name} <span className="text-[14px] font-normal text-muted-foreground">{nextPrayer.time}</span></p>
-        ) : (
-          <p className="mt-1.5 text-[14px] text-muted-foreground">
-            <Link to="/live" className="text-primary hover:underline">Set your city on Live page →</Link>
-          </p>
-        )}
-        <div className="mt-2 flex gap-2 text-[11px] text-muted-foreground">
-          {prayer && ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"].map((p) => (
-            <span key={p} className={nextPrayer?.name === p ? "font-semibold text-primary" : ""}>{p}: {prayer[p.toLowerCase() as keyof PrayerData]}</span>
-          ))}
-        </div>
-      </div>
-
-      {/* Hijri Date Widget */}
-      <div className="rounded-[10px] border border-border bg-surface p-4">
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Hijri Date</p>
-        {hijri?.data?.hijri ? (
-          <p className="mt-1.5 text-[20px] font-bold text-foreground">
-            {hijri.data.hijri.day} {hijri.data.hijri.month.en} {hijri.data.hijri.year} AH
-          </p>
-        ) : (
-          <div className="mt-3 h-5 w-3/4 rounded skeleton-block" />
-        )}
-      </div>
-
-      {/* Quran Verse of the Day Widget */}
-      <div className="rounded-[10px] border border-border bg-surface p-4">
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Verse of the Day</p>
-        {verse ? (
-          <>
-            <p className="mt-1.5 text-[18px] leading-relaxed text-foreground" dir="rtl" style={{ fontFamily: "serif" }}>{verse.arabic}</p>
-            <p className="mt-1.5 line-clamp-2 text-[13px] text-muted-foreground">{verse.english}</p>
-            <p className="mt-1 text-[11px] text-muted-foreground">{verse.ref}</p>
-          </>
-        ) : (
-          <div className="mt-3 space-y-2">
-            <div className="h-5 w-full rounded skeleton-block" />
-            <div className="h-3 w-2/3 rounded skeleton-block" />
-          </div>
-        )}
-      </div>
+      <PrayerTimesWidget city={city} prayer={prayer} nextPrayer={nextPrayer} />
+      <HijriDateWidget hijri={hijri} />
+      <VerseOfTheDayWidget verse={verse} />
     </div>
   );
 }
