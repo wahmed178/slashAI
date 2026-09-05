@@ -23,6 +23,75 @@ interface Props {
  * The single, universal search entry point. On Home it is the primary action;
  * in the app header it is a compact affordance that leads to /search.
  */
+function useSearchShortcut(inputRef: React.RefObject<HTMLInputElement | null>) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const typing = target && /^(INPUT|TEXTAREA)$/.test(target.tagName);
+      if ((e.key === "/" && !typing) || (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey))) {
+        e.preventDefault();
+        inputRef.current?.focus();
+        inputRef.current?.select();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [inputRef]);
+}
+
+function SearchDropdown({
+  open,
+  draft,
+  recentSearches,
+  suggestionsList,
+  onSubmit,
+  onNavigate,
+}: {
+  open: boolean;
+  draft: string;
+  recentSearches: string[];
+  suggestionsList: any[];
+  onSubmit: (term: string) => void;
+  onNavigate: (id: string) => void;
+}) {
+  if (!open || (suggestionsList.length === 0 && (draft || recentSearches.length === 0))) {
+    return null;
+  }
+
+  return (
+    <div className="panel absolute top-[calc(100%+6px)] left-0 z-40 w-full overflow-hidden rounded-xl py-1">
+      {!draft &&
+        recentSearches.map((term) => (
+          <button
+            key={term}
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => onSubmit(term)}
+            className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
+          >
+            <Clock className="size-3.5 shrink-0 text-muted-foreground" />
+            <span className="truncate text-xs text-muted-foreground">{term}</span>
+          </button>
+        ))}
+      {suggestionsList.map((s) => (
+        <button
+          key={s.id}
+          type="button"
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => onNavigate(s.id)}
+          className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
+        >
+          <CommandIcon className="size-3.5 shrink-0 text-primary" />
+          <span className="font-mono text-xs">
+            <Highlight text={s.command} query={draft} />
+          </span>
+          <span className="truncate text-xs text-muted-foreground">{s.title}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function SearchBox({
   value,
   onChange,
@@ -44,19 +113,7 @@ export function SearchBox({
   }, [value]);
 
   // keyboard shortcut: "/" or Ctrl/Cmd-K focuses search
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null;
-      const typing = target && /^(INPUT|TEXTAREA)$/.test(target.tagName);
-      if ((e.key === "/" && !typing) || (e.key.toLowerCase() === "k" && (e.metaKey || e.ctrlKey))) {
-        e.preventDefault();
-        inputRef.current?.focus();
-        inputRef.current?.select();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  useSearchShortcut(inputRef);
 
   const sugg = useMemo(() => (open ? suggestions(draft) : []), [draft, open]);
 
@@ -127,42 +184,18 @@ export function SearchBox({
         </button>
       )}
 
-      {open && (sugg.length > 0 || (!draft && recentSearches.length > 0)) && (
-        <div className="panel absolute top-[calc(100%+6px)] left-0 z-40 w-full overflow-hidden rounded-xl py-1">
-          {!draft &&
-            recentSearches.map((term) => (
-              <button
-                key={term}
-                type="button"
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={() => submit(term)}
-                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
-              >
-                <Clock className="size-3.5 shrink-0 text-muted-foreground" />
-                <span className="truncate text-xs text-muted-foreground">{term}</span>
-              </button>
-            ))}
-          {sugg.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => {
-                recordSearch(draft);
-                setOpen(false);
-                void navigate({ to: "/c/$slug", params: { slug: s.id } });
-              }}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-accent"
-            >
-              <CommandIcon className="size-3.5 shrink-0 text-primary" />
-              <span className="font-mono text-xs">
-                <Highlight text={s.command} query={draft} />
-              </span>
-              <span className="truncate text-xs text-muted-foreground">{s.title}</span>
-            </button>
-          ))}
-        </div>
-      )}
+      <SearchDropdown
+        open={open}
+        draft={draft}
+        recentSearches={recentSearches}
+        suggestionsList={sugg}
+        onSubmit={submit}
+        onNavigate={(id) => {
+          recordSearch(draft);
+          setOpen(false);
+          void navigate({ to: "/c/$slug", params: { slug: id } });
+        }}
+      />
     </div>
   );
 }
