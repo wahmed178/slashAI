@@ -110,8 +110,7 @@ function ComparePage() {
         </p>
 
         <div className="mt-6 flex gap-4">
-          <Link to="/assistant" className="text-sm text-primary hover:underline">Try the AI Assistant →</Link>
-          <Link to="/assistant/about" className="text-sm text-primary hover:underline">Learn more →</Link>
+          <Link to="/ai-tools" className="text-sm text-primary hover:underline">Browse AI tools →</Link>
         </div>
       </div>
     </AppShell>

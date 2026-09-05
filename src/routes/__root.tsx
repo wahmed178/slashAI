@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Search and copy 5,635 free AI slash commands, run 150+ browser tools in SlashKits, and browse 319 curated free resources, generators, roadmaps and a daily quiz. Free forever, no account.",
+          "Search and copy 5,635 free AI slash commands, run 150+ browser tools in SlashKits, and browse 319 curated free resources, roadmaps and a daily quiz. Free forever, no account.",
       },
       { name: "author", content: "SlashAI" },
       { title: "SlashAI — 5,635 Free AI Slash Commands, Tools & Resources" },

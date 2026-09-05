@@ -43,7 +43,6 @@ import {
   topPersonalCommands,
 } from "@/lib/intelligence";
 import trendingToolsData from "@/../src/data/trending-tools.json";
-import { GENERATORS } from "@/lib/generators";
 import { ALL_ROADMAPS } from "@/lib/roadmaps";
 import { GLOSSARY_TOTAL } from "@/lib/glossary";
 import { toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
@@ -55,13 +54,12 @@ function StatsBar() {
   const stats = [
     { number: VERIFIED_TOTAL.toLocaleString(), label: "COMMANDS", color: "var(--primary)", icon: Terminal },
     { number: RESOURCE_TOTAL.toLocaleString(), label: "RESOURCES", color: "var(--primary)", icon: Package },
-    { number: GENERATORS.length.toLocaleString(), label: "GENERATORS", color: "#d29922", icon: Zap },
     { number: ALL_ROADMAPS.length.toLocaleString(), label: "ROADMAPS", color: "#3fb950", icon: Map },
     { number: GLOSSARY_TOTAL.toLocaleString(), label: "GLOSSARY", color: "#a78bfa", icon: BookOpen },
   ];
   return (
     <div className="mt-6 rounded-[10px] border border-sidebar-border bg-surface px-3 py-3 sm:px-6 sm:py-4">
-      <div className="grid grid-cols-5 items-center gap-1 sm:flex sm:items-center sm:justify-between sm:gap-6">
+      <div className="grid grid-cols-4 items-center gap-1 sm:flex sm:items-center sm:justify-between sm:gap-6">
         {stats.map((stat, i) => {
           const Icon = stat.icon;
           return (
@@ -467,11 +465,9 @@ function HomePage() {
       <section className="mt-10">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
-            { to: "/assistant", emoji: "🤖", title: "AI Assistant", desc: "Free-tier AI chat — no subscription" },
             { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories, fresh daily" },
             { to: "/live", emoji: "📡", title: "Live", desc: "Markets, prayer, cricket, weather" },
             { to: "/deals", emoji: "🛍️", title: "Deals", desc: "Live deals from Indian communities" },
-            { to: "/generators", emoji: "⚡", title: "Generators", desc: `${GENERATORS.length} AI-powered tools` },
             { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: `${ALL_ROADMAPS.length} step-by-step guides` },
             { to: "/glossary", emoji: "📖", title: "Glossary", desc: `${GLOSSARY_TOTAL} AI & startup terms` },
             { to: "/discover", emoji: "🧭", title: "Discover", desc: `${RESOURCE_TOTAL}+ free tools and APIs` },
@@ -753,7 +749,6 @@ function HomePage() {
               title: "Commands & Tools",
               links: [
                 { label: "Commands", to: "/explore" },
-                { label: "Generators", to: "/generators" },
                 { label: "Roadmaps", to: "/roadmaps" },
                 { label: "Glossary", to: "/glossary" },
                 { label: "SlashKits", to: "/tools" },

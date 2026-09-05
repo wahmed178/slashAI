@@ -43,7 +43,7 @@ function TermsPage() {
         <Section title="2. Description of Service">
           <p className="mt-2 text-sm text-muted-foreground">
             SlashAI is a free, offline-first library of AI slash commands,
-            curated resources, generators, roadmaps, glossary terms, and
+            curated resources, roadmaps, glossary terms, and
             browser-based tools. The Service runs entirely in your browser —
             there is no account system, no backend database, and no server-side
             processing of your data.
@@ -51,7 +51,6 @@ function TermsPage() {
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
             <li>5,635+ AI slash commands with copy-ready prompt templates</li>
             <li>317+ curated free resources across 12 categories</li>
-            <li>25 AI generators (founder tools)</li>
             <li>20 founder roadmaps with step tracking</li>
             <li>560+ glossary terms across 8 categories</li>
             <li>22 browser-based utility tools (calculators, converters, screensavers)</li>
@@ -85,12 +84,6 @@ function TermsPage() {
             etc.). We do not generate or control the output of these AI models.
             AI-generated content may be inaccurate, incomplete, or outdated.
             Always verify critical information independently.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            The generators on SlashAI (business plans, content briefs, legal
-            templates, etc.) use AI to produce drafts. These are starting points
-            — not professional advice. Consult qualified professionals for
-            legal, financial, or medical decisions.
           </p>
         </Section>
 

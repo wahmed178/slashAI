@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "@/lib/commands";
 import { RESOURCE_TOTAL } from "@/lib/resources";
-import { GENERATORS } from "@/lib/generators";
 import { ALL_ROADMAPS } from "@/lib/roadmaps";
 import { GLOSSARY_TOTAL } from "@/lib/glossary";
 import { SLASH_TOOL_COUNT } from "@/lib/slashkits";
@@ -50,7 +49,6 @@ function AboutPage() {
             <p>{VERIFIED_TOTAL.toLocaleString()} copy-ready AI slash commands</p>
             <p>{RESOURCE_TOTAL} curated free resources — tools, APIs, channels</p>
             <p>{SLASH_TOOL_COUNT} browser-based tools in SlashKits</p>
-            <p>{GENERATORS.length} AI-powered founder generators</p>
             <p>{ALL_ROADMAPS.length} step-by-step founder roadmaps</p>
             <p>{GLOSSARY_TOTAL}-term AI and startup glossary across {CATEGORY_TREE.length} categories</p>
             <p>Live dashboard — markets, cricket, prayer, weather</p>

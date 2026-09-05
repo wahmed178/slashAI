@@ -6,7 +6,6 @@ import {
   Compass,
   Wrench,
   LayoutGrid,
-  Bot,
   Zap,
   Map,
   Radio,
@@ -18,7 +17,6 @@ import {
   NotebookPen,
   Sparkles,
   Flame,
-  Youtube,
   Layers,
   History as HistoryIcon,
   Palette,
@@ -55,12 +53,8 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/tools", label: "SlashKits", icon: Wrench },
   { to: "/ai-tools", label: "AI Tools", icon: Cpu, badge: "100+" },
   { to: "/hub", label: "Hubs", icon: LayoutGrid },
-  { to: "/assistant", label: "AI Assistant", icon: Bot },
-  { to: "/hunyuan", label: "Hunyuan AI", icon: Zap },
-  { to: "/generators", label: "Generators", icon: Zap },
   { to: "/roadmaps", label: "Roadmaps", icon: Map },
   { to: "/live", label: "Live", icon: Radio, badge: "Hot" },
-  { to: "/youtube", label: "YouTube", icon: Youtube },
   { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
   { to: "/glossary", label: "Glossary", icon: BookOpen },
   { to: "/collections", label: "Collections", icon: Layers },
@@ -135,7 +129,6 @@ const HUB_NAMES: Record<string, string> = {
 };
 
 const TOP_LEVEL_NAMES: Record<string, { label: string; to?: string }> = {
-  generators: { label: "Generators", to: "/generators" },
   roadmaps: { label: "Roadmaps", to: "/roadmaps" },
   glossary: { label: "Glossary", to: "/glossary" },
   quiz: { label: "Quiz", to: "/quiz" },

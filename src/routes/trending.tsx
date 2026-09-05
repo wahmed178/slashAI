@@ -12,7 +12,6 @@ import {
   type TrendingCommand,
   type CommandCategory,
 } from "@/lib/trending-commands";
-import { GENERATORS } from "@/lib/generators";
 import { ALL_ROADMAPS } from "@/lib/roadmaps";
 import { ALL_GLOSSARY } from "@/lib/glossary";
 import { COLLECTIONS } from "@/lib/collections";
@@ -21,8 +20,8 @@ import { resourcesBySection } from "@/lib/resources";
 /* ═══════════════════════════════════════════════════════════════════
    FILTER TABS
    ═══════════════════════════════════════════════════════════════════ */
-type FilterTab = "All" | "Commands" | "Resources" | "Generators" | "Roadmaps" | "Glossary" | "Collections";
-const TABS: FilterTab[] = ["All", "Commands", "Resources", "Generators", "Roadmaps", "Glossary", "Collections"];
+type FilterTab = "All" | "Commands" | "Resources" | "Roadmaps" | "Glossary" | "Collections";
+const TABS: FilterTab[] = ["All", "Commands", "Resources", "Roadmaps", "Glossary", "Collections"];
 
 /* ═══════════════════════════════════════════════════════════════════
    COPY BUTTON
@@ -127,7 +126,7 @@ export const Route = createFileRoute("/trending")({
       { title: "Trending on SlashAI" },
       {
         name: "description",
-        content: "What people are copying, saving and building with right now — commands, resources, generators, roadmaps, glossary.",
+        content: "What people are copying, saving and building with right now — commands, resources, roadmaps, glossary.",
       },
     ],
   }),
@@ -254,33 +253,6 @@ function TrendingPage() {
           <div className="mt-3 flex flex-col gap-2">
             {popularResources.map((r) => (
               <ResourceCardEnhanced key={r.id} resource={r} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ──────── Section: Trending Generators ──────── */}
-      {showSection("Generators") && (
-        <section className="mt-7">
-          <div className="flex items-center justify-between gap-2">
-            <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Founder Generators</h2>
-            <Link to="/generators" className="text-xs font-medium text-primary hover:underline">Use a generator →</Link>
-          </div>
-          <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
-            {GENERATORS.slice(0, 10).map((gen) => (
-              <Link
-                key={gen.id}
-                to="/generators/$id"
-                params={{ id: gen.id }}
-                className="group flex flex-col rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
-              >
-                <span className="text-[24px]">{gen.emoji}</span>
-                <p className="mt-2 text-[14px] font-semibold text-foreground group-hover:text-primary">{gen.title}</p>
-                <p className="mt-0.5 line-clamp-1 text-[12px] text-muted-foreground">{gen.tagline}</p>
-                <span className="mt-auto pt-3 inline-flex h-8 items-center justify-center rounded-md border text-[11px] font-medium transition-colors" style={{ borderColor: "#58a6ff40", color: "var(--primary)" }}>
-                  Use →
-                </span>
-              </Link>
             ))}
           </div>
         </section>
