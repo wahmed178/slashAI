@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { Copy, Download, Check } from "lucide-react";
+import DOMPurify from "dompurify";
 
 const EXAMPLE = `# Hello World\n\nThis is **bold** and this is *italic*.\n\n- Item 1\n- Item 2\n- Item 3\n\n> A blockquote\n\n\`\`\`js\nconsole.log("Hello");\n\`\`\``;
 
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/tools/markdown-to-html")({
 });
 
 function simpleMarkdown(md: string): string {
-  let html = md
+  const html = md
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
@@ -23,7 +24,9 @@ function simpleMarkdown(md: string): string {
     .replace(/(<li>.+<\/li>\n?)+/g, (m) => `<ul>${m}</ul>`)
     .replace(/\n\n/g, "</p><p>")
     .replace(/\n/g, "<br>");
-  return `<div style="font-family:Inter,sans-serif;max-width:700px;margin:0 auto;padding:20px"><p>${html}</p></div>`;
+  const wrappedHtml = `<div style="font-family:Inter,sans-serif;max-width:700px;margin:0 auto;padding:20px"><p>${html}</p></div>`;
+  // Sanitize the HTML to prevent XSS vulnerabilities
+  return DOMPurify.sanitize(wrappedHtml);
 }
 
 function MarkdownToHtml() {
@@ -51,20 +54,34 @@ function MarkdownToHtml() {
       <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <div>
           <p className="mb-1 text-[11px] text-muted-foreground">Markdown</p>
-          <textarea value={md} onChange={(e) => setMd(e.target.value)}
-            className="min-h-[350px] w-full resize-y rounded-xl border border-border bg-surface p-4 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none" />
+          <textarea
+            value={md}
+            onChange={(e) => setMd(e.target.value)}
+            className="min-h-[350px] w-full resize-y rounded-xl border border-border bg-surface p-4 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+          />
         </div>
         <div>
           <p className="mb-1 text-[11px] text-muted-foreground">Preview</p>
-          <div className="min-h-[350px] overflow-auto rounded-xl border border-border bg-white p-4 text-sm text-gray-800" dangerouslySetInnerHTML={{ __html: html }} />
+          <div
+            className="min-h-[350px] overflow-auto rounded-xl border border-border bg-white p-4 text-sm text-gray-800"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
         </div>
       </div>
       <div className="mt-3 flex gap-2">
-        <button type="button" onClick={copy} className="flex min-h-[44px] items-center gap-2 rounded-lg border border-border bg-surface px-4 text-sm font-medium text-foreground hover:text-primary">
+        <button
+          type="button"
+          onClick={copy}
+          className="flex min-h-[44px] items-center gap-2 rounded-lg border border-border bg-surface px-4 text-sm font-medium text-foreground hover:text-primary"
+        >
           {copied ? <Check className="size-4 text-green" /> : <Copy className="size-4" />}
           {copied ? "Copied!" : "Copy HTML"}
         </button>
-        <button type="button" onClick={download} className="flex min-h-[44px] items-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+        <button
+          type="button"
+          onClick={download}
+          className="flex min-h-[44px] items-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
           <Download className="size-4" /> Download .html
         </button>
       </div>
