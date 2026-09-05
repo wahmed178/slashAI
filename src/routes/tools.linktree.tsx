@@ -290,7 +290,8 @@ function ProfileList({
                 {copied === p.username ? "✓ Copied" : "Share"}
               </button>
               <Link
-                to={`/l/${p.username}`}
+                to="/l/$username"
+                params={{ username: p.username }}
                 className="text-[11px] text-muted-foreground hover:text-foreground"
               >
                 View

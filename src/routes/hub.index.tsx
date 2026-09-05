@@ -72,10 +72,7 @@ function HubIndexPage() {
         {HUBS.map((hub) => {
           const Icon = hub.icon;
           const count = countFor(hub);
-          const isStatic = ["islam", "urdu", "arabic"].includes(hub.audience);
-          const linkProps = isStatic
-            ? { to: `/hub/${hub.audience}` as const }
-            : { to: "/hub/$audience" as const, params: { audience: hub.audience } };
+          const linkProps = { to: "/hub/$audience" as const, params: { audience: hub.audience } };
           return (
             <Link
               key={hub.audience}
