@@ -1,0 +1,670 @@
+//#region node_modules/.nitro/vite/services/ssr/assets/regional-films-C66JSklZ.js
+var REGIONAL_SHELVES = [
+	{
+		lang: "hindi",
+		label: "Hindi",
+		region: "India",
+		films: [
+			{
+				title: "3 Idiots",
+				year: "2009"
+			},
+			{
+				title: "Gangs of Wasseypur",
+				year: "2012"
+			},
+			{
+				title: "Andhadhun",
+				year: "2018"
+			},
+			{
+				title: "Queen",
+				year: "2013"
+			},
+			{
+				title: "Tumbbad",
+				year: "2018"
+			},
+			{
+				title: "Jawan",
+				year: "2023"
+			},
+			{
+				title: "Dangal",
+				year: "2016"
+			},
+			{
+				title: "Masaan",
+				year: "2015"
+			},
+			{
+				title: "Lagaan",
+				year: "2001"
+			},
+			{
+				title: "Swades",
+				year: "2004"
+			},
+			{
+				title: "Article 15",
+				year: "2019"
+			},
+			{
+				title: "12th Fail",
+				year: "2023"
+			}
+		]
+	},
+	{
+		lang: "telugu",
+		label: "Telugu",
+		region: "India",
+		films: [
+			{
+				title: "Baahubali: The Beginning",
+				year: "2015"
+			},
+			{
+				title: "RRR",
+				year: "2022"
+			},
+			{
+				title: "Jersey",
+				year: "2019"
+			},
+			{
+				title: "Arjun Reddy",
+				year: "2017"
+			},
+			{
+				title: "Pushpa: The Rise",
+				year: "2021"
+			},
+			{
+				title: "Eega",
+				year: "2012"
+			},
+			{
+				title: "Mahanati",
+				year: "2018"
+			},
+			{
+				title: "Rangasthalam",
+				year: "2018"
+			},
+			{
+				title: "C/o Kancharapalem",
+				year: "2018"
+			},
+			{
+				title: "Sita Ramam",
+				year: "2022"
+			},
+			{
+				title: "Ala Vaikunthapurramuloo",
+				year: "2020"
+			},
+			{
+				title: "Kantara",
+				year: "2022"
+			}
+		]
+	},
+	{
+		lang: "tamil",
+		label: "Tamil",
+		region: "India",
+		films: [
+			{
+				title: "Vikram Vedha",
+				year: "2017"
+			},
+			{
+				title: "Super Deluxe",
+				year: "2019"
+			},
+			{
+				title: "Asuran",
+				year: "2019"
+			},
+			{
+				title: "Soorarai Pottru",
+				year: "2020"
+			},
+			{
+				title: "Pariyerum Perumal",
+				year: "2018"
+			},
+			{
+				title: "96",
+				year: "2018"
+			},
+			{
+				title: "Kaithi",
+				year: "2019"
+			},
+			{
+				title: "Jai Bhim",
+				year: "2021"
+			},
+			{
+				title: "Ratsasan",
+				year: "2018"
+			},
+			{
+				title: "Anbe Sivam",
+				year: "2003"
+			},
+			{
+				title: "Vada Chennai",
+				year: "2018"
+			},
+			{
+				title: "Ponniyin Selvan: Part One",
+				year: "2022"
+			}
+		]
+	},
+	{
+		lang: "malayalam",
+		label: "Malayalam",
+		region: "India",
+		films: [
+			{
+				title: "Drishyam",
+				year: "2013"
+			},
+			{
+				title: "Kumbalangi Nights",
+				year: "2019"
+			},
+			{
+				title: "Jallikattu",
+				year: "2019"
+			},
+			{
+				title: "Great Indian Kitchen",
+				year: "2021"
+			},
+			{
+				title: "Maheshinte Prathikaaram",
+				year: "2016"
+			},
+			{
+				title: "Premam",
+				year: "2015"
+			},
+			{
+				title: "Joji",
+				year: "2021"
+			},
+			{
+				title: "Minnal Murali",
+				year: "2021"
+			},
+			{
+				title: "Manjummel Boys",
+				year: "2024"
+			},
+			{
+				title: "Bhramayugam",
+				year: "2024"
+			},
+			{
+				title: "Angamaly Diaries",
+				year: "2017"
+			},
+			{
+				title: "Ustad Hotel",
+				year: "2012"
+			}
+		]
+	},
+	{
+		lang: "kannada",
+		label: "Kannada",
+		region: "India",
+		films: [
+			{
+				title: "KGF: Chapter 1",
+				year: "2018"
+			},
+			{
+				title: "KGF: Chapter 2",
+				year: "2022"
+			},
+			{
+				title: "Kantara",
+				year: "2022"
+			},
+			{
+				title: "Ulidavaru Kandanthe",
+				year: "2014"
+			},
+			{
+				title: "Lucia",
+				year: "2013"
+			},
+			{
+				title: "Thithi",
+				year: "2015"
+			},
+			{
+				title: "Rangitaranga",
+				year: "2015"
+			},
+			{
+				title: "Kirik Party",
+				year: "2016"
+			},
+			{
+				title: "Mungaru Male",
+				year: "2006"
+			},
+			{
+				title: "777 Charlie",
+				year: "2022"
+			},
+			{
+				title: "Sapta Sagaradaache Ello",
+				year: "2023"
+			},
+			{
+				title: "Garuda Gamana Vrishabha Vahana",
+				year: "2021"
+			}
+		]
+	},
+	{
+		lang: "marathi",
+		label: "Marathi",
+		region: "India",
+		films: [
+			{
+				title: "Sairat",
+				year: "2016"
+			},
+			{
+				title: "Court",
+				year: "2014"
+			},
+			{
+				title: "Fandry",
+				year: "2013"
+			},
+			{
+				title: "Killa",
+				year: "2014"
+			},
+			{
+				title: "Natsamrat",
+				year: "2016"
+			},
+			{
+				title: "Sherni",
+				year: "2021"
+			},
+			{
+				title: "Harishchandrachi Factory",
+				year: "2009"
+			},
+			{
+				title: "Shwaas",
+				year: "2004"
+			},
+			{
+				title: "Deool",
+				year: "2011"
+			},
+			{
+				title: "Ventilator",
+				year: "2016"
+			},
+			{
+				title: "Kaksparsh",
+				year: "2012"
+			},
+			{
+				title: "Jhund",
+				year: "2022"
+			}
+		]
+	},
+	{
+		lang: "bengali",
+		label: "Bengali",
+		region: "India & Bangladesh",
+		films: [
+			{
+				title: "Pather Panchali",
+				year: "1955"
+			},
+			{
+				title: "Charulata",
+				year: "1964"
+			},
+			{
+				title: "Meghe Dhaka Tara",
+				year: "1960"
+			},
+			{
+				title: "Autograph",
+				year: "2010"
+			},
+			{
+				title: "Bhooter Bhabishyat",
+				year: "2012"
+			},
+			{
+				title: "Baishe Srabon",
+				year: "2011"
+			},
+			{
+				title: "Aparajito",
+				year: "1956"
+			},
+			{
+				title: "Hirak Rajar Deshe",
+				year: "1980"
+			},
+			{
+				title: "Television",
+				year: "2012"
+			},
+			{
+				title: "Aynabaji",
+				year: "2016"
+			},
+			{
+				title: "Hawa",
+				year: "2022"
+			},
+			{
+				title: "Debi",
+				year: "2018"
+			}
+		]
+	},
+	{
+		lang: "punjabi",
+		label: "Punjabi",
+		region: "India & Pakistan",
+		films: [
+			{
+				title: "Punjab 1984",
+				year: "2014"
+			},
+			{
+				title: "Angrej",
+				year: "2015"
+			},
+			{
+				title: "Qismat",
+				year: "2018"
+			},
+			{
+				title: "Chal Mera Putt",
+				year: "2019"
+			},
+			{
+				title: "Ardaas",
+				year: "2016"
+			},
+			{
+				title: "Carry On Jatta",
+				year: "2012"
+			},
+			{
+				title: "Sufna",
+				year: "2020"
+			},
+			{
+				title: "Rabb Da Radio",
+				year: "2017"
+			},
+			{
+				title: "Jatt & Juliet",
+				year: "2012"
+			},
+			{
+				title: "Nikka Zaildar",
+				year: "2016"
+			},
+			{
+				title: "Shadaa",
+				year: "2019"
+			},
+			{
+				title: "Maurh",
+				year: "2023"
+			}
+		]
+	},
+	{
+		lang: "urdu",
+		label: "Pakistani",
+		region: "Pakistan",
+		films: [
+			{
+				title: "Joyland",
+				year: "2022"
+			},
+			{
+				title: "The Legend of Maula Jatt",
+				year: "2022"
+			},
+			{
+				title: "Cake",
+				year: "2018"
+			},
+			{
+				title: "Bol",
+				year: "2011"
+			},
+			{
+				title: "Khuda Kay Liye",
+				year: "2007"
+			},
+			{
+				title: "Manto",
+				year: "2015"
+			},
+			{
+				title: "Zindagi Tamasha",
+				year: "2019"
+			},
+			{
+				title: "Actor in Law",
+				year: "2016"
+			},
+			{
+				title: "Na Maloom Afraad",
+				year: "2014"
+			},
+			{
+				title: "Parwaaz Hai Junoon",
+				year: "2018"
+			},
+			{
+				title: "Laal Kabootar",
+				year: "2019"
+			},
+			{
+				title: "Punjab Nahi Jaungi",
+				year: "2017"
+			}
+		]
+	},
+	{
+		lang: "nepali",
+		label: "Nepali",
+		region: "Nepal",
+		films: [
+			{
+				title: "Kabaddi",
+				year: "2013"
+			},
+			{
+				title: "Loot",
+				year: "2012"
+			},
+			{
+				title: "Pashupati Prasad",
+				year: "2016"
+			},
+			{
+				title: "White Sun",
+				year: "2016"
+			},
+			{
+				title: "Talakjung vs Tulke",
+				year: "2014"
+			},
+			{
+				title: "Chhakka Panja",
+				year: "2016"
+			},
+			{
+				title: "Kalo Pothi",
+				year: "2015"
+			},
+			{
+				title: "Prasad",
+				year: "2018"
+			},
+			{
+				title: "Numafung",
+				year: "2001"
+			},
+			{
+				title: "Jhola",
+				year: "2013"
+			},
+			{
+				title: "Senti Virus",
+				year: "2020"
+			},
+			{
+				title: "Prem Geet",
+				year: "2016"
+			}
+		]
+	},
+	{
+		lang: "sinhala",
+		label: "Sri Lankan",
+		region: "Sri Lanka",
+		films: [
+			{
+				title: "Ho Gana Pokuna",
+				year: "2015"
+			},
+			{
+				title: "Aloko Udapadi",
+				year: "2017"
+			},
+			{
+				title: "Nidhanaya",
+				year: "1972"
+			},
+			{
+				title: "Purahanda Kaluwara",
+				year: "1997"
+			},
+			{
+				title: "August Drizzle",
+				year: "2020"
+			},
+			{
+				title: "Sankara",
+				year: "2007"
+			},
+			{
+				title: "Machan",
+				year: "2008"
+			},
+			{
+				title: "Kadira Divyaraja",
+				year: "2019"
+			},
+			{
+				title: "Gamperaliya",
+				year: "1963"
+			},
+			{
+				title: "Bahubuthayo",
+				year: "2011"
+			},
+			{
+				title: "Prasanna Vithanage Akasa Kusum",
+				year: "2008"
+			},
+			{
+				title: "Dear Sam",
+				year: "2019"
+			}
+		]
+	},
+	{
+		lang: "world",
+		label: "Global picks",
+		region: "Worldwide",
+		films: [
+			{
+				title: "Parasite",
+				year: "2019"
+			},
+			{
+				title: "Spirited Away",
+				year: "2001"
+			},
+			{
+				title: "City of God",
+				year: "2002"
+			},
+			{
+				title: "The Lives of Others",
+				year: "2006"
+			},
+			{
+				title: "A Separation",
+				year: "2011"
+			},
+			{
+				title: "Amélie",
+				year: "2001"
+			},
+			{
+				title: "Oldboy",
+				year: "2003"
+			},
+			{
+				title: "Cinema Paradiso",
+				year: "1988"
+			},
+			{
+				title: "Pan's Labyrinth",
+				year: "2006"
+			},
+			{
+				title: "The Handmaiden",
+				year: "2016"
+			},
+			{
+				title: "Drive My Car",
+				year: "2021"
+			},
+			{
+				title: "Society of the Snow",
+				year: "2023"
+			}
+		]
+	}
+];
+var SHELF_LANGS = REGIONAL_SHELVES.map((s) => ({
+	lang: s.lang,
+	label: s.label,
+	region: s.region
+}));
+//#endregion
+export { SHELF_LANGS as n, REGIONAL_SHELVES as t };

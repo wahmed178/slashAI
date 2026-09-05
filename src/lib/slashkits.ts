@@ -126,6 +126,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "svg-preview", name: "SVG Previewer", desc: "Preview and edit SVG code", icon: "🖼️" },
       { slug: "code-beautifier", name: "Code Beautifier", desc: "Format HTML/CSS/JS code", icon: "✨" },
       { slug: "html-preview", name: "HTML Previewer", desc: "Preview HTML code in real-time", icon: "🌐" },
+      { slug: "html-compiler", name: "HTML Compiler & Viewer", desc: "Write, compile and preview HTML with live rendering", icon: "🌐" },
       { slug: "css-playground", name: "CSS Playground", desc: "Live CSS editor with preview", icon: "🎨" },
       { slug: "js-playground", name: "JS Playground", desc: "Run JavaScript in the browser", icon: "⚡" },
       { slug: "shortcut", name: "Keyboard Shortcuts", desc: "VS Code, Chrome, Figma, Slack, Mac & more", icon: "⌨️" },

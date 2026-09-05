@@ -131,6 +131,7 @@ import { Route as ToolsHabitsRouteImport } from './routes/tools.habits'
 import { Route as ToolsHealthTrackerRouteImport } from './routes/tools.health-tracker'
 import { Route as ToolsHeartRateRouteImport } from './routes/tools.heart-rate'
 import { Route as ToolsHijriRouteImport } from './routes/tools.hijri'
+import { Route as ToolsHtmlCompilerRouteImport } from './routes/tools.html-compiler'
 import { Route as ToolsHtmlEntityRouteImport } from './routes/tools.html-entity'
 import { Route as ToolsHtmlPreviewRouteImport } from './routes/tools.html-preview'
 import { Route as ToolsHtmlToPdfRouteImport } from './routes/tools.html-to-pdf'
@@ -846,6 +847,11 @@ const ToolsHijriRoute = ToolsHijriRouteImport.update({
   path: '/hijri',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsHtmlCompilerRoute = ToolsHtmlCompilerRouteImport.update({
+  id: '/html-compiler',
+  path: '/html-compiler',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsHtmlEntityRoute = ToolsHtmlEntityRouteImport.update({
   id: '/html-entity',
   path: '/html-entity',
@@ -1484,6 +1490,7 @@ export interface FileRoutesByFullPath {
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/heart-rate': typeof ToolsHeartRateRoute
   '/tools/hijri': typeof ToolsHijriRoute
+  '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
   '/tools/html-entity': typeof ToolsHtmlEntityRoute
   '/tools/html-preview': typeof ToolsHtmlPreviewRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
@@ -1711,6 +1718,7 @@ export interface FileRoutesByTo {
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/heart-rate': typeof ToolsHeartRateRoute
   '/tools/hijri': typeof ToolsHijriRoute
+  '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
   '/tools/html-entity': typeof ToolsHtmlEntityRoute
   '/tools/html-preview': typeof ToolsHtmlPreviewRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
@@ -1940,6 +1948,7 @@ export interface FileRoutesById {
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/heart-rate': typeof ToolsHeartRateRoute
   '/tools/hijri': typeof ToolsHijriRoute
+  '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
   '/tools/html-entity': typeof ToolsHtmlEntityRoute
   '/tools/html-preview': typeof ToolsHtmlPreviewRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
@@ -2170,6 +2179,7 @@ export interface FileRouteTypes {
     | '/tools/health-tracker'
     | '/tools/heart-rate'
     | '/tools/hijri'
+    | '/tools/html-compiler'
     | '/tools/html-entity'
     | '/tools/html-preview'
     | '/tools/html-to-pdf'
@@ -2397,6 +2407,7 @@ export interface FileRouteTypes {
     | '/tools/health-tracker'
     | '/tools/heart-rate'
     | '/tools/hijri'
+    | '/tools/html-compiler'
     | '/tools/html-entity'
     | '/tools/html-preview'
     | '/tools/html-to-pdf'
@@ -2625,6 +2636,7 @@ export interface FileRouteTypes {
     | '/tools/health-tracker'
     | '/tools/heart-rate'
     | '/tools/hijri'
+    | '/tools/html-compiler'
     | '/tools/html-entity'
     | '/tools/html-preview'
     | '/tools/html-to-pdf'
@@ -3655,6 +3667,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsHijriRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/html-compiler': {
+      id: '/tools/html-compiler'
+      path: '/html-compiler'
+      fullPath: '/tools/html-compiler'
+      preLoaderRoute: typeof ToolsHtmlCompilerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/html-entity': {
       id: '/tools/html-entity'
       path: '/html-entity'
@@ -4463,6 +4482,7 @@ interface ToolsRouteChildren {
   ToolsHealthTrackerRoute: typeof ToolsHealthTrackerRoute
   ToolsHeartRateRoute: typeof ToolsHeartRateRoute
   ToolsHijriRoute: typeof ToolsHijriRoute
+  ToolsHtmlCompilerRoute: typeof ToolsHtmlCompilerRoute
   ToolsHtmlEntityRoute: typeof ToolsHtmlEntityRoute
   ToolsHtmlPreviewRoute: typeof ToolsHtmlPreviewRoute
   ToolsHtmlToPdfRoute: typeof ToolsHtmlToPdfRoute
@@ -4633,6 +4653,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsHealthTrackerRoute: ToolsHealthTrackerRoute,
   ToolsHeartRateRoute: ToolsHeartRateRoute,
   ToolsHijriRoute: ToolsHijriRoute,
+  ToolsHtmlCompilerRoute: ToolsHtmlCompilerRoute,
   ToolsHtmlEntityRoute: ToolsHtmlEntityRoute,
   ToolsHtmlPreviewRoute: ToolsHtmlPreviewRoute,
   ToolsHtmlToPdfRoute: ToolsHtmlToPdfRoute,
@@ -4803,3 +4824,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
