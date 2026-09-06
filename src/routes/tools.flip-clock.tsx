@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/tools/flip-clock")({
-  head: () => ({ meta: [{ title: "Flip Clock — SlashKits" }] }),
+  head: () => ({ meta: [{ title: "Flip Clock - SlashKits" }] }),
   component: FlipClock,
 });
 
@@ -163,7 +163,7 @@ function FlipCard({
         />
       </div>
 
-      {/* AM/PM badge — bottom-left of card */}
+      {/* AM/PM badge - bottom-left of card */}
       {showAmPm && (
         <div
           className="absolute z-30"
@@ -178,7 +178,7 @@ function FlipCard({
         </div>
       )}
 
-      {/* Label — top-right of card */}
+      {/* Label - top-right of card */}
       {label && (
         <div
           className="absolute z-30"
@@ -272,7 +272,7 @@ function FlipClock() {
         style={{ width: "1px", background: "rgba(255,255,255,0.04)" }}
       />
 
-      {/* Flip cards — vertical stack, centered */}
+      {/* Flip cards - vertical stack, centered */}
       <div className="flex-1 flex flex-col items-center justify-center gap-3 sm:gap-4 px-8 sm:px-12 relative z-10">
         <div className="w-full max-w-[260px] sm:max-w-[320px]">
           <FlipCard value={hStr} showAmPm={!h24} isPm={isPm} />

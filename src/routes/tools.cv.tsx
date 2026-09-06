@@ -70,8 +70,8 @@ function CVBuilder() {
     const section = (title: string) => { doc.setFont("helvetica", "bold"); doc.setFontSize(11); doc.text(title, 20, y); y += 5; doc.setDrawColor(200); doc.line(20, y, 190, y); y += 5; };
 
     if (data.summary) { section("SUMMARY"); doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.splitTextToSize(data.summary, 170).forEach((l: string) => { doc.text(l, 20, y); y += 4; }); y += 3; }
-    if (data.experience.length) { section("EXPERIENCE"); data.experience.forEach(exp => { doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.text(`${exp.title} — ${exp.company}`, 20, y); y += 4; doc.setFont("helvetica", "italic"); doc.text(exp.dates, 20, y); y += 4; doc.setFont("helvetica", "normal"); doc.splitTextToSize(exp.description, 170).forEach((l: string) => { doc.text(l, 20, y); y += 4; }); y += 2; }); }
-    if (data.education.length) { section("EDUCATION"); data.education.forEach(edu => { doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.text(`${edu.degree} — ${edu.school}`, 20, y); y += 4; doc.setFont("helvetica", "italic"); doc.text(edu.dates, 20, y); y += 6; }); }
+    if (data.experience.length) { section("EXPERIENCE"); data.experience.forEach(exp => { doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.text(`${exp.title} - ${exp.company}`, 20, y); y += 4; doc.setFont("helvetica", "italic"); doc.text(exp.dates, 20, y); y += 4; doc.setFont("helvetica", "normal"); doc.splitTextToSize(exp.description, 170).forEach((l: string) => { doc.text(l, 20, y); y += 4; }); y += 2; }); }
+    if (data.education.length) { section("EDUCATION"); data.education.forEach(edu => { doc.setFont("helvetica", "bold"); doc.setFontSize(9); doc.text(`${edu.degree} - ${edu.school}`, 20, y); y += 4; doc.setFont("helvetica", "italic"); doc.text(edu.dates, 20, y); y += 6; }); }
     if (data.skills.length) { section("SKILLS"); doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text(data.skills.join(" · "), 20, y); }
 
     doc.save(`${data.name || "resume"}.pdf`);
@@ -91,7 +91,7 @@ function CVBuilder() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-foreground">📄 ATS Resume Builder</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Build an ATS-optimised resume. Saves to browser — never lost.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Build an ATS-optimised resume. Saves to browser - never lost.</p>
           </div>
           <div className="text-right">
             <p className={`text-2xl font-bold ${scoreColor}`}>{score}%</p>
@@ -133,7 +133,7 @@ function CVBuilder() {
                   <Input label="Job Title" value={exp.title} onChange={v => updateExp(i, { title: v })} placeholder="Software Engineer" />
                   <Input label="Company" value={exp.company} onChange={v => updateExp(i, { company: v })} placeholder="Company Name" />
                 </div>
-                <Input label="Dates" value={exp.dates} onChange={v => updateExp(i, { dates: v })} placeholder="Jan 2024 — Present" />
+                <Input label="Dates" value={exp.dates} onChange={v => updateExp(i, { dates: v })} placeholder="Jan 2024 - Present" />
                 <div className="mt-1">
                   <label className="mb-1 block text-[10px] text-muted-foreground">Description</label>
                   <textarea value={exp.description} onChange={e => updateExp(i, { description: e.target.value })} rows={2}
@@ -158,7 +158,7 @@ function CVBuilder() {
                   <Input label="Degree" value={edu.degree} onChange={v => updateEdu(i, { degree: v })} placeholder="B.Tech CSE" />
                   <Input label="School" value={edu.school} onChange={v => updateEdu(i, { school: v })} placeholder="University Name" />
                 </div>
-                <Input label="Dates" value={edu.dates} onChange={v => updateEdu(i, { dates: v })} placeholder="2020 — 2024" />
+                <Input label="Dates" value={edu.dates} onChange={v => updateEdu(i, { dates: v })} placeholder="2020 - 2024" />
               </div>
             ))}
           </div>
@@ -198,7 +198,7 @@ function CVBuilder() {
             <h3 className="mt-3 border-b border-gray-200 pb-0.5 text-[11px] font-bold uppercase">Experience</h3>
             {data.experience.map((exp, i) => (
               <div key={i} className="mt-1.5">
-                <p className="text-[11px] font-bold">{exp.title} — {exp.company}</p>
+                <p className="text-[11px] font-bold">{exp.title} - {exp.company}</p>
                 <p className="text-[9px] italic text-gray-500">{exp.dates}</p>
                 <p className="text-[10px] text-gray-700">{exp.description}</p>
               </div>
@@ -208,7 +208,7 @@ function CVBuilder() {
             <h3 className="mt-3 border-b border-gray-200 pb-0.5 text-[11px] font-bold uppercase">Education</h3>
             {data.education.map((edu, i) => (
               <div key={i} className="mt-1.5">
-                <p className="text-[11px] font-bold">{edu.degree} — {edu.school}</p>
+                <p className="text-[11px] font-bold">{edu.degree} - {edu.school}</p>
                 <p className="text-[9px] italic text-gray-500">{edu.dates}</p>
               </div>
             ))}

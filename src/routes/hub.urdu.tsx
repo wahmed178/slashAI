@@ -4,11 +4,11 @@ import { AppShell } from "@/components/library/AppShell";
 export const Route = createFileRoute("/hub/urdu")({
   head: () => ({
     meta: [
-      { title: "Urdu Writers Hub — SlashAI" },
+      { title: "Urdu Writers Hub - SlashAI" },
       {
         name: "description",
         content:
-          "Free Urdu poetry, ghazals, dictionaries, fonts and learning resources — Rekhta, Aamozish, Nastaliq fonts and more in one calm hub.",
+          "Free Urdu poetry, ghazals, dictionaries, fonts and learning resources - Rekhta, Aamozish, Nastaliq fonts and more in one calm hub.",
       },
     ],
   }),
@@ -18,23 +18,23 @@ export const Route = createFileRoute("/hub/urdu")({
 const RESOURCES = [
   { name: "Rekhta", desc: "World's largest free Urdu poetry collection", url: "https://rekhta.org", emoji: "📖", category: "Poetry" },
   { name: "Urdu Word", desc: "Online Urdu-English dictionary with word meanings", url: "https://www.urduword.com", emoji: "📕", category: "Dictionary" },
-  { name: "Google Noto Nastaliq", desc: "Free Urdu font — best for Nastaliq script", url: "https://fonts.google.com/noto/specimen/Noto+Nastaliq+Urdu", emoji: "🔤", category: "Fonts" },
-  { name: "Google Input Tools — Urdu", desc: "Type Urdu in your browser without an Urdu keyboard", url: "https://www.google.com/inputtools/try/", emoji: "⌨️", category: "Tools" },
+  { name: "Google Noto Nastaliq", desc: "Free Urdu font - best for Nastaliq script", url: "https://fonts.google.com/noto/specimen/Noto+Nastaliq+Urdu", emoji: "🔤", category: "Fonts" },
+  { name: "Google Input Tools - Urdu", desc: "Type Urdu in your browser without an Urdu keyboard", url: "https://www.google.com/inputtools/try/", emoji: "⌨️", category: "Tools" },
   { name: "Rekhta Aamozish", desc: "Learn the Urdu script and poetry online, free", url: "https://www.rekhta.org/aamozish", emoji: "🎓", category: "Learning" },
   { name: "BBC Urdu", desc: "News and features in Urdu", url: "https://www.bbc.com/urdu", emoji: "📰", category: "News" },
-  { name: "Voice of America — Urdu", desc: "Urdu news and current affairs", url: "https://www.voanews.com/urdu", emoji: "📻", category: "News" },
+  { name: "Voice of America - Urdu", desc: "Urdu news and current affairs", url: "https://www.voanews.com/urdu", emoji: "📻", category: "News" },
   { name: "HamariWeb Urdu", desc: "Urdu literature and resources", url: "https://hamariweb.com/urdu", emoji: "📚", category: "Literature" },
 ];
 
 const POETS = [
-  { name: "Mirza Ghalib", era: "1797–1869", known: "Ghazal master, Delhi Urdu", famous: "Hazaaron Khwahishen Aisi" },
-  { name: "Allama Iqbal", era: "1877–1938", known: "Poet-philosopher of the East", famous: "Shikwa, Jawaab-e-Shikwa" },
-  { name: "Faiz Ahmed Faiz", era: "1911–1984", known: "Progressive poetry, Lahore", famous: "Mujh Se Pehli Si Mohabbat" },
-  { name: "Mir Taqi Mir", era: "1723–1810", known: "Father of Urdu poetry", famous: "Dikhai Diye Yun" },
-  { name: "Ahmad Faraz", era: "1931–2008", known: "Modern romantic ghazal", famous: "Ranjish Hi Sahi" },
-  { name: "Sahir Ludhianvi", era: "1921–1980", known: "Film lyrics + revolutionary verse", famous: "Chin Taashing" },
-  { name: "Parveen Shakir", era: "1952–1994", known: "Modern women's Urdu poetry", famous: "Kuch Toh Majbooriyan" },
-  { name: "Josh Malihabadi", era: "1894–1982", known: "Poet of revolution", famous: "Shola-o-Shabnam" },
+  { name: "Mirza Ghalib", era: "1797-1869", known: "Ghazal master, Delhi Urdu", famous: "Hazaaron Khwahishen Aisi" },
+  { name: "Allama Iqbal", era: "1877-1938", known: "Poet-philosopher of the East", famous: "Shikwa, Jawaab-e-Shikwa" },
+  { name: "Faiz Ahmed Faiz", era: "1911-1984", known: "Progressive poetry, Lahore", famous: "Mujh Se Pehli Si Mohabbat" },
+  { name: "Mir Taqi Mir", era: "1723-1810", known: "Father of Urdu poetry", famous: "Dikhai Diye Yun" },
+  { name: "Ahmad Faraz", era: "1931-2008", known: "Modern romantic ghazal", famous: "Ranjish Hi Sahi" },
+  { name: "Sahir Ludhianvi", era: "1921-1980", known: "Film lyrics + revolutionary verse", famous: "Chin Taashing" },
+  { name: "Parveen Shakir", era: "1952-1994", known: "Modern women's Urdu poetry", famous: "Kuch Toh Majbooriyan" },
+  { name: "Josh Malihabadi", era: "1894-1982", known: "Poet of revolution", famous: "Shola-o-Shabnam" },
 ];
 
 const GHAZALS = [

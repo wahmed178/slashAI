@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Bold, Italic, Heading1, Link, Code, List, Download, FileText, Eye, Edit3 } from "lucide-react";
 
 export const Route = createFileRoute("/tools/markdown-editor")({
-  head: () => ({ meta: [{ title: "Markdown Editor — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Markdown Editor - SlashAI" }] }),
   component: MarkdownEditor,
 });
 
@@ -19,11 +19,11 @@ const TEMPLATES: Array<{ name: string; content: string }> = [
   },
   {
     name: "Meeting Notes",
-    content: "# Meeting Notes — [Date]\n\n## Attendees\n- Person 1\n- Person 2\n\n## Agenda\n1. Topic 1\n2. Topic 2\n\n## Discussion\n\nNotes here...\n\n## Action Items\n- [ ] Task 1 — @person\n- [ ] Task 2 — @person\n",
+    content: "# Meeting Notes - [Date]\n\n## Attendees\n- Person 1\n- Person 2\n\n## Agenda\n1. Topic 1\n2. Topic 2\n\n## Discussion\n\nNotes here...\n\n## Action Items\n- [ ] Task 1 - @person\n- [ ] Task 2 - @person\n",
   },
   {
     name: "Resume",
-    content: "# Name\n\n**Email** | **Phone** | **LinkedIn**\n\n## Experience\n\n### Company — Role\n*Date — Present*\n- Achievement 1\n- Achievement 2\n\n## Education\n\n### University — Degree\n*Year*\n\n## Skills\n\nSkill 1, Skill 2, Skill 3\n",
+    content: "# Name\n\n**Email** | **Phone** | **LinkedIn**\n\n## Experience\n\n### Company - Role\n*Date - Present*\n- Achievement 1\n- Achievement 2\n\n## Education\n\n### University - Degree\n*Year*\n\n## Skills\n\nSkill 1, Skill 2, Skill 3\n",
   },
 ];
 

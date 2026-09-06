@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/l/$username")({
   head: ({ params }) => ({
     meta: [
-      { title: `${params.username} — Link Page | SlashAI` },
-      { name: "description", content: `Connect with ${params.username} — all their links in one place.` },
+      { title: `${params.username} - Link Page | SlashAI` },
+      { name: "description", content: `Connect with ${params.username} - all their links in one place.` },
     ],
   }),
   component: PublicProfile,

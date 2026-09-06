@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/tools/analyze")({
   head: () => ({
     meta: [
-      { title: "Website Analyser — free SEO, speed & security audit | SlashAI" },
+      { title: "Website Analyser - free SEO, speed & security audit | SlashAI" },
       {
         name: "description",
         content:
@@ -61,7 +61,7 @@ function hostnameOf(url: string): string {
   }
 }
 
-/** crude but honest fingerprinting from raw HTML — no external service needed */
+/** crude but honest fingerprinting from raw HTML - no external service needed */
 function detectTech(html: string, headers: Record<string, string>): { tech: string; detail: string }[] {
   const out: { tech: string; detail: string }[] = [];
   const has = (re: RegExp, tech: string, detail: string) => {
@@ -86,7 +86,7 @@ function detectTech(html: string, headers: Record<string, string>): { tech: stri
 }
 
 function grade(score: number | null): { letter: string; color: string } {
-  if (score === null) return { letter: "—", color: "text-muted-foreground" };
+  if (score === null) return { letter: "-", color: "text-muted-foreground" };
   if (score >= 90) return { letter: "A", color: "text-chart-2" };
   if (score >= 80) return { letter: "B", color: "text-chart-2" };
   if (score >= 70) return { letter: "C", color: "text-chart-3" };
@@ -105,7 +105,7 @@ function AnalyzeTool() {
 
   const run = async () => {
     if (!url.trim()) {
-      setError("Paste a website URL first — e.g. example.com");
+      setError("Paste a website URL first - e.g. example.com");
       setPhase("error");
       return;
     }
@@ -123,7 +123,7 @@ function AnalyzeTool() {
     let headers: Record<string, string> = {};
 
     try {
-      /* 1 — fetch the page HTML through a CORS proxy */
+      /* 1 - fetch the page HTML through a CORS proxy */
       const htmlResp = await fetchWithTimeout(PROXY_RAW(target));
       html = await htmlResp.text();
       const proxyResp = await fetchWithTimeout(PROXY_GET(target));
@@ -131,7 +131,7 @@ function AnalyzeTool() {
         const j = await proxyResp.json();
         if (j?.status?.headers) headers = j.status.headers as Record<string, string>;
       } catch {
-        /* headers unavailable — non-fatal */
+        /* headers unavailable - non-fatal */
       }
     } catch (e) {
       setError(
@@ -143,7 +143,7 @@ function AnalyzeTool() {
       return;
     }
 
-    /* 2 — SEO: parse what we actually received */
+    /* 2 - SEO: parse what we actually received */
     const doc = (() => {
       try {
         return new DOMParser().parseFromString(html, "text/html");
@@ -161,13 +161,13 @@ function AnalyzeTool() {
     const seoChecks: SectionResult["checks"] = [
       { label: `<title> tag present`, ok: title.length > 0, detail: title ? `${title.length} chars` : undefined },
       {
-        label: "Title length 50–60 chars",
+        label: "Title length 50-60 chars",
         ok: title.length >= 50 && title.length <= 60 ? true : title.length > 0 ? false : null,
         detail: title ? `${title.length} chars` : undefined,
       },
       { label: "Meta description present", ok: metaDesc.length > 0, detail: metaDesc ? `${metaDesc.length} chars` : undefined },
       {
-        label: "Meta description 150–160 chars",
+        label: "Meta description 150-160 chars",
         ok: metaDesc.length >= 150 && metaDesc.length <= 160 ? true : metaDesc.length > 0 ? false : null,
         detail: metaDesc ? `${metaDesc.length} chars` : undefined,
       },
@@ -175,7 +175,7 @@ function AnalyzeTool() {
     ];
     results.push({ id: "seo", title: "SEO basics", icon: "🔍", checks: seoChecks });
 
-    /* 3 — social meta tags */
+    /* 3 - social meta tags */
     results.push({
       id: "social",
       title: "Social sharing",
@@ -187,7 +187,7 @@ function AnalyzeTool() {
       ],
     });
 
-    /* 4 — security headers (when the proxy could see them) */
+    /* 4 - security headers (when the proxy could see them) */
     const hd = (k: string) => (headers[k.toLowerCase()] ?? "").toString().toLowerCase();
     results.push({
       id: "security",
@@ -202,7 +202,7 @@ function AnalyzeTool() {
       ],
     });
 
-    /* 5 — robots.txt + sitemap.xml probes */
+    /* 5 - robots.txt + sitemap.xml probes */
     const probes: { label: string; path: string }[] = [
       { label: "robots.txt", path: "/robots.txt" },
       { label: "sitemap.xml", path: "/sitemap.xml" },
@@ -227,7 +227,7 @@ function AnalyzeTool() {
     }
     results.push({ id: "crawl", title: "Crawlability", icon: "🕷️", checks: probeChecks });
 
-    /* 6 — PageSpeed (mobile) — free Google API, optional */
+    /* 6 - PageSpeed (mobile) - free Google API, optional */
     let ps: PageSpeedResult = {};
     try {
       const psResp = await fetchWithTimeout(
@@ -244,7 +244,7 @@ function AnalyzeTool() {
         };
       }
     } catch {
-      /* PageSpeed is best-effort — the rest of the audit still stands */
+      /* PageSpeed is best-effort - the rest of the audit still stands */
     }
     setPageSpeed(ps);
 
@@ -276,7 +276,7 @@ function AnalyzeTool() {
           Website Analyser
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Paste any URL for a free audit — PageSpeed, security headers, SEO basics, social meta and tech stack. No sign-up, no API key.
+          Paste any URL for a free audit - PageSpeed, security headers, SEO basics, social meta and tech stack. No sign-up, no API key.
         </p>
       </header>
 
@@ -344,7 +344,7 @@ function AnalyzeTool() {
               return (
                 <div key={k} className="rounded-xl border border-border bg-surface p-3 text-center">
                   <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">{label}</p>
-                  <p className={cn("mt-1 text-2xl font-black", g.color)}>{v != null ? v : "—"}</p>
+                  <p className={cn("mt-1 text-2xl font-black", g.color)}>{v != null ? v : "-"}</p>
                   <p className="mt-0.5 text-[10px] text-muted-foreground">{v != null ? "/100" : "unavailable"}</p>
                 </div>
               );
@@ -384,7 +384,7 @@ function AnalyzeTool() {
                         {c.ok === null && <span className="mt-0.5 size-3.5 shrink-0 text-muted-foreground/50">·</span>}
                         <span className={c.ok === false ? "text-muted-foreground" : "text-foreground/90"}>
                           {c.label}
-                          {c.detail ? <span className="text-muted-foreground"> — {c.detail}</span> : null}
+                          {c.detail ? <span className="text-muted-foreground"> - {c.detail}</span> : null}
                         </span>
                       </div>
                     ))}

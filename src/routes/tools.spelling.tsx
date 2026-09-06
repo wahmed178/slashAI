@@ -71,7 +71,7 @@ function SpellingChecker() {
     <AppShell title="Spelling Checker">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">✍️ Spelling & Grammar Checker</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Offline spell check — repeated words, common mistakes, capitalization. No API needed.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Offline spell check - repeated words, common mistakes, capitalization. No API needed.</p>
       </header>
 
       <div className="mx-auto max-w-2xl space-y-4">

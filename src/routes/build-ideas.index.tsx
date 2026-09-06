@@ -30,11 +30,11 @@ export const Route = createFileRoute("/build-ideas/")({
         name: "description",
         content: `Browse ${IDEA_TOTAL} researched product ideas with the problem, target users, MVP scope, tech stack, pricing and a first-10-customers plan for each one.`,
       },
-      { property: "og:title", content: "Build Ideas Library — SlashAI" },
+      { property: "og:title", content: "Build Ideas Library - SlashAI" },
       {
         property: "og:description",
         content:
-          "Researched product ideas with MVP scope, monetization and acquisition plans — free to browse, offline ready.",
+          "Researched product ideas with MVP scope, monetization and acquisition plans - free to browse, offline ready.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

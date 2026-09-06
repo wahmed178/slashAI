@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/meme")({
   head: () => ({
     meta: [
-      { title: "Meme Generator — SlashAI" },
-      { name: "description", content: "Create memes in your browser with classic templates — caption, download as PNG, no watermark, nothing uploaded." },
+      { title: "Meme Generator - SlashAI" },
+      { name: "description", content: "Create memes in your browser with classic templates - caption, download as PNG, no watermark, nothing uploaded." },
     ],
   }),
   component: MemeGenerator,
@@ -161,7 +161,7 @@ export default function MemeGenerator() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-foreground">😂 Meme Generator</h1>
-          <p className="text-sm text-muted-foreground">Create memes instantly — no watermark, completely free</p>
+          <p className="text-sm text-muted-foreground">Create memes instantly - no watermark, completely free</p>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[320px_1fr]">

@@ -22,9 +22,9 @@ export const Route = createFileRoute("/build-ideas/$slug")({
     if (!idea) return {};
     return {
       meta: [
-        { title: `${idea.title} — build idea with MVP scope | SlashAI` },
+        { title: `${idea.title} - build idea with MVP scope | SlashAI` },
         { name: "description", content: idea.shortDescription },
-        { property: "og:title", content: `${idea.title} — SlashAI Build Ideas` },
+        { property: "og:title", content: `${idea.title} - SlashAI Build Ideas` },
         { property: "og:description", content: idea.shortDescription },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary" },

@@ -5,11 +5,11 @@ import { AppShell } from "@/components/library/AppShell";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — SlashAI" },
+      { title: "Contact - SlashAI" },
       {
         name: "description",
         content:
-          "Get in touch with the SlashAI team — feedback, bugs, feature requests, or just say hello.",
+          "Get in touch with the SlashAI team - feedback, bugs, feature requests, or just say hello.",
       },
     ],
   }),
@@ -46,7 +46,7 @@ function ContactPage() {
         createdAt: new Date().toISOString(),
       };
 
-      // Store locally (no backend — honest about it)
+      // Store locally (no backend - honest about it)
       const existing: Message[] = JSON.parse(
         localStorage.getItem("slashai-messages") || "[]"
       );
@@ -79,7 +79,7 @@ function ContactPage() {
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
               Stored locally on this device. Since SlashAI has no backend
-              server, we can't receive emails — but your message is saved here.
+              server, we can't receive emails - but your message is saved here.
               Thank you for the feedback!
             </p>
             <button

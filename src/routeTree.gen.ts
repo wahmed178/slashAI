@@ -75,6 +75,7 @@ import { Route as ToolsBudgetRouteImport } from './routes/tools.budget'
 import { Route as ToolsCalorieRouteImport } from './routes/tools.calorie'
 import { Route as ToolsCertificateRouteImport } from './routes/tools.certificate'
 import { Route as ToolsChangelogMakerRouteImport } from './routes/tools.changelog-maker'
+import { Route as ToolsClockAngleRouteImport } from './routes/tools.clock-angle'
 import { Route as ToolsCodeScreenshotRouteImport } from './routes/tools.code-screenshot'
 import { Route as ToolsCoinFlipRouteImport } from './routes/tools.coin-flip'
 import { Route as ToolsColorPaletteRouteImport } from './routes/tools.color-palette'
@@ -103,6 +104,7 @@ import { Route as ToolsGradientRouteImport } from './routes/tools.gradient'
 import { Route as ToolsGstCalculatorRouteImport } from './routes/tools.gst-calculator'
 import { Route as ToolsHabitStackRouteImport } from './routes/tools.habit-stack'
 import { Route as ToolsHabitsRouteImport } from './routes/tools.habits'
+import { Route as ToolsHashGeneratorRouteImport } from './routes/tools.hash-generator'
 import { Route as ToolsHealthTrackerRouteImport } from './routes/tools.health-tracker'
 import { Route as ToolsHijriRouteImport } from './routes/tools.hijri'
 import { Route as ToolsHtmlCompilerRouteImport } from './routes/tools.html-compiler'
@@ -113,12 +115,16 @@ import { Route as ToolsImagesToPdfRouteImport } from './routes/tools.images-to-p
 import { Route as ToolsInterviewRouteImport } from './routes/tools.interview'
 import { Route as ToolsInvoiceRouteImport } from './routes/tools.invoice'
 import { Route as ToolsIpRouteImport } from './routes/tools.ip'
+import { Route as ToolsJsonDiffRouteImport } from './routes/tools.json-diff'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
+import { Route as ToolsJsonYamlRouteImport } from './routes/tools.json-yaml'
 import { Route as ToolsKharchRouteImport } from './routes/tools.kharch'
 import { Route as ToolsLinktreeRouteImport } from './routes/tools.linktree'
+import { Route as ToolsLoanEligibilityRouteImport } from './routes/tools.loan-eligibility'
 import { Route as ToolsLoremRouteImport } from './routes/tools.lorem'
 import { Route as ToolsMarkdownEditorRouteImport } from './routes/tools.markdown-editor'
 import { Route as ToolsMarkdownToHtmlRouteImport } from './routes/tools.markdown-to-html'
+import { Route as ToolsMatrixRouteImport } from './routes/tools.matrix'
 import { Route as ToolsMeetingRouteImport } from './routes/tools.meeting'
 import { Route as ToolsMemeRouteImport } from './routes/tools.meme'
 import { Route as ToolsMetaRouteImport } from './routes/tools.meta'
@@ -179,7 +185,9 @@ import { Route as ToolsUnitConverterRouteImport } from './routes/tools.unit-conv
 import { Route as ToolsUpiRouteImport } from './routes/tools.upi'
 import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
+import { Route as ToolsWhiteboardRouteImport } from './routes/tools.whiteboard'
 import { Route as ToolsWhitespaceRouteImport } from './routes/tools.whitespace'
+import { Route as ToolsWordCloudRouteImport } from './routes/tools.word-cloud'
 import { Route as ToolsWorldClockRouteImport } from './routes/tools.world-clock'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -514,6 +522,11 @@ const ToolsChangelogMakerRoute = ToolsChangelogMakerRouteImport.update({
   path: '/changelog-maker',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsClockAngleRoute = ToolsClockAngleRouteImport.update({
+  id: '/clock-angle',
+  path: '/clock-angle',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsCodeScreenshotRoute = ToolsCodeScreenshotRouteImport.update({
   id: '/code-screenshot',
   path: '/code-screenshot',
@@ -654,6 +667,11 @@ const ToolsHabitsRoute = ToolsHabitsRouteImport.update({
   path: '/habits',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsHashGeneratorRoute = ToolsHashGeneratorRouteImport.update({
+  id: '/hash-generator',
+  path: '/hash-generator',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsHealthTrackerRoute = ToolsHealthTrackerRouteImport.update({
   id: '/health-tracker',
   path: '/health-tracker',
@@ -704,9 +722,19 @@ const ToolsIpRoute = ToolsIpRouteImport.update({
   path: '/ip',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsJsonDiffRoute = ToolsJsonDiffRouteImport.update({
+  id: '/json-diff',
+  path: '/json-diff',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
   id: '/json-formatter',
   path: '/json-formatter',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsJsonYamlRoute = ToolsJsonYamlRouteImport.update({
+  id: '/json-yaml',
+  path: '/json-yaml',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsKharchRoute = ToolsKharchRouteImport.update({
@@ -717,6 +745,11 @@ const ToolsKharchRoute = ToolsKharchRouteImport.update({
 const ToolsLinktreeRoute = ToolsLinktreeRouteImport.update({
   id: '/linktree',
   path: '/linktree',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsLoanEligibilityRoute = ToolsLoanEligibilityRouteImport.update({
+  id: '/loan-eligibility',
+  path: '/loan-eligibility',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsLoremRoute = ToolsLoremRouteImport.update({
@@ -732,6 +765,11 @@ const ToolsMarkdownEditorRoute = ToolsMarkdownEditorRouteImport.update({
 const ToolsMarkdownToHtmlRoute = ToolsMarkdownToHtmlRouteImport.update({
   id: '/markdown-to-html',
   path: '/markdown-to-html',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsMatrixRoute = ToolsMatrixRouteImport.update({
+  id: '/matrix',
+  path: '/matrix',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsMeetingRoute = ToolsMeetingRouteImport.update({
@@ -1034,9 +1072,19 @@ const ToolsWatermarkRoute = ToolsWatermarkRouteImport.update({
   path: '/watermark',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsWhiteboardRoute = ToolsWhiteboardRouteImport.update({
+  id: '/whiteboard',
+  path: '/whiteboard',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsWhitespaceRoute = ToolsWhitespaceRouteImport.update({
   id: '/whitespace',
   path: '/whitespace',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsWordCloudRoute = ToolsWordCloudRouteImport.update({
+  id: '/word-cloud',
+  path: '/word-cloud',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsWorldClockRoute = ToolsWorldClockRouteImport.update({
@@ -1117,6 +1165,7 @@ export interface FileRoutesByFullPath {
   '/tools/calorie': typeof ToolsCalorieRoute
   '/tools/certificate': typeof ToolsCertificateRoute
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
+  '/tools/clock-angle': typeof ToolsClockAngleRoute
   '/tools/code-screenshot': typeof ToolsCodeScreenshotRoute
   '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
@@ -1145,6 +1194,7 @@ export interface FileRoutesByFullPath {
   '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
   '/tools/habit-stack': typeof ToolsHabitStackRoute
   '/tools/habits': typeof ToolsHabitsRoute
+  '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
   '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
@@ -1155,12 +1205,16 @@ export interface FileRoutesByFullPath {
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
+  '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
   '/tools/markdown-editor': typeof ToolsMarkdownEditorRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
+  '/tools/matrix': typeof ToolsMatrixRoute
   '/tools/meeting': typeof ToolsMeetingRoute
   '/tools/meme': typeof ToolsMemeRoute
   '/tools/meta': typeof ToolsMetaRoute
@@ -1221,7 +1275,9 @@ export interface FileRoutesByFullPath {
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
+  '/tools/word-cloud': typeof ToolsWordCloudRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -1292,6 +1348,7 @@ export interface FileRoutesByTo {
   '/tools/calorie': typeof ToolsCalorieRoute
   '/tools/certificate': typeof ToolsCertificateRoute
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
+  '/tools/clock-angle': typeof ToolsClockAngleRoute
   '/tools/code-screenshot': typeof ToolsCodeScreenshotRoute
   '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
@@ -1320,6 +1377,7 @@ export interface FileRoutesByTo {
   '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
   '/tools/habit-stack': typeof ToolsHabitStackRoute
   '/tools/habits': typeof ToolsHabitsRoute
+  '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
   '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
@@ -1330,12 +1388,16 @@ export interface FileRoutesByTo {
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
+  '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
   '/tools/markdown-editor': typeof ToolsMarkdownEditorRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
+  '/tools/matrix': typeof ToolsMatrixRoute
   '/tools/meeting': typeof ToolsMeetingRoute
   '/tools/meme': typeof ToolsMemeRoute
   '/tools/meta': typeof ToolsMetaRoute
@@ -1396,7 +1458,9 @@ export interface FileRoutesByTo {
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
+  '/tools/word-cloud': typeof ToolsWordCloudRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
@@ -1469,6 +1533,7 @@ export interface FileRoutesById {
   '/tools/calorie': typeof ToolsCalorieRoute
   '/tools/certificate': typeof ToolsCertificateRoute
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
+  '/tools/clock-angle': typeof ToolsClockAngleRoute
   '/tools/code-screenshot': typeof ToolsCodeScreenshotRoute
   '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
@@ -1497,6 +1562,7 @@ export interface FileRoutesById {
   '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
   '/tools/habit-stack': typeof ToolsHabitStackRoute
   '/tools/habits': typeof ToolsHabitsRoute
+  '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
   '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
@@ -1507,12 +1573,16 @@ export interface FileRoutesById {
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
+  '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
   '/tools/markdown-editor': typeof ToolsMarkdownEditorRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
+  '/tools/matrix': typeof ToolsMatrixRoute
   '/tools/meeting': typeof ToolsMeetingRoute
   '/tools/meme': typeof ToolsMemeRoute
   '/tools/meta': typeof ToolsMetaRoute
@@ -1573,7 +1643,9 @@ export interface FileRoutesById {
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
+  '/tools/word-cloud': typeof ToolsWordCloudRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -1647,6 +1719,7 @@ export interface FileRouteTypes {
     | '/tools/calorie'
     | '/tools/certificate'
     | '/tools/changelog-maker'
+    | '/tools/clock-angle'
     | '/tools/code-screenshot'
     | '/tools/coin-flip'
     | '/tools/color-palette'
@@ -1675,6 +1748,7 @@ export interface FileRouteTypes {
     | '/tools/gst-calculator'
     | '/tools/habit-stack'
     | '/tools/habits'
+    | '/tools/hash-generator'
     | '/tools/health-tracker'
     | '/tools/hijri'
     | '/tools/html-compiler'
@@ -1685,12 +1759,16 @@ export interface FileRouteTypes {
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/json-diff'
     | '/tools/json-formatter'
+    | '/tools/json-yaml'
     | '/tools/kharch'
     | '/tools/linktree'
+    | '/tools/loan-eligibility'
     | '/tools/lorem'
     | '/tools/markdown-editor'
     | '/tools/markdown-to-html'
+    | '/tools/matrix'
     | '/tools/meeting'
     | '/tools/meme'
     | '/tools/meta'
@@ -1751,7 +1829,9 @@ export interface FileRouteTypes {
     | '/tools/upi'
     | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/whiteboard'
     | '/tools/whitespace'
+    | '/tools/word-cloud'
     | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
@@ -1822,6 +1902,7 @@ export interface FileRouteTypes {
     | '/tools/calorie'
     | '/tools/certificate'
     | '/tools/changelog-maker'
+    | '/tools/clock-angle'
     | '/tools/code-screenshot'
     | '/tools/coin-flip'
     | '/tools/color-palette'
@@ -1850,6 +1931,7 @@ export interface FileRouteTypes {
     | '/tools/gst-calculator'
     | '/tools/habit-stack'
     | '/tools/habits'
+    | '/tools/hash-generator'
     | '/tools/health-tracker'
     | '/tools/hijri'
     | '/tools/html-compiler'
@@ -1860,12 +1942,16 @@ export interface FileRouteTypes {
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/json-diff'
     | '/tools/json-formatter'
+    | '/tools/json-yaml'
     | '/tools/kharch'
     | '/tools/linktree'
+    | '/tools/loan-eligibility'
     | '/tools/lorem'
     | '/tools/markdown-editor'
     | '/tools/markdown-to-html'
+    | '/tools/matrix'
     | '/tools/meeting'
     | '/tools/meme'
     | '/tools/meta'
@@ -1926,7 +2012,9 @@ export interface FileRouteTypes {
     | '/tools/upi'
     | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/whiteboard'
     | '/tools/whitespace'
+    | '/tools/word-cloud'
     | '/tools/world-clock'
     | '/build-ideas'
     | '/collections'
@@ -1998,6 +2086,7 @@ export interface FileRouteTypes {
     | '/tools/calorie'
     | '/tools/certificate'
     | '/tools/changelog-maker'
+    | '/tools/clock-angle'
     | '/tools/code-screenshot'
     | '/tools/coin-flip'
     | '/tools/color-palette'
@@ -2026,6 +2115,7 @@ export interface FileRouteTypes {
     | '/tools/gst-calculator'
     | '/tools/habit-stack'
     | '/tools/habits'
+    | '/tools/hash-generator'
     | '/tools/health-tracker'
     | '/tools/hijri'
     | '/tools/html-compiler'
@@ -2036,12 +2126,16 @@ export interface FileRouteTypes {
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/json-diff'
     | '/tools/json-formatter'
+    | '/tools/json-yaml'
     | '/tools/kharch'
     | '/tools/linktree'
+    | '/tools/loan-eligibility'
     | '/tools/lorem'
     | '/tools/markdown-editor'
     | '/tools/markdown-to-html'
+    | '/tools/matrix'
     | '/tools/meeting'
     | '/tools/meme'
     | '/tools/meta'
@@ -2102,7 +2196,9 @@ export interface FileRouteTypes {
     | '/tools/upi'
     | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/whiteboard'
     | '/tools/whitespace'
+    | '/tools/word-cloud'
     | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
@@ -2634,6 +2730,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsChangelogMakerRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/clock-angle': {
+      id: '/tools/clock-angle'
+      path: '/clock-angle'
+      fullPath: '/tools/clock-angle'
+      preLoaderRoute: typeof ToolsClockAngleRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/code-screenshot': {
       id: '/tools/code-screenshot'
       path: '/code-screenshot'
@@ -2830,6 +2933,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsHabitsRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/hash-generator': {
+      id: '/tools/hash-generator'
+      path: '/hash-generator'
+      fullPath: '/tools/hash-generator'
+      preLoaderRoute: typeof ToolsHashGeneratorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/health-tracker': {
       id: '/tools/health-tracker'
       path: '/health-tracker'
@@ -2900,11 +3010,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsIpRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/json-diff': {
+      id: '/tools/json-diff'
+      path: '/json-diff'
+      fullPath: '/tools/json-diff'
+      preLoaderRoute: typeof ToolsJsonDiffRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/json-formatter': {
       id: '/tools/json-formatter'
       path: '/json-formatter'
       fullPath: '/tools/json-formatter'
       preLoaderRoute: typeof ToolsJsonFormatterRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/json-yaml': {
+      id: '/tools/json-yaml'
+      path: '/json-yaml'
+      fullPath: '/tools/json-yaml'
+      preLoaderRoute: typeof ToolsJsonYamlRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/kharch': {
@@ -2919,6 +3043,13 @@ declare module '@tanstack/react-router' {
       path: '/linktree'
       fullPath: '/tools/linktree'
       preLoaderRoute: typeof ToolsLinktreeRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/loan-eligibility': {
+      id: '/tools/loan-eligibility'
+      path: '/loan-eligibility'
+      fullPath: '/tools/loan-eligibility'
+      preLoaderRoute: typeof ToolsLoanEligibilityRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/lorem': {
@@ -2940,6 +3071,13 @@ declare module '@tanstack/react-router' {
       path: '/markdown-to-html'
       fullPath: '/tools/markdown-to-html'
       preLoaderRoute: typeof ToolsMarkdownToHtmlRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/matrix': {
+      id: '/tools/matrix'
+      path: '/matrix'
+      fullPath: '/tools/matrix'
+      preLoaderRoute: typeof ToolsMatrixRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/meeting': {
@@ -3362,11 +3500,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsWatermarkRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/whiteboard': {
+      id: '/tools/whiteboard'
+      path: '/whiteboard'
+      fullPath: '/tools/whiteboard'
+      preLoaderRoute: typeof ToolsWhiteboardRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/whitespace': {
       id: '/tools/whitespace'
       path: '/whitespace'
       fullPath: '/tools/whitespace'
       preLoaderRoute: typeof ToolsWhitespaceRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/word-cloud': {
+      id: '/tools/word-cloud'
+      path: '/word-cloud'
+      fullPath: '/tools/word-cloud'
+      preLoaderRoute: typeof ToolsWordCloudRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/world-clock': {
@@ -3408,6 +3560,7 @@ interface ToolsRouteChildren {
   ToolsCalorieRoute: typeof ToolsCalorieRoute
   ToolsCertificateRoute: typeof ToolsCertificateRoute
   ToolsChangelogMakerRoute: typeof ToolsChangelogMakerRoute
+  ToolsClockAngleRoute: typeof ToolsClockAngleRoute
   ToolsCodeScreenshotRoute: typeof ToolsCodeScreenshotRoute
   ToolsCoinFlipRoute: typeof ToolsCoinFlipRoute
   ToolsColorPaletteRoute: typeof ToolsColorPaletteRoute
@@ -3436,6 +3589,7 @@ interface ToolsRouteChildren {
   ToolsGstCalculatorRoute: typeof ToolsGstCalculatorRoute
   ToolsHabitStackRoute: typeof ToolsHabitStackRoute
   ToolsHabitsRoute: typeof ToolsHabitsRoute
+  ToolsHashGeneratorRoute: typeof ToolsHashGeneratorRoute
   ToolsHealthTrackerRoute: typeof ToolsHealthTrackerRoute
   ToolsHijriRoute: typeof ToolsHijriRoute
   ToolsHtmlCompilerRoute: typeof ToolsHtmlCompilerRoute
@@ -3446,12 +3600,16 @@ interface ToolsRouteChildren {
   ToolsInterviewRoute: typeof ToolsInterviewRoute
   ToolsInvoiceRoute: typeof ToolsInvoiceRoute
   ToolsIpRoute: typeof ToolsIpRoute
+  ToolsJsonDiffRoute: typeof ToolsJsonDiffRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
+  ToolsJsonYamlRoute: typeof ToolsJsonYamlRoute
   ToolsKharchRoute: typeof ToolsKharchRoute
   ToolsLinktreeRoute: typeof ToolsLinktreeRoute
+  ToolsLoanEligibilityRoute: typeof ToolsLoanEligibilityRoute
   ToolsLoremRoute: typeof ToolsLoremRoute
   ToolsMarkdownEditorRoute: typeof ToolsMarkdownEditorRoute
   ToolsMarkdownToHtmlRoute: typeof ToolsMarkdownToHtmlRoute
+  ToolsMatrixRoute: typeof ToolsMatrixRoute
   ToolsMeetingRoute: typeof ToolsMeetingRoute
   ToolsMemeRoute: typeof ToolsMemeRoute
   ToolsMetaRoute: typeof ToolsMetaRoute
@@ -3512,7 +3670,9 @@ interface ToolsRouteChildren {
   ToolsUpiRoute: typeof ToolsUpiRoute
   ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
+  ToolsWhiteboardRoute: typeof ToolsWhiteboardRoute
   ToolsWhitespaceRoute: typeof ToolsWhitespaceRoute
+  ToolsWordCloudRoute: typeof ToolsWordCloudRoute
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
 }
@@ -3532,6 +3692,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsCalorieRoute: ToolsCalorieRoute,
   ToolsCertificateRoute: ToolsCertificateRoute,
   ToolsChangelogMakerRoute: ToolsChangelogMakerRoute,
+  ToolsClockAngleRoute: ToolsClockAngleRoute,
   ToolsCodeScreenshotRoute: ToolsCodeScreenshotRoute,
   ToolsCoinFlipRoute: ToolsCoinFlipRoute,
   ToolsColorPaletteRoute: ToolsColorPaletteRoute,
@@ -3560,6 +3721,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsGstCalculatorRoute: ToolsGstCalculatorRoute,
   ToolsHabitStackRoute: ToolsHabitStackRoute,
   ToolsHabitsRoute: ToolsHabitsRoute,
+  ToolsHashGeneratorRoute: ToolsHashGeneratorRoute,
   ToolsHealthTrackerRoute: ToolsHealthTrackerRoute,
   ToolsHijriRoute: ToolsHijriRoute,
   ToolsHtmlCompilerRoute: ToolsHtmlCompilerRoute,
@@ -3570,12 +3732,16 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsInterviewRoute: ToolsInterviewRoute,
   ToolsInvoiceRoute: ToolsInvoiceRoute,
   ToolsIpRoute: ToolsIpRoute,
+  ToolsJsonDiffRoute: ToolsJsonDiffRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
+  ToolsJsonYamlRoute: ToolsJsonYamlRoute,
   ToolsKharchRoute: ToolsKharchRoute,
   ToolsLinktreeRoute: ToolsLinktreeRoute,
+  ToolsLoanEligibilityRoute: ToolsLoanEligibilityRoute,
   ToolsLoremRoute: ToolsLoremRoute,
   ToolsMarkdownEditorRoute: ToolsMarkdownEditorRoute,
   ToolsMarkdownToHtmlRoute: ToolsMarkdownToHtmlRoute,
+  ToolsMatrixRoute: ToolsMatrixRoute,
   ToolsMeetingRoute: ToolsMeetingRoute,
   ToolsMemeRoute: ToolsMemeRoute,
   ToolsMetaRoute: ToolsMetaRoute,
@@ -3636,7 +3802,9 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsUpiRoute: ToolsUpiRoute,
   ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
   ToolsWatermarkRoute: ToolsWatermarkRoute,
+  ToolsWhiteboardRoute: ToolsWhiteboardRoute,
   ToolsWhitespaceRoute: ToolsWhitespaceRoute,
+  ToolsWordCloudRoute: ToolsWordCloudRoute,
   ToolsWorldClockRoute: ToolsWorldClockRoute,
   ToolsIndexRoute: ToolsIndexRoute,
 }
@@ -3701,13 +3869,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

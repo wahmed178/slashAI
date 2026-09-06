@@ -2,7 +2,7 @@ import type { Streak } from "./engagement";
 import type { Stats } from "@/hooks/use-library";
 
 /**
- * Achievements — derived purely from local activity. Nothing to store: a
+ * Achievements - derived purely from local activity. Nothing to store: a
  * badge is unlocked exactly when its condition holds right now, so badges
  * can never disagree with the underlying data.
  */

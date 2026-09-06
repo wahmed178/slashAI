@@ -17,13 +17,13 @@ export const Route = createFileRoute("/find")({
   }),
   head: () => ({
     meta: [
-      { title: "Advanced search — turn any keyword into a shortlist | SlashAI" },
+      { title: "Advanced search - turn any keyword into a shortlist | SlashAI" },
       {
         name: "description",
         content:
-          "Type what you want in plain words. SlashAI shortlists the exact features, commands, ideas and resources that fit — plus a ready-to-copy prompt.",
+          "Type what you want in plain words. SlashAI shortlists the exact features, commands, ideas and resources that fit - plus a ready-to-copy prompt.",
       },
-      { property: "og:title", content: "Advanced search — keyword to shortlist | SlashAI" },
+      { property: "og:title", content: "Advanced search - keyword to shortlist | SlashAI" },
       {
         property: "og:description",
         content: "One box, instant feature shortlist and a copy-ready prompt for your AI.",
@@ -76,7 +76,7 @@ function FindPage() {
           Say what you want
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Plain words in — the right features, commands and a ready prompt out.
+          Plain words in - the right features, commands and a ready prompt out.
         </p>
       </header>
 
@@ -118,7 +118,7 @@ function FindPage() {
 
       {!q.trim() ? (
         <p className="mt-8 text-sm text-muted-foreground">
-          Start typing above — everything in SlashAI is searchable from this one box.
+          Start typing above - everything in SlashAI is searchable from this one box.
         </p>
       ) : (
         <div className="mt-7 space-y-8">
@@ -158,7 +158,7 @@ function FindPage() {
               </div>
             ) : (
               <p className="text-sm text-muted-foreground">
-                No feature matched directly — the command matches below are usually what you want.
+                No feature matched directly - the command matches below are usually what you want.
               </p>
             )}
           </section>

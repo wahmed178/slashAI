@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Copy, Check, Download, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/tools/color-palette")({
-  head: () => ({ meta: [{ title: "Color Palette Studio — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Color Palette Studio - SlashAI" }] }),
   component: ColorPalette,
 });
 

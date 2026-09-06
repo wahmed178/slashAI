@@ -51,7 +51,7 @@ function SpeedReadingTrainer() {
     <AppShell title="Speed Reading Trainer">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">📖 Speed Reading Trainer</h1>
-        <p className="mt-1 text-sm text-muted-foreground">RSVP technique — flash one word at a time to train your reading speed.</p>
+        <p className="mt-1 text-sm text-muted-foreground">RSVP technique - flash one word at a time to train your reading speed.</p>
       </header>
 
       {!isRunning ? (

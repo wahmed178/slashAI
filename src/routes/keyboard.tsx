@@ -62,7 +62,7 @@ function KbdKey({ children }: { children: string }) {
 export const Route = createFileRoute("/keyboard")({
   head: () => ({
     meta: [
-      { title: "Keyboard Shortcuts — SlashAI" },
+      { title: "Keyboard Shortcuts - SlashAI" },
       { name: "description", content: "Every keyboard shortcut available across SlashAI." },
     ],
   }),

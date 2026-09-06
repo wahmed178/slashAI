@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw, Trophy, Clock, Target } from "lucide-react";
 
 export const Route = createFileRoute("/tools/typing-test")({
-  head: () => ({ meta: [{ title: "Typing Speed Test — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Typing Speed Test - SlashAI" }] }),
   component: TypingTest,
 });
 
@@ -24,11 +24,11 @@ const TEXTS: Record<string, string[]> = {
     "for (let i = 0; i < array.length; i++) { if (array[i] === target) { return i; } } return -1;",
   ],
   Commands: [
-    "/help — show all available commands and their descriptions for quick reference",
-    "/search python — find all commands related to Python programming language",
-    "/compare gpt-4 claude — compare two AI models side by side on features",
+    "/help - show all available commands and their descriptions for quick reference",
+    "/search python - find all commands related to Python programming language",
+    "/compare gpt-4 claude - compare two AI models side by side on features",
     "/generate blog post outline about artificial intelligence and its impact on society",
-    "/export csv — download your saved commands as a CSV file for offline use",
+    "/export csv - download your saved commands as a CSV file for offline use",
   ],
   Urdu: [
     "کامیابی محنت کا نتیجہ ہے۔ جو لوگ محنت کرتے ہیں وہ ہمیشہ کامیاب ہوتے ہیں۔",
@@ -137,7 +137,7 @@ function TypingTest() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Typing Speed Test</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Test your typing speed — 60 seconds.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Test your typing speed - 60 seconds.</p>
           </div>
           <button onClick={newText} className="flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-2 text-xs text-muted-foreground transition-all hover:text-foreground">
             <RotateCcw className="size-3.5" /> New text

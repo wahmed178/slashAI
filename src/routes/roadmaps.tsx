@@ -14,13 +14,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/roadmaps")({
   head: () => ({
     meta: [
-      { title: `Founder roadmaps — ${ROADMAP_TOTAL} visual paths | SlashAI` },
+      { title: `Founder roadmaps - ${ROADMAP_TOTAL} visual paths | SlashAI` },
       {
         name: "description",
         content:
           "Step-by-step founder roadmaps: validate an idea in 14 days, ship an MVP in 30, get your first 100 users, learn AI engineering, prep fundraising and launch like a pro.",
       },
-      { property: "og:title", content: "Founder Roadmaps — SlashAI" },
+      { property: "og:title", content: "Founder Roadmaps - SlashAI" },
       {
         property: "og:description",
         content: "Visual, phase-by-phase paths for the journeys every builder repeats.",
@@ -79,7 +79,7 @@ function RoadmapsPage() {
           Founder Roadmaps
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          {ROADMAP_TOTAL} visual paths for the journeys every builder repeats — pick one, follow the
+          {ROADMAP_TOTAL} visual paths for the journeys every builder repeats - pick one, follow the
           phases.
         </p>
       </header>

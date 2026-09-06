@@ -1,5 +1,5 @@
 /**
- * SlashKits — the browser-tool catalogue. Single source of truth for the
+ * SlashKits - the browser-tool catalogue. Single source of truth for the
  * /tools index, homepage previews and breadcrumbs.
  *
  * Rules for this file:
@@ -34,18 +34,30 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "smart-paste", name: "Smart Paste Bin", desc: "Detect text type and extract insights", icon: "📋" },
       { slug: "image-compress", name: "Image Compressor", desc: "Reduce image file size in your browser", icon: "🖼️", noUpload: true },
       { slug: "regex", name: "Regex Playground", desc: "Test regex with live highlighting", icon: ".*" },
-      { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test — WPM, accuracy, streaks", icon: "⌨️" },
+      { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test - WPM, accuracy, streaks", icon: "⌨️" },
       { slug: "contract", name: "Contract Generator", desc: "Professional legal contracts as PDF", icon: "📄" },
       { slug: "screenshot", name: "Screenshot to Text", desc: "Extract text from images with OCR", icon: "📸" },
       { slug: "expense", name: "Trip Expense Splitter", desc: "Split expenses with minimum settlements", icon: "💸" },
       { slug: "color-palette", name: "Color Palette Studio", desc: "Generate palettes from any color", icon: "🎨" },
-      { slug: "diff", name: "Text Diff Checker", desc: "Compare two texts — changes highlighted", icon: "🔀" },
+      { slug: "diff", name: "Text Diff Checker", desc: "Compare two texts - changes highlighted", icon: "🔀" },
       { slug: "reading", name: "Speed Reading Trainer", desc: "RSVP flash-one-word technique", icon: "📖" },
       { slug: "noise", name: "Background Noise", desc: "Synthesised ambient sounds, mix & timer", icon: "🔊" },
       { slug: "qr-code", name: "QR Code Generator", desc: "Generate QR for URLs, WiFi, text", icon: "📱" },
       { slug: "code-screenshot", name: "Code Screenshot Maker", desc: "Turn code into beautiful shareable images", icon: "📸" },
       { slug: "sip-calculator", name: "SIP Calculator", desc: "Mutual fund SIP returns with donut chart", icon: "💰" },
       { slug: "pomodoro", name: "Pomodoro Timer", desc: "25/5/15 productivity timer with chime", icon: "🍅" },
+      { slug: "whiteboard", name: "Whiteboard", desc: "Freehand sketch canvas with colors and PNG export", icon: "🖊️" },
+      { slug: "html-compiler", name: "HTML Compiler", desc: "Write HTML/CSS/JS and run it live", icon: "🌐" },
+      { slug: "invoice", name: "Invoice Generator", desc: "Create and download professional invoices", icon: "🧾" },
+      { slug: "stopwatch", name: "Stopwatch & Lap Timer", desc: "Precision stopwatch with lap times", icon: "⏱️" },
+      { slug: "mind-map", name: "Mind Map Builder", desc: "Visual SVG mind map with drag & keyboard", icon: "🧠" },
+      { slug: "json-yaml", name: "JSON-YAML Converter", desc: "Convert between JSON and YAML formats", icon: "🔁" },
+      { slug: "word-cloud", name: "Word Cloud Maker", desc: "Turn any text into a beautiful word cloud", icon: "☁️" },
+      { slug: "hash-generator", name: "Hash Generator", desc: "SHA-1/256/384/512 hashes of any text", icon: "🔏" },
+      { slug: "json-diff", name: "JSON Diff", desc: "Compare two JSON objects side by side", icon: "🔍" },
+      { slug: "clock-angle", name: "Clock Angle Calculator", desc: "Angle between clock hands at any time", icon: "🕐" },
+      { slug: "loan-eligibility", name: "Loan Eligibility Checker", desc: "Estimate EMI affordability from income", icon: "🏦" },
+      { slug: "matrix", name: "Matrix Calculator", desc: "Determinant, inverse, multiply matrices", icon: "🔢" },
     ],
   },
   {
@@ -72,7 +84,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "image-compress", name: "Image Compressor", desc: "Reduce image file size in your browser", icon: "🖼️", noUpload: true },
       { slug: "image-convert", name: "Image Converter", desc: "Convert between JPG, PNG, WebP formats", icon: "🔄", noUpload: true },
       { slug: "thumbnail", name: "YouTube Thumbnail Checker", desc: "Preview thumbnails in 5 YouTube contexts", icon: "🎬" },
-      { slug: "aspect", name: "Aspect Ratio Calculator", desc: "Width, height, ratio — get the third", icon: "📐" },
+      { slug: "aspect", name: "Aspect Ratio Calculator", desc: "Width, height, ratio - get the third", icon: "📐" },
       { slug: "gradient", name: "CSS Gradient Generator", desc: "Pick colors, copy as CSS/Tailwind", icon: "🌈" },
       { slug: "font", name: "Font Pairing Studio", desc: "50+ Google Font combos, copy CSS", icon: "🔤" },
       { slug: "color-picker", name: "Color Picker & Converter", desc: "HEX/RGB/HSL, contrast check, palettes", icon: "🎨" },
@@ -88,7 +100,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "percentage", name: "Percentage Calculator", desc: "3 modes: of, what %, increase/decrease", icon: "Σ" },
       { slug: "age-calculator", name: "Age Calculator", desc: "Exact age, zodiac, birthday countdown", icon: "🕰️" },
       { slug: "upi", name: "UPI Link Generator", desc: "Generate UPI payment links + QR codes", icon: "💳" },
-      { slug: "budget", name: "Budget Tracker", desc: "Monthly income vs expenses — Indian categories", icon: "📈" },
+      { slug: "budget", name: "Budget Tracker", desc: "Monthly income vs expenses - Indian categories", icon: "📈" },
       { slug: "kharch", name: "Urdu/Hindi Budget", desc: "Bilingual expense tracker with Indian categories", icon: "💴" },
       { slug: "currency-history", name: "Currency Rate History", desc: "Exchange rate charts (Frankfurter API)", icon: "💱" },
       { slug: "size", name: "File Size Calculator", desc: "Convert units, download times, comparisons", icon: "📐" },
@@ -101,7 +113,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
     icon: "💻",
     tools: [
       { slug: "regex", name: "Regex Playground", desc: "Test regex with live highlighting", icon: ".*" },
-      { slug: "diff", name: "Text Diff Checker", desc: "Compare two texts — changes highlighted", icon: "🔀" },
+      { slug: "diff", name: "Text Diff Checker", desc: "Compare two texts - changes highlighted", icon: "🔀" },
       { slug: "password", name: "Password Manager", desc: "Encrypted local password vault", icon: "🔐" },
       { slug: "password-gen", name: "Password Generator", desc: "Cryptographically secure random passwords", icon: "🔐" },
       { slug: "json-formatter", name: "JSON Formatter", desc: "Pretty print, minify, validate JSON", icon: "🔧" },
@@ -113,9 +125,9 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "ip", name: "Network Info Tool", desc: "Your IP, location, ISP, and IP lookup", icon: "🌐" },
       { slug: "equation", name: "Math Equation Renderer", desc: "LaTeX → beautiful equations via KaTeX", icon: "🔢" },
       { slug: "code-screenshot", name: "Code Screenshot Maker", desc: "Turn code into beautiful shareable images", icon: "📸" },
-      { slug: "api-tester", name: "API Tester", desc: "Mini Postman — test REST APIs from browser", icon: "🔌" },
+      { slug: "api-tester", name: "API Tester", desc: "Mini Postman - test REST APIs from browser", icon: "🔌" },
       { slug: "shortcut", name: "Keyboard Shortcuts", desc: "VS Code, Chrome, Figma, Slack, Mac & more", icon: "⌨️" },
-      { slug: "fake-email", name: "Temp Email Generator", desc: "Disposable email addresses — inbox via Guerrilla Mail", icon: "📧" },
+      { slug: "fake-email", name: "Temp Email Generator", desc: "Disposable email addresses - inbox via Guerrilla Mail", icon: "📧" },
     ],
   },
   {
@@ -134,7 +146,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "changelog-maker", name: "Changelog Generator", desc: "Markdown/HTML/text/JSON release notes", icon: "📝" },
       { slug: "pitch", name: "Elevator Pitch Builder", desc: "60-second pitch with timer & read-aloud", icon: "🎤" },
       { slug: "thread-maker", name: "Thread Formatter", desc: "Auto-split into Twitter/X or LinkedIn posts", icon: "🧵" },
-      { slug: "spelling", name: "Spelling Checker", desc: "Offline spell check — common mistakes", icon: "✍️" },
+      { slug: "spelling", name: "Spelling Checker", desc: "Offline spell check - common mistakes", icon: "✍️" },
       { slug: "text-case", name: "Text Case Converter", desc: "UPPER, lower, camelCase, snake_case, etc.", icon: "🔄" },
       { slug: "text-stats", name: "Text Statistics", desc: "Word count, reading time, char count", icon: "📊" },
       { slug: "interview", name: "Mock Interview", desc: "Practice with real questions + instant feedback", icon: "🎤" },
@@ -165,7 +177,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "quote-screen", name: "Quote of the Day", desc: "Inspirational quotes with daily refresh", icon: "📝" },
       { slug: "one-liner", name: "OneLiner Quotes", desc: "500+ aesthetic quotes. Copy or download as PNG.", icon: "✨" },
       { slug: "noise", name: "Background Noise", desc: "Synthesised ambient sounds, mix & timer", icon: "🔊" },
-      { slug: "meme", name: "Meme Generator", desc: "Create memes instantly — no watermark", icon: "😂" },
+      { slug: "meme", name: "Meme Generator", desc: "Create memes instantly - no watermark", icon: "😂" },
       { slug: "sticker", name: "WhatsApp Sticker Maker", desc: "Turn any image into a 512×512 sticker", icon: "🎭" },
     ],
   },
@@ -227,7 +239,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "quiz-maker", name: "Quiz Builder", desc: "Build and share quizzes via URL", icon: "❓" },
       { slug: "flashcard-maker", name: "Flashcard Maker", desc: "Create decks, study with spaced repetition", icon: "🧠" },
       { slug: "reading", name: "Speed Reading Trainer", desc: "RSVP flash-one-word technique", icon: "📖" },
-      { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test — WPM, accuracy, streaks", icon: "⌨️" },
+      { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test - WPM, accuracy, streaks", icon: "⌨️" },
       { slug: "story", name: "Story Writing Kit", desc: "Characters, plot planner & writing prompts", icon: "📖" },
       { slug: "habit-stack", name: "Habit Stacking Planner", desc: "Atomic Habits routine builder", icon: "📋" },
     ],
@@ -252,7 +264,7 @@ export const ALL_SLASH_TOOLS: SlashTool[] = TOOL_SECTIONS.flatMap((s) => [
   ...(s.hubTools ?? []),
 ]);
 
-/** only the /tools pages, used for counts (deduped — Popular cross-lists tools) */
+/** only the /tools pages, used for counts (deduped - Popular cross-lists tools) */
 export const SLASH_TOOL_COUNT = new Set(
   TOOL_SECTIONS.flatMap((s) => s.tools.filter((t) => !t.hub).map((t) => t.slug)),
 ).size;

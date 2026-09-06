@@ -178,8 +178,8 @@ async function fetchLiveDeals(): Promise<Deal[]> {
 export const Route = createFileRoute("/deals")({
   head: () => ({
     meta: [
-      { title: "Deals & Products — SlashAI" },
-      { name: "description", content: "Best deals from Indian communities — updated daily." },
+      { title: "Deals & Products - SlashAI" },
+      { name: "description", content: "Best deals from Indian communities - updated daily." },
     ],
   }),
   component: DealsPage,
@@ -381,7 +381,7 @@ function DealsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Deals & Products</h1>
-            <p className="mt-1 text-[15px] text-muted-foreground">Best deals from Indian communities — updated daily.</p>
+            <p className="mt-1 text-[15px] text-muted-foreground">Best deals from Indian communities - updated daily.</p>
           </div>
           <button
             onClick={() => loadDeals(true)}

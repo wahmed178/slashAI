@@ -56,12 +56,12 @@ export const Route = createFileRoute("/search")({
   }),
   head: () => ({
     meta: [
-      { title: "Search commands — SlashAI" },
+      { title: "Search commands - SlashAI" },
       {
         name: "description",
         content: "Search the full SlashAI catalog by task, command name, tag or category.",
       },
-      { property: "og:title", content: "Search commands — SlashAI" },
+      { property: "og:title", content: "Search commands - SlashAI" },
       {
         property: "og:description",
         content: "Fast, typo-tolerant search across every AI slash command in SlashAI.",
@@ -131,7 +131,7 @@ function SearchPage() {
       : base;
   }, [q, cat, sub, search.type, search.diff, search.sort, favorites]);
 
-  // "Based on your usage" — top personally-scored commands for this query
+  // "Based on your usage" - top personally-scored commands for this query
   const personalPicks = useMemo(() => {
     if (!isPersonalized()) return [];
     const ids = topPersonalCommands(3, q);

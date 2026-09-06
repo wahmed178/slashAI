@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-/** Shared card grid — every card links to the /c/$slug detail route. */
+/** Shared card grid - every card links to the /c/$slug detail route. */
 export function CommandGrid({ commands, query = "", className }: Props) {
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite, settings } = useLibrary();

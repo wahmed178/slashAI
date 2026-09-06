@@ -112,14 +112,14 @@ export const Route = createFileRoute("/hub/$audience")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Unavailable — SlashAI" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Unavailable - SlashAI" }, { name: "robots", content: "noindex" }] };
     }
     const { hub } = loaderData;
     return {
       meta: [
-        { title: `${hub.title} — free curated resources | SlashAI` },
+        { title: `${hub.title} - free curated resources | SlashAI` },
         { name: "description", content: hub.blurb },
-        { property: "og:title", content: `${hub.title} — SlashAI` },
+        { property: "og:title", content: `${hub.title} - SlashAI` },
         { property: "og:description", content: hub.blurb },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary" },
@@ -230,7 +230,7 @@ function HubPage() {
               <span className="rounded-full border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.08)] px-1.5 py-0.5 text-[9px] font-semibold text-primary">Free</span>
             </span>
             <span className="mt-0.5 block text-[13px] text-muted-foreground">
-              Practice real interview questions with instant feedback on your answers — no account needed.
+              Practice real interview questions with instant feedback on your answers - no account needed.
             </span>
           </span>
           <span className="shrink-0 text-[15px] text-muted-foreground transition-colors group-hover:text-primary">→</span>

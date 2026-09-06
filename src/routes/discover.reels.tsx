@@ -131,7 +131,7 @@ function ReelCard({
 export const Route = createFileRoute("/discover/reels")({
   head: () => ({
     meta: [
-      { title: "Reels — SlashAI Viral Prompts" },
+      { title: "Reels - SlashAI Viral Prompts" },
       {
         name: "description",
         content:

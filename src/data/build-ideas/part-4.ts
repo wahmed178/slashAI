@@ -1,6 +1,6 @@
 import type { RawIdea } from "@/lib/build-ideas-types";
 
-/** Healthcare — 8, HR — 8, Marketing — 10, E-commerce — 10. */
+/** Healthcare - 8, HR - 8, Marketing - 10, E-commerce - 10. */
 export const PART_4: RawIdea[] = [
   {
     title: "Clinic No-Show Reduction System",
@@ -192,7 +192,7 @@ export const PART_4: RawIdea[] = [
       "Add subscriptions",
     ],
     risks: [
-      "Correlation claims can mislead — presentation must be careful",
+      "Correlation claims can mislead - presentation must be careful",
       "Health data sensitivity and consent",
       "Retention drops when symptoms improve",
     ],
@@ -485,7 +485,7 @@ export const PART_4: RawIdea[] = [
     short: "Versioned policies with acknowledgement tracking, not a PDF nobody opened.",
     problem:
       "Companies email a handbook PDF once, cannot prove who read it, and never update it when law or practice changes.",
-    targetUsers: "HR managers, operations leads at 20–300 person companies, HR consultants.",
+    targetUsers: "HR managers, operations leads at 20-300 person companies, HR consultants.",
     solution:
       "A living handbook with version history, targeted policy assignment by role, acknowledgement tracking and reminders, plus a template library kept current.",
     key: [
@@ -530,7 +530,7 @@ export const PART_4: RawIdea[] = [
     short: "Surfaces internal projects and roles so staff move sideways instead of leaving.",
     problem:
       "Employees leave for opportunities their own company already has, because internal openings are invisible outside the team that posted them.",
-    targetUsers: "HR and talent teams at 100–2,000 person companies, internal mobility leads.",
+    targetUsers: "HR and talent teams at 100-2,000 person companies, internal mobility leads.",
     solution:
       "An internal marketplace of roles, short-term projects and mentoring opportunities matched to employee skills and stated interests, with manager approval flows.",
     key: [
@@ -1150,7 +1150,7 @@ export const PART_4: RawIdea[] = [
     problem:
       "Small newsletters and podcasts have valuable niche audiences but no sales team, and advertisers cannot find them.",
     targetUsers:
-      "Newsletter and podcast owners with 2,000–50,000 audience; B2B and D2C advertisers.",
+      "Newsletter and podcast owners with 2,000-50,000 audience; B2B and D2C advertisers.",
     solution:
       "A curated marketplace with verified audience stats, transparent pricing, escrowed payments and standardised performance reporting after each placement.",
     key: [

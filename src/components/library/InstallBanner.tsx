@@ -60,7 +60,7 @@ export function InstallBanner() {
       const choice = await deferred.userChoice;
       if (choice.outcome === "accepted") setHidden(true);
     } catch {
-      /* prompt failed — hide to avoid nagging */
+      /* prompt failed - hide to avoid nagging */
     }
     try {
       localStorage.setItem(DISMISS_KEY, "1");
@@ -83,7 +83,7 @@ export function InstallBanner() {
     <div className="flex items-center gap-3 border-b border-[rgba(210,153,34,0.25)] bg-[rgba(210,153,34,0.08)] px-4 py-2.5 md:px-8">
       <Download className="size-4 shrink-0 text-[#d29922]" aria-hidden />
       <p className="min-w-0 flex-1 text-[12.5px] text-foreground/90">
-        Add SlashAI to your home screen for full offline access — all 5,635 commands stay available with no connection.
+        Add SlashAI to your home screen for full offline access - all 5,635 commands stay available with no connection.
       </p>
       <button
         onClick={install}

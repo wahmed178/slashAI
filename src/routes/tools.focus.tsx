@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Play, Pause, SkipForward, Volume2, VolumeX, Maximize, Minimize, Coffee } from "lucide-react";
 
 export const Route = createFileRoute("/tools/focus")({
-  head: () => ({ meta: [{ title: "Deep Work Mode — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Deep Work Mode - SlashAI" }] }),
   component: FocusMode,
 });
 

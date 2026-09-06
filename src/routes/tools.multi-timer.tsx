@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Plus, Trash2, Play, Pause, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/tools/multi-timer")({
-  head: () => ({ meta: [{ title: "Multi Timer — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Multi Timer - SlashAI" }] }),
   component: MultiTimer,
 });
 
@@ -108,7 +108,7 @@ function MultiTimer() {
       <div className="mx-auto max-w-2xl space-y-5 pt-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Multi Timer</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Run multiple timers simultaneously — browser notifications when done.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Run multiple timers simultaneously - browser notifications when done.</p>
         </div>
 
         {/* Add timer */}

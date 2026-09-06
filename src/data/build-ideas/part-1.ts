@@ -1,6 +1,6 @@
 import type { RawIdea } from "@/lib/build-ideas-types";
 
-/** AI — 20 ideas. */
+/** AI - 20 ideas. */
 export const PART_1: RawIdea[] = [
   {
     title: "AI Meeting Summarizer",
@@ -150,7 +150,7 @@ export const PART_1: RawIdea[] = [
       "Add credits and subscription billing",
     ],
     risks: [
-      "Users may treat output as legal advice — disclaimers and scoping are essential",
+      "Users may treat output as legal advice - disclaimers and scoping are essential",
       "Confidential documents raise storage and retention expectations",
       "Scanned PDFs need OCR and degrade answer quality",
     ],
@@ -248,7 +248,7 @@ export const PART_1: RawIdea[] = [
       "Add accounts, history and payments",
     ],
     risks: [
-      "AI can invent experience — guardrails and user confirmation are mandatory",
+      "AI can invent experience - guardrails and user confirmation are mandatory",
       "Crowded market with free alternatives",
       "One-off usage means weak retention unless you add tracking",
     ],
@@ -619,7 +619,7 @@ export const PART_1: RawIdea[] = [
       "One search box over Drive, Notion and Slack that answers with sources and permissions respected.",
     problem:
       "Company knowledge is scattered across four tools, so staff ask colleagues instead of searching and the same answer gets rewritten weekly.",
-    targetUsers: "Companies of 20–300 staff, operations leads, internal IT.",
+    targetUsers: "Companies of 20-300 staff, operations leads, internal IT.",
     solution:
       "Connect the document and chat sources, index them with the source permissions attached, and answer employee questions with citations while never surfacing content the asker cannot access.",
     key: [
@@ -786,7 +786,7 @@ export const PART_1: RawIdea[] = [
       "Add billing and limits",
     ],
     risks: [
-      "Sensitive data means many users refuse uploads — local processing matters",
+      "Sensitive data means many users refuse uploads - local processing matters",
       "Excel and Sheets add competing AI features",
       "Edge-case files break parsing",
     ],

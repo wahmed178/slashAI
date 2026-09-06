@@ -37,7 +37,7 @@ function getRecognitionCtor(): (new () => SpeechRecognitionLike) | null {
   return w.SpeechRecognition || w.webkitSpeechRecognition || null;
 }
 
-/** Microphone button for every search input — voice search in EN/HI/AR/UR. */
+/** Microphone button for every search input - voice search in EN/HI/AR/UR. */
 export function VoiceSearchButton({ onResult, onInterim, size = "sm", className }: Props) {
   const supported = typeof window !== "undefined" && getRecognitionCtor() !== null;
   const [open, setOpen] = useState(false);
@@ -90,11 +90,11 @@ export function VoiceSearchButton({ onResult, onInterim, size = "sm", className 
       };
       recognition.onerror = (event: any) => {
         if (event?.error === "not-allowed" || event?.error === "service-not-allowed") {
-          setError("Microphone permission denied — allow mic access and try again.");
+          setError("Microphone permission denied - allow mic access and try again.");
         } else if (event?.error === "no-speech") {
-          setError("No speech detected — try again.");
+          setError("No speech detected - try again.");
         } else {
-          setError("Voice recognition failed — try again.");
+          setError("Voice recognition failed - try again.");
         }
         setListening(false);
       };
@@ -164,7 +164,7 @@ export function VoiceSearchButton({ onResult, onInterim, size = "sm", className 
 
           {listening ? (
             <div className="mt-3">
-              {/* waveform — three bouncing bars */}
+              {/* waveform - three bouncing bars */}
               <div className="flex h-8 items-center justify-center gap-1">
                 {[0, 1, 2].map((i) => (
                   <span
@@ -179,7 +179,7 @@ export function VoiceSearchButton({ onResult, onInterim, size = "sm", className 
                 ))}
               </div>
               <p className="mt-2 text-center text-xs text-muted-foreground">
-                {interim ? `“${interim}”` : "Speak now — say what you want to search"}
+                {interim ? `“${interim}”` : "Speak now - say what you want to search"}
               </p>
               <button
                 type="button"
@@ -199,7 +199,7 @@ export function VoiceSearchButton({ onResult, onInterim, size = "sm", className 
             </p>
           ) : (
             <p className="mt-3 text-[11px] leading-relaxed text-muted-foreground">
-              Tap the mic and say what you're looking for — commands, topics or tasks.
+              Tap the mic and say what you're looking for - commands, topics or tasks.
             </p>
           )}
 

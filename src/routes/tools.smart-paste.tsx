@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Clipboard, Copy, Check } from "lucide-react";
 
 export const Route = createFileRoute("/tools/smart-paste")({
-  head: () => ({ meta: [{ title: "Smart Paste Bin — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Smart Paste Bin - SlashAI" }] }),
   component: SmartPaste,
 });
 
@@ -124,7 +124,7 @@ function SmartPaste() {
         <div>
           <h1 className="text-2xl font-bold text-foreground">Smart Paste Bin</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Paste any text — instantly detect what it is and extract insights.
+            Paste any text - instantly detect what it is and extract insights.
           </p>
         </div>
 

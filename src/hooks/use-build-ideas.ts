@@ -41,7 +41,7 @@ function write(key: string, value: unknown) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    /* storage full or unavailable — non-fatal */
+    /* storage full or unavailable - non-fatal */
   }
 }
 

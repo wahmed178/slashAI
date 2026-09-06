@@ -24,13 +24,13 @@ import { useLibrary, type JournalEntry } from "@/hooks/use-library";
 export const Route = createFileRoute("/journal")({
   head: () => ({
     meta: [
-      { title: "Build journal & achievements — SlashAI" },
+      { title: "Build journal & achievements - SlashAI" },
       {
         name: "description",
         content:
           "Log your build progress day by day, keep your streak alive, and unlock achievements as you copy, save and ship.",
       },
-      { property: "og:title", content: "Build journal — SlashAI" },
+      { property: "og:title", content: "Build journal - SlashAI" },
       {
         property: "og:description",
         content: "A local-first build-in-public journal with streaks and achievement badges.",
@@ -267,7 +267,7 @@ function JournalPage() {
           Build Journal
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Log progress in public — stored on this device, yours alone.
+          Log progress in public - stored on this device, yours alone.
         </p>
       </header>
 

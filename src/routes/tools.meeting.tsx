@@ -32,7 +32,7 @@ function formatMeetingNotes(raw: string): { decisions: string[]; actions: { pers
       continue;
     }
 
-    // Action items — person will/should/needs to do something
+    // Action items - person will/should/needs to do something
     const actionMatch = line.match(/^[-*•]?\s*(\w+)\s+(will|should|needs? to|is going to|gonna|has to|can|shall)\s+(.+)/i);
     if (actionMatch) {
       actions.push({ person: capitalize(actionMatch[1] ?? ""), task: (actionMatch[3] ?? "").trim().replace(/\.$/, "") });
@@ -75,7 +75,7 @@ function MeetingNotesFormatter() {
     if (!result) return;
     let md = "";
     if (result.decisions.length) { md += "**Decisions Made:**\n"; result.decisions.forEach(d => { md += `→ ${d}\n`; }); md += "\n"; }
-    if (result.actions.length) { md += "**Action Items:**\n"; result.actions.forEach(a => { md += `→ ${a.person} — ${a.task}\n`; }); md += "\n"; }
+    if (result.actions.length) { md += "**Action Items:**\n"; result.actions.forEach(a => { md += `→ ${a.person} - ${a.task}\n`; }); md += "\n"; }
     if (result.budget) { md += `**Budget:** ₹${result.budget}\n\n`; }
     if (result.nextMeeting) { md += `**Next Meeting:** ${result.nextMeeting}\n\n`; }
     if (result.notes.length) { md += "**Notes:**\n"; result.notes.forEach(n => { md += `• ${n}\n`; }); }
@@ -120,7 +120,7 @@ function MeetingNotesFormatter() {
                 <div className="mb-4">
                   <h3 className="mb-1 text-xs font-semibold text-primary">⚡ Action Items</h3>
                   {result.actions.map((a, i) => (
-                    <p key={i} className="ml-3 text-sm text-foreground">→ <span className="font-medium">{a.person}</span> — {a.task}</p>
+                    <p key={i} className="ml-3 text-sm text-foreground">→ <span className="font-medium">{a.person}</span> - {a.task}</p>
                   ))}
                 </div>
               )}

@@ -1,7 +1,7 @@
 /**
  * Where you can actually run a slash command, and how to phrase it there.
  *
- * Slash commands are a shorthand, not a standard — no assistant parses them
+ * Slash commands are a shorthand, not a standard - no assistant parses them
  * natively. Each target below gets a short, honest tip about how to paste the
  * command so the model does the right thing.
  */
@@ -19,7 +19,7 @@ export const AI_TARGETS: AiTarget[] = [
     id: "chatgpt",
     name: "ChatGPT",
     url: "https://chat.openai.com",
-    tip: "Paste the command, then attach the file or text on the same message — it handles mixed input well.",
+    tip: "Paste the command, then attach the file or text on the same message - it handles mixed input well.",
     free: "Free tier",
   },
   {
@@ -33,7 +33,7 @@ export const AI_TARGETS: AiTarget[] = [
     id: "gemini",
     name: "Gemini",
     url: "https://gemini.google.com",
-    tip: "Strong on images and current information — good for anything visual or web-grounded.",
+    tip: "Strong on images and current information - good for anything visual or web-grounded.",
     free: "Free",
   },
   {
@@ -47,7 +47,7 @@ export const AI_TARGETS: AiTarget[] = [
     id: "perplexity",
     name: "Perplexity",
     url: "https://www.perplexity.ai",
-    tip: "Use it when you want sources — ask the command to cite links in the answer.",
+    tip: "Use it when you want sources - ask the command to cite links in the answer.",
     free: "Free",
   },
   {
@@ -61,7 +61,7 @@ export const AI_TARGETS: AiTarget[] = [
     id: "duck",
     name: "Duck.ai",
     url: "https://duck.ai",
-    tip: "Anonymous and no sign-in — the safest place for anything personal.",
+    tip: "Anonymous and no sign-in - the safest place for anything personal.",
     free: "Completely free",
   },
 ];

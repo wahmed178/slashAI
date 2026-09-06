@@ -2,7 +2,7 @@ import { COMMANDS, type SlashCommand } from "./commands";
 
 /**
  * Optional, local-only persona layer. A persona is just a shorthand for a set
- * of interests + preferred categories — it never gates any content.
+ * of interests + preferred categories - it never gates any content.
  */
 export interface Persona {
   id: string;
@@ -94,7 +94,7 @@ export const PERSONAS: Persona[] = [
     label: "Just Curious",
     interests: [],
     categories: [],
-    pitch: "Browse everything — there is no wrong way to start.",
+    pitch: "Browse everything - there is no wrong way to start.",
   },
 ];
 

@@ -35,16 +35,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/workflow")({
   head: () => ({
     meta: [
-      { title: "AI Workflows — chain commands — SlashAI" },
+      { title: "AI Workflows - chain commands - SlashAI" },
       {
         name: "description",
         content:
-          "Build a step-by-step AI workflow by chaining SlashAI commands into one copy-ready prompt. Save, reorder and reuse your chains — all on your device.",
+          "Build a step-by-step AI workflow by chaining SlashAI commands into one copy-ready prompt. Save, reorder and reuse your chains - all on your device.",
       },
-      { property: "og:title", content: "AI Workflows — SlashAI" },
+      { property: "og:title", content: "AI Workflows - SlashAI" },
       {
         property: "og:description",
-        content: "Chain commands into one runnable prompt — no account, free forever.",
+        content: "Chain commands into one runnable prompt - no account, free forever.",
       },
     ],
   }),
@@ -101,7 +101,7 @@ function writeSaved(list: SavedWorkflow[]) {
   try {
     localStorage.setItem(SAVED_KEY, JSON.stringify(list));
   } catch {
-    /* storage full — saving is optional */
+    /* storage full - saving is optional */
   }
 }
 
@@ -114,10 +114,10 @@ function uid() {
 /** One step's block inside the chained prompt. */
 function stepBlock(cmd: SlashCommand, no: number, total: number, carry: boolean, prev?: SlashCommand) {
   const inputLine = carry && prev
-    ? `Input: <paste the OUTPUT from STEP ${no - 1} (${prev.command}) here — the previous step's final answer>`
+    ? `Input: <paste the OUTPUT from STEP ${no - 1} (${prev.command}) here - the previous step's final answer>`
     : "Input: <paste your input here>";
   return [
-    `STEP ${no} of ${total} — ${cmd.command}  [${cmd.category}]`,
+    `STEP ${no} of ${total} - ${cmd.command}  [${cmd.category}]`,
     `# ${cmd.title}`,
     `What it does: ${cmd.description}`,
     `How to use: ${cmd.howToUse}`,
@@ -139,7 +139,7 @@ function buildChainPrompt(name: string, resolved: { cmd: SlashCommand; carry: bo
     return stepBlock(cmd, i + 1, total, carry, prev);
   });
   return [
-    `WORKFLOW — ${name.trim() || "Untitled chain"} (${total} step${total > 1 ? "s" : ""})`,
+    `WORKFLOW - ${name.trim() || "Untitled chain"} (${total} step${total > 1 ? "s" : ""})`,
     "",
     "Run this as ONE continuous session in your AI chat: finish STEP 1 first, then let every later step build on the output you already got. Never restart the conversation between steps.",
     "",
@@ -252,7 +252,7 @@ function WorkflowPage() {
         window.setTimeout(() => setCopiedId(null), 1600);
       }
     } catch {
-      toast("Couldn't copy — clipboard not available");
+      toast("Couldn't copy - clipboard not available");
     }
   };
 
@@ -261,7 +261,7 @@ function WorkflowPage() {
       toast("Add at least one command first");
       return;
     }
-    const title = name.trim() || `Workflow — ${resolved[0]?.cmd.command ?? ""}`.trim();
+    const title = name.trim() || `Workflow - ${resolved[0]?.cmd.command ?? ""}`.trim();
     const wf: SavedWorkflow = { id: activeId ?? uid(), name: title, updatedAt: Date.now(), steps };
     const list = [...readSaved().filter((w) => w.id !== wf.id), wf].sort(
       (a, b) => b.updatedAt - a.updatedAt,
@@ -333,7 +333,7 @@ function WorkflowPage() {
         </div>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
           Chain SlashAI commands into a single runnable prompt. Pick the steps, set the order, and let
-          each step build on the previous one — then copy the whole workflow into any AI chat.
+          each step build on the previous one - then copy the whole workflow into any AI chat.
         </p>
       </header>
 
@@ -431,8 +431,8 @@ function WorkflowPage() {
               <div className="mt-4 rounded-lg border border-dashed border-border bg-surface/60 p-4 text-center">
                 <Sparkles className="mx-auto size-5 text-primary" aria-hidden />
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  Search for what you want each step to do — <em>summarize</em>, <em>rewrite</em>,{" "}
-                  <em>plan</em>… — then tap a result to add it.
+                  Search for what you want each step to do - <em>summarize</em>, <em>rewrite</em>,{" "}
+                  <em>plan</em>… - then tap a result to add it.
                 </p>
               </div>
             </div>
@@ -535,7 +535,7 @@ function WorkflowPage() {
               </span>
               <h2 className="mt-4 text-base font-bold text-foreground">Build your first chain</h2>
               <p className="mt-1 max-w-sm text-[13px] leading-relaxed text-muted-foreground">
-                Search for a command on the left and tap it to add a step. Steps run top to bottom —
+                Search for a command on the left and tap it to add a step. Steps run top to bottom -
                 add “uses previous output” when a step needs the result of the one before it.
               </p>
               <div className="mt-4 flex gap-1.5">
@@ -685,7 +685,7 @@ function WorkflowPage() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="min-w-0 flex-1 text-xs text-muted-foreground">
                   <span className="font-semibold text-foreground">How it works:</span> copy the chain
-                  prompt, paste it into any AI chat, then complete each step in order — steps marked{" "}
+                  prompt, paste it into any AI chat, then complete each step in order - steps marked{" "}
                   <span className="text-primary">“uses output”</span> expect you to paste the previous
                   answer where the prompt says.
                 </p>
@@ -702,7 +702,7 @@ function WorkflowPage() {
           )}
 
           <p className="mt-6 text-center text-[11px] text-muted-foreground">
-            Everything stays on this device — no account, no uploads.{" "}
+            Everything stays on this device - no account, no uploads.{" "}
             <Link to="/search" className="text-primary hover:underline">
               Or browse all {VERIFIED_TOTAL.toLocaleString()} commands →
             </Link>

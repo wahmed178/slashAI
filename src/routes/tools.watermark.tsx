@@ -87,7 +87,7 @@ function WatermarkTool() {
     <AppShell title="Watermark Tool">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🖼️ Image Watermark Tool</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Add text watermarks to images. 100% browser-based — nothing uploaded.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Add text watermarks to images. 100% browser-based - nothing uploaded.</p>
       </header>
 
       <div className="grid gap-4 lg:grid-cols-3">

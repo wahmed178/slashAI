@@ -40,12 +40,12 @@ const sectionsWithCounts = SECTIONS.map((s) => ({
 export const Route = createFileRoute("/discover/")({
   head: () => ({
     meta: [
-      { title: "Discover — AI tools, APIs, courses, channels | SlashAI" },
+      { title: "Discover - AI tools, APIs, courses, channels | SlashAI" },
       {
         name: "description",
-        content: `Explore ${RESOURCE_TOTAL}+ free tools, APIs, courses, and channels — curated for builders, developers and creators.`,
+        content: `Explore ${RESOURCE_TOTAL}+ free tools, APIs, courses, and channels - curated for builders, developers and creators.`,
       },
-      { property: "og:title", content: "Discover — SlashAI" },
+      { property: "og:title", content: "Discover - SlashAI" },
       { property: "og:description", content: "Curated tools, APIs, courses for builders." },
     ],
   }),
@@ -92,7 +92,7 @@ function DiscoverPage() {
           Discover
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {RESOURCE_TOTAL}+ free tools, APIs, courses and channels — curated for builders.
+          {RESOURCE_TOTAL}+ free tools, APIs, courses and channels - curated for builders.
         </p>
       </header>
 

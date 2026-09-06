@@ -12,7 +12,7 @@ export const Route = createFileRoute("/glass")({
 });
 
 /**
- * The paid "Glass" tier no longer exists — every feature is free.
+ * The paid "Glass" tier no longer exists - every feature is free.
  * Redirect anywhere pointing at the old waitlist page back home.
  */
 function GlassRedirect() {

@@ -76,15 +76,22 @@ function shuffleArray<T>(arr: T[]): T[] {
 }
 
 function getCacheKey(categoryId: number, difficulty: string): string {
-  return `quiz-cache-${categoryId}-${difficulty}`;
+  // v2: versioned key. Old/corrupt caches under the previous key are ignored
+  // entirely, which fixes devices that previously needed "clear site data".
+  return `quiz-cache-v2-${categoryId}-${difficulty}`;
 }
 
 function getCachedQuestions(categoryId: number, difficulty: string): QuizQuestion[] | null {
   try {
-    const raw = localStorage.getItem(getCacheKey(categoryId, difficulty));
+    const raw = safeStorageGetItem(getCacheKey(categoryId, difficulty));
     if (!raw) return null;
     const cached = JSON.parse(raw);
-    if (cached.date === todayStr()) return cached.questions;
+    if (cached && cached.date === todayStr() && Array.isArray(cached.questions) && cached.questions.length > 0) {
+      return cached.questions;
+    }
+    // Stale or malformed cache entry - remove it so it cannot break future loads
+    try { localStorage.removeItem(getCacheKey(categoryId, difficulty)); } catch { /* ignore */ }
+    try { sessionStorage.removeItem(getCacheKey(categoryId, difficulty)); } catch { /* ignore */ }
     return null;
   } catch { return null; }
 }
@@ -123,7 +130,10 @@ function safeStorageSetItem(key: string, value: string) {
 
 function safeStorageGetItem(key: string): string | null {
   if (globalStorageMode === 'disabled') return null;
-  try { return localStorage.getItem(key); } catch { return null; }
+  try {
+    const v = localStorage.getItem(key);
+    if (v !== null) return v;
+  } catch { /* fall through to session storage */ }
   try { return sessionStorage.getItem(key); } catch { return null; }
 }
 
@@ -185,7 +195,7 @@ function markCategoryCompleted(categoryId: number) {
 }
 
 /* ═══════════════════════════════════════════════
-   API — with timeouts, fallback, and retries
+   API - with timeouts, fallback, and retries
    ═══════════════════════════════════════════════ */
 
 const FETCH_TIMEOUT_MS = 10000; // 10s timeout for all API calls
@@ -255,7 +265,7 @@ async function ensureToken(): Promise<string> {
     const data = await res.json();
     token = data.token;
     if (token) setSessionToken(token);
-  } catch { /* token unavailable — continue without it */ }
+  } catch { /* token unavailable - continue without it */ }
   return token || "";
 }
 
@@ -271,7 +281,7 @@ async function fetchQuestions(
     const res = await fetchWithTimeout(url);
     const data: OpenTDBResponse = await res.json();
 
-    // Token exhausted — reset and retry ONCE
+    // Token exhausted - reset and retry ONCE
     if (data.response_code === 4 && token && _retryCount < 1) {
       try {
         await fetchWithTimeout(`https://opentdb.com/api_token.php?command=reset&token=${token}`);
@@ -280,7 +290,7 @@ async function fetchQuestions(
       return fetchQuestions(categoryId, difficulty, _retryCount + 1);
     }
 
-    // Rate limited — wait and retry ONCE
+    // Rate limited - wait and retry ONCE
     if (data.response_code === 5 && _retryCount < 1) {
       await new Promise((r) => setTimeout(r, 5000));
       return fetchQuestions(categoryId, difficulty, _retryCount + 1);
@@ -292,7 +302,7 @@ async function fetchQuestions(
 
     return { questions: [], responseCode: data.response_code };
   } catch {
-    // OpenTDB failed — try fallback API
+    // OpenTDB failed - try fallback API
     return fetchFromFallbackAPI(categoryId, difficulty);
   }
 }
@@ -324,7 +334,7 @@ async function fetchCategories(): Promise<{ id: number; name: string }[]> {
 export const Route = createFileRoute("/quiz")({
   head: () => ({
     meta: [
-      { title: "Daily Quiz — SlashAI" },
+      { title: "Daily Quiz - SlashAI" },
       { name: "description", content: "Test your knowledge with daily trivia quizzes across 24 categories. Fresh questions every day." },
     ],
   }),
@@ -348,10 +358,17 @@ function QuizPage() {
     globalStorageMode = mode;
     setQuizStorageMode(mode);
     setQuizStorageTested(true);
-    // Always allow storage — quiz works without it but with limited features
+    // Always allow storage - quiz works without it but with limited features
     // Don't block the quiz; just show a diagnostic if storage is unavailable
     setQuizStorageOk(mode !== 'disabled');
   }, [quizStorageTested]);
+
+  const retryStorage = useCallback(() => {
+    const mode = probeStorageKind();
+    globalStorageMode = mode;
+    setQuizStorageMode(mode);
+    setQuizStorageOk(mode !== 'disabled');
+  }, []);
 
   const [difficulty, setDifficulty] = useState<string>(() => {
     try { return localStorage.getItem("quiz-difficulty") || "medium"; } catch { return "medium"; }
@@ -427,7 +444,7 @@ function QuizPage() {
     const { questions: fetched, responseCode } = await fetchQuestions(catId, difficulty);
 
     if (responseCode === 1) {
-      // No results for this difficulty — retry with medium
+      // No results for this difficulty - retry with medium
       if (difficulty !== "medium") {
         const retry = await fetchQuestions(catId, "medium");
         if (retry.questions.length) {
@@ -566,7 +583,7 @@ function QuizPage() {
 
   const playAgain = useCallback(() => {
     if (selectedCategory) {
-      // Bypass daily cache — fetch fresh
+      // Bypass daily cache - fetch fresh
       localStorage.removeItem(getCacheKey(selectedCategory.id, difficulty));
       startQuiz(selectedCategory.id, selectedCategory.name);
     }
@@ -614,6 +631,8 @@ function QuizPage() {
             setDifficulty={setDifficulty}
             completedCategories={completedCategories}
             streak={streak}
+            quizStorageOk={quizStorageOk}
+            onRetryStorage={retryStorage}
             onSelect={(id, name) => startQuiz(id, name)}
           />
         )}
@@ -684,6 +703,8 @@ function QuizPage() {
             selectedCategory={selectedCategory}
             difficulty={difficulty}
             showReview={showReview}
+            quizStorageOk={quizStorageOk}
+            onRetryStorage={retryStorage}
             onToggleReview={() => setShowReview(!showReview)}
             onPlayAgain={playAgain}
             onBackToPicker={goBackToPicker}
@@ -707,6 +728,8 @@ function CategoryPicker({
   setDifficulty,
   completedCategories,
   streak,
+  quizStorageOk,
+  onRetryStorage,
   onSelect,
 }: {
   categories: { id: number; name: string }[];
@@ -716,6 +739,8 @@ function CategoryPicker({
   setDifficulty: (d: string) => void;
   completedCategories: Set<number>;
   streak: { count: number; best: number };
+  quizStorageOk: boolean;
+  onRetryStorage: () => void;
   onSelect: (id: number, name: string) => void;
 }) {
   const displayCategories = categories.length ? categories : FALLBACK_CATEGORIES;
@@ -737,12 +762,7 @@ function CategoryPicker({
             <button
               type="button"
               className="mt-2 min-h-[36px] rounded-md border border-border bg-surface px-3 text-sm font-medium text-foreground transition-colors hover:text-primary"
-              onClick={() => {
-                const mode = probeStorageKind();
-                globalStorageMode = mode;
-                setQuizStorageMode(mode);
-                setQuizStorageOk(mode !== 'disabled');
-              }}
+              onClick={onRetryStorage}
             >
               Retry storage check
             </button>
@@ -1020,6 +1040,8 @@ function ResultsScreen({
   answers,
   selectedCategory,
   difficulty,
+  quizStorageOk,
+  onRetryStorage,
   showReview,
   onToggleReview,
   onPlayAgain,
@@ -1031,6 +1053,8 @@ function ResultsScreen({
   answers: { question: string; correct: string; userAnswer: string; wasCorrect: boolean }[];
   selectedCategory: { id: number; name: string };
   difficulty: string;
+  quizStorageOk: boolean;
+  onRetryStorage: () => void;
   showReview: boolean;
   onToggleReview: () => void;
   onPlayAgain: () => void;
@@ -1095,13 +1119,7 @@ function ResultsScreen({
               <button
                 type="button"
                 className="mt-2 min-h-[36px] rounded-md border border-border bg-surface px-3 text-sm font-medium text-foreground transition-colors hover:text-primary"
-                onClick={() => {
-                  const mode = probeStorageKind();
-                  globalStorageMode = mode;
-                  setQuizStorageMode(mode);
-                  setQuizStorageOk(mode !== 'disabled');
-                  window.location.reload();
-                }}
+                onClick={onRetryStorage}
               >
                 Retry storage check
               </button>

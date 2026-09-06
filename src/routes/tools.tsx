@@ -5,7 +5,7 @@ export const Route = createFileRoute("/tools")({
   head: () => ({
     meta: [
       {
-        title: "SlashKits — 150+ Free Browser Tools",
+        title: "SlashKits - 150+ Free Browser Tools",
       },
       {
         name: "description",

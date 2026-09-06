@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Plus, Trash2, Download } from "lucide-react";
 
 export const Route = createFileRoute("/tools/budget")({
-  head: () => ({ meta: [{ title: "Monthly Budget Tracker — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Monthly Budget Tracker - SlashAI" }] }),
   component: BudgetTracker,
 });
 
@@ -89,7 +89,7 @@ function BudgetTracker() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Budget Tracker</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Track income vs expenses — all stored locally.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Track income vs expenses - all stored locally.</p>
           </div>
           <button onClick={exportCSV} className="flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-2 text-xs text-muted-foreground hover:text-foreground"><Download className="size-3.5" /> Export CSV</button>
         </div>

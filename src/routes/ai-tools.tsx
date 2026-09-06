@@ -12,13 +12,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/ai-tools")({
   head: () => ({
     meta: [
-      { title: "AI Tools Directory — 100+ Free & Freemium Tools — SlashAI" },
+      { title: "AI Tools Directory - 100+ Free & Freemium Tools - SlashAI" },
       {
         name: "description",
         content:
           "Discover 100+ curated AI tools with real free tiers. Browse writing, image, video, coding, design, voice, marketing and more tools in one directory.",
       },
-      { property: "og:title", content: "AI Tools Directory — SlashAI" },
+      { property: "og:title", content: "AI Tools Directory - SlashAI" },
       { property: "og:description", content: "100+ curated AI tools with genuinely usable free tiers." },
     ],
   }),
@@ -312,7 +312,7 @@ function AiToolsPage() {
 
       <p className="mt-10 pb-8 text-center text-[11px] text-muted-foreground/60">
         SlashAI is not affiliated with any of these tools and earns nothing from these links.
-        Free tiers change — check the tool's own pricing page before relying on one.
+        Free tiers change - check the tool's own pricing page before relying on one.
       </p>
     </AppShell>
   );

@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Copy, Check, Download, ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/tools/upi")({
-  head: () => ({ meta: [{ title: "UPI Payment Link Generator — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "UPI Payment Link Generator - SlashAI" }] }),
   component: UPIGenerator,
 });
 
@@ -18,7 +18,7 @@ function generateQR(text: string, size: number = 200): string {
   canvas.height = size;
   const ctx = canvas.getContext("2d")!;
 
-  // Simple pattern-based QR visual (not a real QR code — just the URI)
+  // Simple pattern-based QR visual (not a real QR code - just the URI)
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, size, size);
   ctx.fillStyle = "#0a0a0f";
@@ -36,7 +36,7 @@ function generateQR(text: string, size: number = 200): string {
           ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
         }
       } else {
-        // Data area — use hash of text to create pattern
+        // Data area - use hash of text to create pattern
         const hash = (text.charCodeAt(y % text.length) * (x + 1) + x * 31 + y * 17) % 100;
         if (hash < 45) {
           ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);

@@ -60,7 +60,7 @@ function ChangelogMaker() {
   };
 
   const generateText = () => {
-    let txt = `${product || "Product"} ${version} — ${date}\n${"=".repeat(40)}\n\n`;
+    let txt = `${product || "Product"} ${version} - ${date}\n${"=".repeat(40)}\n\n`;
     for (const [cat, items] of Object.entries(entries) as [Category, ChangelogEntry[]][]) {
       if (items.length === 0) continue;
       txt += `[${CAT_CONFIG[cat].label}]\n`;

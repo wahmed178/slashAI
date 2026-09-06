@@ -1,5 +1,5 @@
 /**
- * Intent engine — turns free-text keywords into a shortlist of app features,
+ * Intent engine - turns free-text keywords into a shortlist of app features,
  * catalog matches and a ready-to-copy prompt. Purely local and deterministic,
  * so it works offline and never spends credits.
  */
@@ -270,7 +270,7 @@ export function buildPrompt(query: string, commands: SlashCommand[]): string {
     "Role: act as an expert who has shipped this exact thing many times.",
     "",
     "Do this:",
-    "1. Ask me at most 3 questions only if something blocks you — otherwise start.",
+    "1. Ask me at most 3 questions only if something blocks you - otherwise start.",
     "2. Give a short plan, then the actual output (not a description of it).",
     "3. Flag assumptions and the one thing most likely to go wrong.",
     "",
@@ -289,11 +289,11 @@ export function buildPrompt(query: string, commands: SlashCommand[]): string {
 export function buildWorkflow(query: string, features: FeatureMatch[]): string[] {
   const goal = query.trim() || "your goal";
   const steps = [
-    `Write the outcome in one sentence: "${goal}" — done means what exactly?`,
+    `Write the outcome in one sentence: "${goal}" - done means what exactly?`,
     "Collect the inputs first (files, links, numbers) so nothing stalls mid-flow.",
   ];
   for (const f of features.slice(0, 3)) {
-    steps.push(`Open ${f.feature.label} — ${f.feature.blurb}`);
+    steps.push(`Open ${f.feature.label} - ${f.feature.blurb}`);
   }
   steps.push(
     "Run the generated prompt in your AI assistant and paste the raw output back.",

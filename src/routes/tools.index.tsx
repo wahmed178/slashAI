@@ -5,7 +5,6 @@ import { AppShell } from "@/components/library/AppShell";
 import {
   TOOL_SECTIONS,
   SLASH_TOOL_COUNT,
-  SLASH_TOOL_COUNT_EXACT,
   toolOfTheDay,
   type SlashTool,
 } from "@/lib/slashkits";
@@ -13,10 +12,10 @@ import {
 export const Route = createFileRoute("/tools/")({
   head: () => ({
     meta: [
-      { title: `SlashKits — ${SLASH_TOOL_COUNT} free browser tools | SlashAI` },
+      { title: `SlashKits - ${SLASH_TOOL_COUNT} free browser tools | SlashAI` },
       {
         name: "description",
-        content: `SlashKits: ${SLASH_TOOL_COUNT} free browser tools — image compress, calculators, noise, tasbeeh, timers, screensavers. No upload, no account.`,
+        content: `SlashKits: ${SLASH_TOOL_COUNT} free browser tools - image compress, calculators, noise, tasbeeh, timers, screensavers. No upload, no account.`,
       },
     ],
   }),
@@ -57,11 +56,11 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {SLASH_TOOL_COUNT_EXACT} browser-based tools. Nothing uploaded. All client-side.
+          {SLASH_TOOL_COUNT} browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
 
-      {/* Tool of the Day — rotates on a daily date seed */}
+      {/* Tool of the Day - rotates on a daily date seed */}
       <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">
         <div className="flex items-center gap-2">
           <span className="text-[14px]">⭐</span>
@@ -124,7 +123,7 @@ function ToolsIndex() {
                 : "border border-border bg-surface text-muted-foreground hover:border-primary/40 hover:text-foreground"
             }`}
           >
-            {f === "All" ? `All (${SLASH_TOOL_COUNT_EXACT})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
+            {f === "All" ? `All (${SLASH_TOOL_COUNT})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
           </button>
         ))}
       </div>

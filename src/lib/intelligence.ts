@@ -1,7 +1,7 @@
 import type { SlashCommand } from "./commands";
 
 /**
- * Command Intelligence Engine — learns from every interaction and personalises
+ * Command Intelligence Engine - learns from every interaction and personalises
  * search + the homepage. All data stays in localStorage under
  * "slashai-intelligence" so nothing ever leaves the device.
  */
@@ -71,7 +71,7 @@ function write(data: IntelligenceData) {
     localStorage.setItem(KEY, JSON.stringify(data));
     window.dispatchEvent(new Event(CHANGE_EVENT));
   } catch {
-    /* storage full — intelligence is optional */
+    /* storage full - intelligence is optional */
   }
 }
 

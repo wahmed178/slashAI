@@ -126,7 +126,7 @@ export const Route = createFileRoute("/trending")({
       { title: "Trending on SlashAI" },
       {
         name: "description",
-        content: "What people are copying, saving and building with right now — commands, resources, roadmaps, glossary.",
+        content: "What people are copying, saving and building with right now - commands, resources, roadmaps, glossary.",
       },
     ],
   }),

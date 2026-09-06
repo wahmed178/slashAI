@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/certificate")({
   head: () => ({
     meta: [
-      { title: "Certificate Generator — SlashAI" },
-      { name: "description", content: "Create printable certificates of completion, achievement and participation — classic, modern and Islamic templates, download as PNG or PDF." },
+      { title: "Certificate Generator - SlashAI" },
+      { name: "description", content: "Create printable certificates of completion, achievement and participation - classic, modern and Islamic templates, download as PNG or PDF." },
     ],
   }),
   component: CertificateGenerator,

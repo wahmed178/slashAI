@@ -1,5 +1,5 @@
 /**
- * Mock Interview question bank — deterministic, 500+ questions, entirely
+ * Mock Interview question bank - deterministic, 500+ questions, entirely
  * static data (no API). Pools are composed below into one flat list with
  * stable ids like "dev-behavioral-003".
  */
@@ -91,22 +91,22 @@ const GENERAL_HR: PoolItem[] = [
   { q: "Where do you see yourself in five years?", tips: "Link ambition to this company's trajectory and the skills you want to build here.", k: "five-years,ambition,career,company,growth" },
   { q: "What are your salary expectations?", tips: "Give a researched range and note you value the role's scope, not just the number.", k: "salary,range,research,expectations,negotiation" },
   { q: "Why should we hire you over other candidates?", tips: "Pick two differentiators with evidence and connect them to this role's top need.", k: "differentiator,evidence,role,value,strengths" },
-  { q: "Tell me about your ideal manager.", tips: "Describe what helps you do your best work — feedback style, trust, clarity — not a wish list.", k: "manager,feedback,trust,clarity,workstyle" },
+  { q: "Tell me about your ideal manager.", tips: "Describe what helps you do your best work - feedback style, trust, clarity - not a wish list.", k: "manager,feedback,trust,clarity,workstyle" },
   { q: "How do you handle working under pressure?", tips: "Show a system (prioritise, communicate, breathe) plus one real pressured moment.", k: "pressure,system,prioritise,communication,example" },
   { q: "Are you comfortable with remote or hybrid work?", tips: "State your preference honestly and prove you stay connected and visible either way.", k: "remote,hybrid,communication,discipline,visibility" },
-  { q: "What do you do when you do not know the answer?", tips: "Show research skills first, then asking well-scoped questions — with a real example.", k: "unknown,research,questions,resourceful,example" },
+  { q: "What do you do when you do not know the answer?", tips: "Show research skills first, then asking well-scoped questions - with a real example.", k: "unknown,research,questions,resourceful,example" },
   { q: "What motivates you to do great work?", tips: "Name one intrinsic driver and prove it with a past moment of sustained effort.", k: "motivation,effort,passion,ownership,evidence" },
   { q: "Do you prefer working alone or in a team?", tips: "Both, with nuance: deep work alone, decisions and reviews with the team.", k: "alone,team,balance,focus,collaboration" },
-  { q: "What questions do you have for us?", tips: "Ask about outcomes, team, and growth — never just perks.", k: "questions,outcomes,team,growth,role" },
+  { q: "What questions do you have for us?", tips: "Ask about outcomes, team, and growth - never just perks.", k: "questions,outcomes,team,growth,role" },
   { q: "Describe your ideal work environment.", tips: "Focus on conditions that produce your best work: clarity, trust, feedback loops.", k: "environment,clarity,trust,feedback,productivity" },
-  { q: "How do you keep your skills up to date?", tips: "Name specific habits: projects, courses, communities, reading — with one recent example.", k: "learning,habits,courses,community,example" },
+  { q: "How do you keep your skills up to date?", tips: "Name specific habits: projects, courses, communities, reading - with one recent example.", k: "learning,habits,courses,community,example" },
   { q: "What would make you reject an offer?", tips: "Honest deal-breakers framed as values (impact, growth, trust) rather than demands.", k: "offer,values,impact,growth,decision" },
   { q: "Tell me about a time you were not happy in a role.", tips: "Choose a fit or growth issue, own your part, and show what you did about it.", k: "unhappy,fit,growth,ownership,resolution" },
   { q: "How do you handle constructive criticism?", tips: "Show a feedback loop: listen, clarify, thank, act, and check back.", k: "criticism,feedback,listen,act,followup" },
   { q: "What do you know about our company and products?", tips: "Give proof of research: a product detail, a recent move, and why it interests you.", k: "company,research,products,recent,interest" },
   { q: "What is your notice period and availability?", tips: "Be direct and concise; mention flexibility without overpromising.", k: "notice,availability,startdate,direct,flexible" },
   { q: "How would your colleagues describe you?", tips: "Use two traits with a short story each from real coworkers' words.", k: "colleagues,traits,evidence,team,reputation" },
-  { q: "What accomplishment are you most proud of outside work?", tips: "Pick something that reveals transferable traits — consistency, learning, leadership.", k: "outside,achievement,consistency,learning,character" },
+  { q: "What accomplishment are you most proud of outside work?", tips: "Pick something that reveals transferable traits - consistency, learning, leadership.", k: "outside,achievement,consistency,learning,character" },
 ];
 
 const ROLE_BEHAVIORAL: Record<InterviewRole, PoolItem[]> = {
@@ -166,9 +166,9 @@ const ROLE_SITUATIONAL: Record<InterviewRole, PoolItem[]> = {
   developer: [
     { q: "A critical bug ships to production on a Friday evening. Walk me through your response.", tips: "Triage first: severity, users affected, rollback vs hotfix, then postmortem discipline.", k: "production,bug,triage,rollback,postmortem" },
     { q: "A teammate writes code that works but is hard to maintain. What do you do?", tips: "Review with concrete suggestions, agree on standards, and share ownership of the fix.", k: "maintainability,review,standards,feedback,team" },
-    { q: "You estimate a task will take two days but it is clearly going to take five. What now?", tips: "Surface early with options — scope cut, help, or time — and document the drift reason.", k: "estimate,deadline,scope,communication,options" },
+    { q: "You estimate a task will take two days but it is clearly going to take five. What now?", tips: "Surface early with options - scope cut, help, or time - and document the drift reason.", k: "estimate,deadline,scope,communication,options" },
     { q: "A legacy system has no tests and you must change it. How do you proceed?", tips: "Add characterisation tests around the behaviour you touch before changing it.", k: "legacy,tests,safety,refactor,risk" },
-    { q: "Your team disagrees on the architecture for a new service. How do you help decide?", tips: "Turn opinions into criteria — scale, team skill, ops cost — and drive a decision with an owner.", k: "architecture,decision,criteria,team,ownership" },
+    { q: "Your team disagrees on the architecture for a new service. How do you help decide?", tips: "Turn opinions into criteria - scale, team skill, ops cost - and drive a decision with an owner.", k: "architecture,decision,criteria,team,ownership" },
   ],
   designer: [
     { q: "You have one hour to present a solution for a problem you have never seen. What do you do?", tips: "Clarify the user and goal first, sketch three directions, recommend one with rationale.", k: "timebox,clarity,sketch,directions,recommendation" },
@@ -188,7 +188,7 @@ const ROLE_SITUATIONAL: Record<InterviewRole, PoolItem[]> = {
     { q: "A campaign goes viral for the wrong reason. What do you do first?", tips: "Assess tone and risk, pause if needed, respond authentically, and align with leadership.", k: "viral,crisis,response,authenticity,leadership" },
     { q: "Your budget is cut 30% mid-quarter. How do you keep delivering?", tips: "Rank channels by ROI, protect proven performers, and renegotiate what success looks like.", k: "budget,roi,channels,priorities,negotiate" },
     { q: "The CEO wants a campaign that conflicts with the brand voice. How do you handle it?", tips: "Understand the goal behind the request, propose on-brand alternatives, and give a recommendation.", k: "ceo,brand,voice,alternative,recommendation" },
-    { q: "Organic reach drops suddenly on your main channel. What do you check?", tips: "Algorithm change, content performance, and audience feedback — then adapt the mix.", k: "reach,algorithm,analysis,adapt,content" },
+    { q: "Organic reach drops suddenly on your main channel. What do you check?", tips: "Algorithm change, content performance, and audience feedback - then adapt the mix.", k: "reach,algorithm,analysis,adapt,content" },
     { q: "Sales says leads from marketing are low quality. How do you respond?", tips: "Agree on a definition of quality first, review handoff data, and fix the funnel together.", k: "leads,quality,sales,alignment,funnel" },
   ],
   sales: [
@@ -224,10 +224,10 @@ const ROLE_SITUATIONAL: Record<InterviewRole, PoolItem[]> = {
 
 const TECHNICAL: Record<Exclude<InterviewRole, "general">, PoolItem[]> = {
   developer: [
-    { q: "Explain the difference between REST and GraphQL.", tips: "Cover the data-fetching trade-offs, caching, and when each fits — with a short example.", k: "rest,graphql,api,overfetch,caching,example" },
+    { q: "Explain the difference between REST and GraphQL.", tips: "Cover the data-fetching trade-offs, caching, and when each fits - with a short example.", k: "rest,graphql,api,overfetch,caching,example" },
     { q: "How does the event loop work in JavaScript?", tips: "Talk through the call stack, task queue, and microtasks, then a setTimeout/Promise example.", k: "eventloop,javascript,callstack,microtask,promise" },
     { q: "Explain closures and give a real use case.", tips: "Define the mechanism precisely and show a practical example like memoisation or privacy.", k: "closure,javascript,scope,memoisation,example" },
-    { q: "What happens when you type a URL and press Enter?", tips: "Walk DNS, TCP/TLS, HTTP request, server, response, and rendering — keep it structured.", k: "dns,tcp,tls,http,rendering,request" },
+    { q: "What happens when you type a URL and press Enter?", tips: "Walk DNS, TCP/TLS, HTTP request, server, response, and rendering - keep it structured.", k: "dns,tcp,tls,http,rendering,request" },
     { q: "Explain how you would design a URL shortener.", tips: "Cover encoding, storage, redirects, collisions, analytics, and scale assumptions.", k: "system-design,url,shortener,storage,scale,redirect" },
     { q: "What is the difference between process and thread?", tips: "Define memory isolation, context switching, and where concurrency actually helps.", k: "process,thread,memory,concurrency,scheduling" },
     { q: "Explain indexes in a database. When do they hurt?", tips: "Cover B-tree basics, covering indexes, write amplification, and cardinality.", k: "index,database,query,write-amplification,performance" },
@@ -314,14 +314,14 @@ const TECHNICAL: Record<Exclude<InterviewRole, "general">, PoolItem[]> = {
     { q: "How do you decide what goes on a landing page above the fold?", tips: "Prioritise the user's job, one clear message, and the primary action.", k: "landing,abovefold,message,cta,conversion" },
     { q: "Explain the F-pattern and when to use it.", tips: "Describe scanning behaviour and how layout follows reading gravity.", k: "fpattern,reading,layout,scanning,webdesign" },
     { q: "What makes a button feel tappable on mobile?", tips: "Discuss size, padding, visual affordance, and thumb reach.", k: "button,mobile,touch,affordance,size" },
-    { q: "How do you approach motion and animation in UI?", tips: "Use motion for meaning — state, spatial memory — not decoration, with easing discipline.", k: "motion,animation,easing,state,performance" },
+    { q: "How do you approach motion and animation in UI?", tips: "Use motion for meaning - state, spatial memory - not decoration, with easing discipline.", k: "motion,animation,easing,state,performance" },
     { q: "What is the difference between a persona and a user journey?", tips: "Define audience archetypes vs experience steps and when each is used.", k: "persona,journey,user,research,archetype" },
     { q: "How would you improve search on an e-commerce site?", tips: "Discuss filters, autocomplete, result relevance signals, and empty states.", k: "search,ecommerce,filters,autocomplete,results" },
     { q: "Explain how you would design a dashboard for executives.", tips: "Lead with decisions and outliers, keep one screen, and avoid chart junk.", k: "dashboard,executives,decisions,charts,simplicity" },
   ],
   manager: [
     { q: "How do you structure a one-on-one with a direct report?", tips: "Make it their agenda, use it for coaching and blockers, and keep notes.", k: "oneonone,coaching,agenda,feedback,notes" },
-    { q: "How do you measure a team's health?", tips: "Cover delivery, satisfaction signals, churn risk, and burnout markers — not just output.", k: "teamhealth,metrics,engagement,churn,delivery" },
+    { q: "How do you measure a team's health?", tips: "Cover delivery, satisfaction signals, churn risk, and burnout markers - not just output.", k: "teamhealth,metrics,engagement,churn,delivery" },
     { q: "Explain how you handle performance reviews.", tips: "Use continuous evidence, clear ratings, development focus, and no surprises.", k: "performance,review,feedback,development,evidence" },
     { q: "How do you decide what to delegate?", tips: "Match tasks to growth needs and capacity; delegate outcomes, not just tasks.", k: "delegation,ownership,growth,capacity,outcomes" },
     { q: "What does a good sprint or planning ritual look like to you?", tips: "Describe goal clarity, realistic scope, and a review loop that improves the next plan.", k: "planning,sprint,goals,scope,review" },
@@ -372,24 +372,24 @@ const TECHNICAL: Record<Exclude<InterviewRole, "general">, PoolItem[]> = {
     { q: "How do you handle a prospect who will not return calls?", tips: "Change the value proposition or the channel, then make a clear exit-or-advance ask.", k: "prospect,noresponse,channel,value,decision" },
   ],
   product: [
-    { q: "How do you decide what to build next?", tips: "Combine strategy, user evidence, and effort — with explicit criteria and a no-go option.", k: "prioritisation,roadmap,evidence,criteria,decision" },
+    { q: "How do you decide what to build next?", tips: "Combine strategy, user evidence, and effort - with explicit criteria and a no-go option.", k: "prioritisation,roadmap,evidence,criteria,decision" },
     { q: "Explain the difference between a problem statement and a solution.", tips: "Define the user job and pain first; solutions are hypotheses to test.", k: "problemstatement,solution,hypothesis,users,pain" },
     { q: "How would you discover unmet user needs?", tips: "Combine interviews, support data, usage analytics, and watching real sessions.", k: "discovery,research,interviews,analytics,needs" },
     { q: "What metrics matter for a new feature's success?", tips: "Define activation and retention for that feature plus guardrails on the core experience.", k: "metrics,activation,retention,guardrails,success" },
-    { q: "How do you write a good user story?", tips: "Use the job, the motivation, and acceptance criteria — keep it small enough to ship.", k: "userstory,acceptance,scope,job,criteria" },
+    { q: "How do you write a good user story?", tips: "Use the job, the motivation, and acceptance criteria - keep it small enough to ship.", k: "userstory,acceptance,scope,job,criteria" },
     { q: "Explain how you would run a discovery interview.", tips: "Ask about past behaviour, not opinions; follow up on stories; record and synthesise.", k: "interview,discovery,questions,behaviour,synthesis" },
-    { q: "How do you prioritise bugs versus features?", tips: "Use severity and user impact for bugs, value and effort for features — and a shared queue.", k: "bugs,features,prioritisation,severity,impact" },
+    { q: "How do you prioritise bugs versus features?", tips: "Use severity and user impact for bugs, value and effort for features - and a shared queue.", k: "bugs,features,prioritisation,severity,impact" },
     { q: "What is product-market fit and how would you measure it?", tips: "Discuss retention curves, willingness to pay, and word-of-mouth as signals.", k: "productmarketfit,retention,pmf,signals,metrics" },
     { q: "How do you run a successful beta?", tips: "Recruit engaged users, define success metrics, create feedback loops, and act visibly.", k: "beta,feedback,metrics,users,iteration" },
     { q: "Explain how you would sunset a product.", tips: "Plan migration, communicate early, define the off-ramp, and learn from the shutdown.", k: "sunset,product,migration,communication,learn" },
     { q: "What is the difference between a roadmap and a backlog?", tips: "Roadmaps communicate strategic themes and intent; backlogs hold candidate work.", k: "roadmap,backlog,themes,strategy,intent" },
-    { q: "How do you make a case for killing a beloved feature?", tips: "Use usage data, maintenance cost, and strategic fit — and share the reasoning transparently.", k: "kill,feature,data,cost,strategy" },
+    { q: "How do you make a case for killing a beloved feature?", tips: "Use usage data, maintenance cost, and strategic fit - and share the reasoning transparently.", k: "kill,feature,data,cost,strategy" },
     { q: "How do you collaborate with engineering during planning?", tips: "Bring problem context and success metrics; let engineers own the how and estimate honestly.", k: "engineering,collaboration,planning,metrics,context" },
     { q: "What is your definition of a successful launch?", tips: "Align on one primary outcome, the audience, and the review date before launch day.", k: "launch,success,definition,outcome,review" },
-    { q: "How do you know when to stop adding features to an MVP?", tips: "Stop when the core job is done and real users can validate value — then iterate on evidence.", k: "mvp,scope,validation,iteration,value" },
+    { q: "How do you know when to stop adding features to an MVP?", tips: "Stop when the core job is done and real users can validate value - then iterate on evidence.", k: "mvp,scope,validation,iteration,value" },
     { q: "Explain how you would handle a product with declining usage.", tips: "Diagnose retention vs acquisition first, talk to churned users, then fix the top cause.", k: "decline,usage,retention,diagnosis,churn" },
     { q: "What tools would you use to track product analytics?", tips: "Name a stack for events, funnels, and retention, and explain what you'd instrument first.", k: "analytics,tools,funnels,retention,instrumentation" },
-    { q: "How do you balance customer requests with the product vision?", tips: "Use a decision framework that weighs evidence, strategy, and effort — and communicate why.", k: "vision,requests,balance,framework,communication" },
+    { q: "How do you balance customer requests with the product vision?", tips: "Use a decision framework that weighs evidence, strategy, and effort - and communicate why.", k: "vision,requests,balance,framework,communication" },
   ],
 };
 
@@ -449,7 +449,7 @@ function build(): InterviewQuestion[] {
 
 export const INTERVIEW_QUESTIONS: InterviewQuestion[] = build();
 
-/** Guaranteed minimum — composition above yields well past this. */
+/** Guaranteed minimum - composition above yields well past this. */
 export const INTERVIEW_QUESTION_COUNT = INTERVIEW_QUESTIONS.length;
 
 export const ROLES_META: { id: InterviewRole; label: string }[] = [
@@ -476,7 +476,7 @@ export function pickInterviewQuestions(opts: {
       q.level.includes(level) &&
       (type === "mixed" || q.type === type),
   );
-  // mixed — pull a spread of types when available
+  // mixed - pull a spread of types when available
   if (type === "mixed") {
     const ordered: InterviewType[] = ["behavioral", "situational", "technical", "hr"];
     const picked: InterviewQuestion[] = [];
@@ -491,7 +491,7 @@ export function pickInterviewQuestions(opts: {
     }
     pool = picked;
   } else {
-    // deterministic-ish shuffle seeded by nothing fancy — use Fisher–Yates
+    // deterministic-ish shuffle seeded by nothing fancy - use Fisher-Yates
     pool = [...pool];
     for (let i = pool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));

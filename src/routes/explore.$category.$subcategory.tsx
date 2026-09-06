@@ -7,7 +7,7 @@ import { COMMANDS } from "@/lib/commands";
 
 export const Route = createFileRoute("/explore/$category/$subcategory")({
   head: ({ params }) => {
-    const title = `${params.subcategory} — ${params.category} | SlashAI`;
+    const title = `${params.subcategory} - ${params.category} | SlashAI`;
     const description = `AI slash commands for ${params.subcategory} inside the ${params.category} category.`;
     return {
       meta: [

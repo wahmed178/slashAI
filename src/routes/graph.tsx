@@ -13,11 +13,11 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/graph")({
   head: () => ({
     meta: [
-      { title: "Your Knowledge Graph — see how saved items connect | SlashAI" },
+      { title: "Your Knowledge Graph - see how saved items connect | SlashAI" },
       {
         name: "description",
         content:
-          "A visual graph of everything you saved on SlashAI — commands, resources, collections and journal notes — connected by category and use.",
+          "A visual graph of everything you saved on SlashAI - commands, resources, collections and journal notes - connected by category and use.",
       },
     ],
   }),
@@ -297,7 +297,7 @@ function GraphPage() {
     return () => ro.disconnect();
   }, []);
 
-  /* simple force simulation — no dependencies, runs fully client-side */
+  /* simple force simulation - no dependencies, runs fully client-side */
   useEffect(() => {
     if (visibleNodes.length === 0) return;
     let raf = 0;
@@ -428,7 +428,7 @@ function GraphPage() {
   const zoom = (dir: 1 | -1) => setScale((s) => clamp(Number((s + dir * 0.25).toFixed(2)), 0.4, 2.4));
 
   const count = nodes.length;
-  const note = count === 0 ? "Save some commands and resources first — they'll appear here as a connected graph." : undefined;
+  const note = count === 0 ? "Save some commands and resources first - they'll appear here as a connected graph." : undefined;
 
   return (
     <AppShell wide title="Knowledge graph">
@@ -440,7 +440,7 @@ function GraphPage() {
           Knowledge Graph
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Everything you saved on this device — commands, resources, collections and journal notes — mapped by how they connect.
+          Everything you saved on this device - commands, resources, collections and journal notes - mapped by how they connect.
         </p>
       </header>
 

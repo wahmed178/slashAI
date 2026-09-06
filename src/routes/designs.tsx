@@ -6,11 +6,11 @@ import { AppShell } from "@/components/library/AppShell";
 export const Route = createFileRoute("/designs")({
   head: () => ({
     meta: [
-      { title: "Designs — SlashAI" },
+      { title: "Designs - SlashAI" },
       {
         name: "description",
         content:
-          "Complete design systems for SlashAI — Linear, Notion, Vercel, Stripe, Supabase and Framer. Apply any one instantly, free.",
+          "Complete design systems for SlashAI - Linear, Notion, Vercel, Stripe, Supabase and Framer. Apply any one instantly, free.",
       },
     ],
   }),
@@ -164,7 +164,7 @@ function DesignsPage() {
           Designs
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Complete design systems inspired by the world's best products — Linear,
+          Complete design systems inspired by the world's best products - Linear,
           Notion, Vercel, Stripe, Supabase and Framer. Click any design to apply
           it instantly. Every design is free.
         </p>

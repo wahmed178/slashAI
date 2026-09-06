@@ -1,5 +1,5 @@
 /**
- * Curated directory of AI tools with a usable free tier. Static data only —
+ * Curated directory of AI tools with a usable free tier. Static data only -
  * no tracking, no affiliate links, no account required to use any of them.
  */
 export interface AiTool {

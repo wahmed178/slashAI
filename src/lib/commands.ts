@@ -38,7 +38,7 @@ function dedupeCatalog(list: SlashCommand[]): SlashCommand[] {
 
 export const COMMANDS: SlashCommand[] = dedupeCatalog(rawCommands as SlashCommand[]);
 
-/** Verified count — post-deduplication, safe to display. */
+/** Verified count - post-deduplication, safe to display. */
 export const VERIFIED_TOTAL = COMMANDS.length;
 
 export const CATEGORY_META = rawCategories as CatalogCategory[];
@@ -111,7 +111,7 @@ export const getCommand = (idOrSlug: string | undefined | null): SlashCommand | 
 
 export const commandPath = (cmd: SlashCommand) => `/c/${cmd.id}`;
 
-/** Deterministic "command of the day" — stable for a given UTC date, for everyone. */
+/** Deterministic "command of the day" - stable for a given UTC date, for everyone. */
 export function getDailyCommand(dateKey: string): SlashCommand {
   let hash = 2166136261;
   for (let i = 0; i < dateKey.length; i++) {
@@ -150,7 +150,7 @@ export function relatedCommands(cmd: SlashCommand, limit = 6): SlashCommand[] {
 
 /* ---------------------------------- search --------------------------------- */
 
-/** Bounded edit distance — returns a number > max as soon as it is hopeless. */
+/** Bounded edit distance - returns a number > max as soon as it is hopeless. */
 function editDistance(a: string, b: string, max: number): number {
   if (Math.abs(a.length - b.length) > max) return max + 1;
   let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
@@ -257,7 +257,7 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
  * token first narrows the catalog to a candidate bucket keyed by the token's
  * first three characters. Tokens that hit nothing in the index (typos, words
  * that only appear in the how-to/example bodies) fall back to a full scan, so
- * result quality is unchanged — only the common path gets faster.
+ * result quality is unchanged - only the common path gets faster.
  */
 const WORD_RE = /[a-z0-9]+/g;
 
@@ -414,7 +414,7 @@ export function suggestions(q: string, limit = 7): SlashCommand[] {
 export function commandTemplate(cmd: SlashCommand): string {
   return `${cmd.command}
 
-# ${cmd.title} — ${cmd.category} / ${cmd.subcategory}
+# ${cmd.title} - ${cmd.category} / ${cmd.subcategory}
 # What it does: ${cmd.description}
 # How to use: ${cmd.howToUse}
 

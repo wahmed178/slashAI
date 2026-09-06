@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/code-screenshot")({
   head: () => ({
     meta: [
-      { title: "Code Screenshot Maker — SlashAI" },
-      { name: "description", content: "Turn code into beautiful shareable images with themes, fonts and window controls — rendered entirely in your browser." },
+      { title: "Code Screenshot Maker - SlashAI" },
+      { name: "description", content: "Turn code into beautiful shareable images with themes, fonts and window controls - rendered entirely in your browser." },
     ],
   }),
   component: CodeScreenshot,
@@ -306,7 +306,7 @@ export default function CodeScreenshot() {
                   {windowStyle === "windows" && (
                     <div style={{ background: theme.bg, padding: "8px 16px", display: "flex", alignItems: "center", borderBottom: `1px solid ${theme.fg}15` }}>
                       <span style={{ flex: 1, fontSize: 11, color: theme.fg + "80" }}>{lang}</span>
-                      <span style={{ color: theme.fg + "60", fontSize: 14 }}>— □ ✕</span>
+                      <span style={{ color: theme.fg + "60", fontSize: 14 }}>- □ ✕</span>
                     </div>
                   )}
 

@@ -7,9 +7,9 @@ import { trackInteraction } from "@/lib/intelligence";
 
 /** Small, non-intrusive celebrations at the moments that matter. */
 const COPY_MILESTONES: Record<number, string> = {
-  1: "Nice — your first command 🎉",
+  1: "Nice - your first command 🎉",
   10: "10 commands copied. You're building a habit 💪",
-  50: "50 copies — official SlashAI power user ⚡",
+  50: "50 copies - official SlashAI power user ⚡",
   100: "100 commands. That's a lot of saved time 🏆",
 };
 
@@ -22,7 +22,7 @@ export function useCommandActions() {
       await navigator.clipboard.writeText(text);
       toast.success(message);
     } catch {
-      toast.error("Clipboard blocked by the browser — select the text and copy manually");
+      toast.error("Clipboard blocked by the browser - select the text and copy manually");
     }
   }, []);
 
@@ -52,11 +52,11 @@ export function useCommandActions() {
 
   const runCommand = useCallback(
     (cmd: SlashCommand, text?: string) =>
-      track(cmd, text ?? commandTemplate(cmd), `${cmd.command} template copied — ready to edit`),
+      track(cmd, text ?? commandTemplate(cmd), `${cmd.command} template copied - ready to edit`),
     [track],
   );
 
-  /** open a command's detail page — feeds the intelligence graph + scores */
+  /** open a command's detail page - feeds the intelligence graph + scores */
   const openCommand = useCallback((cmd: SlashCommand) => {
     recordUse(cmd.id);
     trackInteraction(cmd.id, "open");
@@ -71,13 +71,13 @@ export function useCommandActions() {
       const canShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
       if (canShare) {
         try {
-          await navigator.share({ title: `${cmd.command} — SlashAI`, text: cmd.description, url });
+          await navigator.share({ title: `${cmd.command} - SlashAI`, text: cmd.description, url });
           return;
         } catch (error) {
           if ((error as DOMException)?.name === "AbortError") return;
         }
       }
-      await copy(url, "Link copied — share it anywhere");
+      await copy(url, "Link copied - share it anywhere");
     },
     [copy],
   );

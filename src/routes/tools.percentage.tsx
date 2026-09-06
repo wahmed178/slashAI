@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/percentage")({
-  head: () => ({ meta: [{ title: "Percentage Calculator — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Percentage Calculator - SlashAI" }] }),
   component: PercentageCalc,
 });
 

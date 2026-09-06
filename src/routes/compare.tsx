@@ -36,8 +36,8 @@ function Stars({ count }: { count: number }) {
 export const Route = createFileRoute("/compare")({
   head: () => ({
     meta: [
-      { title: "AI Model Comparison 2026 — SlashAI" },
-      { name: "description", content: "Side-by-side comparison of the best AI models available today — free and paid." },
+      { title: "AI Model Comparison 2026 - SlashAI" },
+      { name: "description", content: "Side-by-side comparison of the best AI models available today - free and paid." },
     ],
   }),
   component: ComparePage,
@@ -49,7 +49,7 @@ function ComparePage() {
       <div className="py-6">
         <h1 className="text-2xl font-bold text-foreground sm:text-3xl">AI Model Comparison 2026</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Side-by-side comparison of the best AI models available today — free and paid.
+          Side-by-side comparison of the best AI models available today - free and paid.
         </p>
         <span className="mt-2 inline-block rounded-full bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">
           Last verified: August 2026

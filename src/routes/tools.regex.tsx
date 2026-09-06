@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Copy, Check, BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/tools/regex")({
-  head: () => ({ meta: [{ title: "Regex Playground — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Regex Playground - SlashAI" }] }),
   component: RegexPlayground,
 });
 

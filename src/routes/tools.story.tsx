@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/story")({
   head: () => ({
     meta: [
-      { title: "Story Writing Kit — SlashAI" },
-      { name: "description", content: "Plan characters, plots and settings with writing prompts — a private story studio that saves locally." },
+      { title: "Story Writing Kit - SlashAI" },
+      { name: "description", content: "Plan characters, plots and settings with writing prompts - a private story studio that saves locally." },
     ],
   }),
   component: StoryWritingKit,
@@ -15,21 +15,21 @@ const prompts: Record<string, string[]> = {
   "Romance": [
     "A letter arrives 20 years late, addressed to someone you've never met.",
     "Two strangers share the same recurring dream every night.",
-    "You find a love letter in a used book at a thrift store — it's addressed to you.",
+    "You find a love letter in a used book at a thrift store - it's addressed to you.",
     "Your childhood imaginary friend turns out to be real.",
     "You discover a hidden room in your new apartment that someone else has been living in.",
   ],
   "Thriller": [
     "You wake up in a locked room with 5 strangers and a note: one of you is the killer.",
     "Your phone autocorrects to reveal messages you never sent.",
-    "You receive a package with tomorrow's newspaper — you're on the front page.",
+    "You receive a package with tomorrow's newspaper - you're on the front page.",
     "The last person on Earth hears a knock at the door.",
     "You find security footage of yourself doing something you have no memory of.",
   ],
   "Horror": [
     "Your shadow moves independently of your body.",
     "Every mirror in your house shows a slightly different version of you.",
-    "You hear a voice through the baby monitor — it's yours, but coming from another room.",
+    "You hear a voice through the baby monitor - it's yours, but coming from another room.",
     "The stop-motion figures in your child's room have moved since yesterday.",
     "You receive a phone call from your own number.",
   ],
@@ -52,7 +52,7 @@ const prompts: Record<string, string[]> = {
     "During Hajj, a man finds a 300-year-old journal hidden in the Kaaba walls.",
     "A mosque's old key opens a door no one has entered in centuries.",
     "A calligrapher's pen writes words of someone who hasn't been born yet.",
-    "During Laylat al-Qadr, every dua you make starts coming true — but with unexpected twists.",
+    "During Laylat al-Qadr, every dua you make starts coming true - but with unexpected twists.",
   ],
   "Literary": [
     "A librarian discovers that the library's forgotten section contains books not yet written.",

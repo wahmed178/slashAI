@@ -9,12 +9,12 @@ import { CATEGORY_TREE, SUBCATEGORY_TOTAL, VERIFIED_TOTAL } from "@/lib/commands
 export const Route = createFileRoute("/explore/")({
   head: () => ({
     meta: [
-      { title: "Commands — SlashAI" },
+      { title: "Commands - SlashAI" },
       {
         name: "description",
         content: `Browse ${VERIFIED_TOTAL} AI slash commands across ${CATEGORY_TREE.length} categories. Copy any command and paste it into ChatGPT, Claude or Gemini.`,
       },
-      { property: "og:title", content: "Commands — SlashAI" },
+      { property: "og:title", content: "Commands - SlashAI" },
     ],
   }),
   component: ExplorePage,
@@ -107,7 +107,7 @@ const USE_CASES = [
   },
 ] as const;
 
-/** Command card — shows name + description, copies on click */
+/** Command card - shows name + description, copies on click */
 function CommandCard({ cmd, desc }: { cmd: string; desc: string }) {
   const [copied, setCopied] = useState(false);
 

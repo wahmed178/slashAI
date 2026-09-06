@@ -12,7 +12,7 @@ function getCountdowns(): Countdown[] {
 function saveCountdowns(c: Countdown[]) { localStorage.setItem("countdowns", JSON.stringify(c)); }
 
 export const Route = createFileRoute("/tools/countdown")({
-  head: () => ({ meta: [{ title: "Countdown Timer — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Countdown Timer - SlashAI" }] }),
   component: CountdownTimer,
 });
 

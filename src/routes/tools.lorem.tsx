@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Copy, Check, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/tools/lorem")({
-  head: () => ({ meta: [{ title: "Content Generator — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Content Generator - SlashAI" }] }),
   component: ContentGenerator,
 });
 
@@ -17,7 +17,7 @@ const PRODUCTS = ["Premium Widget", "Smart Sensor Kit", "Wireless Charger Pro", 
 const DESCRIPTIONS = [
   "High-performance device designed for modern professionals.",
   "Sleek design meets powerful functionality in this premium product.",
-  "Built for reliability — tested under extreme conditions.",
+  "Built for reliability - tested under extreme conditions.",
   "Easy to set up and use right out of the box.",
   "Compatible with all major operating systems and devices.",
 ];
@@ -84,7 +84,7 @@ function ContentGenerator() {
       <div className="mx-auto max-w-3xl space-y-5 pt-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Content Generator</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Generate realistic test data — names, addresses, prices, and more.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Generate realistic test data - names, addresses, prices, and more.</p>
         </div>
 
         {/* Type selector */}

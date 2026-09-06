@@ -4,11 +4,11 @@ import { AppShell } from "@/components/library/AppShell";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms of Service — SlashAI" },
+      { title: "Terms of Service - SlashAI" },
       {
         name: "description",
         content:
-          "SlashAI's terms of service — rules for using the app, disclaimers, and your responsibilities.",
+          "SlashAI's terms of service - rules for using the app, disclaimers, and your responsibilities.",
       },
     ],
   }),
@@ -44,7 +44,7 @@ function TermsPage() {
           <p className="mt-2 text-sm text-muted-foreground">
             SlashAI is a free, offline-first library of AI slash commands,
             curated resources, roadmaps, glossary terms, and
-            browser-based tools. The Service runs entirely in your browser —
+            browser-based tools. The Service runs entirely in your browser -
             there is no account system, no backend database, and no server-side
             processing of your data.
           </p>
@@ -55,22 +55,22 @@ function TermsPage() {
             <li>560+ glossary terms across 8 categories</li>
             <li>22 browser-based utility tools (calculators, converters, screensavers)</li>
             <li>Daily quiz with streaks, live dashboard, build journal</li>
-            <li>Local AI assistant (WebLLM — runs in your browser)</li>
+            <li>Local AI assistant (WebLLM - runs in your browser)</li>
           </ul>
         </Section>
 
         <Section title="3. Free Usage">
           <p className="mt-2 text-sm text-muted-foreground">
             SlashAI is free to use. No account is required. No credit card is
-            required. Every feature is free — no paid tier, no paywalls, no
+            required. Every feature is free - no paid tier, no paywalls, no
             trials.
           </p>
         </Section>
 
         <Section title="4. Your Data">
           <p className="mt-2 text-sm text-muted-foreground">
-            All your data — favourites, journal entries, settings, streaks, and
-            preferences — is stored in your browser's localStorage. It never
+            All your data - favourites, journal entries, settings, streaks, and
+            preferences - is stored in your browser's localStorage. It never
             leaves your device. We have no access to it. If you clear your
             browser data, your SlashAI data is permanently deleted and cannot be
             recovered.
@@ -126,7 +126,7 @@ function TermsPage() {
         <Section title="8. Intellectual Property">
           <p className="mt-2 text-sm text-muted-foreground">
             The SlashAI application, design, code, and original content are
-            owned by Waseem Ahmed. AI slash commands are curated prompts —
+            owned by Waseem Ahmed. AI slash commands are curated prompts -
             individual prompts are not copyrightable, but the compilation,
             organisation, and presentation are our original work.
           </p>

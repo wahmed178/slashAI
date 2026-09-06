@@ -30,7 +30,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/tools/interview")({
   head: () => ({
     meta: [
-      { title: "Mock Interview Simulator — practice with feedback | SlashAI" },
+      { title: "Mock Interview Simulator - practice with feedback | SlashAI" },
       {
         name: "description",
         content:
@@ -200,7 +200,7 @@ function InterviewTool() {
     const w = window as any;
     const Ctor = w.SpeechRecognition || w.webkitSpeechRecognition;
     if (!Ctor) {
-      setVoiceError("Voice capture needs Chrome or Edge — type your answer instead.");
+      setVoiceError("Voice capture needs Chrome or Edge - type your answer instead.");
       setListening(false);
       return;
     }
@@ -224,8 +224,8 @@ function InterviewTool() {
       setListening(false);
       setVoiceError(
         e?.error === "not-allowed"
-          ? "Microphone permission denied — allow mic access and try again."
-          : "Voice capture failed — you can type your answer instead.",
+          ? "Microphone permission denied - allow mic access and try again."
+          : "Voice capture failed - you can type your answer instead.",
       );
     };
     rec.onend = () => {
@@ -237,7 +237,7 @@ function InterviewTool() {
     try {
       rec.start();
     } catch {
-      setVoiceError("Could not start the microphone — type your answer instead.");
+      setVoiceError("Could not start the microphone - type your answer instead.");
       setListening(false);
     }
   }, [phase, listening, qi]);
@@ -245,7 +245,7 @@ function InterviewTool() {
   const startInterview = () => {
     const qs = pickInterviewQuestions({ role, type, level, count: duration.q });
     if (qs.length === 0) {
-      toast("No questions match that combination — try a different type.");
+      toast("No questions match that combination - try a different type.");
       return;
     }
     setQuestions(qs);
@@ -273,7 +273,7 @@ function InterviewTool() {
     if (listening) stopRecognition();
     const text = answer.trim() || liveText.trim();
     if (!text) {
-      toast("Say or type something first — even a rough draft counts.");
+      toast("Say or type something first - even a rough draft counts.");
       return;
     }
     const voice = Boolean(speakStartRef.current) && answer.trim().length > 0;
@@ -307,7 +307,7 @@ function InterviewTool() {
   }, [results]);
 
   const worstArea = useMemo(() => {
-    if (results.length === 0) return "—";
+    if (results.length === 0) return "-";
     const areas: Record<string, number> = { "answer length": 0, fillers: 0, keywords: 0, pace: 0, STAR: 0 };
     for (const r of results) {
       if (r.fb.words < 50) areas["answer length"] = (areas["answer length"] ?? 0) + 1;
@@ -317,7 +317,7 @@ function InterviewTool() {
       if (r.fb.star) for (const v of Object.values(r.fb.star)) if (!v) areas["STAR"] = (areas["STAR"] ?? 0) + 1;
       if (r.fb.wpm !== null && (r.fb.wpm < 100 || r.fb.wpm > 180)) areas["pace"] = (areas["pace"] ?? 0) + 1;
     }
-    return (Object.entries(areas).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "—").replace("STAR", "the STAR method");
+    return (Object.entries(areas).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "-").replace("STAR", "the STAR method");
   }, [results]);
 
   const gradeOf = (s: number) => (s >= 85 ? "A" : s >= 70 ? "B" : s >= 55 ? "C" : s >= 40 ? "D" : "F");
@@ -335,7 +335,7 @@ function InterviewTool() {
       14,
       26,
     );
-    pdf.text(`Overall score: ${overallScore} (${gradeOf(overallScore)}) — weakest area: ${worstArea}`, 14, 33);
+    pdf.text(`Overall score: ${overallScore} (${gradeOf(overallScore)}) - weakest area: ${worstArea}`, 14, 33);
     let y = 43;
     pdf.setFontSize(10);
     results.forEach((r, i) => {
@@ -468,7 +468,7 @@ function InterviewTool() {
             </button>
             {!voiceSupported && (
               <p className="mt-3 text-[12px] text-muted-foreground">
-                🎙️ Voice answers work best in Chrome or Edge — typing answers works everywhere.
+                🎙️ Voice answers work best in Chrome or Edge - typing answers works everywhere.
               </p>
             )}
           </div>
@@ -478,7 +478,7 @@ function InterviewTool() {
               <h3 className="text-sm font-semibold text-foreground">How it works</h3>
               <ol className="mt-2 space-y-2 text-[13px] leading-relaxed text-muted-foreground">
                 <li>1. Answer each question out loud (or by typing).</li>
-                <li>2. Get instant feedback — length, filler words, STAR, keywords, pace.</li>
+                <li>2. Get instant feedback - length, filler words, STAR, keywords, pace.</li>
                 <li>3. Finish with a score, your weakest area, and a PDF report.</li>
               </ol>
               <p className="mt-3 rounded-lg border border-border bg-surface-elevated p-2.5 text-[12px] leading-relaxed text-muted-foreground">
@@ -502,24 +502,24 @@ function InterviewTool() {
   if (phase === "feedback" && feedback && question) {
     const lv =
       feedback.words < 50
-        ? { ok: false, msg: "Too brief — aim for 1–2 minutes of substance." }
+        ? { ok: false, msg: "Too brief - aim for 1-2 minutes of substance." }
         : feedback.words > 300
-          ? { ok: false, msg: "Too long — be more concise and structured." }
+          ? { ok: false, msg: "Too long - be more concise and structured." }
           : { ok: true, msg: "Good length." };
     const pace =
       feedback.wpm === null
         ? null
         : feedback.wpm < 100
-          ? { ok: false, msg: `Speaking slowly (~${feedback.wpm} wpm) — a more confident pace reads better.` }
+          ? { ok: false, msg: `Speaking slowly (~${feedback.wpm} wpm) - a more confident pace reads better.` }
           : feedback.wpm > 180
-            ? { ok: false, msg: `Speaking quickly (~${feedback.wpm} wpm) — slow down a little.` }
+            ? { ok: false, msg: `Speaking quickly (~${feedback.wpm} wpm) - slow down a little.` }
             : { ok: true, msg: `Good pace (~${feedback.wpm} wpm).` };
 
     return (
       <AppShell title="Mock Interview" back={{ to: "/tools", label: "SlashKits" }}>
         <header className="pt-2">
           <p className="text-[12px] font-semibold tracking-wide text-muted-foreground uppercase">
-            Feedback — question {qi + 1} of {questions.length}
+            Feedback - question {qi + 1} of {questions.length}
           </p>
         </header>
 
@@ -538,7 +538,7 @@ function InterviewTool() {
               <Check className={cn("mt-0.5 size-4 shrink-0", lv.ok ? "text-chart-2" : "text-[#d29922]")} />
               <div>
                 <p className="text-[13px] text-foreground">
-                  <strong>{feedback.words}</strong> words —{" "}
+                  <strong>{feedback.words}</strong> words -{" "}
                   <span className={lv.ok ? "text-chart-2" : "text-[#d29922]"}>{lv.msg}</span>
                 </p>
                 {feedback.words >= 50 && feedback.words <= 200 && (
@@ -552,7 +552,7 @@ function InterviewTool() {
                 <X className="mt-0.5 size-4 shrink-0 text-[#d29922]" />
                 <p className="text-[13px] text-foreground">
                   You used filler words{" "}
-                  <strong>{feedback.fillerCount} time{feedback.fillerCount > 1 ? "s" : ""}</strong> —{" "}
+                  <strong>{feedback.fillerCount} time{feedback.fillerCount > 1 ? "s" : ""}</strong> -{" "}
                   {Object.entries(feedback.fillers)
                     .map(([w, n]) => `“${w}” ${n}×`)
                     .join(", ")}
@@ -658,7 +658,7 @@ function InterviewTool() {
           </p>
           <p className="mt-1 text-lg font-bold text-foreground">Grade {gradeOf(overallScore)}</p>
           <p className="mx-auto mt-2 max-w-md text-[13px] leading-relaxed text-muted-foreground">
-            Weakest area: <strong className="text-foreground">{worstArea}</strong> — focus your next practice
+            Weakest area: <strong className="text-foreground">{worstArea}</strong> - focus your next practice
             session there.
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-2">

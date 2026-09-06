@@ -1,6 +1,6 @@
 import type { RawIdea } from "@/lib/build-ideas-types";
 
-/** Business — 12 ideas, Finance — 10 ideas, Education — 10 ideas. */
+/** Business - 12 ideas, Finance - 10 ideas, Education - 10 ideas. */
 export const PART_3: RawIdea[] = [
   {
     title: "Local Service Marketplace for One City",
@@ -231,7 +231,7 @@ export const PART_3: RawIdea[] = [
       "Add billing and SMS metering",
     ],
     risks: [
-      "Review platforms restrict gating practices — must follow their policies carefully",
+      "Review platforms restrict gating practices - must follow their policies carefully",
       "SMS costs and regulation vary by country",
       "Commodity category with many competitors",
     ],
@@ -660,7 +660,7 @@ export const PART_3: RawIdea[] = [
     problem:
       "Small landlords track rent in a spreadsheet and cannot answer which property actually makes money after costs and voids.",
     targetUsers:
-      "Small landlords with 2–20 units, property managers, family property partnerships.",
+      "Small landlords with 2-20 units, property managers, family property partnerships.",
     solution:
       "Track rent due and received, costs, mortgage payments and compliance certificate dates per property, with a clear yield and cash position per unit.",
     key: [
@@ -772,7 +772,7 @@ export const PART_3: RawIdea[] = [
       "Funder platform fee",
       "Subscription for premium suppliers",
     ],
-    pricing: "1–3% of the advanced invoice value, shared between platform and funder.",
+    pricing: "1-3% of the advanced invoice value, shared between platform and funder.",
     acquisition:
       "Industry associations in slow-paying sectors, accountant referrals, and direct outreach to suppliers of known slow payers.",
     first10:
@@ -1113,7 +1113,7 @@ export const PART_3: RawIdea[] = [
     ],
     risks: [
       "Realtime voice cost per minute is high",
-      "Speech recognition is weaker for strong accents — exactly the users you serve",
+      "Speech recognition is weaker for strong accents - exactly the users you serve",
       "Very large funded competitors",
     ],
     score: 7,

@@ -57,7 +57,7 @@ export interface RawIdea {
   first10: string;
   steps: string[];
   risks: string[];
-  /** 1–10 */
+  /** 1-10 */
   score: number;
   tags: string[];
 }

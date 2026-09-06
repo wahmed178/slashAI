@@ -1,6 +1,6 @@
 import type { RawIdea } from "@/lib/build-ideas-types";
 
-/** Creator Tools — 10, Developer Tools — 10, Quality & Operations — 8, Personal Tools — 7. */
+/** Creator Tools - 10, Developer Tools - 10, Quality & Operations - 8, Personal Tools - 7. */
 export const PART_5: RawIdea[] = [
   {
     title: "Podcast Show Notes and Clip Generator",
@@ -472,7 +472,7 @@ export const PART_5: RawIdea[] = [
     short: "Catches the boring review issues so humans review the design.",
     problem:
       "Code review time is eaten by naming, missing tests and obvious edge cases, so real design feedback never happens.",
-    targetUsers: "Engineering teams of 5–100, agencies, open-source maintainers.",
+    targetUsers: "Engineering teams of 5-100, agencies, open-source maintainers.",
     solution:
       "An automated reviewer that comments on mechanical issues, missing test coverage and risky changes with repository-specific conventions learned from history.",
     key: [
@@ -1359,7 +1359,7 @@ export const PART_5: RawIdea[] = [
       "Housemates split bills equally when rooms, incomes and usage differ wildly, which causes ongoing resentment.",
     targetUsers: "Housemates, couples with different incomes, families sharing costs.",
     solution:
-      "Configurable split rules per expense type — equal, by income, by room size or by usage — with running balances and simple settlement.",
+      "Configurable split rules per expense type - equal, by income, by room size or by usage - with running balances and simple settlement.",
     key: [
       "Per-expense-type split rules",
       "Income-proportional and usage-based options",

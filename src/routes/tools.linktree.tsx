@@ -533,7 +533,7 @@ function ProfileEditor({
             </button>
           </div>
           <p className="mt-1 text-[10px] text-muted-foreground">
-            Anyone with this link can see your page — works on any device.
+            Anyone with this link can see your page - works on any device.
           </p>
         </div>
       )}

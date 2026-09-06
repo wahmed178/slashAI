@@ -203,7 +203,7 @@ function QuoteMaker() {
     if (showAuthor && author) {
       ctx.font = `400 ${sz * 0.45}px ${font.style}`;
       ctx.globalAlpha = 0.7;
-      ctx.fillText(`— ${author}`, x, startY + lines.length * lh + 20);
+      ctx.fillText(`- ${author}`, x, startY + lines.length * lh + 20);
       ctx.globalAlpha = 1;
     }
   };
@@ -257,13 +257,13 @@ function QuoteMaker() {
           <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">Design quote cards with custom fonts, backgrounds & aspect ratios</p>
         </div>
 
-        {/* Preview — always on top */}
+        {/* Preview - always on top */}
         <div className="rounded-xl border border-border bg-surface p-2 sm:p-4 flex justify-center mb-3 sm:mb-4">
           <canvas ref={canvasRef} className="rounded-lg w-full"
             style={{ aspectRatio: previewAspect, maxHeight: "45vh" }} />
         </div>
 
-        {/* Aspect Ratio Selector — horizontal scroll */}
+        {/* Aspect Ratio Selector - horizontal scroll */}
         <div className="mb-3 sm:mb-4">
           <label className="text-xs font-medium text-muted-foreground mb-1.5 block">Aspect Ratio</label>
           <div className="flex gap-1.5 overflow-x-auto pb-1 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
@@ -292,7 +292,7 @@ function QuoteMaker() {
           ))}
         </div>
 
-        {/* Controls — tabs on mobile, all on desktop */}
+        {/* Controls - tabs on mobile, all on desktop */}
         <div className="space-y-4">
           {/* TEXT TAB */}
           <div className={`${activeTab !== "text" ? "hidden lg:block" : ""}`}>
@@ -329,7 +329,7 @@ function QuoteMaker() {
                     <button key={i} onClick={() => { setQuote(q.text); setAuthor(q.author); setShowQuotes(false); }}
                       className="w-full text-left rounded-lg bg-surface-elevated p-2.5 hover:bg-surface transition-colors">
                       <p className="text-xs text-foreground line-clamp-2">{q.text}</p>
-                      <p className="text-[10px] text-muted-foreground mt-0.5">— {q.author}</p>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">- {q.author}</p>
                     </button>
                   ))}
                 </div>

@@ -9,13 +9,13 @@ import { DROPS, NEWEST_RESOURCES, dropItems } from "@/lib/resources";
 export const Route = createFileRoute("/whats-new")({
   head: () => ({
     meta: [
-      { title: "What's new — weekly finds and app updates | SlashAI" },
+      { title: "What's new - weekly finds and app updates | SlashAI" },
       {
         name: "description",
         content:
           "Weekly free finds, monthly resource drops, special collections and the SlashAI app changelog in one place.",
       },
-      { property: "og:title", content: "What's new — SlashAI" },
+      { property: "og:title", content: "What's new - SlashAI" },
       {
         property: "og:description",
         content: "Weekly, monthly and yearly curated drops plus release notes.",
@@ -42,7 +42,7 @@ function WhatsNewPage() {
           <Sparkles className="size-6 text-primary" aria-hidden /> What&apos;s new
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Curated drops are compiled by hand — weekly finds, a monthly batch, special occasions and
+          Curated drops are compiled by hand - weekly finds, a monthly batch, special occasions and
           a yearly toolkit.
         </p>
       </header>

@@ -5,8 +5,8 @@ import changelogData from "@/data/changelog.json";
 export const Route = createFileRoute("/changelog")({
   head: () => ({
     meta: [
-      { title: "Changelog — SlashAI" },
-      { name: "description", content: "What's new in SlashAI — every feature, fix, and improvement." },
+      { title: "Changelog - SlashAI" },
+      { name: "description", content: "What's new in SlashAI - every feature, fix, and improvement." },
     ],
   }),
   component: ChangelogPage,
@@ -20,7 +20,7 @@ function ChangelogPage() {
       <div className="pt-2">
         <header className="mb-8">
           <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Changelog</h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">What's new in SlashAI — every feature, fix, and improvement.</p>
+          <p className="mt-1.5 text-sm text-muted-foreground">What's new in SlashAI - every feature, fix, and improvement.</p>
         </header>
 
         <div className="relative space-y-0">

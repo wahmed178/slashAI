@@ -146,7 +146,7 @@ function ContractGenerator() {
     <AppShell title="Contract Generator">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">📄 Contract Generator</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Generate professional legal contracts. Free forever — no lawyers needed.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Generate professional legal contracts. Free forever - no lawyers needed.</p>
       </header>
 
       <div className="grid gap-4 lg:grid-cols-2">

@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
 export const Route = createFileRoute("/tools/readability")({
-  head: () => ({ meta: [{ title: "Text Readability Analyser — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Text Readability Analyser - SlashAI" }] }),
   component: ReadabilityAnalyser,
 });
 

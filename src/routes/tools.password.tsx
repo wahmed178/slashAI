@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Lock, Unlock, Copy, Check, Plus, Trash2, Eye, EyeOff } from "lucide-react";
 
 export const Route = createFileRoute("/tools/password")({
-  head: () => ({ meta: [{ title: "Password Manager (Local) — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Password Manager (Local) - SlashAI" }] }),
   component: PasswordManager,
 });
 

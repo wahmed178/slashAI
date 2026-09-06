@@ -1,6 +1,6 @@
 /**
  * Minimal markdown renderer for AI-generated specs. Handles headings, lists,
- * fenced code blocks, bold and paragraphs — enough for the spec format we ask
+ * fenced code blocks, bold and paragraphs - enough for the spec format we ask
  * the model for, with no extra dependency.
  */
 
@@ -174,7 +174,7 @@ export function Markdown({ source }: { source: string }) {
   return <div className="space-y-2">{blocks}</div>;
 }
 
-/** Pulls the first fenced code block out of a spec — that's the Lovable prompt. */
+/** Pulls the first fenced code block out of a spec - that's the Lovable prompt. */
 export function extractPrompt(markdown: string) {
   const match = markdown.match(/```[a-z]*\n([\s\S]*?)```/i);
   return match?.[1]?.trim() ?? "";

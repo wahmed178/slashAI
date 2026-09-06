@@ -1,5 +1,5 @@
 /**
- * 40 new free APIs — public data, utility, creative, no credit card required.
+ * 40 new free APIs - public data, utility, creative, no credit card required.
  */
 
 export interface FreeApi {
@@ -17,7 +17,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "data-gov-in",
     name: "data.gov.in",
-    description: "India government open data portal — thousands of datasets, completely free.",
+    description: "India government open data portal - thousands of datasets, completely free.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -26,7 +26,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "data-gov-us",
     name: "data.gov (US)",
-    description: "US federal government datasets — 200,000+ datasets, completely free.",
+    description: "US federal government datasets - 200,000+ datasets, completely free.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -35,7 +35,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "data-europa",
     name: "data.europa.eu",
-    description: "EU open data portal — thousands of European government datasets.",
+    description: "EU open data portal - thousands of European government datasets.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -44,7 +44,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "world-bank-api",
     name: "World Bank Open Data API",
-    description: "Global development indicators — economic, social, environmental data for 200+ countries.",
+    description: "Global development indicators - economic, social, environmental data for 200+ countries.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -53,7 +53,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "un-data-api",
     name: "UN Data API",
-    description: "United Nations statistics — population, trade, education, health across all countries.",
+    description: "United Nations statistics - population, trade, education, health across all countries.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -62,7 +62,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "imf-data",
     name: "IMF Data API",
-    description: "International Monetary Fund datasets — economic outlook, balance of payments, debt.",
+    description: "International Monetary Fund datasets - economic outlook, balance of payments, debt.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -71,7 +71,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "who-gho",
     name: "WHO Global Health Observatory",
-    description: "World Health Organization health statistics — disease, mortality, health systems.",
+    description: "World Health Organization health statistics - disease, mortality, health systems.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -80,7 +80,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "oecd-data",
     name: "OECD Data API",
-    description: "Organisation for Economic Co-operation and Development — economic and social data.",
+    description: "Organisation for Economic Co-operation and Development - economic and social data.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -89,7 +89,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "ogd-pakistan",
     name: "ogd.data.gov.pk",
-    description: "Pakistan open government data — datasets on economy, health, education.",
+    description: "Pakistan open government data - datasets on economy, health, education.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Public Data",
@@ -100,7 +100,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "abstract-holidays",
     name: "Abstract Holidays API",
-    description: "Public holidays for 200+ countries — upcoming and historical dates.",
+    description: "Public holidays for 200+ countries - upcoming and historical dates.",
     auth: "Free tier",
     rateLimit: "1000 req/month",
     category: "Utility",
@@ -109,7 +109,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "calendarific",
     name: "Calendarific API",
-    description: "Holidays and observances globally — filter by country, year, type.",
+    description: "Holidays and observances globally - filter by country, year, type.",
     auth: "Free key",
     rateLimit: "1000 req/month",
     category: "Utility",
@@ -118,7 +118,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "timezone-db",
     name: "TimeZoneDB",
-    description: "Timezone data for any location — convert, DST, time zone lookup.",
+    description: "Timezone data for any location - convert, DST, time zone lookup.",
     auth: "Free key",
     rateLimit: "1000 req/day",
     category: "Utility",
@@ -127,7 +127,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "mediastack",
     name: "MediaStack",
-    description: "Global news API — real-time news from 7,500+ sources in 50+ languages.",
+    description: "Global news API - real-time news from 7,500+ sources in 50+ languages.",
     auth: "Free tier",
     rateLimit: "500 req/month",
     category: "Utility",
@@ -136,7 +136,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "newsdata-io",
     name: "NewsData.io",
-    description: "Multilingual news API — includes Urdu, Arabic, Bengali, Hindi sources.",
+    description: "Multilingual news API - includes Urdu, Arabic, Bengali, Hindi sources.",
     auth: "Free tier",
     rateLimit: "200 req/day",
     category: "Utility",
@@ -145,7 +145,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "gdelt",
     name: "GDELT Project",
-    description: "Global news event database — largest free corpus of global news events.",
+    description: "Global news event database - largest free corpus of global news events.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Utility",
@@ -154,7 +154,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "polygon-io",
     name: "Polygon.io",
-    description: "US stock market data — real-time and historical prices for stocks, options, crypto.",
+    description: "US stock market data - real-time and historical prices for stocks, options, crypto.",
     auth: "Free tier",
     rateLimit: "5 req/min",
     category: "Utility",
@@ -163,7 +163,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "alpha-vantage",
     name: "Alpha Vantage",
-    description: "Stocks, forex, crypto market data — real-time and historical, 25+ indicators.",
+    description: "Stocks, forex, crypto market data - real-time and historical, 25+ indicators.",
     auth: "Free key",
     rateLimit: "25 req/day",
     category: "Utility",
@@ -174,7 +174,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "art-institute-chicago",
     name: "Art Institute of Chicago API",
-    description: "100,000+ artwork images — high-res images, artist info, exhibition data.",
+    description: "100,000+ artwork images - high-res images, artist info, exhibition data.",
     auth: "No key",
     rateLimit: "60 req/min",
     category: "Creative",
@@ -183,7 +183,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "met-museum",
     name: "Metropolitan Museum API",
-    description: "400,000+ art objects — paintings, sculptures, textiles from 5,000 years of culture.",
+    description: "400,000+ art objects - paintings, sculptures, textiles from 5,000 years of culture.",
     auth: "No key",
     rateLimit: "80 req/s",
     category: "Creative",
@@ -192,7 +192,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "harvard-art",
     name: "Harvard Art Museums API",
-    description: "250,000+ works — paintings, prints, photographs, sculptures from Harvard's collection.",
+    description: "250,000+ works - paintings, prints, photographs, sculptures from Harvard's collection.",
     auth: "Free key",
     rateLimit: "25 req/s",
     category: "Creative",
@@ -201,7 +201,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "nasa-images",
     name: "NASA Images and Video Library",
-    description: "NASA's full media archive — images, videos, audio from all NASA missions.",
+    description: "NASA's full media archive - images, videos, audio from all NASA missions.",
     auth: "No key",
     rateLimit: "1000 req/hour",
     category: "Creative",
@@ -210,7 +210,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "smithsonian-oa",
     name: "Smithsonian Open Access API",
-    description: "4.7 million+ collection items — art, history, science, culture from 19 museums.",
+    description: "4.7 million+ collection items - art, history, science, culture from 19 museums.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Creative",
@@ -219,7 +219,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "library-congress",
     name: "Library of Congress API",
-    description: "Digital library — millions of books, photos, maps, audio from US national library.",
+    description: "Digital library - millions of books, photos, maps, audio from US national library.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Creative",
@@ -228,7 +228,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "gutendex",
     name: "Gutendex",
-    description: "Project Gutenberg books API — 70,000+ free eBooks in multiple languages.",
+    description: "Project Gutenberg books API - 70,000+ free eBooks in multiple languages.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Creative",
@@ -237,7 +237,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "open-trivia",
     name: "Open Trivia Database",
-    description: "Quiz questions across 20+ categories — perfect for building trivia games.",
+    description: "Quiz questions across 20+ categories - perfect for building trivia games.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Creative",
@@ -246,7 +246,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "quotable",
     name: "Quotable API",
-    description: "1,600+ quotes — by author, tag, or random. Great for apps and websites.",
+    description: "1,600+ quotes - by author, tag, or random. Great for apps and websites.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Creative",
@@ -255,7 +255,7 @@ export const NEW_APIS: FreeApi[] = [
   {
     id: "affirmations-dev",
     name: "Affirmations.dev",
-    description: "Daily positive affirmations — simple API for wellness and motivation apps.",
+    description: "Daily positive affirmations - simple API for wellness and motivation apps.",
     auth: "No key",
     rateLimit: "Unlimited",
     category: "Creative",

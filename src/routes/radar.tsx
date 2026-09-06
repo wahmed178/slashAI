@@ -8,13 +8,13 @@ import { RADAR, RADAR_KINDS } from "@/lib/resources";
 export const Route = createFileRoute("/radar")({
   head: () => ({
     meta: [
-      { title: "Free Radar — new free tools, offers and courses | SlashAI" },
+      { title: "Free Radar - new free tools, offers and courses | SlashAI" },
       {
         name: "description",
         content:
           "Newly spotted free AI tools, student offers, open-source projects and free courses, each with the conditions stated plainly.",
       },
-      { property: "og:title", content: "Free Radar — SlashAI" },
+      { property: "og:title", content: "Free Radar - SlashAI" },
       {
         property: "og:description",
         content: "Free finds with honest eligibility and a verification date.",

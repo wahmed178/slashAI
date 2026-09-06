@@ -1,7 +1,7 @@
 /**
  * Extra curated resources: Free AI, Reddit, Websites and Free Time.
  *
- * Same rules as `resources.ts` — nothing is invented. Where a service is only
+ * Same rules as `resources.ts` - nothing is invented. Where a service is only
  * free in some places (library cards, regions) that condition is written into
  * `eligibility`. We list legal sources only; no piracy hubs, ever.
  */
@@ -34,7 +34,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     type: "AI Tool",
     platform: ["Web", "Android", "iOS"],
     tags: ["search", "privacy", "answers"],
-    notes: "The calmest AI search on this list — no ads, no account prompt.",
+    notes: "The calmest AI search on this list - no ads, no account prompt.",
     radar: "New Free AI Tool",
     commandQuery: "research",
   }),
@@ -79,7 +79,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     platform: ["Web", "Android", "iOS"],
     tags: ["compare", "fact-check", "hidden-gem"],
     notes:
-      "When an answer matters, ask several models at once — disagreement is the signal to dig deeper.",
+      "When an answer matters, ask several models at once - disagreement is the signal to dig deeper.",
     radar: "New Free AI Tool",
     commandQuery: "fact check",
   }),
@@ -292,7 +292,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     type: "Subreddit",
     platform: ["Web", "Android", "iOS"],
     tags: ["freebies", "deals", "community"],
-    notes: "Read the sidebar rules first — the wiki explains how the flair system marks scams.",
+    notes: "Read the sidebar rules first - the wiki explains how the flair system marks scams.",
   }),
   r({
     id: "rd-freegamefindings",
@@ -359,7 +359,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     platform: ["Web"],
     tags: ["movies", "youtube", "legal"],
     notes:
-      "Only official or public-domain uploads belong here — check the channel before watching.",
+      "Only official or public-domain uploads belong here - check the channel before watching.",
   }),
   r({
     id: "rd-documentaries",
@@ -588,7 +588,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     type: "Subreddit",
     platform: ["Web"],
     tags: ["courses", "learning", "coupons"],
-    notes: "Verify each link — coupon posts expire quickly and some are simply marketing.",
+    notes: "Verify each link - coupon posts expire quickly and some are simply marketing.",
   }),
 
   // ------------------------------------------------------------ Websites
@@ -646,7 +646,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     type: "Website",
     platform: ["Web"],
     tags: ["search", "no-ads"],
-    eligibility: "Free trial searches only — this is a paid product, listed for honesty.",
+    eligibility: "Free trial searches only - this is a paid product, listed for honesty.",
   }),
   r({
     id: "web-photopea-alt",
@@ -733,7 +733,7 @@ export const EXTRA_RESOURCES: Resource[] = [
   }),
   r({
     id: "ft-archive-films",
-    name: "Internet Archive — Feature Films",
+    name: "Internet Archive - Feature Films",
     url: "https://archive.org/details/feature_films",
     description: "Public-domain and freely licensed films you can stream or download.",
     section: "free-time",

@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/quiz-maker")({
   head: () => ({
     meta: [
-      { title: "Quiz Builder — SlashAI" },
-      { name: "description", content: "Build a quiz, share it as a link and let anyone play — everything runs in the browser for free." },
+      { title: "Quiz Builder - SlashAI" },
+      { name: "description", content: "Build a quiz, share it as a link and let anyone play - everything runs in the browser for free." },
     ],
   }),
   component: QuizMaker,
@@ -236,7 +236,7 @@ export default function QuizMaker() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground">❓ Quiz Builder</h1>
-            <p className="text-sm text-muted-foreground">Build and share quizzes — no account needed</p>
+            <p className="text-sm text-muted-foreground">Build and share quizzes - no account needed</p>
           </div>
           <button onClick={() => setMode("build")} className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-background hover:opacity-90">+ Create Quiz</button>
         </div>

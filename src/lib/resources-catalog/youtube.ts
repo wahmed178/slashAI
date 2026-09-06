@@ -1,5 +1,5 @@
 /**
- * YouTube channel catalog — expanded to 80+ hand-picked channels across
+ * YouTube channel catalog - expanded to 80+ hand-picked channels across
  * AI, development, data, business, productivity, design and Indian creators.
  */
 import type { Resource } from "../resources";
@@ -14,9 +14,9 @@ export const YOUTUBE_EXTRA: Resource[] = [
   r({ id: "yt-wds", name: "Web Dev Simplified", url: "https://www.youtube.com/@WebDevSimplified", description: "Clear short lessons on JavaScript, React and CSS concepts.", section: "youtube", category: "Development", audience: ["Developers", "Students"], pricing: "Completely Free", type: "YouTube", difficulty: "Beginner", tags: ["javascript", "react", "css"] }),
   r({ id: "yt-kevinpowell", name: "Kevin Powell", url: "https://www.youtube.com/@KevinPowell", description: "The go-to channel for modern CSS explained calmly and correctly.", section: "youtube", category: "Design", audience: ["Developers", "Designers"], pricing: "Completely Free", type: "YouTube", tags: ["css", "layout", "responsive"] }),
   r({ id: "yt-traversy", name: "Traversy Media", url: "https://www.youtube.com/@TraversyMedia", description: "Crash courses on nearly every web technology and framework.", section: "youtube", category: "Development", audience: ["Developers", "Students"], pricing: "Completely Free", type: "YouTube", tags: ["webdev", "crash-course", "fullstack"] }),
-  r({ id: "yt-bytebytego", name: "ByteByteGo", url: "https://www.youtube.com/@ByteByteGo", description: "System design concepts animated clearly — caching, load balancers, queues.", section: "youtube", category: "Development", audience: ["Developers", "Job Seekers"], pricing: "Completely Free", type: "YouTube", tags: ["system-design", "interviews", "architecture"] }),
+  r({ id: "yt-bytebytego", name: "ByteByteGo", url: "https://www.youtube.com/@ByteByteGo", description: "System design concepts animated clearly - caching, load balancers, queues.", section: "youtube", category: "Development", audience: ["Developers", "Job Seekers"], pricing: "Completely Free", type: "YouTube", tags: ["system-design", "interviews", "architecture"] }),
   r({ id: "yt-hussein", name: "Hussein Nasser", url: "https://www.youtube.com/@HusseinNasser-software-engineering", description: "Databases, networking and backend internals explained from the trenches.", section: "youtube", category: "Development", audience: ["Developers"], pricing: "Completely Free", type: "YouTube", tags: ["databases", "networking", "backend"] }),
-  r({ id: "yt-nana", name: "TechWorld with Nana", url: "https://www.youtube.com/@TechWorldwithNana", description: "DevOps bootcamps — Docker, Kubernetes, CI/CD and Terraform.", section: "youtube", category: "Development", audience: ["Developers"], pricing: "Completely Free", type: "YouTube", tags: ["devops", "docker", "kubernetes"] }),
+  r({ id: "yt-nana", name: "TechWorld with Nana", url: "https://www.youtube.com/@TechWorldwithNana", description: "DevOps bootcamps - Docker, Kubernetes, CI/CD and Terraform.", section: "youtube", category: "Development", audience: ["Developers"], pricing: "Completely Free", type: "YouTube", tags: ["devops", "docker", "kubernetes"] }),
 
   // -------------------------------------------------------- Data & Analytics
   r({ id: "yt-alex-analyst", name: "Alex The Analyst", url: "https://www.youtube.com/@AlexTheAnalyst", description: "Full data-analyst career paths: SQL, Excel, Tableau and portfolio projects.", section: "youtube", category: "Data & Analytics", audience: ["Job Seekers", "Students"], pricing: "Completely Free", type: "YouTube", tags: ["sql", "tableau", "career"] }),

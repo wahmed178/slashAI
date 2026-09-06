@@ -16,11 +16,11 @@ export const Route = createFileRoute("/r/$id")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Unavailable — SlashAI" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Unavailable - SlashAI" }, { name: "robots", content: "noindex" }],
       };
     }
     const { resource } = loaderData;
-    const title = `${resource.name} — ${resource.pricing} | SlashAI`;
+    const title = `${resource.name} - ${resource.pricing} | SlashAI`;
     return {
       meta: [
         { title },
@@ -71,7 +71,7 @@ function ResourcePage() {
   ).slice(0, 6);
 
   const reportUrl = `mailto:?subject=${encodeURIComponent(
-    `SlashAI — broken resource: ${resource.name}`,
+    `SlashAI - broken resource: ${resource.name}`,
   )}&body=${encodeURIComponent(`Resource id: ${resource.id}\nURL: ${resource.url}\nWhat changed: `)}`;
 
   return (

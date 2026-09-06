@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Copy, Check, Heart, Share2, RefreshCw } from "lucide-react";
 
 export const Route = createFileRoute("/hub/quotes")({
-  head: () => ({ meta: [{ title: "Curated Quotes — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Curated Quotes - SlashAI" }] }),
   component: QuoteLibrary,
 });
 
@@ -100,7 +100,7 @@ function QuoteLibrary() {
   }, []);
 
   const copyQuote = (q: typeof QUOTES[0], idx: number) => {
-    const text = `"${q.text}" — ${q.author}${q.source ? ` (${q.source})` : ""}`;
+    const text = `"${q.text}" - ${q.author}${q.source ? ` (${q.source})` : ""}`;
     navigator.clipboard.writeText(text);
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(-1), 1500);
@@ -122,7 +122,7 @@ function QuoteLibrary() {
         <div className="rounded-[10px] border border-primary/20 bg-primary/5 p-5">
           <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider text-primary">✨ Quote of the Day</p>
           <p className="text-base font-medium text-foreground leading-relaxed">"{dailyQuote.text}"</p>
-          <p className="mt-2 text-sm text-muted-foreground">— {dailyQuote.author}</p>
+          <p className="mt-2 text-sm text-muted-foreground">- {dailyQuote.author}</p>
         </div>
 
         {/* Search + categories */}
@@ -158,7 +158,7 @@ function QuoteLibrary() {
                 <p className="text-sm leading-relaxed text-foreground">"{q.text}"</p>
                 <div className="mt-2 flex items-center justify-between">
                   <p className="text-xs text-muted-foreground">
-                    — {q.author}{q.source ? `, ${q.source}` : ""} · <span className="text-primary/70">{q.category}</span>
+                    - {q.author}{q.source ? `, ${q.source}` : ""} · <span className="text-primary/70">{q.category}</span>
                   </p>
                   <div className="flex items-center gap-2">
                     <button onClick={() => toggleFav(globalIdx)} className="text-muted-foreground transition-colors hover:text-red">

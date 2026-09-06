@@ -8,13 +8,13 @@ import { COLLECTIONS } from "@/lib/collections";
 export const Route = createFileRoute("/collections/")({
   head: () => ({
     meta: [
-      { title: "Collections — SlashAI" },
+      { title: "Collections - SlashAI" },
       {
         name: "description",
         content:
           "Curated, use-case based sets of AI slash commands for students, creators, professionals, entrepreneurs and everyday life.",
       },
-      { property: "og:title", content: "Collections — SlashAI" },
+      { property: "og:title", content: "Collections - SlashAI" },
       {
         property: "og:description",
         content: "Curated starting points into the SlashAI command catalog.",

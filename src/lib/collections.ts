@@ -3,7 +3,7 @@ import { COMMANDS, type SlashCommand } from "./commands";
 /**
  * Curated, use-case oriented discovery layer.
  *
- * Collections NEVER duplicate command records — each one is a *selector* over
+ * Collections NEVER duplicate command records - each one is a *selector* over
  * the existing catalog and is resolved to real command ids at module load.
  * A command can appear in several collections. Collections are optional
  * discovery paths: every collection is open to every user.
@@ -38,7 +38,7 @@ const DEFS: CollectionDef[] = [
   {
     id: "for-women",
     title: "For Women",
-    blurb: "A lifestyle mix — wellbeing, style, home and career commands.",
+    blurb: "A lifestyle mix - wellbeing, style, home and career commands.",
     icon: "Sparkles",
     interests: ["lifestyle", "fashion", "fitness", "work"],
     categories: ["Health & Wellbeing", "Home & Everyday"],
@@ -47,7 +47,7 @@ const DEFS: CollectionDef[] = [
   {
     id: "for-men",
     title: "For Men",
-    blurb: "A lifestyle mix — fitness, finances, home projects and career.",
+    blurb: "A lifestyle mix - fitness, finances, home projects and career.",
     icon: "Sparkles",
     interests: ["lifestyle", "fitness", "work", "business"],
     categories: ["Health & Wellbeing", "Money & Finance"],

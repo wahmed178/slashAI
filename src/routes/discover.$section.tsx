@@ -32,11 +32,11 @@ export const Route = createFileRoute("/discover/$section")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Unavailable — SlashAI" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Unavailable - SlashAI" }, { name: "robots", content: "noindex" }],
       };
     }
     const { def } = loaderData;
-    const title = `${def.label} — curated free resources | SlashAI`;
+    const title = `${def.label} - curated free resources | SlashAI`;
     return {
       meta: [
         { title },

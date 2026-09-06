@@ -4,11 +4,11 @@ import { AppShell } from "@/components/library/AppShell";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy Policy — SlashAI" },
+      { title: "Privacy Policy - SlashAI" },
       {
         name: "description",
         content:
-          "SlashAI's privacy policy — what we collect, how we use it, and your rights.",
+          "SlashAI's privacy policy - what we collect, how we use it, and your rights.",
       },
     ],
   }),
@@ -44,17 +44,17 @@ function PrivacyPage() {
           </h3>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
             <li>
-              <strong className="text-foreground">Email address</strong> — only
+              <strong className="text-foreground">Email address</strong> - only
               if you contact us. Stored in your browser's localStorage. We never
               send it to a server.
             </li>
             <li>
-              <strong className="text-foreground">Journal entries</strong> — your
+              <strong className="text-foreground">Journal entries</strong> - your
               build journal text and mood selections. Stored entirely on your
               device in localStorage. Never uploaded anywhere.
             </li>
             <li>
-              <strong className="text-foreground">Favourites &amp; settings</strong> — saved commands, theme
+              <strong className="text-foreground">Favourites &amp; settings</strong> - saved commands, theme
               preferences, layout choices. All localStorage, all yours.
             </li>
           </ul>
@@ -64,14 +64,14 @@ function PrivacyPage() {
           </h3>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
             <li>
-              <strong className="text-foreground">Usage analytics</strong> — we
+              <strong className="text-foreground">Usage analytics</strong> - we
               do <em>not</em> use Google Analytics, Mixpanel, or any third-party
               analytics service. No tracking cookies. No fingerprinting.
             </li>
             <li>
-              <strong className="text-foreground">Error reports</strong> — if
+              <strong className="text-foreground">Error reports</strong> - if
               the app crashes, your browser may send a standard error report to
-              our hosting provider (Vercel). This contains no personal data —
+              our hosting provider (Vercel). This contains no personal data -
               only technical details like browser version and the page URL.
             </li>
           </ul>
@@ -82,7 +82,7 @@ function PrivacyPage() {
           <p className="mt-2 text-sm text-muted-foreground">
             SlashAI fetches data from free public APIs (weather, markets, news,
             trivia, etc.) directly from your browser. These requests come from
-            <em> your </em> device — we never proxy or store the responses on a
+            <em> your </em> device - we never proxy or store the responses on a
             server. The API providers may receive your IP address as part of
             standard HTTP requests, the same as visiting any website.
           </p>
@@ -142,7 +142,7 @@ function PrivacyPage() {
         <Section title="6. Third-Party Services">
           <p className="mt-2 text-sm text-muted-foreground">
             SlashAI integrates with the following <em>free, public</em> APIs.
-            We do not share your data with them — your browser fetches data
+            We do not share your data with them - your browser fetches data
             directly:
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
@@ -180,16 +180,16 @@ function PrivacyPage() {
         <Section title="8. Your Rights">
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
             <li>
-              <strong className="text-foreground">Right to delete</strong> —
+              <strong className="text-foreground">Right to delete</strong> -
               clear your browser data, and all SlashAI data is gone. Or use the
               "Reset all data" option in Settings.
             </li>
             <li>
-              <strong className="text-foreground">Right to export</strong> —
+              <strong className="text-foreground">Right to export</strong> -
               Settings → Export Backup downloads a JSON file with all your data.
             </li>
             <li>
-              <strong className="text-foreground">Right to know</strong> — this
+              <strong className="text-foreground">Right to know</strong> - this
               policy tells you everything we have (which is: nothing, beyond
               what's in your own browser).
             </li>

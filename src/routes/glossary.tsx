@@ -16,12 +16,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/glossary")({
   head: () => ({
     meta: [
-      { title: `AI glossary — ${GLOSSARY_TOTAL} terms in plain English | SlashAI` },
+      { title: `AI glossary - ${GLOSSARY_TOTAL} terms in plain English | SlashAI` },
       {
         name: "description",
-        content: `${GLOSSARY_TOTAL} AI terms explained simply — LLMs, RAG, fine-tuning, agents, safety and shipping. No jargon walls.`,
+        content: `${GLOSSARY_TOTAL} AI terms explained simply - LLMs, RAG, fine-tuning, agents, safety and shipping. No jargon walls.`,
       },
-      { property: "og:title", content: "AI Glossary — SlashAI" },
+      { property: "og:title", content: "AI Glossary - SlashAI" },
       {
         property: "og:description",
         content: "Every AI term a builder runs into, explained in one read each.",
@@ -67,7 +67,7 @@ function GlossaryPage() {
           AI Glossary
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          {GLOSSARY_TOTAL} terms, one clear definition each — foundations to shipping.
+          {GLOSSARY_TOTAL} terms, one clear definition each - foundations to shipping.
         </p>
       </header>
 
@@ -108,7 +108,7 @@ function GlossaryPage() {
         <div className="mt-10">
           <EmptyState
             title="No matching terms"
-            hint={`Try a shorter search — or browse “All” across ${GLOSSARY_TOTAL} entries.`}
+            hint={`Try a shorter search - or browse “All” across ${GLOSSARY_TOTAL} entries.`}
           />
         </div>
       ) : (

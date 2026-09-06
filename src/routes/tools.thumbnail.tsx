@@ -45,7 +45,7 @@ function ThumbnailChecker() {
           <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Paste YouTube URL..." className="h-10 rounded-xl border border-border bg-surface px-4 text-sm focus:outline-none focus:border-primary/50" onKeyDown={(e) => e.key === "Enter" && handleSubmit()} />
           <button onClick={handleSubmit} disabled={!extractId(url)} className="rounded-xl bg-primary py-2.5 text-sm font-semibold text-background hover:opacity-90 disabled:opacity-40">Check Thumbnail</button>
         </div>
-        <div className="text-center text-xs text-muted-foreground">— or —</div>
+        <div className="text-center text-xs text-muted-foreground">- or -</div>
         <div className="text-center">
           <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} className="hidden" />
           <button onClick={() => fileRef.current?.click()} className="rounded-xl border border-border bg-surface px-6 py-2.5 text-sm text-foreground hover:bg-surface-elevated transition-colors">Upload Image</button>

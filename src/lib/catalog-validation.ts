@@ -2,7 +2,7 @@
  * Dataset integrity checks for the SlashAI catalog.
  *
  * Used by `bun scripts/validate-catalog.mjs` (CI / pre-commit) and available to the
- * app for a dev-only sanity check. Pure functions — no DOM, no imports of the data
+ * app for a dev-only sanity check. Pure functions - no DOM, no imports of the data
  * itself, so it also works against a future API-backed catalog.
  */
 

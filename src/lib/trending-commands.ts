@@ -1,7 +1,7 @@
 /**
- * 80 real viral slash commands — short modifiers that transform AI output.
+ * 80 real viral slash commands - short modifiers that transform AI output.
  * These are the "/" prefix commands going viral on ChatGPT, Midjourney, Claude,
- * and social media. NOT long prompts — short, punchy modifiers.
+ * and social media. NOT long prompts - short, punchy modifiers.
  */
 
 export type CommandCategory =
@@ -99,7 +99,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 5,
-    howToUse: "Transform any subject into a Studio Ghibli animation style — soft watercolors, warm tones, hand-painted feel.",
+    howToUse: "Transform any subject into a Studio Ghibli animation style - soft watercolors, warm tones, hand-painted feel.",
     example: "A cozy cottage on a hillside /ghibli",
   },
   {
@@ -119,7 +119,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 7,
-    howToUse: "Adds vibrant neon glow effects — cyberpunk streets, glowing signs, electric color accents on any scene.",
+    howToUse: "Adds vibrant neon glow effects - cyberpunk streets, glowing signs, electric color accents on any scene.",
     example: "A rainy city alley at midnight /neon",
   },
   {
@@ -129,7 +129,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 8,
-    howToUse: "Applies a vintage film aesthetic — warm faded tones, subtle grain, and a nostalgic 70s-80s feel.",
+    howToUse: "Applies a vintage film aesthetic - warm faded tones, subtle grain, and a nostalgic 70s-80s feel.",
     example: "A family photo on the beach /vintage",
   },
   {
@@ -149,7 +149,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 10,
-    howToUse: "Adds dramatic chiaroscuro lighting — deep shadows, strong highlights, theatrical mood.",
+    howToUse: "Adds dramatic chiaroscuro lighting - deep shadows, strong highlights, theatrical mood.",
     example: "A portrait of an old man with deep wrinkles /dramatic",
   },
   {
@@ -189,7 +189,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 14,
-    howToUse: "Applies rich oil painting textures — visible brushstrokes, thick impasto, classical art feel.",
+    howToUse: "Applies rich oil painting textures - visible brushstrokes, thick impasto, classical art feel.",
     example: "A bowl of fruit on a wooden table /oil",
   },
   {
@@ -199,7 +199,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 15,
-    howToUse: "Converts any scene to classic film noir — high contrast black and white, venetian blind shadows, moody atmosphere.",
+    howToUse: "Converts any scene to classic film noir - high contrast black and white, venetian blind shadows, moody atmosphere.",
     example: "A detective in a 1940s office /noir",
   },
   {
@@ -219,7 +219,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 17,
-    howToUse: "Pushes any generated image toward photorealism — real textures, lighting, and detail.",
+    howToUse: "Pushes any generated image toward photorealism - real textures, lighting, and detail.",
     example: "A street food vendor in Bangkok /realistic",
   },
   {
@@ -229,7 +229,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 18,
-    howToUse: "Applies matte painting aesthetics — flat color fields, subtle gradients, concept art feel.",
+    howToUse: "Applies matte painting aesthetics - flat color fields, subtle gradients, concept art feel.",
     example: "A fantasy city on floating islands /matte",
   },
   {
@@ -239,7 +239,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 19,
-    howToUse: "Converts any subject into clean 2D flat design — geometric shapes, solid colors, minimal shading.",
+    howToUse: "Converts any subject into clean 2D flat design - geometric shapes, solid colors, minimal shading.",
     example: "A city skyline with trees /flat",
   },
   {
@@ -249,7 +249,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 20,
-    howToUse: "Renders any scene in isometric perspective — 45-degree angle, clean 3D look, no perspective distortion.",
+    howToUse: "Renders any scene in isometric perspective - 45-degree angle, clean 3D look, no perspective distortion.",
     example: "A tiny house with a garden /isometric",
   },
   {
@@ -259,7 +259,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 21,
-    howToUse: "Adds digital glitch artifacts — color channel shifts, pixel corruption, VHS-style distortion.",
+    howToUse: "Adds digital glitch artifacts - color channel shifts, pixel corruption, VHS-style distortion.",
     example: "A portrait of a woman /glitch",
   },
   {
@@ -269,7 +269,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 22,
-    howToUse: "Applies holographic rainbow foil effects — iridescent surfaces, light prismatic reflections.",
+    howToUse: "Applies holographic rainbow foil effects - iridescent surfaces, light prismatic reflections.",
     example: "A product on a pedestal /holographic",
   },
   {
@@ -279,7 +279,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 23,
-    howToUse: "Makes any subject look like a clay stop-motion animation — soft, handmade, tactile feel.",
+    howToUse: "Makes any subject look like a clay stop-motion animation - soft, handmade, tactile feel.",
     example: "A robot walking through a forest /clay",
   },
   {
@@ -289,7 +289,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 24,
-    howToUse: "Applies vaporwave/retrowave aesthetics — grid lines, sunset gradients, Roman busts, neon chrome.",
+    howToUse: "Applies vaporwave/retrowave aesthetics - grid lines, sunset gradients, Roman busts, neon chrome.",
     example: "A futuristic city at sunset /vaporwave",
   },
   {
@@ -299,7 +299,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 25,
-    howToUse: "Creates a cozy lo-fi aesthetic — warm amber tones, fairy lights, rain on windows, plants.",
+    howToUse: "Creates a cozy lo-fi aesthetic - warm amber tones, fairy lights, rain on windows, plants.",
     example: "A bedroom desk with a laptop at night /lofi",
   },
   {
@@ -309,7 +309,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 26,
-    howToUse: "Renders any subject in extreme macro close-up — visible texture, shallow depth of field, tiny details.",
+    howToUse: "Renders any subject in extreme macro close-up - visible texture, shallow depth of field, tiny details.",
     example: "A dewdrop on a leaf /macro",
   },
   {
@@ -319,7 +319,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 27,
-    howToUse: "Shifts any scene to a bird's eye aerial perspective — top-down drone shot look.",
+    howToUse: "Shifts any scene to a bird's eye aerial perspective - top-down drone shot look.",
     example: "A winding river through a forest /aerial",
   },
   {
@@ -329,7 +329,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Stable Diffusion"],
     category: "Image",
     trendingRank: 28,
-    howToUse: "Applies high-end editorial photography aesthetics — professional lighting, bold composition, magazine quality.",
+    howToUse: "Applies high-end editorial photography aesthetics - professional lighting, bold composition, magazine quality.",
     example: "A model in a red dress against a white wall /editorial",
   },
   {
@@ -339,7 +339,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Midjourney", "DALL-E", "Adobe Firefly"],
     category: "Image",
     trendingRank: 29,
-    howToUse: "Places any object in a clean product photography setup — studio lighting, clean background, commercial quality.",
+    howToUse: "Places any object in a clean product photography setup - studio lighting, clean background, commercial quality.",
     example: "A leather wallet /product",
   },
   {
@@ -361,7 +361,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Sora", "Runway", "Pika"],
     category: "Video",
     trendingRank: 31,
-    howToUse: "Append to any video prompt to create slow-motion playback — great for dramatic moments, water splashes, hair movement.",
+    howToUse: "Append to any video prompt to create slow-motion playback - great for dramatic moments, water splashes, hair movement.",
     example: "A glass of water falling and shattering /slowmo",
   },
   {
@@ -371,7 +371,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Sora", "Runway", "Pika"],
     category: "Video",
     trendingRank: 32,
-    howToUse: "Compresses hours into seconds — clouds moving, flowers blooming, city traffic flowing.",
+    howToUse: "Compresses hours into seconds - clouds moving, flowers blooming, city traffic flowing.",
     example: "Sunset over a city skyline /timelapse",
   },
   {
@@ -381,7 +381,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Sora", "Runway", "Pika"],
     category: "Video",
     trendingRank: 33,
-    howToUse: "Creates a seamless loop — the end matches the beginning perfectly. Great for wallpapers and social media.",
+    howToUse: "Creates a seamless loop - the end matches the beginning perfectly. Great for wallpapers and social media.",
     example: "Rain falling on a window /loop",
   },
   {
@@ -391,7 +391,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Sora", "Runway", "Pika"],
     category: "Video",
     trendingRank: 34,
-    howToUse: "Adds a slow, cinematic zoom-in or zoom-out to any scene — the classic Ken Burns documentary effect.",
+    howToUse: "Adds a slow, cinematic zoom-in or zoom-out to any scene - the classic Ken Burns documentary effect.",
     example: "A painting on a wall /zoom",
   },
   {
@@ -401,7 +401,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Sora", "Runway", "Pika"],
     category: "Video",
     trendingRank: 35,
-    howToUse: "Creates a smooth horizontal camera pan across a scene — sweeping establishing shots.",
+    howToUse: "Creates a smooth horizontal camera pan across a scene - sweeping establishing shots.",
     example: "A panoramic mountain range /pan",
   },
   {
@@ -411,7 +411,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["Sora", "Runway", "Pika"],
     category: "Video",
     trendingRank: 36,
-    howToUse: "Makes objects float weightlessly — ethereal, dreamlike, gravity-defying motion.",
+    howToUse: "Makes objects float weightlessly - ethereal, dreamlike, gravity-defying motion.",
     example: "Flowers floating in a room /float",
   },
 
@@ -433,7 +433,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 38,
-    howToUse: "Gets you a balanced explanation — clear enough for a teenager, but with real technical detail.",
+    howToUse: "Gets you a balanced explanation - clear enough for a teenager, but with real technical detail.",
     example: "/eli15 How does DNS resolution work?",
   },
   {
@@ -449,7 +449,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
   {
     slug: "tldr",
     command: "/tldr",
-    description: "Too long, didn't read — give me the summary",
+    description: "Too long, didn't read - give me the summary",
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 40,
@@ -463,7 +463,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 41,
-    howToUse: "Rewrites any text in a formal, professional tone — suitable for business communication and reports.",
+    howToUse: "Rewrites any text in a formal, professional tone - suitable for business communication and reports.",
     example: "Hey wanna grab coffee sometime? /pro",
   },
   {
@@ -473,7 +473,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 42,
-    howToUse: "Transforms formal text into a friendly, conversational tone — like talking to a colleague.",
+    howToUse: "Transforms formal text into a friendly, conversational tone - like talking to a colleague.",
     example: "[paste formal email] /casual",
   },
   {
@@ -503,7 +503,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 45,
-    howToUse: "Boils down any concept or article into a single, punchy tweet — 280 characters or fewer.",
+    howToUse: "Boils down any concept or article into a single, punchy tweet - 280 characters or fewer.",
     example: "[paste article] /tweet",
   },
   {
@@ -513,7 +513,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 46,
-    howToUse: "Breaks any topic into a numbered Twitter thread — each tweet self-contained, hook in the first one.",
+    howToUse: "Breaks any topic into a numbered Twitter thread - each tweet self-contained, hook in the first one.",
     example: "/thread The history of the internet",
   },
   {
@@ -533,7 +533,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 48,
-    howToUse: "Converts any text into a clean numbered list — perfect for step-by-step instructions and rankings.",
+    howToUse: "Converts any text into a clean numbered list - perfect for step-by-step instructions and rankings.",
     example: "Tips for better sleep /list",
   },
   {
@@ -553,7 +553,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 50,
-    howToUse: "Converts any topic into a Q&A format — great for study guides, FAQs, and interview prep.",
+    howToUse: "Converts any topic into a Q&A format - great for study guides, FAQs, and interview prep.",
     example: "Machine learning basics /qa",
   },
   {
@@ -583,7 +583,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 53,
-    howToUse: "Generates a compelling hook — the first sentence that makes readers stop scrolling.",
+    howToUse: "Generates a compelling hook - the first sentence that makes readers stop scrolling.",
     example: "/hook Blog post about climate change solutions",
   },
   {
@@ -593,7 +593,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 54,
-    howToUse: "Adds a persuasive call to action at the end of any text — prompts the reader to take the next step.",
+    howToUse: "Adds a persuasive call to action at the end of any text - prompts the reader to take the next step.",
     example: "[paste landing page copy] /cta",
   },
   {
@@ -613,7 +613,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 56,
-    howToUse: "Elevates the register and authority of any text — suitable for reports, academic writing, and proposals.",
+    howToUse: "Elevates the register and authority of any text - suitable for reports, academic writing, and proposals.",
     example: "[paste text] /formal",
   },
   {
@@ -623,7 +623,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 57,
-    howToUse: "Softens any text to feel more approachable and warm — great for customer-facing content.",
+    howToUse: "Softens any text to feel more approachable and warm - great for customer-facing content.",
     example: "[paste terms of service] /friendly",
   },
   {
@@ -633,7 +633,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 58,
-    howToUse: "Adds persuasive techniques — social proof, urgency, emotional appeal, strong reasoning.",
+    howToUse: "Adds persuasive techniques - social proof, urgency, emotional appeal, strong reasoning.",
     example: "[paste sales page] /persuade",
   },
   {
@@ -643,7 +643,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Writing",
     trendingRank: 59,
-    howToUse: "Gets honest, constructive criticism of any writing — what's weak, what's unclear, what's missing.",
+    howToUse: "Gets honest, constructive criticism of any writing - what's weak, what's unclear, what's missing.",
     example: "[paste your essay] /critique",
   },
 
@@ -675,7 +675,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "GitHub Copilot"],
     category: "Code",
     trendingRank: 62,
-    howToUse: "Takes messy code and restructures it — cleaner names, better patterns, same functionality.",
+    howToUse: "Takes messy code and restructures it - cleaner names, better patterns, same functionality.",
     example: "[paste code] /refactor",
   },
   {
@@ -705,7 +705,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "GitHub Copilot"],
     category: "Code",
     trendingRank: 65,
-    howToUse: "Creates complete documentation — usage examples, parameters, return types, and gotchas.",
+    howToUse: "Creates complete documentation - usage examples, parameters, return types, and gotchas.",
     example: "[paste code] /docs",
   },
   {
@@ -745,7 +745,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "GitHub Copilot"],
     category: "Code",
     trendingRank: 69,
-    howToUse: "Takes complex code and makes it simpler — fewer branches, clearer flow, less cognitive load.",
+    howToUse: "Takes complex code and makes it simpler - fewer branches, clearer flow, less cognitive load.",
     example: "[paste complex code] /simplify",
   },
   {
@@ -755,7 +755,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "GitHub Copilot"],
     category: "Code",
     trendingRank: 70,
-    howToUse: "Audits code for security issues — injection flaws, auth bugs, data exposure, and provides fixes.",
+    howToUse: "Audits code for security issues - injection flaws, auth bugs, data exposure, and provides fixes.",
     example: "[paste code] /secure",
   },
 
@@ -767,7 +767,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Thinking",
     trendingRank: 71,
-    howToUse: "Presents the strongest arguments against your position — finds flaws in your reasoning.",
+    howToUse: "Presents the strongest arguments against your position - finds flaws in your reasoning.",
     example: "/devil Remote work is more productive than office work",
   },
   {
@@ -787,7 +787,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Thinking",
     trendingRank: 73,
-    howToUse: "Uncovers every hidden assumption in a statement, plan, or argument — what are you taking for granted?",
+    howToUse: "Uncovers every hidden assumption in a statement, plan, or argument - what are you taking for granted?",
     example: "/assumptions Our startup will reach 10k users in 6 months",
   },
   {
@@ -797,7 +797,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Thinking",
     trendingRank: 74,
-    howToUse: "Generates a comprehensive risk assessment — what can fail, how likely, and how bad would it be.",
+    howToUse: "Generates a comprehensive risk assessment - what can fail, how likely, and how bad would it be.",
     example: "/risks Launching a SaaS product with no marketing budget",
   },
   {
@@ -827,7 +827,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Thinking",
     trendingRank: 77,
-    howToUse: "Generates a structured SWOT analysis — Strengths, Weaknesses, Opportunities, Threats.",
+    howToUse: "Generates a structured SWOT analysis - Strengths, Weaknesses, Opportunities, Threats.",
     example: "/swot Starting a freelance dev business",
   },
   {
@@ -847,7 +847,7 @@ export const TRENDING_COMMANDS: TrendingCommand[] = [
     worksIn: ["ChatGPT", "Claude", "Gemini"],
     category: "Thinking",
     trendingRank: 79,
-    howToUse: "Generates a comprehensive list of disadvantages — be honest about what you'd lose.",
+    howToUse: "Generates a comprehensive list of disadvantages - be honest about what you'd lose.",
     example: "/cons Moving to a new city for a job",
   },
   {

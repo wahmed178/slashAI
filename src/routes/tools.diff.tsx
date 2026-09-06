@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Copy, Check } from "lucide-react";
 
 export const Route = createFileRoute("/tools/diff")({
-  head: () => ({ meta: [{ title: "Text Diff Checker — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Text Diff Checker - SlashAI" }] }),
   component: TextDiff,
 });
 
@@ -73,7 +73,7 @@ function TextDiff() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Text Diff Checker</h1>
-            <p className="mt-1 text-sm text-muted-foreground">Compare two texts side by side — changes highlighted instantly.</p>
+            <p className="mt-1 text-sm text-muted-foreground">Compare two texts side by side - changes highlighted instantly.</p>
           </div>
           <button onClick={copyDiff} className="flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-2 text-xs text-muted-foreground transition-all hover:text-foreground">
             {copied ? <Check className="size-3.5 text-green" /> : <Copy className="size-3.5" />}

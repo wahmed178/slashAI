@@ -6,11 +6,11 @@ export const Route = createFileRoute("/tools/fake-email")({
   component: TempEmailGenerator,
   head: () => ({
     meta: [
-      { title: "Temp Email Generator — SlashAI" },
+      { title: "Temp Email Generator - SlashAI" },
       {
         name: "description",
         content:
-          "Disposable email addresses with an inbox powered by Guerrilla Mail — no sign-up, nothing stored here.",
+          "Disposable email addresses with an inbox powered by Guerrilla Mail - no sign-up, nothing stored here.",
       },
     ],
   }),
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/tools/fake-email")({
 function GuerrillaNote() {
   return (
     <p className="mt-2 rounded-lg border border-border bg-surface px-3 py-2 text-[11px] text-muted-foreground">
-      Inbox powered by guerrillamail.com — may not always be available.
+      Inbox powered by guerrillamail.com - may not always be available.
     </p>
   );
 }

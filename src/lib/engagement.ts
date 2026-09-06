@@ -4,7 +4,7 @@ import { COMMANDS, type SlashCommand } from "./commands";
  * Social-proof and discovery signals.
  *
  * SlashAI has no backend and no tracking, so "copied N times" is a *stable,
- * derived* figure — a deterministic function of the command id and its curated
+ * derived* figure - a deterministic function of the command id and its curated
  * popularity score. It never changes between devices or reloads, which keeps
  * the number honest as a relative signal rather than a fake live counter.
  */
@@ -75,7 +75,7 @@ export const TIPS: Tip[] = [
   },
   {
     title: "Say what a good answer looks like",
-    body: "Add the format you want — table, 5 bullets, 100 words — and you rarely need a second attempt.",
+    body: "Add the format you want - table, 5 bullets, 100 words - and you rarely need a second attempt.",
   },
   {
     title: "Paste the real thing",
@@ -83,7 +83,7 @@ export const TIPS: Tip[] = [
   },
   {
     title: "Ask for the reasoning last",
-    body: "Request the answer first, then “explain why” — you get a usable result even if you stop reading.",
+    body: "Request the answer first, then “explain why” - you get a usable result even if you stop reading.",
   },
   {
     title: "Iterate in one thread",
@@ -115,7 +115,7 @@ export const EMPTY_STREAK: Streak = { count: 0, best: 0, lastDay: "" };
 
 const dayNumber = (key: string) => Math.floor(Date.parse(`${key}T00:00:00Z`) / 86_400_000);
 
-/** Pure streak transition — called once per app open with today's UTC date. */
+/** Pure streak transition - called once per app open with today's UTC date. */
 export function advanceStreak(prev: Streak, today: string): Streak {
   if (prev.lastDay === today) return prev;
   const gap = prev.lastDay ? dayNumber(today) - dayNumber(prev.lastDay) : Infinity;
@@ -126,9 +126,9 @@ export function advanceStreak(prev: Streak, today: string): Streak {
 export const STREAK_MILESTONES = [3, 7, 14, 30, 100];
 
 export function streakMessage(count: number): string {
-  if (count <= 1) return "First day — welcome back tomorrow to start a streak.";
+  if (count <= 1) return "First day - welcome back tomorrow to start a streak.";
   if (count < 3) return "Two days in. Keep it going.";
   if (count < 7) return `Day ${count} streak. Nice rhythm.`;
-  if (count < 30) return `Day ${count} — you're a regular now.`;
+  if (count < 30) return `Day ${count} - you're a regular now.`;
   return `Day ${count}. Genuinely impressive.`;
 }

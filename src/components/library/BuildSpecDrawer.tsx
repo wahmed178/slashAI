@@ -76,7 +76,7 @@ export function BuildSpecDrawer({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full overflow-y-auto sm:max-w-xl">
         <SheetHeader className="text-left">
-          <SheetTitle>Build spec — {idea.title}</SheetTitle>
+          <SheetTitle>Build spec - {idea.title}</SheetTitle>
           <SheetDescription>
             A full product specification plus a paste-ready prompt. Generated once, then kept on
             this device so it opens instantly and works offline.
@@ -90,7 +90,7 @@ export function BuildSpecDrawer({
               onClick={async () => {
                 await navigator.clipboard.writeText(prompt);
                 setCopied(true);
-                toast.success("Prompt copied — paste it into Lovable");
+                toast.success("Prompt copied - paste it into Lovable");
                 setTimeout(() => setCopied(false), 1600);
               }}
             >

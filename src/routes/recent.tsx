@@ -11,9 +11,9 @@ import { getCommand, type SlashCommand } from "@/lib/commands";
 export const Route = createFileRoute("/recent")({
   head: () => ({
     meta: [
-      { title: "Recently used — SlashAI" },
+      { title: "Recently used - SlashAI" },
       { name: "description", content: "The AI slash commands you opened most recently." },
-      { property: "og:title", content: "Recently used — SlashAI" },
+      { property: "og:title", content: "Recently used - SlashAI" },
       { property: "og:description", content: "Pick up where you left off in SlashAI." },
       { name: "robots", content: "noindex" },
     ],

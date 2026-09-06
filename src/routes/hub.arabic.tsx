@@ -5,7 +5,7 @@ import { AppShell } from "@/components/library/AppShell";
 export const Route = createFileRoute("/hub/arabic")({
   head: () => ({
     meta: [
-      { title: "Arabic Learners Hub — Free Resources | SlashAI" },
+      { title: "Arabic Learners Hub - Free Resources | SlashAI" },
       { name: "description", content: "Free Arabic learning resources: alphabet chart, courses, keyboard, grammar, and common phrases." },
     ],
   }),
@@ -13,10 +13,10 @@ export const Route = createFileRoute("/hub/arabic")({
 });
 
 const RESOURCES = [
-  { title: "Madinah Arabic Books", desc: "Free PDF textbooks — the gold standard for learning Arabic", url: "https://www.madinaharabic.com/", icon: "📚" },
-  { title: "Bayyinah Dream Program", desc: "Free podcast content by Nouman Ali Khan — understand the Quran in Arabic", url: "https://dream.bayyinah.com/", icon: "🎧" },
-  { title: "Duolingo Arabic", desc: "Free interactive Arabic course — Modern Standard Arabic", url: "https://www.duolingo.com/course/ar/en", icon: "🦉" },
-  { title: "Google Fonts — Arabic", desc: "Free Arabic web fonts: Amiri, Noto Naskh, Tajawal, Cairo", url: "https://fonts.google.com/?subset=arabic", icon: "🔤" },
+  { title: "Madinah Arabic Books", desc: "Free PDF textbooks - the gold standard for learning Arabic", url: "https://www.madinaharabic.com/", icon: "📚" },
+  { title: "Bayyinah Dream Program", desc: "Free podcast content by Nouman Ali Khan - understand the Quran in Arabic", url: "https://dream.bayyinah.com/", icon: "🎧" },
+  { title: "Duolingo Arabic", desc: "Free interactive Arabic course - Modern Standard Arabic", url: "https://www.duolingo.com/course/ar/en", icon: "🦉" },
+  { title: "Google Fonts - Arabic", desc: "Free Arabic web fonts: Amiri, Noto Naskh, Tajawal, Cairo", url: "https://fonts.google.com/?subset=arabic", icon: "🔤" },
 ];
 
 const ALPHABET = [

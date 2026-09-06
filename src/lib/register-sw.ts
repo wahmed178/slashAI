@@ -2,7 +2,7 @@
  * Single registrar for the offline app-shell service worker.
  *
  * Registration is refused in dev, inside iframes, in Lovable previews and when
- * `?sw=off` is present — and in those cases any stale `/sw.js` registration is
+ * `?sw=off` is present - and in those cases any stale `/sw.js` registration is
  * removed so the preview always serves fresh code.
  */
 const BLOCKED_HOSTS = ["lovableproject.com", "lovableproject-dev.com", "beta.lovable.dev"] as const;
@@ -40,7 +40,7 @@ export function registerServiceWorker() {
   }
   window.addEventListener("load", () => {
     void navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(() => {
-      /* offline support is optional — never break the app over it */
+      /* offline support is optional - never break the app over it */
     });
   });
 }

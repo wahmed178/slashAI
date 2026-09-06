@@ -4,7 +4,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/one-liner")({
   head: () => ({
     meta: [
-      { title: "OneLiner Quotes — SlashKits" },
+      { title: "OneLiner Quotes - SlashKits" },
       {
         name: "description",
         content:
@@ -1029,7 +1029,7 @@ function OneLiner() {
       }
       const dataUrl = canvas.toDataURL("image/png");
 
-      // METHOD 1: Web Share API — try directly (works in Capacitor + mobile browsers)
+      // METHOD 1: Web Share API - try directly (works in Capacitor + mobile browsers)
       if (navigator.share) {
         try {
           const response = await fetch(dataUrl);
@@ -1044,7 +1044,7 @@ function OneLiner() {
           setTimeout(() => setSaved(false), 2000);
           return;
         } catch (err) {
-          // User cancelled or share not supported with files — fall through
+          // User cancelled or share not supported with files - fall through
           if ((err as Error).name === "AbortError") {
             setDownloading(false);
             return;
@@ -1052,7 +1052,7 @@ function OneLiner() {
         }
       }
 
-      // METHOD 2: Show image overlay — user long-presses to save (works everywhere)
+      // METHOD 2: Show image overlay - user long-presses to save (works everywhere)
       setOverlayUrl(dataUrl);
       setShowOverlay(true);
       setSaved(true);
@@ -1095,7 +1095,7 @@ const total = filtered.length;
         </button>
       </div>
 
-      {/* Category pills — fixed top */}
+      {/* Category pills - fixed top */}
       <div className="shrink-0 w-full overflow-x-auto pb-2 pt-2 px-4 scrollbar-none bg-background">
         <div className="flex items-center gap-2 w-max pr-4">
           {CATEGORIES.map((cat) => {

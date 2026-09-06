@@ -24,7 +24,7 @@ export function WhatsNewDialog() {
           <span className="mb-1 flex size-10 items-center justify-center rounded-xl bg-primary/15 text-primary">
             <Sparkles className="size-5" aria-hidden />
           </span>
-          <DialogTitle className="text-left">What's new — v{LATEST_RELEASE.version}</DialogTitle>
+          <DialogTitle className="text-left">What's new - v{LATEST_RELEASE.version}</DialogTitle>
           <DialogDescription className="text-left">{LATEST_RELEASE.title}</DialogDescription>
         </DialogHeader>
 

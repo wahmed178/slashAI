@@ -10,7 +10,7 @@ import { HEALTH_RESOURCES } from "@/lib/hub-health";
 export const Route = createFileRoute("/hub/")({
   head: () => ({
     meta: [
-      { title: "Hubs — SlashAI" },
+      { title: "Hubs - SlashAI" },
       { name: "description", content: "Role-based and language hubs with curated free resources." },
     ],
   }),
@@ -32,7 +32,7 @@ interface HubCard {
 }
 
 const HUB_DEDICATED: Record<"founders" | "india" | "finance" | "health", { label: string; icon: any; desc: string; list: unknown[] }> = {
-  founders: { label: "Founders Hub", icon: Rocket, desc: "Validate, build, ship, grow — from idea to revenue", list: FOUNDERS_RESOURCES },
+  founders: { label: "Founders Hub", icon: Rocket, desc: "Validate, build, ship, grow - from idea to revenue", list: FOUNDERS_RESOURCES },
   india: { label: "India Hub", icon: IndianRupee, desc: "Free tools, courses and APIs for Indian builders", list: INDIA_RESOURCES },
   finance: { label: "Finance Hub", icon: TrendingUp, desc: "Investing, personal finance, and crypto tools", list: FINANCE_RESOURCES },
   health: { label: "Health Hub", icon: Stethoscope, desc: "Fitness, nutrition and wellbeing tools", list: HEALTH_RESOURCES },
@@ -43,9 +43,9 @@ const HUBS: HubCard[] = [
   { audience: "developers", label: "Developer Hub", icon: Code, desc: "APIs, tools, and tutorials for devs", audienceKey: "Developers" },
   { audience: "creators", label: "Creator Hub", icon: Paintbrush, desc: "Content creation tools and channels", audienceKey: "Creators" },
   { audience: "professionals", label: "Professional Hub", icon: Briefcase, desc: "Productivity tools for working professionals", audienceKey: "Professionals" },
-  { audience: "founders", label: "Founders Hub", icon: Rocket, desc: "From idea to launch — free resources", dedicated: "founders" },
+  { audience: "founders", label: "Founders Hub", icon: Rocket, desc: "From idea to launch - free resources", dedicated: "founders" },
   { audience: "india", label: "India Hub", icon: IndianRupee, desc: "Free tools, courses and APIs for Indian builders", dedicated: "india" },
-  { audience: "islam", label: "Islam Hub", icon: Globe, desc: "Quran, Hadith, prayer, learning and daily tools — all free", staticCount: 53 },
+  { audience: "islam", label: "Islam Hub", icon: Globe, desc: "Quran, Hadith, prayer, learning and daily tools - all free", staticCount: 53 },
   { audience: "urdu", label: "Urdu Hub", icon: Languages, desc: "Urdu poetry, dictionaries, fonts and learning", staticCount: 8 },
   { audience: "arabic", label: "Arabic Hub", icon: Languages, desc: "Arabic alphabet, courses, keyboard and phrases", staticCount: 4, countLabel: "4 curated + alphabet" },
   { audience: "designers", label: "Designers Hub", icon: Paintbrush, desc: "Free design tools, assets and learning", audienceKey: "Designers" },
@@ -65,7 +65,7 @@ function HubIndexPage() {
       <header className="page-enter pt-2">
         <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Hubs</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Role-based and language hubs with curated free resources — every link verified, nothing behind a paywall.
+          Role-based and language hubs with curated free resources - every link verified, nothing behind a paywall.
         </p>
       </header>
       <div className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">

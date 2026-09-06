@@ -164,7 +164,7 @@ function NoiseGenerator() {
     <AppShell title="Background Noise Generator">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🔊 Background Noise Generator</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Synthesised ambient sounds — mix multiple, set a timer. Zero audio files.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Synthesised ambient sounds - mix multiple, set a timer. Zero audio files.</p>
       </header>
 
       <div className="mx-auto max-w-2xl space-y-4">

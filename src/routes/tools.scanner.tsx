@@ -10,11 +10,11 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/tools/scanner")({
   head: () => ({
     meta: [
-      { title: "Document Scanner — turn photos into clean scans | SlashAI" },
+      { title: "Document Scanner - turn photos into clean scans | SlashAI" },
       {
         name: "description",
         content:
-          "Scan documents with your camera or an uploaded photo. Enhance, black & white, multi-page, export as JPG or PDF — all in your browser.",
+          "Scan documents with your camera or an uploaded photo. Enhance, black & white, multi-page, export as JPG or PDF - all in your browser.",
       },
     ],
   }),
@@ -57,7 +57,7 @@ function writePages(pages: Page[]) {
   try {
     localStorage.setItem(PAGES_KEY, JSON.stringify(pages.slice(0, MAX_PAGES)));
   } catch {
-    /* storage full — scanning session just won't persist */
+    /* storage full - scanning session just won't persist */
   }
 }
 
@@ -128,7 +128,7 @@ function processPixels(dataUrl: string, mode: Exclude<EnhanceMode, "original">):
           const avg = 0.299 * r + 0.587 * g + 0.114 * b;
           nr = ng = nb = avg;
         } else {
-          // enhanced — soft contrast + slight saturation push
+          // enhanced - soft contrast + slight saturation push
           const factor = 1.35;
           nr = Math.min(255, Math.max(0, (r - 128) * factor + 128));
           ng = Math.min(255, Math.max(0, (g - 128) * factor + 128));
@@ -185,7 +185,7 @@ function ScannerTool() {
 
   const startCamera = async () => {
     if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
-      setCameraError("Camera is not available on this device or browser — upload an image instead.");
+      setCameraError("Camera is not available on this device or browser - upload an image instead.");
       return;
     }
     setCameraError("");
@@ -335,7 +335,7 @@ function ScannerTool() {
             📷 Document Scanner
           </h1>
           <p className="mt-1 text-[13px] text-muted-foreground">
-            Capture, enhance and export clean document scans — everything stays on your device.
+            Capture, enhance and export clean document scans - everything stays on your device.
           </p>
         </div>
       </header>
@@ -591,7 +591,7 @@ function ScannerTool() {
             <h3 className="text-[12px] font-semibold text-foreground">Scanning tips</h3>
             <ul className="mt-1.5 list-disc space-y-1 pl-4 text-[12px] leading-relaxed text-muted-foreground">
               <li>Keep the document flat and well lit.</li>
-              <li>Fill the frame — edges of the paper cropped out look best.</li>
+              <li>Fill the frame - edges of the paper cropped out look best.</li>
               <li>“Black & white” works great for text-heavy pages.</li>
             </ul>
           </div>

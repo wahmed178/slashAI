@@ -10,9 +10,9 @@ import { getCommand, type SlashCommand } from "@/lib/commands";
 export const Route = createFileRoute("/favorites")({
   head: () => ({
     meta: [
-      { title: "Favorites — SlashAI" },
+      { title: "Favorites - SlashAI" },
       { name: "description", content: "The AI slash commands you saved on this device." },
-      { property: "og:title", content: "Favorites — SlashAI" },
+      { property: "og:title", content: "Favorites - SlashAI" },
       { property: "og:description", content: "Your saved SlashAI commands, kept on-device." },
       { name: "robots", content: "noindex" },
     ],

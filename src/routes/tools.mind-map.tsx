@@ -102,7 +102,7 @@ function MindMapBuilder() {
     <AppShell title="Mind Map Builder">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🧠 Mind Map Builder</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Visual mind map — Tab: add child, Enter: sibling, Delete: remove, Space: edit</p>
+        <p className="mt-1 text-sm text-muted-foreground">Visual mind map - Tab: add child, Enter: sibling, Delete: remove, Space: edit</p>
       </header>
 
       <div className="mx-auto max-w-4xl space-y-3">

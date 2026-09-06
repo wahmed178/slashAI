@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/qibla")({
   head: () => ({
     meta: [
-      { title: "Qibla Compass — SlashAI" },
-      { name: "description", content: "Find the direction of Mecca from anywhere using your device compass and location — free, private, no account." },
+      { title: "Qibla Compass - SlashAI" },
+      { name: "description", content: "Find the direction of Mecca from anywhere using your device compass and location - free, private, no account." },
     ],
   }),
   component: QiblaCompass,
@@ -220,7 +220,7 @@ export default function QiblaCompass() {
             {/* Device orientation toggle */}
             {typeof DeviceOrientationEvent !== "undefined" && (
               <button onClick={() => setUseDevice(!useDevice)} className={`w-full rounded-xl py-3 text-sm font-semibold transition-colors ${useDevice ? "bg-primary text-background" : "border border-border bg-surface text-foreground hover:bg-background"}`}>
-                {useDevice ? "📱 Using device compass — rotate your phone" : "📱 Use device compass"}
+                {useDevice ? "📱 Using device compass - rotate your phone" : "📱 Use device compass"}
               </button>
             )}
 

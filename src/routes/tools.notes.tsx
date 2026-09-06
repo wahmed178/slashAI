@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Plus, Trash2, Search, Download, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/tools/notes")({
-  head: () => ({ meta: [{ title: "Quick Notes — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Quick Notes - SlashAI" }] }),
   component: QuickNotes,
 });
 

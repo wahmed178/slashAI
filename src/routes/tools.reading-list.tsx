@@ -45,7 +45,7 @@ function BookTracker() {
   const filtered = filter === "all" ? books : books.filter((b) => b.status === filter);
   const finishedThisYear = books.filter((b) => b.status === "finished" && b.finishDate?.startsWith(new Date().getFullYear().toString())).length;
   const avgRating = books.filter((b) => b.rating > 0);
-  const avg = avgRating.length > 0 ? (avgRating.reduce((a, b) => a + b.rating, 0) / avgRating.length).toFixed(1) : "—";
+  const avg = avgRating.length > 0 ? (avgRating.reduce((a, b) => a + b.rating, 0) / avgRating.length).toFixed(1) : "-";
   const genres = [...new Set(books.map((b) => b.genre).filter(Boolean))];
 
   const exportCSV = () => {
@@ -59,7 +59,7 @@ function BookTracker() {
     <AppShell title="Book Tracker">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">📚 Reading List</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Track books privately — no social pressure, just your reading journey.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Track books privately - no social pressure, just your reading journey.</p>
       </header>
 
       <div className="mx-auto max-w-2xl space-y-4">

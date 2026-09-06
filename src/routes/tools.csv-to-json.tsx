@@ -9,7 +9,7 @@ Bob,35,Delhi
 Charlie,22,Bangalore`;
 
 export const Route = createFileRoute("/tools/csv-to-json")({
-  head: () => ({ meta: [{ title: "CSV to JSON — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "CSV to JSON - SlashAI" }] }),
   component: CsvToJson,
 });
 

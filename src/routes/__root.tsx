@@ -26,7 +26,7 @@ function NotFoundComponent() {
         <p className="font-mono text-[64px] font-bold leading-none text-primary sm:text-[80px]">404</p>
         <h1 className="mt-4 text-xl font-semibold text-foreground">This page doesn't exist</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          The link may be old or mistyped. Everything else is still here — try one of these instead.
+          The link may be old or mistyped. Everything else is still here - try one of these instead.
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           <Link
@@ -105,8 +105,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Search and copy 5,635 free AI slash commands, run 150+ browser tools in SlashKits, and browse 319 curated free resources, roadmaps and a daily quiz. Free forever, no account.",
       },
       { name: "author", content: "SlashAI" },
-      { title: "SlashAI — 5,635 Free AI Slash Commands, Tools & Resources" },
-      { property: "og:title", content: "SlashAI — 5,635 Free AI Slash Commands, Tools & Resources" },
+      { title: "SlashAI - 5,635 Free AI Slash Commands, Tools & Resources" },
+      { property: "og:title", content: "SlashAI - 5,635 Free AI Slash Commands, Tools & Resources" },
       {
         property: "og:description",
         content:

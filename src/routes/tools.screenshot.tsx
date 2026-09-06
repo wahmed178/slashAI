@@ -44,7 +44,7 @@ function ScreenshotOCR() {
     <AppShell title="Screenshot to Text">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">📸 Screenshot to Text (OCR)</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Extract text from any image or screenshot. Runs 100% in your browser — nothing uploaded.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Extract text from any image or screenshot. Runs 100% in your browser - nothing uploaded.</p>
       </header>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -58,7 +58,7 @@ function ScreenshotOCR() {
               <>
                 <p className="text-3xl">📸</p>
                 <p className="mt-2 text-sm text-muted-foreground">Click to upload screenshot</p>
-                <p className="text-xs text-muted-foreground">JPG, PNG, WebP — all processed locally</p>
+                <p className="text-xs text-muted-foreground">JPG, PNG, WebP - all processed locally</p>
               </>
             )}
           </button>

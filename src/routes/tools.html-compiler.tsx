@@ -5,8 +5,8 @@ import { Copy, Download, Play, RotateCcw, Maximize2, Minimize2, Check, Code2 } f
 export const Route = createFileRoute("/tools/html-compiler")({
   head: () => ({
     meta: [
-      { title: "HTML Compiler — SlashAI" },
-      { name: "description", content: "Write HTML, CSS and JavaScript in a live split-pane editor with instant preview. A free browser-based CodePen alternative — no install, no account." },
+      { title: "HTML Compiler - SlashAI" },
+      { name: "description", content: "Write HTML, CSS and JavaScript in a live split-pane editor with instant preview. A free browser-based CodePen alternative - no install, no account." },
     ],
   }),
   component: HtmlCompiler,

@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Plus, Trash2, Flame } from "lucide-react";
 
 export const Route = createFileRoute("/tools/habits")({
-  head: () => ({ meta: [{ title: "Habit Tracker — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Habit Tracker - SlashAI" }] }),
   component: HabitTracker,
 });
 
@@ -89,7 +89,7 @@ function HabitTracker() {
       <div className="mx-auto max-w-3xl space-y-6 pt-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Habit Tracker</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Build consistency — track habits with a visual grid.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Build consistency - track habits with a visual grid.</p>
         </div>
 
         {/* Add habit */}

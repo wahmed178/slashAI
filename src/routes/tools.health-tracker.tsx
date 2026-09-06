@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/health-tracker")({
   head: () => ({
     meta: [
-      { title: "Health Tracker — SlashAI" },
-      { name: "description", content: "Track weight, BMI and health stats over time — stored privately on your device, never uploaded." },
+      { title: "Health Tracker - SlashAI" },
+      { name: "description", content: "Track weight, BMI and health stats over time - stored privately on your device, never uploaded." },
     ],
   }),
   component: HealthTracker,
@@ -76,7 +76,7 @@ export default function HealthTracker() {
   const firstEntry = filtered.length > 0 ? filtered[0] : undefined;
   const currentW = lastEntry?.weight ?? 0;
   const startW = firstEntry?.weight ?? 0;
-  const bmi = currentW > 0 ? (currentW / ((height / 100) ** 2)).toFixed(1) : "—";
+  const bmi = currentW > 0 ? (currentW / ((height / 100) ** 2)).toFixed(1) : "-";
   const lost = filtered.length >= 2 && firstEntry ? (firstEntry.weight - currentW) : 0;
 
   // Chart
@@ -153,7 +153,7 @@ export default function HealthTracker() {
     });
   }, [filtered, goalWeight, unitLabel, fromKg]);
 
-  const bmiColor = bmi === "—" ? "#8b949e" : Number(bmi) < 18.5 ? "#d29922" : Number(bmi) < 25 ? "#3fb950" : Number(bmi) < 30 ? "#d29922" : "#f85149";
+  const bmiColor = bmi === "-" ? "#8b949e" : Number(bmi) < 18.5 ? "#d29922" : Number(bmi) < 25 ? "#3fb950" : Number(bmi) < 30 ? "#d29922" : "#f85149";
 
   const exportCsv = () => {
     const header = "Date,Weight,Notes\n";
@@ -216,10 +216,10 @@ export default function HealthTracker() {
         {/* Stats */}
         <div className="grid grid-cols-5 gap-2">
           {[
-            { label: "Starting", value: filtered.length ? `${fromKg(startW).toFixed(1)}${unitLabel}` : "—" },
-            { label: "Current", value: filtered.length ? `${fromKg(currentW).toFixed(1)}${unitLabel}` : "—" },
+            { label: "Starting", value: filtered.length ? `${fromKg(startW).toFixed(1)}${unitLabel}` : "-" },
+            { label: "Current", value: filtered.length ? `${fromKg(currentW).toFixed(1)}${unitLabel}` : "-" },
             { label: "Goal", value: `${goalWeight}${unitLabel}` },
-            { label: "Change", value: filtered.length >= 2 ? `${lost >= 0 ? "+" : ""}${fromKg(lost).toFixed(1)}${unitLabel}` : "—" },
+            { label: "Change", value: filtered.length >= 2 ? `${lost >= 0 ? "+" : ""}${fromKg(lost).toFixed(1)}${unitLabel}` : "-" },
             { label: "BMI", value: bmi, color: bmiColor },
           ].map((s) => (
             <div key={s.label} className="rounded-xl border border-border bg-surface p-3 text-center">

@@ -11,10 +11,10 @@ export const Route = createFileRoute("/collections/$id")({
     const collection = getCollection(params.id);
     if (!collection) {
       return {
-        meta: [{ title: "Collection not found — SlashAI" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Collection not found - SlashAI" }, { name: "robots", content: "noindex" }],
       };
     }
-    const title = `${collection.title} — SlashAI collection`;
+    const title = `${collection.title} - SlashAI collection`;
     return {
       meta: [
         { title },

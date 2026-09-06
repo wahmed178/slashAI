@@ -42,11 +42,10 @@ import { getSlashTool } from "@/lib/slashkits";
 import { SearchBox } from "./SearchBox";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
-import { SplashScreen } from "./SplashScreen";
-import { SplashScreen } from "./SplashScreen";
+import { CookieBanner } from "./CookieBanner";
 import { DesktopSidebar } from "./DesktopSidebar";
 
-/** Shared nav items — same as DesktopSidebar */
+/** Shared nav items - same as DesktopSidebar */
 const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Commands", icon: Terminal },
@@ -72,7 +71,7 @@ const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: str
   { to: "/me", label: "Profile & Settings", icon: Settings },
 ];
 
-/** mobile bottom bar — five essentials */
+/** mobile bottom bar - five essentials */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
@@ -116,7 +115,7 @@ interface Props {
   wide?: boolean;
 }
 
-/* ─────────── Breadcrumbs — Home › Section › Page ─────────── */
+/* ─────────── Breadcrumbs - Home › Section › Page ─────────── */
 const HUB_NAMES: Record<string, string> = {
   students: "Student Hub",
   developers: "Developer Hub",
@@ -221,7 +220,7 @@ function Breadcrumbs({ pathname }: { pathname: string }) {
 function BackButton({ to, label }: { to: string; label: string }) {
   const goBack = () => {
     // Use native browser history so the user always returns to whatever
-    // page they came from — whether that's explore, search results, a
+    // page they came from - whether that's explore, search results, a
     // collection, or another command. When there is no previous page
     // (deep link / first visit) the browser stays put.
     window.history.back();
@@ -254,7 +253,7 @@ function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
       </div>
       <div className="h-px bg-surface-elevated" />
 
-      {/* Main nav — same flat list as desktop */}
+      {/* Main nav - same flat list as desktop */}
       <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-0.5">
         {NAV_ITEMS.map((item) => {
           const active = isActive(pathname, item.to, item.exact);
@@ -358,9 +357,9 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   // without head(), hubs, dynamic pages) so no route renders untitled.
   useEffect(() => {
     if (title) {
-      document.title = `${title} — SlashAI`;
+      document.title = `${title} - SlashAI`;
     } else {
-      document.title = "SlashAI — Free AI Commands, Tools & Resources";
+      document.title = "SlashAI - Free AI Commands, Tools & Resources";
     }
   }, [title, pathname]);
 
@@ -417,7 +416,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
               </div>
             </div>
 
-            {/* Right side — same on mobile and desktop */}
+            {/* Right side - same on mobile and desktop */}
             <div className="ml-auto flex items-center gap-2">
               <Link to="/changelog" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Notifications & updates">
                 <Bell className="size-[20px]" />
@@ -432,9 +431,10 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
           </div>
         </header>
 
-        {/* offline + install strips — dismissed installs stay gone, offline re-appears on every disconnect */}
+        {/* offline + install strips - dismissed installs stay gone, offline re-appears on every disconnect */}
         <InstallBanner />
         <OfflineBanner />
+        <CookieBanner />
 
         <main className="flex-1 overflow-y-auto animate-slide-in-up">
           <div className="w-full px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-10">
@@ -444,14 +444,14 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
         </main>
       </div>
 
-      {/* mobile bottom navigation — five essential destinations */}
+      {/* mobile bottom navigation - five essential destinations */}
       <nav
         aria-label="Primary"
         className="fixed inset-x-0 bottom-0 z-30 flex border-t border-sidebar-border bg-[rgba(10,10,15,0.97)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
         style={{ height: 'calc(56px + env(safe-area-inset-bottom))' }}
       >
         {PRIMARY.map((item) => {
-          // Route-based active state — derived from current pathname, not internal state
+          // Route-based active state - derived from current pathname, not internal state
           const active = (() => {
             if (item.exact) return pathname === item.to;
             const p = item.to;

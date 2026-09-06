@@ -22,7 +22,6 @@ import { LiveTicker } from "@/components/library/LiveTicker";
 import { SearchBox } from "@/components/library/SearchBox";
 import { VoiceSearchButton } from "@/components/library/VoiceSearchButton";
 import { Discover } from "@/components/library/Discover";
-import { Onboarding } from "@/components/library/Onboarding";
 import { ResourceGrid } from "@/components/library/ResourceCard";
 import { categoryIcon } from "@/components/library/icons";
 import { useLibrary } from "@/hooks/use-library";
@@ -140,12 +139,12 @@ function YourWeekDigest() {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SlashAI — Find the Right AI Command in Seconds" },
+      { title: "SlashAI - Find the Right AI Command in Seconds" },
       {
         name: "description",
         content: `A calm, searchable library of ${VERIFIED_TOTAL} AI slash commands. Search by what you want to accomplish, save favourites and work offline.`,
       },
-      { property: "og:title", content: "SlashAI — AI slash command library" },
+      { property: "og:title", content: "SlashAI - AI slash command library" },
       {
         property: "og:description",
         content: `Search ${VERIFIED_TOTAL} copy-ready AI slash commands by task, category or collection. Free forever, no account needed.`,
@@ -274,7 +273,6 @@ function HomePage() {
   );
 
   const { streak } = useLibrary();
-  const showOnboarding = hydrated && !settings.onboarded;
 
   const weeklyFinds = useMemo(() => {
     const weekly = DROPS.find((d) => d.cadence === "Weekly");
@@ -290,8 +288,6 @@ function HomePage() {
 
   return (
     <AppShell hideHeaderSearch title="SlashAI">
-      {showOnboarding && <Onboarding />}
-
       {/* ─── Live Ticker ─── */}
       <LiveTicker />
 
@@ -301,7 +297,7 @@ function HomePage() {
           {/* Left: text */}
           <div className="min-w-0 flex-1">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[9px] sm:text-[11px] uppercase tracking-[0.05em] sm:tracking-[0.08em] text-primary">
-              YOUR AI COMMAND VAULT — FREE FOREVER
+              YOUR AI COMMAND VAULT - FREE FOREVER
             </span>
             <h1 className="mt-3 text-[26px] font-bold leading-[1.15] tracking-tight text-foreground sm:mt-4 sm:text-[36px]">
               Find the right AI command
@@ -397,7 +393,7 @@ function HomePage() {
               step: "1",
               emoji: "🔍",
               title: "Search a command",
-              desc: "Type what you want to do — write, code, design, plan — and find a copy-ready AI prompt in seconds.",
+              desc: "Type what you want to do - write, code, design, plan - and find a copy-ready AI prompt in seconds.",
               color: "var(--primary)",
             },
             {
@@ -449,7 +445,7 @@ function HomePage() {
               <span className="rounded-full border border-border bg-surface-elevated px-2.5 py-1 text-[11px] text-muted-foreground">Browser only</span>
             </div>
             <Link
-              to={`/tools/${HERO_TOOL.slug}`}
+              to={`/tools/${HERO_TOOL.slug}` as string}
               className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90"
             >
               Try it now <ArrowRight className="size-4" aria-hidden />
@@ -461,7 +457,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ─── Explore more — 2×4 grid ─── */}
+      {/* ─── Explore more - 2×4 grid ─── */}
       <section className="mt-10">
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
@@ -488,7 +484,7 @@ function HomePage() {
       {/* ─── SlashKits preview (GingerBook-style showcase) ─── */}
       <Section
         title="SlashKits"
-        hint="Free browser tools — nothing uploads, no account needed."
+        hint="Free browser tools - nothing uploads, no account needed."
         action={
           <Link
             to="/tools"
@@ -509,7 +505,7 @@ function HomePage() {
           ].map((tool) => (
             <Link
               key={tool.slug}
-              to={`/tools/${tool.slug}`}
+              to={`/tools/${tool.slug}` as string}
               className="group flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[110px]"
             >
               <span className="text-[26px]">{tool.icon}</span>
@@ -523,13 +519,13 @@ function HomePage() {
       {/* ─── Fun Time (GingerBook-inspired engagement) ─── */}
       <Section
         title="Fun Time"
-        hint="Games, quizzes and creative tools — all free."
+        hint="Games, quizzes and creative tools - all free."
       >
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
           {([
             { to: "/tools/meme", emoji: "😂", title: "Meme Maker", desc: "Create memes" },
             { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories" },
-            { to: "/tools/dice", emoji: "🎲", title: "Dice Roller", desc: "D4–D100" },
+            { to: "/tools/dice", emoji: "🎲", title: "Dice Roller", desc: "D4-D100" },
             { to: "/tools/coin-flip", emoji: "🪙", title: "Coin Flip", desc: "Virtual flip" },
             { to: "/tools/sticker", emoji: "🎭", title: "Sticker Maker", desc: "WhatsApp stickers" },
             { to: "/tools/quiz-maker", emoji: "❓", title: "Quiz Builder", desc: "Create & share" },
@@ -556,7 +552,7 @@ function HomePage() {
             </span>
             <h2 className="mt-3 text-xl font-bold text-foreground">Free courses &amp; resources</h2>
             <p className="mt-1.5 text-[14px] text-muted-foreground">
-              Curated free courses from top platforms — no hidden fees, no credit card required.
+              Curated free courses from top platforms - no hidden fees, no credit card required.
             </p>
             <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {[
@@ -672,7 +668,7 @@ function HomePage() {
 
       <Section
         title="Collections"
-        hint="Curated starting points — every collection is open to everyone."
+        hint="Curated starting points - every collection is open to everyone."
         action={
           <Link
             to="/collections"

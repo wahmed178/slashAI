@@ -24,7 +24,7 @@ function AspectRatioCalc() {
 
   return (
     <AppShell title="Aspect Ratio">
-      <header className="mb-5"><h1 className="text-2xl font-bold tracking-tight text-foreground">📐 Aspect Ratio Calculator</h1><p className="mt-1 text-sm text-muted-foreground">Input any two values — get the third instantly.</p></header>
+      <header className="mb-5"><h1 className="text-2xl font-bold tracking-tight text-foreground">📐 Aspect Ratio Calculator</h1><p className="mt-1 text-sm text-muted-foreground">Input any two values - get the third instantly.</p></header>
       <div className="mx-auto max-w-lg space-y-4">
         <div className="grid grid-cols-3 gap-3">
           <div>

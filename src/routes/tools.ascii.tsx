@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Copy, Check, Download } from "lucide-react";
 
 export const Route = createFileRoute("/tools/ascii")({
-  head: () => ({ meta: [{ title: "ASCII Art Generator — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "ASCII Art Generator - SlashAI" }] }),
   component: ASCIIArt,
 });
 
@@ -86,7 +86,7 @@ function ASCIIArt() {
       <div className="mx-auto max-w-3xl space-y-5 pt-4">
         <div>
           <h1 className="text-2xl font-bold text-foreground">ASCII Art Generator</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Convert text to block ASCII art — perfect for READMEs and terminals.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Convert text to block ASCII art - perfect for READMEs and terminals.</p>
         </div>
 
         <input

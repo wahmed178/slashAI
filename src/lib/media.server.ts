@@ -143,7 +143,7 @@ export async function runMovieSearch(q: string): Promise<MovieHit[]> {
 /**
  * Curated regional shelf. The upstream catalog has no language dimension, so
  * each shelf resolves hand-picked titles and falls back to the seed itself when
- * metadata is unavailable — the shelf never renders empty.
+ * metadata is unavailable - the shelf never renders empty.
  */
 export async function runRegionalShelf(lang: string): Promise<MovieHit[]> {
   const shelf = REGIONAL_SHELVES.find((s) => s.lang === lang) ?? REGIONAL_SHELVES[0]!;

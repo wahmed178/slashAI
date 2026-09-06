@@ -4,8 +4,8 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/tools/calorie")({
   head: () => ({
     meta: [
-      { title: "Calorie & Macro Tracker — SlashAI" },
-      { name: "description", content: "Track daily calories, protein, carbs and fat locally on your device — private, free, works offline." },
+      { title: "Calorie & Macro Tracker - SlashAI" },
+      { name: "description", content: "Track daily calories, protein, carbs and fat locally on your device - private, free, works offline." },
     ],
   }),
   component: CalorieTracker,
@@ -113,7 +113,7 @@ export default function CalorieTracker() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-foreground">🥗 Calorie & Macro Tracker</h1>
-            <p className="text-sm text-muted-foreground">Track daily calories and macros — no account needed</p>
+            <p className="text-sm text-muted-foreground">Track daily calories and macros - no account needed</p>
           </div>
           <button onClick={() => setShowAdd(!showAdd)} className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-background hover:opacity-90">+ Add Food</button>
         </div>

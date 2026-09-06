@@ -26,14 +26,14 @@ function StandupGenerator() {
       return s;
     }
     if (style === "bullet") {
-      let s = `Standup — ${d}\n\n`;
+      let s = `Standup - ${d}\n\n`;
       if (yesterday) s += `Yesterday:\n${yesterday.split("\n").map(l => `• ${l}`).join("\n")}\n\n`;
       if (today) s += `Today:\n${today.split("\n").map(l => `• ${l}`).join("\n")}\n\n`;
       if (blockers) s += `Blockers:\n${blockers.split("\n").map(l => `• ${l}`).join("\n")}\n`;
       return s;
     }
     if (style === "email") {
-      let s = `Subject: Daily Standup — ${d}\n\nHi team,\n\nHere's my standup:\n\nYesterday I completed:\n${yesterday.split("\n").map(l => `  - ${l}`).join("\n") || "  (none)"}`;
+      let s = `Subject: Daily Standup - ${d}\n\nHi team,\n\nHere's my standup:\n\nYesterday I completed:\n${yesterday.split("\n").map(l => `  - ${l}`).join("\n") || "  (none)"}`;
       s += `\n\nToday I will work on:\n${today.split("\n").map(l => `  - ${l}`).join("\n") || "  (none)"}`;
       if (blockers) s += `\n\nBlockers:\n${blockers.split("\n").map(l => `  - ${l}`).join("\n")}`;
       s += `\n\nThanks,\n`;

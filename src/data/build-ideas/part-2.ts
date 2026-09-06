@@ -1,6 +1,6 @@
 import type { RawIdea } from "@/lib/build-ideas-types";
 
-/** SaaS — 15 ideas, Productivity — 12 ideas. */
+/** SaaS - 15 ideas, Productivity - 12 ideas. */
 export const PART_2: RawIdea[] = [
   {
     title: "Client Portal for Small Agencies",

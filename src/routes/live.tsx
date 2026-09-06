@@ -44,13 +44,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/live")({
   head: () => ({
     meta: [
-      { title: "Live — markets, news, weather, prayers & space | SlashAI" },
+      { title: "Live - markets, news, weather, prayers & space | SlashAI" },
       {
         name: "description",
         content:
-          "One live dashboard: NIFTY & SENSEX, crypto prices, forex rates, India headlines, weather, air quality, prayer times with Hijri date, cricket, football and the ISS — all free, no sign-in.",
+          "One live dashboard: NIFTY & SENSEX, crypto prices, forex rates, India headlines, weather, air quality, prayer times with Hijri date, cricket, football and the ISS - all free, no sign-in.",
       },
-      { property: "og:title", content: "Live — markets, news, weather & more | SlashAI" },
+      { property: "og:title", content: "Live - markets, news, weather & more | SlashAI" },
       {
         property: "og:description",
         content:
@@ -210,7 +210,7 @@ function WeatherCard() {
         </div>
       ) : (
         <p className="mt-4 text-sm text-muted-foreground">
-          Couldn&apos;t find that place — try another spelling.
+          Couldn&apos;t find that place - try another spelling.
         </p>
       )}
     </Card>
@@ -250,7 +250,7 @@ function nextPrayer(rows: PrayerRow[], now: Date): { name: string; time: string;
     at.setHours(hm[0], hm[1], 0, 0);
     if (at > now) return { name: r.name, time: r.time, at };
   }
-  // past Isha — count down to tomorrow's Fajr (≈ today's Fajr + 24 h)
+  // past Isha - count down to tomorrow's Fajr (≈ today's Fajr + 24 h)
   const fajr = rows[0];
   if (!fajr) return null;
   const hm = parseTime(fajr.time);
@@ -383,7 +383,7 @@ function PrayerCard() {
         </div>
       ) : (
         <p className="mt-4 text-sm text-muted-foreground">
-          Couldn&apos;t find that city — check the spelling or tap “Locate me”.
+          Couldn&apos;t find that city - check the spelling or tap “Locate me”.
         </p>
       )}
     </Card>
@@ -430,7 +430,7 @@ function AQICard() {
       ) : (
         <div className="mt-4">
           <div className="flex items-center gap-3">
-            <span className="text-4xl leading-none font-bold text-foreground">{data.aqi ?? "—"}</span>
+            <span className="text-4xl leading-none font-bold text-foreground">{data.aqi ?? "-"}</span>
             <span
               className={cn(
                 "rounded-full border px-2.5 py-1 text-xs font-semibold",
@@ -445,13 +445,13 @@ function AQICard() {
             <div className="panel rounded-xl px-3 py-2">
               <p className="text-[11px] text-muted-foreground">PM2.5</p>
               <p className="text-sm font-semibold text-foreground">
-                {data.pm25 !== null ? `${Math.round(data.pm25)} µg/m³` : "—"}
+                {data.pm25 !== null ? `${Math.round(data.pm25)} µg/m³` : "-"}
               </p>
             </div>
             <div className="panel rounded-xl px-3 py-2">
               <p className="text-[11px] text-muted-foreground">PM10</p>
               <p className="text-sm font-semibold text-foreground">
-                {data.pm10 !== null ? `${Math.round(data.pm10)} µg/m³` : "—"}
+                {data.pm10 !== null ? `${Math.round(data.pm10)} µg/m³` : "-"}
               </p>
             </div>
           </div>
@@ -587,7 +587,7 @@ function HackerNewsCard() {
 
 // ------------------------------------------------------------------ markets
 
-/** 60 s refresh while NSE/BSE are open (Mon–Fri, 09:15–15:30 IST); off otherwise. */
+/** 60 s refresh while NSE/BSE are open (Mon-Fri, 09:15-15:30 IST); off otherwise. */
 function marketInterval(): number | false {
   const now = new Date(Date.now() + 5.5 * 3600_000); // shift to IST
   const day = now.getUTCDay();
@@ -827,7 +827,7 @@ function MatchRow({ m }: { m: MatchItem }) {
       <div className="shrink-0 text-right">
         {m.homeScore !== null && m.awayScore !== null ? (
           <p className="font-mono text-sm font-semibold text-foreground">
-            {m.homeScore} – {m.awayScore}
+            {m.homeScore} - {m.awayScore}
           </p>
         ) : null}
         <p className={cn("text-[11px]", live ? "font-semibold text-primary" : "text-muted-foreground")}>
@@ -1001,7 +1001,7 @@ function ApodCard() {
       {!data ? (
         <Skeleton rows={3} />
       ) : !data.imageUrl ? (
-        <p className="text-sm text-muted-foreground">Today&apos;s picture is unavailable (NASA&apos;s demo key has daily limits — it usually recovers within the hour).</p>
+        <p className="text-sm text-muted-foreground">Today&apos;s picture is unavailable (NASA&apos;s demo key has daily limits - it usually recovers within the hour).</p>
       ) : (
         <a href={data.imageUrl} target="_blank" rel="noreferrer noopener" className="group block">
           <img
@@ -1028,7 +1028,7 @@ function LivePage() {
           <Radio className="size-5 text-primary" /> Live
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Markets, crypto, currency, India headlines, weather, air quality, prayer times and space — one calm
+          Markets, crypto, currency, India headlines, weather, air quality, prayer times and space - one calm
           dashboard, all from free public data. No account, no keys.
         </p>
       </header>

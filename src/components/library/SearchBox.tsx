@@ -11,7 +11,7 @@ import { VoiceSearchButton } from "./VoiceSearchButton";
 interface Props {
   /** current query when the box is rendered on the search page */
   value?: string;
-  /** called on every keystroke — when omitted the box navigates to /search */
+  /** called on every keystroke - when omitted the box navigates to /search */
   onChange?: (value: string) => void;
   size?: "sm" | "lg";
   placeholder?: string;

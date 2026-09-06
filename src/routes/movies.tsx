@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/movies")({
   head: () => ({
     meta: [
-      { title: "Regional movie finder — India, Pakistan & neighbours | SlashAI" },
+      { title: "Regional movie finder - India, Pakistan & neighbours | SlashAI" },
       {
         name: "description",
         content:
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/movies")({
       },
       {
         property: "og:title",
-        content: "Regional movie finder — India, Pakistan & neighbours | SlashAI",
+        content: "Regional movie finder - India, Pakistan & neighbours | SlashAI",
       },
       {
         property: "og:description",
@@ -77,7 +77,7 @@ function MoviesPage() {
           Regional movie finder
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          South Asian cinema — Hindi, Telugu, Tamil, Malayalam, Urdu, Bengali, Nepali and more —
+          South Asian cinema - Hindi, Telugu, Tamil, Malayalam, Urdu, Bengali, Nepali and more -
           with legal watch pages for every title.
         </p>
       </header>
@@ -97,7 +97,7 @@ function MoviesPage() {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               aria-label="Search movies"
-              placeholder="Search any film — e.g. Jawan, Sairat, Joyland…"
+              placeholder="Search any film - e.g. Jawan, Sairat, Joyland…"
               className="h-11 w-full rounded-xl border border-border bg-surface pr-3 pl-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40 focus:outline-none"
             />
           </div>
@@ -266,7 +266,7 @@ function MoviesPage() {
               ))}
             </div>
             <p className="mt-3 text-[11px] text-muted-foreground">
-              SlashAI links only to official platforms and store pages — availability depends on
+              SlashAI links only to official platforms and store pages - availability depends on
               your country and subscriptions.
             </p>
           </div>

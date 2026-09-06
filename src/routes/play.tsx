@@ -11,13 +11,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/play")({
   head: () => ({
     meta: [
-      { title: "Play — quick games & decision makers | SlashAI" },
+      { title: "Play - quick games & decision makers | SlashAI" },
       {
         name: "description",
         content:
           "Bored? Flip a coin, roll dice, spin a decision wheel or hit the Surprise me button to land on a random AI command.",
       },
-      { property: "og:title", content: "Play — quick games & decision makers | SlashAI" },
+      { property: "og:title", content: "Play - quick games & decision makers | SlashAI" },
       {
         property: "og:description",
         content: "Coin toss, dice, decision wheel and a Surprise me button, all inside SlashAI.",
@@ -269,7 +269,7 @@ function PlayPage() {
             <Sparkles className="size-5 text-primary" /> Play
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Small, satisfying time-passers — coin toss, dice, a decision spinner and a random
+            Small, satisfying time-passers - coin toss, dice, a decision spinner and a random
             command button. Everything runs offline.
           </p>
         </div>

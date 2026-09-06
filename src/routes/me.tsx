@@ -38,13 +38,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/me")({
   head: () => ({
     meta: [
-      { title: "Profile & Settings — SlashAI" },
+      { title: "Profile & Settings - SlashAI" },
       {
         name: "description",
         content:
-          "Your persona, interests, streak, theme, layout, backup and saved commands — all stored on this device.",
+          "Your persona, interests, streak, theme, layout, backup and saved commands - all stored on this device.",
       },
-      { property: "og:title", content: "Profile & Settings — SlashAI" },
+      { property: "og:title", content: "Profile & Settings - SlashAI" },
       {
         property: "og:description",
         content: "Personalise SlashAI: persona, interests, theme, layout and more.",
@@ -94,7 +94,7 @@ function MePage() {
   const [editingPersona, setEditingPersona] = useState(false);
 
   const persona = getPersona(settings.persona);
-  // every theme is free — nothing is gated
+  // every theme is free - nothing is gated
   const visibleThemes = THEMES;
 
   const resolve = (ids: string[]) =>

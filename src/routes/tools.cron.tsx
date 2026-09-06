@@ -19,7 +19,7 @@ const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 
 function explainCron(expr: string): string {
   const parts = expr.trim().split(/\s+/);
-  if (parts.length !== 5) return "Invalid cron expression — expected 5 fields: minute hour day-of-month month day-of-week";
+  if (parts.length !== 5) return "Invalid cron expression - expected 5 fields: minute hour day-of-month month day-of-week";
 
   const min = parts[0] ?? "*";
   const hour = parts[1] ?? "*";

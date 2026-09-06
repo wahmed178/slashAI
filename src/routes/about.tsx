@@ -9,7 +9,7 @@ import { SLASH_TOOL_COUNT } from "@/lib/slashkits";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — SlashAI" },
+      { title: "About - SlashAI" },
       {
         name: "description",
         content:
@@ -40,21 +40,21 @@ function AboutPage() {
           </p>
         </header>
 
-        {/* Section 2: What you get — free, always */}
+        {/* Section 2: What you get - free, always */}
         <section>
           <h2 className="text-lg font-semibold text-foreground">
-            What you get — free, always
+            What you get - free, always
           </h2>
           <div className="mt-2 space-y-2 text-sm leading-relaxed text-muted-foreground">
             <p>{VERIFIED_TOTAL.toLocaleString()} copy-ready AI slash commands</p>
-            <p>{RESOURCE_TOTAL} curated free resources — tools, APIs, channels</p>
+            <p>{RESOURCE_TOTAL} curated free resources - tools, APIs, channels</p>
             <p>{SLASH_TOOL_COUNT} browser-based tools in SlashKits</p>
             <p>{ALL_ROADMAPS.length} step-by-step founder roadmaps</p>
             <p>{GLOSSARY_TOTAL}-term AI and startup glossary across {CATEGORY_TREE.length} categories</p>
-            <p>Live dashboard — markets, cricket, prayer, weather</p>
+            <p>Live dashboard - markets, cricket, prayer, weather</p>
             <p>Daily quiz across 24 categories</p>
-            <p>12 curated hubs — role-based and language-focused</p>
-            <p>Islam Hub — Quran, Hadith, prayer tools</p>
+            <p>12 curated hubs - role-based and language-focused</p>
+            <p>Islam Hub - Quran, Hadith, prayer tools</p>
           </div>
         </section>
 
@@ -67,7 +67,7 @@ function AboutPage() {
             Press <code className="rounded bg-surface-elevated px-1.5 py-0.5 font-mono text-[13px] text-foreground">/</code> anywhere to search commands.
             Use Discover to browse free tools, APIs and channels.
             Use Hubs to find resources curated for your role.
-            Use SlashKits for {SLASH_TOOL_COUNT} browser tools — nothing uploads.
+            Use SlashKits for {SLASH_TOOL_COUNT} browser tools - nothing uploads.
             All your saved items stay on your device.
           </p>
         </section>

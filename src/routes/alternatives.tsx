@@ -15,7 +15,7 @@ export const Route = createFileRoute("/alternatives")({
         content:
           "Free and open-source stand-ins for popular paid tools, with the licence model stated and no claims of feature parity.",
       },
-      { property: "og:title", content: "Free alternatives — SlashAI" },
+      { property: "og:title", content: "Free alternatives - SlashAI" },
       {
         property: "og:description",
         content: "Open-source and free-tier replacements for common paid software.",
@@ -47,7 +47,7 @@ function AlternativesPage() {
           <Repeat2 className="size-6 text-primary" aria-hidden /> Free alternatives
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Practical replacements, not identical products — check the feature you rely on before you
+          Practical replacements, not identical products - check the feature you rely on before you
           switch.
         </p>
       </header>

@@ -1,12 +1,12 @@
 /**
- * Curated resource catalog — the non-command half of SlashAI.
+ * Curated resource catalog - the non-command half of SlashAI.
  *
  * Every record is hand-curated. Metadata we cannot verify (stars, licenses,
  * eligibility) is simply omitted rather than invented. `lastVerified` is the
  * date a human last opened the link and checked the description still holds.
  *
  * To add a resource: append an object to RESOURCES with a new stable `id`
- * (kebab-case, never reused) and run `bun run lint`. The UI is generic — no
+ * (kebab-case, never reused) and run `bun run lint`. The UI is generic - no
  * component changes are needed.
  */
 
@@ -114,7 +114,7 @@ export interface Resource {
   lastUpdated: string;
   lastVerified: string;
   status: ResourceStatus;
-  /** editorial opinion — clearly separated from official info in the UI */
+  /** editorial opinion - clearly separated from official info in the UI */
   notes?: string;
   radar?: RadarKind;
   /** step list for Tips & Tricks records */
@@ -242,7 +242,7 @@ export const SECTIONS: SectionDef[] = [
   {
     id: "youtube",
     label: "YouTube",
-    blurb: "Channels worth subscribing to — links and notes only.",
+    blurb: "Channels worth subscribing to - links and notes only.",
     icon: "Youtube",
     categories: ["AI", "Development", "Android & Linux", "Productivity", "Design", "Learning"],
   },
@@ -385,7 +385,7 @@ const BASE_RESOURCES: Resource[] = [
     platform: ["Windows", "macOS", "Linux", "CLI"],
     license: "MIT",
     tags: ["local-ai", "privacy", "models"],
-    notes: "Best privacy story here — nothing leaves your machine.",
+    notes: "Best privacy story here - nothing leaves your machine.",
   }),
   r({
     id: "stable-diffusion-webui",
@@ -1273,7 +1273,7 @@ const BASE_RESOURCES: Resource[] = [
     pricing: "Freemium",
     type: "Website",
     platform: ["Web"],
-    region: "Feature availability varies by country — check before relying on it.",
+    region: "Feature availability varies by country - check before relying on it.",
     tags: ["invoicing", "accounting", "smallbusiness"],
   }),
   r({
@@ -1517,7 +1517,7 @@ const BASE_RESOURCES: Resource[] = [
     steps: [
       "When a sub-two-minute task appears mid-focus, write it on one list.",
       "Set one 20-minute block a day for the list.",
-      "Delete anything still on it after a week — it was not important.",
+      "Delete anything still on it after a week - it was not important.",
     ],
     tags: ["focus", "habits", "workflow"],
   }),
@@ -1562,7 +1562,7 @@ export const FREE_STATUSES: Pricing[] = [
   "Paid",
 ];
 
-/** Free Radar — anything explicitly tagged with a radar kind, newest first. */
+/** Free Radar - anything explicitly tagged with a radar kind, newest first. */
 export const RADAR = RESOURCES.filter((x) => x.radar).sort((a, b) =>
   b.addedDate.localeCompare(a.addedDate),
 );
@@ -1618,7 +1618,7 @@ export interface TimedDrop {
 export const DROPS: TimedDrop[] = [
   {
     id: "weekly-2026-w34",
-    title: "Weekly Free Finds — week 34",
+    title: "Weekly Free Finds - week 34",
     cadence: "Weekly",
     blurb: "Five things worth ten minutes each this week.",
     items: ["stirling-pdf", "roadmap-sh", "gh-public-apis", "squoosh", "notebooklm"],
@@ -1626,7 +1626,7 @@ export const DROPS: TimedDrop[] = [
   },
   {
     id: "monthly-2026-08",
-    title: "Monthly Resource Drop — August 2026",
+    title: "Monthly Resource Drop - August 2026",
     cadence: "Monthly",
     blurb: "The strongest additions to the library this month.",
     items: ["ollama", "gh-open-webui", "excalidraw", "elicit", "cs50", "keepassxc"],
@@ -1642,7 +1642,7 @@ export const DROPS: TimedDrop[] = [
   },
   {
     id: "yearly-2026-guide",
-    title: "Yearly Guide — a free toolkit for 2026",
+    title: "Yearly Guide - a free toolkit for 2026",
     cadence: "Yearly",
     blurb: "If you only bookmark ten things from SlashAI, bookmark these.",
     items: [

@@ -15,13 +15,13 @@ import { saveValidation } from "@/hooks/use-build-ideas";
 export const Route = createFileRoute("/build-ideas/validate")({
   head: () => ({
     meta: [
-      { title: "Idea validator — score your startup idea in seconds | SlashAI" },
+      { title: "Idea validator - score your startup idea in seconds | SlashAI" },
       {
         name: "description",
         content:
           "Describe your idea and get a structured read on problem clarity, competition, monetization potential, build difficulty and differentiation.",
       },
-      { property: "og:title", content: "Idea Validator — SlashAI" },
+      { property: "og:title", content: "Idea Validator - SlashAI" },
       {
         property: "og:description",
         content: "A structured second opinion on your idea before you spend a weekend building it.",
@@ -95,7 +95,7 @@ function ValidatePage() {
           <Sparkles className="size-6 text-primary" aria-hidden /> Idea validator
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Describe your idea in a few sentences — the problem, who it&apos;s for, and how you&apos;d
+          Describe your idea in a few sentences - the problem, who it&apos;s for, and how you&apos;d
           charge. You&apos;ll get a structured read before you spend a weekend on it.
         </p>
       </header>

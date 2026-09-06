@@ -19,13 +19,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/build-ideas/projects")({
   head: () => ({
     meta: [
-      { title: "My projects — saved ideas and build tracker | SlashAI" },
+      { title: "My projects - saved ideas and build tracker | SlashAI" },
       {
         name: "description",
         content:
-          "Your saved build ideas and projects, tracked from idea to launch with notes — stored on your device, no account needed.",
+          "Your saved build ideas and projects, tracked from idea to launch with notes - stored on your device, no account needed.",
       },
-      { property: "og:title", content: "My projects — SlashAI" },
+      { property: "og:title", content: "My projects - SlashAI" },
       {
         property: "og:description",
         content: "Track saved ideas from idea to launch, on-device and offline.",
@@ -57,7 +57,7 @@ function ProjectsPage() {
           <FolderKanban className="size-6 text-primary" aria-hidden /> My projects
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Everything here lives on this device — no login required. It travels with your JSON backup
+          Everything here lives on this device - no login required. It travels with your JSON backup
           from Settings.
         </p>
       </header>
@@ -185,7 +185,7 @@ function ProjectsPage() {
                 <Textarea
                   className="mt-3"
                   rows={3}
-                  placeholder="Notes — what's next, what's blocked, what you learned…"
+                  placeholder="Notes - what's next, what's blocked, what you learned…"
                   aria-label={`Notes for ${project.title}`}
                   defaultValue={project.notes}
                   onBlur={(e) => upsertProject({ ideaId: project.ideaId, notes: e.target.value })}

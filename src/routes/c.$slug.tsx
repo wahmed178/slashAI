@@ -11,7 +11,7 @@ export const Route = createFileRoute("/c/$slug")({
   head: ({ params }) => {
     const command = getCommand(params.slug);
     const title = command
-      ? `${command.command} — ${command.title} | SlashAI`
+      ? `${command.command} - ${command.title} | SlashAI`
       : "Command not found | SlashAI";
     const description = command
       ? `${command.description} ${command.category} / ${command.subcategory}.`

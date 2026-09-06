@@ -49,7 +49,7 @@ function CharityTracker() {
     <AppShell title="Charity Tracker">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🤲 Sadaqah & Charity Tracker</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Track your charitable giving. Private — stored locally only.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Track your charitable giving. Private - stored locally only.</p>
       </header>
 
       <div className="mx-auto max-w-2xl space-y-4">

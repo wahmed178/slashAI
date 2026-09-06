@@ -4,7 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Download, Copy, Check } from "lucide-react";
 
 export const Route = createFileRoute("/tools/namecard")({
-  head: () => ({ meta: [{ title: "Digital Business Card — SlashAI" }] }),
+  head: () => ({ meta: [{ title: "Digital Business Card - SlashAI" }] }),
   component: NameCard,
 });
 

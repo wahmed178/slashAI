@@ -1,5 +1,5 @@
 /**
- * Free APIs catalog — keyless or free-tier public APIs, each with a real
+ * Free APIs catalog - keyless or free-tier public APIs, each with a real
  * sample endpoint in `notes`. Auth limits are stated exactly as documented
  * by the provider at verification time.
  */
@@ -88,7 +88,7 @@ export const API_RESOURCES: Resource[] = [
     description: "Official daily NAV for every mutual fund scheme in India, plain text.",
     section: "free-apis", category: "Finance", audience: ["Developers", "Professionals"], region: "India only.",
     pricing: "Completely Free", type: "Dataset",
-    tags: ["mutual-funds", "nav", "no-key", "india"], notes: "Returns the full NAVAll.txt list — parse scheme code, name and NAV per line.",
+    tags: ["mutual-funds", "nav", "no-key", "india"], notes: "Returns the full NAVAll.txt list - parse scheme code, name and NAV per line.",
   }),
 
   // ------------------------------------------------------------------ Space
@@ -130,7 +130,7 @@ export const API_RESOURCES: Resource[] = [
   r({
     id: "api-data-gov-in", name: "data.gov.in APIs",
     url: "https://data.gov.in/apis",
-    description: "Thousands of Indian government datasets via API — agriculture, PIN codes, prices.",
+    description: "Thousands of Indian government datasets via API - agriculture, PIN codes, prices.",
     section: "free-apis", category: "Government & India", audience: ["Developers", "Researchers"], region: "India datasets.",
     pricing: "Free Tier", type: "API",
     eligibility: "Free key issued instantly on registration.",
@@ -147,7 +147,7 @@ export const API_RESOURCES: Resource[] = [
   r({
     id: "api-world-bank", name: "World Bank Open Data",
     url: "https://datahelpdesk.worldbank.org/knowledgebase/topics/125589",
-    description: "Development indicators for every country — GDP, literacy, energy — no key.",
+    description: "Development indicators for every country - GDP, literacy, energy - no key.",
     section: "free-apis", category: "Government & India", audience: ["Researchers", "Developers"],
     pricing: "Completely Free", type: "API",
     tags: ["development", "economics", "no-key"], notes: "Sample: api.worldbank.org/v2/country/IND/indicator/NY.GDP.MKTP.CD?format=json",
@@ -226,7 +226,7 @@ export const API_RESOURCES: Resource[] = [
   r({
     id: "api-swapi", name: "SWAPI",
     url: "https://swapi.dev",
-    description: "The original Star Wars data API — films, characters, planets, starships.",
+    description: "The original Star Wars data API - films, characters, planets, starships.",
     section: "free-apis", category: "Entertainment", audience: ["Developers", "Students"],
     pricing: "Completely Free", type: "API",
     tags: ["star-wars", "fun", "no-key"], notes: "Sample: swapi.dev/api/people/1/",
@@ -452,7 +452,7 @@ export const API_RESOURCES: Resource[] = [
   r({
     id: "api-abuseipdb", name: "AbuseIPDB",
     url: "https://docs.abuseipdb.com/",
-    description: "Reputation check on IPs — spam, brute-force and abuse reports.",
+    description: "Reputation check on IPs - spam, brute-force and abuse reports.",
     section: "free-apis", category: "Utilities", audience: ["Developers"],
     pricing: "Free Tier", type: "API",
     eligibility: "Free key: 1,000 checks/day.",

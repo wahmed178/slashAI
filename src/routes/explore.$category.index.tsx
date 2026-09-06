@@ -12,10 +12,10 @@ export const Route = createFileRoute("/explore/$category/")({
     const node = CATEGORY_TREE.find((c) => c.category === params.category);
     if (!node) {
       return {
-        meta: [{ title: "Category not found — SlashAI" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Category not found - SlashAI" }, { name: "robots", content: "noindex" }],
       };
     }
-    const title = `${node.category} commands — SlashAI`;
+    const title = `${node.category} commands - SlashAI`;
     const description = `${node.count} AI slash commands in ${node.category}, grouped into ${node.subcategories.length} subcategories.`;
     return {
       meta: [

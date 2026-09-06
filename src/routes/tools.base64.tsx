@@ -17,7 +17,7 @@ function EncodersPage() {
       else if (t === "url") setOutput(val ? encodeURIComponent(val) : "");
       else if (t === "html") setOutput(val ? val.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;") : "");
       else if (t === "jwt") {
-        if (!val.includes(".")) { setOutput("Invalid JWT — paste a token with dots"); return; }
+        if (!val.includes(".")) { setOutput("Invalid JWT - paste a token with dots"); return; }
         const parts = val.split(".");
         const p0 = parts[0] ?? "";
         const p1 = parts[1] ?? "";
@@ -46,7 +46,7 @@ function EncodersPage() {
 
   return (
     <AppShell title="Encoders">
-      <header className="mb-5"><h1 className="text-2xl font-bold tracking-tight text-foreground">🔧 Encoders & Decoders</h1><p className="mt-1 text-sm text-muted-foreground">Base64, URL, HTML entities, JWT decode, SHA-256 hash — all in browser.</p></header>
+      <header className="mb-5"><h1 className="text-2xl font-bold tracking-tight text-foreground">🔧 Encoders & Decoders</h1><p className="mt-1 text-sm text-muted-foreground">Base64, URL, HTML entities, JWT decode, SHA-256 hash - all in browser.</p></header>
       <div className="mx-auto max-w-2xl">
         <div className="mb-3 flex gap-1">{tabs.map(t => (
           <button key={t.id} onClick={() => handleTab(t.id)} className={`rounded-lg px-3 py-1.5 text-xs transition-colors ${tab === t.id ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground"}`}>{t.label}</button>

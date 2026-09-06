@@ -70,7 +70,7 @@ function AgeOfThings() {
     <AppShell title="How Old Is Everything">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">⏳ How Old Is Everything?</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Type anything — see exactly how old it is with fun comparisons.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Type anything - see exactly how old it is with fun comparisons.</p>
       </header>
 
       <div className="mx-auto max-w-2xl space-y-4">
