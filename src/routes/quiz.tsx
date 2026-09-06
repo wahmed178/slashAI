@@ -152,6 +152,11 @@ function setSessionToken(token: string) {
   safeStorageSetItem("quiz-session-token", token);
 }
 
+function clearSessionToken() {
+  try { localStorage.removeItem("quiz-session-token"); } catch { /* ignore */ }
+  try { sessionStorage.removeItem("quiz-session-token"); } catch { /* ignore */ }
+}
+
 function getStreak(): { count: number; best: number; lastDate: string } {
   try {
     return {
@@ -328,18 +333,20 @@ const BACKUP_QUESTIONS: QuizQuestion[] = [
 
 function getBackupQuestions(): QuizQuestion[] {
   return shuffleArray(BACKUP_QUESTIONS).slice(0, 10);
-}
-
-async function ensureToken(): Promise<string> {
-  let token = getSessionToken();
-  if (token) return token;
+}async function ensureToken(): Promise<string> {
+  const stored = getSessionToken();
+  if (stored) return stored;
   try {
     const res = await fetchWithTimeout("https://opentdb.com/api_token.php?command=request");
     const data = await res.json();
-    token = data.token;
-    if (token) setSessionToken(token);
+    // Only persist a well-formed token response. Storing anything else
+    // (error bodies, truncated strings) poisons every future request.
+    if (data && data.response_code === 0 && typeof data.token === "string" && data.token.length >= 16) {
+      setSessionToken(data.token);
+      return data.token;
+    }
   } catch { /* token unavailable - continue without it */ }
-  return token || "";
+  return "";
 }
 
 async function fetchQuestions(
@@ -359,7 +366,16 @@ async function fetchQuestions(
       try {
         await fetchWithTimeout(`https://opentdb.com/api_token.php?command=reset&token=${token}`);
       } catch { /* ignore reset failure */ }
-      localStorage.removeItem("quiz-session-token");
+      clearSessionToken();
+      return fetchQuestions(categoryId, difficulty, _retryCount + 1);
+    }
+
+    // Token invalid/retired server-side (response_code 3). OpenTDB keeps
+    // returning code 3 for that token forever, which is exactly the
+    // "only fixed by clearing app data" bug: drop the poisoned token and
+    // retry once WITHOUT it.
+    if (data.response_code === 3 && token && _retryCount < 1) {
+      clearSessionToken();
       return fetchQuestions(categoryId, difficulty, _retryCount + 1);
     }
 
@@ -373,7 +389,10 @@ async function fetchQuestions(
       return { questions: data.results.map(parseQuestion), responseCode: 0 };
     }
 
-    return { questions: [], responseCode: data.response_code };
+    // Any other outcome (1 no results, 2 invalid param, 3 stale token even
+    // after retry, 5 still rate limited) - never return empty silently.
+    // Try the fallback API before giving up.
+    return fetchFromFallbackAPI(categoryId, difficulty);
   } catch {
     // OpenTDB failed - try fallback API
     return fetchFromFallbackAPI(categoryId, difficulty);
@@ -664,8 +683,10 @@ function QuizPage() {
 
   const playAgain = useCallback(() => {
     if (selectedCategory) {
-      // Bypass daily cache - fetch fresh
-      localStorage.removeItem(getCacheKey(selectedCategory.id, difficulty));
+      // Bypass daily cache - fetch fresh (clear from both storage backends)
+      const key = getCacheKey(selectedCategory.id, difficulty);
+      try { localStorage.removeItem(key); } catch { /* ignore */ }
+      try { sessionStorage.removeItem(key); } catch { /* ignore */ }
       startQuiz(selectedCategory.id, selectedCategory.name);
     }
   }, [selectedCategory, difficulty, startQuiz]);
