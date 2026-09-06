@@ -217,44 +217,117 @@ interface TheTriviaAPIQuestion {
   incorrectAnswers: string[];
   category: string;
   difficulty: string;
-}
-
-const TRIVIA_CATEGORY_MAP: Record<number, string> = {
+}const TRIVIA_CATEGORY_MAP: Record<number, string> = {
   9: "General Knowledge", 10: "Arts & Literature", 11: "Film & TV",
   12: "Music", 15: "Video Games", 17: "Science",
   18: "Technology", 19: "Mathematics", 21: "Sports",
   22: "Geography", 23: "History",
 };
 
+/** All The Trivia API category slugs, used as a generic last resort. */
+const TRIVIA_ALL_CATEGORIES = [
+  "general_knowledge", "arts_and_literature", "film_and_tv", "food_and_drink",
+  "science", "society_and_culture", "sport_and_leisure", "history",
+  "geography", "movies", "music",
+];
+
+/** Difficulty attempts in order when the exact difficulty has no questions. */
+const TRIVIA_DIFFICULTY_GROUPS: Record<string, string[]> = {
+  easy: ["easy", "easy,medium", ""],
+  medium: ["medium", "easy,medium", "medium,hard", ""],
+  hard: ["hard", "medium,hard", ""],
+};
+
+/** Parse a The Trivia API question, tolerating missing fields. */
+function parseTriviaQuestion(q: TheTriviaAPIQuestion, fallbackCategory: string): QuizQuestion | null {
+  const text = q?.question?.text;
+  const correct = q?.correctAnswer;
+  const incorrect = Array.isArray(q?.incorrectAnswers) ? q.incorrectAnswers : [];
+  if (!text || !correct || incorrect.length === 0) return null;
+  return {
+    question: text,
+    correctAnswer: correct,
+    answers: shuffleArray([correct, ...incorrect]),
+    category: fallbackCategory,
+    difficulty: q.difficulty || "medium",
+  };
+}
+
+/** One fetch attempt against The Trivia API. Returns [] on any failure. */
+async function triviaFetchOnce(categoryParam: string, difficultyParam: string): Promise<TheTriviaAPIQuestion[]> {
+  const d = difficultyParam ? `&difficulties=${encodeURIComponent(difficultyParam)}` : "";
+  const url = `https://the-trivia-api.com/v2/questions?limit=10&categories=${encodeURIComponent(categoryParam)}${d}`;
+  const res = await fetchWithTimeout(url);
+  if (!res.ok) return [];
+  const data: unknown = await res.json();
+  return Array.isArray(data) ? (data as TheTriviaAPIQuestion[]) : [];
+}
+
 async function fetchFromFallbackAPI(
   categoryId: number,
   difficulty: string,
 ): Promise<{ questions: QuizQuestion[]; responseCode: number }> {
   const categoryName = TRIVIA_CATEGORY_MAP[categoryId];
-  if (!categoryName) return { questions: [], responseCode: 3 };
 
-  const limit = 10;
-  const url = `https://the-trivia-api.com/v2/questions?limit=${limit}&categories=${encodeURIComponent(categoryName)}&difficulties=${difficulty}`;
-
-  try {
-    const res = await fetchWithTimeout(url);
-    if (!res.ok) return { questions: [], responseCode: -1 };
-    const data: TheTriviaAPIQuestion[] = await res.json();
-
-    if (!data.length) return { questions: [], responseCode: 1 };
-
-    const questions: QuizQuestion[] = data.map((q) => ({
-      question: q.question.text,
-      correctAnswer: q.correctAnswer,
-      answers: shuffleArray([q.correctAnswer, ...q.incorrectAnswers]),
-      category: categoryName,
-      difficulty: q.difficulty,
-    }));
-
-    return { questions, responseCode: 0 };
-  } catch {
-    return { questions: [], responseCode: -1 };
+  // Category attempts: mapped display name, then its slug form, then all slugs.
+  const attempts: string[] = [];
+  if (categoryName) {
+    attempts.push(categoryName, categoryName.toLowerCase().replace(/[^a-z]+/g, "_").replace(/^_|_$/g, ""));
   }
+  attempts.push(...TRIVIA_ALL_CATEGORIES);
+
+  const difficulties = TRIVIA_DIFFICULTY_GROUPS[difficulty] ?? TRIVIA_DIFFICULTY_GROUPS["medium"]!;
+
+  // Every category attempt gets every difficulty group before we move on.
+  for (const categoryParam of attempts) {
+    for (const d of difficulties) {
+      try {
+        const raw = await triviaFetchOnce(categoryParam, d);
+        const questions = raw
+          .map((q) => parseTriviaQuestion(q, categoryName || "General Knowledge"))
+          .filter((q): q is QuizQuestion => q !== null);
+        if (questions.length) return { questions, responseCode: 0 };
+      } catch {
+        // network/timeout on this attempt - try the next one
+      }
+      await new Promise((r) => setTimeout(r, 250)); // be polite between attempts
+    }
+  }
+
+  return { questions: [], responseCode: -1 };
+}
+
+/* Final safety net: a small offline question pack so the quiz ALWAYS has content
+   even if both APIs are unreachable (school networks, ad-blockers, API outages). */
+const BACKUP_QUESTIONS: QuizQuestion[] = [
+  { question: "What is the capital of Australia?", correctAnswer: "Canberra", answers: ["Canberra", "Sydney", "Melbourne", "Perth"], category: "Geography", difficulty: "easy" },
+  { question: "Which planet is closest to the Sun?", correctAnswer: "Mercury", answers: ["Mercury", "Venus", "Earth", "Mars"], category: "Science", difficulty: "easy" },
+  { question: "How many continents are there on Earth?", correctAnswer: "7", answers: ["7", "5", "6", "8"], category: "Geography", difficulty: "easy" },
+  { question: "What does CPU stand for?", correctAnswer: "Central Processing Unit", answers: ["Central Processing Unit", "Computer Personal Unit", "Central Program Utility", "Core Processing Unit"], category: "Computers", difficulty: "easy" },
+  { question: "Which language has the most native speakers worldwide?", correctAnswer: "Mandarin Chinese", answers: ["Mandarin Chinese", "English", "Spanish", "Hindi"], category: "General Knowledge", difficulty: "medium" },
+  { question: "What is the largest ocean on Earth?", correctAnswer: "Pacific Ocean", answers: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"], category: "Geography", difficulty: "easy" },
+  { question: "In computing, what does 'HTTP' stand for?", correctAnswer: "HyperText Transfer Protocol", answers: ["HyperText Transfer Protocol", "High Transfer Text Protocol", "HyperTransfer Text Protocol", "HyperText Transport Program"], category: "Computers", difficulty: "medium" },
+  { question: "Which gas do plants absorb from the atmosphere?", correctAnswer: "Carbon dioxide", answers: ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"], category: "Science", difficulty: "easy" },
+  { question: "What is 15% of 200?", correctAnswer: "30", answers: ["30", "25", "35", "40"], category: "Mathematics", difficulty: "easy" },
+  { question: "The Great Barrier Reef is located off the coast of which country?", correctAnswer: "Australia", answers: ["Australia", "Brazil", "India", "South Africa"], category: "Geography", difficulty: "easy" },
+  { question: "Who wrote the play 'Romeo and Juliet'?", correctAnswer: "William Shakespeare", answers: ["William Shakespeare", "Charles Dickens", "Jane Austen", "Mark Twain"], category: "Literature", difficulty: "easy" },
+  { question: "What is the chemical symbol for gold?", correctAnswer: "Au", answers: ["Au", "Ag", "Go", "Gd"], category: "Science", difficulty: "easy" },
+  { question: "Which company created the Android operating system originally?", correctAnswer: "Android Inc.", answers: ["Android Inc.", "Google", "Samsung", "Nokia"], category: "Computers", difficulty: "hard" },
+  { question: "How many bits are in a byte?", correctAnswer: "8", answers: ["8", "4", "16", "32"], category: "Computers", difficulty: "easy" },
+  { question: "Which is the longest river in the world?", correctAnswer: "The Nile", answers: ["The Nile", "The Amazon", "The Yangtze", "The Mississippi"], category: "Geography", difficulty: "medium" },
+  { question: "What year did World War II end?", correctAnswer: "1945", answers: ["1945", "1939", "1941", "1950"], category: "History", difficulty: "easy" },
+  { question: "What does 'URL' stand for?", correctAnswer: "Uniform Resource Locator", answers: ["Uniform Resource Locator", "Universal Router Link", "Unified Reference Locator", "Uniform Router Locator"], category: "Computers", difficulty: "medium" },
+  { question: "Which metal is liquid at room temperature?", correctAnswer: "Mercury", answers: ["Mercury", "Sodium", "Aluminium", "Zinc"], category: "Science", difficulty: "medium" },
+  { question: "How many players are on a football (soccer) team on the pitch?", correctAnswer: "11", answers: ["11", "9", "10", "12"], category: "Sports", difficulty: "easy" },
+  { question: "What is the smallest prime number?", correctAnswer: "2", answers: ["2", "1", "3", "0"], category: "Mathematics", difficulty: "easy" },
+  { question: "Which programming language runs natively in web browsers?", correctAnswer: "JavaScript", answers: ["JavaScript", "Python", "C++", "Ruby"], category: "Computers", difficulty: "easy" },
+  { question: "Mount Everest is in which mountain range?", correctAnswer: "Himalayas", answers: ["Himalayas", "Andes", "Alps", "Rockies"], category: "Geography", difficulty: "easy" },
+  { question: "What is the hardest natural substance?", correctAnswer: "Diamond", answers: ["Diamond", "Quartz", "Steel", "Titanium"], category: "Science", difficulty: "easy" },
+  { question: "Who is known as the father of computers?", correctAnswer: "Charles Babbage", answers: ["Charles Babbage", "Alan Turing", "Bill Gates", "Tim Berners-Lee"], category: "Computers", difficulty: "medium" },
+];
+
+function getBackupQuestions(): QuizQuestion[] {
+  return shuffleArray(BACKUP_QUESTIONS).slice(0, 10);
 }
 
 async function ensureToken(): Promise<string> {
@@ -435,7 +508,7 @@ function QuizPage() {
 
     // Try cache first
     const cached = getCachedQuestions(catId, difficulty);
-    if (cached && cached.length === 10) {
+    if (cached && cached.length > 0) {
       setQuestions(cached);
       setLoading(false);
       return;
@@ -460,8 +533,16 @@ function QuizPage() {
     }
 
     if (!fetched.length) {
-      setError("Could not load questions. Check your connection and try again.");
+      // Both APIs failed. If the browser itself is offline, say so clearly.
+      // Otherwise serve the built-in backup pack so users can always play.
+      if (typeof navigator !== "undefined" && navigator.onLine === false) {
+        setError("You appear to be offline. Reconnect and try again, or play the offline pack below.");
+      } else {
+        setError("Live question services are busy or unreachable right now.");
+      }
+      setQuestions(getBackupQuestions());
       setLoading(false);
+      setView("quiz");
       return;
     }
 
@@ -650,9 +731,33 @@ function QuizPage() {
                     />
                   ))}
                 </div>
-                <p className="mt-4 text-sm text-muted-foreground">Loading questions…</p>
+                <p className="mt-4 text-sm text-muted-foreground">Loading questions...</p>
                 <style>{`@keyframes pulse { 0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1); } }`}</style>
               </div>
+            ) : questions.length > 0 ? (
+              <>
+                {error && (
+                  <div className="mx-auto mb-4 max-w-md rounded-lg border border-[rgba(210,153,34,0.3)] bg-[rgba(210,153,34,0.1)] p-3 text-center text-[12.5px] text-[#d29922]">
+                    {error}
+                  </div>
+                )}
+                <QuizInProgress
+                  questions={questions}
+                  currentQ={currentQ}
+                  score={score}
+                  selectedAnswer={selectedAnswer}
+                  isCorrect={isCorrect}
+                  timeLeft={timeLeft}
+                  maxTime={maxTime}
+                  timerPct={timerPct}
+                  timerColor={timerColor}
+                  circumference={circumference}
+                  onAnswer={handleAnswer}
+                  onNext={manualNext}
+                  selectedCategory={selectedCategory}
+                  difficulty={difficulty}
+                />
+              </>
             ) : error ? (
               <div className="flex flex-col items-center justify-center py-24">
                 <p className="text-sm text-muted-foreground">{error}</p>
@@ -663,23 +768,7 @@ function QuizPage() {
                 >
                   Back to categories
                 </button>
-              </div>              ) : questions.length > 0 ? (
-              <QuizInProgress
-                questions={questions}
-                currentQ={currentQ}
-                score={score}
-                selectedAnswer={selectedAnswer}
-                isCorrect={isCorrect}
-                timeLeft={timeLeft}
-                maxTime={maxTime}
-                timerPct={timerPct}
-                timerColor={timerColor}
-                circumference={circumference}
-                onAnswer={handleAnswer}
-                onNext={manualNext}
-                selectedCategory={selectedCategory}
-                difficulty={difficulty}
-              />              ) : (
+              </div>              ) : (
               <div className="flex flex-col items-center justify-center py-24">
                 <p className="text-sm text-muted-foreground">No questions available right now.</p>
                 <p className="mt-1 text-xs text-muted-foreground/70">Try a different category or difficulty.</p>
