@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Copy, Download, Play, RotateCcw, Maximize2, Minimize2, Check, Code2 } from "lucide-react";
+import { Copy, Download, Play, RotateCcw, Check, Code2 } from "lucide-react";
 
 export const Route = createFileRoute("/tools/html-compiler")({
   head: () => ({
@@ -110,7 +110,7 @@ function HtmlCompiler() {
   const [consoleLog, setConsoleLog] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [fullscreen, setFullscreen] = useState(false);
+  const [viewMode, setViewMode] = useState<"code" | "split" | "preview">("split");
   const [outputSrc, setOutputSrc] = useState("");
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -248,7 +248,7 @@ function HtmlCompiler() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-200 flex flex-col">
+    <div className="flex h-[100dvh] flex-col overflow-hidden bg-[#0a0a0f] text-slate-200">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-[#0f1318] border-b border-slate-800">
         <div className="flex items-center gap-2">
@@ -257,26 +257,49 @@ function HtmlCompiler() {
           <span className="text-[11px] text-slate-500 hidden sm:inline">Live Preview</span>
         </div>
         <div className="flex items-center gap-1.5">
+          {/* View mode switcher: code / split / preview */}
+          <div className="mr-1 hidden items-center rounded-md border border-slate-700 p-0.5 sm:flex">
+            {(["code", "split", "preview"] as const).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                className={`px-2.5 py-1 text-[11px] font-medium capitalize rounded ${
+                  viewMode === mode ? "bg-cyan-500/20 text-cyan-400" : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                {mode}
+              </button>
+            ))}
+          </div>
           <button onClick={run} className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-500/15 text-cyan-400 rounded-md text-xs font-medium hover:bg-cyan-500/25 transition-colors" title="Run (refresh preview)">
             <Play className="w-3.5 h-3.5" /> Run
           </button>
           <button onClick={copyCode} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/50 text-slate-300 rounded-md text-xs hover:bg-slate-700 transition-colors" title="Copy full code">
             {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? "Copied" : "Copy"}
+            <span className="hidden sm:inline">{copied ? "Copied" : "Copy"}</span>
           </button>
           <button onClick={download} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/50 text-slate-300 rounded-md text-xs hover:bg-slate-700 transition-colors" title="Download as HTML file">
-            <Download className="w-3.5 h-3.5" /> Export
+            <Download className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Export</span>
           </button>
-          <button onClick={reset} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/50 text-slate-300 rounded-md text-xs hover:bg-slate-700 transition-colors" title="Reset to defaults">
+          <button onClick={reset} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-700/50 text-slate-300 rounded-md text-xs hover:bg-slate-700 transition-colors" title="Reset to defaults">
             <RotateCcw className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row overflow-hidden">
         {/* Editor panel */}
-        <div className={`flex flex-col ${fullscreen ? "hidden lg:flex lg:w-1/2" : "w-full lg:w-1/2"} border-r border-slate-800`}>
+        <div
+          className={`flex min-h-0 flex-col border-slate-800 lg:border-r ${
+            viewMode === "code"
+              ? "h-full w-full"
+              : viewMode === "split"
+                ? "h-[45vh] w-full shrink-0 lg:h-auto lg:w-1/2"
+                : "hidden"
+          }`}
+        >
           {/* Tabs */}
           <div className="flex items-center border-b border-slate-800 bg-[#0f1318]">
             {(["html", "css", "js"] as Tab[]).map((tab) => (
@@ -298,7 +321,7 @@ function HtmlCompiler() {
           </div>
 
           {/* Code editor */}
-          <div className="flex-1 relative overflow-auto">
+          <div className="relative min-h-0 flex-1">
             <div className="absolute inset-0 flex">
               {/* Line numbers */}
               <div className="w-12 flex-shrink-0 bg-[#0a0a0f] border-r border-slate-800/50 pt-3 text-right pr-2 text-[11px] text-slate-600 select-none font-mono leading-[1.6] overflow-hidden">
@@ -322,7 +345,7 @@ function HtmlCompiler() {
         </div>
 
         {/* Preview panel */}
-        <div className={`flex flex-col ${fullscreen ? "w-full lg:w-1/2" : "w-full lg:w-1/2"}`}>
+        <div className={`flex min-h-0 flex-1 flex-col ${viewMode === "code" ? "hidden" : ""}`}>
           {/* Preview header */}
           <div className="flex items-center justify-between px-3 py-2 bg-[#0f1318] border-b border-slate-800">
             <span className="text-[11px] text-slate-500 uppercase tracking-wider font-medium">Preview</span>
@@ -333,28 +356,35 @@ function HtmlCompiler() {
               >
                 Clear console
               </button>
-              <button
-                onClick={() => setFullscreen(!fullscreen)}
-                className="text-slate-500 hover:text-slate-300 p-1 rounded transition-colors"
-                title={fullscreen ? "Exit fullscreen" : "Fullscreen preview"}
-              >
-                {fullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-              </button>
+              {/* Mobile-only view toggle (desktop switcher lives in the toolbar) */}
+              <div className="flex items-center rounded border border-slate-700 p-0.5 sm:hidden">
+                {(["code", "split", "preview"] as const).map((mode) => (
+                  <button
+                    key={mode}
+                    onClick={() => setViewMode(mode)}
+                    className={`px-1.5 py-0.5 text-[10px] font-medium capitalize rounded ${
+                      viewMode === mode ? "bg-cyan-500/20 text-cyan-400" : "text-slate-400"
+                    }`}
+                  >
+                    {mode === "code" ? "Code" : mode === "split" ? "Split" : "View"}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* iframe */}
-          <div className="flex-1 bg-white relative">
+          <div className="relative min-h-0 flex-1 bg-white">
             {outputSrc ? (
               <iframe
                 ref={iframeRef}
                 srcDoc={outputSrc}
-                className="w-full h-full border-0"
+                className="absolute inset-0 h-full w-full border-0"
                 sandbox="allow-scripts allow-modals"
                 title="Preview"
               />
             ) : (
-              <div className="flex items-center justify-center h-full text-slate-400 text-sm">
+              <div className="flex h-full items-center justify-center text-slate-400 text-sm">
                 Click <strong className="mx-1 text-cyan-400">Run</strong> to preview
               </div>
             )}
@@ -362,7 +392,7 @@ function HtmlCompiler() {
 
           {/* Console */}
           {consoleLog.length > 0 && (
-            <div className="h-28 border-t border-slate-800 bg-[#0d1117] overflow-auto font-mono text-[11px] leading-relaxed">
+            <div className="h-28 shrink-0 border-t border-slate-800 bg-[#0d1117] overflow-auto font-mono text-[11px] leading-relaxed">
               {consoleLog.map((msg, i) => (
                 <div
                   key={i}
