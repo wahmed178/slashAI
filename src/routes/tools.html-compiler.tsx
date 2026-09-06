@@ -257,22 +257,23 @@ function HtmlCompiler() {
           <span className="text-[11px] text-slate-500 hidden sm:inline">Live Preview</span>
         </div>
         <div className="flex items-center gap-1.5">
-          {/* View mode switcher: code / split / preview */}
-          <div className="mr-1 hidden items-center rounded-md border border-slate-700 p-0.5 sm:flex">
+          {/* View mode switcher - lives here so it is reachable in EVERY mode */}
+          <div className="mr-0.5 flex items-center rounded-md border border-slate-700 p-0.5">
             {(["code", "split", "preview"] as const).map((mode) => (
               <button
                 key={mode}
                 onClick={() => setViewMode(mode)}
-                className={`px-2.5 py-1 text-[11px] font-medium capitalize rounded ${
+                className={`rounded px-2 py-1 text-[10px] font-medium capitalize sm:px-2.5 sm:text-[11px] ${
                   viewMode === mode ? "bg-cyan-500/20 text-cyan-400" : "text-slate-400 hover:text-slate-200"
                 }`}
               >
-                {mode}
+                {mode === "preview" ? "View" : mode}
               </button>
             ))}
           </div>
-          <button onClick={run} className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-500/15 text-cyan-400 rounded-md text-xs font-medium hover:bg-cyan-500/25 transition-colors" title="Run (refresh preview)">
-            <Play className="w-3.5 h-3.5" /> Run
+          <button onClick={run} className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-cyan-400 transition-colors hover:text-cyan-300 sm:bg-cyan-500/15 sm:rounded-md sm:hover:bg-cyan-500/25" title="Run (refresh preview)">
+            <Play className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Run</span>
           </button>
           <button onClick={copyCode} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700/50 text-slate-300 rounded-md text-xs hover:bg-slate-700 transition-colors" title="Copy full code">
             {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -294,7 +295,7 @@ function HtmlCompiler() {
         <div
           className={`flex min-h-0 flex-col border-slate-800 lg:border-r ${
             viewMode === "code"
-              ? "h-full w-full"
+              ? "w-full flex-1"
               : viewMode === "split"
                 ? "h-[45vh] w-full shrink-0 lg:h-auto lg:w-1/2"
                 : "hidden"
@@ -356,20 +357,6 @@ function HtmlCompiler() {
               >
                 Clear console
               </button>
-              {/* Mobile-only view toggle (desktop switcher lives in the toolbar) */}
-              <div className="flex items-center rounded border border-slate-700 p-0.5 sm:hidden">
-                {(["code", "split", "preview"] as const).map((mode) => (
-                  <button
-                    key={mode}
-                    onClick={() => setViewMode(mode)}
-                    className={`px-1.5 py-0.5 text-[10px] font-medium capitalize rounded ${
-                      viewMode === mode ? "bg-cyan-500/20 text-cyan-400" : "text-slate-400"
-                    }`}
-                  >
-                    {mode === "code" ? "Code" : mode === "split" ? "Split" : "View"}
-                  </button>
-                ))}
-              </div>
             </div>
           </div>
 

@@ -463,7 +463,6 @@ function HomePage() {
           {[
             { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories, fresh daily" },
             { to: "/live", emoji: "📡", title: "Live", desc: "Markets, prayer, cricket, weather" },
-            { to: "/deals", emoji: "🛍️", title: "Deals", desc: "Live deals from Indian communities" },
             { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: `${ALL_ROADMAPS.length} step-by-step guides` },
             { to: "/glossary", emoji: "📖", title: "Glossary", desc: `${GLOSSARY_TOTAL} AI & startup terms` },
             { to: "/discover", emoji: "🧭", title: "Discover", desc: `${RESOURCE_TOTAL}+ free tools and APIs` },
@@ -755,7 +754,6 @@ function HomePage() {
               links: [
                 { label: "Discover", to: "/discover" },
                 { label: "Live Dashboard", to: "/live" },
-                { label: "Deals", to: "/deals" },
                 { label: "What's New", to: "/whats-new" },
               ],
             },

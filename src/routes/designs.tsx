@@ -10,7 +10,7 @@ export const Route = createFileRoute("/designs")({
       {
         name: "description",
         content:
-          "Complete design systems for SlashAI - Linear, Notion, Vercel, Stripe, Supabase and Framer. Apply any one instantly, free.",
+          "Four hand-tuned themes - Dark, Light, AMOLED and Glass. Preview each one and apply it instantly. Every theme is free.",
       },
     ],
   }),
@@ -33,123 +33,79 @@ interface DesignCard {
 
 const DESIGNS: DesignCard[] = [
   {
-    id: "linear",
-    name: "Linear",
-    brand: "Linear.app",
-    description:
-      "Ultra-minimal dark canvas with lavender-blue accent. Dense, technical, quietly luxurious.",
-    accent: "#5e6ad2",
-    accentLabel: "Lavender Blue",
-    vibe: "Developer productivity",
-    bgPreview: "#010102",
-    surfacePreview: "#0f1011",
-    borderPreview: "#23252a",
+    id: 'dark' as Theme,
+    name: 'Dark',
+    brand: 'SlashAI default',
+    description: 'The signature SlashAI look: near-black navy canvas with an electric cyan accent. Easy on the eyes.',
+    accent: '#2dd4bf',
+    accentLabel: 'Electric Cyan',
+    vibe: 'Default theme',
+    bgPreview: '#0a0a0f',
+    surfacePreview: '#12151c',
+    borderPreview: '#242a35',
     features: [
-      "Near-pure black canvas (#010102)",
-      "4-step surface ladder",
-      "Hairline borders only",
-      "Negative tracking display",
-      "Single chromatic accent",
+      'Near-black navy canvas',
+      'Layered surfaces',
+      'Electric cyan primary',
+      'Space Grotesk typography',
+      'Subtle glass morphism',
     ],
   },
   {
-    id: "notion",
-    name: "Notion",
-    brand: "Notion",
-    description:
-      "Confident, illustration-rich brand voice with deep navy hero and signature purple CTA.",
-    accent: "#5645d4",
-    accentLabel: "Notion Purple",
-    vibe: "All-in-one workspace",
-    bgPreview: "#0a1530",
-    surfacePreview: "#1a2a52",
-    borderPreview: "#2a3a62",
+    id: 'light' as Theme,
+    name: 'Light',
+    brand: 'SlashAI',
+    description: 'Bright, clean and readable - great for daylight and well-lit rooms.',
+    accent: '#0d9488',
+    accentLabel: 'Deep Teal',
+    vibe: 'Daylight theme',
+    bgPreview: '#fafafa',
+    surfacePreview: '#ffffff',
+    borderPreview: '#e5e7eb',
     features: [
-      "Deep navy hero band",
-      "Signature purple pill CTA",
-      "Pastel feature cards",
-      "8px rectangular buttons",
-      "Notion-Sans typography",
+      'Near-white canvas',
+      'High contrast text',
+      'Deep teal primary',
+      'Soft shadows',
+      'Same layout, brighter',
     ],
   },
   {
-    id: "vercel",
-    name: "Vercel",
-    brand: "Vercel",
-    description:
-      "Black-and-white precision with a multi-color mesh gradient at hero scale.",
-    accent: "#171717",
-    accentLabel: "Ink Black",
-    vibe: "Frontend platform",
-    bgPreview: "#fafafa",
-    surfacePreview: "#ffffff",
-    borderPreview: "#ebebeb",
+    id: 'amoled' as Theme,
+    name: 'AMOLED',
+    brand: 'SlashAI',
+    description: 'True pixel-off black. Maximum contrast, minimum battery drain on OLED screens.',
+    accent: '#2dd4bf',
+    accentLabel: 'Electric Cyan',
+    vibe: 'Battery saver',
+    bgPreview: '#000000',
+    surfacePreview: '#0a0a0a',
+    borderPreview: '#1f1f1f',
     features: [
-      "Near-white canvas",
-      "Ink-near-black primary",
-      "Multi-color mesh gradient",
-      "Geist font family",
-      "Stacked shadow elevation",
+      'Pure black background',
+      'Pixels actually turn off',
+      'Saves battery on OLED',
+      'Cyan accents pop harder',
+      'Great at night',
     ],
   },
   {
-    id: "stripe",
-    name: "Stripe",
-    brand: "Stripe",
-    description:
-      "Financial infrastructure brand with electric indigo primary and atmospheric gradient mesh.",
-    accent: "#533afd",
-    accentLabel: "Electric Indigo",
-    vibe: "Payment infrastructure",
-    bgPreview: "#ffffff",
-    surfacePreview: "#f6f9fc",
-    borderPreview: "#e3e8ee",
+    id: 'glass' as Theme,
+    name: 'Glass',
+    brand: 'SlashAI',
+    description: 'Frosted violet-dark surfaces with translucent panels and a soft teal accent.',
+    accent: '#7dd3fc',
+    accentLabel: 'Frost Teal',
+    vibe: 'Glassmorphism',
+    bgPreview: '#0d0b1a',
+    surfacePreview: '#1a1630',
+    borderPreview: '#332b55',
     features: [
-      "Gradient mesh hero backdrop",
-      "Indigo primary CTA",
-      "Thin weight typography (300)",
-      "Tabular figures for money",
-      "Cream band interludes",
-    ],
-  },
-  {
-    id: "supabase",
-    name: "Supabase",
-    brand: "Supabase",
-    description:
-      "Clean white canvas with a single signature emerald-green CTA. Quietly technical.",
-    accent: "#3ecf8e",
-    accentLabel: "Emerald Green",
-    vibe: "Open-source database",
-    bgPreview: "#ffffff",
-    surfacePreview: "#fafafa",
-    borderPreview: "#dfdfdf",
-    features: [
-      "White canvas marketing",
-      "Single emerald primary",
-      "Product UI mockups",
-      "6px button radii",
-      "Code blocks in dark",
-    ],
-  },
-  {
-    id: "framer",
-    name: "Framer",
-    brand: "Framer",
-    description:
-      "Confident dark-canvas builder with white display type and vibrant gradient spotlight cards.",
-    accent: "#ffffff",
-    accentLabel: "Pure White",
-    vibe: "Website builder",
-    bgPreview: "#090909",
-    surfacePreview: "#141414",
-    borderPreview: "#262626",
-    features: [
-      "Pure black canvas",
-      "White pill CTAs",
-      "Gradient spotlight cards",
-      "Massive negative tracking",
-      "Inter Variable body type",
+      'Frosted violet surfaces',
+      'Translucent panels',
+      'Soft glows and blur',
+      'Teal accent',
+      'Premium dark look',
     ],
   },
 ];
@@ -164,9 +120,8 @@ function DesignsPage() {
           Designs
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Complete design systems inspired by the world's best products - Linear,
-          Notion, Vercel, Stripe, Supabase and Framer. Click any design to apply
-          it instantly. Every design is free.
+          Four hand-tuned themes for SlashAI. Click any design to apply
+          it instantly - every theme is free.
         </p>
       </header>
 
@@ -205,17 +160,11 @@ function DesignsPage() {
                 <div
                   className="flex h-full w-2/4 items-center justify-center"
                   style={{ background: design.bgPreview }}
-                >
-                  <div
+                >                    <div
                     className="rounded-md px-3 py-1 text-xs font-semibold"
                     style={{
                       background: design.accent,
-                      color:
-                        design.id === "vercel" || design.id === "supabase"
-                          ? "#ffffff"
-                          : design.accent === "#ffffff"
-                            ? "#000000"
-                            : "#ffffff",
+                      color: "#ffffff",
                     }}
                   >
                     Get Started

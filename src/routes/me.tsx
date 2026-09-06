@@ -6,32 +6,24 @@ import {
   History,
   Info,
   Keyboard,
-  LayoutGrid,
-  List,
-  Moon,
-  MoonStar,
-  Rows3,
-  Rows4,
+  Palette,
   Settings as SettingsIcon,
-  Sparkles,
-  Sun,
   Trash2,
   Download,
   Upload,
   UserRound,
-  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { AppShell } from "@/components/library/AppShell";
 import { CommandGrid, EmptyState } from "@/components/library/CommandGrid";
-import { useLibrary, THEMES, type Theme } from "@/hooks/use-library";
+import { useLibrary } from "@/hooks/use-library";
 import { INTERESTS } from "@/lib/collections";
 import { PERSONAS, getPersona } from "@/lib/personas";
 import { getCommand, type SlashCommand } from "@/lib/commands";
 import { streakMessage } from "@/lib/engagement";
-import { APP_DETAILS, CHANGELOG } from "@/lib/app-meta";
+import { APP_DETAILS } from "@/lib/app-meta";
 import { CATEGORY_TREE, VERIFIED_TOTAL } from "@/lib/commands";
 import { cn } from "@/lib/utils";
 
@@ -88,14 +80,23 @@ function MePage() {
     recentSearches,
     exportBackup,
     importBackup,
-    openWhatsNew,
   } = useLibrary();
   const fileRef = useRef<HTMLInputElement>(null);
   const [editingPersona, setEditingPersona] = useState(false);
+  const [editingName, setEditingName] = useState(false);
 
   const persona = getPersona(settings.persona);
-  // every theme is free - nothing is gated
-  const visibleThemes = THEMES;
+  const [nameDraft, setNameDraft] = useState("");
+
+  const startNameEdit = () => {
+    setNameDraft(settings.displayName);
+    setEditingName(true);
+  };
+
+  const saveName = () => {
+    updateSettings({ displayName: nameDraft.trim().slice(0, 24) });
+    setEditingName(false);
+  };
 
   const resolve = (ids: string[]) =>
     ids
@@ -142,7 +143,7 @@ function MePage() {
         </span>
         <div className="min-w-0">
           <h1 className="text-2xl font-black tracking-tight text-foreground">
-            {persona ? persona.label : "Your profile"}
+            {settings.displayName.trim() || (persona ? persona.label : "Your profile")}
           </h1>
           <p className="text-sm text-muted-foreground">
             {hydrated
@@ -158,6 +159,39 @@ function MePage() {
           </Button>
         </div>
       </header>
+
+      {/* ── Name ── */}
+      <Section title="Your name">
+        {editingName ? (
+          <div className="flex gap-2">
+            <input
+              autoFocus
+              value={nameDraft}
+              onChange={(e) => setNameDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") saveName();
+                if (e.key === "Escape") setEditingName(false);
+              }}
+              maxLength={24}
+              placeholder="e.g. Alex"
+              className="h-10 min-w-0 flex-1 rounded-lg border border-border bg-surface px-3 text-sm outline-none focus:border-primary"
+            />
+            <Button onClick={saveName} size="sm">Save</Button>
+            <Button variant="ghost" size="sm" onClick={() => setEditingName(false)}>Cancel</Button>
+          </div>
+        ) : (
+          <div className="panel flex items-center gap-3 rounded-xl p-3">
+            <p className="min-w-0 flex-1 text-sm text-muted-foreground">
+              {settings.displayName.trim()
+                ? `Shown as "${settings.displayName.trim()}" on this device.`
+                : "Optional - set a custom name to show in the header and here. Stored only on this device."}
+            </p>
+            <Button variant="ghost" size="sm" onClick={startNameEdit}>
+              {settings.displayName.trim() ? "Change" : "Add name"}
+            </Button>
+          </div>
+        )}
+      </Section>
 
       {/* ── Streak ── */}
       {hydrated && streak.count > 0 && (
@@ -247,114 +281,25 @@ function MePage() {
         </div>
       </Section>
 
-      {/* ── Theme ── */}
+      {/* ── Theme (lives on the Designs page) ── */}
       <Section title="Theme">
-        <div className="grid gap-2 sm:grid-cols-2">
-          {visibleThemes.map((t) => {
-            const active = settings.theme === t.id;
-            return (
-              <button
-                key={t.id}
-                type="button"
-                aria-pressed={active}
-                onClick={() => updateSettings({ theme: t.id })}
-                className={cn(
-                  "flex items-center gap-3 rounded-xl border p-3 text-left transition-colors active:scale-[0.99]",
-                  active
-                    ? "border-primary bg-accent"
-                    : "border-border bg-surface hover:border-primary/40",
-                )}
-              >
-                <span
-                  className="size-8 shrink-0 rounded-full border border-border"
-                  style={{ backgroundColor: t.swatch }}
-                  aria-hidden
-                />
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold text-foreground">{t.label}</span>
-                  <span className="block truncate text-xs text-muted-foreground">{t.hint}</span>
-                </span>
-                {active && <Check className="size-4 shrink-0 text-primary" aria-hidden />}
-              </button>
-            );
-          })}
-        </div>
+        <Link
+          to="/designs"
+          className="panel flex items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/40"
+        >
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
+            <Palette className="size-4" aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-sm font-semibold text-foreground">Designs &amp; themes</span>
+            <span className="block truncate text-xs text-muted-foreground">
+              Dark, Light, AMOLED and Glass - preview and apply any theme.
+            </span>
+          </span>
+          <Check className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+        </Link>
       </Section>
 
-      {/* ── Layout ── */}
-      <Section title="Layout">
-        <div className="grid grid-cols-2 gap-2">
-          <Button
-            variant={settings.view === "grid" ? "default" : "outline"}
-            onClick={() => updateSettings({ view: "grid" })}
-            className="gap-1.5"
-          >
-            <LayoutGrid className="size-4" /> Grid
-          </Button>
-          <Button
-            variant={settings.view === "list" ? "default" : "outline"}
-            onClick={() => updateSettings({ view: "list" })}
-            className="gap-1.5"
-          >
-            <List className="size-4" /> List
-          </Button>
-        </div>
-        <div className="mt-2 grid grid-cols-2 gap-2">
-          <Button
-            variant={settings.density === "comfortable" ? "default" : "outline"}
-            onClick={() => updateSettings({ density: "comfortable" })}
-            className="gap-1.5"
-          >
-            <Rows3 className="size-4" /> Comfortable
-          </Button>
-          <Button
-            variant={settings.density === "compact" ? "default" : "outline"}
-            onClick={() => updateSettings({ density: "compact" })}
-            className="gap-1.5"
-          >
-            <Rows4 className="size-4" /> Compact
-          </Button>
-        </div>
-      </Section>
-
-      {/* ── Motion ── */}
-      <Section
-        title={
-          <>
-            <Zap className="size-3.5" /> Motion
-          </>
-        }
-      >
-        <div className="grid grid-cols-2 gap-2">
-          <Button
-            variant={!settings.reducedMotion ? "default" : "outline"}
-            onClick={() => updateSettings({ reducedMotion: false })}
-          >
-            Smooth
-          </Button>
-          <Button
-            variant={settings.reducedMotion ? "default" : "outline"}
-            onClick={() => updateSettings({ reducedMotion: true })}
-          >
-            Off
-          </Button>
-        </div>
-      </Section>
-
-      {/* ── Results per page ── */}
-      <Section title="Results per page">
-        <div className="grid grid-cols-3 gap-2">
-          {[24, 48, 96].map((n) => (
-            <Button
-              key={n}
-              variant={settings.pageSize === n ? "default" : "outline"}
-              onClick={() => updateSettings({ pageSize: n })}
-            >
-              {n}
-            </Button>
-          ))}
-        </div>
-      </Section>
 
       {/* ── Saved Commands ── */}
       <Section title="Saved commands">
@@ -492,38 +437,6 @@ function MePage() {
         </ul>
         <Button asChild variant="ghost" size="sm" className="mt-2">
           <Link to="/keyboard">Full shortcut reference →</Link>
-        </Button>
-      </Section>
-
-      {/* ── Updates ── */}
-      <Section
-        title={
-          <>
-            <Sparkles className="size-3.5" /> Updates
-          </>
-        }
-      >
-        <div className="space-y-3">
-          {CHANGELOG.map((r) => (
-            <div key={r.version} className="panel rounded-xl p-3">
-              <p className="flex items-center justify-between text-sm font-semibold text-foreground">
-                v{r.version}
-                <span className="text-xs font-normal text-muted-foreground">{r.date}</span>
-              </p>
-              <p className="mt-0.5 text-xs text-primary">{r.title}</p>
-              <ul className="mt-2 space-y-1.5">
-                {r.changes.map((c) => (
-                  <li key={c} className="flex gap-2 text-xs leading-relaxed text-muted-foreground">
-                    <span className="mt-1.5 size-1 shrink-0 rounded-full bg-primary" />
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <Button variant="ghost" size="sm" className="mt-2" onClick={openWhatsNew}>
-          Show update popup again
         </Button>
       </Section>
 

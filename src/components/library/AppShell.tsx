@@ -10,7 +10,6 @@ import {
   Map,
   Radio,
   BookOpen,
-  Tag,
   Bookmark,
   Settings,
   Share2,
@@ -59,7 +58,6 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
   { to: "/glossary", label: "Glossary", icon: BookOpen },
   { to: "/collections", label: "Collections", icon: Layers },
-  { to: "/deals", label: "Deals", icon: Tag },
   { to: "/designs", label: "Designs", icon: Palette },
 ];
 
@@ -135,7 +133,6 @@ const TOP_LEVEL_NAMES: Record<string, { label: string; to?: string }> = {
   roadmaps: { label: "Roadmaps", to: "/roadmaps" },
   glossary: { label: "Glossary", to: "/glossary" },
   quiz: { label: "Quiz", to: "/quiz" },
-  deals: { label: "Deals", to: "/deals" },
   live: { label: "Live Dashboard", to: "/live" },
   "ai-tools": { label: "AI Tools", to: "/ai-tools" },
   workflow: { label: "AI Workflows", to: "/workflow" },
@@ -345,12 +342,6 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { settings } = useLibrary();
-  const [splashDone, setSplashDone] = useState(false);
-
-  useEffect(() => {
-    if (splashDone) return;
-    setSplashDone(true);
-  }, []);
 
   // Every page must have a real browser-tab title. Pages that set `head()`
   // meta manage their own <title>; this effect only fills the gaps (tools
@@ -425,7 +416,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
                 <Bookmark className="size-[20px]" />
               </Link>
               <Link to="/me" className="flex size-8 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background transition-opacity hover:opacity-90" aria-label="Profile">
-                S
+                {settings.displayName.trim() ? settings.displayName.trim().charAt(0).toUpperCase() : "U"}
               </Link>
             </div>
           </div>
@@ -457,7 +448,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             const p = item.to;
             if (p === "/hub") return pathname.startsWith("/hub");
             if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
-            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar") || pathname.startsWith("/deals");
+            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar");
             if (p === "/tools") return pathname.startsWith("/tools");
             return pathname.startsWith(p);
           })();

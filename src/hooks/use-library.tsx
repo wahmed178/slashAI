@@ -13,7 +13,20 @@ import { todayKey } from "@/lib/commands";
 import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 import { trackInteraction } from "@/lib/intelligence";
 
-export type Theme = "dark" | "light" | "amoled" | "batman" | "ocean" | "moonlight" | "warm" | "glass" | "linear" | "notion" | "vercel" | "stripe" | "supabase" | "framer";
+export type Theme = "dark" | "light" | "amoled" | "glass";
+/** themes that existed before the set was trimmed to four; mapped to the closest kept theme */
+export const LEGACY_THEME_MAP: Record<string, Theme> = {
+  batman: "dark",
+  ocean: "dark",
+  moonlight: "dark",
+  warm: "light",
+  linear: "dark",
+  notion: "dark",
+  vercel: "light",
+  stripe: "light",
+  supabase: "light",
+  framer: "amoled",
+};
 export type Density = "comfortable" | "compact";
 export type Accent = "teal" | "violet" | "amber" | "rose" | "blue" | "lime";
 export type AppIcon =
@@ -66,71 +79,11 @@ export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[
     swatch: "oklch(0.985 0.003 250)",
   },
   { id: "amoled", label: "AMOLED", hint: "True black, saves battery", swatch: "oklch(0 0 0)" },
-  { id: "batman", label: "Batman", hint: "Near-black with gold", swatch: "oklch(0.84 0.16 92)" },
-  {
-    id: "ocean",
-    label: "Ocean",
-    hint: "Deep blue, cyan highlights",
-    swatch: "oklch(0.8 0.13 205)",
-  },
-  {
-    id: "moonlight",
-    label: "Moonlight",
-    hint: "Soft indigo and lavender",
-    swatch: "oklch(0.82 0.09 295)",
-  },
-  {
-    id: "warm",
-    label: "Warm",
-    hint: "Sepia tones for night reading",
-    swatch: "oklch(0.81 0.14 65)",
-  },
-  {
-    id: "glass",
-    label: "Glass",
-    hint: "Frosted violet dark",
-    swatch: "oklch(0.78 0.16 178)",
-  },
-  {
-    id: "linear",
-    label: "Linear",
-    hint: "Ultra-minimal dark, lavender accent",
-    swatch: "oklch(0.62 0.15 275)",
-  },
-  {
-    id: "notion",
-    label: "Notion",
-    hint: "Warm navy, purple accent",
-    swatch: "oklch(0.58 0.18 280)",
-  },
-  {
-    id: "vercel",
-    label: "Vercel",
-    hint: "Clean light, black precision",
-    swatch: "oklch(0.13 0.005 260)",
-  },
-  {
-    id: "stripe",
-    label: "Stripe",
-    hint: "White canvas, indigo primary",
-    swatch: "oklch(0.5 0.2 280)",
-  },
-  {
-    id: "supabase",
-    label: "Supabase",
-    hint: "Clean white, emerald green",
-    swatch: "oklch(0.78 0.18 155)",
-  },
-  {
-    id: "framer",
-    label: "Framer",
-    hint: "Pure black canvas, white pills",
-    swatch: "oklch(1 0 0)",
-  },
+  { id: "glass", label: "Glass", hint: "Frosted violet dark", swatch: "oklch(0.78 0.16 178)" },
 ];
 
 /** themes that fix their own primary colour, so the accent picker is inert */
-export const FIXED_ACCENT_THEMES: Theme[] = ["batman", "ocean", "moonlight", "warm", "glass", "linear", "notion", "vercel", "stripe", "supabase", "framer"];
+export const FIXED_ACCENT_THEMES: Theme[] = ["glass"];
 
 export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
   { id: "teal", label: "Teal", swatch: "oklch(0.79 0.15 178)" },
@@ -156,6 +109,8 @@ interface Settings {
   onboarded: boolean;
   /** optional persona id from lib/personas */
   persona: string;
+  /** optional custom display name, local-only */
+  displayName: string;
   /** which home surface the user prefers: calm sections or the scroll feed */
   homeMode: HomeMode;
   /** app icon theme */
@@ -172,6 +127,7 @@ const DEFAULT_SETTINGS: Settings = {
   interests: [],
   onboarded: false,
   persona: "",
+  displayName: "",
   homeMode: "calm",
   appIcon: "terminal",
 };
@@ -325,11 +281,14 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     const root = document.documentElement;
-    for (const t of THEMES) root.classList.toggle(t.id, settings.theme === t.id && t.id !== "dark");
+    // Migrate themes removed from the four-theme set to their closest kept theme.
+    const theme = LEGACY_THEME_MAP[settings.theme] ?? settings.theme;
+    if (theme !== settings.theme) updateSettings({ theme });
+    for (const t of THEMES) root.classList.toggle(t.id, theme === t.id && t.id !== "dark");
     root.dataset["accent"] = settings.accent;
     root.dataset["motion"] = settings.reducedMotion ? "reduced" : "full";
-    root.style.colorScheme = settings.theme === "light" ? "light" : "dark";
-    localStorage.setItem(KEYS.settings, JSON.stringify(settings));
+    root.style.colorScheme = theme === "light" ? "light" : "dark";
+    localStorage.setItem(KEYS.settings, JSON.stringify({ ...settings, theme }));
   }, [settings, hydrated]);
 
   const dismissWhatsNew = useCallback(() => {

@@ -16,7 +16,6 @@ import { Route as AlternativesRouteImport } from './routes/alternatives'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as DealsRouteImport } from './routes/deals'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
@@ -225,11 +224,6 @@ const CompareRoute = CompareRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DealsRoute = DealsRouteImport.update({
-  id: '/deals',
-  path: '/deals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignsRoute = DesignsRouteImport.update({
@@ -1112,7 +1106,6 @@ export interface FileRoutesByFullPath {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
-  '/deals': typeof DealsRoute
   '/designs': typeof DesignsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
@@ -1296,7 +1289,6 @@ export interface FileRoutesByTo {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
-  '/deals': typeof DealsRoute
   '/designs': typeof DesignsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
@@ -1480,7 +1472,6 @@ export interface FileRoutesById {
   '/changelog': typeof ChangelogRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
-  '/deals': typeof DealsRoute
   '/designs': typeof DesignsRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
@@ -1666,7 +1657,6 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/contact'
-    | '/deals'
     | '/designs'
     | '/favorites'
     | '/find'
@@ -1850,7 +1840,6 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/contact'
-    | '/deals'
     | '/designs'
     | '/favorites'
     | '/find'
@@ -2033,7 +2022,6 @@ export interface FileRouteTypes {
     | '/changelog'
     | '/compare'
     | '/contact'
-    | '/deals'
     | '/designs'
     | '/favorites'
     | '/find'
@@ -2218,7 +2206,6 @@ export interface RootRouteChildren {
   ChangelogRoute: typeof ChangelogRoute
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
-  DealsRoute: typeof DealsRoute
   DesignsRoute: typeof DesignsRoute
   FavoritesRoute: typeof FavoritesRoute
   FindRoute: typeof FindRoute
@@ -2315,13 +2302,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/deals': {
-      id: '/deals'
-      path: '/deals'
-      fullPath: '/deals'
-      preLoaderRoute: typeof DealsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/designs': {
@@ -3819,7 +3799,6 @@ const rootRouteChildren: RootRouteChildren = {
   ChangelogRoute: ChangelogRoute,
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
-  DealsRoute: DealsRoute,
   DesignsRoute: DesignsRoute,
   FavoritesRoute: FavoritesRoute,
   FindRoute: FindRoute,
