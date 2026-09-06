@@ -42,6 +42,8 @@ import { getSlashTool } from "@/lib/slashkits";
 import { SearchBox } from "./SearchBox";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
+import { SplashScreen } from "./SplashScreen";
+import { SplashScreen } from "./SplashScreen";
 import { DesktopSidebar } from "./DesktopSidebar";
 
 /** Shared nav items — same as DesktopSidebar */
@@ -78,6 +80,8 @@ const PRIMARY = [
   { to: "/tools", label: "SlashKits", icon: Wrench, exact: false },
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
 ] as const;
+
+
 
 function isActive(pathname: string, to: string, exact?: boolean) {
   if (exact) return pathname === to;
@@ -342,6 +346,12 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { settings } = useLibrary();
+  const [splashDone, setSplashDone] = useState(false);
+
+  useEffect(() => {
+    if (splashDone) return;
+    setSplashDone(true);
+  }, []);
 
   // Every page must have a real browser-tab title. Pages that set `head()`
   // meta manage their own <title>; this effect only fills the gaps (tools

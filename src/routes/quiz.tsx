@@ -89,29 +89,65 @@ function getCachedQuestions(categoryId: number, difficulty: string): QuizQuestio
   } catch { return null; }
 }
 
-function setCachedQuestions(categoryId: number, difficulty: string, questions: QuizQuestion[]) {
+type StorageKind = 'localStorage' | 'localStorage-fallback' | 'disabled';
+
+let globalStorageMode: StorageKind = 'localStorage';
+
+function probeStorageKind(): StorageKind {
   try {
-    localStorage.setItem(getCacheKey(categoryId, difficulty), JSON.stringify({
-      questions,
-      date: todayStr(),
-    }));
-  } catch { /* ignore */ }
+    const probe = '__quiz_storage_probe__';
+    localStorage.setItem(probe, '1');
+    const ok = localStorage.getItem(probe);
+    localStorage.removeItem(probe);
+    if (ok === '1') return 'localStorage';
+  } catch { /* degrade */ }
+  try {
+    const probe = '__quiz_storage_probe__';
+    sessionStorage.setItem(probe, '1');
+    const ok = sessionStorage.getItem(probe);
+    sessionStorage.removeItem(probe);
+    if (ok === '1') return 'localStorage-fallback';
+  } catch { /* degrade */ }
+  return 'disabled';
+}
+
+function safeStorageSetItem(key: string, value: string) {
+  if (globalStorageMode === 'disabled') return;
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    if (globalStorageMode === 'localStorage-fallback') return;
+    try { sessionStorage.setItem(key, value); } catch { /* give up */ }
+  }
+}
+
+function safeStorageGetItem(key: string): string | null {
+  if (globalStorageMode === 'disabled') return null;
+  try { return localStorage.getItem(key); } catch { return null; }
+  try { return sessionStorage.getItem(key); } catch { return null; }
+}
+
+function setCachedQuestions(categoryId: number, difficulty: string, questions: QuizQuestion[]) {
+  safeStorageSetItem(getCacheKey(categoryId, difficulty), JSON.stringify({
+    questions,
+    date: todayStr(),
+  }));
 }
 
 function getSessionToken(): string | null {
-  return localStorage.getItem("quiz-session-token");
+  return safeStorageGetItem("quiz-session-token");
 }
 
 function setSessionToken(token: string) {
-  try { localStorage.setItem("quiz-session-token", token); } catch { /* ignore */ }
+  safeStorageSetItem("quiz-session-token", token);
 }
 
 function getStreak(): { count: number; best: number; lastDate: string } {
   try {
     return {
-      count: parseInt(localStorage.getItem("quiz-streak") || "0", 10),
-      best: parseInt(localStorage.getItem("quiz-best-streak") || "0", 10),
-      lastDate: localStorage.getItem("quiz-last-date") || "",
+      count: parseInt(safeStorageGetItem("quiz-streak") || "0", 10),
+      best: parseInt(safeStorageGetItem("quiz-best-streak") || "0", 10),
+      lastDate: safeStorageGetItem("quiz-last-date") || "",
     };
   } catch { return { count: 0, best: 0, lastDate: "" }; }
 }
@@ -122,17 +158,15 @@ function updateStreak(score: number): { count: number; best: number; isNew: bool
   if (s.lastDate === today) return { count: s.count, best: s.best, isNew: false };
   const newCount = score > 0 ? s.count + 1 : 0;
   const newBest = Math.max(newCount, s.best);
-  try {
-    localStorage.setItem("quiz-streak", String(newCount));
-    localStorage.setItem("quiz-best-streak", String(newBest));
-    localStorage.setItem("quiz-last-date", today);
-  } catch { /* ignore */ }
+  safeStorageSetItem("quiz-streak", String(newCount));
+  safeStorageSetItem("quiz-best-streak", String(newBest));
+  safeStorageSetItem("quiz-last-date", today);
   return { count: newCount, best: newBest, isNew: true };
 }
 
 function todayCompletedCategories(): Set<number> {
   try {
-    const raw = localStorage.getItem("quiz-completed-today");
+    const raw = safeStorageGetItem("quiz-completed-today");
     if (!raw) return new Set();
     const parsed = JSON.parse(raw);
     if (parsed.date === todayStr()) return new Set(parsed.ids);
@@ -141,15 +175,13 @@ function todayCompletedCategories(): Set<number> {
 }
 
 function markCategoryCompleted(categoryId: number) {
-  try {
-    const today = todayStr();
-    const existing = todayCompletedCategories();
-    existing.add(categoryId);
-    localStorage.setItem("quiz-completed-today", JSON.stringify({
-      date: today,
-      ids: [...existing],
-    }));
-  } catch { /* ignore */ }
+  const today = todayStr();
+  const existing = todayCompletedCategories();
+  existing.add(categoryId);
+  safeStorageSetItem("quiz-completed-today", JSON.stringify({
+    date: today,
+    ids: [...existing],
+  }));
 }
 
 /* ═══════════════════════════════════════════════
@@ -306,6 +338,21 @@ export const Route = createFileRoute("/quiz")({
 function QuizPage() {
   const [view, setView] = useState<View>("picker");
   const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+  const [quizStorageMode, setQuizStorageMode] = useState<StorageKind>('localStorage');
+  const [quizStorageTested, setQuizStorageTested] = useState(false);
+  const [quizStorageOk, setQuizStorageOk] = useState(true);
+
+  useEffect(() => {
+    if (quizStorageTested) return;
+    const mode = probeStorageKind();
+    globalStorageMode = mode;
+    setQuizStorageMode(mode);
+    setQuizStorageTested(true);
+    // Always allow storage — quiz works without it but with limited features
+    // Don't block the quiz; just show a diagnostic if storage is unavailable
+    setQuizStorageOk(mode !== 'disabled');
+  }, [quizStorageTested]);
+
   const [difficulty, setDifficulty] = useState<string>(() => {
     try { return localStorage.getItem("quiz-difficulty") || "medium"; } catch { return "medium"; }
   });
@@ -597,8 +644,7 @@ function QuizPage() {
                 >
                   Back to categories
                 </button>
-              </div>
-            ) : questions.length > 0 ? (
+              </div>              ) : questions.length > 0 ? (
               <QuizInProgress
                 questions={questions}
                 currentQ={currentQ}
@@ -614,8 +660,7 @@ function QuizPage() {
                 onNext={manualNext}
                 selectedCategory={selectedCategory}
                 difficulty={difficulty}
-              />
-            ) : (
+              />              ) : (
               <div className="flex flex-col items-center justify-center py-24">
                 <p className="text-sm text-muted-foreground">No questions available right now.</p>
                 <p className="mt-1 text-xs text-muted-foreground/70">Try a different category or difficulty.</p>
@@ -681,10 +726,28 @@ function CategoryPicker({
       <div className="pt-2">
         <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           Daily Quiz
-        </h1>
-        <p className="mt-1 text-[15px] text-muted-foreground">
-          Pick a category — fresh questions every day.
+        </h1>              <p className="mt-1 text-[15px] text-muted-foreground">
+          Pick a category - fresh questions every day.
         </p>
+
+        {!quizStorageOk && (
+          <div className="mt-3 rounded-lg border border-border bg-red/10 p-3 text-sm">
+            <p className="font-medium text-red">Storage unavailable</p>
+            <p className="mt-1 text-red/90">Quiz needs browser storage for progress and today questions. If clearing data helped on other devices, click below to retry.</p>
+            <button
+              type="button"
+              className="mt-2 min-h-[36px] rounded-md border border-border bg-surface px-3 text-sm font-medium text-foreground transition-colors hover:text-primary"
+              onClick={() => {
+                const mode = probeStorageKind();
+                globalStorageMode = mode;
+                setQuizStorageMode(mode);
+                setQuizStorageOk(mode !== 'disabled');
+              }}
+            >
+              Retry storage check
+            </button>
+          </div>
+        )}
         <span className="mt-2 inline-flex items-center rounded border border-border bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">
           Questions reset daily at midnight
         </span>
@@ -1016,8 +1079,7 @@ function ResultsScreen({
         {selectedCategory.name} • {difficulty}
       </p>
 
-      {/* Streak */}
-      {(() => {
+          {(() => {
         const s = getStreak();
         if (s.count > 1) return (
           <p className="mt-3 text-sm font-medium text-yellow">
@@ -1025,9 +1087,28 @@ function ResultsScreen({
             {s.count} day streak!
           </p>
         );
-        return (
-          <p className="mt-3 text-sm text-muted-foreground">Streak started!</p>
-        );
+        if (!quizStorageOk) {
+          return (
+            <div className="mt-3 rounded-lg border border-border bg-red/10 p-3 text-sm">
+              <p className="font-medium text-red">Storage unavailable</p>
+              <p className="mt-1 text-red/90">Quiz needs browser storage for streak tracking. If clearing data helped on other devices, click below to retry.</p>
+              <button
+                type="button"
+                className="mt-2 min-h-[36px] rounded-md border border-border bg-surface px-3 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                onClick={() => {
+                  const mode = probeStorageKind();
+                  globalStorageMode = mode;
+                  setQuizStorageMode(mode);
+                  setQuizStorageOk(mode !== 'disabled');
+                  window.location.reload();
+                }}
+              >
+                Retry storage check
+              </button>
+            </div>
+          );
+        }
+        return null;
       })()}
 
       {/* Review toggle */}
@@ -1071,7 +1152,7 @@ function ResultsScreen({
           className="min-h-[44px] rounded-lg border border-primary bg-accent px-5 text-sm font-medium text-foreground transition-colors hover:text-primary"
         >
           <RotateCcw className="mr-1.5 inline size-4" aria-hidden />
-          Play again — same category
+          Play again - same category
         </button>
         <button
           type="button"

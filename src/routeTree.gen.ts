@@ -105,6 +105,7 @@ import { Route as ToolsHabitStackRouteImport } from './routes/tools.habit-stack'
 import { Route as ToolsHabitsRouteImport } from './routes/tools.habits'
 import { Route as ToolsHealthTrackerRouteImport } from './routes/tools.health-tracker'
 import { Route as ToolsHijriRouteImport } from './routes/tools.hijri'
+import { Route as ToolsHtmlCompilerRouteImport } from './routes/tools.html-compiler'
 import { Route as ToolsHtmlToPdfRouteImport } from './routes/tools.html-to-pdf'
 import { Route as ToolsImageCompressRouteImport } from './routes/tools.image-compress'
 import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-convert'
@@ -663,6 +664,11 @@ const ToolsHijriRoute = ToolsHijriRouteImport.update({
   path: '/hijri',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsHtmlCompilerRoute = ToolsHtmlCompilerRouteImport.update({
+  id: '/html-compiler',
+  path: '/html-compiler',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsHtmlToPdfRoute = ToolsHtmlToPdfRouteImport.update({
   id: '/html-to-pdf',
   path: '/html-to-pdf',
@@ -1141,6 +1147,7 @@ export interface FileRoutesByFullPath {
   '/tools/habits': typeof ToolsHabitsRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
+  '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
@@ -1315,6 +1322,7 @@ export interface FileRoutesByTo {
   '/tools/habits': typeof ToolsHabitsRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
+  '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
@@ -1491,6 +1499,7 @@ export interface FileRoutesById {
   '/tools/habits': typeof ToolsHabitsRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
+  '/tools/html-compiler': typeof ToolsHtmlCompilerRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
@@ -1668,6 +1677,7 @@ export interface FileRouteTypes {
     | '/tools/habits'
     | '/tools/health-tracker'
     | '/tools/hijri'
+    | '/tools/html-compiler'
     | '/tools/html-to-pdf'
     | '/tools/image-compress'
     | '/tools/image-convert'
@@ -1842,6 +1852,7 @@ export interface FileRouteTypes {
     | '/tools/habits'
     | '/tools/health-tracker'
     | '/tools/hijri'
+    | '/tools/html-compiler'
     | '/tools/html-to-pdf'
     | '/tools/image-compress'
     | '/tools/image-convert'
@@ -2017,6 +2028,7 @@ export interface FileRouteTypes {
     | '/tools/habits'
     | '/tools/health-tracker'
     | '/tools/hijri'
+    | '/tools/html-compiler'
     | '/tools/html-to-pdf'
     | '/tools/image-compress'
     | '/tools/image-convert'
@@ -2832,6 +2844,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsHijriRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/html-compiler': {
+      id: '/tools/html-compiler'
+      path: '/html-compiler'
+      fullPath: '/tools/html-compiler'
+      preLoaderRoute: typeof ToolsHtmlCompilerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/html-to-pdf': {
       id: '/tools/html-to-pdf'
       path: '/html-to-pdf'
@@ -3419,6 +3438,7 @@ interface ToolsRouteChildren {
   ToolsHabitsRoute: typeof ToolsHabitsRoute
   ToolsHealthTrackerRoute: typeof ToolsHealthTrackerRoute
   ToolsHijriRoute: typeof ToolsHijriRoute
+  ToolsHtmlCompilerRoute: typeof ToolsHtmlCompilerRoute
   ToolsHtmlToPdfRoute: typeof ToolsHtmlToPdfRoute
   ToolsImageCompressRoute: typeof ToolsImageCompressRoute
   ToolsImageConvertRoute: typeof ToolsImageConvertRoute
@@ -3542,6 +3562,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsHabitsRoute: ToolsHabitsRoute,
   ToolsHealthTrackerRoute: ToolsHealthTrackerRoute,
   ToolsHijriRoute: ToolsHijriRoute,
+  ToolsHtmlCompilerRoute: ToolsHtmlCompilerRoute,
   ToolsHtmlToPdfRoute: ToolsHtmlToPdfRoute,
   ToolsImageCompressRoute: ToolsImageCompressRoute,
   ToolsImageConvertRoute: ToolsImageConvertRoute,
@@ -3680,3 +3701,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

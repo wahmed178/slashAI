@@ -5,6 +5,7 @@ import { AppShell } from "@/components/library/AppShell";
 import {
   TOOL_SECTIONS,
   SLASH_TOOL_COUNT,
+  SLASH_TOOL_COUNT_EXACT,
   toolOfTheDay,
   type SlashTool,
 } from "@/lib/slashkits";
@@ -33,12 +34,15 @@ function matches(tool: SlashTool, q: string) {
   return q.split(/\s+/).every((word) => text.includes(word));
 }
 
+// Pre-render the section list so the count badge is available at build time
+const TOOL_SECTIONS_PRERENDER = TOOL_SECTIONS;
+
 function ToolsIndex() {
   const [filter, setFilter] = useState<FilterType>("All");
   const [search, setSearch] = useState("");
   const q = search.trim().toLowerCase();
 
-  const visibleSections = filter === "All" ? TOOL_SECTIONS : TOOL_SECTIONS.filter((s) => s.title === filter);
+  const visibleSections = filter === "All" ? TOOL_SECTIONS_PRERENDER : TOOL_SECTIONS_PRERENDER.filter((s) => s.title === filter);
 
   // count matching tools across every visible section (or globally while searching)
   const matchingTools = !q
@@ -53,7 +57,7 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {SLASH_TOOL_COUNT} browser-based tools. Nothing uploaded. All client-side.
+          {SLASH_TOOL_COUNT_EXACT} browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
 
@@ -120,7 +124,7 @@ function ToolsIndex() {
                 : "border border-border bg-surface text-muted-foreground hover:border-primary/40 hover:text-foreground"
             }`}
           >
-            {f === "All" ? `All (${SLASH_TOOL_COUNT})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
+            {f === "All" ? `All (${SLASH_TOOL_COUNT_EXACT})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
           </button>
         ))}
       </div>
@@ -174,11 +178,11 @@ function ToolsIndex() {
                       <span className="shrink-0 rounded-full border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.08)] px-1.5 py-0.5 text-[9px] font-semibold text-primary">
                         Free
                       </span>
-                      {tool.noUpload && (
+                      {tool.noUpload ? (
                         <span className="rounded border px-1.5 py-0.5 text-[9px] font-medium text-green" style={{ background: "rgba(63,185,80,0.08)", borderColor: "rgba(63,185,80,0.3)" }}>
                           No upload
                         </span>
-                      )}
+                      ) : null}
                     </span>
                     <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">
                       {tool.desc}

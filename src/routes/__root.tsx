@@ -178,8 +178,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LibraryProvider>
         <KeyboardShortcutsProvider>
-        {/* Splash removed — was causing infinite loading */}
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <WhatsNewDialog />
         <Toaster position="bottom-right" />
