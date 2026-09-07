@@ -21,7 +21,13 @@ export default defineConfig({
       VitePWA({
         // The app shell + the whole static command catalog are cached for offline use.
         strategies: "generateSW",
-        registerType: "autoUpdate",
+        // "prompt" (not "autoUpdate"): the plugin force-injects workbox
+        // skipWaiting + clientsClaim under "autoUpdate", which lets a new SW
+        // hijack live pages mid-load and delete the asset cache underneath
+        // them - the cause of unstyled stale-shell pages after deploys.
+        // We register the SW ourselves (register-sw.ts), so this flag only
+        // controls that injection. Updates apply on the next reload.
+        registerType: "prompt",
         injectRegister: null,
         filename: "sw.js",
         devOptions: { enabled: false },
@@ -33,31 +39,20 @@ export default defineConfig({
           navigateFallback: "/",
           navigateFallbackDenylist: [/^\/~oauth/, /^\/api\//],
           cleanupOutdatedCaches: true,
-          clientsClaim: true,
-          skipWaiting: true,
-          runtimeCaching: [
-            {
-              // HTML navigations: always try the network first so updates land immediately.
-              urlPattern: ({ request }) => request.mode === "navigate",
-              handler: "NetworkFirst",
-              options: {
-                cacheName: "slashai-pages-v1",
-                networkTimeoutSeconds: 4,
-                expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 30 },
-              },
-            },
-            {
-              // Hashed build assets are immutable.
-              urlPattern: ({ url, request }) =>
-                url.origin === self.location.origin &&
-                ["script", "style", "font", "image"].includes(request.destination),
-              handler: "CacheFirst",
-              options: {
-                cacheName: "slashai-assets-v1",
-                expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              },
-            },
-          ],
+          // never seize control of a live page; explicit for clarity
+          skipWaiting: false,
+          clientsClaim: false,
+          // Deliberately NO skipWaiting/clientsClaim and NO runtimeCaching:
+          // - The precache is the single source of truth. Workbox installs the
+          //   complete new asset set BEFORE activating, so a page can never
+          //   mix an old index.html with new (404ing) hashed CSS/JS. The old
+          //   combo (skipWaiting + cleanupOutdatedCaches + a NetworkFirst
+          //   page cache) served stale shells whose hashed CSS no longer
+          //   existed, rendering the site unstyled until data was cleared.
+          // - Without skipWaiting the new SW activates on the next reload,
+          //   so users get updates one refresh later instead of a broken
+          //   mid-session page. cleanupOutdatedCaches removes superseded
+          //   precache versions on activation.
         },
       }),
     ],
