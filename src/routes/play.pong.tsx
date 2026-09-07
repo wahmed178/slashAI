@@ -5,25 +5,45 @@ import { RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/play/pong")({ component: Pong });
 
-const W = 640;
-const H = 400;
-const PADDLE_H = 80;
-const PADDLE_W = 12;
+// Vertical court: top paddle vs bottom paddle. Player controls the bottom one.
+const W = 400;
+const H = 640;
+const PAD_W = 92;
+const PAD_T = 12;
+const MARGIN = 22;
 const WIN_SCORE = 7;
 
 interface State {
-  ball: { x: number; y: number; vx: number; vy: number; speed: number };
-  left: number;
-  right: number;
-  scoreL: number;
-  scoreR: number;
+  ball: { x: number; y: number; vx: number; vy: number };
+  top: number;
+  bottom: number;
+  scoreTop: number;
+  scoreBottom: number;
   serving: boolean;
   serveTimer: number;
 }
 
-function freshBall(speed = 4.5) {
-  const angle = (Math.random() * 0.6 - 0.3) + (Math.random() < 0.5 ? 0 : Math.PI);
-  return { x: W / 2, y: H / 2, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, speed };
+function clampPaddle(x: number) {
+  return Math.max(0, Math.min(W - PAD_W, x));
+}
+
+function freshBall() {
+  const down = Math.random() < 0.5;
+  const angle = (down ? Math.PI / 2 : -Math.PI / 2) + (Math.random() * 0.7 - 0.35);
+  const speed = 4.6;
+  return { x: W / 2, y: H / 2, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed };
+}
+
+function freshState(): State {
+  return {
+    ball: freshBall(),
+    top: W / 2 - PAD_W / 2,
+    bottom: W / 2 - PAD_W / 2,
+    scoreTop: 0,
+    scoreBottom: 0,
+    serving: true,
+    serveTimer: 45,
+  };
 }
 
 function Pong() {
@@ -31,40 +51,24 @@ function Pong() {
   const [mode, setMode] = useState<"ai" | "2p">("ai");
   const [running, setRunning] = useState(false);
   const [winner, setWinner] = useState<0 | 1 | 2>(0);
-  const stateRef = useRef<State>({
-    ball: freshBall(),
-    left: H / 2 - PADDLE_H / 2,
-    right: H / 2 - PADDLE_H / 2,
-    scoreL: 0,
-    scoreR: 0,
-    serving: false,
-    serveTimer: 0,
-  });
+  const stateRef = useRef<State>(freshState());
   const keys = useRef(new Set<string>());
-  const touch = useRef<{ left: number | null; right: number | null }>({ left: null, right: null });
+  const pointers = useRef(new Map<number, "top" | "bottom">());
   const runningRef = useRef(running);
   runningRef.current = running;
   const modeRef = useRef(mode);
   modeRef.current = mode;
 
   function reset() {
-    stateRef.current = {
-      ball: freshBall(),
-      left: H / 2 - PADDLE_H / 2,
-      right: H / 2 - PADDLE_H / 2,
-      scoreL: 0,
-      scoreR: 0,
-      serving: false,
-      serveTimer: 0,
-    };
+    stateRef.current = freshState();
     setWinner(0);
     setRunning(true);
   }
 
-  // keyboard
+  // keyboard: A/D move the bottom paddle, arrow keys the top one (2P mode)
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if (["w", "s", "ArrowUp", "ArrowDown"].includes(e.key)) e.preventDefault();
+      if (["a", "d", "ArrowLeft", "ArrowRight"].includes(e.key)) e.preventDefault();
       keys.current.add(e.key);
     };
     const up = (e: KeyboardEvent) => keys.current.delete(e.key);
@@ -76,40 +80,19 @@ function Pong() {
     };
   }, []);
 
-  // touch: drag on left/right half controls that paddle
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const scaleY = (clientY: number) => {
-      const rect = canvas.getBoundingClientRect();
-      return ((clientY - rect.top) / rect.height) * H;
-    };
-    const apply = () => {
-      if (touch.current.left !== null) stateRef.current.left = touch.current.left - PADDLE_H / 2;
-      if (touch.current.right !== null) stateRef.current.right = touch.current.right - PADDLE_H / 2;
-    };
-    const onMove = (e: TouchEvent) => {
-      for (const t of Array.from(e.touches)) {
-        const rect = canvas.getBoundingClientRect();
-        const x = ((t.clientX - rect.left) / rect.width) * W;
-        const y = scaleY(t.clientY);
-        if (x < W / 2) touch.current.left = y;
-        else if (modeRef.current === "2p") touch.current.right = y;
-      }
-      apply();
-    };
-    const onEnd = () => {
-      touch.current = { left: null, right: null };
-    };
-    canvas.addEventListener("touchstart", onMove, { passive: true });
-    canvas.addEventListener("touchmove", onMove, { passive: true });
-    canvas.addEventListener("touchend", onEnd);
-    return () => {
-      canvas.removeEventListener("touchstart", onMove);
-      canvas.removeEventListener("touchmove", onMove);
-      canvas.removeEventListener("touchend", onEnd);
-    };
-  }, []);
+  // pointer control. touch-action: none + pointer capture means dragging the
+  // paddle never scrolls or moves the page, even on mobile.
+  function pointerSide(e: React.PointerEvent<HTMLCanvasElement>): "top" | "bottom" {
+    const canvas = canvasRef.current!;
+    const rect = canvas.getBoundingClientRect();
+    const y = ((e.clientY - rect.top) / rect.height) * H;
+    const x = ((e.clientX - rect.left) / rect.width) * W;
+    const side = modeRef.current === "2p" && y < H / 2 ? "top" : "bottom";
+    pointers.current.set(e.pointerId, side);
+    if (side === "top") stateRef.current.top = clampPaddle(x - PAD_W / 2);
+    else stateRef.current.bottom = clampPaddle(x - PAD_W / 2);
+    return side;
+  }
 
   // game loop
   useEffect(() => {
@@ -120,48 +103,68 @@ function Pong() {
 
     const step = () => {
       const s = stateRef.current;
-      const PADDLE_SPEED = 7;
+      const SPEED = 7;
 
       if (runningRef.current && winner === 0) {
-        // keyboard paddles
-        if (keys.current.has("w")) s.left -= PADDLE_SPEED;
-        if (keys.current.has("s")) s.left += PADDLE_SPEED;
-        const rightIsAI = modeRef.current === "ai";
-        if (rightIsAI) {
-          const target = s.ball.y - PADDLE_H / 2;
-          const diff = target - s.right;
-          s.right += Math.max(-5, Math.min(5, diff * 0.18));
+        if (modeRef.current === "ai") {
+          if (keys.current.has("a") || keys.current.has("ArrowLeft")) s.bottom -= SPEED;
+          if (keys.current.has("d") || keys.current.has("ArrowRight")) s.bottom += SPEED;
         } else {
-          if (keys.current.has("ArrowUp")) s.right -= PADDLE_SPEED;
-          if (keys.current.has("ArrowDown")) s.right += PADDLE_SPEED;
+          if (keys.current.has("a")) s.bottom -= SPEED;
+          if (keys.current.has("d")) s.bottom += SPEED;
+          if (keys.current.has("ArrowLeft")) s.top -= SPEED;
+          if (keys.current.has("ArrowRight")) s.top += SPEED;
         }
-        s.left = Math.max(0, Math.min(H - PADDLE_H, s.left));
-        s.right = Math.max(0, Math.min(H - PADDLE_H, s.right));
+        s.bottom = clampPaddle(s.bottom);
+        s.top = clampPaddle(s.top);
 
-        // ball
         if (!s.serving) {
           s.ball.x += s.ball.vx;
           s.ball.y += s.ball.vy;
-          if (s.ball.y < 4 || s.ball.y > H - 4) s.ball.vy = -s.ball.vy;
 
-          // paddle collisions
-          if (s.ball.x < 24 + PADDLE_W && s.ball.y > s.left && s.ball.y < s.left + PADDLE_H && s.ball.vx < 0) {
-            s.ball.vx = Math.abs(s.ball.vx) * 1.04;
-            s.ball.vy += ((s.ball.y - (s.left + PADDLE_H / 2)) / (PADDLE_H / 2)) * 2;
+          // side walls
+          if (s.ball.x < 5) {
+            s.ball.x = 5;
+            s.ball.vx = Math.abs(s.ball.vx);
           }
-          if (s.ball.x > W - 24 - PADDLE_W && s.ball.y > s.right && s.ball.y < s.right + PADDLE_H && s.ball.vx > 0) {
-            s.ball.vx = -Math.abs(s.ball.vx) * 1.04;
-            s.ball.vy += ((s.ball.y - (s.right + PADDLE_H / 2)) / (PADDLE_H / 2)) * 2;
+          if (s.ball.x > W - 5) {
+            s.ball.x = W - 5;
+            s.ball.vx = -Math.abs(s.ball.vx);
           }
 
-          // scoring
-          if (s.ball.x < 0) {
-            s.scoreR++;
+          // top paddle (AI or P2)
+          if (
+            s.ball.vy < 0 &&
+            s.ball.y - 6 <= MARGIN + PAD_T &&
+            s.ball.y > MARGIN - 12 &&
+            s.ball.x > s.top - 6 &&
+            s.ball.x < s.top + PAD_W + 6
+          ) {
+            s.ball.y = MARGIN + PAD_T + 6;
+            s.ball.vy = Math.abs(s.ball.vy) * 1.045;
+            s.ball.vx += ((s.ball.x - (s.top + PAD_W / 2)) / (PAD_W / 2)) * 2.2;
+          }
+          // bottom paddle (player)
+          if (
+            s.ball.vy > 0 &&
+            s.ball.y + 6 >= H - MARGIN - PAD_T &&
+            s.ball.y < H - MARGIN + 12 &&
+            s.ball.x > s.bottom - 6 &&
+            s.ball.x < s.bottom + PAD_W + 6
+          ) {
+            s.ball.y = H - MARGIN - PAD_T - 6;
+            s.ball.vy = -Math.abs(s.ball.vy) * 1.045;
+            s.ball.vx += ((s.ball.x - (s.bottom + PAD_W / 2)) / (PAD_W / 2)) * 2.2;
+          }
+
+          // goals
+          if (s.ball.y < -10) {
+            s.scoreBottom++;
             s.ball = freshBall();
             s.serving = true;
             s.serveTimer = 45;
-          } else if (s.ball.x > W) {
-            s.scoreL++;
+          } else if (s.ball.y > H + 10) {
+            s.scoreTop++;
             s.ball = freshBall();
             s.serving = true;
             s.serveTimer = 45;
@@ -171,10 +174,10 @@ function Pong() {
           if (s.serveTimer <= 0) s.serving = false;
         }
 
-        if (s.scoreL >= WIN_SCORE) {
+        if (s.scoreBottom >= WIN_SCORE) {
           setWinner(1);
           setRunning(false);
-        } else if (s.scoreR >= WIN_SCORE) {
+        } else if (s.scoreTop >= WIN_SCORE) {
           setWinner(2);
           setRunning(false);
         }
@@ -186,25 +189,25 @@ function Pong() {
       ctx.strokeStyle = "rgba(255,255,255,0.12)";
       ctx.setLineDash([8, 12]);
       ctx.beginPath();
-      ctx.moveTo(W / 2, 0);
-      ctx.lineTo(W / 2, H);
+      ctx.moveTo(0, H / 2);
+      ctx.lineTo(W, H / 2);
       ctx.stroke();
       ctx.setLineDash([]);
 
-      ctx.fillStyle = "#2dd4bf";
-      ctx.fillRect(24, s.left, PADDLE_W, PADDLE_H);
       ctx.fillStyle = "#f87171";
-      ctx.fillRect(W - 24 - PADDLE_W, s.right, PADDLE_W, PADDLE_H);
+      ctx.fillRect(s.top, MARGIN, PAD_W, PAD_T);
+      ctx.fillStyle = "#2dd4bf";
+      ctx.fillRect(s.bottom, H - MARGIN - PAD_T, PAD_W, PAD_T);
       ctx.fillStyle = "#e5e7eb";
       ctx.beginPath();
       ctx.arc(s.ball.x, s.ball.y, 6, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.font = "bold 42px system-ui";
-      ctx.fillStyle = "rgba(255,255,255,0.25)";
+      ctx.font = "bold 40px system-ui";
+      ctx.fillStyle = "rgba(255,255,255,0.22)";
       ctx.textAlign = "center";
-      ctx.fillText(String(s.scoreL), W / 2 - 60, 56);
-      ctx.fillText(String(s.scoreR), W / 2 + 60, 56);
+      ctx.fillText(String(s.scoreTop), W / 2, H / 2 - 26);
+      ctx.fillText(String(s.scoreBottom), W / 2, H / 2 + 54);
 
       raf = requestAnimationFrame(step);
     };
@@ -219,11 +222,12 @@ function Pong() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🏓 Pong</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          W/S for the left paddle{mode === "2p" ? ", arrows for the right" : " - the AI handles the right"}. On touch, drag your half.
+          Vertical court - you defend the bottom. Drag your half to move the paddle (the page stays
+          put while you drag){mode === "2p" ? ", or use A/D - the top player uses arrow keys" : ", or use A/D / arrow keys"}.
         </p>
       </header>
 
-      <div className="mx-auto max-w-xl space-y-3">
+      <div className="mx-auto max-w-md space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex gap-1.5">
             {([["ai", "🤖 Vs AI"], ["2p", "👥 2 Players"]] as const).map(([m, label]) => (
@@ -248,15 +252,30 @@ function Pong() {
             ref={canvasRef}
             width={W}
             height={H}
-            className="w-full rounded-xl border border-border"
+            onPointerDown={(e) => {
+              e.currentTarget.setPointerCapture(e.pointerId);
+              pointerSide(e);
+            }}
+            onPointerMove={(e) => {
+              if (pointers.current.has(e.pointerId)) pointerSide(e);
+            }}
+            onPointerUp={(e) => pointers.current.delete(e.pointerId)}
+            onPointerCancel={(e) => pointers.current.delete(e.pointerId)}
+            className="w-full touch-none rounded-xl border border-border"
             style={{ aspectRatio: `${W}/${H}` }}
           />
           {!running && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-black/60 text-center">
+            <div className="absolute inset-0 flex touch-none flex-col items-center justify-center gap-3 rounded-xl bg-black/60 text-center">
               {winner ? (
                 <>
                   <p className="text-[20px] font-black text-foreground">
-                    {winner === 1 ? "Left player wins!" : mode === "ai" ? "AI wins!" : "Right player wins!"}
+                    {winner === 1
+                      ? mode === "ai"
+                        ? "You win! 🎉"
+                        : "Bottom player wins!"
+                      : mode === "ai"
+                        ? "AI wins this one"
+                        : "Top player wins!"}
                   </p>
                   <button onClick={reset} className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
                     Rematch
@@ -264,14 +283,16 @@ function Pong() {
                 </>
               ) : (
                 <button onClick={() => setRunning(true)} className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
-                  Serve {s.scoreL + s.scoreR > 0 ? "again" : "the ball"}
+                  Serve {s.scoreTop + s.scoreBottom > 0 ? "again" : "the ball"}
                 </button>
               )}
             </div>
           )}
         </div>
 
-        <p className="text-center text-[11px] text-muted-foreground">First to {WIN_SCORE} points wins. Rally long enough and the ball speeds up.</p>
+        <p className="text-center text-[11px] text-muted-foreground">
+          First to {WIN_SCORE} points wins. Long rallies speed the ball up - use the paddle edges to cut sharp angles.
+        </p>
       </div>
     </AppShell>
   );
