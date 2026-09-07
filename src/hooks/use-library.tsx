@@ -79,7 +79,7 @@ export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[
     swatch: "oklch(0.985 0.003 250)",
   },
   { id: "amoled", label: "AMOLED", hint: "True black, saves battery", swatch: "oklch(0 0 0)" },
-  { id: "glass", label: "Glass", hint: "Frosted violet dark", swatch: "oklch(0.78 0.16 178)" },
+  { id: "glass", label: "Glass", hint: "Liquid glass aurora", swatch: "oklch(0.68 0.15 262)" },
 ];
 
 /** themes that fix their own primary colour, so the accent picker is inert */
@@ -118,7 +118,7 @@ interface Settings {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  theme: "dark",
+  theme: "glass",
   density: "comfortable",
   accent: "teal",
   view: "grid",

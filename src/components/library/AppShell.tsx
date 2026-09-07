@@ -384,7 +384,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
       </Sheet>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-sidebar-border bg-[rgba(10,10,15,0.8)] backdrop-blur-[10px]">
+        <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
           <div className="flex h-[52px] items-center gap-3 px-4 md:px-8">
             {/* Mobile: hamburger */}
             <Button
@@ -451,7 +451,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
       {/* mobile bottom navigation - five essential destinations */}
       <nav
         aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-sidebar-border bg-[rgba(10,10,15,0.97)] pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-sidebar-border bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
         style={{ height: 'calc(56px + env(safe-area-inset-bottom))' }}
       >
         {PRIMARY.map((item) => {
