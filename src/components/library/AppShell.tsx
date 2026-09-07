@@ -5,6 +5,7 @@ import {
   Terminal,
   Compass,
   Wrench,
+  Gamepad2,
   LayoutGrid,
   Zap,
   Map,
@@ -38,6 +39,7 @@ import {
 } from "@/components/ui/sheet";
 import { useLibrary } from "@/hooks/use-library";
 import { getSlashTool } from "@/lib/slashkits";
+import { getPlayGame } from "@/lib/slashplay";
 import { SearchBox } from "./SearchBox";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
@@ -51,6 +53,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
   { to: "/discover", label: "Discover", icon: Compass },
   { to: "/tools", label: "SlashKits", icon: Wrench },
+  { to: "/play", label: "SlashPlay", icon: Gamepad2, badge: "New" },
   { to: "/ai-tools", label: "AI Tools", icon: Cpu, badge: "100+" },
   { to: "/hub", label: "Hubs", icon: LayoutGrid },
   { to: "/roadmaps", label: "Roadmaps", icon: Map },
@@ -98,6 +101,7 @@ function isActive(pathname: string, to: string, exact?: boolean) {
       pathname.startsWith("/radar")
     );
   if (to === "/tools") return pathname.startsWith("/tools");
+  if (to === "/play") return pathname.startsWith("/play");
   return pathname.startsWith(to);
 }
 
@@ -163,6 +167,15 @@ function breadcrumbsFor(pathname: string): Crumb[] | null {
       { label: "Home", to: "/" },
       { label: "SlashKits", to: "/tools" },
       { label: tool?.name ?? humanize(segs[1]) },
+    ];
+  }
+  if (first === "play") {
+    const game = segs[1] ? getPlayGame(segs[1]) : undefined;
+    if (!segs[1]) return [{ label: "Home", to: "/" }, { label: "SlashPlay" }];
+    return [
+      { label: "Home", to: "/" },
+      { label: "SlashPlay", to: "/play" },
+      { label: game?.name ?? humanize(segs[1]) },
     ];
   }
   if (first === "hub") {

@@ -34,7 +34,6 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "smart-paste", name: "Smart Paste Bin", desc: "Detect text type and extract insights", icon: "📋" },
       { slug: "image-compress", name: "Image Compressor", desc: "Reduce image file size in your browser", icon: "🖼️", noUpload: true },
       { slug: "regex", name: "Regex Playground", desc: "Test regex with live highlighting", icon: ".*" },
-      { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test - WPM, accuracy, streaks", icon: "⌨️" },
       { slug: "contract", name: "Contract Generator", desc: "Professional legal contracts as PDF", icon: "📄" },
       { slug: "screenshot", name: "Screenshot to Text", desc: "Extract text from images with OCR", icon: "📸" },
       { slug: "expense", name: "Trip Expense Splitter", desc: "Split expenses with minimum settlements", icon: "💸" },
@@ -202,9 +201,6 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "reading-list", name: "Book Tracker", desc: "Private reading list with ratings & export", icon: "📚" },
       { slug: "age-of-things", name: "How Old Is Everything?", desc: "Age comparisons for famous things, places and inventions", icon: "⏳" },
       { slug: "mind-map", name: "Mind Map Builder", desc: "Visual SVG mind map with drag & keyboard", icon: "🧠" },
-      { slug: "dice", name: "Dice Roller", desc: "Roll D4-D100 for tabletop games", icon: "🎲" },
-      { slug: "coin-flip", name: "Coin Flipper", desc: "Virtual coin flip with history", icon: "🪙" },
-      { slug: "random-number", name: "Random Number Generator", desc: "Generate numbers in any range", icon: "🔢" },
       { slug: "roman-numeral", name: "Roman Numeral Converter", desc: "Numbers ↔ Roman numerals", icon: "🏛️" },
     ],
   },
@@ -239,7 +235,6 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "quiz-maker", name: "Quiz Builder", desc: "Build and share quizzes via URL", icon: "❓" },
       { slug: "flashcard-maker", name: "Flashcard Maker", desc: "Create decks, study with spaced repetition", icon: "🧠" },
       { slug: "reading", name: "Speed Reading Trainer", desc: "RSVP flash-one-word technique", icon: "📖" },
-      { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test - WPM, accuracy, streaks", icon: "⌨️" },
       { slug: "story", name: "Story Writing Kit", desc: "Characters, plot planner & writing prompts", icon: "📖" },
       { slug: "habit-stack", name: "Habit Stacking Planner", desc: "Atomic Habits routine builder", icon: "📋" },
     ],
@@ -276,7 +271,7 @@ export const getSlashTool = (slug: string | undefined) =>
 
 /** deterministic daily pick for the "Tool of the Day" spotlight */
 export function toolOfTheDay(): SlashTool {
-  const featured = ["meme", "qr-code", "image-compress", "sip-calculator", "pomodoro", "typing-test", "tasbeeh"]
+  const featured = ["meme", "qr-code", "image-compress", "sip-calculator", "pomodoro", "whiteboard", "tasbeeh"]
     .map((slug) => toolByName.get(slug))
     .filter((t): t is SlashTool => Boolean(t));
   const dayIndex = Math.floor(Date.now() / 86_400_000) % featured.length;

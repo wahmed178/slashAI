@@ -8,6 +8,7 @@ import {
   toolOfTheDay,
   type SlashTool,
 } from "@/lib/slashkits";
+import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
@@ -59,6 +60,19 @@ function ToolsIndex() {
           {SLASH_TOOL_COUNT} browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
+
+      {/* SlashPlay cross-link */}
+      <Link
+        to="/play"
+        className="mt-4 flex items-center gap-3 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 transition-colors hover:bg-[rgba(45,212,191,0.08)]"
+      >
+        <span className="text-[26px]">🎮</span>
+        <span className="flex-1">
+          <span className="block text-[14px] font-bold text-foreground">Looking for games?</span>
+          <span className="block text-[12px] text-muted-foreground">SlashPlay has {PLAY_GAME_COUNT} of them - tic tac toe, battleship, blackjack, snake and more.</span>
+        </span>
+        <span className="text-[12px] font-bold text-primary">Play →</span>
+      </Link>
 
       {/* Tool of the Day - rotates on a daily date seed */}
       <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">

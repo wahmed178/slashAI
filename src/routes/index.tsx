@@ -499,7 +499,7 @@ function HomePage() {
             { slug: "qr-code", icon: "📱", name: "QR Generator", desc: "URLs, WiFi, text" },
             { slug: "pomodoro", icon: "🍅", name: "Pomodoro Timer", desc: "25/5/15 focus" },
             { slug: "sip-calculator", icon: "💰", name: "SIP Calculator", desc: "Mutual fund returns" },
-            { slug: "typing-test", icon: "⌨️", name: "Typing Test", desc: "WPM & accuracy" },
+            { slug: "whiteboard", icon: "🖊️", name: "Whiteboard", desc: "Sketch & export" },
             { slug: "color-palette", icon: "🎨", name: "Color Palette", desc: "Generate palettes" },
           ].map((tool) => (
             <Link
@@ -515,28 +515,36 @@ function HomePage() {
         </div>
       </Section>
 
-      {/* ─── Fun Time (GingerBook-inspired engagement) ─── */}
+      {/* ─── SlashPlay (games showcase) ─── */}
       <Section
-        title="Fun Time"
-        hint="Games, quizzes and creative tools - all free."
+        title="SlashPlay"
+        hint="Free browser games - multiplayer pass-and-play, vs AI and solo."
+        action={
+          <Link
+            to="/play"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            See all games <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
       >
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
-          {([
-            { to: "/tools/meme", emoji: "😂", title: "Meme Maker", desc: "Create memes" },
-            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories" },
-            { to: "/tools/dice", emoji: "🎲", title: "Dice Roller", desc: "D4-D100" },
-            { to: "/tools/coin-flip", emoji: "🪙", title: "Coin Flip", desc: "Virtual flip" },
-            { to: "/tools/sticker", emoji: "🎭", title: "Sticker Maker", desc: "WhatsApp stickers" },
-            { to: "/tools/quiz-maker", emoji: "❓", title: "Quiz Builder", desc: "Create & share" },
-          ]).map((item) => (
+          {[
+            { slug: "tic-tac-toe", icon: "❌", name: "Tic Tac Toe", desc: "Vs AI or a friend" },
+            { slug: "connect-four", icon: "🔴", name: "Connect Four", desc: "Line up four" },
+            { slug: "battleship", icon: "🚢", name: "Battleship", desc: "Sink the fleet" },
+            { slug: "blackjack", icon: "♠️", name: "Blackjack", desc: "Beat the dealer" },
+            { slug: "snake", icon: "🐍", name: "Snake", desc: "Arcade classic" },
+            { slug: "2048", icon: "🔢", name: "2048", desc: "Merge to 2048" },
+          ].map((game) => (
             <Link
-              key={item.to}
-              to={item.to}
-              className="group flex flex-col items-center rounded-xl border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+              key={game.slug}
+              to={`/play/${game.slug}` as string}
+              className="group flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40 min-h-[110px]"
             >
-              <span className="text-[32px]">{item.emoji}</span>
-              <span className="mt-2 block text-[13px] font-semibold text-foreground">{item.title}</span>
-              <span className="mt-0.5 block text-[11px] text-muted-foreground">{item.desc}</span>
+              <span className="text-[26px]">{game.icon}</span>
+              <span className="mt-1.5 block text-[12px] font-semibold text-foreground leading-tight">{game.name}</span>
+              <span className="mt-0.5 block max-w-full truncate text-[10px] text-muted-foreground leading-tight">{game.desc}</span>
             </Link>
           ))}
         </div>
@@ -747,6 +755,7 @@ function HomePage() {
                 { label: "Roadmaps", to: "/roadmaps" },
                 { label: "Glossary", to: "/glossary" },
                 { label: "SlashKits", to: "/tools" },
+                { label: "SlashPlay", to: "/play" },
               ],
             },
             {

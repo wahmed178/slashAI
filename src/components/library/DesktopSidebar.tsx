@@ -4,6 +4,7 @@ import {
   Terminal,
   Compass,
   Wrench,
+  Gamepad2,
   LayoutGrid,
   Zap,
   Map,
@@ -28,6 +29,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
   { to: "/discover", label: "Discover", icon: Compass },
   { to: "/tools", label: "SlashKits", icon: Wrench },
+  { to: "/play", label: "SlashPlay", icon: Gamepad2, badge: "New" },
   { to: "/ai-tools", label: "AI Tools", icon: Cpu, badge: "100+" },
   { to: "/hub", label: "Hubs", icon: LayoutGrid },
   { to: "/roadmaps", label: "Roadmaps", icon: Map },
@@ -65,6 +67,7 @@ function isActive(pathname: string, to: string, exact?: boolean) {
       pathname.startsWith("/radar")
     );
   if (to === "/tools") return pathname.startsWith("/tools");
+  if (to === "/play") return pathname.startsWith("/play");
   return pathname.startsWith(to);
 }
 

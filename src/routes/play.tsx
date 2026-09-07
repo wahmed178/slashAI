@@ -1,290 +1,184 @@
 import { useState } from "react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Coins, Dices, Shuffle, Sparkles, Volume2, VolumeX, Wand2 } from "lucide-react";
-
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Search, X } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
-import { Button } from "@/components/ui/button";
-import { COMMANDS } from "@/lib/commands";
-import { feedback, isMuted, setMuted } from "@/lib/play-sound";
-import { cn } from "@/lib/utils";
+import {
+  PLAY_SECTIONS,
+  PLAY_GAME_COUNT,
+  playModeCounts,
+  type PlayGame,
+} from "@/lib/slashplay";
 
 export const Route = createFileRoute("/play")({
   head: () => ({
     meta: [
-      { title: "Play - quick games & decision makers | SlashAI" },
+      { title: `SlashPlay - ${PLAY_GAME_COUNT} free browser games | SlashAI` },
       {
         name: "description",
-        content:
-          "Bored? Flip a coin, roll dice, spin a decision wheel or hit the Surprise me button to land on a random AI command.",
-      },
-      { property: "og:title", content: "Play - quick games & decision makers | SlashAI" },
-      {
-        property: "og:description",
-        content: "Coin toss, dice, decision wheel and a Surprise me button, all inside SlashAI.",
+        content: `SlashPlay: ${PLAY_GAME_COUNT} free browser games - tic tac toe, connect four, battleship, blackjack, snake, 2048 and more. Multiplayer pass-and-play, no download, works offline.`,
       },
     ],
   }),
-  component: PlayPage,
+  component: PlayIndex,
 });
 
-function Tile({
-  title,
-  hint,
-  children,
-  className,
-}: {
-  title: string;
-  hint: string;
-  children: React.ReactNode;
-  className?: string;
-}) {
+const FILTERS = ["All", ...PLAY_SECTIONS.map((s) => s.title)] as const;
+type FilterType = (typeof FILTERS)[number];
+
+const MODES = playModeCounts();
+
+function matches(game: PlayGame, q: string) {
+  const text = `${game.name} ${game.desc} ${game.players}`.toLowerCase();
+  return q.split(/\s+/).every((word) => text.includes(word));
+}
+
+function GameCard({ game }: { game: PlayGame }) {
   return (
-    <section
-      className={cn(
-        "panel relative overflow-hidden rounded-2xl p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-primary/50",
-        className,
-      )}
+    <Link
+      to={`/play/${game.slug}` as string}
+      className="group flex flex-col rounded-xl border border-border bg-surface p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-24 -right-16 size-48 rounded-full bg-primary/10 blur-3xl"
-      />
-      <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-        {title}
-      </h2>
-      <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
-      <div className="relative mt-4">{children}</div>
-    </section>
-  );
-}
-
-/** Big tactile action button: press-scale, glow, sound + haptics. */
-function ActionButton({
-  children,
-  onClick,
-  icon: Icon,
-  busy,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  icon: React.ComponentType<{ className?: string }>;
-  busy?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      disabled={busy}
-      onClick={onClick}
-      className="group relative inline-flex h-11 w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-transform duration-150 ease-out will-change-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none active:translate-y-0 active:scale-[0.97] disabled:opacity-70"
-    >
-      <span
-        aria-hidden
-        className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary-foreground/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
-      />
-      <Icon className={cn("size-4", busy && "animate-spin")} />
-      {children}
-    </button>
-  );
-}
-
-function CoinToss() {
-  const [result, setResult] = useState<"Heads" | "Tails" | null>(null);
-  const [spinning, setSpinning] = useState(false);
-
-  const toss = () => {
-    feedback("flip");
-    setSpinning(true);
-    window.setTimeout(() => {
-      setResult(Math.random() < 0.5 ? "Heads" : "Tails");
-      setSpinning(false);
-      feedback("win");
-    }, 700);
-  };
-
-  return (
-    <Tile title="Coin toss" hint="Settle it in one tap.">
-      <div className="flex flex-col items-center gap-4">
-        <div
-          className={cn(
-            "flex size-24 items-center justify-center rounded-full border-2 border-primary/40 bg-surface text-lg font-bold text-foreground transition-transform duration-700 ease-out",
-            spinning && "animate-spin",
-          )}
-          aria-live="polite"
-        >
-          {spinning ? <Coins className="size-8 text-primary" /> : (result ?? "Toss")}
-        </div>
-        <ActionButton icon={Coins} onClick={toss} busy={spinning}>
-          Flip the coin
-        </ActionButton>
+      <div className="flex items-start justify-between gap-2">
+        <span className="text-[28px] leading-none">{game.icon}</span>
+        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary">
+          {game.players}
+        </span>
       </div>
-    </Tile>
+      <span className="mt-2.5 block text-[13px] font-bold text-foreground">{game.name}</span>
+      <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{game.desc}</span>
+      <span className="mt-2.5 text-[11px] font-semibold text-primary opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+        Play now →
+      </span>
+    </Link>
   );
 }
 
-const PIPS = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+function PlayIndex() {
+  const [filter, setFilter] = useState<FilterType>("All");
+  const [search, setSearch] = useState("");
+  const q = search.trim().toLowerCase();
 
-function DiceRoll() {
-  const [dice, setDice] = useState<[number, number]>([1, 1]);
-  const [rolling, setRolling] = useState(false);
+  const visibleSections =
+    filter === "All" ? PLAY_SECTIONS : PLAY_SECTIONS.filter((s) => s.title === filter);
 
-  const roll = () => {
-    feedback("roll");
-    setRolling(true);
-    const timer = window.setInterval(() => {
-      setDice([Math.floor(Math.random() * 6), Math.floor(Math.random() * 6)]);
-    }, 70);
-    window.setTimeout(() => {
-      window.clearInterval(timer);
-      setRolling(false);
-      feedback("win");
-    }, 620);
-  };
+  const filtered = q
+    ? PLAY_SECTIONS.map((s) => ({
+        ...s,
+        games: s.games.filter((g) => matches(g, q)),
+      })).filter((s) => s.games.length > 0)
+    : visibleSections;
 
-  return (
-    <Tile title="Dice" hint="Two dice, real randomness.">
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex items-center gap-3" aria-live="polite">
-          {dice.map((d, i) => (
-            <span
-              key={i}
-              className={cn(
-                "select-none text-6xl leading-none text-primary transition-transform duration-150",
-                rolling && "scale-110",
-              )}
-            >
-              {PIPS[d]}
-            </span>
-          ))}
-        </div>
-        <p className="text-sm text-muted-foreground">Total {dice[0] + dice[1] + 2}</p>
-        <ActionButton icon={Dices} onClick={roll} busy={rolling}>
-          Roll dice
-        </ActionButton>
-      </div>
-    </Tile>
-  );
-}
-
-function DecisionWheel() {
-  const [raw, setRaw] = useState("Pizza, Biryani, Noodles, Cook at home");
-  const [pick, setPick] = useState<string | null>(null);
-  const [spinning, setSpinning] = useState(false);
-
-  const spin = () => {
-    const options = raw
-      .split(/[,\n]/)
-      .map((o) => o.trim())
-      .filter(Boolean);
-    if (options.length === 0) return;
-    feedback("roll");
-    setSpinning(true);
-    const timer = window.setInterval(() => {
-      setPick(options[Math.floor(Math.random() * options.length)] ?? null);
-    }, 90);
-    window.setTimeout(() => {
-      window.clearInterval(timer);
-      setSpinning(false);
-      feedback("win");
-    }, 900);
-  };
+  const foundCount = q
+    ? PLAY_SECTIONS.reduce((acc, s) => acc + s.games.filter((g) => matches(g, q)).length, 0)
+    : PLAY_SECTIONS.reduce((acc, s) => (filter === "All" || s.title === filter ? acc + s.games.length : acc), 0);
 
   return (
-    <Tile title="Decide for me" hint="Type your options, comma separated.">
-      <div className="space-y-3">
-        <textarea
-          value={raw}
-          onChange={(e) => setRaw(e.target.value)}
-          rows={3}
-          aria-label="Options to choose between"
-          className="w-full resize-none rounded-xl border border-border bg-surface p-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-ring/40 focus:outline-none"
-          placeholder="Option one, option two, option three"
-        />
-        <div
-          className={cn(
-            "rounded-xl border border-dashed border-primary/40 px-4 py-3 text-center text-base font-semibold text-foreground transition-opacity",
-            spinning && "opacity-60",
-          )}
-          aria-live="polite"
-        >
-          {pick ?? "Spin to pick"}
-        </div>
-        <ActionButton icon={Shuffle} onClick={spin} busy={spinning}>
-          Spin
-        </ActionButton>
-      </div>
-    </Tile>
-  );
-}
-
-function SurpriseMe() {
-  const navigate = useNavigate();
-  const [teaser, setTeaser] = useState<string | null>(null);
-
-  const surprise = () => {
-    const cmd = COMMANDS[Math.floor(Math.random() * COMMANDS.length)];
-    if (!cmd) return;
-    feedback("flip");
-    setTeaser(cmd.command);
-    window.setTimeout(() => {
-      void navigate({ to: "/c/$slug", params: { slug: cmd.id } });
-    }, 320);
-  };
-
-  return (
-    <Tile title="Bored? Surprise me" hint="Jump to a random command from the library.">
-      <div className="space-y-3">
-        <p className="font-mono text-sm text-primary" aria-live="polite">
-          {teaser ?? "/????"}
+    <AppShell wide title="SlashPlay">
+      <header className="page-enter pt-2">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">🎮 SlashPlay</h1>
+        <p className="mt-1 text-[15px] text-muted-foreground">
+          {PLAY_GAME_COUNT} games that run instantly in your browser. No downloads, works offline.
         </p>
-        <ActionButton icon={Wand2} onClick={surprise}>
-          Surprise me
-        </ActionButton>
-        <Link
-          to="/discover/$section"
-          params={{ section: "free-time" }}
-          className="block text-center text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-        >
-          More free-time picks
-        </Link>
-      </div>
-    </Tile>
-  );
-}
-
-function PlayPage() {
-  const [muted, setMutedState] = useState(() => (typeof window === "undefined" ? true : isMuted()));
-
-  const toggleSound = () => {
-    const next = !muted;
-    setMuted(next);
-    setMutedState(next);
-    if (!next) feedback("tap");
-  };
-
-  return (
-    <AppShell wide title="Play">
-      <header className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold text-foreground">
-            <Sparkles className="size-5 text-primary" /> Play
-          </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Small, satisfying time-passers - coin toss, dice, a decision spinner and a random
-            command button. Everything runs offline.
-          </p>
-        </div>
-        <Button variant="outline" size="sm" className="gap-1.5" onClick={toggleSound}>
-          {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
-          {muted ? "Sound off" : "Sound on"}
-        </Button>
       </header>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        <CoinToss />
-        <DiceRoll />
-        <DecisionWheel />
-        <SurpriseMe />
+      {/* Multiplayer spotlight */}
+      <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="text-[14px]">🎯</span>
+          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Pass and Play</span>
+          <span className="text-[10px] text-muted-foreground">· share one device, take turns</span>
+        </div>
+        <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-5">
+          {PLAY_SECTIONS[0]!.games.slice(0, 5).map((g) => (
+            <Link
+              key={g.slug}
+              to={`/play/${g.slug}` as string}
+              className="flex flex-col items-center rounded-lg bg-surface px-2 py-3 text-center transition-colors hover:bg-surface-elevated"
+            >
+              <span className="text-[24px]">{g.icon}</span>
+              <span className="mt-1 block text-[11px] font-semibold text-foreground leading-tight">{g.name}</span>
+            </Link>
+          ))}
+        </div>
       </div>
+
+      {/* Stats strip */}
+      <div className="mt-3 grid grid-cols-3 gap-2">
+        {[
+          { label: "Games", value: PLAY_GAME_COUNT, icon: "🎮" },
+          { label: "Multiplayer", value: MODES.multiplayer, icon: "👥" },
+          { label: "Vs AI modes", value: MODES.vsAi, icon: "🤖" },
+        ].map((s) => (
+          <div key={s.label} className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+            <p className="text-[17px] font-bold text-foreground">
+              {s.icon} {s.value}
+            </p>
+            <p className="text-[10px] text-muted-foreground">{s.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Search */}
+      <div className="relative mt-4">
+        <Search className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search games..."
+          className="w-full rounded-xl border border-border bg-surface py-2.5 pr-10 pl-10 text-[13px] text-foreground placeholder-muted-foreground focus:border-primary/50 focus:outline-none"
+        />
+        {search && (
+          <button
+            onClick={() => setSearch("")}
+            className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            aria-label="Clear search"
+          >
+            <X className="size-4" />
+          </button>
+        )}
+      </div>
+
+      {/* Filter chips */}
+      <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {FILTERS.map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-medium transition-colors ${
+              filter === f
+                ? "bg-primary text-background"
+                : "border border-border bg-surface text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+
+      {foundCount === 0 ? (
+        <p className="mt-10 text-center text-sm text-muted-foreground">No games match "{search}".</p>
+      ) : (
+        filtered.map((section) => (
+          <section key={section.title} className="mt-7">
+            <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold text-foreground">
+              <span>{section.icon}</span>
+              {section.title}
+              <span className="text-[11px] font-medium text-muted-foreground">
+                {section.games.length} game{section.games.length === 1 ? "" : "s"}
+              </span>
+            </h2>
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
+              {section.games.map((game) => (
+                <GameCard key={game.slug} game={game} />
+              ))}
+            </div>
+          </section>
+        ))
+      )}
+
+      <p className="mt-8 text-center text-[11px] text-muted-foreground">
+        Multiplayer games are pass-and-play: share one device and take turns. Everything saves locally - your scores never leave your browser.
+      </p>
     </AppShell>
   );
 }
