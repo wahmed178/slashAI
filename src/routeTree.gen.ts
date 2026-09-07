@@ -58,6 +58,7 @@ import { Route as HubIslamRouteImport } from './routes/hub.islam';
 import { Route as HubQuotesRouteImport } from './routes/hub.quotes';
 import { Route as HubUrduRouteImport } from './routes/hub.urdu';
 import { Route as LUsernameRouteImport } from './routes/l.$username';
+import { Route as PlayIndexRouteImport } from './routes/play.index';
 import { Route as Play2048RouteImport } from './routes/play.2048';
 import { Route as PlayBattleshipRouteImport } from './routes/play.battleship';
 import { Route as PlayBlackjackRouteImport } from './routes/play.blackjack';
@@ -454,6 +455,11 @@ const LUsernameRoute = LUsernameRouteImport.update({
   id: '/l/$username',
   path: '/l/$username',
   getParentRoute: () => rootRouteImport,
+} as any);
+const PlayIndexRoute = PlayIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PlayRoute,
 } as any);
 const Play2048Route = Play2048RouteImport.update({
   id: '/2048',
@@ -1410,6 +1416,7 @@ export interface FileRoutesByFullPath {
   '/discover/': typeof DiscoverIndexRoute;
   '/explore/': typeof ExploreIndexRoute;
   '/hub/': typeof HubIndexRoute;
+  '/play/': typeof PlayIndexRoute;
   '/tools/': typeof ToolsIndexRoute;
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute;
   '/explore/$category/': typeof ExploreCategoryIndexRoute;
@@ -1433,7 +1440,6 @@ export interface FileRoutesByTo {
   '/live': typeof LiveRoute;
   '/me': typeof MeRoute;
   '/movies': typeof MoviesRoute;
-  '/play': typeof PlayRouteWithChildren;
   '/privacy': typeof PrivacyRoute;
   '/quiz': typeof QuizRoute;
   '/radar': typeof RadarRoute;
@@ -1611,6 +1617,7 @@ export interface FileRoutesByTo {
   '/discover': typeof DiscoverIndexRoute;
   '/explore': typeof ExploreIndexRoute;
   '/hub': typeof HubIndexRoute;
+  '/play': typeof PlayIndexRoute;
   '/tools': typeof ToolsIndexRoute;
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute;
   '/explore/$category': typeof ExploreCategoryIndexRoute;
@@ -1814,6 +1821,7 @@ export interface FileRoutesById {
   '/discover/': typeof DiscoverIndexRoute;
   '/explore/': typeof ExploreIndexRoute;
   '/hub/': typeof HubIndexRoute;
+  '/play/': typeof PlayIndexRoute;
   '/tools/': typeof ToolsIndexRoute;
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute;
   '/explore/$category/': typeof ExploreCategoryIndexRoute;
@@ -2018,6 +2026,7 @@ export interface FileRouteTypes {
     | '/discover/'
     | '/explore/'
     | '/hub/'
+    | '/play/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/';
@@ -2041,7 +2050,6 @@ export interface FileRouteTypes {
     | '/live'
     | '/me'
     | '/movies'
-    | '/play'
     | '/privacy'
     | '/quiz'
     | '/radar'
@@ -2219,6 +2227,7 @@ export interface FileRouteTypes {
     | '/discover'
     | '/explore'
     | '/hub'
+    | '/play'
     | '/tools'
     | '/explore/$category/$subcategory'
     | '/explore/$category';
@@ -2421,6 +2430,7 @@ export interface FileRouteTypes {
     | '/discover/'
     | '/explore/'
     | '/hub/'
+    | '/play/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/';
@@ -2825,6 +2835,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/l/$username';
       preLoaderRoute: typeof LUsernameRouteImport;
       parentRoute: typeof rootRouteImport;
+    };
+    '/play/': {
+      id: '/play/';
+      path: '/';
+      fullPath: '/play/';
+      preLoaderRoute: typeof PlayIndexRouteImport;
+      parentRoute: typeof PlayRoute;
     };
     '/play/2048': {
       id: '/play/2048';
@@ -3906,6 +3923,7 @@ interface PlayRouteChildren {
   PlayTicTacToeRoute: typeof PlayTicTacToeRoute;
   PlayTypingTestRoute: typeof PlayTypingTestRoute;
   PlayWordGuessRoute: typeof PlayWordGuessRoute;
+  PlayIndexRoute: typeof PlayIndexRoute;
 }
 
 const PlayRouteChildren: PlayRouteChildren = {
@@ -3928,6 +3946,7 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayTicTacToeRoute: PlayTicTacToeRoute,
   PlayTypingTestRoute: PlayTypingTestRoute,
   PlayWordGuessRoute: PlayWordGuessRoute,
+  PlayIndexRoute: PlayIndexRoute,
 };
 
 const PlayRouteWithChildren = PlayRoute._addFileChildren(PlayRouteChildren);
