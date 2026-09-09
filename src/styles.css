@@ -19,7 +19,7 @@
  */
 
 @theme inline {
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Outfit", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -887,4 +887,33 @@ a[id], section[id], [id^="section"] {
   .cat-glow:hover {
     transform: translateY(-2px);
   }
+}
+
+/* ══════════════════════════════════════════════════════════
+   Mobile bottom nav - float-in, springy Hub button, tap polish
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+  .nav-float {
+    animation: navFloat 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+@keyframes navFloat {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.nav-hub-btn {
+  background: linear-gradient(135deg, #2dd4bf, #38bdf8 55%, #a78bfa);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+.nav-hub-btn:active {
+  transform: scale(0.9);
+}
+.ripple-press {
+  -webkit-tap-highlight-color: transparent;
 }

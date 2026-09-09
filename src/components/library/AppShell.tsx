@@ -28,6 +28,7 @@ import {
   Search as SearchIcon,
   Cpu,
   Dices,
+  UserRound,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -74,13 +75,16 @@ const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: str
   { to: "/me", label: "Profile & Settings", icon: Settings },
 ];
 
-/** mobile bottom bar - five essentials */
+/**
+ * Mobile bottom bar - Instagram-style: Discover first (the feed), Hub in the
+ * centre as the elevated action, tools/games reachable from there.
+ */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/explore", label: "Commands", icon: Terminal, exact: false },
   { to: "/discover", label: "Discover", icon: Compass, exact: false },
-  { to: "/tools", label: "SlashKits", icon: Wrench, exact: false },
-  { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
+  { to: "/hub", label: "Hub", icon: LayoutGrid, exact: false, center: true },
+  { to: "/explore", label: "Commands", icon: Terminal, exact: false },
+  { to: "/me", label: "You", icon: UserRound, exact: true },
 ] as const;
 
 
@@ -453,11 +457,11 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
         </main>
       </div>
 
-      {/* mobile bottom navigation - five essential destinations */}
+      {/* mobile bottom navigation - Instagram-style: feed · Hub centre · utilities */}
       <nav
         aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-30 flex border-t border-sidebar-border bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-[10px] md:hidden"
-        style={{ height: 'calc(56px + env(safe-area-inset-bottom))' }}
+        className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px] md:hidden"
+        style={{ height: 'calc(62px + env(safe-area-inset-bottom))' }}
       >
         {PRIMARY.map((item) => {
           // Route-based active state - derived from current pathname, not internal state
@@ -470,24 +474,50 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             if (p === "/tools") return pathname.startsWith("/tools");
             return pathname.startsWith(p);
           })();
+
+          // ── Hub: elevated centre action (Instagram '+' slot) ──
+          if ((item as { center?: boolean }).center) {
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                aria-label="Hub"
+                className="ripple-press flex min-h-[62px] flex-1 items-center justify-center"
+              >
+                <span
+                  className="nav-hub-btn flex flex-col items-center justify-center gap-[2px] rounded-2xl px-4 py-1.5 text-[9px] font-bold text-background shadow-lg shadow-primary/25"
+                  style={
+                    active
+                      ? { background: "linear-gradient(135deg, #2dd4bf, #38bdf8 55%, #a78bfa)" }
+                      : undefined
+                  }
+                >
+                  <item.icon className="size-[20px]" aria-hidden strokeWidth={2.2} />
+                  Hub
+                </span>
+              </Link>
+            );
+          }
+
+          // ── Regular tabs: icon + label, smooth pill on active ──
           return (
             <Link
               key={item.to}
               to={item.to}
-              className="ripple-press flex min-h-[56px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium transition-colors"
+              className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
               style={{ color: active ? 'var(--primary)' : 'var(--muted-foreground)' }}
             >
-              {/* Active dot indicator */}
-              <div className="relative flex flex-col items-center">
-                {active && (
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-primary" />
-                )}
+              <span
+                className={`flex items-center justify-center rounded-full px-3.5 py-1 transition-all duration-200 ${
+                  active ? "bg-primary/12" : "bg-transparent"
+                }`}
+              >
                 <item.icon
                   className="size-[22px]"
                   aria-hidden
                   strokeWidth={active ? 2.4 : 1.8}
                 />
-              </div>
+              </span>
               {item.label}
             </Link>
           );
