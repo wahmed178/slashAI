@@ -293,6 +293,35 @@ function DiscoverPage() {
 
 /* ──────────── feed tile (the "post") ──────────── */
 
+/** Favicon with a guaranteed-visible fallback: letter avatar tinted by category. */
+function Favicon({ host, tint, name }: { host: string; tint: CatColor; name: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) {
+    return (
+      <span
+        aria-hidden
+        className="grid size-10 place-items-center rounded-lg text-[17px] font-black"
+        style={{
+          background: `color-mix(in oklab, ${tint.hex} 30%, transparent)`,
+          color: tint.hex,
+          border: `1px solid color-mix(in oklab, ${tint.hex} 45%, transparent)`,
+        }}
+      >
+        {name.charAt(0).toUpperCase()}
+      </span>
+    );
+  }
+  return (
+    <img
+      src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=64`}
+      alt=""
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className="size-10 rounded-lg bg-background/60 p-1.5"
+    />
+  );
+}
+
 function FeedTile({ item }: { item: FeedItem }) {
   return (
     <Link
@@ -308,15 +337,10 @@ function FeedTile({ item }: { item: FeedItem }) {
         }}
       >
         {item.kind === "resource" ? (
-          <img
-            src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(hostOf(item.to))}&sz=64`}
-            alt=""
-            loading="lazy"
-            className="size-10 rounded-lg bg-background/60 p-1.5"
-          />
+          <Favicon host={hostOf(item.to)} tint={item.tint} name={item.title} />
         ) : (
           <span className="text-[40px] leading-none drop-shadow-sm transition-transform duration-200 group-hover:scale-110">
-            {item.emoji}
+            {item.emoji || "✨"}
           </span>
         )}
         <span className="cat-chip absolute left-2 top-2 rounded-full px-2 py-0.5 text-[9px] font-bold">

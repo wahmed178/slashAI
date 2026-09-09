@@ -383,54 +383,6 @@ function HomePage() {
       {/* ─── Stats Bar ─── */}
       <StatsBar />
 
-      {/* ─── How it works (FREEIEO-inspired) ─── */}
-      <section className="mt-10 rounded-2xl border border-sidebar-border bg-surface p-6 sm:p-8">
-        <h2 className="text-center text-lg font-bold tracking-tight text-foreground sm:text-xl">How SlashAI Works</h2>
-        <p className="mt-1 text-center text-[13px] text-muted-foreground">Three steps. No sign-up. No uploads. 100% free.</p>
-        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {[
-            {
-              step: "1",
-              emoji: "🔍",
-              title: "Search a command",
-              desc: "Type what you want to do - write, code, design, plan - and find a copy-ready AI prompt in seconds.",
-              color: "var(--primary)",
-            },
-            {
-              step: "2",
-              emoji: "📋",
-              title: "Copy to clipboard",
-              desc: "One click copies the perfect prompt. Edit it if you like, then paste it into ChatGPT, Claude, Gemini or any AI.",
-              color: "#d29922",
-            },
-            {
-              step: "3",
-              emoji: "⚡",
-              title: "Get results instantly",
-              desc: "Get expert-level output every time. Save favorites, build streaks, and explore 5,600+ commands across 30+ categories.",
-              color: "#3fb950",
-            },
-          ].map((item) => (
-            <div key={item.step} className="flex flex-col items-center text-center">
-              <div
-                className="flex size-14 items-center justify-center rounded-2xl text-2xl"
-                style={{
-                  background: `${item.color}10`,
-                  border: `1px solid ${item.color}30`,
-                }}
-              >
-                {item.emoji}
-              </div>
-              <span className="mt-3 inline-flex size-6 items-center justify-center rounded-full text-[11px] font-bold text-muted-foreground border border-border bg-surface-elevated">
-                {item.step}
-              </span>
-              <h3 className="mt-2 text-[15px] font-semibold text-foreground">{item.title}</h3>
-              <p className="mt-1 max-w-[260px] text-[13px] leading-relaxed text-muted-foreground">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ─── Tool of the Day (rotates daily via date seed) ─── */}
       <section className="mt-8 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
         <div className="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">

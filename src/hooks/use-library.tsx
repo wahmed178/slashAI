@@ -118,7 +118,7 @@ interface Settings {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  theme: "glass",
+  theme: "dark",
   density: "comfortable",
   accent: "teal",
   view: "grid",
