@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { ExternalLink, Search, Dices } from "lucide-react";
+import { funCategoryColor } from "@/lib/category-colors";
 
 export const Route = createFileRoute("/hub/fun")({
   head: () => ({
@@ -92,7 +93,7 @@ function FunSitesHub() {
   return (
     <AppShell title="Fun Sites Hub">
       <header className="mb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">🎪 Fun Sites Hub</h1>
+        <h1 className="bg-gradient-to-r from-[#22d3ee] via-[#e879f9] to-[#fbbf24] bg-clip-text text-2xl font-bold tracking-tight text-transparent">🎪 Fun Sites Hub</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {SITES.length} of the most interesting, delightful and gloriously pointless websites ever made.
           Every one free, no signup, safe to open at 2am.
@@ -119,22 +120,31 @@ function FunSitesHub() {
         </div>
 
         <div className="flex flex-wrap gap-1.5">
-          {CATEGORIES.map((c) => (
-            <button
-              key={c}
-              onClick={() => setCategory(c)}
-              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
-                c === category
-                  ? "bg-primary text-primary-foreground"
-                  : "border border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
-              }`}
-            >
-              {c}
-              {c !== "All" && (
-                <span className="ml-1 opacity-70">{SITES.filter((s) => s.category === c).length}</span>
-              )}
-            </button>
-          ))}
+          {CATEGORIES.map((c) => {
+            const cc = c === "All" ? undefined : funCategoryColor(c);
+            const active = c === category;
+            return (
+              <button
+                key={c}
+                onClick={() => setCategory(c)}
+                style={
+                  active && cc
+                    ? { background: cc.hex, borderColor: cc.hex, color: "oklch(0.15 0.02 255)" }
+                    : undefined
+                }
+                className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  active
+                    ? "bg-primary text-primary-foreground"
+                    : "border border-border text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {c}
+                {c !== "All" && (
+                  <span className="ml-1 opacity-70">{SITES.filter((s) => s.category === c).length}</span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {q && (
@@ -144,25 +154,29 @@ function FunSitesHub() {
         )}
 
         <div className="grid gap-2.5 sm:grid-cols-2">
-          {filtered.map((site) => (
-            <a
-              key={site.name}
-              href={site.url}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="group flex items-start gap-3 rounded-xl border border-border bg-surface p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40"
-            >
-              <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-muted text-xl">{site.emoji}</span>
-              <div className="min-w-0 flex-1">
-                <p className="flex items-center gap-1.5 text-sm font-bold text-foreground">
-                  {site.name}
-                  <ExternalLink className="size-3 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
-                </p>
-                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary">{site.category}</p>
-                <p className="mt-1 text-[12px] leading-snug text-muted-foreground">{site.desc}</p>
-              </div>
-            </a>
-          ))}
+          {filtered.map((site) => {
+            const cc = funCategoryColor(site.category);
+            return (
+              <a
+                key={site.name}
+                href={site.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                style={{ "--cat": cc.hex } as React.CSSProperties}
+                className="cat cat-glow group flex items-start gap-3 rounded-xl border bg-surface p-4"
+              >
+                <span className="cat-tile grid size-11 shrink-0 place-items-center rounded-lg text-xl">{site.emoji}</span>
+                <div className="min-w-0 flex-1">
+                  <p className="flex items-center gap-1.5 text-sm font-bold text-foreground">
+                    {site.name}
+                    <ExternalLink className="size-3 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                  </p>
+                  <p className="cat-text mt-0.5 text-[11px] font-semibold uppercase tracking-wide">{site.category}</p>
+                  <p className="mt-1 text-[12px] leading-snug text-muted-foreground">{site.desc}</p>
+                </div>
+              </a>
+            );
+          })}
         </div>
 
         {filtered.length === 0 && (

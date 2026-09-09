@@ -10,6 +10,7 @@ import {
 } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
+import { kitSectionColor } from "@/lib/category-colors";
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
@@ -54,7 +55,7 @@ function ToolsIndex() {
   return (
     <AppShell wide title="SlashKits">
       <header className="page-enter pt-2">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+        <h1 className="bg-gradient-to-r from-[#2dd4bf] via-[#38bdf8] to-[#a78bfa] bg-clip-text text-2xl font-bold tracking-tight text-transparent sm:text-3xl">
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
@@ -75,24 +76,34 @@ function ToolsIndex() {
         <span className="ml-auto shrink-0 text-[11px] font-semibold text-primary">Roll the dice →</span>
       </Link>
 
-      {/* SlashPlay cross-link */}
+      {/* SlashPlay cross-link - tinted with the Multiplayer colour */}
       <Link
         to="/play"
-        className="mt-4 flex items-center gap-3 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 transition-colors hover:bg-[rgba(45,212,191,0.08)]"
+        className="mt-4 flex items-center gap-3 overflow-hidden rounded-xl border p-4 transition-colors"
+        style={{
+          borderColor: "rgba(251,113,133,0.28)",
+          background: "linear-gradient(135deg, rgba(251,113,133,0.09), rgba(168,85,247,0.07))",
+        }}
       >
         <span className="text-[26px]">🎮</span>
         <span className="flex-1">
           <span className="block text-[14px] font-bold text-foreground">Looking for games?</span>
           <span className="block text-[12px] text-muted-foreground">SlashPlay has {PLAY_GAME_COUNT} of them - tic tac toe, battleship, blackjack, snake and more.</span>
         </span>
-        <span className="text-[12px] font-bold text-primary">Play →</span>
+        <span className="text-[12px] font-bold" style={{ color: "#fb7185" }}>Play →</span>
       </Link>
 
       {/* Tool of the Day - rotates on a daily date seed */}
-      <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">
+      <div
+        className="mt-4 overflow-hidden rounded-xl border p-4 sm:p-5"
+        style={{
+          borderColor: "rgba(251,191,36,0.3)",
+          background: "linear-gradient(135deg, rgba(251,191,36,0.08), rgba(244,114,182,0.06))",
+        }}
+      >
         <div className="flex items-center gap-2">
           <span className="text-[14px]">⭐</span>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Tool of the Day</span>
+          <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "#fbbf24" }}>Tool of the Day</span>
           <span className="text-[10px] text-muted-foreground">· changes daily</span>
         </div>
         <div className="mt-2.5 flex items-start gap-4">
@@ -139,21 +150,30 @@ function ToolsIndex() {
         </p>
       )}
 
-      {/* Filter chips */}
+      {/* Filter chips - the active chip takes its section colour */}
       <div className="mt-3 flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
-        {FILTERS.map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] font-medium transition-colors ${
-              filter === f
-                ? "bg-primary text-background"
-                : "border border-border bg-surface text-muted-foreground hover:border-primary/40 hover:text-foreground"
-            }`}
-          >
-            {f === "All" ? `All (${SLASH_TOOL_COUNT})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
-          </button>
-        ))}
+        {FILTERS.map((f) => {
+          const cc = f === "All" ? undefined : kitSectionColor(f);
+          const active = filter === f;
+          return (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              style={
+                active && cc
+                  ? { background: cc.hex, borderColor: cc.hex, color: "oklch(0.15 0.02 255)" }
+                  : undefined
+              }
+              className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] font-medium transition-colors ${
+                active
+                  ? "bg-primary text-background"
+                  : "border border-border bg-surface text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {f === "All" ? `All (${SLASH_TOOL_COUNT})` : `${TOOL_SECTIONS.find((s) => s.title === f)?.icon} ${f}`}
+            </button>
+          );
+        })}
       </div>
 
       {/* No matches while searching */}
@@ -182,47 +202,56 @@ function ToolsIndex() {
           return { section, tools };
         })
         .filter(({ tools }) => tools.length > 0)
-        .map(({ section, tools }, si) => (
-          <section key={section.title} id={section.title.toLowerCase().replace(/[^a-z]/g, "")} className={si === 0 ? "mt-4" : "mt-10"}>
-            <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
-              <span className="text-lg">{section.icon}</span> {section.title}
-            </h2>
-            <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-              {tools.map((tool) => (
-                <Link
-                  key={tool.slug}
-                  to={tool.slug.startsWith("/") ? tool.slug : `/tools/${tool.slug}`}
-                  className="group flex items-start gap-3 rounded-[10px] border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
-                >
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[22px]">
-                    {tool.icon}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="flex items-center gap-2">
-                      <span className="text-[15px] font-semibold text-foreground group-hover:text-primary">
-                        {tool.name}
-                      </span>
-                      <span className="shrink-0 rounded-full border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.08)] px-1.5 py-0.5 text-[9px] font-semibold text-primary">
-                        Free
-                      </span>
-                      {tool.noUpload ? (
-                        <span className="rounded border px-1.5 py-0.5 text-[9px] font-medium text-green" style={{ background: "rgba(63,185,80,0.08)", borderColor: "rgba(63,185,80,0.3)" }}>
-                          No upload
+        .map(({ section, tools }, si) => {
+          const cc = kitSectionColor(section.title);
+          return (
+            <section
+              key={section.title}
+              id={section.title.toLowerCase().replace(/[^a-z]/g, "")}
+              className={si === 0 ? "mt-4" : "mt-10"}
+              style={{ "--cat": cc.hex } as React.CSSProperties}
+            >
+              <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide uppercase" style={{ color: cc.hex }}>
+                <span className="text-lg">{section.icon}</span> {section.title}
+              </h2>
+              <div className="cat-rule mt-1.5 w-24" />
+              <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+                {tools.map((tool) => (
+                  <Link
+                    key={tool.slug}
+                    to={tool.slug.startsWith("/") ? tool.slug : `/tools/${tool.slug}`}
+                    className="cat cat-glow group flex items-start gap-3 rounded-[10px] border bg-surface p-4"
+                  >
+                    <span className="cat-tile flex size-10 shrink-0 items-center justify-center rounded-lg text-[22px]">
+                      {tool.icon}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="flex items-center gap-2">
+                        <span className="text-[15px] font-semibold text-foreground">
+                          {tool.name}
                         </span>
-                      ) : null}
+                        <span className="cat-chip shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-semibold">
+                          Free
+                        </span>
+                        {tool.noUpload ? (
+                          <span className="rounded border px-1.5 py-0.5 text-[9px] font-medium text-green" style={{ background: "rgba(63,185,80,0.08)", borderColor: "rgba(63,185,80,0.3)" }}>
+                            No upload
+                          </span>
+                        ) : null}
+                      </span>
+                      <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">
+                        {tool.desc}
+                      </span>
                     </span>
-                    <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">
-                      {tool.desc}
+                    <span className="cat-text mt-1 shrink-0 text-[13px] transition-colors">
+                      →
                     </span>
-                  </span>
-                  <span className="mt-1 shrink-0 text-[13px] text-muted-foreground transition-colors group-hover:text-primary">
-                    →
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </section>
-        ))}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          );
+        })}
     </AppShell>
   );
 }

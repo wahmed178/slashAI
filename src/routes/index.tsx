@@ -302,7 +302,7 @@ function HomePage() {
             <h1 className="mt-3 text-[26px] font-bold leading-[1.15] tracking-tight text-foreground sm:mt-4 sm:text-[36px]">
               Find the right AI command
               <br />
-              <span className="text-primary">in seconds</span>
+              <span className="bg-gradient-to-r from-[#2dd4bf] via-[#38bdf8] to-[#a78bfa] bg-clip-text text-transparent">in seconds</span>
             </h1>
             <p className="mt-2 text-[13px] text-muted-foreground sm:mt-3 sm:text-[14px]">
               {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · Free forever

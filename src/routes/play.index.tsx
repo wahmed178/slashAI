@@ -9,6 +9,7 @@ import {
   type PlayGame,
 } from "@/lib/slashplay";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
+import { playSectionColor } from "@/lib/category-colors";
 
 export const Route = createFileRoute("/play/")({
   head: () => ({
@@ -33,21 +34,22 @@ function matches(game: PlayGame, q: string) {
   return q.split(/\s+/).every((word) => text.includes(word));
 }
 
-function GameCard({ game }: { game: PlayGame }) {
+function GameCard({ game, color }: { game: PlayGame; color: string }) {
   return (
     <Link
       to={`/play/${game.slug}` as string}
-      className="group flex flex-col rounded-xl border border-border bg-surface p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+      style={{ "--cat": color } as React.CSSProperties}
+      className="cat cat-glow group flex flex-col rounded-xl border bg-surface p-3.5"
     >
       <div className="flex items-start justify-between gap-2">
-        <span className="text-[28px] leading-none">{game.icon}</span>
-        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[9px] font-bold tracking-wide text-primary">
+        <span className="cat-tile flex size-9 items-center justify-center rounded-lg text-[24px] leading-none">{game.icon}</span>
+        <span className="cat-chip rounded-full px-2 py-0.5 text-[9px] font-bold tracking-wide">
           {game.players}
         </span>
       </div>
       <span className="mt-2.5 block text-[13px] font-bold text-foreground">{game.name}</span>
       <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{game.desc}</span>
-      <span className="mt-2.5 text-[11px] font-semibold text-primary opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+      <span className="cat-text mt-2.5 text-[11px] font-semibold opacity-0 transition-opacity duration-150 group-hover:opacity-100">
         Play now →
       </span>
     </Link>
@@ -76,7 +78,9 @@ function PlayIndex() {
   return (
     <AppShell wide title="SlashPlay">
       <header className="page-enter pt-2">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">🎮 SlashPlay</h1>
+        <h1 className="bg-gradient-to-r from-[#fb7185] via-[#f472b6] to-[#a78bfa] bg-clip-text text-2xl font-bold tracking-tight text-transparent sm:text-3xl">
+          🎮 SlashPlay
+        </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
           {PLAY_GAME_COUNT} games that run instantly in your browser. No downloads, works offline.
         </p>
@@ -95,11 +99,17 @@ function PlayIndex() {
         <span className="ml-auto shrink-0 text-[11px] font-semibold text-primary">Feeling lucky →</span>
       </Link>
 
-      {/* Multiplayer spotlight */}
-      <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">
+      {/* Multiplayer spotlight - tinted with the Multiplayer colour */}
+      <div
+        className="mt-4 overflow-hidden rounded-xl border p-4 sm:p-5"
+        style={{
+          borderColor: "rgba(251,113,133,0.28)",
+          background: "linear-gradient(135deg, rgba(251,113,133,0.09), rgba(244,114,182,0.06))",
+        }}
+      >
         <div className="flex items-center gap-2">
           <span className="text-[14px]">🎯</span>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">Pass and Play</span>
+          <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "#fb7185" }}>Pass and Play</span>
           <span className="text-[10px] text-muted-foreground">· share one device, take turns</span>
         </div>
         <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-5">
@@ -152,42 +162,59 @@ function PlayIndex() {
         )}
       </div>
 
-      {/* Filter chips */}
+      {/* Filter chips - the active chip takes its section colour */}
       <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {FILTERS.map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-medium transition-colors ${
-              filter === f
-                ? "bg-primary text-background"
-                : "border border-border bg-surface text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {f}
-          </button>
-        ))}
+        {FILTERS.map((f) => {
+          const cc = f === "All" ? undefined : playSectionColor(f);
+          const active = filter === f;
+          return (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              style={
+                active && cc
+                  ? { background: cc.hex, borderColor: cc.hex, color: "oklch(0.15 0.02 255)" }
+                  : undefined
+              }
+              className={`shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-medium transition-colors ${
+                active
+                  ? "bg-primary text-background"
+                  : "border border-border bg-surface text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {f}
+            </button>
+          );
+        })}
       </div>
 
       {foundCount === 0 ? (
         <p className="mt-10 text-center text-sm text-muted-foreground">No games match "{search}".</p>
       ) : (
-        filtered.map((section) => (
-          <section key={section.title} className="mt-7">
-            <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold text-foreground">
-              <span>{section.icon}</span>
-              {section.title}
-              <span className="text-[11px] font-medium text-muted-foreground">
-                {section.games.length} game{section.games.length === 1 ? "" : "s"}
-              </span>
-            </h2>
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
-              {section.games.map((game) => (
-                <GameCard key={game.slug} game={game} />
-              ))}
-            </div>
-          </section>
-        ))
+        filtered.map((section) => {
+          const cc = playSectionColor(section.title);
+          return (
+            <section
+              key={section.title}
+              className="mt-7"
+              style={{ "--cat": cc.hex } as React.CSSProperties}
+            >
+              <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold" style={{ color: cc.hex }}>
+                <span>{section.icon}</span>
+                {section.title}
+                <span className="text-[11px] font-medium text-muted-foreground">
+                  {section.games.length} game{section.games.length === 1 ? "" : "s"}
+                </span>
+              </h2>
+              <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
+                {section.games.map((game) => (
+                  <GameCard key={game.slug} game={game} color={cc.hex} />
+                ))}
+              </div>
+            </section>
+          );
+        })
       )}
 
       <p className="mt-8 text-center text-[11px] text-muted-foreground">
