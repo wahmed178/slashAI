@@ -27,6 +27,7 @@ import {
   Bell,
   Search as SearchIcon,
   Cpu,
+  Dices,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -54,6 +55,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/discover", label: "Discover", icon: Compass },
   { to: "/tools", label: "SlashKits", icon: Wrench },
   { to: "/play", label: "SlashPlay", icon: Gamepad2, badge: "New" },
+  { to: "/random", label: "Random", icon: Dices },
   { to: "/ai-tools", label: "AI Tools", icon: Cpu, badge: "100+" },
   { to: "/hub", label: "Hubs", icon: LayoutGrid },
   { to: "/roadmaps", label: "Roadmaps", icon: Map },
@@ -160,6 +162,9 @@ function breadcrumbsFor(pathname: string): Crumb[] | null {
   if (segs.length === 0) return null;
   const first = segs[0]!;
 
+  if (first === "random") {
+    return [{ label: "Home", to: "/" }, { label: "Random" }];
+  }
   if (first === "tools") {
     const tool = segs[1] ? getSlashTool(segs[1]) : undefined;
     if (!segs[1]) return [{ label: "Home", to: "/" }, { label: "SlashKits" }];

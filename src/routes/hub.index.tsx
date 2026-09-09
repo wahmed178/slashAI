@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { GraduationCap, Code, Paintbrush, Briefcase, Rocket, IndianRupee, Stethoscope, TrendingUp, Globe, Languages } from "lucide-react";
+import { GraduationCap, Code, Paintbrush, Briefcase, Rocket, IndianRupee, Stethoscope, TrendingUp, Globe, Languages, PartyPopper } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import { audienceResources, type Audience } from "@/lib/resources";
 import { FOUNDERS_RESOURCES } from "@/lib/hub-founders";
@@ -49,6 +49,7 @@ const HUBS: HubCard[] = [
   { audience: "urdu", label: "Urdu Hub", icon: Languages, desc: "Urdu poetry, dictionaries, fonts and learning", staticCount: 8 },
   { audience: "arabic", label: "Arabic Hub", icon: Languages, desc: "Arabic alphabet, courses, keyboard and phrases", staticCount: 4, countLabel: "4 curated + alphabet" },
   { audience: "designers", label: "Designers Hub", icon: Paintbrush, desc: "Free design tools, assets and learning", audienceKey: "Designers" },
+  { audience: "fun", label: "Fun Sites Hub", icon: PartyPopper, desc: "neal.fun, Bored.com, Bored Button and 25+ amazing websites", staticCount: 30, countLabel: "30 amazing sites" },
   { audience: "finance", label: "Finance Hub", icon: TrendingUp, desc: "Markets, crypto and money tools", dedicated: "finance" },
   { audience: "health", label: "Health Hub", icon: Stethoscope, desc: "Evidence-based health and fitness tools", dedicated: "health" },
 ];

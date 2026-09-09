@@ -74,6 +74,22 @@ export const PLAY_SECTIONS: PlaySection[] = [
     ],
   },
   {
+    title: "Viral & Zen",
+    icon: "🔥",
+    games: [
+      { slug: "perfect-circle", name: "Perfect Circle", desc: "Draw a circle, get judged. Brutally. One stroke", icon: "⭕", players: "Solo" },
+      { slug: "password-game", name: "The Password Game", desc: "25 escalating rules. Keep them ALL true at once", icon: "🔑", players: "Solo" },
+      { slug: "flag-guess", name: "Flag Guess", desc: "Name the country from its flag - 10 rounds", icon: "🚩", players: "Solo" },
+      { slug: "would-you-rather", name: "Would You Rather", desc: "Impossible choices, pass-and-play debates", icon: "🤔", players: "2P" },
+      { slug: "bubble-wrap", name: "Bubble Wrap", desc: "Pop an endless sheet. Drag to pop rows. Zen", icon: "🫧", players: "Solo" },
+      { slug: "ten-seconds", name: "Ten Seconds", desc: "Stop the timer at exactly 10.00s. Pure feel", icon: "⏱️", players: "Solo" },
+      { slug: "aim-trainer", name: "Aim Trainer", desc: "Pop 30 targets fast - reflexes and accuracy", icon: "🎯", players: "Solo" },
+      { slug: "lights-out", name: "Lights Out", desc: "Flip cells to kill every light - classic logic", icon: "💡", players: "Solo" },
+      { slug: "fake-or-fact", name: "Fake or Fact", desc: "Real claim or internet nonsense? Guess right", icon: "🧐", players: "Solo" },
+      { slug: "emoji-phrase", name: "Emoji Phrase", desc: "Decode the movie or phrase hidden in emojis", icon: "🤡", players: "Solo" },
+    ],
+  },
+  {
     title: "Quick Plays",
     icon: "⚡",
     games: [

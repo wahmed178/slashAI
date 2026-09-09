@@ -9,6 +9,7 @@ import {
   type SlashTool,
 } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
+import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
@@ -60,6 +61,19 @@ function ToolsIndex() {
           {SLASH_TOOL_COUNT} browser-based tools. Nothing uploaded. All client-side.
         </p>
       </header>
+
+      <Link
+        to="/random"
+        search={{ go: true }}
+        className="group mt-3 flex items-center gap-3 rounded-xl border border-primary/25 bg-primary/5 px-4 py-3 transition-colors hover:border-primary/50"
+      >
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-[16px] transition-transform duration-150 group-hover:rotate-12">🎲</span>
+        <span className="min-w-0">
+          <span className="block text-[13px] font-bold text-foreground">Feeling lucky?</span>
+          <span className="block text-[11px] text-muted-foreground">One tap to a random tool - from all {RANDOM_POOL_SIZE} destinations</span>
+        </span>
+        <span className="ml-auto shrink-0 text-[11px] font-semibold text-primary">Roll the dice →</span>
+      </Link>
 
       {/* SlashPlay cross-link */}
       <Link

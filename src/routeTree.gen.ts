@@ -31,6 +31,7 @@ import { Route as PlayRouteImport } from './routes/play'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RadarRouteImport } from './routes/radar'
+import { Route as RandomRouteImport } from './routes/random'
 import { Route as RecentRouteImport } from './routes/recent'
 import { Route as RoadmapsRouteImport } from './routes/roadmaps'
 import { Route as SearchRouteImport } from './routes/search'
@@ -54,15 +55,18 @@ import { Route as ExploreIndexRouteImport } from './routes/explore.index'
 import { Route as HubIndexRouteImport } from './routes/hub.index'
 import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
 import { Route as HubArabicRouteImport } from './routes/hub.arabic'
+import { Route as HubFunRouteImport } from './routes/hub.fun'
 import { Route as HubIslamRouteImport } from './routes/hub.islam'
 import { Route as HubQuotesRouteImport } from './routes/hub.quotes'
 import { Route as HubUrduRouteImport } from './routes/hub.urdu'
 import { Route as LUsernameRouteImport } from './routes/l.$username'
 import { Route as PlayIndexRouteImport } from './routes/play.index'
 import { Route as Play2048RouteImport } from './routes/play.2048'
+import { Route as PlayAimTrainerRouteImport } from './routes/play.aim-trainer'
 import { Route as PlayBattleshipRouteImport } from './routes/play.battleship'
 import { Route as PlayBlackjackRouteImport } from './routes/play.blackjack'
 import { Route as PlayBreakoutRouteImport } from './routes/play.breakout'
+import { Route as PlayBubbleWrapRouteImport } from './routes/play.bubble-wrap'
 import { Route as PlayCheckersRouteImport } from './routes/play.checkers'
 import { Route as PlayCoinFlipRouteImport } from './routes/play.coin-flip'
 import { Route as PlayConnectFourRouteImport } from './routes/play.connect-four'
@@ -70,12 +74,18 @@ import { Route as PlayCricketRouteImport } from './routes/play.cricket'
 import { Route as PlayDiceRouteImport } from './routes/play.dice'
 import { Route as PlayDiceDuelRouteImport } from './routes/play.dice-duel'
 import { Route as PlayDotsBoxesRouteImport } from './routes/play.dots-boxes'
+import { Route as PlayEmojiPhraseRouteImport } from './routes/play.emoji-phrase'
+import { Route as PlayFakeOrFactRouteImport } from './routes/play.fake-or-fact'
+import { Route as PlayFlagGuessRouteImport } from './routes/play.flag-guess'
 import { Route as PlayGoFishRouteImport } from './routes/play.go-fish'
 import { Route as PlayHangmanRouteImport } from './routes/play.hangman'
 import { Route as PlayHigherLowerRouteImport } from './routes/play.higher-lower'
+import { Route as PlayLightsOutRouteImport } from './routes/play.lights-out'
 import { Route as PlayMathDuelRouteImport } from './routes/play.math-duel'
 import { Route as PlayMemoryMatchRouteImport } from './routes/play.memory-match'
 import { Route as PlayMinesweeperRouteImport } from './routes/play.minesweeper'
+import { Route as PlayPasswordGameRouteImport } from './routes/play.password-game'
+import { Route as PlayPerfectCircleRouteImport } from './routes/play.perfect-circle'
 import { Route as PlayPongRouteImport } from './routes/play.pong'
 import { Route as PlayRandomNumberRouteImport } from './routes/play.random-number'
 import { Route as PlayReactionTestRouteImport } from './routes/play.reaction-test'
@@ -85,10 +95,12 @@ import { Route as PlaySimonRouteImport } from './routes/play.simon'
 import { Route as PlaySkyDashRouteImport } from './routes/play.sky-dash'
 import { Route as PlaySnakeRouteImport } from './routes/play.snake'
 import { Route as PlaySnakesLaddersRouteImport } from './routes/play.snakes-ladders'
+import { Route as PlayTenSecondsRouteImport } from './routes/play.ten-seconds'
 import { Route as PlayTicTacToeRouteImport } from './routes/play.tic-tac-toe'
 import { Route as PlayTypingTestRouteImport } from './routes/play.typing-test'
 import { Route as PlayWhackAMoleRouteImport } from './routes/play.whack-a-mole'
 import { Route as PlayWordGuessRouteImport } from './routes/play.word-guess'
+import { Route as PlayWouldYouRatherRouteImport } from './routes/play.would-you-rather'
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
@@ -116,6 +128,7 @@ import { Route as ToolsCronRouteImport } from './routes/tools.cron'
 import { Route as ToolsCsvToJsonRouteImport } from './routes/tools.csv-to-json'
 import { Route as ToolsCurrencyHistoryRouteImport } from './routes/tools.currency-history'
 import { Route as ToolsCvRouteImport } from './routes/tools.cv'
+import { Route as ToolsDeepSeaRouteImport } from './routes/tools.deep-sea'
 import { Route as ToolsDiceRouteImport } from './routes/tools.dice'
 import { Route as ToolsDiffRouteImport } from './routes/tools.diff'
 import { Route as ToolsDuaMakerRouteImport } from './routes/tools.dua-maker'
@@ -149,6 +162,8 @@ import { Route as ToolsJsonDiffRouteImport } from './routes/tools.json-diff'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
 import { Route as ToolsJsonYamlRouteImport } from './routes/tools.json-yaml'
 import { Route as ToolsKharchRouteImport } from './routes/tools.kharch'
+import { Route as ToolsLifeInWeeksRouteImport } from './routes/tools.life-in-weeks'
+import { Route as ToolsLifeStatsRouteImport } from './routes/tools.life-stats'
 import { Route as ToolsLinktreeRouteImport } from './routes/tools.linktree'
 import { Route as ToolsLoanEligibilityRouteImport } from './routes/tools.loan-eligibility'
 import { Route as ToolsLoremRouteImport } from './routes/tools.lorem'
@@ -197,6 +212,7 @@ import { Route as ToolsSizeRouteImport } from './routes/tools.size'
 import { Route as ToolsSmartPasteRouteImport } from './routes/tools.smart-paste'
 import { Route as ToolsSpeechToTextRouteImport } from './routes/tools.speech-to-text'
 import { Route as ToolsSpellingRouteImport } from './routes/tools.spelling'
+import { Route as ToolsSpendMoneyRouteImport } from './routes/tools.spend-money'
 import { Route as ToolsStandupRouteImport } from './routes/tools.standup'
 import { Route as ToolsStarfieldRouteImport } from './routes/tools.starfield'
 import { Route as ToolsStickerRouteImport } from './routes/tools.sticker'
@@ -210,6 +226,7 @@ import { Route as ToolsThreadMakerRouteImport } from './routes/tools.thread-make
 import { Route as ToolsThumbnailRouteImport } from './routes/tools.thumbnail'
 import { Route as ToolsTimestampRouteImport } from './routes/tools.timestamp'
 import { Route as ToolsTipCalculatorRouteImport } from './routes/tools.tip-calculator'
+import { Route as ToolsTrolleyRouteImport } from './routes/tools.trolley'
 import { Route as ToolsTypingTestRouteImport } from './routes/tools.typing-test'
 import { Route as ToolsUnitConverterRouteImport } from './routes/tools.unit-converter'
 import { Route as ToolsUpiRouteImport } from './routes/tools.upi'
@@ -217,6 +234,7 @@ import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
 import { Route as ToolsWhiteboardRouteImport } from './routes/tools.whiteboard'
 import { Route as ToolsWhitespaceRouteImport } from './routes/tools.whitespace'
+import { Route as ToolsWikiSpeedrunRouteImport } from './routes/tools.wiki-speedrun'
 import { Route as ToolsWordCloudRouteImport } from './routes/tools.word-cloud'
 import { Route as ToolsWorldClockRouteImport } from './routes/tools.world-clock'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
@@ -330,6 +348,11 @@ const QuizRoute = QuizRouteImport.update({
 const RadarRoute = RadarRouteImport.update({
   id: '/radar',
   path: '/radar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RandomRoute = RandomRouteImport.update({
+  id: '/random',
+  path: '/random',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecentRoute = RecentRouteImport.update({
@@ -447,6 +470,11 @@ const HubArabicRoute = HubArabicRouteImport.update({
   path: '/hub/arabic',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HubFunRoute = HubFunRouteImport.update({
+  id: '/hub/fun',
+  path: '/hub/fun',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HubIslamRoute = HubIslamRouteImport.update({
   id: '/hub/islam',
   path: '/hub/islam',
@@ -477,6 +505,11 @@ const Play2048Route = Play2048RouteImport.update({
   path: '/2048',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayAimTrainerRoute = PlayAimTrainerRouteImport.update({
+  id: '/aim-trainer',
+  path: '/aim-trainer',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayBattleshipRoute = PlayBattleshipRouteImport.update({
   id: '/battleship',
   path: '/battleship',
@@ -490,6 +523,11 @@ const PlayBlackjackRoute = PlayBlackjackRouteImport.update({
 const PlayBreakoutRoute = PlayBreakoutRouteImport.update({
   id: '/breakout',
   path: '/breakout',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayBubbleWrapRoute = PlayBubbleWrapRouteImport.update({
+  id: '/bubble-wrap',
+  path: '/bubble-wrap',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayCheckersRoute = PlayCheckersRouteImport.update({
@@ -527,6 +565,21 @@ const PlayDotsBoxesRoute = PlayDotsBoxesRouteImport.update({
   path: '/dots-boxes',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayEmojiPhraseRoute = PlayEmojiPhraseRouteImport.update({
+  id: '/emoji-phrase',
+  path: '/emoji-phrase',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayFakeOrFactRoute = PlayFakeOrFactRouteImport.update({
+  id: '/fake-or-fact',
+  path: '/fake-or-fact',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayFlagGuessRoute = PlayFlagGuessRouteImport.update({
+  id: '/flag-guess',
+  path: '/flag-guess',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayGoFishRoute = PlayGoFishRouteImport.update({
   id: '/go-fish',
   path: '/go-fish',
@@ -542,6 +595,11 @@ const PlayHigherLowerRoute = PlayHigherLowerRouteImport.update({
   path: '/higher-lower',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayLightsOutRoute = PlayLightsOutRouteImport.update({
+  id: '/lights-out',
+  path: '/lights-out',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayMathDuelRoute = PlayMathDuelRouteImport.update({
   id: '/math-duel',
   path: '/math-duel',
@@ -555,6 +613,16 @@ const PlayMemoryMatchRoute = PlayMemoryMatchRouteImport.update({
 const PlayMinesweeperRoute = PlayMinesweeperRouteImport.update({
   id: '/minesweeper',
   path: '/minesweeper',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayPasswordGameRoute = PlayPasswordGameRouteImport.update({
+  id: '/password-game',
+  path: '/password-game',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayPerfectCircleRoute = PlayPerfectCircleRouteImport.update({
+  id: '/perfect-circle',
+  path: '/perfect-circle',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayPongRoute = PlayPongRouteImport.update({
@@ -602,6 +670,11 @@ const PlaySnakesLaddersRoute = PlaySnakesLaddersRouteImport.update({
   path: '/snakes-ladders',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayTenSecondsRoute = PlayTenSecondsRouteImport.update({
+  id: '/ten-seconds',
+  path: '/ten-seconds',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayTicTacToeRoute = PlayTicTacToeRouteImport.update({
   id: '/tic-tac-toe',
   path: '/tic-tac-toe',
@@ -620,6 +693,11 @@ const PlayWhackAMoleRoute = PlayWhackAMoleRouteImport.update({
 const PlayWordGuessRoute = PlayWordGuessRouteImport.update({
   id: '/word-guess',
   path: '/word-guess',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayWouldYouRatherRoute = PlayWouldYouRatherRouteImport.update({
+  id: '/would-you-rather',
+  path: '/would-you-rather',
   getParentRoute: () => PlayRoute,
 } as any)
 const RIdRoute = RIdRouteImport.update({
@@ -755,6 +833,11 @@ const ToolsCurrencyHistoryRoute = ToolsCurrencyHistoryRouteImport.update({
 const ToolsCvRoute = ToolsCvRouteImport.update({
   id: '/cv',
   path: '/cv',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsDeepSeaRoute = ToolsDeepSeaRouteImport.update({
+  id: '/deep-sea',
+  path: '/deep-sea',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsDiceRoute = ToolsDiceRouteImport.update({
@@ -920,6 +1003,16 @@ const ToolsJsonYamlRoute = ToolsJsonYamlRouteImport.update({
 const ToolsKharchRoute = ToolsKharchRouteImport.update({
   id: '/kharch',
   path: '/kharch',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsLifeInWeeksRoute = ToolsLifeInWeeksRouteImport.update({
+  id: '/life-in-weeks',
+  path: '/life-in-weeks',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsLifeStatsRoute = ToolsLifeStatsRouteImport.update({
+  id: '/life-stats',
+  path: '/life-stats',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsLinktreeRoute = ToolsLinktreeRouteImport.update({
@@ -1162,6 +1255,11 @@ const ToolsSpellingRoute = ToolsSpellingRouteImport.update({
   path: '/spelling',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsSpendMoneyRoute = ToolsSpendMoneyRouteImport.update({
+  id: '/spend-money',
+  path: '/spend-money',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsStandupRoute = ToolsStandupRouteImport.update({
   id: '/standup',
   path: '/standup',
@@ -1227,6 +1325,11 @@ const ToolsTipCalculatorRoute = ToolsTipCalculatorRouteImport.update({
   path: '/tip-calculator',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsTrolleyRoute = ToolsTrolleyRouteImport.update({
+  id: '/trolley',
+  path: '/trolley',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsTypingTestRoute = ToolsTypingTestRouteImport.update({
   id: '/typing-test',
   path: '/typing-test',
@@ -1260,6 +1363,11 @@ const ToolsWhiteboardRoute = ToolsWhiteboardRouteImport.update({
 const ToolsWhitespaceRoute = ToolsWhitespaceRouteImport.update({
   id: '/whitespace',
   path: '/whitespace',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsWikiSpeedrunRoute = ToolsWikiSpeedrunRouteImport.update({
+  id: '/wiki-speedrun',
+  path: '/wiki-speedrun',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsWordCloudRoute = ToolsWordCloudRouteImport.update({
@@ -1307,6 +1415,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
+  '/random': typeof RandomRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
@@ -1325,14 +1434,17 @@ export interface FileRoutesByFullPath {
   '/discover/reels': typeof DiscoverReelsRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/hub/arabic': typeof HubArabicRoute
+  '/hub/fun': typeof HubFunRoute
   '/hub/islam': typeof HubIslamRoute
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/play/2048': typeof Play2048Route
+  '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
   '/play/breakout': typeof PlayBreakoutRoute
+  '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/checkers': typeof PlayCheckersRoute
   '/play/coin-flip': typeof PlayCoinFlipRoute
   '/play/connect-four': typeof PlayConnectFourRoute
@@ -1340,12 +1452,18 @@ export interface FileRoutesByFullPath {
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
   '/play/dots-boxes': typeof PlayDotsBoxesRoute
+  '/play/emoji-phrase': typeof PlayEmojiPhraseRoute
+  '/play/fake-or-fact': typeof PlayFakeOrFactRoute
+  '/play/flag-guess': typeof PlayFlagGuessRoute
   '/play/go-fish': typeof PlayGoFishRoute
   '/play/hangman': typeof PlayHangmanRoute
   '/play/higher-lower': typeof PlayHigherLowerRoute
+  '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
+  '/play/password-game': typeof PlayPasswordGameRoute
+  '/play/perfect-circle': typeof PlayPerfectCircleRoute
   '/play/pong': typeof PlayPongRoute
   '/play/random-number': typeof PlayRandomNumberRoute
   '/play/reaction-test': typeof PlayReactionTestRoute
@@ -1355,10 +1473,12 @@ export interface FileRoutesByFullPath {
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
+  '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
   '/play/typing-test': typeof PlayTypingTestRoute
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
+  '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -1385,6 +1505,7 @@ export interface FileRoutesByFullPath {
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/deep-sea': typeof ToolsDeepSeaRoute
   '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
@@ -1418,6 +1539,8 @@ export interface FileRoutesByFullPath {
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/kharch': typeof ToolsKharchRoute
+  '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
+  '/tools/life-stats': typeof ToolsLifeStatsRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -1466,6 +1589,7 @@ export interface FileRoutesByFullPath {
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
   '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
+  '/tools/spend-money': typeof ToolsSpendMoneyRoute
   '/tools/standup': typeof ToolsStandupRoute
   '/tools/starfield': typeof ToolsStarfieldRoute
   '/tools/sticker': typeof ToolsStickerRoute
@@ -1479,6 +1603,7 @@ export interface FileRoutesByFullPath {
   '/tools/thumbnail': typeof ToolsThumbnailRoute
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
+  '/tools/trolley': typeof ToolsTrolleyRoute
   '/tools/typing-test': typeof ToolsTypingTestRoute
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
@@ -1486,6 +1611,7 @@ export interface FileRoutesByFullPath {
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
+  '/tools/wiki-speedrun': typeof ToolsWikiSpeedrunRoute
   '/tools/word-cloud': typeof ToolsWordCloudRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
@@ -1520,6 +1646,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
+  '/random': typeof RandomRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
@@ -1537,14 +1664,17 @@ export interface FileRoutesByTo {
   '/discover/reels': typeof DiscoverReelsRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/hub/arabic': typeof HubArabicRoute
+  '/hub/fun': typeof HubFunRoute
   '/hub/islam': typeof HubIslamRoute
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/play/2048': typeof Play2048Route
+  '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
   '/play/breakout': typeof PlayBreakoutRoute
+  '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/checkers': typeof PlayCheckersRoute
   '/play/coin-flip': typeof PlayCoinFlipRoute
   '/play/connect-four': typeof PlayConnectFourRoute
@@ -1552,12 +1682,18 @@ export interface FileRoutesByTo {
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
   '/play/dots-boxes': typeof PlayDotsBoxesRoute
+  '/play/emoji-phrase': typeof PlayEmojiPhraseRoute
+  '/play/fake-or-fact': typeof PlayFakeOrFactRoute
+  '/play/flag-guess': typeof PlayFlagGuessRoute
   '/play/go-fish': typeof PlayGoFishRoute
   '/play/hangman': typeof PlayHangmanRoute
   '/play/higher-lower': typeof PlayHigherLowerRoute
+  '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
+  '/play/password-game': typeof PlayPasswordGameRoute
+  '/play/perfect-circle': typeof PlayPerfectCircleRoute
   '/play/pong': typeof PlayPongRoute
   '/play/random-number': typeof PlayRandomNumberRoute
   '/play/reaction-test': typeof PlayReactionTestRoute
@@ -1567,10 +1703,12 @@ export interface FileRoutesByTo {
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
+  '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
   '/play/typing-test': typeof PlayTypingTestRoute
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
+  '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -1597,6 +1735,7 @@ export interface FileRoutesByTo {
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/deep-sea': typeof ToolsDeepSeaRoute
   '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
@@ -1630,6 +1769,8 @@ export interface FileRoutesByTo {
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/kharch': typeof ToolsKharchRoute
+  '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
+  '/tools/life-stats': typeof ToolsLifeStatsRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -1678,6 +1819,7 @@ export interface FileRoutesByTo {
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
   '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
+  '/tools/spend-money': typeof ToolsSpendMoneyRoute
   '/tools/standup': typeof ToolsStandupRoute
   '/tools/starfield': typeof ToolsStarfieldRoute
   '/tools/sticker': typeof ToolsStickerRoute
@@ -1691,6 +1833,7 @@ export interface FileRoutesByTo {
   '/tools/thumbnail': typeof ToolsThumbnailRoute
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
+  '/tools/trolley': typeof ToolsTrolleyRoute
   '/tools/typing-test': typeof ToolsTypingTestRoute
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
@@ -1698,6 +1841,7 @@ export interface FileRoutesByTo {
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
+  '/tools/wiki-speedrun': typeof ToolsWikiSpeedrunRoute
   '/tools/word-cloud': typeof ToolsWordCloudRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
@@ -1734,6 +1878,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
+  '/random': typeof RandomRoute
   '/recent': typeof RecentRoute
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
@@ -1752,14 +1897,17 @@ export interface FileRoutesById {
   '/discover/reels': typeof DiscoverReelsRoute
   '/hub/$audience': typeof HubAudienceRoute
   '/hub/arabic': typeof HubArabicRoute
+  '/hub/fun': typeof HubFunRoute
   '/hub/islam': typeof HubIslamRoute
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/play/2048': typeof Play2048Route
+  '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
   '/play/breakout': typeof PlayBreakoutRoute
+  '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/checkers': typeof PlayCheckersRoute
   '/play/coin-flip': typeof PlayCoinFlipRoute
   '/play/connect-four': typeof PlayConnectFourRoute
@@ -1767,12 +1915,18 @@ export interface FileRoutesById {
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
   '/play/dots-boxes': typeof PlayDotsBoxesRoute
+  '/play/emoji-phrase': typeof PlayEmojiPhraseRoute
+  '/play/fake-or-fact': typeof PlayFakeOrFactRoute
+  '/play/flag-guess': typeof PlayFlagGuessRoute
   '/play/go-fish': typeof PlayGoFishRoute
   '/play/hangman': typeof PlayHangmanRoute
   '/play/higher-lower': typeof PlayHigherLowerRoute
+  '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
+  '/play/password-game': typeof PlayPasswordGameRoute
+  '/play/perfect-circle': typeof PlayPerfectCircleRoute
   '/play/pong': typeof PlayPongRoute
   '/play/random-number': typeof PlayRandomNumberRoute
   '/play/reaction-test': typeof PlayReactionTestRoute
@@ -1782,10 +1936,12 @@ export interface FileRoutesById {
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
+  '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
   '/play/typing-test': typeof PlayTypingTestRoute
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
+  '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -1812,6 +1968,7 @@ export interface FileRoutesById {
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/deep-sea': typeof ToolsDeepSeaRoute
   '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
@@ -1845,6 +2002,8 @@ export interface FileRoutesById {
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/kharch': typeof ToolsKharchRoute
+  '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
+  '/tools/life-stats': typeof ToolsLifeStatsRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -1893,6 +2052,7 @@ export interface FileRoutesById {
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
   '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
+  '/tools/spend-money': typeof ToolsSpendMoneyRoute
   '/tools/standup': typeof ToolsStandupRoute
   '/tools/starfield': typeof ToolsStarfieldRoute
   '/tools/sticker': typeof ToolsStickerRoute
@@ -1906,6 +2066,7 @@ export interface FileRoutesById {
   '/tools/thumbnail': typeof ToolsThumbnailRoute
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
+  '/tools/trolley': typeof ToolsTrolleyRoute
   '/tools/typing-test': typeof ToolsTypingTestRoute
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
@@ -1913,6 +2074,7 @@ export interface FileRoutesById {
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
+  '/tools/wiki-speedrun': typeof ToolsWikiSpeedrunRoute
   '/tools/word-cloud': typeof ToolsWordCloudRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
@@ -1950,6 +2112,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/radar'
+    | '/random'
     | '/recent'
     | '/roadmaps'
     | '/search'
@@ -1968,14 +2131,17 @@ export interface FileRouteTypes {
     | '/discover/reels'
     | '/hub/$audience'
     | '/hub/arabic'
+    | '/hub/fun'
     | '/hub/islam'
     | '/hub/quotes'
     | '/hub/urdu'
     | '/l/$username'
     | '/play/2048'
+    | '/play/aim-trainer'
     | '/play/battleship'
     | '/play/blackjack'
     | '/play/breakout'
+    | '/play/bubble-wrap'
     | '/play/checkers'
     | '/play/coin-flip'
     | '/play/connect-four'
@@ -1983,12 +2149,18 @@ export interface FileRouteTypes {
     | '/play/dice'
     | '/play/dice-duel'
     | '/play/dots-boxes'
+    | '/play/emoji-phrase'
+    | '/play/fake-or-fact'
+    | '/play/flag-guess'
     | '/play/go-fish'
     | '/play/hangman'
     | '/play/higher-lower'
+    | '/play/lights-out'
     | '/play/math-duel'
     | '/play/memory-match'
     | '/play/minesweeper'
+    | '/play/password-game'
+    | '/play/perfect-circle'
     | '/play/pong'
     | '/play/random-number'
     | '/play/reaction-test'
@@ -1998,10 +2170,12 @@ export interface FileRouteTypes {
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
+    | '/play/ten-seconds'
     | '/play/tic-tac-toe'
     | '/play/typing-test'
     | '/play/whack-a-mole'
     | '/play/word-guess'
+    | '/play/would-you-rather'
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -2028,6 +2202,7 @@ export interface FileRouteTypes {
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/deep-sea'
     | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
@@ -2061,6 +2236,8 @@ export interface FileRouteTypes {
     | '/tools/json-formatter'
     | '/tools/json-yaml'
     | '/tools/kharch'
+    | '/tools/life-in-weeks'
+    | '/tools/life-stats'
     | '/tools/linktree'
     | '/tools/loan-eligibility'
     | '/tools/lorem'
@@ -2109,6 +2286,7 @@ export interface FileRouteTypes {
     | '/tools/smart-paste'
     | '/tools/speech-to-text'
     | '/tools/spelling'
+    | '/tools/spend-money'
     | '/tools/standup'
     | '/tools/starfield'
     | '/tools/sticker'
@@ -2122,6 +2300,7 @@ export interface FileRouteTypes {
     | '/tools/thumbnail'
     | '/tools/timestamp'
     | '/tools/tip-calculator'
+    | '/tools/trolley'
     | '/tools/typing-test'
     | '/tools/unit-converter'
     | '/tools/upi'
@@ -2129,6 +2308,7 @@ export interface FileRouteTypes {
     | '/tools/watermark'
     | '/tools/whiteboard'
     | '/tools/whitespace'
+    | '/tools/wiki-speedrun'
     | '/tools/word-cloud'
     | '/tools/world-clock'
     | '/build-ideas/'
@@ -2163,6 +2343,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/radar'
+    | '/random'
     | '/recent'
     | '/roadmaps'
     | '/search'
@@ -2180,14 +2361,17 @@ export interface FileRouteTypes {
     | '/discover/reels'
     | '/hub/$audience'
     | '/hub/arabic'
+    | '/hub/fun'
     | '/hub/islam'
     | '/hub/quotes'
     | '/hub/urdu'
     | '/l/$username'
     | '/play/2048'
+    | '/play/aim-trainer'
     | '/play/battleship'
     | '/play/blackjack'
     | '/play/breakout'
+    | '/play/bubble-wrap'
     | '/play/checkers'
     | '/play/coin-flip'
     | '/play/connect-four'
@@ -2195,12 +2379,18 @@ export interface FileRouteTypes {
     | '/play/dice'
     | '/play/dice-duel'
     | '/play/dots-boxes'
+    | '/play/emoji-phrase'
+    | '/play/fake-or-fact'
+    | '/play/flag-guess'
     | '/play/go-fish'
     | '/play/hangman'
     | '/play/higher-lower'
+    | '/play/lights-out'
     | '/play/math-duel'
     | '/play/memory-match'
     | '/play/minesweeper'
+    | '/play/password-game'
+    | '/play/perfect-circle'
     | '/play/pong'
     | '/play/random-number'
     | '/play/reaction-test'
@@ -2210,10 +2400,12 @@ export interface FileRouteTypes {
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
+    | '/play/ten-seconds'
     | '/play/tic-tac-toe'
     | '/play/typing-test'
     | '/play/whack-a-mole'
     | '/play/word-guess'
+    | '/play/would-you-rather'
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -2240,6 +2432,7 @@ export interface FileRouteTypes {
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/deep-sea'
     | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
@@ -2273,6 +2466,8 @@ export interface FileRouteTypes {
     | '/tools/json-formatter'
     | '/tools/json-yaml'
     | '/tools/kharch'
+    | '/tools/life-in-weeks'
+    | '/tools/life-stats'
     | '/tools/linktree'
     | '/tools/loan-eligibility'
     | '/tools/lorem'
@@ -2321,6 +2516,7 @@ export interface FileRouteTypes {
     | '/tools/smart-paste'
     | '/tools/speech-to-text'
     | '/tools/spelling'
+    | '/tools/spend-money'
     | '/tools/standup'
     | '/tools/starfield'
     | '/tools/sticker'
@@ -2334,6 +2530,7 @@ export interface FileRouteTypes {
     | '/tools/thumbnail'
     | '/tools/timestamp'
     | '/tools/tip-calculator'
+    | '/tools/trolley'
     | '/tools/typing-test'
     | '/tools/unit-converter'
     | '/tools/upi'
@@ -2341,6 +2538,7 @@ export interface FileRouteTypes {
     | '/tools/watermark'
     | '/tools/whiteboard'
     | '/tools/whitespace'
+    | '/tools/wiki-speedrun'
     | '/tools/word-cloud'
     | '/tools/world-clock'
     | '/build-ideas'
@@ -2376,6 +2574,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/quiz'
     | '/radar'
+    | '/random'
     | '/recent'
     | '/roadmaps'
     | '/search'
@@ -2394,14 +2593,17 @@ export interface FileRouteTypes {
     | '/discover/reels'
     | '/hub/$audience'
     | '/hub/arabic'
+    | '/hub/fun'
     | '/hub/islam'
     | '/hub/quotes'
     | '/hub/urdu'
     | '/l/$username'
     | '/play/2048'
+    | '/play/aim-trainer'
     | '/play/battleship'
     | '/play/blackjack'
     | '/play/breakout'
+    | '/play/bubble-wrap'
     | '/play/checkers'
     | '/play/coin-flip'
     | '/play/connect-four'
@@ -2409,12 +2611,18 @@ export interface FileRouteTypes {
     | '/play/dice'
     | '/play/dice-duel'
     | '/play/dots-boxes'
+    | '/play/emoji-phrase'
+    | '/play/fake-or-fact'
+    | '/play/flag-guess'
     | '/play/go-fish'
     | '/play/hangman'
     | '/play/higher-lower'
+    | '/play/lights-out'
     | '/play/math-duel'
     | '/play/memory-match'
     | '/play/minesweeper'
+    | '/play/password-game'
+    | '/play/perfect-circle'
     | '/play/pong'
     | '/play/random-number'
     | '/play/reaction-test'
@@ -2424,10 +2632,12 @@ export interface FileRouteTypes {
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
+    | '/play/ten-seconds'
     | '/play/tic-tac-toe'
     | '/play/typing-test'
     | '/play/whack-a-mole'
     | '/play/word-guess'
+    | '/play/would-you-rather'
     | '/r/$id'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -2454,6 +2664,7 @@ export interface FileRouteTypes {
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/deep-sea'
     | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
@@ -2487,6 +2698,8 @@ export interface FileRouteTypes {
     | '/tools/json-formatter'
     | '/tools/json-yaml'
     | '/tools/kharch'
+    | '/tools/life-in-weeks'
+    | '/tools/life-stats'
     | '/tools/linktree'
     | '/tools/loan-eligibility'
     | '/tools/lorem'
@@ -2535,6 +2748,7 @@ export interface FileRouteTypes {
     | '/tools/smart-paste'
     | '/tools/speech-to-text'
     | '/tools/spelling'
+    | '/tools/spend-money'
     | '/tools/standup'
     | '/tools/starfield'
     | '/tools/sticker'
@@ -2548,6 +2762,7 @@ export interface FileRouteTypes {
     | '/tools/thumbnail'
     | '/tools/timestamp'
     | '/tools/tip-calculator'
+    | '/tools/trolley'
     | '/tools/typing-test'
     | '/tools/unit-converter'
     | '/tools/upi'
@@ -2555,6 +2770,7 @@ export interface FileRouteTypes {
     | '/tools/watermark'
     | '/tools/whiteboard'
     | '/tools/whitespace'
+    | '/tools/wiki-speedrun'
     | '/tools/word-cloud'
     | '/tools/world-clock'
     | '/build-ideas/'
@@ -2591,6 +2807,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   QuizRoute: typeof QuizRoute
   RadarRoute: typeof RadarRoute
+  RandomRoute: typeof RandomRoute
   RecentRoute: typeof RecentRoute
   RoadmapsRoute: typeof RoadmapsRoute
   SearchRoute: typeof SearchRoute
@@ -2609,6 +2826,7 @@ export interface RootRouteChildren {
   DiscoverReelsRoute: typeof DiscoverReelsRoute
   HubAudienceRoute: typeof HubAudienceRoute
   HubArabicRoute: typeof HubArabicRoute
+  HubFunRoute: typeof HubFunRoute
   HubIslamRoute: typeof HubIslamRoute
   HubQuotesRoute: typeof HubQuotesRoute
   HubUrduRoute: typeof HubUrduRoute
@@ -2779,6 +2997,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RadarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/random': {
+      id: '/random'
+      path: '/random'
+      fullPath: '/random'
+      preLoaderRoute: typeof RandomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recent': {
       id: '/recent'
       path: '/recent'
@@ -2940,6 +3165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HubArabicRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hub/fun': {
+      id: '/hub/fun'
+      path: '/hub/fun'
+      fullPath: '/hub/fun'
+      preLoaderRoute: typeof HubFunRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hub/islam': {
       id: '/hub/islam'
       path: '/hub/islam'
@@ -2982,6 +3214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Play2048RouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/aim-trainer': {
+      id: '/play/aim-trainer'
+      path: '/aim-trainer'
+      fullPath: '/play/aim-trainer'
+      preLoaderRoute: typeof PlayAimTrainerRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/battleship': {
       id: '/play/battleship'
       path: '/battleship'
@@ -3001,6 +3240,13 @@ declare module '@tanstack/react-router' {
       path: '/breakout'
       fullPath: '/play/breakout'
       preLoaderRoute: typeof PlayBreakoutRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/bubble-wrap': {
+      id: '/play/bubble-wrap'
+      path: '/bubble-wrap'
+      fullPath: '/play/bubble-wrap'
+      preLoaderRoute: typeof PlayBubbleWrapRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/checkers': {
@@ -3052,6 +3298,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayDotsBoxesRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/emoji-phrase': {
+      id: '/play/emoji-phrase'
+      path: '/emoji-phrase'
+      fullPath: '/play/emoji-phrase'
+      preLoaderRoute: typeof PlayEmojiPhraseRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/fake-or-fact': {
+      id: '/play/fake-or-fact'
+      path: '/fake-or-fact'
+      fullPath: '/play/fake-or-fact'
+      preLoaderRoute: typeof PlayFakeOrFactRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/flag-guess': {
+      id: '/play/flag-guess'
+      path: '/flag-guess'
+      fullPath: '/play/flag-guess'
+      preLoaderRoute: typeof PlayFlagGuessRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/go-fish': {
       id: '/play/go-fish'
       path: '/go-fish'
@@ -3073,6 +3340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayHigherLowerRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/lights-out': {
+      id: '/play/lights-out'
+      path: '/lights-out'
+      fullPath: '/play/lights-out'
+      preLoaderRoute: typeof PlayLightsOutRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/math-duel': {
       id: '/play/math-duel'
       path: '/math-duel'
@@ -3092,6 +3366,20 @@ declare module '@tanstack/react-router' {
       path: '/minesweeper'
       fullPath: '/play/minesweeper'
       preLoaderRoute: typeof PlayMinesweeperRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/password-game': {
+      id: '/play/password-game'
+      path: '/password-game'
+      fullPath: '/play/password-game'
+      preLoaderRoute: typeof PlayPasswordGameRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/perfect-circle': {
+      id: '/play/perfect-circle'
+      path: '/perfect-circle'
+      fullPath: '/play/perfect-circle'
+      preLoaderRoute: typeof PlayPerfectCircleRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/pong': {
@@ -3157,6 +3445,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaySnakesLaddersRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/ten-seconds': {
+      id: '/play/ten-seconds'
+      path: '/ten-seconds'
+      fullPath: '/play/ten-seconds'
+      preLoaderRoute: typeof PlayTenSecondsRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/tic-tac-toe': {
       id: '/play/tic-tac-toe'
       path: '/tic-tac-toe'
@@ -3183,6 +3478,13 @@ declare module '@tanstack/react-router' {
       path: '/word-guess'
       fullPath: '/play/word-guess'
       preLoaderRoute: typeof PlayWordGuessRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/would-you-rather': {
+      id: '/play/would-you-rather'
+      path: '/would-you-rather'
+      fullPath: '/play/would-you-rather'
+      preLoaderRoute: typeof PlayWouldYouRatherRouteImport
       parentRoute: typeof PlayRoute
     }
     '/r/$id': {
@@ -3372,6 +3674,13 @@ declare module '@tanstack/react-router' {
       path: '/cv'
       fullPath: '/tools/cv'
       preLoaderRoute: typeof ToolsCvRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/deep-sea': {
+      id: '/tools/deep-sea'
+      path: '/deep-sea'
+      fullPath: '/tools/deep-sea'
+      preLoaderRoute: typeof ToolsDeepSeaRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/dice': {
@@ -3603,6 +3912,20 @@ declare module '@tanstack/react-router' {
       path: '/kharch'
       fullPath: '/tools/kharch'
       preLoaderRoute: typeof ToolsKharchRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/life-in-weeks': {
+      id: '/tools/life-in-weeks'
+      path: '/life-in-weeks'
+      fullPath: '/tools/life-in-weeks'
+      preLoaderRoute: typeof ToolsLifeInWeeksRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/life-stats': {
+      id: '/tools/life-stats'
+      path: '/life-stats'
+      fullPath: '/tools/life-stats'
+      preLoaderRoute: typeof ToolsLifeStatsRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/linktree': {
@@ -3941,6 +4264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSpellingRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/spend-money': {
+      id: '/tools/spend-money'
+      path: '/spend-money'
+      fullPath: '/tools/spend-money'
+      preLoaderRoute: typeof ToolsSpendMoneyRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/standup': {
       id: '/tools/standup'
       path: '/standup'
@@ -4032,6 +4362,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsTipCalculatorRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/trolley': {
+      id: '/tools/trolley'
+      path: '/trolley'
+      fullPath: '/tools/trolley'
+      preLoaderRoute: typeof ToolsTrolleyRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/typing-test': {
       id: '/tools/typing-test'
       path: '/typing-test'
@@ -4081,6 +4418,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsWhitespaceRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/wiki-speedrun': {
+      id: '/tools/wiki-speedrun'
+      path: '/wiki-speedrun'
+      fullPath: '/tools/wiki-speedrun'
+      preLoaderRoute: typeof ToolsWikiSpeedrunRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/word-cloud': {
       id: '/tools/word-cloud'
       path: '/word-cloud'
@@ -4114,9 +4458,11 @@ declare module '@tanstack/react-router' {
 
 interface PlayRouteChildren {
   Play2048Route: typeof Play2048Route
+  PlayAimTrainerRoute: typeof PlayAimTrainerRoute
   PlayBattleshipRoute: typeof PlayBattleshipRoute
   PlayBlackjackRoute: typeof PlayBlackjackRoute
   PlayBreakoutRoute: typeof PlayBreakoutRoute
+  PlayBubbleWrapRoute: typeof PlayBubbleWrapRoute
   PlayCheckersRoute: typeof PlayCheckersRoute
   PlayCoinFlipRoute: typeof PlayCoinFlipRoute
   PlayConnectFourRoute: typeof PlayConnectFourRoute
@@ -4124,12 +4470,18 @@ interface PlayRouteChildren {
   PlayDiceRoute: typeof PlayDiceRoute
   PlayDiceDuelRoute: typeof PlayDiceDuelRoute
   PlayDotsBoxesRoute: typeof PlayDotsBoxesRoute
+  PlayEmojiPhraseRoute: typeof PlayEmojiPhraseRoute
+  PlayFakeOrFactRoute: typeof PlayFakeOrFactRoute
+  PlayFlagGuessRoute: typeof PlayFlagGuessRoute
   PlayGoFishRoute: typeof PlayGoFishRoute
   PlayHangmanRoute: typeof PlayHangmanRoute
   PlayHigherLowerRoute: typeof PlayHigherLowerRoute
+  PlayLightsOutRoute: typeof PlayLightsOutRoute
   PlayMathDuelRoute: typeof PlayMathDuelRoute
   PlayMemoryMatchRoute: typeof PlayMemoryMatchRoute
   PlayMinesweeperRoute: typeof PlayMinesweeperRoute
+  PlayPasswordGameRoute: typeof PlayPasswordGameRoute
+  PlayPerfectCircleRoute: typeof PlayPerfectCircleRoute
   PlayPongRoute: typeof PlayPongRoute
   PlayRandomNumberRoute: typeof PlayRandomNumberRoute
   PlayReactionTestRoute: typeof PlayReactionTestRoute
@@ -4139,18 +4491,22 @@ interface PlayRouteChildren {
   PlaySkyDashRoute: typeof PlaySkyDashRoute
   PlaySnakeRoute: typeof PlaySnakeRoute
   PlaySnakesLaddersRoute: typeof PlaySnakesLaddersRoute
+  PlayTenSecondsRoute: typeof PlayTenSecondsRoute
   PlayTicTacToeRoute: typeof PlayTicTacToeRoute
   PlayTypingTestRoute: typeof PlayTypingTestRoute
   PlayWhackAMoleRoute: typeof PlayWhackAMoleRoute
   PlayWordGuessRoute: typeof PlayWordGuessRoute
+  PlayWouldYouRatherRoute: typeof PlayWouldYouRatherRoute
   PlayIndexRoute: typeof PlayIndexRoute
 }
 
 const PlayRouteChildren: PlayRouteChildren = {
   Play2048Route: Play2048Route,
+  PlayAimTrainerRoute: PlayAimTrainerRoute,
   PlayBattleshipRoute: PlayBattleshipRoute,
   PlayBlackjackRoute: PlayBlackjackRoute,
   PlayBreakoutRoute: PlayBreakoutRoute,
+  PlayBubbleWrapRoute: PlayBubbleWrapRoute,
   PlayCheckersRoute: PlayCheckersRoute,
   PlayCoinFlipRoute: PlayCoinFlipRoute,
   PlayConnectFourRoute: PlayConnectFourRoute,
@@ -4158,12 +4514,18 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayDiceRoute: PlayDiceRoute,
   PlayDiceDuelRoute: PlayDiceDuelRoute,
   PlayDotsBoxesRoute: PlayDotsBoxesRoute,
+  PlayEmojiPhraseRoute: PlayEmojiPhraseRoute,
+  PlayFakeOrFactRoute: PlayFakeOrFactRoute,
+  PlayFlagGuessRoute: PlayFlagGuessRoute,
   PlayGoFishRoute: PlayGoFishRoute,
   PlayHangmanRoute: PlayHangmanRoute,
   PlayHigherLowerRoute: PlayHigherLowerRoute,
+  PlayLightsOutRoute: PlayLightsOutRoute,
   PlayMathDuelRoute: PlayMathDuelRoute,
   PlayMemoryMatchRoute: PlayMemoryMatchRoute,
   PlayMinesweeperRoute: PlayMinesweeperRoute,
+  PlayPasswordGameRoute: PlayPasswordGameRoute,
+  PlayPerfectCircleRoute: PlayPerfectCircleRoute,
   PlayPongRoute: PlayPongRoute,
   PlayRandomNumberRoute: PlayRandomNumberRoute,
   PlayReactionTestRoute: PlayReactionTestRoute,
@@ -4173,10 +4535,12 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlaySkyDashRoute: PlaySkyDashRoute,
   PlaySnakeRoute: PlaySnakeRoute,
   PlaySnakesLaddersRoute: PlaySnakesLaddersRoute,
+  PlayTenSecondsRoute: PlayTenSecondsRoute,
   PlayTicTacToeRoute: PlayTicTacToeRoute,
   PlayTypingTestRoute: PlayTypingTestRoute,
   PlayWhackAMoleRoute: PlayWhackAMoleRoute,
   PlayWordGuessRoute: PlayWordGuessRoute,
+  PlayWouldYouRatherRoute: PlayWouldYouRatherRoute,
   PlayIndexRoute: PlayIndexRoute,
 }
 
@@ -4208,6 +4572,7 @@ interface ToolsRouteChildren {
   ToolsCsvToJsonRoute: typeof ToolsCsvToJsonRoute
   ToolsCurrencyHistoryRoute: typeof ToolsCurrencyHistoryRoute
   ToolsCvRoute: typeof ToolsCvRoute
+  ToolsDeepSeaRoute: typeof ToolsDeepSeaRoute
   ToolsDiceRoute: typeof ToolsDiceRoute
   ToolsDiffRoute: typeof ToolsDiffRoute
   ToolsDuaMakerRoute: typeof ToolsDuaMakerRoute
@@ -4241,6 +4606,8 @@ interface ToolsRouteChildren {
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJsonYamlRoute: typeof ToolsJsonYamlRoute
   ToolsKharchRoute: typeof ToolsKharchRoute
+  ToolsLifeInWeeksRoute: typeof ToolsLifeInWeeksRoute
+  ToolsLifeStatsRoute: typeof ToolsLifeStatsRoute
   ToolsLinktreeRoute: typeof ToolsLinktreeRoute
   ToolsLoanEligibilityRoute: typeof ToolsLoanEligibilityRoute
   ToolsLoremRoute: typeof ToolsLoremRoute
@@ -4289,6 +4656,7 @@ interface ToolsRouteChildren {
   ToolsSmartPasteRoute: typeof ToolsSmartPasteRoute
   ToolsSpeechToTextRoute: typeof ToolsSpeechToTextRoute
   ToolsSpellingRoute: typeof ToolsSpellingRoute
+  ToolsSpendMoneyRoute: typeof ToolsSpendMoneyRoute
   ToolsStandupRoute: typeof ToolsStandupRoute
   ToolsStarfieldRoute: typeof ToolsStarfieldRoute
   ToolsStickerRoute: typeof ToolsStickerRoute
@@ -4302,6 +4670,7 @@ interface ToolsRouteChildren {
   ToolsThumbnailRoute: typeof ToolsThumbnailRoute
   ToolsTimestampRoute: typeof ToolsTimestampRoute
   ToolsTipCalculatorRoute: typeof ToolsTipCalculatorRoute
+  ToolsTrolleyRoute: typeof ToolsTrolleyRoute
   ToolsTypingTestRoute: typeof ToolsTypingTestRoute
   ToolsUnitConverterRoute: typeof ToolsUnitConverterRoute
   ToolsUpiRoute: typeof ToolsUpiRoute
@@ -4309,6 +4678,7 @@ interface ToolsRouteChildren {
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
   ToolsWhiteboardRoute: typeof ToolsWhiteboardRoute
   ToolsWhitespaceRoute: typeof ToolsWhitespaceRoute
+  ToolsWikiSpeedrunRoute: typeof ToolsWikiSpeedrunRoute
   ToolsWordCloudRoute: typeof ToolsWordCloudRoute
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
@@ -4340,6 +4710,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsCsvToJsonRoute: ToolsCsvToJsonRoute,
   ToolsCurrencyHistoryRoute: ToolsCurrencyHistoryRoute,
   ToolsCvRoute: ToolsCvRoute,
+  ToolsDeepSeaRoute: ToolsDeepSeaRoute,
   ToolsDiceRoute: ToolsDiceRoute,
   ToolsDiffRoute: ToolsDiffRoute,
   ToolsDuaMakerRoute: ToolsDuaMakerRoute,
@@ -4373,6 +4744,8 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJsonYamlRoute: ToolsJsonYamlRoute,
   ToolsKharchRoute: ToolsKharchRoute,
+  ToolsLifeInWeeksRoute: ToolsLifeInWeeksRoute,
+  ToolsLifeStatsRoute: ToolsLifeStatsRoute,
   ToolsLinktreeRoute: ToolsLinktreeRoute,
   ToolsLoanEligibilityRoute: ToolsLoanEligibilityRoute,
   ToolsLoremRoute: ToolsLoremRoute,
@@ -4421,6 +4794,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsSmartPasteRoute: ToolsSmartPasteRoute,
   ToolsSpeechToTextRoute: ToolsSpeechToTextRoute,
   ToolsSpellingRoute: ToolsSpellingRoute,
+  ToolsSpendMoneyRoute: ToolsSpendMoneyRoute,
   ToolsStandupRoute: ToolsStandupRoute,
   ToolsStarfieldRoute: ToolsStarfieldRoute,
   ToolsStickerRoute: ToolsStickerRoute,
@@ -4434,6 +4808,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsThumbnailRoute: ToolsThumbnailRoute,
   ToolsTimestampRoute: ToolsTimestampRoute,
   ToolsTipCalculatorRoute: ToolsTipCalculatorRoute,
+  ToolsTrolleyRoute: ToolsTrolleyRoute,
   ToolsTypingTestRoute: ToolsTypingTestRoute,
   ToolsUnitConverterRoute: ToolsUnitConverterRoute,
   ToolsUpiRoute: ToolsUpiRoute,
@@ -4441,6 +4816,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsWatermarkRoute: ToolsWatermarkRoute,
   ToolsWhiteboardRoute: ToolsWhiteboardRoute,
   ToolsWhitespaceRoute: ToolsWhitespaceRoute,
+  ToolsWikiSpeedrunRoute: ToolsWikiSpeedrunRoute,
   ToolsWordCloudRoute: ToolsWordCloudRoute,
   ToolsWorldClockRoute: ToolsWorldClockRoute,
   ToolsIndexRoute: ToolsIndexRoute,
@@ -4471,6 +4847,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   QuizRoute: QuizRoute,
   RadarRoute: RadarRoute,
+  RandomRoute: RandomRoute,
   RecentRoute: RecentRoute,
   RoadmapsRoute: RoadmapsRoute,
   SearchRoute: SearchRoute,
@@ -4489,6 +4866,7 @@ const rootRouteChildren: RootRouteChildren = {
   DiscoverReelsRoute: DiscoverReelsRoute,
   HubAudienceRoute: HubAudienceRoute,
   HubArabicRoute: HubArabicRoute,
+  HubFunRoute: HubFunRoute,
   HubIslamRoute: HubIslamRoute,
   HubQuotesRoute: HubQuotesRoute,
   HubUrduRoute: HubUrduRoute,
@@ -4505,13 +4883,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

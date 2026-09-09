@@ -8,6 +8,7 @@ import {
   playModeCounts,
   type PlayGame,
 } from "@/lib/slashplay";
+import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 
 export const Route = createFileRoute("/play/")({
   head: () => ({
@@ -80,6 +81,19 @@ function PlayIndex() {
           {PLAY_GAME_COUNT} games that run instantly in your browser. No downloads, works offline.
         </p>
       </header>
+
+      <Link
+        to="/random"
+        search={{ go: true }}
+        className="group mt-3 flex items-center gap-3 rounded-xl border border-primary/25 bg-primary/5 px-4 py-3 transition-colors hover:border-primary/50"
+      >
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-[16px] transition-transform duration-150 group-hover:rotate-12">🎲</span>
+        <span className="min-w-0">
+          <span className="block text-[13px] font-bold text-foreground">Bored? Roll the dice</span>
+          <span className="block text-[11px] text-muted-foreground">Jump into a random tool or game - {RANDOM_POOL_SIZE} destinations in the pool</span>
+        </span>
+        <span className="ml-auto shrink-0 text-[11px] font-semibold text-primary">Feeling lucky →</span>
+      </Link>
 
       {/* Multiplayer spotlight */}
       <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4 sm:p-5">

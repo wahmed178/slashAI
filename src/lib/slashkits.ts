@@ -240,6 +240,18 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
     ],
   },
   {
+    title: "Curiosities",
+    icon: "🧭",
+    tools: [
+      { slug: "spend-money", name: "Spend Billions", desc: "You have $100B. Spend every cent on burgers or islands", icon: "💸", noUpload: true },
+      { slug: "life-in-weeks", name: "Life in Weeks", desc: "Your whole life as one grid of tiny boxes", icon: "🗓️", noUpload: true },
+      { slug: "life-stats", name: "Your Life in Numbers", desc: "Heartbeats, blinks, steps - what your body has done", icon: "📊", noUpload: true },
+      { slug: "deep-sea", name: "Deep Sea", desc: "Scroll 11 km down and meet what lives at every depth", icon: "🌊", noUpload: true },
+      { slug: "trolley", name: "Trolley Problems", desc: "Ten ethical dilemmas that reveal what you value", icon: "🚋", noUpload: true },
+      { slug: "wiki-speedrun", name: "Wiki Speedrun", desc: "Race from one Wikipedia page to another via links", icon: "🏃" },
+    ],
+  },
+  {
     title: "Languages",
     icon: "🌍",
     tools: [
