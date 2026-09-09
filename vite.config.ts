@@ -21,6 +21,13 @@ export default defineConfig({
       VitePWA({
         // The app shell + the whole static command catalog are cached for offline use.
         strategies: "generateSW",
+        // Nitro v3 redirects the client build away from the default dist/:
+        // on Vercel it emits into .vercel/output/static, locally into
+        // .output/public. The PWA plugin defaults to globbing dist/, which is
+        // empty on a clean Vercel build and crashed workbox with "Couldn't
+        // find configuration for either precaching or runtime caching".
+        // Point it at the real client output for each environment.
+        outDir: process.env["VERCEL"] ? ".vercel/output/static" : ".output/public",
         // "prompt" (not "autoUpdate"): the plugin force-injects workbox
         // skipWaiting + clientsClaim under "autoUpdate", which lets a new SW
         // hijack live pages mid-load and delete the asset cache underneath
