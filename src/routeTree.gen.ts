@@ -102,6 +102,8 @@ import { Route as PlayWhackAMoleRouteImport } from './routes/play.whack-a-mole'
 import { Route as PlayWordGuessRouteImport } from './routes/play.word-guess'
 import { Route as PlayWouldYouRatherRouteImport } from './routes/play.would-you-rather'
 import { Route as RIdRouteImport } from './routes/r.$id'
+import { Route as SlashIndexRouteImport } from './routes/slash.index'
+import { Route as SlashAppRouteImport } from './routes/slash.$app'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as ToolsAgeOfThingsRouteImport } from './routes/tools.age-of-things'
@@ -703,6 +705,16 @@ const PlayWouldYouRatherRoute = PlayWouldYouRatherRouteImport.update({
 const RIdRoute = RIdRouteImport.update({
   id: '/r/$id',
   path: '/r/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlashIndexRoute = SlashIndexRouteImport.update({
+  id: '/slash/',
+  path: '/slash/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlashAppRoute = SlashAppRouteImport.update({
+  id: '/slash/$app',
+  path: '/slash/$app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
@@ -1480,6 +1492,7 @@ export interface FileRoutesByFullPath {
   '/play/word-guess': typeof PlayWordGuessRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
+  '/slash/$app': typeof SlashAppRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -1620,6 +1633,7 @@ export interface FileRoutesByFullPath {
   '/explore/': typeof ExploreIndexRoute
   '/hub/': typeof HubIndexRoute
   '/play/': typeof PlayIndexRoute
+  '/slash/': typeof SlashIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -1710,6 +1724,7 @@ export interface FileRoutesByTo {
   '/play/word-guess': typeof PlayWordGuessRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
+  '/slash/$app': typeof SlashAppRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -1850,6 +1865,7 @@ export interface FileRoutesByTo {
   '/explore': typeof ExploreIndexRoute
   '/hub': typeof HubIndexRoute
   '/play': typeof PlayIndexRoute
+  '/slash': typeof SlashIndexRoute
   '/tools': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
@@ -1943,6 +1959,7 @@ export interface FileRoutesById {
   '/play/word-guess': typeof PlayWordGuessRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
+  '/slash/$app': typeof SlashAppRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2083,6 +2100,7 @@ export interface FileRoutesById {
   '/explore/': typeof ExploreIndexRoute
   '/hub/': typeof HubIndexRoute
   '/play/': typeof PlayIndexRoute
+  '/slash/': typeof SlashIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
@@ -2177,6 +2195,7 @@ export interface FileRouteTypes {
     | '/play/word-guess'
     | '/play/would-you-rather'
     | '/r/$id'
+    | '/slash/$app'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2317,6 +2336,7 @@ export interface FileRouteTypes {
     | '/explore/'
     | '/hub/'
     | '/play/'
+    | '/slash/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -2407,6 +2427,7 @@ export interface FileRouteTypes {
     | '/play/word-guess'
     | '/play/would-you-rather'
     | '/r/$id'
+    | '/slash/$app'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2547,6 +2568,7 @@ export interface FileRouteTypes {
     | '/explore'
     | '/hub'
     | '/play'
+    | '/slash'
     | '/tools'
     | '/explore/$category/$subcategory'
     | '/explore/$category'
@@ -2639,6 +2661,7 @@ export interface FileRouteTypes {
     | '/play/word-guess'
     | '/play/would-you-rather'
     | '/r/$id'
+    | '/slash/$app'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2779,6 +2802,7 @@ export interface FileRouteTypes {
     | '/explore/'
     | '/hub/'
     | '/play/'
+    | '/slash/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/explore/$category/'
@@ -2832,11 +2856,13 @@ export interface RootRouteChildren {
   HubUrduRoute: typeof HubUrduRoute
   LUsernameRoute: typeof LUsernameRoute
   RIdRoute: typeof RIdRoute
+  SlashAppRoute: typeof SlashAppRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   ExploreIndexRoute: typeof ExploreIndexRoute
   HubIndexRoute: typeof HubIndexRoute
+  SlashIndexRoute: typeof SlashIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
 }
@@ -3492,6 +3518,20 @@ declare module '@tanstack/react-router' {
       path: '/r/$id'
       fullPath: '/r/$id'
       preLoaderRoute: typeof RIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/slash/': {
+      id: '/slash/'
+      path: '/slash'
+      fullPath: '/slash/'
+      preLoaderRoute: typeof SlashIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/slash/$app': {
+      id: '/slash/$app'
+      path: '/slash/$app'
+      fullPath: '/slash/$app'
+      preLoaderRoute: typeof SlashAppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/': {
@@ -4872,11 +4912,13 @@ const rootRouteChildren: RootRouteChildren = {
   HubUrduRoute: HubUrduRoute,
   LUsernameRoute: LUsernameRoute,
   RIdRoute: RIdRoute,
+  SlashAppRoute: SlashAppRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   ExploreIndexRoute: ExploreIndexRoute,
   HubIndexRoute: HubIndexRoute,
+  SlashIndexRoute: SlashIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
 }

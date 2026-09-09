@@ -42,6 +42,7 @@ import {
 import { useLibrary } from "@/hooks/use-library";
 import { getSlashTool } from "@/lib/slashkits";
 import { getPlayGame } from "@/lib/slashplay";
+import { appBySlug } from "@/lib/slashbar";
 import { SearchBox } from "./SearchBox";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
@@ -54,6 +55,7 @@ const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; 
   { to: "/explore", label: "Commands", icon: Terminal },
   { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
   { to: "/discover", label: "Discover", icon: Compass },
+  { to: "/slash", label: "SlashBar", icon: Zap, badge: "23" },
   { to: "/tools", label: "SlashKits", icon: Wrench },
   { to: "/play", label: "SlashPlay", icon: Gamepad2, badge: "New" },
   { to: "/random", label: "Random", icon: Dices },
@@ -76,15 +78,15 @@ const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: str
 ];
 
 /**
- * Mobile bottom bar - Instagram-style: Discover first (the feed), Hub in the
+ * Mobile bottom bar - Instagram-style: Home · Discovery · SlashBar (centre) ·
  * centre as the elevated action, tools/games reachable from there.
  */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/discover", label: "Discover", icon: Compass, exact: false },
-  { to: "/hub", label: "Hub", icon: LayoutGrid, exact: false, center: true },
+  { to: "/discover", label: "Discovery", icon: Compass, exact: false },
+  { to: "/slash", label: "SlashBar", icon: Zap, exact: false, center: true },
+  { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
-  { to: "/me", label: "You", icon: UserRound, exact: true },
 ] as const;
 
 
@@ -92,6 +94,7 @@ const PRIMARY = [
 function isActive(pathname: string, to: string, exact?: boolean) {
   if (exact) return pathname === to;
   if (to === "/hub") return pathname.startsWith("/hub");
+  if (to === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play");
   if (to === "/explore")
     return (
       pathname.startsWith("/explore") ||
@@ -185,6 +188,15 @@ function breadcrumbsFor(pathname: string): Crumb[] | null {
       { label: "Home", to: "/" },
       { label: "SlashPlay", to: "/play" },
       { label: game?.name ?? humanize(segs[1]) },
+    ];
+  }
+  if (first === "slash") {
+    const app = segs[1] ? appBySlug(segs[1]) : undefined;
+    if (!segs[1]) return [{ label: "Home", to: "/" }, { label: "SlashBar" }];
+    return [
+      { label: "Home", to: "/" },
+      { label: "SlashBar", to: "/slash" },
+      { label: app?.name ?? humanize(segs[1]) },
     ];
   }
   if (first === "hub") {
@@ -467,21 +479,21 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
           // Route-based active state - derived from current pathname, not internal state
           const active = (() => {
             if (item.exact) return pathname === item.to;
-            const p = item.to;
+            const p = item.to as string;
             if (p === "/hub") return pathname.startsWith("/hub");
+            if (p === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play");
             if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
             if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar");
-            if (p === "/tools") return pathname.startsWith("/tools");
             return pathname.startsWith(p);
           })();
 
-          // ── Hub: elevated centre action (Instagram '+' slot) ──
+          // ── SlashBar: elevated centre action (Instagram '+' slot) ──
           if ((item as { center?: boolean }).center) {
             return (
               <Link
                 key={item.to}
                 to={item.to}
-                aria-label="Hub"
+                aria-label={item.label}
                 className="ripple-press flex min-h-[62px] flex-1 items-center justify-center"
               >
                 <span
@@ -493,7 +505,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
                   }
                 >
                   <item.icon className="size-[20px]" aria-hidden strokeWidth={2.2} />
-                  Hub
+                  {item.label}
                 </span>
               </Link>
             );

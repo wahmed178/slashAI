@@ -11,6 +11,7 @@ import {
 } from "@/lib/resources";
 import { TOOL_SECTIONS } from "@/lib/slashkits";
 import { PLAY_SECTIONS } from "@/lib/slashplay";
+import { SLASH_APPS } from "@/lib/slashbar";
 import {
   CAT_PALETTE,
   kitSectionColor,
@@ -124,6 +125,24 @@ function buildFeed(): FeedItem[] {
     }
   }
 
+  // slash apps - the whole SlashBar rail is discoverable too
+  for (const app of SLASH_APPS) {
+    const appPath = app.link ?? `/slash/${app.slug}`;
+    if (app.link) continue; // SlashKits/SlashPlay already in the feed as tools/games
+    items.push({
+      key: `slash-${app.slug}`,
+      kind: "tool",
+      title: app.name,
+      desc: app.desc,
+      emoji: app.emoji,
+      badge: "⚡ Slash",
+      to: appPath,
+      external: false,
+      tint: app.tint,
+      rank: 2,
+    });
+  }
+
   return items;
 }
 
@@ -140,6 +159,7 @@ const STORIES = [
   })),
   { label: "SlashKits", emoji: "🧰", to: "/tools", tint: CAT_PALETTE.teal },
   { label: "SlashPlay", emoji: "🎮", to: "/play", tint: CAT_PALETTE.rose },
+  { label: "SlashBar", emoji: "⚡", to: "/slash", tint: CAT_PALETTE.amber },
   { label: "Fun Sites", emoji: "🎪", to: "/hub/fun", tint: CAT_PALETTE.orange },
 ];
 
