@@ -383,6 +383,9 @@ function HomePage() {
       {/* ─── Stats Bar ─── */}
       <StatsBar />
 
+      {/* ─── Your week digest (moved up, right under the hero stats) ─── */}
+      <YourWeekDigest />
+
       {/* ─── Tool of the Day (rotates daily via date seed) ─── */}
       <section className="mt-8 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
         <div className="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
@@ -414,7 +417,7 @@ function HomePage() {
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories, fresh daily" },
-            { to: "/live", emoji: "📡", title: "Live", desc: "Markets, prayer, cricket, weather" },
+            { to: "/live", emoji: "📡", title: "Live", desc: "Markets, weather, prayer times" },
             { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: `${ALL_ROADMAPS.length} step-by-step guides` },
             { to: "/glossary", emoji: "📖", title: "Glossary", desc: `${GLOSSARY_TOTAL} AI & startup terms` },
             { to: "/discover", emoji: "🧭", title: "Discover", desc: `${RESOURCE_TOTAL}+ free tools and APIs` },
@@ -542,8 +545,6 @@ function HomePage() {
       >
         <Discover />
       </Section>
-
-      <YourWeekDigest />
 
       <MostUsedCommands />
 

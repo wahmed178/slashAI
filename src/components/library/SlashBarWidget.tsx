@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Check, Copy, RotateCcw } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Check, Copy, RotateCcw, Search } from "lucide-react";
 
 import type { Widget } from "@/lib/slashbar";
 
@@ -22,6 +22,7 @@ export function SlashBarWidget({ widget, tint }: { widget: Widget; tint: string 
       </header>
       <div className="mt-3">
         {widget.kind === "list" && <ListWidget widget={widget} tint={tint} />}
+        {widget.kind === "deck" && <DeckWidget widget={widget} />}
         {widget.kind === "picker" && <PickerWidget widget={widget} tint={tint} />}
         {widget.kind === "counter" && <CounterWidget widget={widget} tint={tint} />}
         {widget.kind === "gallery" && <GalleryWidget widget={widget} tint={tint} />}
@@ -108,6 +109,78 @@ function ListWidget({ widget, tint }: { widget: Widget; tint: string }) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+/* ──────────── deck: big searchable pool with pagination ──────────── */
+
+const DECK_PAGE = 12;
+
+function DeckWidget({ widget }: { widget: Widget }) {
+  const [q, setQ] = useState("");
+  const [shown, setShown] = useState(DECK_PAGE);
+  const items = widget.items ?? [];
+  const query = q.trim().toLowerCase();
+
+  const filtered = useMemo(
+    () => (query ? items.filter((i) => i.toLowerCase().includes(query)) : items),
+    [items, query],
+  );
+  const visible = filtered.slice(0, query ? filtered.length : shown);
+
+  return (
+    <div className="flex flex-col gap-2.5">
+      {items.length > 10 && (
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
+          <input
+            value={q}
+            onChange={(e) => {
+              setQ(e.target.value);
+              setShown(DECK_PAGE);
+            }}
+            placeholder={`Search ${items.length} entries…`}
+            className="h-9 w-full rounded-full border border-border bg-background pl-9 pr-3 text-[12.5px] text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[color-mix(in_oklab,var(--cat)_30%,transparent)]"
+          />
+        </div>
+      )}
+      <div className="flex flex-col gap-2">
+        {visible.map((item, i) => {
+          const idx = item.indexOf("→");
+          const front = idx > 0 ? item.slice(0, idx).trim() : item;
+          const back = idx > 0 ? item.slice(idx + 1).trim() : null;
+          return (
+            <div
+              key={`${i}-${item.slice(0, 24)}`}
+              className="rounded-lg border border-border bg-surface-elevated p-3"
+            >
+              {back ? (
+                <>
+                  <p className="text-[13px] font-semibold text-foreground">{front}</p>
+                  <p className="cat-text mt-1 text-[12.5px] leading-snug">→ {back}</p>
+                </>
+              ) : (
+                <p className="text-[13px] leading-snug text-foreground">{item}</p>
+              )}
+            </div>
+          );
+        })}
+        {visible.length === 0 && (
+          <p className="rounded-lg border border-border bg-surface-elevated p-4 text-center text-[12.5px] text-muted-foreground">
+            Nothing matches “{q.trim()}”. Try another word.
+          </p>
+        )}
+      </div>
+      {!query && shown < filtered.length && (
+        <button
+          type="button"
+          onClick={() => setShown((n) => n + DECK_PAGE)}
+          className="cat-chip ripple-press mx-auto rounded-full px-4 py-1.5 text-[11.5px] font-bold"
+        >
+          Show more ({filtered.length - shown} left)
+        </button>
+      )}
     </div>
   );
 }

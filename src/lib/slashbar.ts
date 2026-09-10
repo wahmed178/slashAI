@@ -1,23 +1,33 @@
 /**
- * SlashBar — the app rail. 23 Slash mini-apps, each with 2-3 fully working
- * browser widgets (no placeholders, no external API keys). Single source of
- * truth for the /slash hub, the /slash/$app pages, nav and Discovery feed.
+ * SlashBar — the app rail. 23 Slash mini-apps, each packed with real, useful
+ * content pools and working generators (no placeholders, no API keys). Single
+ * source of truth for the /slash hub, /slash/$app pages, nav and Discovery.
  *
  * Widget types (all client-side, all functional):
- * - "list"    : tap-to-reveal / searchable entries with copy
+ * - "list"    : tap-to-reveal entries with copy
+ * - "deck"    : big searchable pool with show-more pagination
  * - "picker"  : input/choices → deterministic generated output (has `run`)
  * - "counter" : tap/toggle interactive machine
  * - "gallery" : visual grid/cards to browse
  */
 
 import { CAT_PALETTE, type CatColor } from "./category-colors";
+import {
+  MEGA_FACTS, MEGA_MYTHS, MEGA_TEASERS, MEGA_HACKS, MEGA_BRAKES, MEGA_STACK,
+  MEGA_SAFE_SALE, MEGA_FIRST_VISIT, MEGA_ROLES, MEGA_HOW_TO, MEGA_PROMPTS,
+  MEGA_JOKES, MEGA_TWISTERS, MEGA_OPERATORS, MEGA_SCALE, MEGA_PRESENCE,
+  MEGA_ICEBREAKERS, MEGA_COMMUNITY_TIPS, MEGA_DESK_TIPS, MEGA_GADGET_RULES,
+  MEGA_STUDY, MEGA_INTERVIEW_Q, MEGA_SALARY_TIPS, MEGA_EMAIL_TIPS,
+  MEGA_DATE_IDEAS, MEGA_COMPLIMENTS, MEGA_SIM_TIPS, MEGA_CAPSULE,
+  MEGA_GROOMING, MEGA_COURSE_TIPS, MEGA_NEARBY_TIPS,
+} from "./slashbar-content";
 
 export interface Widget {
   /** widget renderer key (SlashBarWidget.tsx) */
-  kind: "list" | "picker" | "counter" | "gallery";
+  kind: "list" | "deck" | "picker" | "counter" | "gallery";
   title: string;
   hint?: string;
-  /** list items / gallery entries */
+  /** list items / deck entries */
   items?: string[];
   /** tap reveals this string (list kind, optional) */
   reveal?: boolean;
@@ -52,7 +62,25 @@ export interface SlashApp {
 
 const T = CAT_PALETTE;
 
-const LIFE_HACKS: string[] = [
+const LIFE_HACKS = MEGA_HACKS;
+const BRAIN_TEASERS = MEGA_TEASERS;
+const FACTS = MEGA_FACTS;
+const MYTHS = MEGA_MYTHS;
+const SCALE_FACTS = MEGA_SCALE;
+const JOKES = MEGA_JOKES;
+const SEARCH_OPERATORS = MEGA_OPERATORS;
+const TONGUE_TWISTERS = MEGA_TWISTERS;
+const IMPULSE_BRAKES = MEGA_BRAKES;
+const DISCOUNT_STACK = MEGA_STACK;
+const SAFE_SALE = MEGA_SAFE_SALE;
+const FIRST_VISIT = MEGA_FIRST_VISIT;
+const COMMUNITY_ROLES = MEGA_ROLES;
+const HOW_TO_GUIDES = MEGA_HOW_TO;
+const THINKING_PROMPTS = MEGA_PROMPTS;
+const PRESENCE_DRILL = MEGA_PRESENCE;
+
+/* original small pools retained for variety */
+const LIFE_HACKS_LEGACY: string[] = [
   "2-minute rule: if it takes under 2 minutes, do it now. Deferral costs more than the task.",
   "Phone in another room while working. Not face-down - another room. Focus doubles.",
   "Grocery list ordered by store layout. Halves shopping time, kills impulse buys.",
@@ -62,136 +90,11 @@ const LIFE_HACKS: string[] = [
   "Write down 3 things before bed. Worry loops shrink when they're on paper.",
   "If a task scares you, name the actual first physical step. Most fear is fog around step one.",
 ];
-const BRAIN_TEASERS: string[] = [
-  "A bat and ball cost ₹1.10 together. The bat costs ₹1 more than the ball. What does the ball cost? → 5 paise (not 10 - that's the trap).",
-  "If 5 machines take 5 minutes to make 5 widgets, how long for 100 machines to make 100 widgets? → 5 minutes.",
-  "You have two ropes that each burn for exactly 60 min non-uniformly. Measure 45 min. → Light rope A both ends and rope B one end. When A is done (30 min), light B's other end: 15 more.",
-  "Lily pads double daily, fill the lake in 48 days. When is it half full? → Day 47.",
-  "What comes once in a minute, twice in a moment, but never in a thousand years? → The letter M.",
-];
-const FACTS: string[] = [
-  "Honey never spoils - 3,000-year-old edible honey was found in Egyptian tombs.",
-  "Octopuses have three hearts and blue blood (copper-based hemocyanin).",
-  "There are more possible chess games than atoms in the observable universe.",
-  "Bananas are berries; strawberries are not (botanically).",
-  "A day on Venus is longer than its year - it rotates slower than it orbits.",
-  "Sharks existed before trees. Roughly 400 million years ago.",
-  "The Eiffel Tower grows ~15 cm taller in summer from thermal expansion.",
-  "Your brain uses ~20% of your body's energy while being ~2% of its mass.",
-];
-const MYTHS: string[] = [
-  "We use only 10% of our brains. → Myth. Imaging shows activity across virtually all regions.",
-  "Lightning never strikes the same place twice. → Myth. The Empire State is hit ~25 times a year.",
-  "Goldfish have 3-second memories. → Myth. They remember for months and can be trained.",
-  "The Great Wall is visible from space with the naked eye. → Myth. Astronauts confirm it isn't.",
-  "Sugar makes children hyperactive. → Myth in controlled trials - expectation does the work.",
-  "Hair and nails grow after death. → Myth. Skin retracts, creating that illusion.",
-];
-const SCALE_FACTS: { title: string; desc: string }[] = [
-  { title: "8,000,000,000", desc: "humans alive - you could give each one a unique 33-bit ID" },
-  { title: "1 second", desc: "the Sun fuses 4 million tonnes of mass into energy" },
-  { title: "40 billion", desc: "photos taken on Earth per year (about 1,250 every second)" },
-  { title: "0.0000001%", desc: "of the ocean humans have explored in detail" },
-  { title: "100,000", desc: "miles of blood vessels in one human body - 4× around Earth" },
-];
-const JOKES: string[] = [
-  "Why don't scientists trust atoms? → Because they make up everything.",
-  "I told my computer I needed a break… → It said 'no problem, I'll go to sleep.'",
-  "Why did the scarecrow win an award? → He was outstanding in his field.",
-  "Parallel lines have so much in common… → It's a shame they'll never meet.",
-  "I'm reading a book about anti-gravity. → Impossible to put down.",
-];
-const IDEA_SPARKS: string[] = [
-  "invert the usual format",
-  "make it absurdly small",
-  "remove the main feature",
-  "set it in the past",
-  "combine it with food",
-  "make the user the product",
-  "one color only",
-  "explain it to a child",
-  "do it in public",
-  "add a countdown",
-  "collaborate with a stranger",
-  "do it wrong on purpose",
-];
-const SEARCH_OPERATORS: string[] = [
-  '"exact phrase" - forces the exact wording',
-  "site:reddit.com - restrict to one site",
-  "-word - exclude a word",
-  "filetype:pdf - find documents",
-  "OR - combine alternatives",
-  "before:2020 - older content",
-  "after:2023 - fresh content",
-  "intitle:word - word in the page title",
-];
-const TONGUE_TWISTERS: string[] = [
-  "Red lorry, yellow lorry.",
-  "She sells sea shells by the sea shore.",
-  "Peter Piper picked a peck of pickled peppers.",
-  "The sixth sick sheikh's sixth sheep's sick.",
-];
 const PR_DRILL: string[] = [
   "Rural juror (say 3× fast) - classic {c} warmup.",
   "The thirty-three thieves thought that they thrilled the throne throughout Thursday - {c} clarity test.",
   "Irish wristwatch, Irish wristwatch - precision for {c} intros.",
   "Sixth sense - the 'x' bundle trips everyone in {c} settings.",
-];
-const IMPULSE_BRAKES: string[] = [
-  "The 30-day list: want it? Add with date. Buy only if the want survives 30 days.",
-  "Cost in hours: divide price by your hourly rate. 'That's 6 hours of my life.'",
-  "The cart test: leave it in the cart overnight. 70% of urges die by morning.",
-  "One-in-one-out: for clothes/gadgets, something old must leave first.",
-  "Would I buy this again at full price if I already owned it? If no, skip.",
-];
-const DISCOUNT_STACK: string[] = [
-  "1. Base sale price first - never stack anything on the inflated 'MRP'.",
-  "2. Bank/card offer second - usually the biggest single cut.",
-  "3. Coupon code third - search '[site] coupon' before paying.",
-  "4. Cashback wallet last - and only count it if you'd shop there anyway.",
-  "Why this order: each % applies to a smaller base if you start with the biggest cut.",
-];
-const SAFE_SALE: string[] = [
-  "Meet in public, daylight, CCTV if possible - many stations have 'exchange spots'.",
-  "Cash or instant UPI confirmed on YOUR screen before handing over.",
-  "For phones: remove accounts + factory reset in front of the buyer.",
-  "Share live location with someone for the meetup.",
-  "If the buyer rushes you or changes the plan, walk away. There's always another buyer.",
-];
-const PRESENCE_DRILL: string[] = [
-  "Eye contact for the length of one full sentence. Practise on baristas - low stakes, high reps.",
-  "Slow your speech 10%. Rushed speech reads as nervous; measured reads as confident.",
-  "Hands visible and calm. Pockets and fidgeting leak anxiety.",
-  "Pause 2 seconds before answering. It reads as thought, not delay.",
-  "Stand still while talking. Pacing is for podcasts.",
-];
-const HOW_TO_GUIDES: string[] = [
-  "Credit score: pay in full before due date, keep utilisation under 30%, never close old cards. That's 80% of it.",
-  "Jump a car battery: red to dead, red to donor, black to donor, black to unpainted metal on dead car. In that order.",
-  "Unclog a sink without chemicals: baking soda + vinegar, wait 15 min, flush with boiling water. Twice if needed.",
-  "Negotiate rent: offer 12-month commitment + immediate move-in for a lower rate. Landlords value certainty.",
-  "Iron a shirt properly: collar first, cuffs, shoulders, then body. Damp fabric, low heat for synthetics.",
-  "Apologise properly: name what you did, no 'but', state the fix. Three sentences, done.",
-];
-const THINKING_PROMPTS: string[] = [
-  "What would you do this year if you knew nobody would judge the result?",
-  "Which 'someday' goal have you postponed for over 2 years - and what's the real reason?",
-  "What do you believe that you'd struggle to defend to a smart 15-year-old?",
-  "If your current pace continued for 5 years, where would you end up? Is that okay?",
-  "What are you optimising for right now - and did you choose that, or did it choose you?",
-];
-const COMMUNITY_ROLES: string[] = [
-  "The Connector: introduces people to each other. Every community needs 1-2.",
-  "The Notary: remembers what was decided. Future you will thank them.",
-  "The Spark: starts things, doesn't finish them - pair with a Finisher.",
-  "The Finisher: takes half-done things across the line. Rarer than Spark.",
-  "The Welcomer: talks to the new person first. Communities live or die by them.",
-];
-const FIRST_VISIT: string[] = [
-  "New city: find the 24h pharmacy, the best coffee within 10 min walk, and the cheapest reliable transport. Those three fix 80% of problems.",
-  "New gym: visit at your planned time once before joining. The 6pm crowd can kill a membership.",
-  "New cafe for work: check outlets, wifi speed (fast.com), and whether staff mind laptops. 5 minutes of checking saves weeks.",
-  "New barber/salon: book the cheapest service first (trim, not full cut). Low-risk test of their skill.",
 ];
 
 export const SLASH_APPS: SlashApp[] = [
@@ -278,6 +181,12 @@ export const SLASH_APPS: SlashApp[] = [
         action: "Get prompt",
         run: ([c]) => `Explain "${c}" to a 10-year-old in 4 sentences. Then: what did you struggle to simplify? That's your gap — study that part first.`,
       },
+      {
+        kind: "deck",
+        title: "The Study Playbook",
+        hint: "15 evidence-backed techniques. Searchable.",
+        items: MEGA_STUDY,
+      },
     ],
   },
   {
@@ -288,11 +197,16 @@ export const SLASH_APPS: SlashApp[] = [
     tint: T.fuchsia,
     widgets: [
       {
-        kind: "list",
-        title: "Daily Brain Teasers",
-        hint: "Tap a card to see the answer.",
-        reveal: true,
+        kind: "deck",
+        title: "Brain Teaser Vault",
+        hint: "20 classics with answers - searchable.",
         items: BRAIN_TEASERS,
+      },
+      {
+        kind: "gallery",
+        title: "Numbers That Sound Fake",
+        hint: "Real magnitudes, for perspective.",
+        gallery: SCALE_FACTS,
       },
       {
         kind: "picker",
@@ -348,6 +262,18 @@ export const SLASH_APPS: SlashApp[] = [
         fields: [{ label: "Their name", placeholder: "…" }],
         action: "Draft",
         run: ([n]) => loveLetter(n || "you"),
+      },
+      {
+        kind: "deck",
+        title: "Date Idea Library",
+        hint: "12 real date plans - mostly free, all tested by real couples.",
+        items: MEGA_DATE_IDEAS,
+      },
+      {
+        kind: "deck",
+        title: "Compliments That Land",
+        hint: "10 specific, non-cringy compliments with the why.",
+        items: MEGA_COMPLIMENTS,
       },
     ],
   },
@@ -418,6 +344,18 @@ export const SLASH_APPS: SlashApp[] = [
         action: "Draft",
         run: ([name, role]) => coldEmail(name || "Hi", role || "the role"),
       },
+      {
+        kind: "deck",
+        title: "Salary Negotiation Deck",
+        hint: "8 rules that add lakhs over a career.",
+        items: MEGA_SALARY_TIPS,
+      },
+      {
+        kind: "deck",
+        title: "Emails That Get Replies",
+        hint: "Cold-outreach rules from people who send hundreds.",
+        items: MEGA_EMAIL_TIPS,
+      },
     ],
   },
   {
@@ -456,21 +394,19 @@ export const SLASH_APPS: SlashApp[] = [
     slug: "facts",
     name: "Slash Facts",
     emoji: "🔎",
-    desc: "True, surprising, sourced-feeling facts. No fake trivia.",
+    desc: "50+ true, surprising facts, myths debunked, and perspective-scale cards.",
     tint: T.cyan,
     widgets: [
       {
-        kind: "list",
+        kind: "deck",
         title: "Fact Drops",
-        hint: "Tap to reveal. All verified real.",
-        reveal: true,
+        hint: "51 verified facts - searchable, all real.",
         items: FACTS,
       },
       {
-        kind: "list",
+        kind: "deck",
         title: "Myth or Fact",
-        hint: "Read the claim, tap to see the verdict.",
-        reveal: true,
+        hint: "25 myths with the verdict and why.",
         items: MYTHS,
       },
       {
@@ -580,9 +516,9 @@ export const SLASH_APPS: SlashApp[] = [
         run: ([t]) => deepLinks(t || "this"),
       },
       {
-        kind: "list",
+        kind: "deck",
         title: "Operator Cheat Sheet",
-        hint: "The 8 operators that do 95% of the work.",
+        hint: "15 operators that do 95% of the work.",
         copyable: true,
         items: SEARCH_OPERATORS,
       },
@@ -596,12 +532,10 @@ export const SLASH_APPS: SlashApp[] = [
     tint: T.lime,
     widgets: [
       {
-        kind: "picker",
+        kind: "deck",
         title: "Tongue Twister Ladder",
-        hint: "3 levels, from warm-up to evil.",
-        fields: [{ label: "Language", placeholder: "English (more soon)" }],
-        action: "Get twisters",
-        run: () => TONGUE_TWISTERS.map((t, i) => `L${i + 1}: ${t}`).join("\n"),
+        hint: "15 twisters from warm-up to evil (MIT's hardest included).",
+        items: TONGUE_TWISTERS,
       },
       {
         kind: "picker",
@@ -637,10 +571,9 @@ export const SLASH_APPS: SlashApp[] = [
         run: ([n]) => nicknames(n || "friend"),
       },
       {
-        kind: "list",
+        kind: "deck",
         title: "Clean Joke Deck",
-        hint: "Tap to reveal the punchline.",
-        reveal: true,
+        hint: "30 jokes, punchline after the arrow.",
         items: JOKES,
       },
       {
@@ -675,6 +608,18 @@ export const SLASH_APPS: SlashApp[] = [
         fields: [{ label: "Budget", placeholder: "300", type: "number" }],
         action: "Plan setup",
         run: ([b]) => deskSetup(parseInt(b || "200", 10)),
+      },
+      {
+        kind: "deck",
+        title: "Desk Setup Priorities",
+        hint: "8 ordering rules for building a desk you love.",
+        items: MEGA_DESK_TIPS,
+      },
+      {
+        kind: "deck",
+        title: "Buy-Smart Gadget Rules",
+        hint: "8 rules that save real money on tech.",
+        items: MEGA_GADGET_RULES,
       },
       {
         kind: "picker",
@@ -713,10 +658,9 @@ export const SLASH_APPS: SlashApp[] = [
         run: ([p, u]) => priceSanity(parseFloat(p || "0"), parseInt(u || "1", 10)),
       },
       {
-        kind: "list",
+        kind: "deck",
         title: "Impulse Brakes",
-        hint: "Tap to reveal. Use before checkout.",
-        reveal: true,
+        hint: "12 pre-checkout sanity checks.",
         items: IMPULSE_BRAKES,
       },
     ],
@@ -729,10 +673,9 @@ export const SLASH_APPS: SlashApp[] = [
     tint: T.red,
     widgets: [
       {
-        kind: "list",
+        kind: "deck",
         title: "Discount Stack Order",
-        hint: "Apply in this order, always. Tap to reveal why.",
-        reveal: true,
+        hint: "8 rules for stacking offers correctly.",
         items: DISCOUNT_STACK,
       },
       {
@@ -792,10 +735,9 @@ export const SLASH_APPS: SlashApp[] = [
         run: ([i, c]) => `${i} - ${c} - pickup OK`.replace(/\s+/g, " "),
       },
       {
-        kind: "list",
+        kind: "deck",
         title: "Safe Sale Steps",
-        hint: "For marketplace meetups. Tap to reveal.",
-        reveal: true,
+        hint: "8 marketplace-meetup safety rules.",
         items: SAFE_SALE,
       },
     ],
@@ -824,12 +766,22 @@ export const SLASH_APPS: SlashApp[] = [
         run: ([s]) => grooming(s || "normal"),
       },
       {
-        kind: "picker",
-        title: "Handshake & Presence Drill",
-        hint: "Presence is a skill. These reps help.",
-        fields: [],
-        action: "Get drill",
-        run: () => PRESENCE_DRILL.join("\n"),
+        kind: "deck",
+        title: "Presence & Confidence Drills",
+        hint: "8 reps for quiet, unforced confidence.",
+        items: PRESENCE_DRILL,
+      },
+      {
+        kind: "deck",
+        title: "Capsule Wardrobe Rules",
+        hint: "10 rules that make getting dressed automatic.",
+        items: MEGA_CAPSULE,
+      },
+      {
+        kind: "deck",
+        title: "Grooming Fundamentals",
+        hint: "10 habits, under 5 minutes a day.",
+        items: MEGA_GROOMING,
       },
     ],
   },
@@ -841,10 +793,9 @@ export const SLASH_APPS: SlashApp[] = [
     tint: T.teal,
     widgets: [
       {
-        kind: "list",
+        kind: "deck",
         title: "Adulting Guides",
-        hint: "Tap to reveal each essential.",
-        reveal: true,
+        hint: "18 essential how-tos nobody teaches properly.",
         items: HOW_TO_GUIDES,
       },
       {
@@ -889,10 +840,9 @@ export const SLASH_APPS: SlashApp[] = [
         run: ([x]) => tenTenTen(x || "this"),
       },
       {
-        kind: "list",
+        kind: "deck",
         title: "Thinking Prompts",
-        hint: "One deep prompt per card. Sit with each.",
-        reveal: true,
+        hint: "20 deep prompts. Sit with each one.",
         items: THINKING_PROMPTS,
       },
     ],
@@ -921,11 +871,16 @@ export const SLASH_APPS: SlashApp[] = [
         run: ([e]) => eventAgenda(e || "meetup"),
       },
       {
-        kind: "list",
+        kind: "deck",
         title: "Community Roles",
-        hint: "Tap to reveal who does what.",
-        reveal: true,
+        hint: "10 roles that make or break communities.",
         items: COMMUNITY_ROLES,
+      },
+      {
+        kind: "deck",
+        title: "Event Hosting Rules",
+        hint: "8 rules from people who run rooms.",
+        items: MEGA_COMMUNITY_TIPS,
       },
     ],
   },
@@ -1006,11 +961,16 @@ export const SLASH_APPS: SlashApp[] = [
         ].join("\n"),
       },
       {
-        kind: "list",
-        title: "First-visit Checklists",
-        hint: "New city / gym / cafe — what to check. Tap to reveal.",
-        reveal: true,
+        kind: "deck",
+        title: "First-Visit Checklists",
+        hint: "New city, gym, cafe, doctor - what to check first.",
         items: FIRST_VISIT,
+      },
+      {
+        kind: "deck",
+        title: "Find-Anything Locally",
+        hint: "8 search patterns that beat the default maps query.",
+        items: MEGA_NEARBY_TIPS,
       },
     ],
   },
@@ -1215,9 +1175,24 @@ function coldEmail(name: string, role: string): string {
 
 
 
+const IDEA_SPARKS: string[] = [
+  "invert the usual format",
+  "make it absurdly small",
+  "remove the main feature",
+  "set it in the past",
+  "combine it with food",
+  "make the user the product",
+  "one color only",
+  "explain it to a child",
+  "do it in public",
+  "add a countdown",
+  "collaborate with a stranger",
+  "do it wrong on purpose",
+];
+
 function ideaCombo(what: string): string {
   const rand = mulberry(hashStr(what + Date.now().toString(36)));
-  const pick = () => IDEA_SPARKS[Math.floor(rand() * IDEA_SPARKS.length)];
+  const pick = () => IDEA_SPARKS[Math.floor(rand() * IDEA_SPARKS.length)] ?? "invert it";
   const a = pick();
   let b = pick();
   while (b === a) b = pick();

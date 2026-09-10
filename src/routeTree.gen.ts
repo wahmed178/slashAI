@@ -29,6 +29,7 @@ import { Route as MeRouteImport } from './routes/me'
 import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as PlayRouteImport } from './routes/play'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PromoRouteImport } from './routes/promo'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RandomRouteImport } from './routes/random'
@@ -39,6 +40,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TrendingRouteImport } from './routes/trending'
+import { Route as WebSearchRouteImport } from './routes/web-search'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as WorkflowRouteImport } from './routes/workflow'
 import { Route as BuildIdeasIndexRouteImport } from './routes/build-ideas.index'
@@ -104,6 +106,7 @@ import { Route as PlayWouldYouRatherRouteImport } from './routes/play.would-you-
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as SlashIndexRouteImport } from './routes/slash.index'
 import { Route as SlashAppRouteImport } from './routes/slash.$app'
+import { Route as SlashSlashgramRouteImport } from './routes/slash.slashgram'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as ToolsAgeOfThingsRouteImport } from './routes/tools.age-of-things'
@@ -342,6 +345,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PromoRoute = PromoRouteImport.update({
+  id: '/promo',
+  path: '/promo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
@@ -390,6 +398,11 @@ const ToolsRoute = ToolsRouteImport.update({
 const TrendingRoute = TrendingRouteImport.update({
   id: '/trending',
   path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WebSearchRoute = WebSearchRouteImport.update({
+  id: '/web-search',
+  path: '/web-search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WhatsNewRoute = WhatsNewRouteImport.update({
@@ -715,6 +728,11 @@ const SlashIndexRoute = SlashIndexRouteImport.update({
 const SlashAppRoute = SlashAppRouteImport.update({
   id: '/slash/$app',
   path: '/slash/$app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlashSlashgramRoute = SlashSlashgramRouteImport.update({
+  id: '/slash/slashgram',
+  path: '/slash/slashgram',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
@@ -1425,6 +1443,7 @@ export interface FileRoutesByFullPath {
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRouteWithChildren
   '/privacy': typeof PrivacyRoute
+  '/promo': typeof PromoRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/random': typeof RandomRoute
@@ -1435,6 +1454,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
+  '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -1493,6 +1513,7 @@ export interface FileRoutesByFullPath {
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
+  '/slash/slashgram': typeof SlashSlashgramRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -1658,6 +1679,7 @@ export interface FileRoutesByTo {
   '/me': typeof MeRoute
   '/movies': typeof MoviesRoute
   '/privacy': typeof PrivacyRoute
+  '/promo': typeof PromoRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/random': typeof RandomRoute
@@ -1667,6 +1689,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
+  '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -1725,6 +1748,7 @@ export interface FileRoutesByTo {
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
+  '/slash/slashgram': typeof SlashSlashgramRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -1892,6 +1916,7 @@ export interface FileRoutesById {
   '/movies': typeof MoviesRoute
   '/play': typeof PlayRouteWithChildren
   '/privacy': typeof PrivacyRoute
+  '/promo': typeof PromoRoute
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/random': typeof RandomRoute
@@ -1902,6 +1927,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
+  '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
@@ -1960,6 +1986,7 @@ export interface FileRoutesById {
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
+  '/slash/slashgram': typeof SlashSlashgramRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2128,6 +2155,7 @@ export interface FileRouteTypes {
     | '/movies'
     | '/play'
     | '/privacy'
+    | '/promo'
     | '/quiz'
     | '/radar'
     | '/random'
@@ -2138,6 +2166,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/trending'
+    | '/web-search'
     | '/whats-new'
     | '/workflow'
     | '/build-ideas/$slug'
@@ -2196,6 +2225,7 @@ export interface FileRouteTypes {
     | '/play/would-you-rather'
     | '/r/$id'
     | '/slash/$app'
+    | '/slash/slashgram'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2361,6 +2391,7 @@ export interface FileRouteTypes {
     | '/me'
     | '/movies'
     | '/privacy'
+    | '/promo'
     | '/quiz'
     | '/radar'
     | '/random'
@@ -2370,6 +2401,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/terms'
     | '/trending'
+    | '/web-search'
     | '/whats-new'
     | '/workflow'
     | '/build-ideas/$slug'
@@ -2428,6 +2460,7 @@ export interface FileRouteTypes {
     | '/play/would-you-rather'
     | '/r/$id'
     | '/slash/$app'
+    | '/slash/slashgram'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2594,6 +2627,7 @@ export interface FileRouteTypes {
     | '/movies'
     | '/play'
     | '/privacy'
+    | '/promo'
     | '/quiz'
     | '/radar'
     | '/random'
@@ -2604,6 +2638,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/trending'
+    | '/web-search'
     | '/whats-new'
     | '/workflow'
     | '/build-ideas/$slug'
@@ -2662,6 +2697,7 @@ export interface FileRouteTypes {
     | '/play/would-you-rather'
     | '/r/$id'
     | '/slash/$app'
+    | '/slash/slashgram'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2829,6 +2865,7 @@ export interface RootRouteChildren {
   MoviesRoute: typeof MoviesRoute
   PlayRoute: typeof PlayRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
+  PromoRoute: typeof PromoRoute
   QuizRoute: typeof QuizRoute
   RadarRoute: typeof RadarRoute
   RandomRoute: typeof RandomRoute
@@ -2839,6 +2876,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRouteWithChildren
   TrendingRoute: typeof TrendingRoute
+  WebSearchRoute: typeof WebSearchRoute
   WhatsNewRoute: typeof WhatsNewRoute
   WorkflowRoute: typeof WorkflowRoute
   BuildIdeasSlugRoute: typeof BuildIdeasSlugRoute
@@ -2857,6 +2895,7 @@ export interface RootRouteChildren {
   LUsernameRoute: typeof LUsernameRoute
   RIdRoute: typeof RIdRoute
   SlashAppRoute: typeof SlashAppRoute
+  SlashSlashgramRoute: typeof SlashSlashgramRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
@@ -3009,6 +3048,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/promo': {
+      id: '/promo'
+      path: '/promo'
+      fullPath: '/promo'
+      preLoaderRoute: typeof PromoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz': {
       id: '/quiz'
       path: '/quiz'
@@ -3077,6 +3123,13 @@ declare module '@tanstack/react-router' {
       path: '/trending'
       fullPath: '/trending'
       preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/web-search': {
+      id: '/web-search'
+      path: '/web-search'
+      fullPath: '/web-search'
+      preLoaderRoute: typeof WebSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/whats-new': {
@@ -3532,6 +3585,13 @@ declare module '@tanstack/react-router' {
       path: '/slash/$app'
       fullPath: '/slash/$app'
       preLoaderRoute: typeof SlashAppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/slash/slashgram': {
+      id: '/slash/slashgram'
+      path: '/slash/slashgram'
+      fullPath: '/slash/slashgram'
+      preLoaderRoute: typeof SlashSlashgramRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/': {
@@ -4885,6 +4945,7 @@ const rootRouteChildren: RootRouteChildren = {
   MoviesRoute: MoviesRoute,
   PlayRoute: PlayRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
+  PromoRoute: PromoRoute,
   QuizRoute: QuizRoute,
   RadarRoute: RadarRoute,
   RandomRoute: RandomRoute,
@@ -4895,6 +4956,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRouteWithChildren,
   TrendingRoute: TrendingRoute,
+  WebSearchRoute: WebSearchRoute,
   WhatsNewRoute: WhatsNewRoute,
   WorkflowRoute: WorkflowRoute,
   BuildIdeasSlugRoute: BuildIdeasSlugRoute,
@@ -4913,6 +4975,7 @@ const rootRouteChildren: RootRouteChildren = {
   LUsernameRoute: LUsernameRoute,
   RIdRoute: RIdRoute,
   SlashAppRoute: SlashAppRoute,
+  SlashSlashgramRoute: SlashSlashgramRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,

@@ -17,7 +17,6 @@ import {
   Rocket,
   Satellite,
   Search,
-  Trophy,
   Wind,
   Radio,
 } from "lucide-react";
@@ -30,13 +29,11 @@ import {
   getForex,
   getCommodities,
   getIndiaNews,
-  getMatches,
   getNews,
   getPrayerTimes,
   getSpace,
   getStocks,
   getWeather,
-  type MatchItem,
 } from "@/lib/live.functions";
 import { feedback } from "@/lib/play-sound";
 import { cn } from "@/lib/utils";
@@ -44,11 +41,11 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/live")({
   head: () => ({
     meta: [
-      { title: "Live - markets, news, weather, prayers & space | SlashAI" },
+      { title: "Live - markets, news, weather & prayer times | SlashAI" },
       {
         name: "description",
         content:
-          "One live dashboard: NIFTY & SENSEX, crypto prices, forex rates, India headlines, weather, air quality, prayer times with Hijri date, cricket, football and the ISS - all free, no sign-in.",
+          "One live dashboard: NIFTY & SENSEX, crypto prices, forex rates, India headlines, weather, air quality, prayer times with Hijri date, the Moon and the ISS - all free, no sign-in.",
       },
       { property: "og:title", content: "Live - markets, news, weather & more | SlashAI" },
       {
@@ -797,100 +794,6 @@ function CommoditiesCard() {
   );
 }
 
-// ------------------------------------------------------------------- scores
-
-function MatchRow({ m }: { m: MatchItem }) {
-  const live = /(1st|2nd|half|live|in play|innings)/i.test(m.status);
-  return (
-    <li className="panel lift flex items-center gap-3 rounded-xl px-3 py-2.5">
-      {m.badge ? (
-        <img src={m.badge} alt="" loading="lazy" className="size-8 shrink-0 rounded object-contain" />
-      ) : (
-        <Trophy className="size-8 shrink-0 p-1.5 text-primary" aria-hidden />
-      )}
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-foreground">
-          {m.home && m.away ? `${m.home} vs ${m.away}` : m.event}
-        </p>
-        <p className="truncate text-xs text-muted-foreground">
-          {m.league}
-          {m.time
-            ? ` · ${new Date(m.time).toLocaleString(undefined, {
-                hour: "2-digit",
-                minute: "2-digit",
-                day: "numeric",
-                month: "short",
-              })}`
-            : ""}
-        </p>
-      </div>
-      <div className="shrink-0 text-right">
-        {m.homeScore !== null && m.awayScore !== null ? (
-          <p className="font-mono text-sm font-semibold text-foreground">
-            {m.homeScore} - {m.awayScore}
-          </p>
-        ) : null}
-        <p className={cn("text-[11px]", live ? "font-semibold text-primary" : "text-muted-foreground")}>
-          {live && <span className="mr-1 inline-block size-1.5 animate-pulse rounded-full bg-primary align-middle" />}
-          {m.status}
-        </p>
-      </div>
-    </li>
-  );
-}
-
-function ScoresCard({ sport, title }: { sport: "Soccer" | "Cricket"; title: string }) {
-  const fetchMatches = useServerFn(getMatches);
-  const [offset, setOffset] = useState(0);
-  const { data, isFetching } = useQuery({
-    queryKey: ["matches", sport, offset],
-    queryFn: () => fetchMatches({ data: { sport, offsetDays: offset } }),
-    staleTime: 60 * 1000,
-    refetchInterval: 60_000,
-  });
-
-  const label = offset === 0 ? "Today" : offset === -1 ? "Yesterday" : "Tomorrow";
-
-  return (
-    <Card
-      title={title}
-      icon={Trophy}
-      action={
-        <div className="flex items-center gap-1">
-          {[-1, 0, 1].map((o) => (
-            <button
-              key={o}
-              type="button"
-              onClick={() => {
-                feedback("tap");
-                setOffset(o);
-              }}
-              className={cn(
-                "rounded-lg px-2 py-1 text-xs transition-colors",
-                offset === o ? "bg-accent font-semibold text-foreground" : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {o === -1 ? "Yest" : o === 0 ? "Today" : "Tmrw"}
-            </button>
-          ))}
-        </div>
-      }
-    >
-      {!data && isFetching ? (
-        <Skeleton rows={5} />
-      ) : !data || data.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No {title.toLowerCase()} listed for {label.toLowerCase()}.</p>
-      ) : (
-        <ul className="max-h-96 space-y-2 overflow-y-auto pr-1">
-          {data.map((m) => (
-            <MatchRow key={m.id} m={m} />
-          ))}
-        </ul>
-      )}
-    </Card>
-  );
-}
-
 // -------------------------------------------------------------------- space
 
 const MOON_PHASES: [number, string][] = [
@@ -981,43 +884,6 @@ function IssCard() {
   );
 }
 
-function ApodCard() {
-  const fetchSpace = useServerFn(getSpace);
-  const { data, isFetching } = useQuery({
-    queryKey: ["apod"],
-    queryFn: () => fetchSpace(),
-    select: (d) => d.apod,
-    staleTime: 6 * 60 * 60 * 1000,
-  });
-  return (
-    <Card
-      title="NASA picture of the day"
-      icon={Rocket}
-      className="lg:col-span-2"
-      action={
-        isFetching ? <RefreshCw className="size-4 animate-spin text-muted-foreground" /> : undefined
-      }
-    >
-      {!data ? (
-        <Skeleton rows={3} />
-      ) : !data.imageUrl ? (
-        <p className="text-sm text-muted-foreground">Today&apos;s picture is unavailable (NASA&apos;s demo key has daily limits - it usually recovers within the hour).</p>
-      ) : (
-        <a href={data.imageUrl} target="_blank" rel="noreferrer noopener" className="group block">
-          <img
-            src={data.imageUrl}
-            alt={data.title}
-            loading="lazy"
-            className="aspect-video w-full rounded-xl object-cover transition-opacity group-hover:opacity-90"
-          />
-          <p className="mt-3 text-sm font-bold text-foreground">{data.title}</p>
-          <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-muted-foreground">{data.explanation}</p>
-        </a>
-      )}
-    </Card>
-  );
-}
-
 // --------------------------------------------------------------------- page
 
 function LivePage() {
@@ -1028,7 +894,7 @@ function LivePage() {
           <Radio className="size-5 text-primary" /> Live
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Markets, crypto, currency, India headlines, weather, air quality, prayer times and space - one calm
+          Markets, crypto, currency, India headlines, weather, air quality, prayer times, the Moon and the ISS - one calm
           dashboard, all from free public data. No account, no keys.
         </p>
       </header>
@@ -1043,17 +909,14 @@ function LivePage() {
         <CryptoCard />
         <ForexCard />
         <CommoditiesCard />
-        <ScoresCard sport="Cricket" title="Cricket" />
-        <ScoresCard sport="Soccer" title="Football" />
-        <ApodCard />
         <MoonCard />
         <IssCard />
       </div>
 
       <p className="mt-4 text-xs text-muted-foreground">
         Data: Yahoo Finance (markets), CoinGecko (crypto), open.er-api.com (currency), NDTV/Gadgets360 feeds via
-        rss2json (India news), Open-Meteo (weather & air quality), Aladhan (prayer times), Hacker News, NASA APOD,
-        WhereTheISS.at, TheSportsDB. Markets auto-refresh during NSE hours.
+        rss2json (India news), Open-Meteo (weather & air quality), Aladhan (prayer times), Hacker News,
+        WhereTheISS.at. Markets auto-refresh during NSE hours.
       </p>
     </AppShell>
   );

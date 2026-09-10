@@ -103,28 +103,25 @@ function SlashAppPage() {
           const prev = ALL_SLASH_APPS[(i - 1 + ALL_SLASH_APPS.length) % ALL_SLASH_APPS.length]!;
           const next = ALL_SLASH_APPS[(i + 1) % ALL_SLASH_APPS.length]!;
           const label = (a: typeof prev) => `${a.emoji} ${a.name.replace("Slash ", "")}`;
+          const cls = "ripple-press text-[12.5px] font-semibold text-muted-foreground transition-colors hover:text-foreground";
           return (
             <>
-              <Link
-                to={prev.link ?? "/slash/$app"}
-                params={prev.link ? undefined : { app: prev.slug }}
-                className="ripple-press text-[12.5px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
-              >
-                ← {label(prev)}
-              </Link>
+              {prev.link ? (
+                <Link to={prev.link} className={cls}>← {label(prev)}</Link>
+              ) : (
+                <Link to="/slash/$app" params={{ app: prev.slug }} className={cls}>← {label(prev)}</Link>
+              )}
               <Link
                 to="/slash"
                 className="text-[12px] text-muted-foreground hover:text-foreground"
               >
                 All apps
               </Link>
-              <Link
-                to={next.link ?? "/slash/$app"}
-                params={next.link ? undefined : { app: next.slug }}
-                className="ripple-press text-[12.5px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {label(next)} →
-              </Link>
+              {next.link ? (
+                <Link to={next.link} className={cls}>{label(next)} →</Link>
+              ) : (
+                <Link to="/slash/$app" params={{ app: next.slug }} className={cls}>{label(next)} →</Link>
+              )}
             </>
           );
         })()}

@@ -1,156 +1,135 @@
+import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import {
-  Home,
-  Terminal,
-  Compass,
-  Wrench,
-  Gamepad2,
-  LayoutGrid,
-  Zap,
-  Map,
-  Radio,
-  BookOpen,
-  Bookmark,
-  Settings,
-  NotebookPen,
-  Sparkles,
-  Flame,
-  Layers,
-  History,
-  Palette,
-  Workflow,
-  Share2,
-  Cpu,
-  Dices,
-} from "lucide-react";
+import { ChevronDown, Settings } from "lucide-react";
 
-const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
-  { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/explore", label: "Commands", icon: Terminal },
-  { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
-  { to: "/discover", label: "Discovery", icon: Compass },
-  { to: "/slash", label: "SlashBar", icon: Zap, badge: "23" },
-  { to: "/tools", label: "SlashKits", icon: Wrench },
-  { to: "/play", label: "SlashPlay", icon: Gamepad2, badge: "New" },
-  { to: "/random", label: "Random", icon: Dices },
-  { to: "/ai-tools", label: "AI Tools", icon: Cpu, badge: "100+" },
-  { to: "/hub", label: "Hubs", icon: LayoutGrid },
-  { to: "/roadmaps", label: "Roadmaps", icon: Map },
-  { to: "/workflow", label: "AI Workflows", icon: Workflow, badge: "New" },
-  { to: "/live", label: "Live", icon: Radio, badge: "Hot" },
-  { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
-  { to: "/glossary", label: "Glossary", icon: BookOpen },
-  { to: "/collections", label: "Collections", icon: Layers },
-  { to: "/designs", label: "Designs", icon: Palette },
-];
+import { NAV_GROUPS } from "./nav-groups";
 
-const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: string }> = [
-  { to: "/journal", label: "Journal", icon: NotebookPen },
-  { to: "/graph", label: "Knowledge Graph", icon: Share2, badge: "New" },
-  { to: "/recent", label: "Recent", icon: History },
-  { to: "/favorites", label: "Saved", icon: Bookmark },
-  { to: "/me", label: "Profile & Settings", icon: Settings },
-];
-
-function isActive(pathname: string, to: string, exact?: boolean) {
-  if (exact) return pathname === to;
-  if (to === "/hub") return pathname.startsWith("/hub");
-  if (to === "/explore")
-    return (
-      pathname.startsWith("/explore") ||
-      pathname.startsWith("/search") ||
-      pathname.startsWith("/find") ||
-      pathname.startsWith("/c/")
-    );
-  if (to === "/discover")
-    return (
-      pathname.startsWith("/discover") ||
-      pathname.startsWith("/r/") ||
-      pathname.startsWith("/whats-new") ||
-      pathname.startsWith("/radar")
-    );
-  if (to === "/tools") return pathname.startsWith("/tools");
-  if (to === "/play") return pathname.startsWith("/play");
-  return pathname.startsWith(to);
+function isActive(pathname: string, to: string) {
+  return pathname === to || pathname.startsWith(`${to}/`);
 }
 
 export function DesktopSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [open, setOpen] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const g of NAV_GROUPS) {
+      if (g.match(pathname)) initial[g.id] = true;
+    }
+    return initial;
+  });
 
   return (
-    <aside className="sticky top-0 hidden h-screen w-[220px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex">
+    <aside className="sticky top-0 hidden h-screen w-[232px] shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex">
       {/* Logo */}
       <div className="px-3 py-4">
         <Link to="/" className="flex items-center gap-2.5 px-2 focus-visible:outline-none">
           <span className="text-[22px]">⚡</span>
           <span className="text-[18px] font-bold text-foreground">SlashAI</span>
-          <svg className="ml-1 size-3.5 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
         </Link>
       </div>
 
       <div className="h-px bg-surface-elevated" />
 
-      {/* Main nav */}
-      <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-0.5">
-        {NAV_ITEMS.map((item) => {
-          const active = isActive(pathname, item.to, item.exact);
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`flex h-[36px] items-center gap-2.5 rounded-[6px] px-2.5 text-[13px] transition-all duration-150 ${
-                active
-                  ? "bg-primary/10 text-foreground border-l-2 border-l-primary pl-2"
-                  : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground border-l-2 border-l-transparent pl-2"
-              }`}
-            >
-              <item.icon
-                className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`}
-                strokeWidth={active ? 2.2 : 1.8}
-              />
-              <span className="flex-1">{item.label}</span>
-              {item.badge && (
-                <span
-                  className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold leading-none ${
-                    item.badge === "Hot"
-                      ? "bg-red-500 text-white"
-                      : "bg-primary text-background"
-                  }`}
-                >
-                  {item.badge}
-                </span>
-              )}
-            </Link>
-          );
-        })}
+      {/* Grouped nav with sub-folders */}
+      <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 py-3">
+        {NAV_GROUPS.map((group) => {
+          const groupActive = group.match(pathname);
+          const expanded = open[group.id] ?? false;
+          const Icon = group.icon;
 
-        <div className="my-2 h-px bg-surface-elevated" />
+          // simple link (no leaves)
+          if (group.leaves.length === 0 && group.to) {
+            const active = isActive(pathname, group.to) || groupActive;
+            return (
+              <Link
+                key={group.id}
+                to={group.to}
+                className={`flex h-[36px] items-center gap-2.5 rounded-[6px] px-2.5 text-[13px] transition-all duration-150 ${
+                  active
+                    ? "bg-primary/10 text-foreground"
+                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                }`}
+              >
+                <Icon className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2.2 : 1.8} />
+                <span className="flex-1">{group.label}</span>
+              </Link>
+            );
+          }
 
-        {SECONDARY_ITEMS.map((item) => {
-          const active = isActive(pathname, item.to);
           return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`flex h-[36px] items-center gap-2.5 rounded-[6px] px-2.5 text-[13px] transition-all duration-150 ${
-                active
-                  ? "bg-primary/10 text-foreground border-l-2 border-l-primary pl-2"
-                  : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground border-l-2 border-l-transparent pl-2"
-              }`}
-            >
-              <item.icon
-                className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`}
-                strokeWidth={active ? 2.2 : 1.8}
-              />
-              <span className="flex-1">{item.label}</span>
-              {item.badge && (
-                <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
-                  {item.badge}
-                </span>
+            <div key={group.id}>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => setOpen((prev) => ({ ...prev, [group.id]: !expanded }))}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setOpen((prev) => ({ ...prev, [group.id]: !expanded }));
+                  }
+                }}
+                className={`flex h-[36px] cursor-pointer select-none items-center gap-2.5 rounded-[6px] px-2.5 text-[13px] transition-all duration-150 ${
+                  groupActive
+                    ? "bg-primary/10 text-foreground"
+                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                }`}
+              >
+                <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
+                <span className="flex-1">{group.label}</span>
+                {group.badge && (
+                  <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
+                    {group.badge}
+                  </span>
+                )}
+                <ChevronDown
+                  className={`size-3.5 shrink-0 text-muted-foreground transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+                />
+              </div>
+
+              {expanded && (
+                <div className="mb-1.5 ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-surface-elevated pl-2.5">
+                  {group.to && (
+                    <Link
+                      to={group.to}
+                      onClick={() => setOpen((prev) => ({ ...prev, [group.id]: true }))}
+                      className={`flex h-[30px] items-center rounded-[6px] px-2 text-[12.5px] font-medium transition-all duration-150 ${
+                        pathname === group.to
+                          ? "text-primary"
+                          : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                      }`}
+                    >
+                      Overview
+                    </Link>
+                  )}
+                  {group.leaves.map((leaf) => {
+                    const active = pathname === leaf.to;
+                    return (
+                      <Link
+                        key={leaf.to}
+                        to={leaf.to}
+                        className={`flex h-[30px] items-center gap-2 rounded-[6px] px-2 text-[12.5px] transition-all duration-150 ${
+                          active
+                            ? "text-primary"
+                            : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                        }`}
+                      >
+                        <span className="flex-1 truncate">{leaf.label}</span>
+                        {leaf.badge && (
+                          <span
+                            className={`shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold leading-none ${
+                              leaf.badge === "Hot"
+                                ? "bg-red-500 text-white"
+                                : "bg-surface-elevated text-muted-foreground"
+                            }`}
+                          >
+                            {leaf.badge}
+                          </span>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
               )}
-            </Link>
+            </div>
           );
         })}
       </nav>
@@ -165,7 +144,7 @@ export function DesktopSidebar() {
           <p className="text-[11px] text-muted-foreground">No account · Local only</p>
         </div>
         <Link to="/me">
-          <Settings className="size-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors" />
+          <Settings className="size-4 shrink-0 text-muted-foreground transition-colors hover:text-foreground" />
         </Link>
       </div>
     </aside>

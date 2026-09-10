@@ -48,34 +48,9 @@ import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
 import { CookieBanner } from "./CookieBanner";
 import { DesktopSidebar } from "./DesktopSidebar";
+import { NAV_GROUPS } from "./nav-groups";
 
 /** Shared nav items - same as DesktopSidebar */
-const NAV_ITEMS: Array<{ to: string; label: string; icon: any; exact?: boolean; badge?: string }> = [
-  { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/explore", label: "Commands", icon: Terminal },
-  { to: "/trending", label: "Trending", icon: Flame, badge: "New" },
-  { to: "/discover", label: "Discover", icon: Compass },
-  { to: "/slash", label: "SlashBar", icon: Zap, badge: "23" },
-  { to: "/tools", label: "SlashKits", icon: Wrench },
-  { to: "/play", label: "SlashPlay", icon: Gamepad2, badge: "New" },
-  { to: "/random", label: "Random", icon: Dices },
-  { to: "/ai-tools", label: "AI Tools", icon: Cpu, badge: "100+" },
-  { to: "/hub", label: "Hubs", icon: LayoutGrid },
-  { to: "/roadmaps", label: "Roadmaps", icon: Map },
-  { to: "/live", label: "Live", icon: Radio, badge: "Hot" },
-  { to: "/quiz", label: "Daily Quiz", icon: Sparkles },
-  { to: "/glossary", label: "Glossary", icon: BookOpen },
-  { to: "/collections", label: "Collections", icon: Layers },
-  { to: "/designs", label: "Designs", icon: Palette },
-];
-
-const SECONDARY_ITEMS: Array<{ to: string; label: string; icon: any; badge?: string }> = [
-  { to: "/journal", label: "Journal", icon: NotebookPen },
-  { to: "/graph", label: "Knowledge Graph", icon: Share2, badge: "New" },
-  { to: "/recent", label: "Recent", icon: HistoryIcon },
-  { to: "/favorites", label: "Saved", icon: Bookmark },
-  { to: "/me", label: "Profile & Settings", icon: Settings },
-];
 
 /**
  * Mobile bottom bar - Instagram-style: Home · Discovery · SlashBar (centre) ·
@@ -270,6 +245,64 @@ function BackButton({ to, label }: { to: string; label: string }) {
   );
 }
 
+function DrawerGroupLeaves({
+  group,
+  pathname,
+  onNavigate,
+  active,
+}: {
+  group: (typeof NAV_GROUPS)[number];
+  pathname: string;
+  onNavigate?: (() => void) | undefined;
+  active: boolean;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const open = expanded || active;
+  if (group.leaves.length === 0) return null;
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        className="mt-0.5 flex h-[26px] w-full items-center gap-1.5 rounded-[6px] px-2.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground/70 transition-colors hover:text-foreground"
+      >
+        <span className="flex-1 text-left">{open && !expanded ? "Hide sections" : "All sections"}</span>
+      </button>
+      {open && (
+        <div className="mb-1.5 ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-surface-elevated pl-2.5">
+          {group.leaves.map((leaf) => {
+            const leafActive = pathname === leaf.to;
+            return (
+              <Link
+                key={leaf.to}
+                to={leaf.to}
+                onClick={onNavigate}
+                className={`flex h-[32px] items-center gap-2 rounded-[6px] px-2 text-[13px] transition-all duration-150 ${
+                  leafActive
+                    ? "text-primary"
+                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                }`}
+              >
+                <span className="flex-1 truncate">{leaf.label}</span>
+                {leaf.badge && (
+                  <span
+                    className={`shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold leading-none ${
+                      leaf.badge === "Hot" ? "bg-red-500 text-white" : "bg-surface-elevated text-muted-foreground"
+                    }`}
+                  >
+                    {leaf.badge}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
+}
+
 function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -284,55 +317,53 @@ function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
       </div>
       <div className="h-px bg-surface-elevated" />
 
-      {/* Main nav - same flat list as desktop */}
-      <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-0.5">
-        {NAV_ITEMS.map((item) => {
-          const active = isActive(pathname, item.to, item.exact);
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={onNavigate}
-              className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
-                active
-                  ? "bg-primary/10 text-foreground border-l-2 border-l-primary pl-2"
-                  : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground border-l-2 border-l-transparent pl-2"
-              }`}
-            >
-              <item.icon className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2.2 : 1.8} />
-              <span className="flex-1">{item.label}</span>
-              {item.badge && (
-                <span className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold leading-none ${item.badge === "Hot" ? "bg-red-500 text-white" : "bg-primary text-background"}`}>
-                  {item.badge}
-                </span>
-              )}
-            </Link>
-          );
-        })}
+      {/* Grouped nav - same sub-folder tree as desktop */}
+      <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 py-3">
+        {NAV_GROUPS.map((group) => {
+          const groupActive = group.match(pathname);
+          const Icon = group.icon;
 
-        <div className="my-2 h-px bg-surface-elevated" />
+          if (group.leaves.length === 0 && group.to) {
+            return (
+              <Link
+                key={group.id}
+                to={group.to}
+                onClick={onNavigate}
+                className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
+                  groupActive
+                    ? "bg-primary/10 text-foreground"
+                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                }`}
+              >
+                <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
+                <span className="flex-1">{group.label}</span>
+              </Link>
+            );
+          }
 
-        {SECONDARY_ITEMS.map((item) => {
-          const active = isActive(pathname, item.to);
           return (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={onNavigate}
-              className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
-                active
-                  ? "bg-primary/10 text-foreground border-l-2 border-l-primary pl-2"
-                  : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground border-l-2 border-l-transparent pl-2"
-              }`}
-            >
-              <item.icon className={`size-[18px] shrink-0 ${active ? "text-primary" : ""}`} strokeWidth={active ? 2.2 : 1.8} />
-              <span className="flex-1">{item.label}</span>
-              {item.badge && (
-                <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
-                  {item.badge}
-                </span>
-              )}
-            </Link>
+            <div key={group.id}>
+              <Link
+                to={group.to ?? "#"}
+                onClick={onNavigate}
+                className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
+                  groupActive
+                    ? "bg-primary/10 text-foreground"
+                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                }`}
+              >
+                <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
+                <span className="flex-1">{group.label}</span>
+                {group.badge && (
+                  <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
+                    {group.badge}
+                  </span>
+                )}
+              </Link>
+
+              {/* Sub-folder: collapsed behind a toggle, auto-expanded when active */}
+              <DrawerGroupLeaves group={group} pathname={pathname} onNavigate={onNavigate} active={groupActive} />
+            </div>
           );
         })}
       </nav>
