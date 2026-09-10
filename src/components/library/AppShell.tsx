@@ -21,6 +21,7 @@ import {
   History as HistoryIcon,
   Palette,
   Menu,
+  ChevronDown,
   ChevronLeft,
   Moon,
   Sun,
@@ -69,7 +70,7 @@ const PRIMARY = [
 function isActive(pathname: string, to: string, exact?: boolean) {
   if (exact) return pathname === to;
   if (to === "/hub") return pathname.startsWith("/hub");
-  if (to === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play");
+  if (to === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play") || pathname.startsWith("/web-search");
   if (to === "/explore")
     return (
       pathname.startsWith("/explore") ||
@@ -250,13 +251,16 @@ function DrawerGroupLeaves({
   pathname,
   onNavigate,
   active,
+  expanded,
+  onToggle,
 }: {
   group: (typeof NAV_GROUPS)[number];
   pathname: string;
   onNavigate?: (() => void) | undefined;
   active: boolean;
+  expanded: boolean;
+  onToggle: () => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
   const open = expanded || active;
   if (group.leaves.length === 0) return null;
 
@@ -264,13 +268,16 @@ function DrawerGroupLeaves({
     <>
       <button
         type="button"
-        onClick={() => setExpanded((v) => !v)}
+        onClick={onToggle}
         className="mt-0.5 flex h-[26px] w-full items-center gap-1.5 rounded-[6px] px-2.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground/70 transition-colors hover:text-foreground"
       >
         <span className="flex-1 text-left">{open && !expanded ? "Hide sections" : "All sections"}</span>
+        <ChevronDown
+          className={`size-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
       </button>
       {open && (
-        <div className="mb-1.5 ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-surface-elevated pl-2.5">
+        <div className="dropdown-reveal mb-1.5 ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-surface-elevated pl-2.5">
           {group.leaves.map((leaf) => {
             const leafActive = pathname === leaf.to;
             return (
@@ -305,6 +312,13 @@ function DrawerGroupLeaves({
 
 function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const [drawerOpen, setDrawerOpen] = useState<Record<string, boolean>>(() => {
+    const initial: Record<string, boolean> = {};
+    for (const g of NAV_GROUPS) {
+      if (g.match(pathname)) initial[g.id] = true;
+    }
+    return initial;
+  });
 
   return (
     <div className="flex h-full flex-col">
@@ -322,6 +336,7 @@ function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
         {NAV_GROUPS.map((group) => {
           const groupActive = group.match(pathname);
           const Icon = group.icon;
+          const expanded = drawerOpen[group.id] ?? false;
 
           if (group.leaves.length === 0 && group.to) {
             return (
@@ -343,26 +358,52 @@ function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
 
           return (
             <div key={group.id}>
-              <Link
-                to={group.to ?? "#"}
-                onClick={onNavigate}
-                className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
-                  groupActive
-                    ? "bg-primary/10 text-foreground"
-                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
-                }`}
-              >
-                <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
-                <span className="flex-1">{group.label}</span>
-                {group.badge && (
-                  <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
-                    {group.badge}
-                  </span>
-                )}
-              </Link>
+              <div className="flex items-center">
+                <Link
+                  to={group.to ?? "#"}
+                  onClick={onNavigate}
+                  className={`flex h-[40px] min-w-0 flex-1 items-center gap-2.5 rounded-l-[6px] px-2.5 text-[14px] transition-all duration-150 ${
+                    groupActive
+                      ? "bg-primary/10 text-foreground"
+                      : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                  }`}
+                >
+                  <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
+                  <span className="flex-1 truncate">{group.label}</span>
+                  {group.badge && (
+                    <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
+                      {group.badge}
+                    </span>
+                  )}
+                </Link>
+                <button
+                  type="button"
+                  aria-label={`${expanded ? "Collapse" : "Expand"} ${group.label}`}
+                  aria-expanded={expanded}
+                  onClick={() =>
+                    setDrawerOpen((prev) => ({ ...prev, [group.id]: !expanded }))
+                  }
+                  className={`flex h-[40px] w-[28px] shrink-0 items-center justify-center rounded-r-[6px] transition-all duration-150 ${
+                    groupActive
+                      ? "bg-primary/10 text-foreground"
+                      : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                  }`}
+                >
+                  <ChevronDown
+                    className={`size-3.5 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+                  />
+                </button>
+              </div>
 
               {/* Sub-folder: collapsed behind a toggle, auto-expanded when active */}
-              <DrawerGroupLeaves group={group} pathname={pathname} onNavigate={onNavigate} active={groupActive} />
+              <DrawerGroupLeaves
+                group={group}
+                pathname={pathname}
+                onNavigate={onNavigate}
+                active={groupActive}
+                expanded={expanded}
+                onToggle={() => setDrawerOpen((prev) => ({ ...prev, [group.id]: !expanded }))}
+              />
             </div>
           );
         })}
@@ -512,7 +553,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             if (item.exact) return pathname === item.to;
             const p = item.to as string;
             if (p === "/hub") return pathname.startsWith("/hub");
-            if (p === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play");
+            if (p === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play") || pathname.startsWith("/web-search");
             if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
             if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar");
             return pathname.startsWith(p);

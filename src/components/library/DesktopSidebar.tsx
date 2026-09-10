@@ -58,35 +58,42 @@ export function DesktopSidebar() {
 
           return (
             <div key={group.id}>
-              <div
-                role="button"
-                tabIndex={0}
-                onClick={() => setOpen((prev) => ({ ...prev, [group.id]: !expanded }))}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    setOpen((prev) => ({ ...prev, [group.id]: !expanded }));
-                  }
-                }}
-                className={`flex h-[36px] cursor-pointer select-none items-center gap-2.5 rounded-[6px] px-2.5 text-[13px] transition-all duration-150 ${
-                  groupActive
-                    ? "bg-primary/10 text-foreground"
-                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
-                }`}
-              >
-                <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
-                <span className="flex-1">{group.label}</span>
-                {group.badge && (
-                  <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
-                    {group.badge}
-                  </span>
-                )}
-                <ChevronDown
-                  className={`size-3.5 shrink-0 text-muted-foreground transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
-                />
+              <div className="flex items-center">
+                <Link
+                  to={group.to ?? "#"}
+                  className={`flex h-[36px] min-w-0 flex-1 items-center gap-2.5 rounded-l-[6px] px-2.5 text-[13px] transition-all duration-150 ${
+                    groupActive
+                      ? "bg-primary/10 text-foreground"
+                      : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                  }`}
+                >
+                  <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
+                  <span className="flex-1 truncate">{group.label}</span>
+                  {group.badge && (
+                    <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
+                      {group.badge}
+                    </span>
+                  )}
+                </Link>
+                <button
+                  type="button"
+                  aria-label={`${expanded ? "Collapse" : "Expand"} ${group.label}`}
+                  aria-expanded={expanded}
+                  onClick={() => setOpen((prev) => ({ ...prev, [group.id]: !expanded }))}
+                  className={`flex h-[36px] w-[26px] shrink-0 items-center justify-center rounded-r-[6px] transition-all duration-150 ${
+                    groupActive
+                      ? "bg-primary/10 text-foreground"
+                      : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                  }`}
+                >
+                  <ChevronDown
+                    className={`size-3.5 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+                  />
+                </button>
               </div>
 
               {expanded && (
-                <div className="mb-1.5 ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-surface-elevated pl-2.5">
+                <div className="dropdown-reveal mb-1.5 ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-surface-elevated pl-2.5">
                   {group.to && (
                     <Link
                       to={group.to}

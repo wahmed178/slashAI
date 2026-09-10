@@ -21,7 +21,7 @@ export const Route = createFileRoute("/promo")({
       {
         name: "description",
         content:
-          "SlashAI is a free, no-login toolbox: 135+ instant tools, 42 playable games, 25 Slash mini-apps, a fictional social world, a private search engine and a viral command bar. Everything works offline, nothing is tracked.",
+          "SlashAI is a free, no-login toolbox: 135+ instant tools, 42 playable games, 26 Slash mini-apps, a fictional social world, a private search engine and a viral command bar. Everything works offline, nothing is tracked.",
       },
     ],
   }),
@@ -49,7 +49,7 @@ const PILLARS = [
     icon: Sparkles,
     tint: "#818cf8",
     title: "SlashBar",
-    desc: "25 themed mini-apps with 150+ working widgets each: learning, brain boosters, jobs, life hacks, romance, shopping, simulators and more.",
+    desc: "26 themed mini-apps with 150+ working widgets each: learning, brain boosters, jobs, life hacks, romance, shopping, simulators and more.",
     to: "/slash",
     cta: "Explore the bar",
   },
@@ -197,7 +197,7 @@ function PromoPage() {
           </p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             <a
-              href="https://wa.me/?text=SlashAI%20%E2%80%94%20one%20bar%20with%20135%2B%20tools%2C%2042%20games%20and%20a%20private%20search%20engine.%20Free%2C%20no%20login%3A%20https%3A%2F%2Fslashai.app"
+              href="https://wa.me/?text=SlashAI%20%E2%80%94%20one%20bar%20with%20135%2B%20tools%2C%2042%20games%20and%20a%20private%20search%20engine.%20Free%2C%20no%20login%3A%20https%3A%2F%2Fslashai-nu.vercel.app"
               target="_blank"
               rel="noreferrer noopener"
               className="ripple-press inline-flex h-10 items-center gap-1.5 rounded-xl bg-[#25D366] px-4 text-[13px] font-bold text-white"
@@ -205,7 +205,7 @@ function PromoPage() {
               Share on WhatsApp
             </a>
             <a
-              href="https://twitter.com/intent/tweet?text=SlashAI%20%E2%80%94%20one%20bar%20with%20135%2B%20free%20tools%2C%2042%20games%20and%20a%20private%20search%20engine.%20No%20login%2C%20no%20ads.&url=https%3A%2F%2Fslashai.app"
+              href="https://twitter.com/intent/tweet?text=SlashAI%20%E2%80%94%20one%20bar%20with%20135%2B%20free%20tools%2C%2042%20games%20and%20a%20private%20search%20engine.%20No%20login%2C%20no%20ads.&url=https%3A%2F%2Fslashai-nu.vercel.app"
               target="_blank"
               rel="noreferrer noopener"
               className="ripple-press inline-flex h-10 items-center gap-1.5 rounded-xl bg-foreground px-4 text-[13px] font-bold text-background"
@@ -215,7 +215,7 @@ function PromoPage() {
             <button
               type="button"
               onClick={() => {
-                void navigator.clipboard?.writeText("https://slashai.app").catch(() => {});
+                void navigator.clipboard?.writeText("https://slashai-nu.vercel.app").catch(() => {});
               }}
               className="ripple-press inline-flex h-10 items-center gap-1.5 rounded-xl border border-border bg-background px-4 text-[13px] font-bold text-foreground hover:border-primary/40"
             >

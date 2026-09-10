@@ -61,13 +61,13 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "slashbar",
     label: "SlashBar",
     icon: Zap,
-    match: starts("/slash"),
+    match: starts("/slash") || starts("/web-search"),
     to: "/slash",
-    badge: "25",
+    badge: "26",
     leaves: [
       { to: "/tools", label: "SlashKits", badge: "135+" },
       { to: "/play", label: "SlashPlay" },
-      { to: "/slash/slashgram", label: "SlashGram" },
+      { to: "/slash/slashgram", label: "SlashGram", badge: "New" },
       { to: "/slash/labs", label: "Labs" },
       { to: "/slash/learning", label: "Learning" },
       { to: "/slash/brain-boosters", label: "Brain Boosters" },
@@ -78,19 +78,19 @@ export const NAV_GROUPS: NavGroup[] = [
       { to: "/slash/facts", label: "Facts" },
       { to: "/slash/create", label: "Create" },
       { to: "/slash/image", label: "Image" },
-      { to: "/slash/search-engine", label: "Search Engine" },
+      { to: "/web-search", label: "Search Engine", badge: "Live" },
       { to: "/slash/speak", label: "Speak" },
       { to: "/slash/fun", label: "Fun" },
       { to: "/slash/gadgets", label: "Gadgets" },
-      { to: "/slash/shoppings", label: "Shoppings" },
+      { to: "/slash/shopping", label: "Shoppings" },
       { to: "/slash/offers", label: "Offers" },
       { to: "/slash/mini-store", label: "Mini Store" },
       { to: "/slash/mens", label: "Mens" },
+      { to: "/slash/nearby", label: "Nearby" },
       { to: "/slash/how-to-zone", label: "How-To Zone" },
       { to: "/slash/thinks", label: "Thinks" },
       { to: "/slash/community", label: "Community" },
       { to: "/slash/simulator", label: "Simulator" },
-      { to: "/slash/nearby", label: "Nearby" },
     ],
   },
   {
@@ -126,7 +126,6 @@ export const NAV_GROUPS: NavGroup[] = [
     icon: Wrench,
     match:
       starts("/ai-tools") ||
-      starts("/web-search") ||
       starts("/workflow") ||
       starts("/random") ||
       starts("/roadmaps") ||
@@ -137,7 +136,6 @@ export const NAV_GROUPS: NavGroup[] = [
     to: "/ai-tools",
     leaves: [
       { to: "/ai-tools", label: "AI Tools", badge: "100+" },
-      { to: "/web-search", label: "Free Search" },
       { to: "/workflow", label: "AI Workflows", badge: "New" },
       { to: "/roadmaps", label: "Roadmaps" },
       { to: "/random", label: "Random" },

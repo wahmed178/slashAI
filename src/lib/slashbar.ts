@@ -117,6 +117,15 @@ export const SLASH_APPS: SlashApp[] = [
     widgets: [],
   },
   {
+    slug: "slashgram",
+    name: "SlashGram",
+    emoji: "📸",
+    desc: "A fictional social world - post, go viral, collect millions of fake likes.",
+    tint: T.fuchsia,
+    link: "/slash/slashgram",
+    widgets: [],
+  },
+  {
     slug: "labs",
     name: "Slash Labs",
     emoji: "🧪",
@@ -1469,5 +1478,12 @@ function compound(monthly: number, years: number, rate: number): string {
 export const ALL_SLASH_APPS: SlashApp[] = SLASH_APPS;
 
 export function appBySlug(slug: string): SlashApp | undefined {
-  return SLASH_APPS.find((a) => a.slug === slug);
+  const s = slug.trim().toLowerCase();
+  return SLASH_APPS.find(
+    (a) =>
+      a.slug === s ||
+      a.name.toLowerCase().replace(/\s+/g, "-") === s ||
+      a.name.toLowerCase().replace(/\s+/g, "") === s ||
+      `${a.slug}s` === s,
+  );
 }

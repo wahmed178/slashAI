@@ -11,7 +11,7 @@ export const Route = createFileRoute("/slash/")({
       {
         name: "description",
         content:
-          "SlashKits, SlashPlay, Labs, Learning, Brain Boosters and 18 more Slash apps - one rail, everything working, everything free.",
+          "SlashKits, SlashPlay, SlashGram, Labs, Learning, Brain Boosters and more - one rail, everything working, everything free.",
       },
     ],
   }),
