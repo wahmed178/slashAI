@@ -156,6 +156,22 @@ function ExplorePage() {
             {VERIFIED_TOTAL.toLocaleString()} commands across {CATEGORY_TREE.length} categories ·
             Copy any command and paste it into ChatGPT, Claude, Gemini or any AI
           </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {([
+              { to: "/search", label: "🔍 Search" },
+              { to: "/collections", label: "📁 Collections" },
+              { to: "/favorites", label: "⭐ Saved" },
+              { to: "/recent", label: "🕐 Recent" },
+            ] as const).map((p) => (
+              <Link
+                key={p.to}
+                to={p.to}
+                className="ripple-press inline-flex h-9 items-center rounded-full border border-border bg-surface px-4 text-[12px] font-semibold text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary"
+              >
+                {p.label}
+              </Link>
+            ))}
+          </div>
         </header>
 
         {/* ── Use-case sections ── */}

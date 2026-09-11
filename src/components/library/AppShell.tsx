@@ -4,32 +4,16 @@ import {
   Home,
   Terminal,
   Compass,
-  Wrench,
-  Gamepad2,
   LayoutGrid,
   Zap,
-  Map,
-  Radio,
-  BookOpen,
   Bookmark,
   Settings,
-  Share2,
-  NotebookPen,
-  Sparkles,
-  Flame,
-  Layers,
-  History as HistoryIcon,
-  Palette,
   Menu,
   ChevronDown,
   ChevronLeft,
   Moon,
   Sun,
-  Bell,
   Search as SearchIcon,
-  Cpu,
-  Dices,
-  UserRound,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -44,23 +28,21 @@ import { useLibrary } from "@/hooks/use-library";
 import { getSlashTool } from "@/lib/slashkits";
 import { getPlayGame } from "@/lib/slashplay";
 import { appBySlug } from "@/lib/slashbar";
-import { SearchBox } from "./SearchBox";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
 import { CookieBanner } from "./CookieBanner";
 import { DesktopSidebar } from "./DesktopSidebar";
+import { SlashBarOverlay } from "./SlashBarOverlay";
 import { NAV_GROUPS } from "./nav-groups";
 
-/** Shared nav items - same as DesktopSidebar */
-
 /**
- * Mobile bottom bar - Instagram-style: Home · Discovery · SlashBar (centre) ·
- * centre as the elevated action, tools/games reachable from there.
+ * Mobile bottom bar: Home · Discovery · SlashBar (elevated centre launcher) ·
+ * Hubs · Commands. The centre button opens the full-screen SlashBar overlay.
  */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/discover", label: "Discovery", icon: Compass, exact: false },
-  { to: "/slash", label: "SlashBar", icon: Zap, exact: false, center: true },
+  { to: "", label: "SlashBar", icon: Zap, exact: false, center: true },
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
 ] as const;
@@ -70,7 +52,6 @@ const PRIMARY = [
 function isActive(pathname: string, to: string, exact?: boolean) {
   if (exact) return pathname === to;
   if (to === "/hub") return pathname.startsWith("/hub");
-  if (to === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play") || pathname.startsWith("/web-search");
   if (to === "/explore")
     return (
       pathname.startsWith("/explore") ||
@@ -83,10 +64,9 @@ function isActive(pathname: string, to: string, exact?: boolean) {
       pathname.startsWith("/discover") ||
       pathname.startsWith("/r/") ||
       pathname.startsWith("/whats-new") ||
-      pathname.startsWith("/radar")
+      pathname.startsWith("/radar") ||
+      pathname.startsWith("/trending")
     );
-  if (to === "/tools") return pathname.startsWith("/tools");
-  if (to === "/play") return pathname.startsWith("/play");
   return pathname.startsWith(to);
 }
 
@@ -446,6 +426,7 @@ function ThemeToggleButton() {
 
 export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [slashbarOpen, setSlashbarOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { settings } = useLibrary();
 
@@ -514,15 +495,12 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             </div>
 
             {/* Right side - same on mobile and desktop */}
-            <div className="ml-auto flex items-center gap-2">
-              <Link to="/changelog" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Notifications & updates">
-                <Bell className="size-[20px]" />
-              </Link>
+            <div className="ml-auto flex items-center gap-1">
               <Link to="/favorites" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Saved items">
                 <Bookmark className="size-[20px]" />
               </Link>
-              <Link to="/me" className="flex size-8 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background transition-opacity hover:opacity-90" aria-label="Profile">
-                {settings.displayName.trim() ? settings.displayName.trim().charAt(0).toUpperCase() : "U"}
+              <Link to="/me" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Settings">
+                <Settings className="size-[20px]" />
               </Link>
             </div>
           </div>
@@ -541,7 +519,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
         </main>
       </div>
 
-      {/* mobile bottom navigation - Instagram-style: feed · Hub centre · utilities */}
+      {/* mobile bottom navigation: Home · Discovery · SlashBar launcher · Hubs · Commands */}
       <nav
         aria-label="Primary"
         className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px] md:hidden"
@@ -550,63 +528,68 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
         {PRIMARY.map((item) => {
           // Route-based active state - derived from current pathname, not internal state
           const active = (() => {
+            if ((item as { center?: boolean }).center) return false; // launcher, never active
             if (item.exact) return pathname === item.to;
             const p = item.to as string;
             if (p === "/hub") return pathname.startsWith("/hub");
-            if (p === "/slash") return pathname.startsWith("/slash") || pathname.startsWith("/tools") || pathname.startsWith("/play") || pathname.startsWith("/web-search");
             if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
-            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar");
+            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar") || pathname.startsWith("/trending");
             return pathname.startsWith(p);
           })();
 
-          // ── SlashBar: elevated centre action (Instagram '+' slot) ──
+          // ── SlashBar: elevated centre launcher button — opens the overlay ──
           if ((item as { center?: boolean }).center) {
             return (
-              <Link
-                key={item.to}
-                to={item.to}
-                aria-label={item.label}
-                className="ripple-press flex min-h-[62px] flex-1 items-center justify-center"
+              <button
+                key={item.label}
+                type="button"
+                aria-label={`Open ${item.label}`}
+                aria-haspopup="dialog"
+                onClick={() => setSlashbarOpen(true)}
+                className="ripple-press relative flex min-h-[62px] flex-1 items-center justify-center"
               >
                 <span
-                  className="nav-hub-btn flex flex-col items-center justify-center gap-[2px] rounded-2xl px-4 py-1.5 text-[9px] font-bold text-background shadow-lg shadow-primary/25"
-                  style={
-                    active
-                      ? { background: "linear-gradient(135deg, #2dd4bf, #38bdf8 55%, #a78bfa)" }
-                      : undefined
-                  }
+                  className="nav-hub-btn flex size-[46px] items-center justify-center rounded-full text-background"
+                  style={{
+                    background: "linear-gradient(135deg, #2dd4bf, #38bdf8 55%, #a78bfa)",
+                    boxShadow: "0 4px 20px rgba(45, 212, 191, 0.4)",
+                    transform: "translateY(-8px)",
+                  }}
                 >
-                  <item.icon className="size-[20px]" aria-hidden strokeWidth={2.2} />
-                  {item.label}
+                  <item.icon className="size-[24px]" aria-hidden strokeWidth={2.2} />
                 </span>
-              </Link>
+              </button>
             );
           }
 
-          // ── Regular tabs: icon + label, smooth pill on active ──
+          // ── Regular tabs: icon + label, accent dot on active ──
           return (
             <Link
               key={item.to}
-              to={item.to}
+              to={item.to as "/"}
               className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
               style={{ color: active ? 'var(--primary)' : 'var(--muted-foreground)' }}
             >
-              <span
-                className={`flex items-center justify-center rounded-full px-3.5 py-1 transition-all duration-200 ${
-                  active ? "bg-primary/12" : "bg-transparent"
-                }`}
-              >
-                <item.icon
-                  className="size-[22px]"
+              {active && (
+                <span
                   aria-hidden
-                  strokeWidth={active ? 2.4 : 1.8}
+                  className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
+                  style={{ background: "var(--primary)" }}
                 />
-              </span>
+              )}
+              <item.icon
+                className="size-[22px]"
+                aria-hidden
+                strokeWidth={active ? 2.4 : 1.8}
+              />
               {item.label}
             </Link>
           );
         })}
       </nav>
+
+      {/* full-screen SlashBar launcher overlay (centre button) */}
+      <SlashBarOverlay open={slashbarOpen} onClose={() => setSlashbarOpen(false)} />
     </div>
   );
 }

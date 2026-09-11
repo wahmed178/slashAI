@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.18.0";
+export const APP_VERSION = "2.19.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,20 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.19.0",
+    date: "2026-09-11",
+    title: "SlashBar launcher - the app drawer",
+    changes: [
+      "SlashBar is now a full-screen launcher: tap the ⚡ centre button and an app drawer slides up with every Slash app organised into clear sections",
+      "Live search inside the launcher with a found-count, plus swipe-down or × to close",
+      "Bottom nav redesigned: lifted accent SlashBar button, active dots above tabs, accurate route matching",
+      "Header cleanup: changelog link removed, proper gear icon for settings",
+      "Homepage: stats bar now shows all five counts including Generators, Tool of the Day moved above Your Week, titles never cut mid-word",
+      "SlashKits and SlashPlay preview sections added to the homepage",
+      "Commands page got quick-link pills (Search, Collections, Saved, Recent); discovery, hubs, tools and play pages got stat rows",
+    ],
+  },
   {
     version: "2.18.0",
     date: "2026-09-04",

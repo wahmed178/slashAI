@@ -1,6 +1,19 @@
 {
-  "version": "2.18.0",
+  "version": "2.19.0",
   "entries": [
+    {
+      "version": "2.19.0",
+      "date": "2026-09-11",
+      "changes": [
+        "SlashBar is now a full-screen launcher: tap the ⚡ centre button and an app drawer slides up with every Slash app organised into clear sections",
+        "Live search inside the launcher with a found-count, plus swipe-down or × to close",
+        "Bottom nav redesigned: lifted accent SlashBar button, active dots above tabs, accurate route matching",
+        "Header cleanup: changelog link removed, proper gear icon for settings",
+        "Homepage: stats bar now shows all five counts including Generators, Tool of the Day moved above Your Week, titles never cut mid-word",
+        "SlashKits and SlashPlay preview sections added to the homepage",
+        "Commands page got quick-link pills (Search, Collections, Saved, Recent); discovery, hubs, tools and play pages got stat rows"
+      ]
+    },
     {
       "version": "2.18.0",
       "date": "2026-09-04",

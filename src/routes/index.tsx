@@ -44,21 +44,31 @@ import {
 import trendingToolsData from "@/../src/data/trending-tools.json";
 import { ALL_ROADMAPS } from "@/lib/roadmaps";
 import { GLOSSARY_TOTAL } from "@/lib/glossary";
-import { toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
+import { ALL_SLASH_TOOLS, SLASH_TOOL_COUNT, toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
+import { PLAY_GAME_COUNT } from "@/lib/slashplay";
+import { TOOLS } from "@/lib/tools";
 
 const HERO_TOOL = heroToolOfTheDay();
+const GENERATOR_TOTAL = ALL_SLASH_TOOLS.filter((t) =>
+  t.name.toLowerCase().includes("generator"),
+).length;
+
+/** Truncate at a word boundary so titles never cut mid-word */
+const truncateWords = (s: string, n: number) =>
+  s.length > n ? s.slice(0, s.lastIndexOf(" ", n)).trimEnd() + "…" : s;
 
 /* ─────────────── Stats Bar (live counts, cannot fail) ─────────────── */
 function StatsBar() {
   const stats = [
     { number: VERIFIED_TOTAL.toLocaleString(), label: "COMMANDS", color: "var(--primary)", icon: Terminal },
     { number: RESOURCE_TOTAL.toLocaleString(), label: "RESOURCES", color: "var(--primary)", icon: Package },
+    { number: GENERATOR_TOTAL.toLocaleString(), label: "GENERATORS", color: "#fbbf24", icon: Sparkles },
     { number: ALL_ROADMAPS.length.toLocaleString(), label: "ROADMAPS", color: "#3fb950", icon: Map },
     { number: GLOSSARY_TOTAL.toLocaleString(), label: "GLOSSARY", color: "#a78bfa", icon: BookOpen },
   ];
   return (
     <div className="mt-6 rounded-[10px] border border-sidebar-border bg-surface px-3 py-3 sm:px-6 sm:py-4">
-      <div className="grid grid-cols-4 items-center gap-1 sm:flex sm:items-center sm:justify-between sm:gap-6">
+      <div className="grid grid-cols-5 items-center gap-1 sm:flex sm:items-center sm:justify-between sm:gap-6">
         {stats.map((stat, i) => {
           const Icon = stat.icon;
           return (
@@ -383,11 +393,54 @@ function HomePage() {
       {/* ─── Stats Bar ─── */}
       <StatsBar />
 
-      {/* ─── Your week digest (moved up, right under the hero stats) ─── */}
-      <YourWeekDigest />
+      {/* ─── Feature cards ─── */}
+      <section className="mt-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+        {[
+          { to: "/explore", emoji: "⌨️", title: "AI Commands", desc: `${VERIFIED_TOTAL.toLocaleString()} copy-ready prompts` },
+          { to: "/hub/founders", emoji: "🚀", title: "Founder Tools", desc: "Validate, build & ship free" },
+          { to: "/live", emoji: "📡", title: "Live Dashboard", desc: "Markets, weather, cricket" },
+          { to: "/discover", emoji: "📦", title: "Free Resources", desc: `${RESOURCE_TOTAL}+ verified picks` },
+        ].map((card) => (
+          <Link
+            key={card.to}
+            to={card.to}
+            className="flex flex-col rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
+          >
+            <span className="text-[24px]">{card.emoji}</span>
+            <span className="mt-2 text-[13px] font-semibold text-foreground">{card.title}</span>
+            <span className="mt-0.5 text-[11px] leading-tight text-muted-foreground">{card.desc}</span>
+          </Link>
+        ))}
+      </section>
+
+      {/* ─── Explore more - 2×4 grid ─── */}
+      <section className="mt-4">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {[
+            { to: "/ai-tools", emoji: "🤖", title: "AI Assistant", desc: `${TOOLS.length} curated AI tools` },
+            { to: "/tools", emoji: "⚡", title: "Generators", desc: `${GENERATOR_TOTAL} instant generators` },
+            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: `${ALL_ROADMAPS.length} step-by-step guides` },
+            { to: "/live", emoji: "📡", title: "Live", desc: "Markets, weather, prayer times" },
+            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories, fresh daily" },
+            { to: "/radar", emoji: "🛍️", title: "Deals & Offers", desc: "Free offers, checked daily" },
+            { to: "/glossary", emoji: "📖", title: "Glossary", desc: `${GLOSSARY_TOTAL} AI & startup terms` },
+            { to: "/discover", emoji: "🧭", title: "Discover", desc: `${RESOURCE_TOTAL}+ free resources` },
+          ].map((card) => (
+            <Link
+              key={card.to}
+              to={card.to}
+              className="group flex flex-col items-center justify-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[120px]"
+            >
+              <span className="text-[26px]">{card.emoji}</span>
+              <span className="mt-2 block text-[13px] font-semibold text-foreground">{card.title}</span>
+              <span className="mt-0.5 block max-w-full truncate text-[11px] text-muted-foreground">{card.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       {/* ─── Tool of the Day (rotates daily via date seed) ─── */}
-      <section className="mt-8 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
+      <section className="mt-10 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
         <div className="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div className="flex-1">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-primary">
@@ -412,132 +465,8 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ─── Explore more - 2×4 grid ─── */}
-      <section className="mt-10">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {[
-            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories, fresh daily" },
-            { to: "/live", emoji: "📡", title: "Live", desc: "Markets, weather, prayer times" },
-            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: `${ALL_ROADMAPS.length} step-by-step guides` },
-            { to: "/glossary", emoji: "📖", title: "Glossary", desc: `${GLOSSARY_TOTAL} AI & startup terms` },
-            { to: "/discover", emoji: "🧭", title: "Discover", desc: `${RESOURCE_TOTAL}+ free tools and APIs` },
-          ].map((card) => (
-            <Link
-              key={card.to}
-              to={card.to}
-              className="group flex flex-col items-center justify-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[120px]"
-            >
-              <span className="text-[26px]">{card.emoji}</span>
-              <span className="mt-2 block text-[13px] font-semibold text-foreground">{card.title}</span>
-              <span className="mt-0.5 block max-w-full truncate text-[11px] text-muted-foreground">{card.desc}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── SlashKits preview (GingerBook-style showcase) ─── */}
-      <Section
-        title="SlashKits"
-        hint="Free browser tools - nothing uploads, no account needed."
-        action={
-          <Link
-            to="/tools"
-            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-          >
-            See all tools <ArrowRight className="size-4" aria-hidden />
-          </Link>
-        }
-      >
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
-          {[
-            { slug: "image-compress", icon: "🖼️", name: "Image Compressor", desc: "Reduce size in-browser" },
-            { slug: "qr-code", icon: "📱", name: "QR Generator", desc: "URLs, WiFi, text" },
-            { slug: "pomodoro", icon: "🍅", name: "Pomodoro Timer", desc: "25/5/15 focus" },
-            { slug: "sip-calculator", icon: "💰", name: "SIP Calculator", desc: "Mutual fund returns" },
-            { slug: "whiteboard", icon: "🖊️", name: "Whiteboard", desc: "Sketch & export" },
-            { slug: "color-palette", icon: "🎨", name: "Color Palette", desc: "Generate palettes" },
-          ].map((tool) => (
-            <Link
-              key={tool.slug}
-              to={`/tools/${tool.slug}` as string}
-              className="group flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[110px]"
-            >
-              <span className="text-[26px]">{tool.icon}</span>
-              <span className="mt-1.5 block text-[12px] font-semibold text-foreground leading-tight">{tool.name}</span>
-              <span className="mt-0.5 block max-w-full truncate text-[10px] text-muted-foreground leading-tight">{tool.desc}</span>
-            </Link>
-          ))}
-        </div>
-      </Section>
-
-      {/* ─── SlashPlay (games showcase) ─── */}
-      <Section
-        title="SlashPlay"
-        hint="Free browser games - multiplayer pass-and-play, vs AI and solo."
-        action={
-          <Link
-            to="/play"
-            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-          >
-            See all games <ArrowRight className="size-4" aria-hidden />
-          </Link>
-        }
-      >
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
-          {[
-            { slug: "tic-tac-toe", icon: "❌", name: "Tic Tac Toe", desc: "Vs AI or a friend" },
-            { slug: "connect-four", icon: "🔴", name: "Connect Four", desc: "Line up four" },
-            { slug: "battleship", icon: "🚢", name: "Battleship", desc: "Sink the fleet" },
-            { slug: "blackjack", icon: "♠️", name: "Blackjack", desc: "Beat the dealer" },
-            { slug: "snake", icon: "🐍", name: "Snake", desc: "Arcade classic" },
-            { slug: "2048", icon: "🔢", name: "2048", desc: "Merge to 2048" },
-          ].map((game) => (
-            <Link
-              key={game.slug}
-              to={`/play/${game.slug}` as string}
-              className="group flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40 min-h-[110px]"
-            >
-              <span className="text-[26px]">{game.icon}</span>
-              <span className="mt-1.5 block text-[12px] font-semibold text-foreground leading-tight">{game.name}</span>
-              <span className="mt-0.5 block max-w-full truncate text-[10px] text-muted-foreground leading-tight">{game.desc}</span>
-            </Link>
-          ))}
-        </div>
-      </Section>
-
-      {/* ─── Free Resources (GingerBook-style promo) ─── */}
-      <section className="mt-10 overflow-hidden rounded-2xl border border-sidebar-border bg-surface p-6 sm:p-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex-1">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(251,191,36,0.2)] bg-[rgba(251,191,36,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-[#fbbf24]">
-              🎓 Free Learning
-            </span>
-            <h2 className="mt-3 text-xl font-bold text-foreground">Free courses &amp; resources</h2>
-            <p className="mt-1.5 text-[14px] text-muted-foreground">
-              Curated free courses from top platforms - no hidden fees, no credit card required.
-            </p>
-            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {[
-                { emoji: "🎨", label: "Free Udemy Courses", to: "/hub/creators" },
-                { emoji: "💻", label: "Free Dev Courses", to: "/hub/developers" },
-                { emoji: "📈", label: "Free Business Courses", to: "/hub/professionals" },
-                { emoji: "✍️", label: "Free Writing Tools", to: "/search?q=writing" },
-                { emoji: "🔍", label: "5,600+ AI Commands", to: "/search" },
-                { emoji: "📦", label: "319+ Free Resources", to: "/discover" },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  className="flex items-center gap-2 rounded-lg border border-border bg-surface-elevated px-3 py-2.5 text-[12px] font-medium text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
-                >
-                  <span>{item.emoji}</span>
-                  <span>{item.label}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ─── Your week digest ─── */}
+      <YourWeekDigest />
 
       <Section
         title="Command of the day"
@@ -574,8 +503,12 @@ function HomePage() {
                   {tool.name?.[0] || '?'}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm font-semibold text-foreground">{tool.name}</span>
-                  <span className="block truncate text-xs text-muted-foreground">{tool.description}</span>
+                  <span className="block truncate text-sm font-semibold text-foreground">
+                    {truncateWords(String(tool.name ?? ""), 60)}
+                  </span>
+                  <span className="block truncate text-xs text-muted-foreground">
+                    {truncateWords(String(tool.description ?? ""), 110)}
+                  </span>
                 </span>
                 <span className="shrink-0 rounded border border-border bg-surface-elevated px-2 py-0.5 text-[10px] text-muted-foreground">
                   {tool.source}
@@ -587,6 +520,110 @@ function HomePage() {
           <ResourceGrid resources={weeklyFinds} />
         )}
       </Section>
+
+      {/* ─── SlashKits preview (GingerBook-style showcase) ─── */}
+      <Section
+        title="SlashKits"
+        hint={`${SLASH_TOOL_COUNT}+ free browser tools - nothing uploads, no account needed.`}
+        action={
+          <Link
+            to="/tools"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            See all {SLASH_TOOL_COUNT}+ tools <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
+      >
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+          {[
+            { slug: "image-compress", icon: "🖼️", name: "Image Compressor", desc: "Reduce size in-browser" },
+            { slug: "qr-code", icon: "📱", name: "QR Generator", desc: "URLs, WiFi, text" },
+            { slug: "pomodoro", icon: "🍅", name: "Pomodoro Timer", desc: "25/5/15 focus" },
+            { slug: "spelling", icon: "✍️", name: "Grammar Checker", desc: "Offline spell check" },
+            { slug: "whiteboard", icon: "🖊️", name: "Whiteboard", desc: "Sketch & export" },
+            { slug: "api-tester", icon: "🔌", name: "API Tester", desc: "Test REST APIs" },
+          ].map((tool) => (
+            <Link
+              key={tool.slug}
+              to={`/tools/${tool.slug}` as string}
+              className="group flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[110px]"
+            >
+              <span className="text-[26px]">{tool.icon}</span>
+              <span className="mt-1.5 block text-[12px] font-semibold text-foreground leading-tight">{tool.name}</span>
+              <span className="mt-0.5 block max-w-full truncate text-[10px] text-muted-foreground leading-tight">{tool.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* ─── SlashPlay (games showcase) ─── */}
+      <Section
+        title="SlashPlay"
+        hint={`${PLAY_GAME_COUNT} free browser games - pass-and-play, vs AI, and solo.`}
+        action={
+          <Link
+            to="/play"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            See all {PLAY_GAME_COUNT} games <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
+      >
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+          {[
+            { slug: "cricket", icon: "🏏", name: "Cricket", desc: "Hit sixes" },
+            { slug: "2048", icon: "🔢", name: "2048", desc: "Merge to 2048" },
+            { slug: "snake", icon: "🐍", name: "Snake", desc: "Arcade classic" },
+            { slug: "simon", icon: "🎵", name: "Simon", desc: "Memory colors" },
+            { slug: "tic-tac-toe", icon: "❌", name: "Tic Tac Toe", desc: "Vs AI or a friend" },
+            { slug: "minesweeper", icon: "💣", name: "Minesweeper", desc: "Clear the grid" },
+          ].map((game) => (
+            <Link
+              key={game.slug}
+              to={`/play/${game.slug}` as string}
+              className="group flex flex-col items-center justify-center rounded-xl border border-border bg-surface p-3 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40 min-h-[110px]"
+            >
+              <span className="text-[26px]">{game.icon}</span>
+              <span className="mt-1.5 block text-[12px] font-semibold text-foreground leading-tight">{game.name}</span>
+              <span className="mt-0.5 block max-w-full truncate text-[10px] text-muted-foreground leading-tight">{game.desc}</span>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* ─── Free Resources (GingerBook-style promo) ─── */}
+      <section className="mt-10 overflow-hidden rounded-2xl border border-sidebar-border bg-surface p-6 sm:p-8">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex-1">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(251,191,36,0.2)] bg-[rgba(251,191,36,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-[#fbbf24]">
+              🎓 Free Learning
+            </span>
+            <h2 className="mt-3 text-xl font-bold text-foreground">Free courses &amp; resources</h2>
+            <p className="mt-1.5 text-[14px] text-muted-foreground">
+              Curated free courses from top platforms - no hidden fees, no credit card required.
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {[
+                { emoji: "🎨", label: "Free Courses", to: "/discover/learn" },
+                { emoji: "💻", label: "Free Dev Courses", to: "/hub/developers" },
+                { emoji: "📈", label: "Free Business Courses", to: "/hub/founders" },
+                { emoji: "✍️", label: "Free Writing Tools", to: "/search?q=write" },
+                { emoji: "🔍", label: `${VERIFIED_TOTAL.toLocaleString()} AI Commands`, to: "/explore" },
+                { emoji: "📦", label: `${RESOURCE_TOTAL}+ Free Resources`, to: "/discover" },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.to}
+                  className="flex items-center gap-2 rounded-lg border border-border bg-surface-elevated px-3 py-2.5 text-[12px] font-medium text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+                >
+                  <span>{item.emoji}</span>
+                  <span>{item.label}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {recentCommands.length > 0 && (
         <Section
@@ -673,6 +710,7 @@ function HomePage() {
             { to: "/hub/developers", emoji: "\u{1F4BB}", title: "Developer Hub", desc: "APIs & open-source" },
             { to: "/hub/creators", emoji: "\u{1F3A8}", title: "Creator Hub", desc: "Design & content" },
             { to: "/hub/professionals", emoji: "\u{1F4BC}", title: "Professional Hub", desc: "Productivity" },
+            { to: "/hub/founders", emoji: "\u{1F680}", title: "Founders Hub", desc: "Idea to first customer" },
             { to: "/hub/islam", emoji: "☪", title: "Islam Hub", desc: "Quran, Hadith & learning" },
           ]).map((hub) => (
             <Link
@@ -702,32 +740,33 @@ function HomePage() {
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
             {
-              title: "Commands & Tools",
+              title: "AI Tools",
               links: [
                 { label: "Commands", to: "/explore" },
+                { label: "Generators", to: "/tools" },
                 { label: "Roadmaps", to: "/roadmaps" },
                 { label: "Glossary", to: "/glossary" },
-                { label: "SlashKits", to: "/tools" },
-                { label: "SlashPlay", to: "/play" },
+                { label: "AI Assistant", to: "/ai-tools" },
               ],
             },
             {
-              title: "Discover & Live",
+              title: "Explore",
               links: [
                 { label: "Discover", to: "/discover" },
                 { label: "Live Dashboard", to: "/live" },
+                { label: "Deals & Offers", to: "/radar" },
                 { label: "What's New", to: "/whats-new" },
+                { label: "Daily Quiz", to: "/quiz" },
               ],
             },
             {
-              title: "Hubs & Collections",
+              title: "Tools & Play",
               links: [
-                { label: "All Hubs", to: "/hub" },
-                { label: "Student Hub", to: "/hub/students" },
-                { label: "Developer Hub", to: "/hub/developers" },
-                { label: "Islam Hub", to: "/hub/islam" },
-                { label: "Collections", to: "/collections" },
-                { label: "Favorites", to: "/favorites" },
+                { label: "SlashKits", to: "/tools" },
+                { label: "SlashPlay", to: "/play" },
+                { label: "SlashBar", to: "/slash" },
+                { label: "Journal", to: "/journal" },
+                { label: "Settings", to: "/me" },
               ],
             },
             {
@@ -735,8 +774,8 @@ function HomePage() {
               links: [
                 { label: "About", to: "/about" },
                 { label: "Changelog", to: "/changelog" },
-                { label: "Journal", to: "/journal" },
-                { label: "Settings", to: "/me" },
+                { label: "Islam Hub", to: "/hub/islam" },
+                { label: "All Hubs", to: "/hub" },
               ],
             },
           ].map((col) => (

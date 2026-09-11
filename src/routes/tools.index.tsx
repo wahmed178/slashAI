@@ -59,7 +59,8 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {SLASH_TOOL_COUNT} browser-based tools. Nothing uploaded. All client-side.
+          {SLASH_TOOL_COUNT}+ free browser tools — calculators, converters, file tools and more.
+          Nothing uploads. No account needed. <span className="text-[12px] font-semibold">All free · Works offline</span>
         </p>
       </header>
 

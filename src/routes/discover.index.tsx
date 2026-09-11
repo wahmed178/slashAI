@@ -196,6 +196,15 @@ function DiscoverPage() {
         <p className="mt-1 text-sm text-muted-foreground">
           {RESOURCE_TOTAL}+ resources · every tool · every game - one endless feed.
         </p>
+        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.04em] text-muted-foreground">
+          <span className="text-primary">{RESOURCE_TOTAL} resources</span>
+          <span>·</span>
+          <span>{TOOL_SECTIONS.reduce((a, s) => a + s.tools.length, 0)} tools</span>
+          <span>·</span>
+          <span>{PLAY_SECTIONS.reduce((a, s) => a + s.games.length, 0)} games</span>
+          <span>·</span>
+          <span className="text-[#3fb950]">All free</span>
+        </div>
       </header>
 
       {/* ── search (IG-style pill) ── */}

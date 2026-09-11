@@ -82,7 +82,8 @@ function PlayIndex() {
           🎮 SlashPlay
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {PLAY_GAME_COUNT} games that run instantly in your browser. No downloads, works offline.
+          {PLAY_GAME_COUNT} free browser games — solo, vs AI, and pass-and-play multiplayer.
+          No downloads needed. <span className="text-[12px] font-semibold">Works offline</span>
         </p>
       </header>
 

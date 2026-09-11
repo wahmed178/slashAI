@@ -941,3 +941,15 @@ a[id], section[id], [id^="section"] {
 :root[data-motion="reduced"] .dropdown-reveal {
   animation: none;
 }
+
+/* ──────────── SlashBar full-screen launcher overlay ──────────── */
+@keyframes slashbar-slide-up {
+  from { transform: translate3d(0, 100%, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.slashbar-overlay {
+  animation: slashbar-slide-up 250ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+:root[data-motion="reduced"] .slashbar-overlay {
+  animation: none;
+}
