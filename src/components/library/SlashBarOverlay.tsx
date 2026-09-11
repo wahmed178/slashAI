@@ -2,12 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
 
+import { SLASH_APPS, type SlashApp } from "@/lib/slashbar";
+
 /**
  * SlashBar launcher — a full-screen overlay (opened from the centre bottom-nav
- * button) that shows every SlashAI destination as an app-drawer grid, organised
- * into 7 clear sections with a live search filter.
+ * button) that shows ONLY the Slash original apps from SLASH_APPS (single
+ * source of truth), organised into clear sections with a live search filter.
  *
- * Every entry links to a real, working route — no placeholders.
+ * Every entry links to the app's real destination (its link override or
+ * /slash/<slug>) — no placeholders, no mixed-in tools.
  */
 
 interface AppButton {
@@ -22,89 +25,67 @@ interface LauncherSection {
   items: AppButton[];
 }
 
-const SECTIONS: LauncherSection[] = [
+/** Section assignment by SLASH_APPS slug — every app appears exactly once. */
+const SECTION_SLUGS: { title: string; slugs: string[] }[] = [
   {
-    title: "⚡ AI & Commands",
-    items: [
-      { name: "Search Engine", emoji: "🔍", desc: "Web, image & video search", to: "/web-search" },
-      { name: "Commands", emoji: "⌨️", desc: "5,650 AI slash commands", to: "/explore" },
-      { name: "AI Tools", emoji: "🤖", desc: "100+ curated AI tools", to: "/ai-tools" },
-      { name: "Roadmaps", emoji: "🗺️", desc: "20 step-by-step guides", to: "/roadmaps" },
-      { name: "Glossary", emoji: "📖", desc: "560+ AI terms", to: "/glossary" },
-      { name: "Workflows", emoji: "🔗", desc: "Chain commands together", to: "/workflow" },
-    ],
+    title: "⚡ Flagship",
+    slugs: ["kits", "play", "slashgram"],
   },
   {
-    title: "🛠️ Tools & Utilities",
-    items: [
-      { name: "SlashKits", emoji: "🧰", desc: "150+ browser tools", to: "/tools" },
-      { name: "Scanner", emoji: "📷", desc: "Scan docs to PDF", to: "/tools/scanner" },
-      { name: "Notepad", emoji: "📝", desc: "Quick local notes", to: "/tools/notes" },
-      { name: "Grammar", emoji: "🔤", desc: "Spelling & style check", to: "/tools/spelling" },
-      { name: "Converter", emoji: "🌡️", desc: "All-unit converter", to: "/tools/unit-converter" },
-      { name: "Gradient", emoji: "🎨", desc: "CSS gradient maker", to: "/tools/gradient" },
-      { name: "Contract", emoji: "📄", desc: "Simple contract drafts", to: "/tools/contract" },
-      { name: "API Tester", emoji: "🔌", desc: "Test any HTTP API", to: "/tools/api-tester" },
-      { name: "Whiteboard", emoji: "⌨️", desc: "Sketch & export", to: "/tools/whiteboard" },
-    ],
+    title: "🧪 Learn & Think",
+    slugs: ["labs", "learning", "brain-boosters", "courses", "thinks"],
   },
   {
-    title: "🎮 Play & Fun",
-    items: [
-      { name: "SlashPlay", emoji: "🕹️", desc: "All 40+ games", to: "/play" },
-      { name: "Cricket", emoji: "🏏", desc: "Time the sixes", to: "/play/cricket" },
-      { name: "Tic Tac Toe", emoji: "❌", desc: "Vs AI or a friend", to: "/play/tic-tac-toe" },
-      { name: "2048", emoji: "🔢", desc: "Merge to 2048", to: "/play/2048" },
-      { name: "Minesweeper", emoji: "💣", desc: "Classic mine hunt", to: "/play/minesweeper" },
-      { name: "Simon", emoji: "🎵", desc: "Memory sequence", to: "/play/simon" },
-    ],
+    title: "💼 Work & Money",
+    slugs: ["jobs", "simulator", "life-hacks"],
   },
   {
-    title: "📊 Life & Finance",
-    items: [
-      { name: "SIP Calc", emoji: "💰", desc: "Mutual fund returns", to: "/tools/sip-calculator" },
-      { name: "EMI Calc", emoji: "🏦", desc: "Loan EMI planner", to: "/tools/emi-calculator" },
-      { name: "GST Calc", emoji: "💸", desc: "Add or remove GST", to: "/tools/gst-calculator" },
-      { name: "Budget", emoji: "📅", desc: "50/30/20 planner", to: "/tools/budget" },
-      { name: "BMI", emoji: "⚖️", desc: "Body mass index", to: "/tools/bmi-calculator" },
-      { name: "Calories", emoji: "🥗", desc: "Daily macro needs", to: "/tools/calorie" },
-    ],
+    title: "✨ Create & Fun",
+    slugs: ["romantic", "create", "image", "speak", "fun"],
   },
   {
-    title: "🕌 Islamic & South Asia",
-    items: [
-      { name: "Prayer Times", emoji: "🕌", desc: "Today's schedule", to: "/tools/prayer-schedule" },
-      { name: "Tasbeeh", emoji: "📿", desc: "Digital counter", to: "/tools/tasbeeh" },
-      { name: "Qibla", emoji: "🧭", desc: "Find Mecca's direction", to: "/tools/qibla" },
-      { name: "Quran", emoji: "📖", desc: "Word search & verses", to: "/tools/quran-search" },
-      { name: "Hijri", emoji: "🌙", desc: "Islamic calendar", to: "/tools/hijri" },
-      { name: "Islam Hub", emoji: "☪️", desc: "53 curated resources", to: "/hub/islam" },
-    ],
+    title: "🛍️ Shop & Daily Life",
+    slugs: ["gadgets", "shopping", "offers", "mini-store", "mens", "nearby"],
   },
   {
-    title: "📡 Live & News",
-    items: [
-      { name: "Live", emoji: "📡", desc: "Markets, weather, prayer", to: "/live" },
-      { name: "Trending", emoji: "🔥", desc: "80 viral commands", to: "/trending" },
-      { name: "Free Radar", emoji: "🛍️", desc: "Offers & freebies", to: "/radar" },
-      { name: "Daily Quiz", emoji: "🧠", desc: "24 categories daily", to: "/quiz" },
-      { name: "What's New", emoji: "🆕", desc: "Weekly free finds", to: "/whats-new" },
-      { name: "India Hub", emoji: "🇮🇳", desc: "Resources for builders", to: "/hub/india" },
-    ],
-  },
-  {
-    title: "🎨 Create & Slash World",
-    items: [
-      { name: "Meme Maker", emoji: "😂", desc: "Generate memes", to: "/tools/meme" },
-      { name: "Sticker", emoji: "🎭", desc: "WhatsApp stickers", to: "/tools/sticker" },
-      { name: "Certificate", emoji: "🏆", desc: "Make certificates", to: "/tools/certificate" },
-      { name: "Watermark", emoji: "💧", desc: "Protect your images", to: "/tools/watermark" },
-      { name: "SlashGram", emoji: "📸", desc: "Fictional social world", to: "/slash/slashgram" },
-      { name: "Hubs", emoji: "🗂️", desc: "All 13 hubs", to: "/hub" },
-    ],
+    title: "🔍 Search & Connect",
+    slugs: ["search-engine", "facts", "community", "how-to-zone"],
   },
 ];
 
+function appTo(app: SlashApp): string {
+  return app.link ?? `/slash/${app.slug}`;
+}
+
+function buildSections(): LauncherSection[] {
+  const bySlug = new Map(SLASH_APPS.map((a) => [a.slug, a]));
+  const used = new Set<string>();
+  const sections: LauncherSection[] = [];
+
+  for (const { title, slugs } of SECTION_SLUGS) {
+    const items: AppButton[] = [];
+    for (const slug of slugs) {
+      const app = bySlug.get(slug);
+      if (!app) continue; // slug renamed/removed — skip silently
+      used.add(slug);
+      items.push({ name: app.name, emoji: app.emoji, desc: app.desc, to: appTo(app) });
+    }
+    if (items.length > 0) sections.push({ title, items });
+  }
+
+  // Safety net: any app not assigned to a section still shows up.
+  const rest = SLASH_APPS.filter((a) => !used.has(a.slug));
+  if (rest.length > 0) {
+    sections.push({
+      title: "🎩 More Slash Apps",
+      items: rest.map((app) => ({ name: app.name, emoji: app.emoji, desc: app.desc, to: appTo(app) })),
+    });
+  }
+
+  return sections;
+}
+
+const SECTIONS: LauncherSection[] = buildSections();
 const ALL_ITEMS: AppButton[] = SECTIONS.flatMap((s) => s.items);
 
 export function SlashBarOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -166,7 +147,7 @@ export function SlashBarOverlay({ open, onClose }: { open: boolean; onClose: () 
           <div className="min-w-0">
             <h2 className="text-2xl font-bold tracking-tight text-foreground">⚡ SlashBar</h2>
             <p className="mt-0.5 text-[13px] text-muted-foreground">
-              Your launch pad — tap anything to open
+              {ALL_ITEMS.length} Slash originals — tap anything to open
             </p>
           </div>
           <button
@@ -213,7 +194,7 @@ export function SlashBarOverlay({ open, onClose }: { open: boolean; onClose: () 
                   No apps found for &ldquo;{query.trim()}&rdquo;
                 </p>
                 <p className="mt-1 text-[13px] text-muted-foreground">
-                  Try &ldquo;quiz&rdquo;, &ldquo;quran&rdquo;, &ldquo;calculator&rdquo; or &ldquo;games&rdquo;
+                  Try &ldquo;play&rdquo;, &ldquo;facts&rdquo;, &ldquo;romantic&rdquo; or &ldquo;shop&rdquo;
                 </p>
               </div>
             )}
