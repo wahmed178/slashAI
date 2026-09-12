@@ -22,7 +22,7 @@ export function OfflineBanner() {
       <button
         onClick={() => setDismissed(true)}
         aria-label="Dismiss offline notice"
-        className="shrink-0 rounded-md p-1 text-muted-foreground transition-colors hover:text-foreground"
+        className="shrink-0 rounded-md border border-border bg-surface-elevated p-1.5 text-foreground transition-colors hover:bg-accent"
       >
         <X className="size-4" />
       </button>

@@ -180,6 +180,7 @@ const KEYS = {
   streak: "slashai.streak",
   stats: "slashai.stats",
   journal: "slashai.journal",
+  toolFavorites: "slashai.toolFavorites",
 };
 
 export interface BackupPayload {
@@ -193,11 +194,16 @@ export interface BackupPayload {
   streak?: Streak;
   stats?: Stats;
   journal?: JournalEntry[];
+  toolFavorites: string[];
 }
 
 interface LibraryValue {
   hydrated: boolean;
   favorites: string[];
+  toolFavorites: string[];
+  isToolFavorite: (slug: string) => boolean;
+  toggleToolFavorite: (slug: string) => void;
+  clearToolFavorites: () => void;
   recents: string[];
   recentSearches: string[];
   settings: Settings;
@@ -249,6 +255,7 @@ function readArray(key: string): string[] {
 export function LibraryProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [toolFavorites, setToolFavorites] = useState<string[]>([]);
   const [recents, setRecents] = useState<string[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
@@ -259,6 +266,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setFavorites(readArray(KEYS.favorites));
+    setToolFavorites(readArray(KEYS.toolFavorites));
     setRecents(readArray(KEYS.recents));
     setRecentSearches(readArray(KEYS.searches));
     setSettings(read<Settings>(KEYS.settings, DEFAULT_SETTINGS));
@@ -355,6 +363,26 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(KEYS.favorites, "[]");
   }, []);
 
+  const isToolFavorite = useCallback(
+    (slug: string) => toolFavorites.includes(slug),
+    [toolFavorites],
+  );
+
+  const toggleToolFavorite = useCallback((slug: string) => {
+    setToolFavorites((prev) => {
+      const adding = !prev.includes(slug);
+      const next = adding ? [slug, ...prev] : prev.filter((x) => x !== slug);
+      localStorage.setItem(KEYS.toolFavorites, JSON.stringify(next));
+      if (adding) trackInteraction(slug, "save");
+      return next;
+    });
+  }, []);
+
+  const clearToolFavorites = useCallback(() => {
+    setToolFavorites([]);
+    localStorage.setItem(KEYS.toolFavorites, "[]");
+  }, []);
+
   const clearSearches = useCallback(() => {
     setRecentSearches([]);
     localStorage.setItem(KEYS.searches, "[]");
@@ -395,6 +423,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const clearAllData = useCallback(() => {
     for (const key of Object.values(KEYS)) localStorage.removeItem(key);
     setFavorites([]);
+    setToolFavorites([]);
     setRecents([]);
     setRecentSearches([]);
     setStats(DEFAULT_STATS);
@@ -419,8 +448,9 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       streak,
       stats,
       journal,
+      toolFavorites,
     }),
-    [favorites, recents, recentSearches, settings, streak, stats, journal],
+    [favorites, recents, recentSearches, settings, streak, stats, journal, toolFavorites],
   );
 
   const importBackup = useCallback((raw: string) => {
@@ -473,6 +503,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     () => ({
       hydrated,
       favorites,
+      toolFavorites,
+      isToolFavorite,
+      toggleToolFavorite,
+      clearToolFavorites,
       recents,
       recentSearches,
       settings,
@@ -501,6 +535,10 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     [
       hydrated,
       favorites,
+      toolFavorites,
+      isToolFavorite,
+      toggleToolFavorite,
+      clearToolFavorites,
       recents,
       recentSearches,
       settings,

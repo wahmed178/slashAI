@@ -13,6 +13,14 @@ import { useEffect, useRef, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { registerServiceWorker } from "../lib/register-sw";
+import {
+  installChunkErrorRecovery,
+  installBfcacheRecovery,
+  isChunkLoadError,
+  recoveredThisSession,
+  hardReloadFresh,
+  setupServiceWorkerUpdates,
+} from "../lib/app-update";
 import { LibraryProvider } from "@/hooks/use-library";
 import { KeyboardShortcutsProvider } from "@/lib/keyboard-shortcuts.tsx";
 import { Toaster } from "@/components/ui/sonner";
@@ -59,9 +67,25 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+
+  const stale = isChunkLoadError(error?.message ?? "");
+
   useEffect(() => {
+    if (!recoveredThisSession()) {
+      // Stale bundle: hard-reload immediately (no user action needed).
+      if (stale) {
+        void hardReloadFresh();
+        return;
+      }
+      // Non-stale first error: still try one hard reload on mobile/WebView
+      // where the true cause is often a stale asset that throws a generic error.
+      if (typeof navigator !== "undefined" && /mobile|webview|iphone|ipad|android/i.test(navigator.userAgent)) {
+        void hardReloadFresh();
+        return;
+      }
+    }
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
+  }, [error, stale]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -70,11 +94,22 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           This page didn't load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          {stale
+            ? "The app updated in the background and this cached copy is out of date."
+            : "Something went wrong. Try refreshing — if it keeps happening, head back home."}
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
+              if (stale) {
+                void hardReloadFresh();
+                return;
+              }
+              // On any error, always try a hard reload first (clears stale assets).
+              if (!recoveredThisSession()) {
+                void hardReloadFresh();
+                return;
+              }
               router.invalidate();
               reset();
             }}
@@ -138,6 +173,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+// Module scope: install the stale-bundle recovery listeners before the router
+// starts lazy-loading route chunks - the crash can happen during first render.
+if (typeof window !== "undefined") {
+  installChunkErrorRecovery();
+  installBfcacheRecovery();
+}
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
@@ -163,6 +205,7 @@ function RootComponent() {
 
   useEffect(() => {
     registerServiceWorker();
+    setupServiceWorkerUpdates();
   }, []);
 
   // Scroll to top on every route change

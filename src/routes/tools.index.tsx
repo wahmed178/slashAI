@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { X, Search } from "lucide-react";
+import { X, Search, Star, StarOff } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import {
   TOOL_SECTIONS,
@@ -11,6 +11,7 @@ import {
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 import { kitSectionColor } from "@/lib/category-colors";
+import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
@@ -43,6 +44,7 @@ function ToolsIndex() {
   const [filter, setFilter] = useState<FilterType>("All");
   const [search, setSearch] = useState("");
   const q = search.trim().toLowerCase();
+  const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
 
   const visibleSections = filter === "All" ? TOOL_SECTIONS_PRERENDER : TOOL_SECTIONS_PRERENDER.filter((s) => s.title === filter);
 
@@ -244,9 +246,26 @@ function ToolsIndex() {
                         {tool.desc}
                       </span>
                     </span>
-                    <span className="cat-text mt-1 shrink-0 text-[13px] transition-colors">
-                      →
-                    </span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          toggleToolFavorite(tool.slug);
+                        }}
+                        aria-label={isToolFavorite(tool.slug) ? `Remove ${tool.name} from saved` : `Save ${tool.name}`}
+                        className={`shrink-0 rounded-md p-1.5 transition-colors hover:text-foreground ${isToolFavorite(tool.slug) ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+                      >
+                        {isToolFavorite(tool.slug) ? (
+                          <Star className="size-4 fill-current" />
+                        ) : (
+                          <StarOff className="size-4" />
+                        )}
+                      </button>
+                      <span className="cat-text mt-1 shrink-0 text-[13px] transition-colors">
+                        →
+                      </span>
+                    </div>
                   </Link>
                 ))}
               </div>

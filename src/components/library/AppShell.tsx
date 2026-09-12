@@ -14,6 +14,7 @@ import {
   Sun,
   Info,
   Search as SearchIcon,
+  X,
 } from "lucide-react";
 
 import { useLibrary } from "@/hooks/use-library";
@@ -316,6 +317,17 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             >
               <Settings className="size-[19px]" />
             </Link>
+            {/* small close (X) button for full-screen tool pages - no back prop */}
+            {!back && pathname.startsWith("/tools/") && (
+              <button
+                type="button"
+                onClick={() => window.history.back()}
+                aria-label="Close tool"
+                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              >
+                <X className="size-[19px]" />
+              </button>
+            )}
           </div>
         </div>
       </header>
