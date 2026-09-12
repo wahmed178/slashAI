@@ -56,7 +56,6 @@ const MORE = [
   { to: "/journal", emoji: "📝", label: "Journal", desc: "Build log, streaks, badges" },
   { to: "/trending", emoji: "🔥", label: "Trending", desc: "What's hot right now" },
   { to: "/promo", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
-  { to: "/random", emoji: "🎲", label: "Random", desc: "One tap, anywhere" },
 ];
 
 function matches(q: string, ...text: string[]) {

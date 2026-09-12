@@ -1,6 +1,16 @@
 {
-  "version": "2.22.0",
+  "version": "2.23.0",
   "entries": [
+    {
+      "version": "2.23.0",
+      "date": "2026-09-12",
+      "changes": [
+        "Bottom nav now has a Random button in place of Commands - one tap instantly drops you into a random tool or game (the bored button, always one tap away)",
+        "Homepage: Journal gets a hero-style card near the top with your live streak, copies and saved counts",
+        "Homepage bottom: new More to Explore grid - AI Commands, AI Tools, Workflows, Search Engine, Live, Quiz, Roadmaps, Glossary, Trending, What's New, Deals and About all on the main page",
+        "Header: small About SlashAI (i) icon added top right next to Saved and Settings"
+      ]
+    },
     {
       "version": "2.22.0",
       "date": "2026-09-12",

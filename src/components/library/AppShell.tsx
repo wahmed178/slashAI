@@ -1,14 +1,15 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Home,
-  Terminal,
   Compass,
   LayoutGrid,
   Zap,
   Bookmark,
   Settings,
   ChevronLeft,
+  Dices,
+  Info,
   Moon,
   Sun,
   Search as SearchIcon,
@@ -18,6 +19,7 @@ import { useLibrary } from "@/hooks/use-library";
 import { getSlashTool } from "@/lib/slashkits";
 import { getPlayGame } from "@/lib/slashplay";
 import { appBySlug } from "@/lib/slashbar";
+import { pickRandom } from "@/lib/random-pick";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
 import { CookieBanner } from "./CookieBanner";
@@ -32,7 +34,7 @@ const PRIMARY = [
   { to: "/discover", label: "Discovery", icon: Compass, exact: false },
   { to: "", label: "SlashBar", icon: Zap, exact: false, center: true },
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
-  { to: "/explore", label: "Commands", icon: Terminal, exact: false },
+  { to: "", label: "Random", icon: Dices, exact: false, random: true },
 ] as const;
 
 
@@ -281,11 +283,11 @@ export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
           <div className="ml-auto flex items-center gap-0.5">
             <ThemeToggleButton />
             <Link
-              to="/explore"
+              to="/promo"
               className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
-              aria-label="Commands"
+              aria-label="About SlashAI"
             >
-              <Terminal className="size-[19px]" />
+              <Info className="size-[19px]" />
             </Link>
             <Link
               to="/favorites"
@@ -326,19 +328,15 @@ export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
       >
         <div className="mx-auto flex w-full max-w-[640px] items-stretch">
           {PRIMARY.map((item) => {
+            const isRandom = (item as { random?: boolean }).random === true;
+
             // Route-based active state - derived from current pathname, not internal state
             const active = (() => {
               if ((item as { center?: boolean }).center) return false; // launcher, never active
+              if (isRandom) return pathname.startsWith("/random");
               if (item.exact) return pathname === item.to;
               const p = item.to as string;
               if (p === "/hub") return pathname.startsWith("/hub");
-              if (p === "/explore")
-                return (
-                  pathname.startsWith("/explore") ||
-                  pathname.startsWith("/search") ||
-                  pathname.startsWith("/find") ||
-                  pathname.startsWith("/c/")
-                );
               if (p === "/discover")
                 return (
                   pathname.startsWith("/discover") ||
@@ -349,6 +347,33 @@ export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
                 );
               return pathname.startsWith(p);
             })();
+
+            // ── Random: instant roll - pick a destination and jump straight to it ──
+            if (isRandom) {
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  aria-label={`Random ${item.label}`}
+                  onClick={() => {
+                    const pick = pickRandom(pathname);
+                    window.location.assign(pick.path);
+                  }}
+                  className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
+                  style={{ color: active ? "var(--primary)" : "var(--muted-foreground)" }}
+                >
+                  {active && (
+                    <span
+                      aria-hidden
+                      className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
+                      style={{ background: "var(--primary)" }}
+                    />
+                  )}
+                  <item.icon className="size-[22px]" aria-hidden strokeWidth={active ? 2.4 : 1.8} />
+                  {item.label}
+                </button>
+              );
+            }
 
             // ── SlashBar: elevated centre launcher button — opens the overlay ──
             if ((item as { center?: boolean }).center) {

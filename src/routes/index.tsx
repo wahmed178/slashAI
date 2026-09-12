@@ -55,6 +55,54 @@ const GENERATOR_TOTAL = ALL_SLASH_TOOLS.filter((t) =>
 const truncateWords = (s: string, n: number) =>
   s.length > n ? s.slice(0, s.lastIndexOf(" ", n)).trimEnd() + "…" : s;
 
+/* ─────────────── Journal hero card (upper page) ─────────────── */
+function JournalHeroCard() {
+  const { streak, stats, favorites, hydrated } = useLibrary();
+  const chips = [
+    { icon: "🔥", label: "streak", value: hydrated ? streak.count : 0 },
+    { icon: "📋", label: "copies", value: hydrated ? stats.copies : 0 },
+    { icon: "⭐", label: "saved", value: hydrated ? favorites.length : 0 },
+  ];
+  return (
+    <section className="relative mt-4 overflow-hidden rounded-2xl border border-sidebar-border bg-surface p-5 sm:p-7">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(600px 180px at 12% 0%, rgba(45,212,191,0.10), transparent 70%)" }}
+      />
+      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0 flex-1">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-primary">
+            📝 Your build journal
+          </span>
+          <h2 className="mt-3 text-xl font-bold leading-tight tracking-tight text-foreground sm:text-2xl">
+            Log the journey.
+            <br className="hidden sm:block" />
+            {" "}Keep the streak alive.
+          </h2>
+          <p className="mt-1.5 text-[13px] text-muted-foreground sm:text-[14px]">
+            Daily logs, moods and achievement badges - stored on this device, free forever.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {chips.map((c) => (
+              <span key={c.label} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-elevated px-3 py-1 text-[12px] text-muted-foreground">
+                <span>{c.icon}</span>
+                <b className="text-foreground">{c.value}</b> {c.label}
+              </span>
+            ))}
+          </div>
+        </div>
+        <Link
+          to="/journal"
+          className="inline-flex shrink-0 items-center gap-2 self-start rounded-lg bg-primary px-5 py-2.5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90 sm:self-center"
+        >
+          Open Journal <ArrowRight className="size-4" aria-hidden />
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 /* ─────────────── Stats Bar (live counts, cannot fail) ─────────────── */
 function StatsBar() {
   const stats = [
@@ -393,6 +441,9 @@ function HomePage() {
 
       {/* ─── Stats Bar ─── */}
       <StatsBar />
+
+      {/* ─── Journal hero card ─── */}
+      <JournalHeroCard />
 
       {/* ─── Feature cards ─── */}
       <section className="mt-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
@@ -734,6 +785,49 @@ function HomePage() {
         >
           See all hubs <ArrowRight className="size-4" aria-hidden />
         </Link>
+      </Section>
+
+      {/* ─── More to explore - every remaining app, main page bottom ─── */}
+      <Section
+        title="More to explore"
+        hint="Every corner of SlashAI, one tap away."
+        action={
+          <Link
+            to="/everything"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            Everything <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
+      >
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+          {[
+            { to: "/explore", emoji: "⌨️", label: "AI Commands", desc: `${VERIFIED_TOTAL.toLocaleString()} copy-ready prompts` },
+            { to: "/ai-tools", emoji: "🤖", label: "AI Tools", desc: "100+ curated AI directory" },
+            { to: "/workflow", emoji: "🔗", label: "AI Workflows", desc: "Chain commands into one prompt" },
+            { to: "/web-search", emoji: "🌐", label: "Search Engine", desc: "Free meta search, zero tracking" },
+            { to: "/live", emoji: "📡", label: "Live Dashboard", desc: "Markets, weather, prayer, space" },
+            { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "24 categories, streaks" },
+            { to: "/roadmaps", emoji: "🗺️", label: "Roadmaps", desc: "Founder step-by-step guides" },
+            { to: "/glossary", emoji: "📖", label: "Glossary", desc: "AI & startup terms" },
+            { to: "/trending", emoji: "🔥", label: "Trending", desc: "What's hot right now" },
+            { to: "/whats-new", emoji: "🆕", label: "What's New", desc: "Fresh finds every week" },
+            { to: "/radar", emoji: "🛍️", label: "Deals Radar", desc: "Free offers, checked daily" },
+            { to: "/promo", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
+          ].map((m) => (
+            <Link
+              key={m.to}
+              to={m.to}
+              className="ripple-press flex items-center gap-2.5 rounded-lg border border-border bg-surface p-3 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+            >
+              <span className="text-[22px]">{m.emoji}</span>
+              <span className="min-w-0">
+                <span className="block truncate text-[13px] font-semibold text-foreground">{m.label}</span>
+                <span className="block truncate text-[11px] text-muted-foreground">{m.desc}</span>
+              </span>
+            </Link>
+          ))}
+        </div>
       </Section>
 
       {/* ─── Footer ─── */}
