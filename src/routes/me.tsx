@@ -6,7 +6,6 @@ import {
   History,
   Info,
   Keyboard,
-  Palette,
   Settings as SettingsIcon,
   Trash2,
   Download,
@@ -280,26 +279,6 @@ function MePage() {
           })}
         </div>
       </Section>
-
-      {/* ── Theme (lives on the Designs page) ── */}
-      <Section title="Theme">
-        <Link
-          to="/designs"
-          className="panel flex items-center gap-3 rounded-xl p-3 transition-colors hover:border-primary/40"
-        >
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">
-            <Palette className="size-4" aria-hidden />
-          </span>
-          <span className="min-w-0 flex-1">
-            <span className="block text-sm font-semibold text-foreground">Designs &amp; themes</span>
-            <span className="block truncate text-xs text-muted-foreground">
-              Dark, Light, AMOLED and Glass - preview and apply any theme.
-            </span>
-          </span>
-          <Check className="size-4 shrink-0 text-muted-foreground" aria-hidden />
-        </Link>
-      </Section>
-
 
       {/* ── Saved Commands ── */}
       <Section title="Saved commands">

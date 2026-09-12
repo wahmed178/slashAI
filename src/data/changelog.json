@@ -1,6 +1,19 @@
 {
-  "version": "2.23.0",
+  "version": "2.24.0",
   "entries": [
+    {
+      "version": "2.24.0",
+      "date": "2026-09-12",
+      "changes": [
+        "Bottom dock redesigned: shiny 🎲 Random button now sits in the centre with a glow and a periodic shine sweep - tap it for an instant jump anywhere",
+        "⚡ Slash moved to the side tab of the dock and opens the full-screen SlashBar launcher",
+        "Header: command search now sits right next to the logo, plus a compact Live Dashboard pill",
+        "Theme switching is now a one-tap cycle in the header (Dark → Light → AMOLED) - theme and design settings removed from Settings",
+        "Desktop no longer looks like a phone: content now breathes at full width with denser grids",
+        "Homepage de-duplicated: stats bar, feature cards and the explore grid removed (everything already lives in More to explore below)",
+        "This week's free finds now rotate automatically every week, with the current week number shown"
+      ]
+    },
     {
       "version": "2.23.0",
       "date": "2026-09-12",

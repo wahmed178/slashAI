@@ -9,9 +9,10 @@ import {
   Settings,
   ChevronLeft,
   Dices,
-  Info,
+  Activity,
   Moon,
   Sun,
+  Info,
   Search as SearchIcon,
 } from "lucide-react";
 
@@ -26,17 +27,16 @@ import { CookieBanner } from "./CookieBanner";
 import { SlashBarOverlay } from "./SlashBarOverlay";
 
 /**
- * Mobile bottom bar: Home · Discovery · SlashBar (elevated centre launcher) ·
- * Hubs · Commands. The centre button opens the full-screen SlashBar overlay.
+ * Bottom dock: Home · Discovery · 🎲 Random (elevated shiny centre, instant roll) ·
+ * Hubs · ⚡ Slash (side tab, opens the full-screen SlashBar overlay).
  */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "/discover", label: "Discovery", icon: Compass, exact: false },
-  { to: "", label: "SlashBar", icon: Zap, exact: false, center: true },
+  { to: "", label: "Random", icon: Dices, random: true },
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
-  { to: "", label: "Random", icon: Dices, exact: false, random: true },
+  { to: "", label: "Slash", icon: Zap, slash: true },
 ] as const;
-
 
 
 function isActive(pathname: string, to: string, exact?: boolean) {
@@ -218,25 +218,27 @@ function BackButton({ to, label }: { to: string; label: string }) {
 
 function ThemeToggleButton() {
   const { settings, updateSettings } = useLibrary();
-  const isLight = settings.theme === "light";
-
-  const toggle = () => {
-    updateSettings({ theme: isLight ? "dark" : "light" });
-  };
+  // three-way cycle: dark → light → amoled → dark (glass stays a Designs pick)
+  const CYCLE = ["dark", "light", "amoled"] as const;
+  const idx = CYCLE.indexOf(settings.theme as (typeof CYCLE)[number]);
+  const next = CYCLE[(idx + 1 + CYCLE.length) % CYCLE.length] ?? "dark";
+  const ICONS = { dark: <Moon className="size-[18px]" />, light: <Sun className="size-[18px]" />, amoled: <span className="text-[15px] leading-none">⬛</span> } as const;
+  const LABELS: Record<string, string> = { dark: "Dark", light: "Light", amoled: "AMOLED" };
 
   return (
     <button
       type="button"
-      onClick={toggle}
-      aria-label={`Switch to ${isLight ? 'dark' : 'light'} mode`}
-      className="hidden md:flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      onClick={() => updateSettings({ theme: next })}
+      aria-label={`Theme: ${LABELS[settings.theme] ?? settings.theme}. Switch to ${LABELS[next]}`}
+      title={`Theme: ${LABELS[settings.theme] ?? settings.theme} → ${LABELS[next]}`}
+      className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
     >
-      {isLight ? <Moon className="size-[18px]" /> : <Sun className="size-[18px]" />}
+      {ICONS[settings.theme as keyof typeof ICONS] ?? <Moon className="size-[18px]" />}
     </button>
   );
 }
 
-export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
+export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [slashbarOpen, setSlashbarOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -254,24 +256,35 @@ export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
   return (
     <div className="flex min-h-screen w-full flex-col" style={{ background: "var(--background)" }}>
       <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
-        <div className="mx-auto flex h-[52px] w-full max-w-[1100px] items-center gap-2 px-4 md:gap-3 md:px-6">
+        <div className={`mx-auto flex h-[52px] w-full items-center gap-2 px-4 md:gap-3 md:px-6 ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}>
           {back && <BackButton to={back.to} label={back.label} />}
 
           {/* logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex shrink-0 items-center gap-2">
             <span className="text-[18px]">⚡</span>
             <span className="text-[16px] font-bold text-foreground">SlashAI</span>
           </Link>
 
-          {/* header search — one box on every screen, lands in the full library search */}
+          {/* live dashboard — mini icon pill beside the logo */}
+          <Link
+            to="/live"
+            title="Live Dashboard"
+            aria-label="Live Dashboard"
+            className="hidden shrink-0 items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground min-[480px]:flex"
+          >
+            <Activity className="size-3.5 text-primary" aria-hidden />
+            <span className="hidden lg:inline">Live Dashboard</span>
+          </Link>
+
+          {/* header command search — sits at the top on every screen */}
           {!hideHeaderSearch && (
-            <div className="mx-auto hidden min-[420px]:flex flex-1 justify-center">
+            <div className="hidden min-[420px]:flex min-w-0 flex-1 justify-center px-2">
               <Link
                 to="/search"
-                className="flex h-[34px] w-full max-w-[340px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+                className="flex h-[34px] w-full max-w-[460px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
               >
                 <SearchIcon className="size-[14px] shrink-0" />
-                <span className="flex-1 truncate text-[13px]">Search commands, tools, games…</span>
+                <span className="flex-1 truncate text-[13px]">Search commands…</span>
                 <span className="hidden h-5 shrink-0 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] sm:flex">
                   /
                 </span>
@@ -312,7 +325,7 @@ export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
       <OfflineBanner />
       <CookieBanner />
 
-      <main className="mx-auto w-full max-w-[1100px] flex-1 animate-slide-in-up">
+      <main className={`mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}>
         <div className="w-full px-4 py-6 md:px-6 md:py-8" style={{ paddingBottom: "calc(62px + env(safe-area-inset-bottom) + 20px)" }}>
           <Breadcrumbs pathname={pathname} />
           {children}
@@ -320,21 +333,21 @@ export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
       </main>
 
       {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
-          Home · Discovery · SlashBar launcher · Hubs · Commands */}
+          Home · Discovery · 🎲 Random (centre) · Hubs · ⚡ Slash (overlay) */}
       <nav
         aria-label="Primary"
         className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
         style={{ height: "calc(62px + env(safe-area-inset-bottom))" }}
       >
-        <div className="mx-auto flex w-full max-w-[640px] items-stretch">
+        <div className="mx-auto flex w-full max-w-[760px] items-stretch">
           {PRIMARY.map((item) => {
             const isRandom = (item as { random?: boolean }).random === true;
+            const isSlash = (item as { slash?: boolean }).slash === true;
 
             // Route-based active state - derived from current pathname, not internal state
             const active = (() => {
-              if ((item as { center?: boolean }).center) return false; // launcher, never active
-              if (isRandom) return pathname.startsWith("/random");
-              if (item.exact) return pathname === item.to;
+              if (isRandom || isSlash) return false; // action buttons, never route-active
+              if ((item as { exact?: boolean }).exact) return pathname === item.to;
               const p = item.to as string;
               if (p === "/hub") return pathname.startsWith("/hub");
               if (p === "/discover")
@@ -348,54 +361,51 @@ export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
               return pathname.startsWith(p);
             })();
 
-            // ── Random: instant roll - pick a destination and jump straight to it ──
+            // ── Random: elevated shiny centre button - instant roll to a random destination ──
             if (isRandom) {
               return (
                 <button
                   key={item.label}
                   type="button"
-                  aria-label={`Random ${item.label}`}
+                  aria-label="Random — jump somewhere fun"
+                  title="Surprise me"
                   onClick={() => {
                     const pick = pickRandom(pathname);
                     window.location.assign(pick.path);
                   }}
-                  className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
-                  style={{ color: active ? "var(--primary)" : "var(--muted-foreground)" }}
+                  className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-end pb-[8px] text-[10px] font-medium"
+                  style={{ color: "var(--muted-foreground)" }}
                 >
-                  {active && (
+                  <span className="nav-random-btn mb-[3px] flex size-[46px] items-center justify-center rounded-full text-background">
+                    <item.icon className="size-[23px]" aria-hidden strokeWidth={2.2} />
+                  </span>
+                  {item.label}
+                </button>
+              );
+            }
+
+            // ── Slash: side tab that opens the full-screen SlashBar overlay ──
+            if (isSlash) {
+              const slashActive = pathname.startsWith("/slash");
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  aria-label="Open SlashBar"
+                  aria-haspopup="dialog"
+                  onClick={() => setSlashbarOpen(true)}
+                  className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
+                  style={{ color: slashActive ? "var(--primary)" : "var(--muted-foreground)" }}
+                >
+                  {slashActive && (
                     <span
                       aria-hidden
                       className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
                       style={{ background: "var(--primary)" }}
                     />
                   )}
-                  <item.icon className="size-[22px]" aria-hidden strokeWidth={active ? 2.4 : 1.8} />
+                  <item.icon className="size-[22px]" aria-hidden strokeWidth={slashActive ? 2.4 : 1.8} />
                   {item.label}
-                </button>
-              );
-            }
-
-            // ── SlashBar: elevated centre launcher button — opens the overlay ──
-            if ((item as { center?: boolean }).center) {
-              return (
-                <button
-                  key={item.label}
-                  type="button"
-                  aria-label={`Open ${item.label}`}
-                  aria-haspopup="dialog"
-                  onClick={() => setSlashbarOpen(true)}
-                  className="ripple-press relative flex min-h-[62px] flex-1 items-center justify-center"
-                >
-                  <span
-                    className="nav-hub-btn flex size-[46px] items-center justify-center rounded-full text-background"
-                    style={{
-                      background: "linear-gradient(135deg, #2dd4bf, #38bdf8 55%, #a78bfa)",
-                      boxShadow: "0 4px 20px rgba(45, 212, 191, 0.4)",
-                      transform: "translateY(-8px)",
-                    }}
-                  >
-                    <item.icon className="size-[24px]" aria-hidden strokeWidth={2.2} />
-                  </span>
                 </button>
               );
             }

@@ -9,11 +9,6 @@ import {
   Star,
   History,
   Flame,
-  Terminal,
-  Package,
-  Zap,
-  Map,
-  BookOpen,
 } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
@@ -40,11 +35,8 @@ import {
   topPersonalCommands,
 } from "@/lib/intelligence";
 import trendingToolsData from "@/../src/data/trending-tools.json";
-import { ALL_ROADMAPS } from "@/lib/roadmaps";
-import { GLOSSARY_TOTAL } from "@/lib/glossary";
 import { ALL_SLASH_TOOLS, SLASH_TOOL_COUNT, toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
-import { TOOLS } from "@/lib/tools";
 
 const HERO_TOOL = heroToolOfTheDay();
 const GENERATOR_TOTAL = ALL_SLASH_TOOLS.filter((t) =>
@@ -100,36 +92,6 @@ function JournalHeroCard() {
         </Link>
       </div>
     </section>
-  );
-}
-
-/* ─────────────── Stats Bar (live counts, cannot fail) ─────────────── */
-function StatsBar() {
-  const stats = [
-    { number: VERIFIED_TOTAL.toLocaleString(), label: "COMMANDS", color: "var(--primary)", icon: Terminal },
-    { number: RESOURCE_TOTAL.toLocaleString(), label: "RESOURCES", color: "var(--primary)", icon: Package },
-    { number: GENERATOR_TOTAL.toLocaleString(), label: "GENERATORS", color: "#fbbf24", icon: Sparkles },
-    { number: ALL_ROADMAPS.length.toLocaleString(), label: "ROADMAPS", color: "#3fb950", icon: Map },
-    { number: GLOSSARY_TOTAL.toLocaleString(), label: "GLOSSARY", color: "#a78bfa", icon: BookOpen },
-  ];
-  return (
-    <div className="mt-6 rounded-[10px] border border-sidebar-border bg-surface px-3 py-3 sm:px-6 sm:py-4">
-      <div className="grid grid-cols-5 items-center gap-1 sm:flex sm:items-center sm:justify-between sm:gap-6">
-        {stats.map((stat, i) => {
-          const Icon = stat.icon;
-          return (
-            <span key={stat.label} className="flex items-center gap-1 sm:gap-2.5 justify-center">
-              {i > 0 && <div className="hidden sm:block h-[24px] w-px bg-surface-elevated" />}
-              <Icon className="size-4 sm:size-[18px] shrink-0" style={{ color: stat.color }} aria-hidden />
-              <div className="text-center">
-                <span className="block text-[14px] sm:text-[22px] font-bold text-foreground leading-tight" style={{ fontFamily: "var(--font-mono, monospace)" }}>{stat.number}</span>
-                <span className="block text-[7px] sm:text-[10px] uppercase tracking-[0.04em] sm:tracking-[0.06em] text-muted-foreground leading-tight">{stat.label}</span>
-              </div>
-            </span>
-          );
-        })}
-      </div>
-    </div>
   );
 }
 
@@ -334,12 +296,18 @@ function HomePage() {
     return weekly ? dropItems(weekly).slice(0, 6) : [];
   }, []);
 
-  // Auto-updated trending tools from GitHub Actions
+  // Auto-updated trending tools from GitHub Actions - the window slides
+  // forward every ISO week, so the picks rotate even between data refreshes.
   const trendingTools = useMemo(() => {
-    const items = (trendingToolsData as any).items || [];
-    return items.slice(0, 5);
+    const items: any[] = (trendingToolsData as any).items || [];
+    if (items.length === 0) return [];
+    const week = Math.floor(Date.now() / 604_800_000); // weeks since epoch
+    const perView = 5;
+    const offset = (week * perView) % items.length;
+    return [...items.slice(offset), ...items.slice(0, offset)].slice(0, perView);
   }, []);
   const trendingUpdated = (trendingToolsData as any).updated || '';
+  const weekNumber = Math.floor(Date.now() / 604_800_000) % 52 + 1;
 
   return (
     <AppShell hideHeaderSearch title="SlashAI">
@@ -439,57 +407,8 @@ function HomePage() {
         <style>{`@keyframes float { 0%, 100% { transform: rotate(15deg) translateY(0px); } 50% { transform: rotate(15deg) translateY(-10px); } }`}</style>
       </section>
 
-      {/* ─── Stats Bar ─── */}
-      <StatsBar />
-
       {/* ─── Journal hero card ─── */}
       <JournalHeroCard />
-
-      {/* ─── Feature cards ─── */}
-      <section className="mt-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
-        {[
-          { to: "/explore", emoji: "⌨️", title: "AI Commands", desc: `${VERIFIED_TOTAL.toLocaleString()} copy-ready prompts` },
-          { to: "/hub/founders", emoji: "🚀", title: "Founder Tools", desc: "Validate, build & ship free" },
-          { to: "/live", emoji: "📡", title: "Live Dashboard", desc: "Markets, weather, cricket" },
-          { to: "/discover", emoji: "📦", title: "Free Resources", desc: `${RESOURCE_TOTAL}+ verified picks` },
-        ].map((card) => (
-          <Link
-            key={card.to}
-            to={card.to}
-            className="flex flex-col rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58]"
-          >
-            <span className="text-[24px]">{card.emoji}</span>
-            <span className="mt-2 text-[13px] font-semibold text-foreground">{card.title}</span>
-            <span className="mt-0.5 text-[11px] leading-tight text-muted-foreground">{card.desc}</span>
-          </Link>
-        ))}
-      </section>
-
-      {/* ─── Explore more - 2×4 grid ─── */}
-      <section className="mt-4">
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          {[
-            { to: "/ai-tools", emoji: "🤖", title: "AI Assistant", desc: `${TOOLS.length} curated AI tools` },
-            { to: "/tools", emoji: "⚡", title: "Generators", desc: `${GENERATOR_TOTAL} instant generators` },
-            { to: "/roadmaps", emoji: "🗺️", title: "Roadmaps", desc: `${ALL_ROADMAPS.length} step-by-step guides` },
-            { to: "/live", emoji: "📡", title: "Live", desc: "Markets, weather, prayer times" },
-            { to: "/quiz", emoji: "🧠", title: "Daily Quiz", desc: "24 categories, fresh daily" },
-            { to: "/radar", emoji: "🛍️", title: "Deals & Offers", desc: "Free offers, checked daily" },
-            { to: "/glossary", emoji: "📖", title: "Glossary", desc: `${GLOSSARY_TOTAL} AI & startup terms` },
-            { to: "/discover", emoji: "🧭", title: "Discover", desc: `${RESOURCE_TOTAL}+ free resources` },
-          ].map((card) => (
-            <Link
-              key={card.to}
-              to={card.to}
-              className="group flex flex-col items-center justify-center rounded-[10px] border border-border bg-surface p-4 text-center transition-all duration-150 hover:-translate-y-0.5 hover:border-[#484f58] min-h-[120px]"
-            >
-              <span className="text-[26px]">{card.emoji}</span>
-              <span className="mt-2 block text-[13px] font-semibold text-foreground">{card.title}</span>
-              <span className="mt-0.5 block max-w-full truncate text-[11px] text-muted-foreground">{card.desc}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
 
       {/* ─── Tool of the Day (rotates daily via date seed) ─── */}
       <section className="mt-10 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
@@ -531,7 +450,7 @@ function HomePage() {
 
       <Section
         title="This week's free finds"
-        hint={trendingUpdated ? `Auto-updated ${trendingUpdated}` : "Hand-picked, with a last-checked date on every entry."}
+        hint={trendingUpdated ? `Auto-updated ${trendingUpdated} · Week ${weekNumber}` : `Rotates every week · Week ${weekNumber}`}
         action={
           <Link
             to="/whats-new"

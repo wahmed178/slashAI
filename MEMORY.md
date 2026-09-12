@@ -157,11 +157,16 @@ Built on Lovable, deployed on Vercel.
   toggle, saved workflows in localStorage "slashai-workflows", active chain autosaved
   to sessionStorage, char/token estimate. New "New" badge nav item + homepage card.
 
-## Navigation (v2.21 — sidebar removed)
+## Navigation (v2.24 — sidebar removed, Random-centred dock)
 - NO sidebar / NO drawer anywhere: DesktopSidebar.tsx and nav-groups.ts were deleted in v2.21.
   The bottom dock is the ONLY navigation on every screen size:
-  Home (/) · Discovery (/discover) · ⚡ SlashBar launcher (overlay, not a route) · Hubs (/hub) · Commands (/explore)
-- Header: logo · search (→ /search, ≥420px) · theme toggle · Commands · Saved · Settings
+  Home (/) · Discovery (/discover) · 🎲 Random (elevated shiny centre button, instant roll via
+  src/lib/random-pick.ts) · Hubs (/hub) · ⚡ Slash (side tab, opens the SlashBar overlay).
+- Header (v2.24): ⚡ SlashAI logo · Live Dashboard mini-pill (≥480px) · command search
+  (→ /search, ≥420px) · theme cycle button (Dark → Light → AMOLED, one tap each) ·
+  About (i) · Saved · Settings. Theme/design settings removed from /me (Settings).
+- Desktop uses the space: AppShell default max-w 1500px, `wide` pages 1700px (explore,
+  discover, hubs, collections, favorites, find…). No horizontal scroll (html/body overflow-x hidden).
 - /everything — "Explore Everything" page: all Slash apps, all tools, all games, hubs and
   more on one page with its own filter + the universal search at top. Linked from homepage
   pills and footer.
