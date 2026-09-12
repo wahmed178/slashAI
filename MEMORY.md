@@ -157,9 +157,18 @@ Built on Lovable, deployed on Vercel.
   toggle, saved workflows in localStorage "slashai-workflows", active chain autosaved
   to sessionStorage, char/token estimate. New "New" badge nav item + homepage card.
 
-## Navigation
-- Bottom tab bar: Home | Commands | Discover | Hubs | Saved (5 tabs, route-based active states)
-- Sidebar: Commands, Assistant, Founder tools, Roadmaps, Journal, AI tools, Glossary, Live, YouTube, Movies, Collections, Play, Recent, Me, Settings, About, Trending, Changelog, Glass, Hubs
+## Navigation (v2.21 — sidebar removed)
+- NO sidebar / NO drawer anywhere: DesktopSidebar.tsx and nav-groups.ts were deleted in v2.21.
+  The bottom dock is the ONLY navigation on every screen size:
+  Home (/) · Discovery (/discover) · ⚡ SlashBar launcher (overlay, not a route) · Hubs (/hub) · Commands (/explore)
+- Header: logo · search (→ /search, ≥420px) · theme toggle · Commands · Saved · Settings
+- /everything — "Explore Everything" page: all Slash apps, all tools, all games, hubs and
+  more on one page with its own filter + the universal search at top. Linked from homepage
+  pills and footer.
+- UniversalSearch (src/components/library/UniversalSearch.tsx) powers the homepage hero:
+  live results across commands/tools/games/web, recent searches, keyboard nav (/ or ⌘K),
+  and a Search Engine pill linking to /web-search (which now honors ?q= deep links).
+- SlashBar leaves, hub routes and page headers: see v2.20/v2.19 notes below.
 - ResourceCardEnhanced component: favicon + pricing badge + save button, used on Discover, hubs, trending
 - Hub pages: resources grouped into named sections with section headers
 - Keyboard shortcuts: / (search), ? (guide), G+H/D/T/L (go to), Escape (close)

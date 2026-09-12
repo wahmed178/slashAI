@@ -21,6 +21,8 @@ interface State {
   scoreBottom: number;
   serving: boolean;
   serveTimer: number;
+  /** AI aim error (px) - re-rolled every time the player strikes the ball */
+  aiOffset: number;
 }
 
 function clampPaddle(x: number) {
@@ -43,7 +45,25 @@ function freshState(): State {
     scoreBottom: 0,
     serving: true,
     serveTimer: 45,
+    aiOffset: (Math.random() - 0.5) * 40,
   };
+}
+
+/**
+ * AI opponent: tracks the ball while it travels toward the AI paddle, drifts
+ * back to centre between shots, and aims with a per-rally error so it is
+ * beatable. Its reaction speed scales with the ball speed, so long rallies
+ * get harder for both players.
+ */
+function moveAI(s: State) {
+  const centre = s.top + PAD_W / 2;
+  const ballComing = s.ball.vy < 0;
+  // aim the paddle centre ahead of the ball, plus the rally's persistent error
+  const raw = ballComing ? s.ball.x + s.ball.vx * 4 + s.aiOffset : W / 2;
+  const aim = Math.max(PAD_W / 2, Math.min(W - PAD_W / 2, raw));
+  const maxSpeed = ballComing ? 5.6 + Math.min(3.2, Math.abs(s.ball.vy) * 0.28) : 3.2;
+  const delta = aim - centre;
+  if (Math.abs(delta) > 4) s.top = clampPaddle(s.top + Math.sign(delta) * Math.min(maxSpeed, Math.abs(delta)));
 }
 
 function Pong() {
@@ -109,6 +129,7 @@ function Pong() {
         if (modeRef.current === "ai") {
           if (keys.current.has("a") || keys.current.has("ArrowLeft")) s.bottom -= SPEED;
           if (keys.current.has("d") || keys.current.has("ArrowRight")) s.bottom += SPEED;
+          moveAI(s);
         } else {
           if (keys.current.has("a")) s.bottom -= SPEED;
           if (keys.current.has("d")) s.bottom += SPEED;
@@ -155,6 +176,8 @@ function Pong() {
             s.ball.y = H - MARGIN - PAD_T - 6;
             s.ball.vy = -Math.abs(s.ball.vy) * 1.045;
             s.ball.vx += ((s.ball.x - (s.bottom + PAD_W / 2)) / (PAD_W / 2)) * 2.2;
+            // the player just hit it: the AI re-aims with a fresh human-like error
+            s.aiOffset = (Math.random() - 0.5) * (30 + Math.min(34, Math.abs(s.ball.vy) * 3));
           }
 
           // goals
@@ -223,7 +246,7 @@ function Pong() {
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🏓 Pong</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Vertical court - you defend the bottom. Drag your half to move the paddle (the page stays
-          put while you drag){mode === "2p" ? ", or use A/D - the top player uses arrow keys" : ", or use A/D / arrow keys"}.
+          put while you drag){mode === "2p" ? ", or use A/D - the top player uses arrow keys" : ", or use A/D / arrow keys"}. The AI tracks the ball and speeds up with long rallies - beat it with sharp angles.
         </p>
       </header>
 

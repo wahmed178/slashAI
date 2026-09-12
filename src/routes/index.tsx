@@ -299,7 +299,7 @@ function HomePage() {
       <LiveTicker />
 
       {/* ─── Hero Section ─── */}
-      <section className="relative overflow-hidden rounded-2xl bg-surface border border-sidebar-border p-4 pt-6 sm:p-8">
+      <section className="relative rounded-2xl bg-surface border border-sidebar-border p-4 pt-6 sm:p-8">
         <div className="flex flex-col gap-4 overflow-hidden md:flex-row md:items-center md:justify-between md:gap-6">
           {/* Left: text */}
           <div className="min-w-0 flex-1">
@@ -318,6 +318,34 @@ function HomePage() {
             {/* Universal search: commands + tools + games + web, live results */}
             <div className="relative z-30 mt-5 max-w-[520px]">
               <UniversalSearch size="lg" />
+            </div>
+
+            {/* Direct routes - the Slash search engine lives on the home screen */}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Link
+                to="/web-search"
+                className="flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.35)] bg-[rgba(45,212,191,0.1)] px-3.5 py-1.5 text-[12px] font-semibold text-primary transition-all duration-150 hover:bg-[rgba(45,212,191,0.18)]"
+              >
+                <span>🌐</span> Search Engine
+              </Link>
+              <Link
+                to="/everything"
+                className="flex items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-3.5 py-1.5 text-[12px] text-muted-foreground transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-foreground"
+              >
+                <span>🧭</span> Everything
+              </Link>
+              <Link
+                to="/tools"
+                className="flex items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-3.5 py-1.5 text-[12px] text-muted-foreground transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-foreground"
+              >
+                <span>🧰</span> SlashKits
+              </Link>
+              <Link
+                to="/play"
+                className="flex items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-3.5 py-1.5 text-[12px] text-muted-foreground transition-all duration-150 hover:border-[rgba(45,212,191,0.3)] hover:text-foreground"
+              >
+                <span>🎮</span> SlashPlay
+              </Link>
             </div>
 
             {/* Intent chips */}
@@ -341,8 +369,8 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Right: 3D CSS cube (desktop only) */}
-          <div className="hidden md:flex items-center justify-center">
+          {/* Right: 3D CSS cube (desktop only) - own overflow clip keeps the glow inside */}
+          <div className="hidden overflow-hidden rounded-2xl md:flex items-center justify-center">
             <div
               className="flex items-center justify-center"
               style={{
@@ -725,6 +753,7 @@ function HomePage() {
             {
               title: "Explore",
               links: [
+                { label: "Everything", to: "/everything" },
                 { label: "Discover", to: "/discover" },
                 { label: "Live Dashboard", to: "/live" },
                 { label: "Deals & Offers", to: "/radar" },

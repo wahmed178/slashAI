@@ -8,22 +8,12 @@ import {
   Zap,
   Bookmark,
   Settings,
-  Menu,
-  ChevronDown,
   ChevronLeft,
   Moon,
   Sun,
   Search as SearchIcon,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from "@/components/ui/sheet";
 import { useLibrary } from "@/hooks/use-library";
 import { getSlashTool } from "@/lib/slashkits";
 import { getPlayGame } from "@/lib/slashplay";
@@ -31,9 +21,7 @@ import { appBySlug } from "@/lib/slashbar";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
 import { CookieBanner } from "./CookieBanner";
-import { DesktopSidebar } from "./DesktopSidebar";
 import { SlashBarOverlay } from "./SlashBarOverlay";
-import { NAV_GROUPS } from "./nav-groups";
 
 /**
  * Mobile bottom bar: Home · Discovery · SlashBar (elevated centre launcher) ·
@@ -226,184 +214,6 @@ function BackButton({ to, label }: { to: string; label: string }) {
   );
 }
 
-function DrawerGroupLeaves({
-  group,
-  pathname,
-  onNavigate,
-  active,
-  expanded,
-  onToggle,
-}: {
-  group: (typeof NAV_GROUPS)[number];
-  pathname: string;
-  onNavigate?: (() => void) | undefined;
-  active: boolean;
-  expanded: boolean;
-  onToggle: () => void;
-}) {
-  const open = expanded || active;
-  if (group.leaves.length === 0) return null;
-
-  return (
-    <>
-      <button
-        type="button"
-        onClick={onToggle}
-        className="mt-0.5 flex h-[26px] w-full items-center gap-1.5 rounded-[6px] px-2.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground/70 transition-colors hover:text-foreground"
-      >
-        <span className="flex-1 text-left">{open && !expanded ? "Hide sections" : "All sections"}</span>
-        <ChevronDown
-          className={`size-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-      {open && (
-        <div className="dropdown-reveal mb-1.5 ml-[18px] mt-0.5 flex flex-col gap-0.5 border-l border-surface-elevated pl-2.5">
-          {group.leaves.map((leaf) => {
-            const leafActive = pathname === leaf.to;
-            return (
-              <Link
-                key={leaf.to}
-                to={leaf.to}
-                onClick={onNavigate}
-                className={`flex h-[32px] items-center gap-2 rounded-[6px] px-2 text-[13px] transition-all duration-150 ${
-                  leafActive
-                    ? "text-primary"
-                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
-                }`}
-              >
-                <span className="flex-1 truncate">{leaf.label}</span>
-                {leaf.badge && (
-                  <span
-                    className={`shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold leading-none ${
-                      leaf.badge === "Hot" ? "bg-red-500 text-white" : "bg-surface-elevated text-muted-foreground"
-                    }`}
-                  >
-                    {leaf.badge}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-        </div>
-      )}
-    </>
-  );
-}
-
-function DrawerNavList({ onNavigate }: { onNavigate?: () => void }) {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [drawerOpen, setDrawerOpen] = useState<Record<string, boolean>>(() => {
-    const initial: Record<string, boolean> = {};
-    for (const g of NAV_GROUPS) {
-      if (g.match(pathname)) initial[g.id] = true;
-    }
-    return initial;
-  });
-
-  return (
-    <div className="flex h-full flex-col">
-      {/* Logo */}
-      <div className="px-4 py-4">
-        <Link to="/" onClick={onNavigate} className="flex items-center gap-2.5">
-          <span className="text-[22px]">⚡</span>
-          <span className="text-[18px] font-bold text-foreground">SlashAI</span>
-        </Link>
-      </div>
-      <div className="h-px bg-surface-elevated" />
-
-      {/* Grouped nav - same sub-folder tree as desktop */}
-      <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 py-3">
-        {NAV_GROUPS.map((group) => {
-          const groupActive = group.match(pathname);
-          const Icon = group.icon;
-          const expanded = drawerOpen[group.id] ?? false;
-
-          if (group.leaves.length === 0 && group.to) {
-            return (
-              <Link
-                key={group.id}
-                to={group.to}
-                onClick={onNavigate}
-                className={`flex h-[40px] items-center gap-2.5 rounded-[6px] px-2.5 text-[14px] transition-all duration-150 ${
-                  groupActive
-                    ? "bg-primary/10 text-foreground"
-                    : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
-                }`}
-              >
-                <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
-                <span className="flex-1">{group.label}</span>
-              </Link>
-            );
-          }
-
-          return (
-            <div key={group.id}>
-              <div className="flex items-center">
-                <Link
-                  to={group.to ?? "#"}
-                  onClick={onNavigate}
-                  className={`flex h-[40px] min-w-0 flex-1 items-center gap-2.5 rounded-l-[6px] px-2.5 text-[14px] transition-all duration-150 ${
-                    groupActive
-                      ? "bg-primary/10 text-foreground"
-                      : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
-                  }`}
-                >
-                  <Icon className={`size-[18px] shrink-0 ${groupActive ? "text-primary" : ""}`} strokeWidth={groupActive ? 2.2 : 1.8} />
-                  <span className="flex-1 truncate">{group.label}</span>
-                  {group.badge && (
-                    <span className="rounded-full bg-primary px-1.5 py-0.5 text-[9px] font-bold leading-none text-background">
-                      {group.badge}
-                    </span>
-                  )}
-                </Link>
-                <button
-                  type="button"
-                  aria-label={`${expanded ? "Collapse" : "Expand"} ${group.label}`}
-                  aria-expanded={expanded}
-                  onClick={() =>
-                    setDrawerOpen((prev) => ({ ...prev, [group.id]: !expanded }))
-                  }
-                  className={`flex h-[40px] w-[28px] shrink-0 items-center justify-center rounded-r-[6px] transition-all duration-150 ${
-                    groupActive
-                      ? "bg-primary/10 text-foreground"
-                      : "text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
-                  }`}
-                >
-                  <ChevronDown
-                    className={`size-3.5 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
-                  />
-                </button>
-              </div>
-
-              {/* Sub-folder: collapsed behind a toggle, auto-expanded when active */}
-              <DrawerGroupLeaves
-                group={group}
-                pathname={pathname}
-                onNavigate={onNavigate}
-                active={groupActive}
-                expanded={expanded}
-                onToggle={() => setDrawerOpen((prev) => ({ ...prev, [group.id]: !expanded }))}
-              />
-            </div>
-          );
-        })}
-      </nav>
-
-      {/* User indicator */}
-      <div className="flex items-center gap-2.5 border-t border-sidebar-border px-3 py-2.5">
-        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-[14px] font-bold text-background">S</div>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-[13px] text-foreground">Slash User</p>
-          <p className="text-[11px] text-muted-foreground">No account · Local only</p>
-        </div>
-        <Link to="/me" onClick={onNavigate}>
-          <Settings className="size-4 shrink-0 text-muted-foreground hover:text-foreground transition-colors" />
-        </Link>
-      </div>
-    </div>
-  );
-}
-
 function ThemeToggleButton() {
   const { settings, updateSettings } = useLibrary();
   const isLight = settings.theme === "light";
@@ -424,11 +234,9 @@ function ThemeToggleButton() {
   );
 }
 
-export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
-  const [menuOpen, setMenuOpen] = useState(false);
+export function AppShell({ children, title, back, hideHeaderSearch }: Props) {
   const [slashbarOpen, setSlashbarOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const { settings } = useLibrary();
 
   // Every page must have a real browser-tab title. Pages that set `head()`
   // meta manage their own <title>; this effect only fills the gaps (tools
@@ -442,150 +250,156 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
   }, [title, pathname]);
 
   return (
-    <div className="flex min-h-screen w-full" style={{ background: "var(--background)" }}>
-      {/* desktop sidebar */}
-      <DesktopSidebar />
+    <div className="flex min-h-screen w-full flex-col" style={{ background: "var(--background)" }}>
+      <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
+        <div className="mx-auto flex h-[52px] w-full max-w-[1100px] items-center gap-2 px-4 md:gap-3 md:px-6">
+          {back && <BackButton to={back.to} label={back.label} />}
 
-      {/* mobile drawer holds the secondary destinations */}
-      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-        <SheetContent side="left" className="w-[82vw] max-w-xs overflow-y-auto p-0">
-          <SheetHeader className="sr-only">
-            <SheetTitle>Navigation</SheetTitle>
-            <SheetDescription>SlashAI navigation menu</SheetDescription>
-          </SheetHeader>
-          <DrawerNavList onNavigate={() => setMenuOpen(false)} />
-        </SheetContent>
-      </Sheet>
+          {/* logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <span className="text-[18px]">⚡</span>
+            <span className="text-[16px] font-bold text-foreground">SlashAI</span>
+          </Link>
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
-          <div className="flex h-[52px] items-center gap-3 px-4 md:px-8">
-            {/* Mobile: hamburger */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="-ml-1 md:hidden"
-              aria-label="Open menu"
-              onClick={() => setMenuOpen(true)}
-            >
-              <Menu className="size-5" />
-            </Button>
-
-            {/* Mobile: logo */}
-            <Link to="/" className="md:hidden flex items-center gap-2">
-              <span className="text-[18px]">⚡</span>
-              <span className="text-[16px] font-bold text-foreground">SlashAI</span>
-            </Link>
-
-            {/* Desktop: search bar */}
-            <div className="hidden md:flex flex-1 justify-center">
-              <div className="flex h-[36px] w-[320px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 transition-colors focus-within:border-primary">
-                <SearchIcon className="size-[14px] shrink-0 text-muted-foreground" />
-                <input
-                  type="text"
-                  placeholder="Search 5,635 commands..."
-                  className="flex-1 bg-transparent text-[13px] text-foreground outline-none placeholder:text-muted-foreground"
-                  onFocus={() => window.location.href = '/search'}
-                  readOnly
-                />
-                <span className="flex h-5 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] text-muted-foreground">
-                  ⌘K
+          {/* header search — one box on every screen, lands in the full library search */}
+          {!hideHeaderSearch && (
+            <div className="mx-auto hidden min-[420px]:flex flex-1 justify-center">
+              <Link
+                to="/search"
+                className="flex h-[34px] w-full max-w-[340px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+              >
+                <SearchIcon className="size-[14px] shrink-0" />
+                <span className="flex-1 truncate text-[13px]">Search commands, tools, games…</span>
+                <span className="hidden h-5 shrink-0 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] sm:flex">
+                  /
                 </span>
-              </div>
-            </div>
-
-            {/* Right side - same on mobile and desktop */}
-            <div className="ml-auto flex items-center gap-1">
-              <Link to="/favorites" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Saved items">
-                <Bookmark className="size-[20px]" />
-              </Link>
-              <Link to="/me" className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground" aria-label="Settings">
-                <Settings className="size-[20px]" />
               </Link>
             </div>
+          )}
+
+          {/* right side - quick links, same on every screen */}
+          <div className="ml-auto flex items-center gap-0.5">
+            <ThemeToggleButton />
+            <Link
+              to="/explore"
+              className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
+              aria-label="Commands"
+            >
+              <Terminal className="size-[19px]" />
+            </Link>
+            <Link
+              to="/favorites"
+              className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
+              aria-label="Saved items"
+            >
+              <Bookmark className="size-[19px]" />
+            </Link>
+            <Link
+              to="/me"
+              className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
+              aria-label="Settings"
+            >
+              <Settings className="size-[19px]" />
+            </Link>
           </div>
-        </header>
+        </div>
+      </header>
 
-        {/* offline + install strips - dismissed installs stay gone, offline re-appears on every disconnect */}
-        <InstallBanner />
-        <OfflineBanner />
-        <CookieBanner />
+      {/* offline + install strips - dismissed installs stay gone, offline re-appears on every disconnect */}
+      <InstallBanner />
+      <OfflineBanner />
+      <CookieBanner />
 
-        <main className="flex-1 overflow-y-auto animate-slide-in-up">
-          <div className="w-full px-4 py-6 md:px-8 md:py-8 pb-28 md:pb-10">
-            <Breadcrumbs pathname={pathname} />
-            {children}
-          </div>
-        </main>
-      </div>
+      <main className="mx-auto w-full max-w-[1100px] flex-1 animate-slide-in-up">
+        <div className="w-full px-4 py-6 md:px-6 md:py-8" style={{ paddingBottom: "calc(62px + env(safe-area-inset-bottom) + 20px)" }}>
+          <Breadcrumbs pathname={pathname} />
+          {children}
+        </div>
+      </main>
 
-      {/* mobile bottom navigation: Home · Discovery · SlashBar launcher · Hubs · Commands */}
+      {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
+          Home · Discovery · SlashBar launcher · Hubs · Commands */}
       <nav
         aria-label="Primary"
-        className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px] md:hidden"
-        style={{ height: 'calc(62px + env(safe-area-inset-bottom))' }}
+        className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
+        style={{ height: "calc(62px + env(safe-area-inset-bottom))" }}
       >
-        {PRIMARY.map((item) => {
-          // Route-based active state - derived from current pathname, not internal state
-          const active = (() => {
-            if ((item as { center?: boolean }).center) return false; // launcher, never active
-            if (item.exact) return pathname === item.to;
-            const p = item.to as string;
-            if (p === "/hub") return pathname.startsWith("/hub");
-            if (p === "/explore") return pathname.startsWith("/explore") || pathname.startsWith("/search") || pathname.startsWith("/find") || pathname.startsWith("/c/");
-            if (p === "/discover") return pathname.startsWith("/discover") || pathname.startsWith("/r/") || pathname.startsWith("/whats-new") || pathname.startsWith("/radar") || pathname.startsWith("/trending");
-            return pathname.startsWith(p);
-          })();
+        <div className="mx-auto flex w-full max-w-[640px] items-stretch">
+          {PRIMARY.map((item) => {
+            // Route-based active state - derived from current pathname, not internal state
+            const active = (() => {
+              if ((item as { center?: boolean }).center) return false; // launcher, never active
+              if (item.exact) return pathname === item.to;
+              const p = item.to as string;
+              if (p === "/hub") return pathname.startsWith("/hub");
+              if (p === "/explore")
+                return (
+                  pathname.startsWith("/explore") ||
+                  pathname.startsWith("/search") ||
+                  pathname.startsWith("/find") ||
+                  pathname.startsWith("/c/")
+                );
+              if (p === "/discover")
+                return (
+                  pathname.startsWith("/discover") ||
+                  pathname.startsWith("/r/") ||
+                  pathname.startsWith("/whats-new") ||
+                  pathname.startsWith("/radar") ||
+                  pathname.startsWith("/trending")
+                );
+              return pathname.startsWith(p);
+            })();
 
-          // ── SlashBar: elevated centre launcher button — opens the overlay ──
-          if ((item as { center?: boolean }).center) {
-            return (
-              <button
-                key={item.label}
-                type="button"
-                aria-label={`Open ${item.label}`}
-                aria-haspopup="dialog"
-                onClick={() => setSlashbarOpen(true)}
-                className="ripple-press relative flex min-h-[62px] flex-1 items-center justify-center"
-              >
-                <span
-                  className="nav-hub-btn flex size-[46px] items-center justify-center rounded-full text-background"
-                  style={{
-                    background: "linear-gradient(135deg, #2dd4bf, #38bdf8 55%, #a78bfa)",
-                    boxShadow: "0 4px 20px rgba(45, 212, 191, 0.4)",
-                    transform: "translateY(-8px)",
-                  }}
+            // ── SlashBar: elevated centre launcher button — opens the overlay ──
+            if ((item as { center?: boolean }).center) {
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  aria-label={`Open ${item.label}`}
+                  aria-haspopup="dialog"
+                  onClick={() => setSlashbarOpen(true)}
+                  className="ripple-press relative flex min-h-[62px] flex-1 items-center justify-center"
                 >
-                  <item.icon className="size-[24px]" aria-hidden strokeWidth={2.2} />
-                </span>
-              </button>
-            );
-          }
+                  <span
+                    className="nav-hub-btn flex size-[46px] items-center justify-center rounded-full text-background"
+                    style={{
+                      background: "linear-gradient(135deg, #2dd4bf, #38bdf8 55%, #a78bfa)",
+                      boxShadow: "0 4px 20px rgba(45, 212, 191, 0.4)",
+                      transform: "translateY(-8px)",
+                    }}
+                  >
+                    <item.icon className="size-[24px]" aria-hidden strokeWidth={2.2} />
+                  </span>
+                </button>
+              );
+            }
 
-          // ── Regular tabs: icon + label, accent dot on active ──
-          return (
-            <Link
-              key={item.to}
-              to={item.to as "/"}
-              className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
-              style={{ color: active ? 'var(--primary)' : 'var(--muted-foreground)' }}
-            >
-              {active && (
-                <span
+            // ── Regular tabs: icon + label, accent dot on active ──
+            return (
+              <Link
+                key={item.to}
+                to={item.to as "/"}
+                className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
+                style={{ color: active ? "var(--primary)" : "var(--muted-foreground)" }}
+              >
+                {active && (
+                  <span
+                    aria-hidden
+                    className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
+                    style={{ background: "var(--primary)" }}
+                  />
+                )}
+                <item.icon
+                  className="size-[22px]"
                   aria-hidden
-                  className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
-                  style={{ background: "var(--primary)" }}
+                  strokeWidth={active ? 2.4 : 1.8}
                 />
-              )}
-              <item.icon
-                className="size-[22px]"
-                aria-hidden
-                strokeWidth={active ? 2.4 : 1.8}
-              />
-              {item.label}
-            </Link>
-          );
-        })}
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
       </nav>
 
       {/* full-screen SlashBar launcher overlay (centre button) */}

@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.20.1";
+export const APP_VERSION = "2.21.0";
 
 export interface ReleaseNote {
   version: string;

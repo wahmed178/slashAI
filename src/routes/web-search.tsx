@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useSearch } from "@tanstack/react-router";
 import {
   BookOpen,
   Code2,
@@ -187,8 +187,10 @@ function useWikiAnswer(query: string) {
 /* ──────────── page ──────────── */
 
 function WebSearchPage() {
-  const [query, setQuery] = useState("");
-  const [submitted, setSubmitted] = useState("");
+  // deep links carry ?q= (home hero search, Find Anything, UniversalSearch)
+  const routeSearch = useSearch({ strict: false }) as { q?: string };
+  const [query, setQuery] = useState(typeof routeSearch.q === "string" ? routeSearch.q : "");
+  const [submitted, setSubmitted] = useState(typeof routeSearch.q === "string" ? routeSearch.q : "");
   const [cat, setCat] = useState("web");
   const inputRef = useRef<HTMLInputElement>(null);
 

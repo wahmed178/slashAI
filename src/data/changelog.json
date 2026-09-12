@@ -1,6 +1,17 @@
 {
-  "version": "2.20.1",
+  "version": "2.21.0",
   "entries": [
+    {
+      "version": "2.21.0",
+      "date": "2026-09-12",
+      "changes": [
+        "Pong Vs AI actually plays now: the AI paddle tracks the ball, aims with human-like error and speeds up during long rallies",
+        "Search engine is on the home screen: hero search shows live results for commands, tools and games, with a one-tap Search Engine button - all visible on mobile",
+        "Sidebar removed everywhere - the bottom dock (Home · Discovery · SlashBar · Hubs · Commands) is now the only navigation, on every screen size",
+        "New Everything page (/everything): every Slash app, all tools, all games, hubs and more listed on one page with its own filter",
+        "Duplicate tool pages removed: /tools/typing-test, /tools/coin-flip, /tools/dice and /tools/random-number now live only in SlashPlay"
+      ]
+    },
     {
       "version": "2.20.1",
       "date": "2026-09-12",

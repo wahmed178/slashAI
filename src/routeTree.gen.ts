@@ -17,6 +17,7 @@ import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DesignsRouteImport } from './routes/designs'
+import { Route as EverythingRouteImport } from './routes/everything'
 import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as FindRouteImport } from './routes/find'
 import { Route as GlassRouteImport } from './routes/glass'
@@ -131,7 +132,6 @@ import { Route as ToolsCertificateRouteImport } from './routes/tools.certificate
 import { Route as ToolsChangelogMakerRouteImport } from './routes/tools.changelog-maker'
 import { Route as ToolsClockAngleRouteImport } from './routes/tools.clock-angle'
 import { Route as ToolsCodeScreenshotRouteImport } from './routes/tools.code-screenshot'
-import { Route as ToolsCoinFlipRouteImport } from './routes/tools.coin-flip'
 import { Route as ToolsColorPaletteRouteImport } from './routes/tools.color-palette'
 import { Route as ToolsColorPickerRouteImport } from './routes/tools.color-picker'
 import { Route as ToolsContractRouteImport } from './routes/tools.contract'
@@ -141,7 +141,6 @@ import { Route as ToolsCsvToJsonRouteImport } from './routes/tools.csv-to-json'
 import { Route as ToolsCurrencyHistoryRouteImport } from './routes/tools.currency-history'
 import { Route as ToolsCvRouteImport } from './routes/tools.cv'
 import { Route as ToolsDeepSeaRouteImport } from './routes/tools.deep-sea'
-import { Route as ToolsDiceRouteImport } from './routes/tools.dice'
 import { Route as ToolsDiffRouteImport } from './routes/tools.diff'
 import { Route as ToolsDuaMakerRouteImport } from './routes/tools.dua-maker'
 import { Route as ToolsEmiCalculatorRouteImport } from './routes/tools.emi-calculator'
@@ -215,7 +214,6 @@ import { Route as ToolsQuoteMakerRouteImport } from './routes/tools.quote-maker'
 import { Route as ToolsQuoteScreenRouteImport } from './routes/tools.quote-screen'
 import { Route as ToolsQuranSearchRouteImport } from './routes/tools.quran-search'
 import { Route as ToolsRainScreenRouteImport } from './routes/tools.rain-screen'
-import { Route as ToolsRandomNumberRouteImport } from './routes/tools.random-number'
 import { Route as ToolsReadabilityRouteImport } from './routes/tools.readability'
 import { Route as ToolsReadingRouteImport } from './routes/tools.reading'
 import { Route as ToolsReadingListRouteImport } from './routes/tools.reading-list'
@@ -247,7 +245,6 @@ import { Route as ToolsTimeZoneMeetingRouteImport } from './routes/tools.time-zo
 import { Route as ToolsTimestampRouteImport } from './routes/tools.timestamp'
 import { Route as ToolsTipCalculatorRouteImport } from './routes/tools.tip-calculator'
 import { Route as ToolsTrolleyRouteImport } from './routes/tools.trolley'
-import { Route as ToolsTypingTestRouteImport } from './routes/tools.typing-test'
 import { Route as ToolsUnitConverterRouteImport } from './routes/tools.unit-converter'
 import { Route as ToolsUpiRouteImport } from './routes/tools.upi'
 import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
@@ -301,6 +298,11 @@ const ContactRoute = ContactRouteImport.update({
 const DesignsRoute = DesignsRouteImport.update({
   id: '/designs',
   path: '/designs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EverythingRoute = EverythingRouteImport.update({
+  id: '/everything',
+  path: '/everything',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritesRoute = FavoritesRouteImport.update({
@@ -873,11 +875,6 @@ const ToolsCodeScreenshotRoute = ToolsCodeScreenshotRouteImport.update({
   path: '/code-screenshot',
   getParentRoute: () => ToolsRoute,
 } as any)
-const ToolsCoinFlipRoute = ToolsCoinFlipRouteImport.update({
-  id: '/coin-flip',
-  path: '/coin-flip',
-  getParentRoute: () => ToolsRoute,
-} as any)
 const ToolsColorPaletteRoute = ToolsColorPaletteRouteImport.update({
   id: '/color-palette',
   path: '/color-palette',
@@ -921,11 +918,6 @@ const ToolsCvRoute = ToolsCvRouteImport.update({
 const ToolsDeepSeaRoute = ToolsDeepSeaRouteImport.update({
   id: '/deep-sea',
   path: '/deep-sea',
-  getParentRoute: () => ToolsRoute,
-} as any)
-const ToolsDiceRoute = ToolsDiceRouteImport.update({
-  id: '/dice',
-  path: '/dice',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsDiffRoute = ToolsDiffRouteImport.update({
@@ -1293,11 +1285,6 @@ const ToolsRainScreenRoute = ToolsRainScreenRouteImport.update({
   path: '/rain-screen',
   getParentRoute: () => ToolsRoute,
 } as any)
-const ToolsRandomNumberRoute = ToolsRandomNumberRouteImport.update({
-  id: '/random-number',
-  path: '/random-number',
-  getParentRoute: () => ToolsRoute,
-} as any)
 const ToolsReadabilityRoute = ToolsReadabilityRouteImport.update({
   id: '/readability',
   path: '/readability',
@@ -1453,11 +1440,6 @@ const ToolsTrolleyRoute = ToolsTrolleyRouteImport.update({
   path: '/trolley',
   getParentRoute: () => ToolsRoute,
 } as any)
-const ToolsTypingTestRoute = ToolsTypingTestRouteImport.update({
-  id: '/typing-test',
-  path: '/typing-test',
-  getParentRoute: () => ToolsRoute,
-} as any)
 const ToolsUnitConverterRoute = ToolsUnitConverterRouteImport.update({
   id: '/unit-converter',
   path: '/unit-converter',
@@ -1539,6 +1521,7 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/designs': typeof DesignsRoute
+  '/everything': typeof EverythingRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
@@ -1645,7 +1628,6 @@ export interface FileRoutesByFullPath {
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
   '/tools/clock-angle': typeof ToolsClockAngleRoute
   '/tools/code-screenshot': typeof ToolsCodeScreenshotRoute
-  '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
   '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/contract': typeof ToolsContractRoute
@@ -1655,7 +1637,6 @@ export interface FileRoutesByFullPath {
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
   '/tools/deep-sea': typeof ToolsDeepSeaRoute
-  '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
   '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
@@ -1729,7 +1710,6 @@ export interface FileRoutesByFullPath {
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
-  '/tools/random-number': typeof ToolsRandomNumberRoute
   '/tools/readability': typeof ToolsReadabilityRoute
   '/tools/reading': typeof ToolsReadingRoute
   '/tools/reading-list': typeof ToolsReadingListRoute
@@ -1761,7 +1741,6 @@ export interface FileRoutesByFullPath {
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/trolley': typeof ToolsTrolleyRoute
-  '/tools/typing-test': typeof ToolsTypingTestRoute
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
@@ -1794,6 +1773,7 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/designs': typeof DesignsRoute
+  '/everything': typeof EverythingRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
@@ -1898,7 +1878,6 @@ export interface FileRoutesByTo {
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
   '/tools/clock-angle': typeof ToolsClockAngleRoute
   '/tools/code-screenshot': typeof ToolsCodeScreenshotRoute
-  '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
   '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/contract': typeof ToolsContractRoute
@@ -1908,7 +1887,6 @@ export interface FileRoutesByTo {
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
   '/tools/deep-sea': typeof ToolsDeepSeaRoute
-  '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
   '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
@@ -1982,7 +1960,6 @@ export interface FileRoutesByTo {
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
-  '/tools/random-number': typeof ToolsRandomNumberRoute
   '/tools/readability': typeof ToolsReadabilityRoute
   '/tools/reading': typeof ToolsReadingRoute
   '/tools/reading-list': typeof ToolsReadingListRoute
@@ -2014,7 +1991,6 @@ export interface FileRoutesByTo {
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/trolley': typeof ToolsTrolleyRoute
-  '/tools/typing-test': typeof ToolsTypingTestRoute
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
@@ -2048,6 +2024,7 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/designs': typeof DesignsRoute
+  '/everything': typeof EverythingRoute
   '/favorites': typeof FavoritesRoute
   '/find': typeof FindRoute
   '/glass': typeof GlassRoute
@@ -2154,7 +2131,6 @@ export interface FileRoutesById {
   '/tools/changelog-maker': typeof ToolsChangelogMakerRoute
   '/tools/clock-angle': typeof ToolsClockAngleRoute
   '/tools/code-screenshot': typeof ToolsCodeScreenshotRoute
-  '/tools/coin-flip': typeof ToolsCoinFlipRoute
   '/tools/color-palette': typeof ToolsColorPaletteRoute
   '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/contract': typeof ToolsContractRoute
@@ -2164,7 +2140,6 @@ export interface FileRoutesById {
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
   '/tools/deep-sea': typeof ToolsDeepSeaRoute
-  '/tools/dice': typeof ToolsDiceRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
   '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
@@ -2238,7 +2213,6 @@ export interface FileRoutesById {
   '/tools/quote-screen': typeof ToolsQuoteScreenRoute
   '/tools/quran-search': typeof ToolsQuranSearchRoute
   '/tools/rain-screen': typeof ToolsRainScreenRoute
-  '/tools/random-number': typeof ToolsRandomNumberRoute
   '/tools/readability': typeof ToolsReadabilityRoute
   '/tools/reading': typeof ToolsReadingRoute
   '/tools/reading-list': typeof ToolsReadingListRoute
@@ -2270,7 +2244,6 @@ export interface FileRoutesById {
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/trolley': typeof ToolsTrolleyRoute
-  '/tools/typing-test': typeof ToolsTypingTestRoute
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
@@ -2305,6 +2278,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/designs'
+    | '/everything'
     | '/favorites'
     | '/find'
     | '/glass'
@@ -2411,7 +2385,6 @@ export interface FileRouteTypes {
     | '/tools/changelog-maker'
     | '/tools/clock-angle'
     | '/tools/code-screenshot'
-    | '/tools/coin-flip'
     | '/tools/color-palette'
     | '/tools/color-picker'
     | '/tools/contract'
@@ -2421,7 +2394,6 @@ export interface FileRouteTypes {
     | '/tools/currency-history'
     | '/tools/cv'
     | '/tools/deep-sea'
-    | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
     | '/tools/emi-calculator'
@@ -2495,7 +2467,6 @@ export interface FileRouteTypes {
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
-    | '/tools/random-number'
     | '/tools/readability'
     | '/tools/reading'
     | '/tools/reading-list'
@@ -2527,7 +2498,6 @@ export interface FileRouteTypes {
     | '/tools/timestamp'
     | '/tools/tip-calculator'
     | '/tools/trolley'
-    | '/tools/typing-test'
     | '/tools/unit-converter'
     | '/tools/upi'
     | '/tools/url-encoder'
@@ -2560,6 +2530,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/designs'
+    | '/everything'
     | '/favorites'
     | '/find'
     | '/glass'
@@ -2664,7 +2635,6 @@ export interface FileRouteTypes {
     | '/tools/changelog-maker'
     | '/tools/clock-angle'
     | '/tools/code-screenshot'
-    | '/tools/coin-flip'
     | '/tools/color-palette'
     | '/tools/color-picker'
     | '/tools/contract'
@@ -2674,7 +2644,6 @@ export interface FileRouteTypes {
     | '/tools/currency-history'
     | '/tools/cv'
     | '/tools/deep-sea'
-    | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
     | '/tools/emi-calculator'
@@ -2748,7 +2717,6 @@ export interface FileRouteTypes {
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
-    | '/tools/random-number'
     | '/tools/readability'
     | '/tools/reading'
     | '/tools/reading-list'
@@ -2780,7 +2748,6 @@ export interface FileRouteTypes {
     | '/tools/timestamp'
     | '/tools/tip-calculator'
     | '/tools/trolley'
-    | '/tools/typing-test'
     | '/tools/unit-converter'
     | '/tools/upi'
     | '/tools/url-encoder'
@@ -2813,6 +2780,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/contact'
     | '/designs'
+    | '/everything'
     | '/favorites'
     | '/find'
     | '/glass'
@@ -2919,7 +2887,6 @@ export interface FileRouteTypes {
     | '/tools/changelog-maker'
     | '/tools/clock-angle'
     | '/tools/code-screenshot'
-    | '/tools/coin-flip'
     | '/tools/color-palette'
     | '/tools/color-picker'
     | '/tools/contract'
@@ -2929,7 +2896,6 @@ export interface FileRouteTypes {
     | '/tools/currency-history'
     | '/tools/cv'
     | '/tools/deep-sea'
-    | '/tools/dice'
     | '/tools/diff'
     | '/tools/dua-maker'
     | '/tools/emi-calculator'
@@ -3003,7 +2969,6 @@ export interface FileRouteTypes {
     | '/tools/quote-screen'
     | '/tools/quran-search'
     | '/tools/rain-screen'
-    | '/tools/random-number'
     | '/tools/readability'
     | '/tools/reading'
     | '/tools/reading-list'
@@ -3035,7 +3000,6 @@ export interface FileRouteTypes {
     | '/tools/timestamp'
     | '/tools/tip-calculator'
     | '/tools/trolley'
-    | '/tools/typing-test'
     | '/tools/unit-converter'
     | '/tools/upi'
     | '/tools/url-encoder'
@@ -3069,6 +3033,7 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   DesignsRoute: typeof DesignsRoute
+  EverythingRoute: typeof EverythingRoute
   FavoritesRoute: typeof FavoritesRoute
   FindRoute: typeof FindRoute
   GlassRoute: typeof GlassRoute
@@ -3178,6 +3143,13 @@ declare module '@tanstack/react-router' {
       path: '/designs'
       fullPath: '/designs'
       preLoaderRoute: typeof DesignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/everything': {
+      id: '/everything'
+      path: '/everything'
+      fullPath: '/everything'
+      preLoaderRoute: typeof EverythingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favorites': {
@@ -3978,13 +3950,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCodeScreenshotRouteImport
       parentRoute: typeof ToolsRoute
     }
-    '/tools/coin-flip': {
-      id: '/tools/coin-flip'
-      path: '/coin-flip'
-      fullPath: '/tools/coin-flip'
-      preLoaderRoute: typeof ToolsCoinFlipRouteImport
-      parentRoute: typeof ToolsRoute
-    }
     '/tools/color-palette': {
       id: '/tools/color-palette'
       path: '/color-palette'
@@ -4046,13 +4011,6 @@ declare module '@tanstack/react-router' {
       path: '/deep-sea'
       fullPath: '/tools/deep-sea'
       preLoaderRoute: typeof ToolsDeepSeaRouteImport
-      parentRoute: typeof ToolsRoute
-    }
-    '/tools/dice': {
-      id: '/tools/dice'
-      path: '/dice'
-      fullPath: '/tools/dice'
-      preLoaderRoute: typeof ToolsDiceRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/diff': {
@@ -4566,13 +4524,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRainScreenRouteImport
       parentRoute: typeof ToolsRoute
     }
-    '/tools/random-number': {
-      id: '/tools/random-number'
-      path: '/random-number'
-      fullPath: '/tools/random-number'
-      preLoaderRoute: typeof ToolsRandomNumberRouteImport
-      parentRoute: typeof ToolsRoute
-    }
     '/tools/readability': {
       id: '/tools/readability'
       path: '/readability'
@@ -4788,13 +4739,6 @@ declare module '@tanstack/react-router' {
       path: '/trolley'
       fullPath: '/tools/trolley'
       preLoaderRoute: typeof ToolsTrolleyRouteImport
-      parentRoute: typeof ToolsRoute
-    }
-    '/tools/typing-test': {
-      id: '/tools/typing-test'
-      path: '/typing-test'
-      fullPath: '/tools/typing-test'
-      preLoaderRoute: typeof ToolsTypingTestRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/unit-converter': {
@@ -5019,7 +4963,6 @@ interface ToolsRouteChildren {
   ToolsChangelogMakerRoute: typeof ToolsChangelogMakerRoute
   ToolsClockAngleRoute: typeof ToolsClockAngleRoute
   ToolsCodeScreenshotRoute: typeof ToolsCodeScreenshotRoute
-  ToolsCoinFlipRoute: typeof ToolsCoinFlipRoute
   ToolsColorPaletteRoute: typeof ToolsColorPaletteRoute
   ToolsColorPickerRoute: typeof ToolsColorPickerRoute
   ToolsContractRoute: typeof ToolsContractRoute
@@ -5029,7 +4972,6 @@ interface ToolsRouteChildren {
   ToolsCurrencyHistoryRoute: typeof ToolsCurrencyHistoryRoute
   ToolsCvRoute: typeof ToolsCvRoute
   ToolsDeepSeaRoute: typeof ToolsDeepSeaRoute
-  ToolsDiceRoute: typeof ToolsDiceRoute
   ToolsDiffRoute: typeof ToolsDiffRoute
   ToolsDuaMakerRoute: typeof ToolsDuaMakerRoute
   ToolsEmiCalculatorRoute: typeof ToolsEmiCalculatorRoute
@@ -5103,7 +5045,6 @@ interface ToolsRouteChildren {
   ToolsQuoteScreenRoute: typeof ToolsQuoteScreenRoute
   ToolsQuranSearchRoute: typeof ToolsQuranSearchRoute
   ToolsRainScreenRoute: typeof ToolsRainScreenRoute
-  ToolsRandomNumberRoute: typeof ToolsRandomNumberRoute
   ToolsReadabilityRoute: typeof ToolsReadabilityRoute
   ToolsReadingRoute: typeof ToolsReadingRoute
   ToolsReadingListRoute: typeof ToolsReadingListRoute
@@ -5135,7 +5076,6 @@ interface ToolsRouteChildren {
   ToolsTimestampRoute: typeof ToolsTimestampRoute
   ToolsTipCalculatorRoute: typeof ToolsTipCalculatorRoute
   ToolsTrolleyRoute: typeof ToolsTrolleyRoute
-  ToolsTypingTestRoute: typeof ToolsTypingTestRoute
   ToolsUnitConverterRoute: typeof ToolsUnitConverterRoute
   ToolsUpiRoute: typeof ToolsUpiRoute
   ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
@@ -5168,7 +5108,6 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsChangelogMakerRoute: ToolsChangelogMakerRoute,
   ToolsClockAngleRoute: ToolsClockAngleRoute,
   ToolsCodeScreenshotRoute: ToolsCodeScreenshotRoute,
-  ToolsCoinFlipRoute: ToolsCoinFlipRoute,
   ToolsColorPaletteRoute: ToolsColorPaletteRoute,
   ToolsColorPickerRoute: ToolsColorPickerRoute,
   ToolsContractRoute: ToolsContractRoute,
@@ -5178,7 +5117,6 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsCurrencyHistoryRoute: ToolsCurrencyHistoryRoute,
   ToolsCvRoute: ToolsCvRoute,
   ToolsDeepSeaRoute: ToolsDeepSeaRoute,
-  ToolsDiceRoute: ToolsDiceRoute,
   ToolsDiffRoute: ToolsDiffRoute,
   ToolsDuaMakerRoute: ToolsDuaMakerRoute,
   ToolsEmiCalculatorRoute: ToolsEmiCalculatorRoute,
@@ -5252,7 +5190,6 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsQuoteScreenRoute: ToolsQuoteScreenRoute,
   ToolsQuranSearchRoute: ToolsQuranSearchRoute,
   ToolsRainScreenRoute: ToolsRainScreenRoute,
-  ToolsRandomNumberRoute: ToolsRandomNumberRoute,
   ToolsReadabilityRoute: ToolsReadabilityRoute,
   ToolsReadingRoute: ToolsReadingRoute,
   ToolsReadingListRoute: ToolsReadingListRoute,
@@ -5284,7 +5221,6 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsTimestampRoute: ToolsTimestampRoute,
   ToolsTipCalculatorRoute: ToolsTipCalculatorRoute,
   ToolsTrolleyRoute: ToolsTrolleyRoute,
-  ToolsTypingTestRoute: ToolsTypingTestRoute,
   ToolsUnitConverterRoute: ToolsUnitConverterRoute,
   ToolsUpiRoute: ToolsUpiRoute,
   ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
@@ -5311,6 +5247,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   DesignsRoute: DesignsRoute,
+  EverythingRoute: EverythingRoute,
   FavoritesRoute: FavoritesRoute,
   FindRoute: FindRoute,
   GlassRoute: GlassRoute,
