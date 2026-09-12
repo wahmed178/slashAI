@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.20.0";
+export const APP_VERSION = "2.20.1";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,16 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.20.1",
+    date: "2026-09-12",
+    title: "Universal search on the homepage",
+    changes: [
+      "The homepage hero search is now the full universal search: live results across commands, tools, games and the web as you type - no more plain redirect",
+      "Recent searches appear when the empty search is focused; keyboard navigation (up/down/enter) works everywhere",
+      "'See everything matching' link at the bottom of results opens the full Find Anything page",
+    ],
+  },
   {
     version: "2.20.0",
     date: "2026-09-12",

@@ -9,7 +9,6 @@ import {
   Star,
   History,
   Flame,
-  Search as SearchIcon,
   Terminal,
   Package,
   Zap,
@@ -19,8 +18,7 @@ import {
 
 import { AppShell } from "@/components/library/AppShell";
 import { LiveTicker } from "@/components/library/LiveTicker";
-import { SearchBox } from "@/components/library/SearchBox";
-import { VoiceSearchButton } from "@/components/library/VoiceSearchButton";
+import { UniversalSearch } from "@/components/library/UniversalSearch";
 import { Discover } from "@/components/library/Discover";
 import { ResourceGrid } from "@/components/library/ResourceCard";
 import { categoryIcon } from "@/components/library/icons";
@@ -256,7 +254,6 @@ function MostUsedCommands() {
 
 function HomePage() {
   const { hydrated, favorites, recents, settings } = useLibrary();
-  const [heroQuery, setHeroQuery] = useState("");
 
 
   const recentCommands = useMemo(
@@ -318,34 +315,10 @@ function HomePage() {
               {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · Free forever
             </p>
 
-            {/* Search bar */}
-            <form
-              className="mt-5 flex h-[48px] max-w-[460px] items-center gap-3 rounded-[8px] border border-sidebar-border bg-surface px-4 transition-colors focus-within:border-primary"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (heroQuery.trim()) window.location.assign(`/tools/finder?q=${encodeURIComponent(heroQuery.trim())}`);
-              }}
-            >
-              <SearchIcon className="size-[16px] shrink-0 text-muted-foreground" aria-hidden />
-              <input
-                name="q"
-                value={heroQuery}
-                onChange={(e) => setHeroQuery(e.target.value)}
-                type="text"
-                placeholder="Search commands, tools, games, topics..."
-                className="flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground"
-              />
-              <VoiceSearchButton
-                size="sm"
-                onResult={(t) => {
-                  setHeroQuery(t);
-                  window.location.assign(`/tools/finder?q=${encodeURIComponent(t.trim())}`);
-                }}
-              />
-              <span className="flex h-5 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] text-muted-foreground">
-                ⌘K
-              </span>
-            </form>
+            {/* Universal search: commands + tools + games + web, live results */}
+            <div className="relative z-30 mt-5 max-w-[520px]">
+              <UniversalSearch size="lg" />
+            </div>
 
             {/* Intent chips */}
             <div className="mt-4 flex flex-wrap gap-2">

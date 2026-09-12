@@ -1,6 +1,15 @@
 {
-  "version": "2.20.0",
+  "version": "2.20.1",
   "entries": [
+    {
+      "version": "2.20.1",
+      "date": "2026-09-12",
+      "changes": [
+        "The homepage hero search is now the full universal search: live results across commands, tools, games and the web as you type - no more plain redirect",
+        "Recent searches appear when the empty search is focused; keyboard navigation (up/down/enter) works everywhere",
+        "'See everything matching' link at the bottom of results opens the full Find Anything page"
+      ]
+    },
     {
       "version": "2.20.0",
       "date": "2026-09-12",
