@@ -10,7 +10,7 @@ export const Route = createFileRoute("/tools")({
       {
         name: "description",
         content:
-          "Run 150+ free browser tools without uploading anything: calculators, converters, generators, PDF tools, Islamic tools and more. Free forever, no account.",
+          "Run 140+ free browser tools without uploading anything: calculators, converters, generators, PDF tools, Islamic tools and more. Free forever, no account.",
       },
     ],
   }),

@@ -1,152 +1,117 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
-export const Route = createFileRoute("/tools/watermark")({
-  component: WatermarkTool,
-});
+export const Route = createFileRoute("/tools/watermark")({ component: WatermarkMaker });
 
-type Position = "top-left" | "top-right" | "bottom-left" | "bottom-right" | "center" | "tile";
-
-function WatermarkTool() {
+function WatermarkMaker() {
+  const [img, setImg] = useState<HTMLImageElement | null>(null);
+  const [text, setText] = useState("@SlashAI");
+  const [opacity, setOpacity] = useState(60);
+  const [size, setSize] = useState(4);
+  const [pos, setPos] = useState<"br" | "bl" | "tr" | "tl" | "center">("br");
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [text, setText] = useState(`© ${new Date().getFullYear()} SlashAI`);
-  const [position, setPosition] = useState<Position>("bottom-right");
-  const [opacity, setOpacity] = useState(50);
-  const [fontSize, setFontSize] = useState(24);
-  const [color, setColor] = useState("#ffffff");
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const img = new Image();
-    img.onload = () => setImage(img);
-    img.src = URL.createObjectURL(file);
+  const render = () => {
+    const c = canvasRef.current;
+    if (!c || !img) return;
+    const maxW = 1000;
+    const scale = Math.min(1, maxW / img.width);
+    c.width = Math.round(img.width * scale);
+    c.height = Math.round(img.height * scale);
+    const ctx = c.getContext("2d")!;
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    const fontSize = Math.max(14, (c.width * size) / 100);
+    ctx.font = `bold ${fontSize}px Inter, system-ui, sans-serif`;
+    const m = ctx.measureText(text);
+    const pad = fontSize * 0.4;
+    let x = c.width - m.width - pad * 2;
+    let y = c.height - pad * 2.2;
+    if (pos === "bl") { x = pad * 1.5; y = c.height - pad * 2.2; }
+    if (pos === "tr") { x = c.width - m.width - pad * 2; y = pad * 2; }
+    if (pos === "tl") { x = pad * 1.5; y = pad * 2; }
+    if (pos === "center") {
+      x = (c.width - m.width) / 2;
+      y = c.height / 2;
+    }
+    ctx.globalAlpha = opacity / 100;
+    ctx.fillStyle = "rgba(0,0,0,0.35)";
+    ctx.fillRect(x - pad / 2, y - fontSize, m.width + pad, fontSize + pad);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(text, x, y);
+    ctx.globalAlpha = 1;
   };
 
-  const draw = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || !image) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+  useEffect(() => {
+    render();
+  }, [img, text, opacity, size, pos]);
 
-    canvas.width = image.width;
-    canvas.height = image.height;
-    ctx.drawImage(image, 0, 0);
+  const onFile = (file: File | undefined) => {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const image = new Image();
+    image.onload = () => {
+      setImg(image);
+      URL.revokeObjectURL(url);
+    };
+    image.src = url;
+  };
 
-    ctx.globalAlpha = opacity / 100;
-    ctx.font = `${fontSize}px sans-serif`;
-    ctx.fillStyle = color;
-    ctx.textBaseline = "top";
-
-    const metrics = ctx.measureText(text);
-    const tw = metrics.width;
-    const th = fontSize;
-
-    const pad = 20;
-
-    if (position === "tile") {
-      ctx.globalAlpha = opacity / 200;
-      for (let y = 0; y < canvas.height; y += th + 60) {
-        for (let x = 0; x < canvas.width; x += tw + 80) {
-          ctx.save();
-          ctx.translate(x + tw / 2, y + th / 2);
-          ctx.rotate(-Math.PI / 6);
-          ctx.fillText(text, -tw / 2, -th / 2);
-          ctx.restore();
-        }
-      }
-    } else {
-      const positions: Record<string, [number, number]> = {
-        "top-left": [pad, pad],
-        "top-right": [canvas.width - tw - pad, pad],
-        "bottom-left": [pad, canvas.height - th - pad],
-        "bottom-right": [canvas.width - tw - pad, canvas.height - th - pad],
-        "center": [(canvas.width - tw) / 2, (canvas.height - th) / 2],
-      };
-      const pos = positions[position] || positions["bottom-right"];
-      if (pos) ctx.fillText(text, pos[0], pos[1]);
-    }
-
-    ctx.globalAlpha = 1;
-  }, [image, text, position, opacity, fontSize, color]);
-
-  useEffect(() => { draw(); }, [draw]);
-
-  const handleDownload = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const link = document.createElement("a");
-    link.download = "watermarked-image.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+  const download = () => {
+    const a = document.createElement("a");
+    a.download = "watermarked.png";
+    a.href = canvasRef.current!.toDataURL("image/png");
+    a.click();
   };
 
   return (
-    <AppShell title="Watermark Tool">
+    <AppShell title="Watermark Maker">
       <header className="mb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">🖼️ Image Watermark Tool</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Add text watermarks to images. 100% browser-based - nothing uploaded.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">💧 Watermark Maker</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Add text watermarks to images - everything stays in your browser.</p>
       </header>
-
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="space-y-3">
-          <div>
-            <label className="mb-1 block text-xs text-muted-foreground">Upload Image</label>
-            <input type="file" accept="image/*" onChange={handleFile}
-              className="w-full rounded-lg border border-border bg-surface p-2 text-sm text-foreground" />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs text-muted-foreground">Watermark Text</label>
-            <input value={text} onChange={e => setText(e.target.value)}
-              className="h-9 w-full rounded-lg border border-border bg-surface px-3 text-sm text-foreground focus:border-primary/60 focus:outline-none" />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs text-muted-foreground">Position</label>
-            <div className="grid grid-cols-3 gap-1">
-              {(["top-left", "top-right", "center", "bottom-left", "bottom-right", "tile"] as Position[]).map(p => (
-                <button key={p} type="button" onClick={() => setPosition(p)}
-                  className={`rounded-lg border px-2 py-1 text-[10px] transition-colors ${position === p ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground hover:text-foreground"}`}>
-                  {p === "tile" ? "Tiled" : p.split("-").map(w => (w[0] ?? "").toUpperCase()).join("")}
+      <div className="mx-auto max-w-2xl space-y-4">
+        <label className="grid h-24 cursor-pointer place-items-center rounded-xl border-2 border-dashed border-border text-sm text-muted-foreground transition-colors hover:border-primary">
+          {img ? "✅ Image loaded - pick another" : "📁 Choose an image (JPG/PNG)"}
+          <input type="file" accept="image/*" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
+        </label>
+        {img && (
+          <>
+            <canvas ref={canvasRef} className="w-full rounded-xl border border-border" />
+            <input
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Watermark text"
+              className="h-11 w-full rounded-xl border border-border bg-surface px-4 text-sm text-foreground focus:border-primary focus:outline-none"
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="mb-1 block text-[11px] text-muted-foreground">Size: {size}% of width</label>
+                <input type="range" min={2} max={12} value={size} onChange={(e) => setSize(Number(e.target.value))} className="w-full accent-primary" />
+              </div>
+              <div>
+                <label className="mb-1 block text-[11px] text-muted-foreground">Opacity: {opacity}%</label>
+                <input type="range" min={10} max={100} value={opacity} onChange={(e) => setOpacity(Number(e.target.value))} className="w-full accent-primary" />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              {([
+                ["tl", "↖"], ["tr", "↗"], ["center", "⏺"], ["bl", "↙"], ["br", "↘"],
+              ] as const).map(([p, icon]) => (
+                <button
+                  key={p}
+                  onClick={() => setPos(p)}
+                  className={`h-10 flex-1 rounded-lg text-sm ${pos === p ? "bg-primary text-primary-foreground" : "border border-border bg-surface text-muted-foreground"}`}
+                >
+                  {icon}
                 </button>
               ))}
             </div>
-          </div>
-          <div>
-            <label className="mb-1 block text-xs text-muted-foreground">Opacity: {opacity}%</label>
-            <input type="range" min={10} max={100} value={opacity} onChange={e => setOpacity(Number(e.target.value))} className="w-full" />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs text-muted-foreground">Font Size: {fontSize}px</label>
-            <input type="range" min={8} max={72} value={fontSize} onChange={e => setFontSize(Number(e.target.value))} className="w-full" />
-          </div>
-          <div>
-            <label className="mb-1 block text-xs text-muted-foreground">Color</label>
-            <div className="flex gap-2">
-              {["#ffffff", "#000000", "#ff0000", "#00ff00", "#0000ff", "#ffff00"].map(c => (
-                <button key={c} type="button" onClick={() => setColor(c)}
-                  className={`size-7 rounded-full border-2 ${color === c ? "border-primary" : "border-border"}`}
-                  style={{ background: c }} />
-              ))}
-            </div>
-          </div>
-          <button type="button" onClick={handleDownload} disabled={!image}
-            className="h-10 w-full rounded-lg bg-primary text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-40">
-            Download Watermarked Image
-          </button>
-        </div>
-
-        <div className="lg:col-span-2 flex items-center justify-center rounded-xl border border-border bg-surface p-4 min-h-[300px]">
-          {image ? (
-            <canvas ref={canvasRef} className="max-h-[500px] w-full object-contain" />
-          ) : (
-            <div className="text-center">
-              <p className="text-4xl">🖼️</p>
-              <p className="mt-2 text-sm text-muted-foreground">Upload an image to start</p>
-            </div>
-          )}
-        </div>
+            <button onClick={download} className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground">
+              ⬇ Download watermarked image
+            </button>
+          </>
+        )}
       </div>
     </AppShell>
   );

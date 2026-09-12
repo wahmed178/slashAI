@@ -67,11 +67,13 @@ import { Route as Play2048RouteImport } from './routes/play.2048'
 import { Route as PlayAimTrainerRouteImport } from './routes/play.aim-trainer'
 import { Route as PlayBattleshipRouteImport } from './routes/play.battleship'
 import { Route as PlayBlackjackRouteImport } from './routes/play.blackjack'
+import { Route as PlayBounceRouteImport } from './routes/play.bounce'
 import { Route as PlayBreakoutRouteImport } from './routes/play.breakout'
 import { Route as PlayBubbleWrapRouteImport } from './routes/play.bubble-wrap'
 import { Route as PlayCheckersRouteImport } from './routes/play.checkers'
 import { Route as PlayCoinFlipRouteImport } from './routes/play.coin-flip'
 import { Route as PlayConnectFourRouteImport } from './routes/play.connect-four'
+import { Route as PlayCosmicDiveRouteImport } from './routes/play.cosmic-dive'
 import { Route as PlayCricketRouteImport } from './routes/play.cricket'
 import { Route as PlayDiceRouteImport } from './routes/play.dice'
 import { Route as PlayDiceDuelRouteImport } from './routes/play.dice-duel'
@@ -80,10 +82,13 @@ import { Route as PlayEmojiPhraseRouteImport } from './routes/play.emoji-phrase'
 import { Route as PlayFakeOrFactRouteImport } from './routes/play.fake-or-fact'
 import { Route as PlayFlagGuessRouteImport } from './routes/play.flag-guess'
 import { Route as PlayGoFishRouteImport } from './routes/play.go-fish'
+import { Route as PlayGuessTheYearRouteImport } from './routes/play.guess-the-year'
 import { Route as PlayHangmanRouteImport } from './routes/play.hangman'
 import { Route as PlayHigherLowerRouteImport } from './routes/play.higher-lower'
+import { Route as PlayKindleRouteImport } from './routes/play.kindle'
 import { Route as PlayLightsOutRouteImport } from './routes/play.lights-out'
 import { Route as PlayMathDuelRouteImport } from './routes/play.math-duel'
+import { Route as PlayMazeRunnerRouteImport } from './routes/play.maze-runner'
 import { Route as PlayMemoryMatchRouteImport } from './routes/play.memory-match'
 import { Route as PlayMinesweeperRouteImport } from './routes/play.minesweeper'
 import { Route as PlayPasswordGameRouteImport } from './routes/play.password-game'
@@ -97,6 +102,8 @@ import { Route as PlaySimonRouteImport } from './routes/play.simon'
 import { Route as PlaySkyDashRouteImport } from './routes/play.sky-dash'
 import { Route as PlaySnakeRouteImport } from './routes/play.snake'
 import { Route as PlaySnakesLaddersRouteImport } from './routes/play.snakes-ladders'
+import { Route as PlayStopTheColorRouteImport } from './routes/play.stop-the-color'
+import { Route as PlayTapTheDifferenceRouteImport } from './routes/play.tap-the-difference'
 import { Route as PlayTenSecondsRouteImport } from './routes/play.ten-seconds'
 import { Route as PlayTicTacToeRouteImport } from './routes/play.tic-tac-toe'
 import { Route as PlayTypingTestRouteImport } from './routes/play.typing-test'
@@ -142,6 +149,7 @@ import { Route as ToolsEmojiRouteImport } from './routes/tools.emoji'
 import { Route as ToolsEquationRouteImport } from './routes/tools.equation'
 import { Route as ToolsExpenseRouteImport } from './routes/tools.expense'
 import { Route as ToolsFakeEmailRouteImport } from './routes/tools.fake-email'
+import { Route as ToolsFinderRouteImport } from './routes/tools.finder'
 import { Route as ToolsFlashcardMakerRouteImport } from './routes/tools.flashcard-maker'
 import { Route as ToolsFlipClockRouteImport } from './routes/tools.flip-clock'
 import { Route as ToolsFocusRouteImport } from './routes/tools.focus'
@@ -160,12 +168,15 @@ import { Route as ToolsHtmlToPdfRouteImport } from './routes/tools.html-to-pdf'
 import { Route as ToolsImageCompressRouteImport } from './routes/tools.image-compress'
 import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-convert'
 import { Route as ToolsImagesToPdfRouteImport } from './routes/tools.images-to-pdf'
+import { Route as ToolsInterestCalculatorRouteImport } from './routes/tools.interest-calculator'
+import { Route as ToolsIntervalTimerRouteImport } from './routes/tools.interval-timer'
 import { Route as ToolsInterviewRouteImport } from './routes/tools.interview'
 import { Route as ToolsInvoiceRouteImport } from './routes/tools.invoice'
 import { Route as ToolsIpRouteImport } from './routes/tools.ip'
 import { Route as ToolsJsonDiffRouteImport } from './routes/tools.json-diff'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
 import { Route as ToolsJsonYamlRouteImport } from './routes/tools.json-yaml'
+import { Route as ToolsJwtDecoderRouteImport } from './routes/tools.jwt-decoder'
 import { Route as ToolsKharchRouteImport } from './routes/tools.kharch'
 import { Route as ToolsLifeInWeeksRouteImport } from './routes/tools.life-in-weeks'
 import { Route as ToolsLifeStatsRouteImport } from './routes/tools.life-stats'
@@ -175,6 +186,7 @@ import { Route as ToolsLoremRouteImport } from './routes/tools.lorem'
 import { Route as ToolsMarkdownEditorRouteImport } from './routes/tools.markdown-editor'
 import { Route as ToolsMarkdownToHtmlRouteImport } from './routes/tools.markdown-to-html'
 import { Route as ToolsMatrixRouteImport } from './routes/tools.matrix'
+import { Route as ToolsMatrixScreenRouteImport } from './routes/tools.matrix-screen'
 import { Route as ToolsMeetingRouteImport } from './routes/tools.meeting'
 import { Route as ToolsMemeRouteImport } from './routes/tools.meme'
 import { Route as ToolsMetaRouteImport } from './routes/tools.meta'
@@ -190,6 +202,7 @@ import { Route as ToolsOneLinerRouteImport } from './routes/tools.one-liner'
 import { Route as ToolsPasswordRouteImport } from './routes/tools.password'
 import { Route as ToolsPasswordGenRouteImport } from './routes/tools.password-gen'
 import { Route as ToolsPercentageRouteImport } from './routes/tools.percentage'
+import { Route as ToolsPeriodicTableRouteImport } from './routes/tools.periodic-table'
 import { Route as ToolsPitchRouteImport } from './routes/tools.pitch'
 import { Route as ToolsPlantRouteImport } from './routes/tools.plant'
 import { Route as ToolsPollRouteImport } from './routes/tools.poll'
@@ -212,6 +225,7 @@ import { Route as ToolsSadaqahRouteImport } from './routes/tools.sadaqah'
 import { Route as ToolsScannerRouteImport } from './routes/tools.scanner'
 import { Route as ToolsScreenshotRouteImport } from './routes/tools.screenshot'
 import { Route as ToolsShortcutRouteImport } from './routes/tools.shortcut'
+import { Route as ToolsSignatureMakerRouteImport } from './routes/tools.signature-maker'
 import { Route as ToolsSipCalculatorRouteImport } from './routes/tools.sip-calculator'
 import { Route as ToolsSizeRouteImport } from './routes/tools.size'
 import { Route as ToolsSmartPasteRouteImport } from './routes/tools.smart-paste'
@@ -229,6 +243,7 @@ import { Route as ToolsTextCaseRouteImport } from './routes/tools.text-case'
 import { Route as ToolsTextStatsRouteImport } from './routes/tools.text-stats'
 import { Route as ToolsThreadMakerRouteImport } from './routes/tools.thread-maker'
 import { Route as ToolsThumbnailRouteImport } from './routes/tools.thumbnail'
+import { Route as ToolsTimeZoneMeetingRouteImport } from './routes/tools.time-zone-meeting'
 import { Route as ToolsTimestampRouteImport } from './routes/tools.timestamp'
 import { Route as ToolsTipCalculatorRouteImport } from './routes/tools.tip-calculator'
 import { Route as ToolsTrolleyRouteImport } from './routes/tools.trolley'
@@ -236,11 +251,14 @@ import { Route as ToolsTypingTestRouteImport } from './routes/tools.typing-test'
 import { Route as ToolsUnitConverterRouteImport } from './routes/tools.unit-converter'
 import { Route as ToolsUpiRouteImport } from './routes/tools.upi'
 import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
+import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools.uuid-generator'
+import { Route as ToolsWaterTrackerRouteImport } from './routes/tools.water-tracker'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
 import { Route as ToolsWhiteboardRouteImport } from './routes/tools.whiteboard'
 import { Route as ToolsWhitespaceRouteImport } from './routes/tools.whitespace'
 import { Route as ToolsWikiSpeedrunRouteImport } from './routes/tools.wiki-speedrun'
 import { Route as ToolsWordCloudRouteImport } from './routes/tools.word-cloud'
+import { Route as ToolsWordFrequencyRouteImport } from './routes/tools.word-frequency'
 import { Route as ToolsWorldClockRouteImport } from './routes/tools.world-clock'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
@@ -535,6 +553,11 @@ const PlayBlackjackRoute = PlayBlackjackRouteImport.update({
   path: '/blackjack',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayBounceRoute = PlayBounceRouteImport.update({
+  id: '/bounce',
+  path: '/bounce',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayBreakoutRoute = PlayBreakoutRouteImport.update({
   id: '/breakout',
   path: '/breakout',
@@ -558,6 +581,11 @@ const PlayCoinFlipRoute = PlayCoinFlipRouteImport.update({
 const PlayConnectFourRoute = PlayConnectFourRouteImport.update({
   id: '/connect-four',
   path: '/connect-four',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayCosmicDiveRoute = PlayCosmicDiveRouteImport.update({
+  id: '/cosmic-dive',
+  path: '/cosmic-dive',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayCricketRoute = PlayCricketRouteImport.update({
@@ -600,6 +628,11 @@ const PlayGoFishRoute = PlayGoFishRouteImport.update({
   path: '/go-fish',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayGuessTheYearRoute = PlayGuessTheYearRouteImport.update({
+  id: '/guess-the-year',
+  path: '/guess-the-year',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayHangmanRoute = PlayHangmanRouteImport.update({
   id: '/hangman',
   path: '/hangman',
@@ -610,6 +643,11 @@ const PlayHigherLowerRoute = PlayHigherLowerRouteImport.update({
   path: '/higher-lower',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayKindleRoute = PlayKindleRouteImport.update({
+  id: '/kindle',
+  path: '/kindle',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayLightsOutRoute = PlayLightsOutRouteImport.update({
   id: '/lights-out',
   path: '/lights-out',
@@ -618,6 +656,11 @@ const PlayLightsOutRoute = PlayLightsOutRouteImport.update({
 const PlayMathDuelRoute = PlayMathDuelRouteImport.update({
   id: '/math-duel',
   path: '/math-duel',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayMazeRunnerRoute = PlayMazeRunnerRouteImport.update({
+  id: '/maze-runner',
+  path: '/maze-runner',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayMemoryMatchRoute = PlayMemoryMatchRouteImport.update({
@@ -683,6 +726,16 @@ const PlaySnakeRoute = PlaySnakeRouteImport.update({
 const PlaySnakesLaddersRoute = PlaySnakesLaddersRouteImport.update({
   id: '/snakes-ladders',
   path: '/snakes-ladders',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayStopTheColorRoute = PlayStopTheColorRouteImport.update({
+  id: '/stop-the-color',
+  path: '/stop-the-color',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayTapTheDifferenceRoute = PlayTapTheDifferenceRouteImport.update({
+  id: '/tap-the-difference',
+  path: '/tap-the-difference',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayTenSecondsRoute = PlayTenSecondsRouteImport.update({
@@ -910,6 +963,11 @@ const ToolsFakeEmailRoute = ToolsFakeEmailRouteImport.update({
   path: '/fake-email',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsFinderRoute = ToolsFinderRouteImport.update({
+  id: '/finder',
+  path: '/finder',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsFlashcardMakerRoute = ToolsFlashcardMakerRouteImport.update({
   id: '/flashcard-maker',
   path: '/flashcard-maker',
@@ -1000,6 +1058,16 @@ const ToolsImagesToPdfRoute = ToolsImagesToPdfRouteImport.update({
   path: '/images-to-pdf',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsInterestCalculatorRoute = ToolsInterestCalculatorRouteImport.update({
+  id: '/interest-calculator',
+  path: '/interest-calculator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsIntervalTimerRoute = ToolsIntervalTimerRouteImport.update({
+  id: '/interval-timer',
+  path: '/interval-timer',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsInterviewRoute = ToolsInterviewRouteImport.update({
   id: '/interview',
   path: '/interview',
@@ -1028,6 +1096,11 @@ const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
 const ToolsJsonYamlRoute = ToolsJsonYamlRouteImport.update({
   id: '/json-yaml',
   path: '/json-yaml',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsJwtDecoderRoute = ToolsJwtDecoderRouteImport.update({
+  id: '/jwt-decoder',
+  path: '/jwt-decoder',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsKharchRoute = ToolsKharchRouteImport.update({
@@ -1073,6 +1146,11 @@ const ToolsMarkdownToHtmlRoute = ToolsMarkdownToHtmlRouteImport.update({
 const ToolsMatrixRoute = ToolsMatrixRouteImport.update({
   id: '/matrix',
   path: '/matrix',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsMatrixScreenRoute = ToolsMatrixScreenRouteImport.update({
+  id: '/matrix-screen',
+  path: '/matrix-screen',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsMeetingRoute = ToolsMeetingRouteImport.update({
@@ -1148,6 +1226,11 @@ const ToolsPasswordGenRoute = ToolsPasswordGenRouteImport.update({
 const ToolsPercentageRoute = ToolsPercentageRouteImport.update({
   id: '/percentage',
   path: '/percentage',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsPeriodicTableRoute = ToolsPeriodicTableRouteImport.update({
+  id: '/periodic-table',
+  path: '/periodic-table',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsPitchRoute = ToolsPitchRouteImport.update({
@@ -1260,6 +1343,11 @@ const ToolsShortcutRoute = ToolsShortcutRouteImport.update({
   path: '/shortcut',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsSignatureMakerRoute = ToolsSignatureMakerRouteImport.update({
+  id: '/signature-maker',
+  path: '/signature-maker',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsSipCalculatorRoute = ToolsSipCalculatorRouteImport.update({
   id: '/sip-calculator',
   path: '/sip-calculator',
@@ -1345,6 +1433,11 @@ const ToolsThumbnailRoute = ToolsThumbnailRouteImport.update({
   path: '/thumbnail',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsTimeZoneMeetingRoute = ToolsTimeZoneMeetingRouteImport.update({
+  id: '/time-zone-meeting',
+  path: '/time-zone-meeting',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsTimestampRoute = ToolsTimestampRouteImport.update({
   id: '/timestamp',
   path: '/timestamp',
@@ -1380,6 +1473,16 @@ const ToolsUrlEncoderRoute = ToolsUrlEncoderRouteImport.update({
   path: '/url-encoder',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
+  id: '/uuid-generator',
+  path: '/uuid-generator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsWaterTrackerRoute = ToolsWaterTrackerRouteImport.update({
+  id: '/water-tracker',
+  path: '/water-tracker',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsWatermarkRoute = ToolsWatermarkRouteImport.update({
   id: '/watermark',
   path: '/watermark',
@@ -1403,6 +1506,11 @@ const ToolsWikiSpeedrunRoute = ToolsWikiSpeedrunRouteImport.update({
 const ToolsWordCloudRoute = ToolsWordCloudRouteImport.update({
   id: '/word-cloud',
   path: '/word-cloud',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsWordFrequencyRoute = ToolsWordFrequencyRouteImport.update({
+  id: '/word-frequency',
+  path: '/word-frequency',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsWorldClockRoute = ToolsWorldClockRouteImport.update({
@@ -1475,11 +1583,13 @@ export interface FileRoutesByFullPath {
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
+  '/play/bounce': typeof PlayBounceRoute
   '/play/breakout': typeof PlayBreakoutRoute
   '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/checkers': typeof PlayCheckersRoute
   '/play/coin-flip': typeof PlayCoinFlipRoute
   '/play/connect-four': typeof PlayConnectFourRoute
+  '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
@@ -1488,10 +1598,13 @@ export interface FileRoutesByFullPath {
   '/play/fake-or-fact': typeof PlayFakeOrFactRoute
   '/play/flag-guess': typeof PlayFlagGuessRoute
   '/play/go-fish': typeof PlayGoFishRoute
+  '/play/guess-the-year': typeof PlayGuessTheYearRoute
   '/play/hangman': typeof PlayHangmanRoute
   '/play/higher-lower': typeof PlayHigherLowerRoute
+  '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
+  '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/password-game': typeof PlayPasswordGameRoute
@@ -1505,6 +1618,8 @@ export interface FileRoutesByFullPath {
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
+  '/play/stop-the-color': typeof PlayStopTheColorRoute
+  '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
   '/play/typing-test': typeof PlayTypingTestRoute
@@ -1548,6 +1663,7 @@ export interface FileRoutesByFullPath {
   '/tools/equation': typeof ToolsEquationRoute
   '/tools/expense': typeof ToolsExpenseRoute
   '/tools/fake-email': typeof ToolsFakeEmailRoute
+  '/tools/finder': typeof ToolsFinderRoute
   '/tools/flashcard-maker': typeof ToolsFlashcardMakerRoute
   '/tools/flip-clock': typeof ToolsFlipClockRoute
   '/tools/focus': typeof ToolsFocusRoute
@@ -1566,12 +1682,15 @@ export interface FileRoutesByFullPath {
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/interest-calculator': typeof ToolsInterestCalculatorRoute
+  '/tools/interval-timer': typeof ToolsIntervalTimerRoute
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
+  '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
   '/tools/life-stats': typeof ToolsLifeStatsRoute
@@ -1581,6 +1700,7 @@ export interface FileRoutesByFullPath {
   '/tools/markdown-editor': typeof ToolsMarkdownEditorRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
   '/tools/matrix': typeof ToolsMatrixRoute
+  '/tools/matrix-screen': typeof ToolsMatrixScreenRoute
   '/tools/meeting': typeof ToolsMeetingRoute
   '/tools/meme': typeof ToolsMemeRoute
   '/tools/meta': typeof ToolsMetaRoute
@@ -1596,6 +1716,7 @@ export interface FileRoutesByFullPath {
   '/tools/password': typeof ToolsPasswordRoute
   '/tools/password-gen': typeof ToolsPasswordGenRoute
   '/tools/percentage': typeof ToolsPercentageRoute
+  '/tools/periodic-table': typeof ToolsPeriodicTableRoute
   '/tools/pitch': typeof ToolsPitchRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
@@ -1618,6 +1739,7 @@ export interface FileRoutesByFullPath {
   '/tools/scanner': typeof ToolsScannerRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
+  '/tools/signature-maker': typeof ToolsSignatureMakerRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
@@ -1635,6 +1757,7 @@ export interface FileRoutesByFullPath {
   '/tools/text-stats': typeof ToolsTextStatsRoute
   '/tools/thread-maker': typeof ToolsThreadMakerRoute
   '/tools/thumbnail': typeof ToolsThumbnailRoute
+  '/tools/time-zone-meeting': typeof ToolsTimeZoneMeetingRoute
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/trolley': typeof ToolsTrolleyRoute
@@ -1642,11 +1765,14 @@ export interface FileRoutesByFullPath {
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/tools/water-tracker': typeof ToolsWaterTrackerRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
   '/tools/wiki-speedrun': typeof ToolsWikiSpeedrunRoute
   '/tools/word-cloud': typeof ToolsWordCloudRoute
+  '/tools/word-frequency': typeof ToolsWordFrequencyRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -1710,11 +1836,13 @@ export interface FileRoutesByTo {
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
+  '/play/bounce': typeof PlayBounceRoute
   '/play/breakout': typeof PlayBreakoutRoute
   '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/checkers': typeof PlayCheckersRoute
   '/play/coin-flip': typeof PlayCoinFlipRoute
   '/play/connect-four': typeof PlayConnectFourRoute
+  '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
@@ -1723,10 +1851,13 @@ export interface FileRoutesByTo {
   '/play/fake-or-fact': typeof PlayFakeOrFactRoute
   '/play/flag-guess': typeof PlayFlagGuessRoute
   '/play/go-fish': typeof PlayGoFishRoute
+  '/play/guess-the-year': typeof PlayGuessTheYearRoute
   '/play/hangman': typeof PlayHangmanRoute
   '/play/higher-lower': typeof PlayHigherLowerRoute
+  '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
+  '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/password-game': typeof PlayPasswordGameRoute
@@ -1740,6 +1871,8 @@ export interface FileRoutesByTo {
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
+  '/play/stop-the-color': typeof PlayStopTheColorRoute
+  '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
   '/play/typing-test': typeof PlayTypingTestRoute
@@ -1783,6 +1916,7 @@ export interface FileRoutesByTo {
   '/tools/equation': typeof ToolsEquationRoute
   '/tools/expense': typeof ToolsExpenseRoute
   '/tools/fake-email': typeof ToolsFakeEmailRoute
+  '/tools/finder': typeof ToolsFinderRoute
   '/tools/flashcard-maker': typeof ToolsFlashcardMakerRoute
   '/tools/flip-clock': typeof ToolsFlipClockRoute
   '/tools/focus': typeof ToolsFocusRoute
@@ -1801,12 +1935,15 @@ export interface FileRoutesByTo {
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/interest-calculator': typeof ToolsInterestCalculatorRoute
+  '/tools/interval-timer': typeof ToolsIntervalTimerRoute
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
+  '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
   '/tools/life-stats': typeof ToolsLifeStatsRoute
@@ -1816,6 +1953,7 @@ export interface FileRoutesByTo {
   '/tools/markdown-editor': typeof ToolsMarkdownEditorRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
   '/tools/matrix': typeof ToolsMatrixRoute
+  '/tools/matrix-screen': typeof ToolsMatrixScreenRoute
   '/tools/meeting': typeof ToolsMeetingRoute
   '/tools/meme': typeof ToolsMemeRoute
   '/tools/meta': typeof ToolsMetaRoute
@@ -1831,6 +1969,7 @@ export interface FileRoutesByTo {
   '/tools/password': typeof ToolsPasswordRoute
   '/tools/password-gen': typeof ToolsPasswordGenRoute
   '/tools/percentage': typeof ToolsPercentageRoute
+  '/tools/periodic-table': typeof ToolsPeriodicTableRoute
   '/tools/pitch': typeof ToolsPitchRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
@@ -1853,6 +1992,7 @@ export interface FileRoutesByTo {
   '/tools/scanner': typeof ToolsScannerRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
+  '/tools/signature-maker': typeof ToolsSignatureMakerRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
@@ -1870,6 +2010,7 @@ export interface FileRoutesByTo {
   '/tools/text-stats': typeof ToolsTextStatsRoute
   '/tools/thread-maker': typeof ToolsThreadMakerRoute
   '/tools/thumbnail': typeof ToolsThumbnailRoute
+  '/tools/time-zone-meeting': typeof ToolsTimeZoneMeetingRoute
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/trolley': typeof ToolsTrolleyRoute
@@ -1877,11 +2018,14 @@ export interface FileRoutesByTo {
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/tools/water-tracker': typeof ToolsWaterTrackerRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
   '/tools/wiki-speedrun': typeof ToolsWikiSpeedrunRoute
   '/tools/word-cloud': typeof ToolsWordCloudRoute
+  '/tools/word-frequency': typeof ToolsWordFrequencyRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
@@ -1948,11 +2092,13 @@ export interface FileRoutesById {
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
+  '/play/bounce': typeof PlayBounceRoute
   '/play/breakout': typeof PlayBreakoutRoute
   '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/checkers': typeof PlayCheckersRoute
   '/play/coin-flip': typeof PlayCoinFlipRoute
   '/play/connect-four': typeof PlayConnectFourRoute
+  '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
@@ -1961,10 +2107,13 @@ export interface FileRoutesById {
   '/play/fake-or-fact': typeof PlayFakeOrFactRoute
   '/play/flag-guess': typeof PlayFlagGuessRoute
   '/play/go-fish': typeof PlayGoFishRoute
+  '/play/guess-the-year': typeof PlayGuessTheYearRoute
   '/play/hangman': typeof PlayHangmanRoute
   '/play/higher-lower': typeof PlayHigherLowerRoute
+  '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
+  '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/password-game': typeof PlayPasswordGameRoute
@@ -1978,6 +2127,8 @@ export interface FileRoutesById {
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
+  '/play/stop-the-color': typeof PlayStopTheColorRoute
+  '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
   '/play/typing-test': typeof PlayTypingTestRoute
@@ -2021,6 +2172,7 @@ export interface FileRoutesById {
   '/tools/equation': typeof ToolsEquationRoute
   '/tools/expense': typeof ToolsExpenseRoute
   '/tools/fake-email': typeof ToolsFakeEmailRoute
+  '/tools/finder': typeof ToolsFinderRoute
   '/tools/flashcard-maker': typeof ToolsFlashcardMakerRoute
   '/tools/flip-clock': typeof ToolsFlipClockRoute
   '/tools/focus': typeof ToolsFocusRoute
@@ -2039,12 +2191,15 @@ export interface FileRoutesById {
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
   '/tools/images-to-pdf': typeof ToolsImagesToPdfRoute
+  '/tools/interest-calculator': typeof ToolsInterestCalculatorRoute
+  '/tools/interval-timer': typeof ToolsIntervalTimerRoute
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
+  '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
   '/tools/life-stats': typeof ToolsLifeStatsRoute
@@ -2054,6 +2209,7 @@ export interface FileRoutesById {
   '/tools/markdown-editor': typeof ToolsMarkdownEditorRoute
   '/tools/markdown-to-html': typeof ToolsMarkdownToHtmlRoute
   '/tools/matrix': typeof ToolsMatrixRoute
+  '/tools/matrix-screen': typeof ToolsMatrixScreenRoute
   '/tools/meeting': typeof ToolsMeetingRoute
   '/tools/meme': typeof ToolsMemeRoute
   '/tools/meta': typeof ToolsMetaRoute
@@ -2069,6 +2225,7 @@ export interface FileRoutesById {
   '/tools/password': typeof ToolsPasswordRoute
   '/tools/password-gen': typeof ToolsPasswordGenRoute
   '/tools/percentage': typeof ToolsPercentageRoute
+  '/tools/periodic-table': typeof ToolsPeriodicTableRoute
   '/tools/pitch': typeof ToolsPitchRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
@@ -2091,6 +2248,7 @@ export interface FileRoutesById {
   '/tools/scanner': typeof ToolsScannerRoute
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
+  '/tools/signature-maker': typeof ToolsSignatureMakerRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
@@ -2108,6 +2266,7 @@ export interface FileRoutesById {
   '/tools/text-stats': typeof ToolsTextStatsRoute
   '/tools/thread-maker': typeof ToolsThreadMakerRoute
   '/tools/thumbnail': typeof ToolsThumbnailRoute
+  '/tools/time-zone-meeting': typeof ToolsTimeZoneMeetingRoute
   '/tools/timestamp': typeof ToolsTimestampRoute
   '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/trolley': typeof ToolsTrolleyRoute
@@ -2115,11 +2274,14 @@ export interface FileRoutesById {
   '/tools/unit-converter': typeof ToolsUnitConverterRoute
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/tools/water-tracker': typeof ToolsWaterTrackerRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
   '/tools/whitespace': typeof ToolsWhitespaceRoute
   '/tools/wiki-speedrun': typeof ToolsWikiSpeedrunRoute
   '/tools/word-cloud': typeof ToolsWordCloudRoute
+  '/tools/word-frequency': typeof ToolsWordFrequencyRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
@@ -2187,11 +2349,13 @@ export interface FileRouteTypes {
     | '/play/aim-trainer'
     | '/play/battleship'
     | '/play/blackjack'
+    | '/play/bounce'
     | '/play/breakout'
     | '/play/bubble-wrap'
     | '/play/checkers'
     | '/play/coin-flip'
     | '/play/connect-four'
+    | '/play/cosmic-dive'
     | '/play/cricket'
     | '/play/dice'
     | '/play/dice-duel'
@@ -2200,10 +2364,13 @@ export interface FileRouteTypes {
     | '/play/fake-or-fact'
     | '/play/flag-guess'
     | '/play/go-fish'
+    | '/play/guess-the-year'
     | '/play/hangman'
     | '/play/higher-lower'
+    | '/play/kindle'
     | '/play/lights-out'
     | '/play/math-duel'
+    | '/play/maze-runner'
     | '/play/memory-match'
     | '/play/minesweeper'
     | '/play/password-game'
@@ -2217,6 +2384,8 @@ export interface FileRouteTypes {
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
+    | '/play/stop-the-color'
+    | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
     | '/play/typing-test'
@@ -2260,6 +2429,7 @@ export interface FileRouteTypes {
     | '/tools/equation'
     | '/tools/expense'
     | '/tools/fake-email'
+    | '/tools/finder'
     | '/tools/flashcard-maker'
     | '/tools/flip-clock'
     | '/tools/focus'
@@ -2278,12 +2448,15 @@ export interface FileRouteTypes {
     | '/tools/image-compress'
     | '/tools/image-convert'
     | '/tools/images-to-pdf'
+    | '/tools/interest-calculator'
+    | '/tools/interval-timer'
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
     | '/tools/json-diff'
     | '/tools/json-formatter'
     | '/tools/json-yaml'
+    | '/tools/jwt-decoder'
     | '/tools/kharch'
     | '/tools/life-in-weeks'
     | '/tools/life-stats'
@@ -2293,6 +2466,7 @@ export interface FileRouteTypes {
     | '/tools/markdown-editor'
     | '/tools/markdown-to-html'
     | '/tools/matrix'
+    | '/tools/matrix-screen'
     | '/tools/meeting'
     | '/tools/meme'
     | '/tools/meta'
@@ -2308,6 +2482,7 @@ export interface FileRouteTypes {
     | '/tools/password'
     | '/tools/password-gen'
     | '/tools/percentage'
+    | '/tools/periodic-table'
     | '/tools/pitch'
     | '/tools/plant'
     | '/tools/poll'
@@ -2330,6 +2505,7 @@ export interface FileRouteTypes {
     | '/tools/scanner'
     | '/tools/screenshot'
     | '/tools/shortcut'
+    | '/tools/signature-maker'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
@@ -2347,6 +2523,7 @@ export interface FileRouteTypes {
     | '/tools/text-stats'
     | '/tools/thread-maker'
     | '/tools/thumbnail'
+    | '/tools/time-zone-meeting'
     | '/tools/timestamp'
     | '/tools/tip-calculator'
     | '/tools/trolley'
@@ -2354,11 +2531,14 @@ export interface FileRouteTypes {
     | '/tools/unit-converter'
     | '/tools/upi'
     | '/tools/url-encoder'
+    | '/tools/uuid-generator'
+    | '/tools/water-tracker'
     | '/tools/watermark'
     | '/tools/whiteboard'
     | '/tools/whitespace'
     | '/tools/wiki-speedrun'
     | '/tools/word-cloud'
+    | '/tools/word-frequency'
     | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
@@ -2422,11 +2602,13 @@ export interface FileRouteTypes {
     | '/play/aim-trainer'
     | '/play/battleship'
     | '/play/blackjack'
+    | '/play/bounce'
     | '/play/breakout'
     | '/play/bubble-wrap'
     | '/play/checkers'
     | '/play/coin-flip'
     | '/play/connect-four'
+    | '/play/cosmic-dive'
     | '/play/cricket'
     | '/play/dice'
     | '/play/dice-duel'
@@ -2435,10 +2617,13 @@ export interface FileRouteTypes {
     | '/play/fake-or-fact'
     | '/play/flag-guess'
     | '/play/go-fish'
+    | '/play/guess-the-year'
     | '/play/hangman'
     | '/play/higher-lower'
+    | '/play/kindle'
     | '/play/lights-out'
     | '/play/math-duel'
+    | '/play/maze-runner'
     | '/play/memory-match'
     | '/play/minesweeper'
     | '/play/password-game'
@@ -2452,6 +2637,8 @@ export interface FileRouteTypes {
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
+    | '/play/stop-the-color'
+    | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
     | '/play/typing-test'
@@ -2495,6 +2682,7 @@ export interface FileRouteTypes {
     | '/tools/equation'
     | '/tools/expense'
     | '/tools/fake-email'
+    | '/tools/finder'
     | '/tools/flashcard-maker'
     | '/tools/flip-clock'
     | '/tools/focus'
@@ -2513,12 +2701,15 @@ export interface FileRouteTypes {
     | '/tools/image-compress'
     | '/tools/image-convert'
     | '/tools/images-to-pdf'
+    | '/tools/interest-calculator'
+    | '/tools/interval-timer'
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
     | '/tools/json-diff'
     | '/tools/json-formatter'
     | '/tools/json-yaml'
+    | '/tools/jwt-decoder'
     | '/tools/kharch'
     | '/tools/life-in-weeks'
     | '/tools/life-stats'
@@ -2528,6 +2719,7 @@ export interface FileRouteTypes {
     | '/tools/markdown-editor'
     | '/tools/markdown-to-html'
     | '/tools/matrix'
+    | '/tools/matrix-screen'
     | '/tools/meeting'
     | '/tools/meme'
     | '/tools/meta'
@@ -2543,6 +2735,7 @@ export interface FileRouteTypes {
     | '/tools/password'
     | '/tools/password-gen'
     | '/tools/percentage'
+    | '/tools/periodic-table'
     | '/tools/pitch'
     | '/tools/plant'
     | '/tools/poll'
@@ -2565,6 +2758,7 @@ export interface FileRouteTypes {
     | '/tools/scanner'
     | '/tools/screenshot'
     | '/tools/shortcut'
+    | '/tools/signature-maker'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
@@ -2582,6 +2776,7 @@ export interface FileRouteTypes {
     | '/tools/text-stats'
     | '/tools/thread-maker'
     | '/tools/thumbnail'
+    | '/tools/time-zone-meeting'
     | '/tools/timestamp'
     | '/tools/tip-calculator'
     | '/tools/trolley'
@@ -2589,11 +2784,14 @@ export interface FileRouteTypes {
     | '/tools/unit-converter'
     | '/tools/upi'
     | '/tools/url-encoder'
+    | '/tools/uuid-generator'
+    | '/tools/water-tracker'
     | '/tools/watermark'
     | '/tools/whiteboard'
     | '/tools/whitespace'
     | '/tools/wiki-speedrun'
     | '/tools/word-cloud'
+    | '/tools/word-frequency'
     | '/tools/world-clock'
     | '/build-ideas'
     | '/collections'
@@ -2659,11 +2857,13 @@ export interface FileRouteTypes {
     | '/play/aim-trainer'
     | '/play/battleship'
     | '/play/blackjack'
+    | '/play/bounce'
     | '/play/breakout'
     | '/play/bubble-wrap'
     | '/play/checkers'
     | '/play/coin-flip'
     | '/play/connect-four'
+    | '/play/cosmic-dive'
     | '/play/cricket'
     | '/play/dice'
     | '/play/dice-duel'
@@ -2672,10 +2872,13 @@ export interface FileRouteTypes {
     | '/play/fake-or-fact'
     | '/play/flag-guess'
     | '/play/go-fish'
+    | '/play/guess-the-year'
     | '/play/hangman'
     | '/play/higher-lower'
+    | '/play/kindle'
     | '/play/lights-out'
     | '/play/math-duel'
+    | '/play/maze-runner'
     | '/play/memory-match'
     | '/play/minesweeper'
     | '/play/password-game'
@@ -2689,6 +2892,8 @@ export interface FileRouteTypes {
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
+    | '/play/stop-the-color'
+    | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
     | '/play/typing-test'
@@ -2732,6 +2937,7 @@ export interface FileRouteTypes {
     | '/tools/equation'
     | '/tools/expense'
     | '/tools/fake-email'
+    | '/tools/finder'
     | '/tools/flashcard-maker'
     | '/tools/flip-clock'
     | '/tools/focus'
@@ -2750,12 +2956,15 @@ export interface FileRouteTypes {
     | '/tools/image-compress'
     | '/tools/image-convert'
     | '/tools/images-to-pdf'
+    | '/tools/interest-calculator'
+    | '/tools/interval-timer'
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
     | '/tools/json-diff'
     | '/tools/json-formatter'
     | '/tools/json-yaml'
+    | '/tools/jwt-decoder'
     | '/tools/kharch'
     | '/tools/life-in-weeks'
     | '/tools/life-stats'
@@ -2765,6 +2974,7 @@ export interface FileRouteTypes {
     | '/tools/markdown-editor'
     | '/tools/markdown-to-html'
     | '/tools/matrix'
+    | '/tools/matrix-screen'
     | '/tools/meeting'
     | '/tools/meme'
     | '/tools/meta'
@@ -2780,6 +2990,7 @@ export interface FileRouteTypes {
     | '/tools/password'
     | '/tools/password-gen'
     | '/tools/percentage'
+    | '/tools/periodic-table'
     | '/tools/pitch'
     | '/tools/plant'
     | '/tools/poll'
@@ -2802,6 +3013,7 @@ export interface FileRouteTypes {
     | '/tools/scanner'
     | '/tools/screenshot'
     | '/tools/shortcut'
+    | '/tools/signature-maker'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
@@ -2819,6 +3031,7 @@ export interface FileRouteTypes {
     | '/tools/text-stats'
     | '/tools/thread-maker'
     | '/tools/thumbnail'
+    | '/tools/time-zone-meeting'
     | '/tools/timestamp'
     | '/tools/tip-calculator'
     | '/tools/trolley'
@@ -2826,11 +3039,14 @@ export interface FileRouteTypes {
     | '/tools/unit-converter'
     | '/tools/upi'
     | '/tools/url-encoder'
+    | '/tools/uuid-generator'
+    | '/tools/water-tracker'
     | '/tools/watermark'
     | '/tools/whiteboard'
     | '/tools/whitespace'
     | '/tools/wiki-speedrun'
     | '/tools/word-cloud'
+    | '/tools/word-frequency'
     | '/tools/world-clock'
     | '/build-ideas/'
     | '/collections/'
@@ -3314,6 +3530,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayBlackjackRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/bounce': {
+      id: '/play/bounce'
+      path: '/bounce'
+      fullPath: '/play/bounce'
+      preLoaderRoute: typeof PlayBounceRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/breakout': {
       id: '/play/breakout'
       path: '/breakout'
@@ -3347,6 +3570,13 @@ declare module '@tanstack/react-router' {
       path: '/connect-four'
       fullPath: '/play/connect-four'
       preLoaderRoute: typeof PlayConnectFourRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/cosmic-dive': {
+      id: '/play/cosmic-dive'
+      path: '/cosmic-dive'
+      fullPath: '/play/cosmic-dive'
+      preLoaderRoute: typeof PlayCosmicDiveRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/cricket': {
@@ -3405,6 +3635,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayGoFishRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/guess-the-year': {
+      id: '/play/guess-the-year'
+      path: '/guess-the-year'
+      fullPath: '/play/guess-the-year'
+      preLoaderRoute: typeof PlayGuessTheYearRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/hangman': {
       id: '/play/hangman'
       path: '/hangman'
@@ -3419,6 +3656,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayHigherLowerRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/kindle': {
+      id: '/play/kindle'
+      path: '/kindle'
+      fullPath: '/play/kindle'
+      preLoaderRoute: typeof PlayKindleRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/lights-out': {
       id: '/play/lights-out'
       path: '/lights-out'
@@ -3431,6 +3675,13 @@ declare module '@tanstack/react-router' {
       path: '/math-duel'
       fullPath: '/play/math-duel'
       preLoaderRoute: typeof PlayMathDuelRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/maze-runner': {
+      id: '/play/maze-runner'
+      path: '/maze-runner'
+      fullPath: '/play/maze-runner'
+      preLoaderRoute: typeof PlayMazeRunnerRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/memory-match': {
@@ -3522,6 +3773,20 @@ declare module '@tanstack/react-router' {
       path: '/snakes-ladders'
       fullPath: '/play/snakes-ladders'
       preLoaderRoute: typeof PlaySnakesLaddersRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/stop-the-color': {
+      id: '/play/stop-the-color'
+      path: '/stop-the-color'
+      fullPath: '/play/stop-the-color'
+      preLoaderRoute: typeof PlayStopTheColorRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/tap-the-difference': {
+      id: '/play/tap-the-difference'
+      path: '/tap-the-difference'
+      fullPath: '/play/tap-the-difference'
+      preLoaderRoute: typeof PlayTapTheDifferenceRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/ten-seconds': {
@@ -3839,6 +4104,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsFakeEmailRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/finder': {
+      id: '/tools/finder'
+      path: '/finder'
+      fullPath: '/tools/finder'
+      preLoaderRoute: typeof ToolsFinderRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/flashcard-maker': {
       id: '/tools/flashcard-maker'
       path: '/flashcard-maker'
@@ -3965,6 +4237,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsImagesToPdfRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/interest-calculator': {
+      id: '/tools/interest-calculator'
+      path: '/interest-calculator'
+      fullPath: '/tools/interest-calculator'
+      preLoaderRoute: typeof ToolsInterestCalculatorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/interval-timer': {
+      id: '/tools/interval-timer'
+      path: '/interval-timer'
+      fullPath: '/tools/interval-timer'
+      preLoaderRoute: typeof ToolsIntervalTimerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/interview': {
       id: '/tools/interview'
       path: '/interview'
@@ -4005,6 +4291,13 @@ declare module '@tanstack/react-router' {
       path: '/json-yaml'
       fullPath: '/tools/json-yaml'
       preLoaderRoute: typeof ToolsJsonYamlRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/jwt-decoder': {
+      id: '/tools/jwt-decoder'
+      path: '/jwt-decoder'
+      fullPath: '/tools/jwt-decoder'
+      preLoaderRoute: typeof ToolsJwtDecoderRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/kharch': {
@@ -4068,6 +4361,13 @@ declare module '@tanstack/react-router' {
       path: '/matrix'
       fullPath: '/tools/matrix'
       preLoaderRoute: typeof ToolsMatrixRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/matrix-screen': {
+      id: '/tools/matrix-screen'
+      path: '/matrix-screen'
+      fullPath: '/tools/matrix-screen'
+      preLoaderRoute: typeof ToolsMatrixScreenRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/meeting': {
@@ -4173,6 +4473,13 @@ declare module '@tanstack/react-router' {
       path: '/percentage'
       fullPath: '/tools/percentage'
       preLoaderRoute: typeof ToolsPercentageRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/periodic-table': {
+      id: '/tools/periodic-table'
+      path: '/periodic-table'
+      fullPath: '/tools/periodic-table'
+      preLoaderRoute: typeof ToolsPeriodicTableRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/pitch': {
@@ -4329,6 +4636,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsShortcutRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/signature-maker': {
+      id: '/tools/signature-maker'
+      path: '/signature-maker'
+      fullPath: '/tools/signature-maker'
+      preLoaderRoute: typeof ToolsSignatureMakerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/sip-calculator': {
       id: '/tools/sip-calculator'
       path: '/sip-calculator'
@@ -4448,6 +4762,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsThumbnailRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/time-zone-meeting': {
+      id: '/tools/time-zone-meeting'
+      path: '/time-zone-meeting'
+      fullPath: '/tools/time-zone-meeting'
+      preLoaderRoute: typeof ToolsTimeZoneMeetingRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/timestamp': {
       id: '/tools/timestamp'
       path: '/timestamp'
@@ -4497,6 +4818,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsUrlEncoderRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/uuid-generator': {
+      id: '/tools/uuid-generator'
+      path: '/uuid-generator'
+      fullPath: '/tools/uuid-generator'
+      preLoaderRoute: typeof ToolsUuidGeneratorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/water-tracker': {
+      id: '/tools/water-tracker'
+      path: '/water-tracker'
+      fullPath: '/tools/water-tracker'
+      preLoaderRoute: typeof ToolsWaterTrackerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/watermark': {
       id: '/tools/watermark'
       path: '/watermark'
@@ -4532,6 +4867,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsWordCloudRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/word-frequency': {
+      id: '/tools/word-frequency'
+      path: '/word-frequency'
+      fullPath: '/tools/word-frequency'
+      preLoaderRoute: typeof ToolsWordFrequencyRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/world-clock': {
       id: '/tools/world-clock'
       path: '/world-clock'
@@ -4561,11 +4903,13 @@ interface PlayRouteChildren {
   PlayAimTrainerRoute: typeof PlayAimTrainerRoute
   PlayBattleshipRoute: typeof PlayBattleshipRoute
   PlayBlackjackRoute: typeof PlayBlackjackRoute
+  PlayBounceRoute: typeof PlayBounceRoute
   PlayBreakoutRoute: typeof PlayBreakoutRoute
   PlayBubbleWrapRoute: typeof PlayBubbleWrapRoute
   PlayCheckersRoute: typeof PlayCheckersRoute
   PlayCoinFlipRoute: typeof PlayCoinFlipRoute
   PlayConnectFourRoute: typeof PlayConnectFourRoute
+  PlayCosmicDiveRoute: typeof PlayCosmicDiveRoute
   PlayCricketRoute: typeof PlayCricketRoute
   PlayDiceRoute: typeof PlayDiceRoute
   PlayDiceDuelRoute: typeof PlayDiceDuelRoute
@@ -4574,10 +4918,13 @@ interface PlayRouteChildren {
   PlayFakeOrFactRoute: typeof PlayFakeOrFactRoute
   PlayFlagGuessRoute: typeof PlayFlagGuessRoute
   PlayGoFishRoute: typeof PlayGoFishRoute
+  PlayGuessTheYearRoute: typeof PlayGuessTheYearRoute
   PlayHangmanRoute: typeof PlayHangmanRoute
   PlayHigherLowerRoute: typeof PlayHigherLowerRoute
+  PlayKindleRoute: typeof PlayKindleRoute
   PlayLightsOutRoute: typeof PlayLightsOutRoute
   PlayMathDuelRoute: typeof PlayMathDuelRoute
+  PlayMazeRunnerRoute: typeof PlayMazeRunnerRoute
   PlayMemoryMatchRoute: typeof PlayMemoryMatchRoute
   PlayMinesweeperRoute: typeof PlayMinesweeperRoute
   PlayPasswordGameRoute: typeof PlayPasswordGameRoute
@@ -4591,6 +4938,8 @@ interface PlayRouteChildren {
   PlaySkyDashRoute: typeof PlaySkyDashRoute
   PlaySnakeRoute: typeof PlaySnakeRoute
   PlaySnakesLaddersRoute: typeof PlaySnakesLaddersRoute
+  PlayStopTheColorRoute: typeof PlayStopTheColorRoute
+  PlayTapTheDifferenceRoute: typeof PlayTapTheDifferenceRoute
   PlayTenSecondsRoute: typeof PlayTenSecondsRoute
   PlayTicTacToeRoute: typeof PlayTicTacToeRoute
   PlayTypingTestRoute: typeof PlayTypingTestRoute
@@ -4605,11 +4954,13 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayAimTrainerRoute: PlayAimTrainerRoute,
   PlayBattleshipRoute: PlayBattleshipRoute,
   PlayBlackjackRoute: PlayBlackjackRoute,
+  PlayBounceRoute: PlayBounceRoute,
   PlayBreakoutRoute: PlayBreakoutRoute,
   PlayBubbleWrapRoute: PlayBubbleWrapRoute,
   PlayCheckersRoute: PlayCheckersRoute,
   PlayCoinFlipRoute: PlayCoinFlipRoute,
   PlayConnectFourRoute: PlayConnectFourRoute,
+  PlayCosmicDiveRoute: PlayCosmicDiveRoute,
   PlayCricketRoute: PlayCricketRoute,
   PlayDiceRoute: PlayDiceRoute,
   PlayDiceDuelRoute: PlayDiceDuelRoute,
@@ -4618,10 +4969,13 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayFakeOrFactRoute: PlayFakeOrFactRoute,
   PlayFlagGuessRoute: PlayFlagGuessRoute,
   PlayGoFishRoute: PlayGoFishRoute,
+  PlayGuessTheYearRoute: PlayGuessTheYearRoute,
   PlayHangmanRoute: PlayHangmanRoute,
   PlayHigherLowerRoute: PlayHigherLowerRoute,
+  PlayKindleRoute: PlayKindleRoute,
   PlayLightsOutRoute: PlayLightsOutRoute,
   PlayMathDuelRoute: PlayMathDuelRoute,
+  PlayMazeRunnerRoute: PlayMazeRunnerRoute,
   PlayMemoryMatchRoute: PlayMemoryMatchRoute,
   PlayMinesweeperRoute: PlayMinesweeperRoute,
   PlayPasswordGameRoute: PlayPasswordGameRoute,
@@ -4635,6 +4989,8 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlaySkyDashRoute: PlaySkyDashRoute,
   PlaySnakeRoute: PlaySnakeRoute,
   PlaySnakesLaddersRoute: PlaySnakesLaddersRoute,
+  PlayStopTheColorRoute: PlayStopTheColorRoute,
+  PlayTapTheDifferenceRoute: PlayTapTheDifferenceRoute,
   PlayTenSecondsRoute: PlayTenSecondsRoute,
   PlayTicTacToeRoute: PlayTicTacToeRoute,
   PlayTypingTestRoute: PlayTypingTestRoute,
@@ -4681,6 +5037,7 @@ interface ToolsRouteChildren {
   ToolsEquationRoute: typeof ToolsEquationRoute
   ToolsExpenseRoute: typeof ToolsExpenseRoute
   ToolsFakeEmailRoute: typeof ToolsFakeEmailRoute
+  ToolsFinderRoute: typeof ToolsFinderRoute
   ToolsFlashcardMakerRoute: typeof ToolsFlashcardMakerRoute
   ToolsFlipClockRoute: typeof ToolsFlipClockRoute
   ToolsFocusRoute: typeof ToolsFocusRoute
@@ -4699,12 +5056,15 @@ interface ToolsRouteChildren {
   ToolsImageCompressRoute: typeof ToolsImageCompressRoute
   ToolsImageConvertRoute: typeof ToolsImageConvertRoute
   ToolsImagesToPdfRoute: typeof ToolsImagesToPdfRoute
+  ToolsInterestCalculatorRoute: typeof ToolsInterestCalculatorRoute
+  ToolsIntervalTimerRoute: typeof ToolsIntervalTimerRoute
   ToolsInterviewRoute: typeof ToolsInterviewRoute
   ToolsInvoiceRoute: typeof ToolsInvoiceRoute
   ToolsIpRoute: typeof ToolsIpRoute
   ToolsJsonDiffRoute: typeof ToolsJsonDiffRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJsonYamlRoute: typeof ToolsJsonYamlRoute
+  ToolsJwtDecoderRoute: typeof ToolsJwtDecoderRoute
   ToolsKharchRoute: typeof ToolsKharchRoute
   ToolsLifeInWeeksRoute: typeof ToolsLifeInWeeksRoute
   ToolsLifeStatsRoute: typeof ToolsLifeStatsRoute
@@ -4714,6 +5074,7 @@ interface ToolsRouteChildren {
   ToolsMarkdownEditorRoute: typeof ToolsMarkdownEditorRoute
   ToolsMarkdownToHtmlRoute: typeof ToolsMarkdownToHtmlRoute
   ToolsMatrixRoute: typeof ToolsMatrixRoute
+  ToolsMatrixScreenRoute: typeof ToolsMatrixScreenRoute
   ToolsMeetingRoute: typeof ToolsMeetingRoute
   ToolsMemeRoute: typeof ToolsMemeRoute
   ToolsMetaRoute: typeof ToolsMetaRoute
@@ -4729,6 +5090,7 @@ interface ToolsRouteChildren {
   ToolsPasswordRoute: typeof ToolsPasswordRoute
   ToolsPasswordGenRoute: typeof ToolsPasswordGenRoute
   ToolsPercentageRoute: typeof ToolsPercentageRoute
+  ToolsPeriodicTableRoute: typeof ToolsPeriodicTableRoute
   ToolsPitchRoute: typeof ToolsPitchRoute
   ToolsPlantRoute: typeof ToolsPlantRoute
   ToolsPollRoute: typeof ToolsPollRoute
@@ -4751,6 +5113,7 @@ interface ToolsRouteChildren {
   ToolsScannerRoute: typeof ToolsScannerRoute
   ToolsScreenshotRoute: typeof ToolsScreenshotRoute
   ToolsShortcutRoute: typeof ToolsShortcutRoute
+  ToolsSignatureMakerRoute: typeof ToolsSignatureMakerRoute
   ToolsSipCalculatorRoute: typeof ToolsSipCalculatorRoute
   ToolsSizeRoute: typeof ToolsSizeRoute
   ToolsSmartPasteRoute: typeof ToolsSmartPasteRoute
@@ -4768,6 +5131,7 @@ interface ToolsRouteChildren {
   ToolsTextStatsRoute: typeof ToolsTextStatsRoute
   ToolsThreadMakerRoute: typeof ToolsThreadMakerRoute
   ToolsThumbnailRoute: typeof ToolsThumbnailRoute
+  ToolsTimeZoneMeetingRoute: typeof ToolsTimeZoneMeetingRoute
   ToolsTimestampRoute: typeof ToolsTimestampRoute
   ToolsTipCalculatorRoute: typeof ToolsTipCalculatorRoute
   ToolsTrolleyRoute: typeof ToolsTrolleyRoute
@@ -4775,11 +5139,14 @@ interface ToolsRouteChildren {
   ToolsUnitConverterRoute: typeof ToolsUnitConverterRoute
   ToolsUpiRoute: typeof ToolsUpiRoute
   ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
+  ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
+  ToolsWaterTrackerRoute: typeof ToolsWaterTrackerRoute
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
   ToolsWhiteboardRoute: typeof ToolsWhiteboardRoute
   ToolsWhitespaceRoute: typeof ToolsWhitespaceRoute
   ToolsWikiSpeedrunRoute: typeof ToolsWikiSpeedrunRoute
   ToolsWordCloudRoute: typeof ToolsWordCloudRoute
+  ToolsWordFrequencyRoute: typeof ToolsWordFrequencyRoute
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
 }
@@ -4819,6 +5186,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsEquationRoute: ToolsEquationRoute,
   ToolsExpenseRoute: ToolsExpenseRoute,
   ToolsFakeEmailRoute: ToolsFakeEmailRoute,
+  ToolsFinderRoute: ToolsFinderRoute,
   ToolsFlashcardMakerRoute: ToolsFlashcardMakerRoute,
   ToolsFlipClockRoute: ToolsFlipClockRoute,
   ToolsFocusRoute: ToolsFocusRoute,
@@ -4837,12 +5205,15 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsImageCompressRoute: ToolsImageCompressRoute,
   ToolsImageConvertRoute: ToolsImageConvertRoute,
   ToolsImagesToPdfRoute: ToolsImagesToPdfRoute,
+  ToolsInterestCalculatorRoute: ToolsInterestCalculatorRoute,
+  ToolsIntervalTimerRoute: ToolsIntervalTimerRoute,
   ToolsInterviewRoute: ToolsInterviewRoute,
   ToolsInvoiceRoute: ToolsInvoiceRoute,
   ToolsIpRoute: ToolsIpRoute,
   ToolsJsonDiffRoute: ToolsJsonDiffRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJsonYamlRoute: ToolsJsonYamlRoute,
+  ToolsJwtDecoderRoute: ToolsJwtDecoderRoute,
   ToolsKharchRoute: ToolsKharchRoute,
   ToolsLifeInWeeksRoute: ToolsLifeInWeeksRoute,
   ToolsLifeStatsRoute: ToolsLifeStatsRoute,
@@ -4852,6 +5223,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsMarkdownEditorRoute: ToolsMarkdownEditorRoute,
   ToolsMarkdownToHtmlRoute: ToolsMarkdownToHtmlRoute,
   ToolsMatrixRoute: ToolsMatrixRoute,
+  ToolsMatrixScreenRoute: ToolsMatrixScreenRoute,
   ToolsMeetingRoute: ToolsMeetingRoute,
   ToolsMemeRoute: ToolsMemeRoute,
   ToolsMetaRoute: ToolsMetaRoute,
@@ -4867,6 +5239,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsPasswordRoute: ToolsPasswordRoute,
   ToolsPasswordGenRoute: ToolsPasswordGenRoute,
   ToolsPercentageRoute: ToolsPercentageRoute,
+  ToolsPeriodicTableRoute: ToolsPeriodicTableRoute,
   ToolsPitchRoute: ToolsPitchRoute,
   ToolsPlantRoute: ToolsPlantRoute,
   ToolsPollRoute: ToolsPollRoute,
@@ -4889,6 +5262,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsScannerRoute: ToolsScannerRoute,
   ToolsScreenshotRoute: ToolsScreenshotRoute,
   ToolsShortcutRoute: ToolsShortcutRoute,
+  ToolsSignatureMakerRoute: ToolsSignatureMakerRoute,
   ToolsSipCalculatorRoute: ToolsSipCalculatorRoute,
   ToolsSizeRoute: ToolsSizeRoute,
   ToolsSmartPasteRoute: ToolsSmartPasteRoute,
@@ -4906,6 +5280,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsTextStatsRoute: ToolsTextStatsRoute,
   ToolsThreadMakerRoute: ToolsThreadMakerRoute,
   ToolsThumbnailRoute: ToolsThumbnailRoute,
+  ToolsTimeZoneMeetingRoute: ToolsTimeZoneMeetingRoute,
   ToolsTimestampRoute: ToolsTimestampRoute,
   ToolsTipCalculatorRoute: ToolsTipCalculatorRoute,
   ToolsTrolleyRoute: ToolsTrolleyRoute,
@@ -4913,11 +5288,14 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsUnitConverterRoute: ToolsUnitConverterRoute,
   ToolsUpiRoute: ToolsUpiRoute,
   ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
+  ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,
+  ToolsWaterTrackerRoute: ToolsWaterTrackerRoute,
   ToolsWatermarkRoute: ToolsWatermarkRoute,
   ToolsWhiteboardRoute: ToolsWhiteboardRoute,
   ToolsWhitespaceRoute: ToolsWhitespaceRoute,
   ToolsWikiSpeedrunRoute: ToolsWikiSpeedrunRoute,
   ToolsWordCloudRoute: ToolsWordCloudRoute,
+  ToolsWordFrequencyRoute: ToolsWordFrequencyRoute,
   ToolsWorldClockRoute: ToolsWorldClockRoute,
   ToolsIndexRoute: ToolsIndexRoute,
 }
@@ -4988,13 +5366,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -3,6 +3,8 @@ import { Dices } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { SLASH_APPS } from "@/lib/slashbar";
+import { SLASH_TOOL_COUNT } from "@/lib/slashkits";
+import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 
 export const Route = createFileRoute("/slash/")({
   head: () => ({
@@ -100,8 +102,8 @@ function SlashBarPage() {
                   <span className="block text-[10.5px] font-semibold text-muted-foreground">
                     {app.link
                       ? app.slug === "kits"
-                        ? "150+ tools"
-                        : "42 games"
+                        ? `${SLASH_TOOL_COUNT}+ tools`
+                        : `${PLAY_GAME_COUNT} games`
                       : `${app.widgets.length} widgets`}
                   </span>
                 </span>

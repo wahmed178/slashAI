@@ -111,7 +111,7 @@ export const SLASH_APPS: SlashApp[] = [
     slug: "play",
     name: "SlashPlay",
     emoji: "🎮",
-    desc: "42 free games - multiplayer, arcade, cards, puzzles.",
+    desc: "47 free games - multiplayer, arcade, cards, puzzles, zen.",
     tint: T.rose,
     link: "/play",
     widgets: [],

@@ -323,7 +323,7 @@ function HomePage() {
               className="mt-5 flex h-[48px] max-w-[460px] items-center gap-3 rounded-[8px] border border-sidebar-border bg-surface px-4 transition-colors focus-within:border-primary"
               onSubmit={(e) => {
                 e.preventDefault();
-                if (heroQuery.trim()) window.location.href = `/search?q=${encodeURIComponent(heroQuery.trim())}`;
+                if (heroQuery.trim()) window.location.assign(`/tools/finder?q=${encodeURIComponent(heroQuery.trim())}`);
               }}
             >
               <SearchIcon className="size-[16px] shrink-0 text-muted-foreground" aria-hidden />
@@ -332,14 +332,14 @@ function HomePage() {
                 value={heroQuery}
                 onChange={(e) => setHeroQuery(e.target.value)}
                 type="text"
-                placeholder="Search commands, tools, topics..."
+                placeholder="Search commands, tools, games, topics..."
                 className="flex-1 bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground"
               />
               <VoiceSearchButton
                 size="sm"
                 onResult={(t) => {
                   setHeroQuery(t);
-                  window.location.href = `/search?q=${encodeURIComponent(t.trim())}`;
+                  window.location.assign(`/tools/finder?q=${encodeURIComponent(t.trim())}`);
                 }}
               />
               <span className="flex h-5 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] text-muted-foreground">

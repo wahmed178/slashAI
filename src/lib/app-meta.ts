@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.19.0";
+export const APP_VERSION = "2.20.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,20 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.20.0",
+    date: "2026-09-12",
+    title: "The big content expansion",
+    changes: [
+      "11 new working tools in SlashKits: Interest Calculator, UUID Generator, JWT Decoder, Word Frequency Analyser, Meeting Time Planner, Interval Timer, Matrix Rain, Signature Maker, Water Tracker, Periodic Table and Watermark Maker",
+      "7 new games in SlashPlay: Stop the Color, Kindle, Guess the Year, Cosmic Dive, Maze Runner, Tap the Difference and Bounce - plus duplicates fixed so every listing matches a real page",
+      "32 new trending commands added (5,682 total): agent swarms, Veo/video-scene prompts, headshot recipes, podcast clip scripts, programmatic SEO, interview war rooms and more",
+      "SlashBar content pools roughly doubled - 710 curated entries across facts, hacks, shopping safety, study, career, romance and nearby-search guides",
+      "New unified Find Anything search (/tools/finder): one box across commands, tools, games and the web, wired into the homepage hero",
+      "Sidebar rebuilt: all 13 real hubs listed, SlashBar leaves mirror the rail exactly, Discovery/Commands tabs light up on all their sub-pages",
+      "Duplicate SlashKits listings removed - every tool in the catalogue now opens a real page",
+    ],
+  },
   {
     version: "2.19.0",
     date: "2026-09-11",

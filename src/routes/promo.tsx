@@ -21,7 +21,7 @@ export const Route = createFileRoute("/promo")({
       {
         name: "description",
         content:
-          "SlashAI is a free, no-login toolbox: 135+ instant tools, 42 playable games, 26 Slash mini-apps, a fictional social world, a private search engine and a viral command bar. Everything works offline, nothing is tracked.",
+          "SlashAI is a free, no-login toolbox: 140+ instant tools, 47 playable games, 26 Slash mini-apps, a fictional social world, a private search engine and 5,682 copy-ready AI commands. Everything works offline, nothing is tracked.",
       },
     ],
   }),
@@ -33,7 +33,7 @@ const PILLARS = [
     icon: Zap,
     tint: "#2dd4bf",
     title: "SlashKits",
-    desc: "135+ real utilities that finish in seconds: calculators, converters, image tools, text helpers, timers — no signup, no ads, no waiting.",
+    desc: "140+ real utilities that finish in seconds: calculators, converters, image tools, text helpers, timers — no signup, no ads, no waiting.",
     to: "/tools",
     cta: "Open the kits",
   },
@@ -41,7 +41,7 @@ const PILLARS = [
     icon: Gauge,
     tint: "#f472b6",
     title: "SlashPlay",
-    desc: "42 games you can actually play — quick solo plays and pass-and-play duels. Every game runs offline once loaded.",
+    desc: "47 games you can actually play — quick solo plays, zen toys and pass-and-play duels. Every game runs offline once loaded.",
     to: "/play",
     cta: "Play something",
   },
@@ -80,9 +80,9 @@ const PILLARS = [
 ];
 
 const STATS = [
-  { value: "135+", label: "instant tools" },
-  { value: "42", label: "playable games" },
-  { value: "25", label: "Slash mini-apps" },
+  { value: "140+", label: "instant tools" },
+  { value: "47", label: "playable games" },
+  { value: "26", label: "Slash mini-apps" },
   { value: "500+", label: "discovery picks" },
 ];
 

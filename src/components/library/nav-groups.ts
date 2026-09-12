@@ -49,7 +49,7 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "discover",
     label: "Discovery",
     icon: Compass,
-    match: starts("/discover") || starts("/r/"),
+    match: starts("/discover") || starts("/r/") || starts("/trending") || starts("/radar") || starts("/whats-new"),
     to: "/discover",
     leaves: [
       { to: "/trending", label: "Trending", badge: "Hot" },
@@ -61,12 +61,12 @@ export const NAV_GROUPS: NavGroup[] = [
     id: "slashbar",
     label: "SlashBar",
     icon: Zap,
-    match: starts("/slash") || starts("/web-search"),
+    match: starts("/slash") || starts("/tools") || starts("/play") || starts("/web-search"),
     to: "/slash",
     badge: "26",
     leaves: [
-      { to: "/tools", label: "SlashKits", badge: "135+" },
-      { to: "/play", label: "SlashPlay" },
+      { to: "/tools", label: "SlashKits", badge: "140+" },
+      { to: "/play", label: "SlashPlay", badge: "47" },
       { to: "/slash/slashgram", label: "SlashGram", badge: "New" },
       { to: "/slash/labs", label: "Labs" },
       { to: "/slash/learning", label: "Learning" },
@@ -82,7 +82,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { to: "/slash/speak", label: "Speak" },
       { to: "/slash/fun", label: "Fun" },
       { to: "/slash/gadgets", label: "Gadgets" },
-      { to: "/slash/shopping", label: "Shoppings" },
+      { to: "/slash/shopping", label: "Shopping" },
       { to: "/slash/offers", label: "Offers" },
       { to: "/slash/mini-store", label: "Mini Store" },
       { to: "/slash/mens", label: "Mens" },
@@ -100,18 +100,29 @@ export const NAV_GROUPS: NavGroup[] = [
     match: starts("/hub"),
     to: "/hub",
     leaves: [
+      { to: "/hub/students", label: "Student Hub" },
+      { to: "/hub/developers", label: "Developer Hub" },
+      { to: "/hub/creators", label: "Creator Hub" },
+      { to: "/hub/professionals", label: "Professional Hub" },
+      { to: "/hub/founders", label: "Founders Hub" },
+      { to: "/hub/india", label: "India Hub" },
+      { to: "/hub/designers", label: "Designers Hub" },
+      { to: "/hub/finance", label: "Finance Hub" },
+      { to: "/hub/health", label: "Health Hub" },
       { to: "/hub/fun", label: "Fun Sites" },
       { to: "/hub/islam", label: "Islam Hub" },
       { to: "/hub/urdu", label: "Urdu Hub" },
       { to: "/hub/quotes", label: "Quotes Hub" },
+      { to: "/hub/arabic", label: "Arabic Hub" },
     ],
   },
   {
     id: "commands",
     label: "Commands",
     icon: Terminal,
-    match: starts("/explore") || starts("/search") || starts("/find") || starts("/c/"),
+    match: starts("/explore") || starts("/search") || starts("/find") || starts("/c/") || starts("/collections") || starts("/recent") || starts("/favorites"),
     to: "/explore",
+    badge: "5,682",
     leaves: [
       { to: "/search", label: "Search" },
       { to: "/find", label: "Find" },
@@ -132,9 +143,11 @@ export const NAV_GROUPS: NavGroup[] = [
       starts("/live") ||
       starts("/quiz") ||
       starts("/glossary") ||
-      starts("/graph"),
+      starts("/graph") ||
+      starts("/tools/finder"),
     to: "/ai-tools",
     leaves: [
+      { to: "/tools/finder", label: "Find Anything", badge: "New" },
       { to: "/ai-tools", label: "AI Tools", badge: "100+" },
       { to: "/workflow", label: "AI Workflows", badge: "New" },
       { to: "/roadmaps", label: "Roadmaps" },
