@@ -67,10 +67,21 @@ export const PLAY_SECTIONS: PlaySection[] = [
   },
   {
     title: "Word & Puzzle",
-    icon: "🧠",
+    icon: "🧩",
     games: [
       { slug: "hangman", name: "Hangman", desc: "Guess the hidden word one letter at a time", icon: "🔤", players: "Solo" },
       { slug: "word-guess", name: "Word Guess", desc: "Crack the 5-letter word in six tries", icon: "📝", players: "Solo" },
+    ],
+  },
+  {
+    title: "Brain Training",
+    icon: "🧠",
+    games: [
+      { slug: "memory-palace", name: "Memory Palace", desc: "Place items in rooms, then recall every room - method of loci", icon: "🏛️", players: "Solo" },
+      { slug: "stroop-test", name: "Stroop Test", desc: "The 1935 psychology classic - name the ink, fight the reflex", icon: "🌈", players: "Solo" },
+      { slug: "stop-the-color", name: "Stop the Color", desc: "Quick-fire Stroop - 30 seconds, most correct taps wins", icon: "🎨", players: "Solo" },
+      { slug: "digit-span", name: "Digit Span", desc: "Digits flash once - type them back, forward or reversed", icon: "🔢", players: "Solo" },
+      { slug: "schulte-table", name: "Schulte Table", desc: "Tap 1-N in order, eyes fixed on centre - pilot vision drill", icon: "🎯", players: "Solo" },
     ],
   },
   {
@@ -79,7 +90,6 @@ export const PLAY_SECTIONS: PlaySection[] = [
     games: [
       { slug: "perfect-circle", name: "Perfect Circle", desc: "Draw a circle, get judged. Brutally. One stroke", icon: "⭕", players: "Solo" },
       { slug: "password-game", name: "The Password Game", desc: "25 escalating rules. Keep them ALL true at once", icon: "🔑", players: "Solo" },
-      { slug: "stop-the-color", name: "Stop the Color", desc: "Tap the ink colour, not the word - the Stroop fight", icon: "🎨", players: "Solo" },
       { slug: "kindle", name: "Kindle", desc: "Drag to spark glowing embers - a zen fireplace", icon: "🕯️", players: "Solo" },
       { slug: "guess-the-year", name: "Guess the Year", desc: "10 famous moments - how close to the real year?", icon: "📅", players: "Solo" },
       { slug: "cosmic-dive", name: "Cosmic Dive", desc: "Scroll from Earth to the edge of the universe", icon: "🌌", players: "Solo" },

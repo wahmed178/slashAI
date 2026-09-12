@@ -78,6 +78,7 @@ import { Route as PlayCosmicDiveRouteImport } from './routes/play.cosmic-dive'
 import { Route as PlayCricketRouteImport } from './routes/play.cricket'
 import { Route as PlayDiceRouteImport } from './routes/play.dice'
 import { Route as PlayDiceDuelRouteImport } from './routes/play.dice-duel'
+import { Route as PlayDigitSpanRouteImport } from './routes/play.digit-span'
 import { Route as PlayDotsBoxesRouteImport } from './routes/play.dots-boxes'
 import { Route as PlayEmojiPhraseRouteImport } from './routes/play.emoji-phrase'
 import { Route as PlayFakeOrFactRouteImport } from './routes/play.fake-or-fact'
@@ -91,6 +92,7 @@ import { Route as PlayLightsOutRouteImport } from './routes/play.lights-out'
 import { Route as PlayMathDuelRouteImport } from './routes/play.math-duel'
 import { Route as PlayMazeRunnerRouteImport } from './routes/play.maze-runner'
 import { Route as PlayMemoryMatchRouteImport } from './routes/play.memory-match'
+import { Route as PlayMemoryPalaceRouteImport } from './routes/play.memory-palace'
 import { Route as PlayMinesweeperRouteImport } from './routes/play.minesweeper'
 import { Route as PlayPasswordGameRouteImport } from './routes/play.password-game'
 import { Route as PlayPerfectCircleRouteImport } from './routes/play.perfect-circle'
@@ -99,11 +101,13 @@ import { Route as PlayRandomNumberRouteImport } from './routes/play.random-numbe
 import { Route as PlayReactionTestRouteImport } from './routes/play.reaction-test'
 import { Route as PlayReversiRouteImport } from './routes/play.reversi'
 import { Route as PlayRockPaperScissorsRouteImport } from './routes/play.rock-paper-scissors'
+import { Route as PlaySchulteTableRouteImport } from './routes/play.schulte-table'
 import { Route as PlaySimonRouteImport } from './routes/play.simon'
 import { Route as PlaySkyDashRouteImport } from './routes/play.sky-dash'
 import { Route as PlaySnakeRouteImport } from './routes/play.snake'
 import { Route as PlaySnakesLaddersRouteImport } from './routes/play.snakes-ladders'
 import { Route as PlayStopTheColorRouteImport } from './routes/play.stop-the-color'
+import { Route as PlayStroopTestRouteImport } from './routes/play.stroop-test'
 import { Route as PlayTapTheDifferenceRouteImport } from './routes/play.tap-the-difference'
 import { Route as PlayTenSecondsRouteImport } from './routes/play.ten-seconds'
 import { Route as PlayTicTacToeRouteImport } from './routes/play.tic-tac-toe'
@@ -605,6 +609,11 @@ const PlayDiceDuelRoute = PlayDiceDuelRouteImport.update({
   path: '/dice-duel',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayDigitSpanRoute = PlayDigitSpanRouteImport.update({
+  id: '/digit-span',
+  path: '/digit-span',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayDotsBoxesRoute = PlayDotsBoxesRouteImport.update({
   id: '/dots-boxes',
   path: '/dots-boxes',
@@ -670,6 +679,11 @@ const PlayMemoryMatchRoute = PlayMemoryMatchRouteImport.update({
   path: '/memory-match',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayMemoryPalaceRoute = PlayMemoryPalaceRouteImport.update({
+  id: '/memory-palace',
+  path: '/memory-palace',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayMinesweeperRoute = PlayMinesweeperRouteImport.update({
   id: '/minesweeper',
   path: '/minesweeper',
@@ -710,6 +724,11 @@ const PlayRockPaperScissorsRoute = PlayRockPaperScissorsRouteImport.update({
   path: '/rock-paper-scissors',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlaySchulteTableRoute = PlaySchulteTableRouteImport.update({
+  id: '/schulte-table',
+  path: '/schulte-table',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlaySimonRoute = PlaySimonRouteImport.update({
   id: '/simon',
   path: '/simon',
@@ -733,6 +752,11 @@ const PlaySnakesLaddersRoute = PlaySnakesLaddersRouteImport.update({
 const PlayStopTheColorRoute = PlayStopTheColorRouteImport.update({
   id: '/stop-the-color',
   path: '/stop-the-color',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayStroopTestRoute = PlayStroopTestRouteImport.update({
+  id: '/stroop-test',
+  path: '/stroop-test',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayTapTheDifferenceRoute = PlayTapTheDifferenceRouteImport.update({
@@ -1576,6 +1600,7 @@ export interface FileRoutesByFullPath {
   '/play/cricket': typeof PlayCricketRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
+  '/play/digit-span': typeof PlayDigitSpanRoute
   '/play/dots-boxes': typeof PlayDotsBoxesRoute
   '/play/emoji-phrase': typeof PlayEmojiPhraseRoute
   '/play/fake-or-fact': typeof PlayFakeOrFactRoute
@@ -1589,6 +1614,7 @@ export interface FileRoutesByFullPath {
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
+  '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/password-game': typeof PlayPasswordGameRoute
   '/play/perfect-circle': typeof PlayPerfectCircleRoute
@@ -1597,11 +1623,13 @@ export interface FileRoutesByFullPath {
   '/play/reaction-test': typeof PlayReactionTestRoute
   '/play/reversi': typeof PlayReversiRoute
   '/play/rock-paper-scissors': typeof PlayRockPaperScissorsRoute
+  '/play/schulte-table': typeof PlaySchulteTableRoute
   '/play/simon': typeof PlaySimonRoute
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
   '/play/stop-the-color': typeof PlayStopTheColorRoute
+  '/play/stroop-test': typeof PlayStroopTestRoute
   '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
@@ -1826,6 +1854,7 @@ export interface FileRoutesByTo {
   '/play/cricket': typeof PlayCricketRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
+  '/play/digit-span': typeof PlayDigitSpanRoute
   '/play/dots-boxes': typeof PlayDotsBoxesRoute
   '/play/emoji-phrase': typeof PlayEmojiPhraseRoute
   '/play/fake-or-fact': typeof PlayFakeOrFactRoute
@@ -1839,6 +1868,7 @@ export interface FileRoutesByTo {
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
+  '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/password-game': typeof PlayPasswordGameRoute
   '/play/perfect-circle': typeof PlayPerfectCircleRoute
@@ -1847,11 +1877,13 @@ export interface FileRoutesByTo {
   '/play/reaction-test': typeof PlayReactionTestRoute
   '/play/reversi': typeof PlayReversiRoute
   '/play/rock-paper-scissors': typeof PlayRockPaperScissorsRoute
+  '/play/schulte-table': typeof PlaySchulteTableRoute
   '/play/simon': typeof PlaySimonRoute
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
   '/play/stop-the-color': typeof PlayStopTheColorRoute
+  '/play/stroop-test': typeof PlayStroopTestRoute
   '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
@@ -2079,6 +2111,7 @@ export interface FileRoutesById {
   '/play/cricket': typeof PlayCricketRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
+  '/play/digit-span': typeof PlayDigitSpanRoute
   '/play/dots-boxes': typeof PlayDotsBoxesRoute
   '/play/emoji-phrase': typeof PlayEmojiPhraseRoute
   '/play/fake-or-fact': typeof PlayFakeOrFactRoute
@@ -2092,6 +2125,7 @@ export interface FileRoutesById {
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
+  '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/password-game': typeof PlayPasswordGameRoute
   '/play/perfect-circle': typeof PlayPerfectCircleRoute
@@ -2100,11 +2134,13 @@ export interface FileRoutesById {
   '/play/reaction-test': typeof PlayReactionTestRoute
   '/play/reversi': typeof PlayReversiRoute
   '/play/rock-paper-scissors': typeof PlayRockPaperScissorsRoute
+  '/play/schulte-table': typeof PlaySchulteTableRoute
   '/play/simon': typeof PlaySimonRoute
   '/play/sky-dash': typeof PlaySkyDashRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
   '/play/stop-the-color': typeof PlayStopTheColorRoute
+  '/play/stroop-test': typeof PlayStroopTestRoute
   '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
@@ -2333,6 +2369,7 @@ export interface FileRouteTypes {
     | '/play/cricket'
     | '/play/dice'
     | '/play/dice-duel'
+    | '/play/digit-span'
     | '/play/dots-boxes'
     | '/play/emoji-phrase'
     | '/play/fake-or-fact'
@@ -2346,6 +2383,7 @@ export interface FileRouteTypes {
     | '/play/math-duel'
     | '/play/maze-runner'
     | '/play/memory-match'
+    | '/play/memory-palace'
     | '/play/minesweeper'
     | '/play/password-game'
     | '/play/perfect-circle'
@@ -2354,11 +2392,13 @@ export interface FileRouteTypes {
     | '/play/reaction-test'
     | '/play/reversi'
     | '/play/rock-paper-scissors'
+    | '/play/schulte-table'
     | '/play/simon'
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
     | '/play/stop-the-color'
+    | '/play/stroop-test'
     | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
@@ -2583,6 +2623,7 @@ export interface FileRouteTypes {
     | '/play/cricket'
     | '/play/dice'
     | '/play/dice-duel'
+    | '/play/digit-span'
     | '/play/dots-boxes'
     | '/play/emoji-phrase'
     | '/play/fake-or-fact'
@@ -2596,6 +2637,7 @@ export interface FileRouteTypes {
     | '/play/math-duel'
     | '/play/maze-runner'
     | '/play/memory-match'
+    | '/play/memory-palace'
     | '/play/minesweeper'
     | '/play/password-game'
     | '/play/perfect-circle'
@@ -2604,11 +2646,13 @@ export interface FileRouteTypes {
     | '/play/reaction-test'
     | '/play/reversi'
     | '/play/rock-paper-scissors'
+    | '/play/schulte-table'
     | '/play/simon'
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
     | '/play/stop-the-color'
+    | '/play/stroop-test'
     | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
@@ -2835,6 +2879,7 @@ export interface FileRouteTypes {
     | '/play/cricket'
     | '/play/dice'
     | '/play/dice-duel'
+    | '/play/digit-span'
     | '/play/dots-boxes'
     | '/play/emoji-phrase'
     | '/play/fake-or-fact'
@@ -2848,6 +2893,7 @@ export interface FileRouteTypes {
     | '/play/math-duel'
     | '/play/maze-runner'
     | '/play/memory-match'
+    | '/play/memory-palace'
     | '/play/minesweeper'
     | '/play/password-game'
     | '/play/perfect-circle'
@@ -2856,11 +2902,13 @@ export interface FileRouteTypes {
     | '/play/reaction-test'
     | '/play/reversi'
     | '/play/rock-paper-scissors'
+    | '/play/schulte-table'
     | '/play/simon'
     | '/play/sky-dash'
     | '/play/snake'
     | '/play/snakes-ladders'
     | '/play/stop-the-color'
+    | '/play/stroop-test'
     | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
@@ -3572,6 +3620,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayDiceDuelRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/digit-span': {
+      id: '/play/digit-span'
+      path: '/digit-span'
+      fullPath: '/play/digit-span'
+      preLoaderRoute: typeof PlayDigitSpanRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/dots-boxes': {
       id: '/play/dots-boxes'
       path: '/dots-boxes'
@@ -3663,6 +3718,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayMemoryMatchRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/memory-palace': {
+      id: '/play/memory-palace'
+      path: '/memory-palace'
+      fullPath: '/play/memory-palace'
+      preLoaderRoute: typeof PlayMemoryPalaceRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/minesweeper': {
       id: '/play/minesweeper'
       path: '/minesweeper'
@@ -3719,6 +3781,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayRockPaperScissorsRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/schulte-table': {
+      id: '/play/schulte-table'
+      path: '/schulte-table'
+      fullPath: '/play/schulte-table'
+      preLoaderRoute: typeof PlaySchulteTableRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/simon': {
       id: '/play/simon'
       path: '/simon'
@@ -3752,6 +3821,13 @@ declare module '@tanstack/react-router' {
       path: '/stop-the-color'
       fullPath: '/play/stop-the-color'
       preLoaderRoute: typeof PlayStopTheColorRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/stroop-test': {
+      id: '/play/stroop-test'
+      path: '/stroop-test'
+      fullPath: '/play/stroop-test'
+      preLoaderRoute: typeof PlayStroopTestRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/tap-the-difference': {
@@ -4857,6 +4933,7 @@ interface PlayRouteChildren {
   PlayCricketRoute: typeof PlayCricketRoute
   PlayDiceRoute: typeof PlayDiceRoute
   PlayDiceDuelRoute: typeof PlayDiceDuelRoute
+  PlayDigitSpanRoute: typeof PlayDigitSpanRoute
   PlayDotsBoxesRoute: typeof PlayDotsBoxesRoute
   PlayEmojiPhraseRoute: typeof PlayEmojiPhraseRoute
   PlayFakeOrFactRoute: typeof PlayFakeOrFactRoute
@@ -4870,6 +4947,7 @@ interface PlayRouteChildren {
   PlayMathDuelRoute: typeof PlayMathDuelRoute
   PlayMazeRunnerRoute: typeof PlayMazeRunnerRoute
   PlayMemoryMatchRoute: typeof PlayMemoryMatchRoute
+  PlayMemoryPalaceRoute: typeof PlayMemoryPalaceRoute
   PlayMinesweeperRoute: typeof PlayMinesweeperRoute
   PlayPasswordGameRoute: typeof PlayPasswordGameRoute
   PlayPerfectCircleRoute: typeof PlayPerfectCircleRoute
@@ -4878,11 +4956,13 @@ interface PlayRouteChildren {
   PlayReactionTestRoute: typeof PlayReactionTestRoute
   PlayReversiRoute: typeof PlayReversiRoute
   PlayRockPaperScissorsRoute: typeof PlayRockPaperScissorsRoute
+  PlaySchulteTableRoute: typeof PlaySchulteTableRoute
   PlaySimonRoute: typeof PlaySimonRoute
   PlaySkyDashRoute: typeof PlaySkyDashRoute
   PlaySnakeRoute: typeof PlaySnakeRoute
   PlaySnakesLaddersRoute: typeof PlaySnakesLaddersRoute
   PlayStopTheColorRoute: typeof PlayStopTheColorRoute
+  PlayStroopTestRoute: typeof PlayStroopTestRoute
   PlayTapTheDifferenceRoute: typeof PlayTapTheDifferenceRoute
   PlayTenSecondsRoute: typeof PlayTenSecondsRoute
   PlayTicTacToeRoute: typeof PlayTicTacToeRoute
@@ -4908,6 +4988,7 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayCricketRoute: PlayCricketRoute,
   PlayDiceRoute: PlayDiceRoute,
   PlayDiceDuelRoute: PlayDiceDuelRoute,
+  PlayDigitSpanRoute: PlayDigitSpanRoute,
   PlayDotsBoxesRoute: PlayDotsBoxesRoute,
   PlayEmojiPhraseRoute: PlayEmojiPhraseRoute,
   PlayFakeOrFactRoute: PlayFakeOrFactRoute,
@@ -4921,6 +5002,7 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayMathDuelRoute: PlayMathDuelRoute,
   PlayMazeRunnerRoute: PlayMazeRunnerRoute,
   PlayMemoryMatchRoute: PlayMemoryMatchRoute,
+  PlayMemoryPalaceRoute: PlayMemoryPalaceRoute,
   PlayMinesweeperRoute: PlayMinesweeperRoute,
   PlayPasswordGameRoute: PlayPasswordGameRoute,
   PlayPerfectCircleRoute: PlayPerfectCircleRoute,
@@ -4929,11 +5011,13 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayReactionTestRoute: PlayReactionTestRoute,
   PlayReversiRoute: PlayReversiRoute,
   PlayRockPaperScissorsRoute: PlayRockPaperScissorsRoute,
+  PlaySchulteTableRoute: PlaySchulteTableRoute,
   PlaySimonRoute: PlaySimonRoute,
   PlaySkyDashRoute: PlaySkyDashRoute,
   PlaySnakeRoute: PlaySnakeRoute,
   PlaySnakesLaddersRoute: PlaySnakesLaddersRoute,
   PlayStopTheColorRoute: PlayStopTheColorRoute,
+  PlayStroopTestRoute: PlayStroopTestRoute,
   PlayTapTheDifferenceRoute: PlayTapTheDifferenceRoute,
   PlayTenSecondsRoute: PlayTenSecondsRoute,
   PlayTicTacToeRoute: PlayTicTacToeRoute,

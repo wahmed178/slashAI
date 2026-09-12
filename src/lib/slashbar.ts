@@ -202,7 +202,7 @@ export const SLASH_APPS: SlashApp[] = [
     slug: "brain-boosters",
     name: "Slash Brain Boosters",
     emoji: "🧠",
-    desc: "Daily cognitive workouts - patterns, memory chains, focus drills.",
+    desc: "Memory palace, Stroop test, digit span - playable brain training plus daily drills.",
     tint: T.fuchsia,
     widgets: [
       {

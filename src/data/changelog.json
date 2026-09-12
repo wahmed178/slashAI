@@ -1,6 +1,15 @@
 {
-  "version": "2.21.0",
+  "version": "2.22.0",
   "entries": [
+    {
+      "version": "2.22.0",
+      "date": "2026-09-12",
+      "changes": [
+        "New Brain Training section in SlashPlay with 4 proper cognitive games: Memory Palace (method-of-loci room recall with growing levels), Stroop Test (the 1935 psychology classic with Practice/Sprint/Precision modes and reaction-time stats), Digit Span (forward and backward working-memory test, the real psychologist's format) and Schulte Table (3x3-6x6 peripheral-vision drill with per-size records)",
+        "Slash Brain Boosters page now opens with the playable brain games embedded at the top, above the existing teasers and drills",
+        "SlashPlay grows to 51 games - Stop the Color joins the Brain Training line-up as the quick-fire Stroop variant"
+      ]
+    },
     {
       "version": "2.21.0",
       "date": "2026-09-12",

@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import { SlashBarWidget } from "@/components/library/SlashBarWidget";
 import { ALL_SLASH_APPS, appBySlug, type Widget } from "@/lib/slashbar";
+import { PLAY_SECTIONS } from "@/lib/slashplay";
 
 export const Route = createFileRoute("/slash/$app")({
   loader: ({ params }) => {
@@ -48,6 +49,11 @@ function AppNotFound() {
 
 function SlashAppPage() {
   const { app } = Route.useLoaderData();
+  // Brain Boosters embeds its playable games (Brain Training section) inline
+  const games =
+    app.slug === "brain-boosters"
+      ? PLAY_SECTIONS.find((s) => s.title === "Brain Training")?.games ?? []
+      : [];
 
   return (
     <AppShell wide hideHeaderSearch title={app.name}>
@@ -76,6 +82,31 @@ function SlashAppPage() {
           </div>
         </div>
       </header>
+
+      {games.length > 0 && (
+        <section className="mt-5">
+          <h2 className="text-sm font-semibold tracking-wide uppercase" style={{ color: app.tint.hex }}>
+            🎮 Playable brain games
+          </h2>
+          <div className="cat-rule mt-1.5 w-24" />
+          <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+            {games.map((g) => (
+              <Link
+                key={g.slug}
+                to="/play/$game"
+                params={{ game: g.slug }}
+                className="ripple-press flex items-center gap-2.5 rounded-xl border bg-surface p-3 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+              >
+                <span className="text-[22px]">{g.icon}</span>
+                <span className="min-w-0">
+                  <span className="block truncate text-[13px] font-bold text-foreground">{g.name}</span>
+                  <span className="line-clamp-2 block text-[11px] leading-snug text-muted-foreground">{g.desc}</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <div className="stagger-children mt-5 grid gap-3 lg:grid-cols-2">
         {app.widgets.map((w: Widget) => (
