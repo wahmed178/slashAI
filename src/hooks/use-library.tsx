@@ -124,7 +124,9 @@ interface Settings {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  theme: "dark",
+  // first-run look: neo-brutalism (paper + ink). Returning users keep whatever
+  // they picked — their saved settings simply win over this default.
+  theme: "brutal",
   density: "comfortable",
   accent: "teal",
   view: "grid",

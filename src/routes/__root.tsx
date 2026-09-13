@@ -187,7 +187,7 @@ function RootShell({ children }: { children: ReactNode }) {
         {/* FOUC prevention: apply theme before any paint */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem('slashai-theme');try{var s=JSON.parse(localStorage.getItem('slashai.settings')||'{}');if(s&&typeof s.theme==='string')t=s.theme}catch(e){}if(t==='light'){document.documentElement.classList.add('light')}else if(t==='amoled'){document.documentElement.classList.add('amoled')}else if(t==='glass'){document.documentElement.classList.add('glass')}}catch(e){}`,
+            __html: `try{var t='brutal';try{var s=JSON.parse(localStorage.getItem('slashai.settings')||'{}');if(s&&typeof s.theme==='string')t=s.theme}catch(e){}if(t==='light'){document.documentElement.classList.add('light')}else if(t==='amoled'){document.documentElement.classList.add('amoled')}else if(t==='glass'){document.documentElement.classList.add('glass')}else if(t==='brutal'){document.documentElement.classList.add('brutal')}}catch(e){}`,
           }}
         />
         <HeadContent />

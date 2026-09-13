@@ -172,9 +172,11 @@ function breadcrumbsFor(pathname: string): Crumb[] | null {
   return null;
 }
 
-function Breadcrumbs({ pathname }: { pathname: string }) {
+function Breadcrumbs({ pathname, trailing }: { pathname: string; trailing?: ReactNode }) {
   const crumbs = breadcrumbsFor(pathname);
-  if (!crumbs) return null;
+  if (!crumbs) {
+    return trailing ? <div className="mb-4">{trailing}</div> : null;
+  }
   return (
     <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[12px] text-muted-foreground scrollbar-none">
       {crumbs.map((c, i) => {
@@ -192,6 +194,7 @@ function Breadcrumbs({ pathname }: { pathname: string }) {
           </span>
         );
       })}
+      {trailing && <span className="ml-1.5 inline-flex shrink-0 items-center">{trailing}</span>}
     </nav>
   );
 }
@@ -268,6 +271,28 @@ const KIND_LABEL: Record<"tool" | "game" | "app", string> = {
   app: "app",
 };
 
+/** small Save pill that sits next to the page label on tool/game/app screens */
+function ScreenStar({ fav, label, onToggle }: { fav: boolean; label: string; onToggle: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={fav}
+      aria-label={fav ? `Remove this ${label} from Saved` : `Save this ${label} to Saved`}
+      title={fav ? "Saved — tap to remove" : `Save this ${label} to your favorites`}
+      className="ripple-press inline-flex h-6 shrink-0 items-center gap-1 rounded-full border px-2 text-[11px] font-semibold transition-colors"
+      style={{
+        borderColor: fav ? "color-mix(in oklab, var(--primary) 40%, transparent)" : "var(--border)",
+        background: fav ? "color-mix(in oklab, var(--primary) 12%, transparent)" : "var(--surface)",
+        color: fav ? "var(--primary)" : "var(--muted-foreground)",
+      }}
+    >
+      <Star className="size-3" fill={fav ? "currentColor" : "none"} />
+      {fav ? "Saved" : "Save"}
+    </button>
+  );
+}
+
 export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [slashbarOpen, setSlashbarOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -336,20 +361,6 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
 
           {/* right side - quick links, same on every screen */}
           <div className="ml-auto flex items-center gap-0.5">
-            {/* star the open tool / game / slash app - only on those screens */}
-            {screen && (
-              <button
-                type="button"
-                onClick={onStarScreen}
-                aria-pressed={screenFav}
-                aria-label={screenFav ? `Remove this ${kindLabel} from Saved` : `Save this ${kindLabel} to Saved`}
-                title={screenFav ? `Saved — tap to remove` : `Save this ${kindLabel} to your favorites`}
-                className="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-surface-elevated focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                style={{ color: screenFav ? "var(--primary)" : "var(--muted-foreground)" }}
-              >
-                <Star className="size-[19px]" fill={screenFav ? "currentColor" : "none"} />
-              </button>
-            )}
             <ThemeToggleButton />
             <Link
               to="/promo"
@@ -394,7 +405,11 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
 
       <main className={`mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}>
         <div className="w-full px-4 py-6 md:px-6 md:py-8" style={{ paddingBottom: "calc(62px + env(safe-area-inset-bottom) + 20px)" }}>
-          <Breadcrumbs pathname={pathname} />
+          {/* the Save pill lives next to the page label (breadcrumbs), not the header */}
+          <Breadcrumbs
+            pathname={pathname}
+            trailing={screen ? <ScreenStar fav={screenFav} label={kindLabel} onToggle={onStarScreen} /> : undefined}
+          />
           {children}
         </div>
       </main>

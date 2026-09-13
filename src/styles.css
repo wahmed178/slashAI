@@ -1104,3 +1104,60 @@ a[id], section[id], [id^="section"] {
 :root[data-motion="reduced"] .slashbar-overlay {
   animation: none;
 }
+
+/* ══════════════════════════════════════════════════════════
+   Curiosity tools — Hacker Typer / Pixel Thoughts / Void
+   ══════════════════════════════════════════════════════════ */
+
+/* Pixel Thoughts: a released worry literally shrinks into the distance */
+@keyframes pixel-shrink {
+  from {
+    font-size: 1.05rem;
+    opacity: 0.95;
+    filter: blur(0);
+  }
+  50% {
+    font-size: 0.78rem;
+    opacity: 0.65;
+  }
+  to {
+    font-size: 0.45rem;
+    opacity: 0.22;
+    filter: blur(0.6px);
+  }
+}
+.pixel-shrink {
+  animation: pixel-shrink 90s linear forwards;
+}
+:root[data-motion="reduced"] .pixel-shrink {
+  animation: none;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* Void: released text dissolves into nothing */
+@keyframes void-dissolve {
+  to {
+    opacity: 0;
+    filter: blur(6px);
+    letter-spacing: 0.35em;
+  }
+}
+.void-text.dissolving {
+  animation: void-dissolve 1.1s ease-out forwards;
+}
+
+/* Hacker Typer: blinking terminal caret */
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret-blink {
+  animation: caret-blink 1s step-end infinite;
+}

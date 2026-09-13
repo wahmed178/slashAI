@@ -144,6 +144,7 @@ import { Route as ToolsCronRouteImport } from './routes/tools.cron'
 import { Route as ToolsCsvToJsonRouteImport } from './routes/tools.csv-to-json'
 import { Route as ToolsCurrencyHistoryRouteImport } from './routes/tools.currency-history'
 import { Route as ToolsCvRouteImport } from './routes/tools.cv'
+import { Route as ToolsDangerousWritingRouteImport } from './routes/tools.dangerous-writing'
 import { Route as ToolsDeepSeaRouteImport } from './routes/tools.deep-sea'
 import { Route as ToolsDiffRouteImport } from './routes/tools.diff'
 import { Route as ToolsDuaMakerRouteImport } from './routes/tools.dua-maker'
@@ -163,6 +164,7 @@ import { Route as ToolsGradientRouteImport } from './routes/tools.gradient'
 import { Route as ToolsGstCalculatorRouteImport } from './routes/tools.gst-calculator'
 import { Route as ToolsHabitStackRouteImport } from './routes/tools.habit-stack'
 import { Route as ToolsHabitsRouteImport } from './routes/tools.habits'
+import { Route as ToolsHackerTyperRouteImport } from './routes/tools.hacker-typer'
 import { Route as ToolsHashGeneratorRouteImport } from './routes/tools.hash-generator'
 import { Route as ToolsHealthTrackerRouteImport } from './routes/tools.health-tracker'
 import { Route as ToolsHijriRouteImport } from './routes/tools.hijri'
@@ -176,6 +178,7 @@ import { Route as ToolsIntervalTimerRouteImport } from './routes/tools.interval-
 import { Route as ToolsInterviewRouteImport } from './routes/tools.interview'
 import { Route as ToolsInvoiceRouteImport } from './routes/tools.invoice'
 import { Route as ToolsIpRouteImport } from './routes/tools.ip'
+import { Route as ToolsIsItRouteImport } from './routes/tools.is-it'
 import { Route as ToolsJsonDiffRouteImport } from './routes/tools.json-diff'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
 import { Route as ToolsJsonYamlRouteImport } from './routes/tools.json-yaml'
@@ -207,6 +210,7 @@ import { Route as ToolsPasswordGenRouteImport } from './routes/tools.password-ge
 import { Route as ToolsPercentageRouteImport } from './routes/tools.percentage'
 import { Route as ToolsPeriodicTableRouteImport } from './routes/tools.periodic-table'
 import { Route as ToolsPitchRouteImport } from './routes/tools.pitch'
+import { Route as ToolsPixelThoughtsRouteImport } from './routes/tools.pixel-thoughts'
 import { Route as ToolsPlantRouteImport } from './routes/tools.plant'
 import { Route as ToolsPollRouteImport } from './routes/tools.poll'
 import { Route as ToolsPomodoroRouteImport } from './routes/tools.pomodoro'
@@ -228,6 +232,7 @@ import { Route as ToolsScannerRouteImport } from './routes/tools.scanner'
 import { Route as ToolsScreenshotRouteImport } from './routes/tools.screenshot'
 import { Route as ToolsShortcutRouteImport } from './routes/tools.shortcut'
 import { Route as ToolsSignatureMakerRouteImport } from './routes/tools.signature-maker'
+import { Route as ToolsSilkRouteImport } from './routes/tools.silk'
 import { Route as ToolsSipCalculatorRouteImport } from './routes/tools.sip-calculator'
 import { Route as ToolsSizeRouteImport } from './routes/tools.size'
 import { Route as ToolsSmartPasteRouteImport } from './routes/tools.smart-paste'
@@ -253,6 +258,7 @@ import { Route as ToolsUnitConverterRouteImport } from './routes/tools.unit-conv
 import { Route as ToolsUpiRouteImport } from './routes/tools.upi'
 import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
 import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools.uuid-generator'
+import { Route as ToolsVoidRouteImport } from './routes/tools.void'
 import { Route as ToolsWaterTrackerRouteImport } from './routes/tools.water-tracker'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
 import { Route as ToolsWhiteboardRouteImport } from './routes/tools.whiteboard'
@@ -939,6 +945,11 @@ const ToolsCvRoute = ToolsCvRouteImport.update({
   path: '/cv',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsDangerousWritingRoute = ToolsDangerousWritingRouteImport.update({
+  id: '/dangerous-writing',
+  path: '/dangerous-writing',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsDeepSeaRoute = ToolsDeepSeaRouteImport.update({
   id: '/deep-sea',
   path: '/deep-sea',
@@ -1034,6 +1045,11 @@ const ToolsHabitsRoute = ToolsHabitsRouteImport.update({
   path: '/habits',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsHackerTyperRoute = ToolsHackerTyperRouteImport.update({
+  id: '/hacker-typer',
+  path: '/hacker-typer',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsHashGeneratorRoute = ToolsHashGeneratorRouteImport.update({
   id: '/hash-generator',
   path: '/hash-generator',
@@ -1097,6 +1113,11 @@ const ToolsInvoiceRoute = ToolsInvoiceRouteImport.update({
 const ToolsIpRoute = ToolsIpRouteImport.update({
   id: '/ip',
   path: '/ip',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsIsItRoute = ToolsIsItRouteImport.update({
+  id: '/is-it',
+  path: '/is-it',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsJsonDiffRoute = ToolsJsonDiffRouteImport.update({
@@ -1254,6 +1275,11 @@ const ToolsPitchRoute = ToolsPitchRouteImport.update({
   path: '/pitch',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsPixelThoughtsRoute = ToolsPixelThoughtsRouteImport.update({
+  id: '/pixel-thoughts',
+  path: '/pixel-thoughts',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsPlantRoute = ToolsPlantRouteImport.update({
   id: '/plant',
   path: '/plant',
@@ -1357,6 +1383,11 @@ const ToolsShortcutRoute = ToolsShortcutRouteImport.update({
 const ToolsSignatureMakerRoute = ToolsSignatureMakerRouteImport.update({
   id: '/signature-maker',
   path: '/signature-maker',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsSilkRoute = ToolsSilkRouteImport.update({
+  id: '/silk',
+  path: '/silk',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsSipCalculatorRoute = ToolsSipCalculatorRouteImport.update({
@@ -1482,6 +1513,11 @@ const ToolsUrlEncoderRoute = ToolsUrlEncoderRouteImport.update({
 const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
   id: '/uuid-generator',
   path: '/uuid-generator',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsVoidRoute = ToolsVoidRouteImport.update({
+  id: '/void',
+  path: '/void',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsWaterTrackerRoute = ToolsWaterTrackerRouteImport.update({
@@ -1664,6 +1700,7 @@ export interface FileRoutesByFullPath {
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/dangerous-writing': typeof ToolsDangerousWritingRoute
   '/tools/deep-sea': typeof ToolsDeepSeaRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
@@ -1683,6 +1720,7 @@ export interface FileRoutesByFullPath {
   '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
   '/tools/habit-stack': typeof ToolsHabitStackRoute
   '/tools/habits': typeof ToolsHabitsRoute
+  '/tools/hacker-typer': typeof ToolsHackerTyperRoute
   '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
@@ -1696,6 +1734,7 @@ export interface FileRoutesByFullPath {
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/is-it': typeof ToolsIsItRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
@@ -1727,6 +1766,7 @@ export interface FileRoutesByFullPath {
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/periodic-table': typeof ToolsPeriodicTableRoute
   '/tools/pitch': typeof ToolsPitchRoute
+  '/tools/pixel-thoughts': typeof ToolsPixelThoughtsRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
@@ -1748,6 +1788,7 @@ export interface FileRoutesByFullPath {
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/signature-maker': typeof ToolsSignatureMakerRoute
+  '/tools/silk': typeof ToolsSilkRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
@@ -1773,6 +1814,7 @@ export interface FileRoutesByFullPath {
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/tools/void': typeof ToolsVoidRoute
   '/tools/water-tracker': typeof ToolsWaterTrackerRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
@@ -1918,6 +1960,7 @@ export interface FileRoutesByTo {
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/dangerous-writing': typeof ToolsDangerousWritingRoute
   '/tools/deep-sea': typeof ToolsDeepSeaRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
@@ -1937,6 +1980,7 @@ export interface FileRoutesByTo {
   '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
   '/tools/habit-stack': typeof ToolsHabitStackRoute
   '/tools/habits': typeof ToolsHabitsRoute
+  '/tools/hacker-typer': typeof ToolsHackerTyperRoute
   '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
@@ -1950,6 +1994,7 @@ export interface FileRoutesByTo {
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/is-it': typeof ToolsIsItRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
@@ -1981,6 +2026,7 @@ export interface FileRoutesByTo {
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/periodic-table': typeof ToolsPeriodicTableRoute
   '/tools/pitch': typeof ToolsPitchRoute
+  '/tools/pixel-thoughts': typeof ToolsPixelThoughtsRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
@@ -2002,6 +2048,7 @@ export interface FileRoutesByTo {
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/signature-maker': typeof ToolsSignatureMakerRoute
+  '/tools/silk': typeof ToolsSilkRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
@@ -2027,6 +2074,7 @@ export interface FileRoutesByTo {
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/tools/void': typeof ToolsVoidRoute
   '/tools/water-tracker': typeof ToolsWaterTrackerRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
@@ -2175,6 +2223,7 @@ export interface FileRoutesById {
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/currency-history': typeof ToolsCurrencyHistoryRoute
   '/tools/cv': typeof ToolsCvRoute
+  '/tools/dangerous-writing': typeof ToolsDangerousWritingRoute
   '/tools/deep-sea': typeof ToolsDeepSeaRoute
   '/tools/diff': typeof ToolsDiffRoute
   '/tools/dua-maker': typeof ToolsDuaMakerRoute
@@ -2194,6 +2243,7 @@ export interface FileRoutesById {
   '/tools/gst-calculator': typeof ToolsGstCalculatorRoute
   '/tools/habit-stack': typeof ToolsHabitStackRoute
   '/tools/habits': typeof ToolsHabitsRoute
+  '/tools/hacker-typer': typeof ToolsHackerTyperRoute
   '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/health-tracker': typeof ToolsHealthTrackerRoute
   '/tools/hijri': typeof ToolsHijriRoute
@@ -2207,6 +2257,7 @@ export interface FileRoutesById {
   '/tools/interview': typeof ToolsInterviewRoute
   '/tools/invoice': typeof ToolsInvoiceRoute
   '/tools/ip': typeof ToolsIpRoute
+  '/tools/is-it': typeof ToolsIsItRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
@@ -2238,6 +2289,7 @@ export interface FileRoutesById {
   '/tools/percentage': typeof ToolsPercentageRoute
   '/tools/periodic-table': typeof ToolsPeriodicTableRoute
   '/tools/pitch': typeof ToolsPitchRoute
+  '/tools/pixel-thoughts': typeof ToolsPixelThoughtsRoute
   '/tools/plant': typeof ToolsPlantRoute
   '/tools/poll': typeof ToolsPollRoute
   '/tools/pomodoro': typeof ToolsPomodoroRoute
@@ -2259,6 +2311,7 @@ export interface FileRoutesById {
   '/tools/screenshot': typeof ToolsScreenshotRoute
   '/tools/shortcut': typeof ToolsShortcutRoute
   '/tools/signature-maker': typeof ToolsSignatureMakerRoute
+  '/tools/silk': typeof ToolsSilkRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
@@ -2284,6 +2337,7 @@ export interface FileRoutesById {
   '/tools/upi': typeof ToolsUpiRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
+  '/tools/void': typeof ToolsVoidRoute
   '/tools/water-tracker': typeof ToolsWaterTrackerRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/whiteboard': typeof ToolsWhiteboardRoute
@@ -2433,6 +2487,7 @@ export interface FileRouteTypes {
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/dangerous-writing'
     | '/tools/deep-sea'
     | '/tools/diff'
     | '/tools/dua-maker'
@@ -2452,6 +2507,7 @@ export interface FileRouteTypes {
     | '/tools/gst-calculator'
     | '/tools/habit-stack'
     | '/tools/habits'
+    | '/tools/hacker-typer'
     | '/tools/hash-generator'
     | '/tools/health-tracker'
     | '/tools/hijri'
@@ -2465,6 +2521,7 @@ export interface FileRouteTypes {
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/is-it'
     | '/tools/json-diff'
     | '/tools/json-formatter'
     | '/tools/json-yaml'
@@ -2496,6 +2553,7 @@ export interface FileRouteTypes {
     | '/tools/percentage'
     | '/tools/periodic-table'
     | '/tools/pitch'
+    | '/tools/pixel-thoughts'
     | '/tools/plant'
     | '/tools/poll'
     | '/tools/pomodoro'
@@ -2517,6 +2575,7 @@ export interface FileRouteTypes {
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/signature-maker'
+    | '/tools/silk'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
@@ -2542,6 +2601,7 @@ export interface FileRouteTypes {
     | '/tools/upi'
     | '/tools/url-encoder'
     | '/tools/uuid-generator'
+    | '/tools/void'
     | '/tools/water-tracker'
     | '/tools/watermark'
     | '/tools/whiteboard'
@@ -2687,6 +2747,7 @@ export interface FileRouteTypes {
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/dangerous-writing'
     | '/tools/deep-sea'
     | '/tools/diff'
     | '/tools/dua-maker'
@@ -2706,6 +2767,7 @@ export interface FileRouteTypes {
     | '/tools/gst-calculator'
     | '/tools/habit-stack'
     | '/tools/habits'
+    | '/tools/hacker-typer'
     | '/tools/hash-generator'
     | '/tools/health-tracker'
     | '/tools/hijri'
@@ -2719,6 +2781,7 @@ export interface FileRouteTypes {
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/is-it'
     | '/tools/json-diff'
     | '/tools/json-formatter'
     | '/tools/json-yaml'
@@ -2750,6 +2813,7 @@ export interface FileRouteTypes {
     | '/tools/percentage'
     | '/tools/periodic-table'
     | '/tools/pitch'
+    | '/tools/pixel-thoughts'
     | '/tools/plant'
     | '/tools/poll'
     | '/tools/pomodoro'
@@ -2771,6 +2835,7 @@ export interface FileRouteTypes {
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/signature-maker'
+    | '/tools/silk'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
@@ -2796,6 +2861,7 @@ export interface FileRouteTypes {
     | '/tools/upi'
     | '/tools/url-encoder'
     | '/tools/uuid-generator'
+    | '/tools/void'
     | '/tools/water-tracker'
     | '/tools/watermark'
     | '/tools/whiteboard'
@@ -2943,6 +3009,7 @@ export interface FileRouteTypes {
     | '/tools/csv-to-json'
     | '/tools/currency-history'
     | '/tools/cv'
+    | '/tools/dangerous-writing'
     | '/tools/deep-sea'
     | '/tools/diff'
     | '/tools/dua-maker'
@@ -2962,6 +3029,7 @@ export interface FileRouteTypes {
     | '/tools/gst-calculator'
     | '/tools/habit-stack'
     | '/tools/habits'
+    | '/tools/hacker-typer'
     | '/tools/hash-generator'
     | '/tools/health-tracker'
     | '/tools/hijri'
@@ -2975,6 +3043,7 @@ export interface FileRouteTypes {
     | '/tools/interview'
     | '/tools/invoice'
     | '/tools/ip'
+    | '/tools/is-it'
     | '/tools/json-diff'
     | '/tools/json-formatter'
     | '/tools/json-yaml'
@@ -3006,6 +3075,7 @@ export interface FileRouteTypes {
     | '/tools/percentage'
     | '/tools/periodic-table'
     | '/tools/pitch'
+    | '/tools/pixel-thoughts'
     | '/tools/plant'
     | '/tools/poll'
     | '/tools/pomodoro'
@@ -3027,6 +3097,7 @@ export interface FileRouteTypes {
     | '/tools/screenshot'
     | '/tools/shortcut'
     | '/tools/signature-maker'
+    | '/tools/silk'
     | '/tools/sip-calculator'
     | '/tools/size'
     | '/tools/smart-paste'
@@ -3052,6 +3123,7 @@ export interface FileRouteTypes {
     | '/tools/upi'
     | '/tools/url-encoder'
     | '/tools/uuid-generator'
+    | '/tools/void'
     | '/tools/water-tracker'
     | '/tools/watermark'
     | '/tools/whiteboard'
@@ -4082,6 +4154,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCvRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/dangerous-writing': {
+      id: '/tools/dangerous-writing'
+      path: '/dangerous-writing'
+      fullPath: '/tools/dangerous-writing'
+      preLoaderRoute: typeof ToolsDangerousWritingRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/deep-sea': {
       id: '/tools/deep-sea'
       path: '/deep-sea'
@@ -4215,6 +4294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsHabitsRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/hacker-typer': {
+      id: '/tools/hacker-typer'
+      path: '/hacker-typer'
+      fullPath: '/tools/hacker-typer'
+      preLoaderRoute: typeof ToolsHackerTyperRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/hash-generator': {
       id: '/tools/hash-generator'
       path: '/hash-generator'
@@ -4304,6 +4390,13 @@ declare module '@tanstack/react-router' {
       path: '/ip'
       fullPath: '/tools/ip'
       preLoaderRoute: typeof ToolsIpRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/is-it': {
+      id: '/tools/is-it'
+      path: '/is-it'
+      fullPath: '/tools/is-it'
+      preLoaderRoute: typeof ToolsIsItRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/json-diff': {
@@ -4523,6 +4616,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsPitchRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/pixel-thoughts': {
+      id: '/tools/pixel-thoughts'
+      path: '/pixel-thoughts'
+      fullPath: '/tools/pixel-thoughts'
+      preLoaderRoute: typeof ToolsPixelThoughtsRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/plant': {
       id: '/tools/plant'
       path: '/plant'
@@ -4668,6 +4768,13 @@ declare module '@tanstack/react-router' {
       path: '/signature-maker'
       fullPath: '/tools/signature-maker'
       preLoaderRoute: typeof ToolsSignatureMakerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/silk': {
+      id: '/tools/silk'
+      path: '/silk'
+      fullPath: '/tools/silk'
+      preLoaderRoute: typeof ToolsSilkRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/sip-calculator': {
@@ -4843,6 +4950,13 @@ declare module '@tanstack/react-router' {
       path: '/uuid-generator'
       fullPath: '/tools/uuid-generator'
       preLoaderRoute: typeof ToolsUuidGeneratorRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/void': {
+      id: '/tools/void'
+      path: '/void'
+      fullPath: '/tools/void'
+      preLoaderRoute: typeof ToolsVoidRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/water-tracker': {
@@ -5055,6 +5169,7 @@ interface ToolsRouteChildren {
   ToolsCsvToJsonRoute: typeof ToolsCsvToJsonRoute
   ToolsCurrencyHistoryRoute: typeof ToolsCurrencyHistoryRoute
   ToolsCvRoute: typeof ToolsCvRoute
+  ToolsDangerousWritingRoute: typeof ToolsDangerousWritingRoute
   ToolsDeepSeaRoute: typeof ToolsDeepSeaRoute
   ToolsDiffRoute: typeof ToolsDiffRoute
   ToolsDuaMakerRoute: typeof ToolsDuaMakerRoute
@@ -5074,6 +5189,7 @@ interface ToolsRouteChildren {
   ToolsGstCalculatorRoute: typeof ToolsGstCalculatorRoute
   ToolsHabitStackRoute: typeof ToolsHabitStackRoute
   ToolsHabitsRoute: typeof ToolsHabitsRoute
+  ToolsHackerTyperRoute: typeof ToolsHackerTyperRoute
   ToolsHashGeneratorRoute: typeof ToolsHashGeneratorRoute
   ToolsHealthTrackerRoute: typeof ToolsHealthTrackerRoute
   ToolsHijriRoute: typeof ToolsHijriRoute
@@ -5087,6 +5203,7 @@ interface ToolsRouteChildren {
   ToolsInterviewRoute: typeof ToolsInterviewRoute
   ToolsInvoiceRoute: typeof ToolsInvoiceRoute
   ToolsIpRoute: typeof ToolsIpRoute
+  ToolsIsItRoute: typeof ToolsIsItRoute
   ToolsJsonDiffRoute: typeof ToolsJsonDiffRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJsonYamlRoute: typeof ToolsJsonYamlRoute
@@ -5118,6 +5235,7 @@ interface ToolsRouteChildren {
   ToolsPercentageRoute: typeof ToolsPercentageRoute
   ToolsPeriodicTableRoute: typeof ToolsPeriodicTableRoute
   ToolsPitchRoute: typeof ToolsPitchRoute
+  ToolsPixelThoughtsRoute: typeof ToolsPixelThoughtsRoute
   ToolsPlantRoute: typeof ToolsPlantRoute
   ToolsPollRoute: typeof ToolsPollRoute
   ToolsPomodoroRoute: typeof ToolsPomodoroRoute
@@ -5139,6 +5257,7 @@ interface ToolsRouteChildren {
   ToolsScreenshotRoute: typeof ToolsScreenshotRoute
   ToolsShortcutRoute: typeof ToolsShortcutRoute
   ToolsSignatureMakerRoute: typeof ToolsSignatureMakerRoute
+  ToolsSilkRoute: typeof ToolsSilkRoute
   ToolsSipCalculatorRoute: typeof ToolsSipCalculatorRoute
   ToolsSizeRoute: typeof ToolsSizeRoute
   ToolsSmartPasteRoute: typeof ToolsSmartPasteRoute
@@ -5164,6 +5283,7 @@ interface ToolsRouteChildren {
   ToolsUpiRoute: typeof ToolsUpiRoute
   ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
   ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
+  ToolsVoidRoute: typeof ToolsVoidRoute
   ToolsWaterTrackerRoute: typeof ToolsWaterTrackerRoute
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
   ToolsWhiteboardRoute: typeof ToolsWhiteboardRoute
@@ -5200,6 +5320,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsCsvToJsonRoute: ToolsCsvToJsonRoute,
   ToolsCurrencyHistoryRoute: ToolsCurrencyHistoryRoute,
   ToolsCvRoute: ToolsCvRoute,
+  ToolsDangerousWritingRoute: ToolsDangerousWritingRoute,
   ToolsDeepSeaRoute: ToolsDeepSeaRoute,
   ToolsDiffRoute: ToolsDiffRoute,
   ToolsDuaMakerRoute: ToolsDuaMakerRoute,
@@ -5219,6 +5340,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsGstCalculatorRoute: ToolsGstCalculatorRoute,
   ToolsHabitStackRoute: ToolsHabitStackRoute,
   ToolsHabitsRoute: ToolsHabitsRoute,
+  ToolsHackerTyperRoute: ToolsHackerTyperRoute,
   ToolsHashGeneratorRoute: ToolsHashGeneratorRoute,
   ToolsHealthTrackerRoute: ToolsHealthTrackerRoute,
   ToolsHijriRoute: ToolsHijriRoute,
@@ -5232,6 +5354,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsInterviewRoute: ToolsInterviewRoute,
   ToolsInvoiceRoute: ToolsInvoiceRoute,
   ToolsIpRoute: ToolsIpRoute,
+  ToolsIsItRoute: ToolsIsItRoute,
   ToolsJsonDiffRoute: ToolsJsonDiffRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJsonYamlRoute: ToolsJsonYamlRoute,
@@ -5263,6 +5386,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsPercentageRoute: ToolsPercentageRoute,
   ToolsPeriodicTableRoute: ToolsPeriodicTableRoute,
   ToolsPitchRoute: ToolsPitchRoute,
+  ToolsPixelThoughtsRoute: ToolsPixelThoughtsRoute,
   ToolsPlantRoute: ToolsPlantRoute,
   ToolsPollRoute: ToolsPollRoute,
   ToolsPomodoroRoute: ToolsPomodoroRoute,
@@ -5284,6 +5408,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsScreenshotRoute: ToolsScreenshotRoute,
   ToolsShortcutRoute: ToolsShortcutRoute,
   ToolsSignatureMakerRoute: ToolsSignatureMakerRoute,
+  ToolsSilkRoute: ToolsSilkRoute,
   ToolsSipCalculatorRoute: ToolsSipCalculatorRoute,
   ToolsSizeRoute: ToolsSizeRoute,
   ToolsSmartPasteRoute: ToolsSmartPasteRoute,
@@ -5309,6 +5434,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsUpiRoute: ToolsUpiRoute,
   ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
   ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,
+  ToolsVoidRoute: ToolsVoidRoute,
   ToolsWaterTrackerRoute: ToolsWaterTrackerRoute,
   ToolsWatermarkRoute: ToolsWatermarkRoute,
   ToolsWhiteboardRoute: ToolsWhiteboardRoute,

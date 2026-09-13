@@ -248,6 +248,12 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "deep-sea", name: "Deep Sea", desc: "Scroll 11 km down and meet what lives at every depth", icon: "🌊", noUpload: true },
       { slug: "trolley", name: "Trolley Problems", desc: "Ten ethical dilemmas that reveal what you value", icon: "🚋", noUpload: true },
       { slug: "wiki-speedrun", name: "Wiki Speedrun", desc: "Race from one Wikipedia page to another via links", icon: "🏃" },
+      { slug: "hacker-typer", name: "Hacker Typer", desc: "Mash any keys, produce flawless movie-hacker code", icon: "💻", noUpload: true },
+      { slug: "dangerous-writing", name: "Dangerous Writing", desc: "Stop typing for 15s and everything vanishes. Keep going", icon: "✍️", noUpload: true },
+      { slug: "pixel-thoughts", name: "Pixel Thoughts", desc: "Put a worry in a star and watch it shrink away", icon: "🌠", noUpload: true },
+      { slug: "void", name: "Scream Into The Void", desc: "Type or shout it out, then watch it dissolve. Nothing saved", icon: "🕳️", noUpload: true },
+      { slug: "is-it", name: "Is It…?", desc: "Is it Friday? Christmas? A full moon? Committed answers", icon: "❓", noUpload: true },
+      { slug: "silk", name: "Silk Painter", desc: "Draw glowing symmetric thread art, download as PNG", icon: "🎨", noUpload: true },
     ],
   },
   {
