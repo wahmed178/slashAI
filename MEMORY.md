@@ -157,6 +157,20 @@ Built on Lovable, deployed on Vercel.
   toggle, saved workflows in localStorage "slashai-workflows", active chain autosaved
   to sessionStorage, char/token estimate. New "New" badge nav item + homepage card.
 
+## v2.24.1 (Sep 2026) — self-healing updates (fixes "This page didn't load" on phones)
+- Root cause: PWA precache + rapid deploys. Old cached app shell lazy-imports /assets
+  chunks that the new deploy no longer serves (Vercel purges old hashes) → chunk-load
+  error → root ErrorComponent. Storage eviction can corrupt the precache on any device.
+- src/lib/app-update.ts: installChunkErrorRecovery() listens for vite:preloadError /
+  unhandledrejection / capture-phase resource errors; on first chunk failure per session
+  it hardReloadFresh() = delete all caches + unregister SW + location.reload().
+- ErrorComponent: if the error is a chunk-load error, offer "Try again" = hard reload
+  fresh and auto-attempt recovery once.
+- setupServiceWorkerUpdates(): waiting SW is SKIP_WAITING-nudged via postMessage
+  (generateSW injects the message handler), controllerchange with flag in
+  sessionStorage reloads once so users never stay on a superseded asset set.
+- register-sw.ts still refuses SW in previews/dev and unregisters strays.
+
 ## Navigation (v2.24 — sidebar removed, Random-centred dock)
 - NO sidebar / NO drawer anywhere: DesktopSidebar.tsx and nav-groups.ts were deleted in v2.21.
   The bottom dock is the ONLY navigation on every screen size:

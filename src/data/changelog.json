@@ -1,6 +1,15 @@
 {
-  "version": "2.24.0",
+  "version": "2.24.1",
   "entries": [
+    {
+      "version": "2.24.1",
+      "date": "2026-09-12",
+      "changes": [
+        "Fixed: the app could get stuck on 'This page didn't load' on phones after an update - a cached offline copy was asking for app files that no longer exist on the server",
+        "Self-healing updates: if a cached copy is ever out of sync again, the app now clears its own cache, fetches the fresh version and reloads automatically - no manual 'clear storage' needed",
+        "Updates now apply by the very next refresh instead of waiting for a second visit"
+      ]
+    },
     {
       "version": "2.24.0",
       "date": "2026-09-12",
