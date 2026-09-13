@@ -2,9 +2,11 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Dices } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
-import { SLASH_APPS } from "@/lib/slashbar";
+import { SLASH_APPS, ALL_SLASH_APPS } from "@/lib/slashbar";
 import { SLASH_TOOL_COUNT } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
+import { Star, StarOff } from "lucide-react";
+import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/slash/")({
   head: () => ({
@@ -30,6 +32,9 @@ function SlashBarPage() {
     navigate({ to: path, replace: true });
   };
 
+  const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
+  const savedApp = (slug: string) => isToolFavorite(slug);
+
   return (
     <AppShell wide hideHeaderSearch title="SlashBar">
       <header className="page-enter pt-2">
@@ -47,8 +52,9 @@ function SlashBarPage() {
         style={{ scrollbarWidth: "none" }}
       >
         {SLASH_APPS.map((app) => {
+          const saved = savedApp(app.slug);
           const inner = (
-            <>
+            <div className="flex flex-col items-center gap-1">
               <span
                 className="grid size-[64px] place-items-center rounded-full p-[2.5px]"
                 style={{
@@ -62,7 +68,15 @@ function SlashBarPage() {
               <span className="w-[72px] truncate text-center text-[10px] font-medium text-muted-foreground">
                 {app.name.replace("Slash ", "").replace("SlashKits", "Kits").replace("SlashPlay", "Play")}
               </span>
-            </>
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleToolFavorite(app.slug); }}
+                aria-label={saved ? `Remove ${app.name} from saved` : `Save ${app.name}`}
+                className={`ripple-press transition-colors ${saved ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+              >
+                {saved ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+              </button>
+            </div>
           );
           return app.link ? (
             <Link
@@ -88,8 +102,9 @@ function SlashBarPage() {
       {/* app grid with descriptions */}
       <div className="stagger-children mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
         {SLASH_APPS.map((app) => {
+          const saved = savedApp(app.slug);
           const body = (
-            <>
+            <div className="flex flex-col min-w-0">
               <span className="flex items-center gap-2">
                 <span
                   className="grid size-10 shrink-0 place-items-center rounded-xl text-[20px]"
@@ -107,11 +122,19 @@ function SlashBarPage() {
                       : `${app.widgets.length} widgets`}
                   </span>
                 </span>
+                <button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleToolFavorite(app.slug); }}
+                  aria-label={saved ? `Remove ${app.name} from saved` : `Save ${app.name}`}
+                  className={`shrink-0 rounded-md p-1.5 transition-colors ${saved ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+                >
+                  {saved ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+                </button>
               </span>
               <span className="mt-2 line-clamp-2 block text-[12px] leading-snug text-muted-foreground">
                 {app.desc}
               </span>
-            </>
+            </div>
           );
           return app.link ? (
             <Link

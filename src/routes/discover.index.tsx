@@ -357,7 +357,7 @@ function FeedTile({ item }: { item: FeedItem }) {
   const isResource = item.kind === "resource";
   const saved = isResource
     ? false // resources use ResourceCardEnhanced's own save
-    : isToolFavorite(item.key.replace(/^tool-|game-/, ""));
+    : isToolFavorite(item.key.replace(/^tool-|game-|slash-/, ""));
   return (
     <Link
       to={item.to}
@@ -395,7 +395,7 @@ function FeedTile({ item }: { item: FeedItem }) {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                const slug = item.key.replace(/^tool-|game-/, "");
+                const slug = item.key.replace(/^tool-|game-|slash-/, "");
                 toggleToolFavorite(slug);
               }}
               aria-label={saved ? `Remove ${item.title} from saved` : `Save ${item.title}`}

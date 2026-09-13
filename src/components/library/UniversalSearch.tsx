@@ -23,7 +23,7 @@ export interface UniversalSugg {
 interface Props {
   size?: "md" | "lg";
   /** start with this query already typed and the panel open */
-  initialQuery?: string;
+  initialQuery?: string | undefined;
   autoFocus?: boolean;
   className?: string;
 }

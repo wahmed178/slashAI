@@ -8,6 +8,8 @@ import { useLibrary } from "@/hooks/use-library";
 import { getCommand, type SlashCommand } from "@/lib/commands";
 import { TOOL_SECTIONS } from "@/lib/slashkits";
 import { PLAY_SECTIONS } from "@/lib/slashplay";
+import { ALL_SLASH_APPS } from "@/lib/slashbar";
+import { BookMarked } from "lucide-react";
 
 export const Route = createFileRoute("/favorites")({
   head: () => ({
@@ -24,6 +26,22 @@ export const Route = createFileRoute("/favorites")({
 
 const ALL_TOOLS = TOOL_SECTIONS.flatMap((s) => [...s.tools, ...(s.hubTools ?? [])]);
 const ALL_GAMES = PLAY_SECTIONS.flatMap((s) => s.games);
+const ALL_SLASH_APPS_LIST = ALL_SLASH_APPS;
+
+function AppChip({ slug, emoji }: { slug: string; emoji: string }) {
+  return (
+    <Link
+      to={(slug.startsWith("/") ? slug : `/slash/${slug}`) as string}
+      className="flex items-center gap-3 rounded-[10px] border border-border bg-surface p-3"
+    >
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg text-[20px]">{emoji}</span>
+      <span className="min-w-0">
+        <span className="block text-[14px] font-semibold text-foreground">{slug}</span>
+        <span className="block text-[12px] text-muted-foreground">Slash app</span>
+      </span>
+    </Link>
+  );
+}
 
 function ToolChip({ slug }: { slug: string }) {
   const tool = ALL_TOOLS.find((t) => t.slug === slug);
@@ -73,7 +91,11 @@ function FavoritesPage() {
     () => toolFavorites.filter((slug) => ALL_GAMES.some((g) => g.slug === slug)),
     [toolFavorites],
   );
-  const total = commands.length + tools.length + games.length;
+  const apps = useMemo(
+    () => toolFavorites.filter((slug) => ALL_SLASH_APPS_LIST.some((a) => a.slug === slug)),
+    [toolFavorites],
+  );
+  const total = commands.length + tools.length + games.length + apps.length;
 
   return (
     <AppShell wide>
@@ -99,6 +121,20 @@ function FavoritesPage() {
             🎮 Games ({games.length})
           </h2>
           <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3">{games.map((slug) => <GameChip key={slug} slug={slug} />)}</div>
+        </section>
+      )}
+
+      {apps.length > 0 && (
+        <section className="mt-6">
+          <h2 className="mb-3 text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+            ⚡ Slash apps ({apps.length})
+          </h2>
+          <div className="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
+            {apps.map((slug) => {
+              const app = ALL_SLASH_APPS_LIST.find((a) => a.slug === slug);
+              return app ? <AppChip key={slug} slug={slug} emoji={app.emoji} /> : null;
+            })}
+          </div>
         </section>
       )}
 

@@ -4,7 +4,7 @@ import { Search, X, Star, StarOff } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { UniversalSearch } from "@/components/library/UniversalSearch";
-import { SLASH_APPS } from "@/lib/slashbar";
+import { SLASH_APPS, ALL_SLASH_APPS } from "@/lib/slashbar";
 import { TOOL_SECTIONS, ALL_SLASH_TOOLS, SLASH_TOOL_COUNT } from "@/lib/slashkits";
 import { PLAY_SECTIONS, ALL_PLAY_GAMES, PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { VERIFIED_TOTAL } from "@/lib/commands";
@@ -74,6 +74,7 @@ function ExploreEverything() {
   const onToggle = (slug: string) => toggleToolFavorite(slug);
 
   const apps = SLASH_APPS.filter((a) => matches(q, a.name, a.desc));
+  const savedApps = ALL_SLASH_APPS.filter((a) => matches(q, a.name, a.desc));
   const gameSections = PLAY_SECTIONS.map((s) => ({
     ...s,
     games: s.games.filter((g) => matches(q, g.name, g.desc)),
@@ -139,28 +140,38 @@ function ExploreEverything() {
         <h2 className="text-sm font-semibold tracking-wide text-foreground uppercase">⚡ Slash apps</h2>
         <div className="cat-rule mt-1.5 w-24" />
         <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-          {apps.map((app) => (
-            <Link
-              key={app.slug}
-              to={app.link ?? "/slash/$app"}
-              params={app.link ? undefined : { app: app.slug }}
-              style={{ "--cat": app.tint.hex } as React.CSSProperties}
-              className="cat cat-glow ripple-press flex items-start gap-3 rounded-xl border bg-surface p-3.5"
-            >
-              <span
-                className="grid size-10 shrink-0 place-items-center rounded-xl text-[20px]"
-                style={{ background: `color-mix(in oklab, ${app.tint.hex} 14%, transparent)` }}
+          {apps.map((app) => {
+            const saved = isToolFavorite(app.slug);
+            return (
+              <Link
+                key={app.slug}
+                to={(app.link ?? `/slash/${app.slug}`) as string}
+                style={{ "--cat": app.tint.hex } as React.CSSProperties}
+                className="cat cat-glow ripple-press group flex items-start gap-3 rounded-xl border bg-surface p-3.5"
               >
-                {app.emoji}
-              </span>
-              <span className="min-w-0">
-                <span className="cat-text block truncate text-[13.5px] font-bold">{app.name}</span>
-                <span className="mt-0.5 line-clamp-2 block text-[11.5px] leading-snug text-muted-foreground">
-                  {app.desc}
+                <span
+                  className="grid size-10 shrink-0 place-items-center rounded-xl text-[20px]"
+                  style={{ background: `color-mix(in oklab, ${app.tint.hex} 14%, transparent)` }}
+                >
+                  {app.emoji}
                 </span>
-              </span>
-            </Link>
-          ))}
+                <span className="min-w-0">
+                  <span className="cat-text block truncate text-[13.5px] font-bold">{app.name}</span>
+                  <span className="mt-0.5 line-clamp-2 block text-[11.5px] leading-snug text-muted-foreground">
+                    {app.desc}
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleToolFavorite(app.slug); }}
+                  aria-label={saved ? `Remove ${app.name} from saved` : `Save ${app.name}`}
+                  className={`shrink-0 rounded-md p-1.5 transition-colors ${saved ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+                >
+                  {saved ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+                </button>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -180,12 +191,11 @@ function ExploreEverything() {
               </h3>
               <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
                 {s.games.map((g) => (
-                  <Link
-                    key={g.slug}
-                    to="/play/$game"
-                    params={{ game: g.slug }}
-                    className="ripple-press flex items-center gap-2.5 rounded-lg border border-border bg-surface p-2.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
-                  >
+                <Link
+                  key={g.slug}
+                  to={`/play/${g.slug}` as string}
+                  className="ripple-press flex items-center gap-2.5 rounded-lg border border-border bg-surface p-2.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+                >
                     <span className="text-[20px]">{g.icon}</span>
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[13px] font-semibold text-foreground">{g.name}</span>

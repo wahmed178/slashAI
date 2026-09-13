@@ -13,7 +13,7 @@ import { todayKey } from "@/lib/commands";
 import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 import { trackInteraction } from "@/lib/intelligence";
 
-export type Theme = "dark" | "light" | "amoled" | "glass";
+export type Theme = "dark" | "light" | "amoled" | "glass" | "brutal";
 /** themes that existed before the set was trimmed to four; mapped to the closest kept theme */
 export const LEGACY_THEME_MAP: Record<string, Theme> = {
   batman: "dark",
@@ -80,10 +80,16 @@ export const THEMES: { id: Theme; label: string; hint: string; swatch: string }[
   },
   { id: "amoled", label: "AMOLED", hint: "True black, saves battery", swatch: "oklch(0 0 0)" },
   { id: "glass", label: "Glass", hint: "Liquid glass aurora", swatch: "oklch(0.68 0.15 262)" },
+  {
+    id: "brutal",
+    label: "Brutal",
+    hint: "Neo-brutalism: raw paper, ink borders, hard shadows",
+    swatch: "oklch(0.95 0.02 95)",
+  },
 ];
 
 /** themes that fix their own primary colour, so the accent picker is inert */
-export const FIXED_ACCENT_THEMES: Theme[] = ["glass"];
+export const FIXED_ACCENT_THEMES: Theme[] = ["glass", "brutal"];
 
 export const ACCENTS: { id: Accent; label: string; swatch: string }[] = [
   { id: "teal", label: "Teal", swatch: "oklch(0.79 0.15 178)" },
@@ -295,7 +301,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
     for (const t of THEMES) root.classList.toggle(t.id, theme === t.id && t.id !== "dark");
     root.dataset["accent"] = settings.accent;
     root.dataset["motion"] = settings.reducedMotion ? "reduced" : "full";
-    root.style.colorScheme = theme === "light" ? "light" : "dark";
+    root.style.colorScheme = theme === "light" || theme === "brutal" ? "light" : "dark";
     localStorage.setItem(KEYS.settings, JSON.stringify({ ...settings, theme }));
   }, [settings, hydrated]);
 

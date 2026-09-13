@@ -5,6 +5,8 @@ import { AppShell } from "@/components/library/AppShell";
 import { SlashBarWidget } from "@/components/library/SlashBarWidget";
 import { ALL_SLASH_APPS, appBySlug, type Widget } from "@/lib/slashbar";
 import { PLAY_SECTIONS } from "@/lib/slashplay";
+import { Star, StarOff } from "lucide-react";
+import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/slash/$app")({
   loader: ({ params }) => {
@@ -49,6 +51,8 @@ function AppNotFound() {
 
 function SlashAppPage() {
   const { app } = Route.useLoaderData();
+  const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
+  const saved = isToolFavorite(app.slug);
   // Brain Boosters embeds its playable games (Brain Training section) inline
   const games =
     app.slug === "brain-boosters"
@@ -79,6 +83,20 @@ function SlashAppPage() {
               {app.name}
             </h1>
             <p className="text-[13px] text-muted-foreground">{app.desc}</p>
+            <div className="mt-2 flex gap-2">
+              <button
+                type="button"
+                onClick={() => toggleToolFavorite(app.slug)}
+                aria-label={saved ? `Remove ${app.name} from saved` : `Save ${app.name}`}
+                className={`inline-flex h-7 items-center gap-1 rounded-full border px-3 text-[11.5px] font-semibold transition-colors ${
+                  saved
+                    ? "border-primary/30 bg-primary/10 text-primary"
+                    : "border-border bg-surface text-muted-foreground hover:text-amber-300"
+                }`}
+              >
+                {saved ? <><Star className="size-3 fill-current" /> Saved</> : <><StarOff className="size-3" /> Save</>}
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -93,8 +111,7 @@ function SlashAppPage() {
             {games.map((g) => (
               <Link
                 key={g.slug}
-                to="/play/$game"
-                params={{ game: g.slug }}
+                to={`/play/${g.slug}` as string}
                 className="ripple-press flex items-center gap-2.5 rounded-xl border bg-surface p-3 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
               >
                 <span className="text-[22px]">{g.icon}</span>

@@ -15,12 +15,13 @@ import {
   Info,
   Search as SearchIcon,
   X,
+  Star,
 } from "lucide-react";
 
 import { useLibrary } from "@/hooks/use-library";
 import { getSlashTool } from "@/lib/slashkits";
 import { getPlayGame } from "@/lib/slashplay";
-import { appBySlug } from "@/lib/slashbar";
+import { appBySlug, ALL_SLASH_APPS } from "@/lib/slashbar";
 import { pickRandom } from "@/lib/random-pick";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
@@ -219,12 +220,17 @@ function BackButton({ to, label }: { to: string; label: string }) {
 
 function ThemeToggleButton() {
   const { settings, updateSettings } = useLibrary();
-  // three-way cycle: dark → light → amoled → dark (glass stays a Designs pick)
-  const CYCLE = ["dark", "light", "amoled"] as const;
+  // four-way cycle: dark → light → amoled → brutal → dark (glass stays a Designs pick)
+  const CYCLE = ["dark", "light", "amoled", "brutal"] as const;
   const idx = CYCLE.indexOf(settings.theme as (typeof CYCLE)[number]);
   const next = CYCLE[(idx + 1 + CYCLE.length) % CYCLE.length] ?? "dark";
-  const ICONS = { dark: <Moon className="size-[18px]" />, light: <Sun className="size-[18px]" />, amoled: <span className="text-[15px] leading-none">⬛</span> } as const;
-  const LABELS: Record<string, string> = { dark: "Dark", light: "Light", amoled: "AMOLED" };
+  const ICONS = {
+    dark: <Moon className="size-[18px]" />,
+    light: <Sun className="size-[18px]" />,
+    amoled: <span className="text-[15px] leading-none">⬛</span>,
+    brutal: <span className="text-[15px] font-black leading-none" style={{ color: "var(--primary)" }}>◼</span>,
+  } as const;
+  const LABELS: Record<string, string> = { dark: "Dark", light: "Light", amoled: "AMOLED", brutal: "Brutal" };
 
   return (
     <button
@@ -239,9 +245,44 @@ function ThemeToggleButton() {
   );
 }
 
+/** the exact tool/game/app screen open right now, so AppShell can star it */
+function screenItem(pathname: string): { slug: string; kind: "tool" | "game" | "app" } | null {
+  const segs = pathname.split("/").filter(Boolean);
+  if (segs[0] === "tools" && segs[1]) {
+    return getSlashTool(segs[1]) ? { slug: segs[1]!, kind: "tool" } : null;
+  }
+  if (segs[0] === "play" && segs[1]) {
+    return getPlayGame(segs[1]) ? { slug: segs[1]!, kind: "game" } : null;
+  }
+  if (segs[0] === "slash" && segs[1]) {
+    return appBySlug(segs[1]) || ALL_SLASH_APPS.some((a) => a.slug === segs[1])
+      ? { slug: segs[1]!, kind: "app" }
+      : null;
+  }
+  return null;
+}
+
+const KIND_LABEL: Record<"tool" | "game" | "app", string> = {
+  tool: "tool",
+  game: "game",
+  app: "app",
+};
+
 export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
   const [slashbarOpen, setSlashbarOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { isToolFavorite, toggleToolFavorite } = useLibrary();
+
+  // the current screen (tool / game / slash app) can be starred straight
+  // from the header — same localStorage list the Saved page reads
+  const screen = screenItem(pathname);
+  const screenFav = screen ? isToolFavorite(screen.slug) : false;
+  const kindLabel = screen ? KIND_LABEL[screen.kind] : "item";
+
+  const onStarScreen = () => {
+    if (!screen) return;
+    toggleToolFavorite(screen.slug);
+  };
 
   // Every page must have a real browser-tab title. Pages that set `head()`
   // meta manage their own <title>; this effect only fills the gaps (tools
@@ -295,6 +336,20 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
 
           {/* right side - quick links, same on every screen */}
           <div className="ml-auto flex items-center gap-0.5">
+            {/* star the open tool / game / slash app - only on those screens */}
+            {screen && (
+              <button
+                type="button"
+                onClick={onStarScreen}
+                aria-pressed={screenFav}
+                aria-label={screenFav ? `Remove this ${kindLabel} from Saved` : `Save this ${kindLabel} to Saved`}
+                title={screenFav ? `Saved — tap to remove` : `Save this ${kindLabel} to your favorites`}
+                className="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-surface-elevated focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                style={{ color: screenFav ? "var(--primary)" : "var(--muted-foreground)" }}
+              >
+                <Star className="size-[19px]" fill={screenFav ? "currentColor" : "none"} />
+              </button>
+            )}
             <ThemeToggleButton />
             <Link
               to="/promo"
