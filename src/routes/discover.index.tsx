@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, X, LoaderCircle } from "lucide-react";
+import { Search, X, LoaderCircle, Star, StarOff } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import {
@@ -18,6 +18,7 @@ import {
   playSectionColor,
   type CatColor,
 } from "@/lib/category-colors";
+import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/discover/")({
   head: () => ({
@@ -352,6 +353,11 @@ function Favicon({ host, tint, name }: { host: string; tint: CatColor; name: str
 }
 
 function FeedTile({ item }: { item: FeedItem }) {
+  const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
+  const isResource = item.kind === "resource";
+  const saved = isResource
+    ? false // resources use ResourceCardEnhanced's own save
+    : isToolFavorite(item.key.replace(/^tool-|game-/, ""));
   return (
     <Link
       to={item.to}
@@ -376,12 +382,29 @@ function FeedTile({ item }: { item: FeedItem }) {
           {item.badge}
         </span>
       </span>
-      {/* caption */}
+      {/* caption + bookmark */}
       <span className="flex flex-1 flex-col p-2.5">
         <span className="truncate text-[12.5px] font-bold text-foreground">{item.title}</span>
         <span className="mt-0.5 line-clamp-2 text-[10.5px] leading-snug text-muted-foreground">
           {item.desc}
         </span>
+        {!isResource && (
+          <div className="mt-1.5 flex justify-end">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const slug = item.key.replace(/^tool-|game-/, "");
+                toggleToolFavorite(slug);
+              }}
+              aria-label={saved ? `Remove ${item.title} from saved` : `Save ${item.title}`}
+              className={`rounded-md p-1 transition-colors ${saved ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+            >
+              {saved ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+            </button>
+          </div>
+        )}
       </span>
     </Link>
   );

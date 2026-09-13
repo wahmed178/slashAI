@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, X } from "lucide-react";
+import { Search, X, Star, StarOff } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { UniversalSearch } from "@/components/library/UniversalSearch";
@@ -9,6 +9,7 @@ import { TOOL_SECTIONS, ALL_SLASH_TOOLS, SLASH_TOOL_COUNT } from "@/lib/slashkit
 import { PLAY_SECTIONS, ALL_PLAY_GAMES, PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { VERIFIED_TOTAL } from "@/lib/commands";
 import { RESOURCE_TOTAL } from "@/lib/resources";
+import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/everything")({
   head: () => ({
@@ -68,6 +69,9 @@ function ExploreEverything() {
   const [filter, setFilter] = useState("");
   const q = filter;
   const filtered = useMemo(() => q.trim().length > 0, [q]);
+  const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
+  const isFavorite = (slug: string) => isToolFavorite(slug);
+  const onToggle = (slug: string) => toggleToolFavorite(slug);
 
   const apps = SLASH_APPS.filter((a) => matches(q, a.name, a.desc));
   const gameSections = PLAY_SECTIONS.map((s) => ({
@@ -183,10 +187,18 @@ function ExploreEverything() {
                     className="ripple-press flex items-center gap-2.5 rounded-lg border border-border bg-surface p-2.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
                   >
                     <span className="text-[20px]">{g.icon}</span>
-                    <span className="min-w-0">
+                    <span className="min-w-0 flex-1">
                       <span className="block truncate text-[13px] font-semibold text-foreground">{g.name}</span>
                       <span className="block truncate text-[11px] text-muted-foreground">{g.desc}</span>
                     </span>
+                    <button
+                      type="button"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleToolFavorite(g.slug); }}
+                      aria-label={isFavorite(g.slug) ? `Remove ${g.name} from saved` : `Save ${g.name}`}
+                      className={`shrink-0 rounded-md p-1.5 transition-colors ${isFavorite(g.slug) ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+                    >
+                      {isFavorite(g.slug) ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+                    </button>
                   </Link>
                 ))}
               </div>
@@ -220,10 +232,18 @@ function ExploreEverything() {
                     className="ripple-press flex items-center gap-2.5 rounded-lg border border-border bg-surface p-2.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
                   >
                     <span className="text-[20px]">{t.icon}</span>
-                    <span className="min-w-0">
+                    <span className="min-w-0 flex-1">
                       <span className="block truncate text-[13px] font-semibold text-foreground">{t.name}</span>
                       <span className="block truncate text-[11px] text-muted-foreground">{t.desc}</span>
                     </span>
+                    <button
+                      type="button"
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleToolFavorite(t.slug); }}
+                      aria-label={isFavorite(t.slug) ? `Remove ${t.name} from saved` : `Save ${t.name}`}
+                      className={`shrink-0 rounded-md p-1.5 transition-colors ${isFavorite(t.slug) ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+                    >
+                      {isFavorite(t.slug) ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+                    </button>
                   </Link>
                 ))}
               </div>

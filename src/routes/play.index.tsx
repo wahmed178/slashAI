@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, X } from "lucide-react";
+import { Search, X, Star, StarOff } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import {
   PLAY_SECTIONS,
@@ -10,6 +10,7 @@ import {
 } from "@/lib/slashplay";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 import { playSectionColor } from "@/lib/category-colors";
+import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/play/")({
   head: () => ({
@@ -35,6 +36,8 @@ function matches(game: PlayGame, q: string) {
 }
 
 function GameCard({ game, color }: { game: PlayGame; color: string }) {
+  const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
+  const saved = isToolFavorite(game.slug);
   return (
     <Link
       to={`/play/${game.slug}` as string}
@@ -43,9 +46,19 @@ function GameCard({ game, color }: { game: PlayGame; color: string }) {
     >
       <div className="flex items-start justify-between gap-2">
         <span className="cat-tile flex size-9 items-center justify-center rounded-lg text-[24px] leading-none">{game.icon}</span>
-        <span className="cat-chip rounded-full px-2 py-0.5 text-[9px] font-bold tracking-wide">
-          {game.players}
-        </span>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); toggleToolFavorite(game.slug); }}
+            aria-label={saved ? `Remove ${game.name} from saved` : `Save ${game.name}`}
+            className={`shrink-0 rounded-md p-1 transition-colors ${saved ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
+          >
+            {saved ? <Star className="size-3.5 fill-current" /> : <StarOff className="size-3.5" />}
+          </button>
+          <span className="cat-chip rounded-full px-2 py-0.5 text-[9px] font-bold tracking-wide">
+            {game.players}
+          </span>
+        </div>
       </div>
       <span className="mt-2.5 block text-[13px] font-bold text-foreground">{game.name}</span>
       <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{game.desc}</span>
