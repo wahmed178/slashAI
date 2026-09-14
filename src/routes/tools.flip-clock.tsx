@@ -43,7 +43,9 @@ function FlipCard({
   const staticNum = flipping ? prev : displayed;
 
   return (
+
     <div className="relative w-full" style={{ aspectRatio: "1.35" }}>
+      <h1 className="sr-only">Flip Clock - SlashAI</h1>
       {/* Card background */}
       <div
         className="absolute inset-0 rounded-[18px] sm:rounded-[24px]"

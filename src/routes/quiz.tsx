@@ -709,10 +709,10 @@ function QuizPage() {
     const text = `I scored ${score}/${questions.length} on the ${selectedCategory?.name} quiz! \u{1F9E0} Try it free at slashai.app`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: "SlashAI Daily Quiz", text, url: "https://slashai-nu.vercel.app/quiz" });
+        await navigator.share({ title: "SlashAI Daily Quiz", text, url: "https://slashai.in/quiz" });
       } catch { /* user cancelled */ }
     } else {
-      try { await navigator.clipboard.writeText(text + "\nhttps://slashai-nu.vercel.app/quiz"); } catch { /* ignore */ }
+      try { await navigator.clipboard.writeText(text + "\nhttps://slashai.in/quiz"); } catch { /* ignore */ }
     }
   }, [score, questions.length, selectedCategory]);
 

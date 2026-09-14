@@ -202,7 +202,7 @@ function FocusMode() {
   const progress = mode === "work" ? ((WORK_TIME - timeLeft) / WORK_TIME) * 100 : ((BREAK_TIME - timeLeft) / BREAK_TIME) * 100;
 
   return (
-    <AppShell title="Deep Work Mode">
+    <AppShell title="Deep Work Mode" srH1="Deep Work Mode - SlashAI">
       <div className={`flex flex-col items-center justify-center ${isFullscreen ? "fixed inset-0 z-50 bg-background" : "min-h-[70vh] pt-8"}`}>
         {isFullscreen && (
           <button onClick={toggleFullscreen} className="absolute right-4 top-4 text-muted-foreground hover:text-foreground">

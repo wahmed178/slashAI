@@ -55,8 +55,10 @@ function QuoteScreen() {
   };
 
   return (
+
     <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center"
       style={{ background: "linear-gradient(135deg, var(--background), rgba(10,22,40,1), rgba(26,13,40,1), var(--background))", backgroundSize: "400% 400%", animation: "gradientShift 60s ease infinite" }}>
+      <h1 className="sr-only">Quote of the Day Screen - SlashAI</h1>
 
       {/* Auto-dismiss close button */}
       <div

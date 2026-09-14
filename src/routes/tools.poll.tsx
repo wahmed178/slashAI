@@ -29,7 +29,7 @@ function PollCreator() {
 
   const totalVotes = createdPoll ? createdPoll.votes.reduce<number>((s, v) => s + v, 0) : 0;
 
-  const embedCode = createdPoll ? `<iframe src="${window.location.origin}/poll?id=${createdPoll.id}" width="400" height="300" frameborder="0"></iframe>` : "";
+  const embedCode = createdPoll ? `<iframe src="https://slashai.in/poll?id=${createdPoll.id}" width="400" height="300" frameborder="0"></iframe>` : "";
 
   return (
     <AppShell title="Poll Creator">

@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -6,17 +6,25 @@ import { AppShell } from "@/components/library/AppShell";
 import { CommandGrid } from "@/components/library/CommandGrid";
 import { categoryIcon } from "@/components/library/icons";
 import { CATEGORY_TREE, COMMANDS } from "@/lib/commands";
+import {
+  resolveCategory,
+  resolveSubcategory,
+  slugify,
+  categoryHref,
+  subcategoryHref,
+} from "@/lib/explore-slugs";
 
 export const Route = createFileRoute("/explore/$category/")({
   head: ({ params }) => {
-    const node = CATEGORY_TREE.find((c) => c.category === params.category);
-    if (!node) {
+    const category = resolveCategory(params.category);
+    if (!category) {
       return {
         meta: [{ title: "Category not found - SlashAI" }, { name: "robots", content: "noindex" }],
       };
     }
-    const title = `${node.category} commands - SlashAI`;
-    const description = `${node.count} AI slash commands in ${node.category}, grouped into ${node.subcategories.length} subcategories.`;
+    const node = CATEGORY_TREE.find((c) => c.category === category)!;
+    const title = `${category} commands - SlashAI`;
+    const description = `${node.count} AI slash commands in ${category}, grouped into ${node.subcategories.length} subcategories.`;
     return {
       meta: [
         { title },
@@ -27,8 +35,14 @@ export const Route = createFileRoute("/explore/$category/")({
     };
   },
   loader: ({ params }) => {
-    const node = CATEGORY_TREE.find((c) => c.category === params.category);
-    if (!node) throw notFound();
+    const category = resolveCategory(params.category);
+    if (!category) throw notFound();
+    // Legacy percent-encoded URLs (e.g. /explore/Writing%20%26%20Communication)
+    // 301 to the clean slug so search engines index one canonical page.
+    const slug = slugify(category);
+    if (decodeURIComponent(params.category) !== slug) {
+      throw redirect({ to: categoryHref(category), statusCode: 301 });
+    }
     return null;
   },
   notFoundComponent: CategoryMissing,
@@ -49,8 +63,10 @@ function CategoryMissing() {
 }
 
 function CategoryPage() {
-  const { category } = Route.useParams();
-  const node = CATEGORY_TREE.find((c) => c.category === category);
+  const params = Route.useParams();
+  // Resolves clean slugs and legacy percent-encoded names alike.
+  const category = resolveCategory(params.category);
+  const node = category ? CATEGORY_TREE.find((c) => c.category === category) : undefined;
   if (!node) return <CategoryMissing />;
 
   const Icon = categoryIcon(node.icon);
@@ -59,7 +75,7 @@ function CategoryPage() {
     .slice(0, 6);
 
   return (
-    <AppShell wide back={{ to: "/explore", label: "Explore" }} hideHeaderSearch title={category}>
+    <AppShell wide back={{ to: "/explore", label: "Explore" }} hideHeaderSearch title={category ?? ""}>
       <header className="flex items-start gap-3 pt-2">
         <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
           <Icon className="size-6" aria-hidden />
@@ -77,8 +93,7 @@ function CategoryPage() {
         {node.subcategories.map((s) => (
           <Link
             key={s.subcategory}
-            to="/explore/$category/$subcategory"
-            params={{ category: node.category, subcategory: s.subcategory }}
+            to={subcategoryHref(node.category, s.subcategory)}
             className="group flex min-h-14 items-center gap-2 rounded-xl border border-border bg-surface px-3.5 transition-colors hover:border-primary/50"
           >
             <span className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">

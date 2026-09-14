@@ -223,6 +223,6 @@ export const APP_DETAILS = {
   tagline: "A pocket library of AI slash commands.",
   version: APP_VERSION,
   creator: "Waseem Ahmed",
-  website: "https://slashai.lovable.app",
+  website: "https://slashai.in",
   storage: "Everything stays on this device - no account, no tracking.",
 };

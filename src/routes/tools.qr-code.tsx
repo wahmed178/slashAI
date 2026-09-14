@@ -14,7 +14,7 @@ interface Preset {
 }
 
 const PRESETS: Preset[] = [
-  { label: "URL", icon: "🔗", placeholder: "https://example.com", initial: "https://slashai.app" },
+  { label: "URL", icon: "🔗", placeholder: "https://example.com", initial: "https://slashai.in" },
   { label: "WiFi", icon: "📶", placeholder: "Network name" },
   { label: "Email", icon: "📧", placeholder: "name@example.com" },
   { label: "Phone", icon: "📞", placeholder: "+91 98765 43210" },

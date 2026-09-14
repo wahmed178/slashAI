@@ -34,7 +34,7 @@ function TermsPage() {
         <Section title="1. Acceptance of Terms">
           <p className="mt-2 text-sm text-muted-foreground">
             By accessing or using SlashAI (the "Service"), including our website
-            at slashai-nu.vercel.app, mobile apps, and browser tools, you agree
+            at slashai.in, mobile apps, and browser tools, you agree
             to be bound by these Terms of Service. If you do not agree, please
             do not use the Service.
           </p>

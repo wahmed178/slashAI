@@ -107,7 +107,8 @@ export default function QuizMaker() {
 
   const generateShare = () => {
     const encoded = btoa(encodeURIComponent(JSON.stringify(quiz)));
-    const url = `${window.location.origin}/tools/quiz-maker?q=${encoded}`;
+    // Canonical public domain so shared quiz links resolve everywhere.
+    const url = `https://slashai.in/tools/quiz-maker?q=${encoded}`;
     setShareUrl(url);
     navigator.clipboard?.writeText(url);
   };

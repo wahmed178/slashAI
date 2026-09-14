@@ -6,6 +6,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { CommandDetailContent } from "@/components/library/CommandDetailContent";
 import { useLibrary } from "@/hooks/use-library";
 import { getCommand, type SlashCommand } from "@/lib/commands";
+import { categoryHref, subcategoryHref } from "@/lib/explore-slugs";
 
 export const Route = createFileRoute("/c/$slug")({
   head: ({ params }) => {
@@ -52,16 +53,14 @@ function CommandPage() {
         <>
           <p className="text-xs text-muted-foreground">
             <Link
-              to="/explore/$category"
-              params={{ category: command.category }}
+              to={categoryHref(command.category)}
               className="text-primary hover:underline"
             >
               {command.category}
             </Link>{" "}
             /{" "}
             <Link
-              to="/explore/$category/$subcategory"
-              params={{ category: command.category, subcategory: command.subcategory }}
+              to={subcategoryHref(command.category, command.subcategory)}
               className="hover:underline"
             >
               {command.subcategory}

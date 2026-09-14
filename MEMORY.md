@@ -1,7 +1,7 @@
 # SlashAI — Project Memory
 
 ## What This Is
-SlashAI (https://slashai-nu.vercel.app/) is a free, offline-first,
+SlashAI (https://slashai.in/) is a free, offline-first,
 no-account AI command and resource library. 5,635 commands, 317+ curated
 resources, 50+ viral prompts, 80 trending /commands, 25 generators,
 20 roadmaps, 560+ glossary terms, 32 South Asia resources, 40+ new APIs,

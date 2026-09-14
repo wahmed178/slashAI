@@ -1454,7 +1454,7 @@ const BASE_RESOURCES: Resource[] = [
   r({
     id: "tip-ai-give-the-format",
     name: "Tell the AI the output format first",
-    url: "https://slashai.lovable.app/about",
+    url: "https://slashai.in/about",
     description: "Naming the exact shape of the answer removes most rewriting.",
     section: "tips",
     category: "AI",
@@ -1472,7 +1472,7 @@ const BASE_RESOURCES: Resource[] = [
   r({
     id: "tip-ai-ask-for-questions",
     name: "Make the AI interview you first",
-    url: "https://slashai.lovable.app/about",
+    url: "https://slashai.in/about",
     description: "Asking for clarifying questions before an answer removes guesswork.",
     section: "tips",
     category: "AI",
@@ -1507,7 +1507,7 @@ const BASE_RESOURCES: Resource[] = [
   r({
     id: "tip-productivity-two-minute",
     name: "Batch every task under two minutes",
-    url: "https://slashai.lovable.app/about",
+    url: "https://slashai.in/about",
     description: "Collecting tiny tasks into one short block beats interrupting deep work.",
     section: "tips",
     category: "Productivity",

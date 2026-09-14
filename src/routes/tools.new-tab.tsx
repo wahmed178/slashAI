@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 const DEFAULT_BOOKMARKS = [
-  { icon: "\u{1F310}", name: "SlashAI", url: "https://slashai-nu.vercel.app" },
+  { icon: "\u{1F310}", name: "SlashAI", url: "https://slashai.in" },
   { icon: "\u{2709}\u{FE0F}", name: "Gmail", url: "https://mail.google.com" },
   { icon: "\u{1F3AC}", name: "YouTube", url: "https://youtube.com" },
   { icon: "\u{1F4AC}", name: "WhatsApp", url: "https://web.whatsapp.com" },
@@ -119,7 +119,7 @@ function NewTabScreen() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!search) return;
-    if (search.startsWith("/")) window.location.href = `https://slashai-nu.vercel.app/search?q=${encodeURIComponent(search)}`;
+    if (search.startsWith("/")) window.location.href = `https://slashai.in/search?q=${encodeURIComponent(search)}`;
     else window.location.href = `https://www.google.com/search?q=${encodeURIComponent(search)}`;
   };
 
@@ -127,7 +127,9 @@ function NewTabScreen() {
   const saveBookmarks = () => { localStorage.setItem("newtab-bookmarks", JSON.stringify(bookmarks)); setEditMode(false); };
 
   return (
+
     <div className="flex min-h-screen flex-col items-center justify-center px-4" style={{ background: "var(--background)" }}>
+      <h1 className="sr-only">New Tab Screen - SlashAI</h1>
 
       {/* Auto-dismiss close button */}
       <div

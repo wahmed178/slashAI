@@ -155,7 +155,7 @@ function SearchPage() {
   const subcategories = CATEGORY_TREE.find((c) => c.category === cat)?.subcategories ?? [];
 
   return (
-    <AppShell wide hideHeaderSearch title="Search">
+    <AppShell wide hideHeaderSearch title="Search" srH1="Search - SlashAI">
       <SearchBox size="lg" value={q} onChange={(v) => set({ q: v })} autoFocus />
 
       {personalPicks.length > 0 && (

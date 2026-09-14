@@ -27,7 +27,7 @@ function SipCalculator() {
   const invPct = result.total > 0 ? (result.invested / result.total) * 100 : 50;
 
   return (
-    <AppShell title="SIP Calculator" back={{ to: "/tools", label: "SlashKits" }}>
+    <AppShell title="SIP Calculator" back={{ to: "/tools", label: "SlashKits" }} srH1="SIP Calculator - SlashAI">
       <div className="mt-4 space-y-5">
         {/* Inputs */}
         <div className="rounded-xl border border-border bg-surface p-4 space-y-4">

@@ -78,7 +78,9 @@ function Starfield() {
   const dateStr = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
   return (
+
     <div className="relative min-h-screen overflow-hidden" style={{ background: "var(--background)" }}>
+      <h1 className="sr-only">Starfield Screen - SlashAI</h1>
 
       {/* Auto-dismiss close button */}
       <div

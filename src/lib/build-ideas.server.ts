@@ -14,7 +14,7 @@ export async function askOpenRouter(system: string, user: string) {
     headers: {
       Authorization: `Bearer ${key}`,
       "Content-Type": "application/json",
-      "HTTP-Referer": "https://slashai.lovable.app",
+      "HTTP-Referer": "https://slashai.in",
       "X-Title": "SlashAI Build Ideas",
     },
     body: JSON.stringify({

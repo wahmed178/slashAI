@@ -81,7 +81,7 @@ const SITES: FunSite[] = [
   { name: "The Oatmeal", url: "https://theoatmeal.com", emoji: "🥣", category: "Weird", desc: "Internet comics, sometimes deeply weird, always funny." },
 
   /* ── Interactive art & visuals ── */
-  { name: "Weave Silk", url: "http://weavesilk.com", emoji: "🧵", category: "Interactive", desc: "Draw symmetry art that feels like magic. (We built an in-app silk painter.)", inApp: { to: "/tools/silk", label: "Silk Painter" } },
+  { name: "Weave Silk", url: "https://weavesilk.com", emoji: "🧵", category: "Interactive", desc: "Draw symmetry art that feels like magic. (We built an in-app silk painter.)", inApp: { to: "/tools/silk", label: "Silk Painter" } },
   { name: "Patatap", url: "https://patatap.com", emoji: "🎹", category: "Interactive", desc: "Press any key for animated sounds and shapes. The keyboard becomes an instrument." },
   { name: "The Scale of the Universe", url: "https://htwins.net/scale2/", emoji: "🔬", category: "Interactive", desc: "Zoom from Planck length to the entire universe in one scrolling canvas." },
   { name: "Window Swap", url: "https://window-swap.com", emoji: "🪟", category: "Interactive", desc: "Open a random window somewhere in the world and see someone else's view." },

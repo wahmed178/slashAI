@@ -72,6 +72,12 @@ interface Props {
   hideHeaderSearch?: boolean;
   /** widen the content column for dense list pages */
   wide?: boolean;
+  /**
+   * Screen-reader-only <h1> for pages whose UI has no visible heading
+   * (canvas-based tools, screensavers...). Keeps exactly one H1 per page
+   * for accessibility and SEO without changing the visual design.
+   */
+  srH1?: string;
 }
 
 /* ─────────── Breadcrumbs - Home › Section › Page ─────────── */
@@ -293,10 +299,17 @@ function ScreenStar({ fav, label, onToggle }: { fav: boolean; label: string; onT
   );
 }
 
-export function AppShell({ children, title, back, hideHeaderSearch, wide }: Props) {
+export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }: Props) {
   const [slashbarOpen, setSlashbarOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isToolFavorite, toggleToolFavorite } = useLibrary();
+
+  // Did the matched route contribute its own head()? The root always
+  // contributes one (canonical/OG), so look for a non-root match with meta.
+  const matches = useRouterState({ select: (s) => s.matches });
+  const hasSeoHead = matches.some(
+    (m) => m.routeId !== "__root__" && Array.isArray(m.meta) && m.meta.length > 0,
+  );
 
   // the current screen (tool / game / slash app) can be starred straight
   // from the header — same localStorage list the Saved page reads
@@ -309,16 +322,18 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
     toggleToolFavorite(screen.slug);
   };
 
-  // Every page must have a real browser-tab title. Pages that set `head()`
-  // meta manage their own <title>; this effect only fills the gaps (tools
-  // without head(), hubs, dynamic pages) so no route renders untitled.
+  // Fill the browser-tab title only when the route has no SEO head of its
+  // own (a route-level head() always sets a description). Writing the title
+  // unconditionally used to overwrite richer SSR titles like
+  // "Command - Title | SlashAI" on hydration.
   useEffect(() => {
+    if (hasSeoHead) return;
     if (title) {
       document.title = `${title} - SlashAI`;
     } else {
       document.title = "SlashAI - Free AI Commands, Tools & Resources";
     }
-  }, [title, pathname]);
+  }, [hasSeoHead, title, pathname]);
 
   return (
     <div className="flex min-h-screen w-full flex-col" style={{ background: "var(--background)" }}>
@@ -410,6 +425,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide }: Prop
             pathname={pathname}
             trailing={screen ? <ScreenStar fav={screenFav} label={kindLabel} onToggle={onStarScreen} /> : undefined}
           />
+          {srH1 && <h1 className="sr-only">{srH1}</h1>}
           {children}
         </div>
       </main>

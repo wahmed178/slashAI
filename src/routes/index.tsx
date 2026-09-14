@@ -775,6 +775,15 @@ function HomePage() {
               ],
             },
             {
+              title: "More",
+              links: [
+                { label: "Build Ideas Library", to: "/build-ideas" },
+                { label: "Compare AI Models", to: "/compare" },
+                { label: "Designs & Themes", to: "/designs" },
+                { label: "Sitemap", to: "/sitemap" },
+              ],
+            },
+            {
               title: "Tools & Play",
               links: [
                 { label: "SlashKits", to: "/tools" },

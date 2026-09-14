@@ -1078,7 +1078,9 @@ const total = filtered.length;
   const atEnd = pos >= total - 1;
 
   return (
+
     <div className="flex flex-col h-screen overflow-hidden bg-background">
+      <h1 className="sr-only">One Liner Generator - SlashAI</h1>
 
       {/* Auto-dismiss close button */}
       <div

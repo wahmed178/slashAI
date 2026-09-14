@@ -28,7 +28,7 @@ function GstCalculator() {
   }, [amount, effectiveRate, mode]);
 
   return (
-    <AppShell title="GST Calculator" back={{ to: "/tools", label: "SlashKits" }}>
+    <AppShell title="GST Calculator" back={{ to: "/tools", label: "SlashKits" }} srH1="GST Calculator - SlashAI">
       <div className="mt-4 space-y-4">
         <div className="flex gap-2">
           {(["add", "remove"] as const).map((m) => (

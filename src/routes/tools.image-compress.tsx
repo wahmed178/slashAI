@@ -68,7 +68,7 @@ function ImageCompress() {
   const pct = origSize > 0 ? Math.round((1 - compSize / origSize) * 100) : 0;
 
   return (
-    <AppShell title="Image Compressor" back={{ to: "/tools", label: "SlashKits" }}>
+    <AppShell title="Image Compressor" back={{ to: "/tools", label: "SlashKits" }} srH1="Image Compressor - SlashAI">
       <canvas ref={canvasRef} className="hidden" />
       {!file ? (
         <div

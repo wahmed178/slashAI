@@ -9,7 +9,7 @@ const config: CapacitorConfig = {
   backgroundColor: "#12161c",
   server: {
     androidScheme: "https",
-    url: "https://slashai-nu.vercel.app",
+    url: "https://slashai.in",
   },
   android: {
     backgroundColor: "#12161c",

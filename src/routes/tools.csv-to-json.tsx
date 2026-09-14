@@ -64,7 +64,7 @@ function CsvToJson() {
   };
 
   return (
-    <AppShell title="CSV ↔ JSON" back={{ to: "/tools", label: "SlashKits" }}>
+    <AppShell title="CSV ↔ JSON" back={{ to: "/tools", label: "SlashKits" }} srH1="CSV ↔ JSON - SlashAI">
       <div className="mt-4 flex gap-2">
         <button type="button" onClick={() => setMode("csv-to-json")}
           className="min-h-[40px] flex-1 rounded-lg border px-3 text-sm font-medium transition-colors"

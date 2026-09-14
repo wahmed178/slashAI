@@ -173,6 +173,7 @@ function ReelsPage() {
 
   return (
     <div className="fixed inset-0 z-50 bg-black">
+      <h1 className="sr-only">Prompt Reels - SlashAI</h1>
       {/* Back button */}
       <Link
         to="/discover"

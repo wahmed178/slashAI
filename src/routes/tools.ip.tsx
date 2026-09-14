@@ -16,11 +16,22 @@ function NetworkInfoTool() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // ipwho.is: free, keyless and HTTPS-capable. ip-api.com's free tier is
+    // HTTP-only, which browsers block as mixed content on an HTTPS page.
+    const mapIpInfo = (d: any) => ({
+      country: d.country,
+      countryCode: d.country_code,
+      city: d.city,
+      isp: d.connection?.isp,
+      org: d.connection?.org,
+      timezone: d.timezone?.id,
+      as: d.connection?.asn ? `AS${d.connection.asn}` : undefined,
+    });
     fetch("https://api.ipify.org?format=json")
       .then((r) => r.json())
-      .then((d) => { setMyIP(d.ip); return fetch(`http://ip-api.com/json/${d.ip}`); })
+      .then((d) => { setMyIP(d.ip); return fetch(`https://ipwho.is/${d.ip}`); })
       .then((r) => r.json())
-      .then((d) => setMyInfo(d))
+      .then((d) => setMyInfo(mapIpInfo(d)))
       .catch(() => {});
   }, []);
 
@@ -28,9 +39,17 @@ function NetworkInfoTool() {
     if (!lookupIP.trim()) return;
     setLoading(true);
     try {
-      const r = await fetch(`http://ip-api.com/json/${lookupIP.trim()}`);
+      const r = await fetch(`https://ipwho.is/${lookupIP.trim()}`);
       const d = await r.json();
-      setLookupInfo(d);
+      setLookupInfo({
+        country: d.country,
+        countryCode: d.country_code,
+        city: d.city,
+        isp: d.connection?.isp,
+        org: d.connection?.org,
+        timezone: d.timezone?.id,
+        as: d.connection?.asn ? `AS${d.connection.asn}` : undefined,
+      });
     } catch { setLookupInfo(null); }
     setLoading(false);
   };

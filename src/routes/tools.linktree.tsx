@@ -118,7 +118,8 @@ function encodeProfile(profile: Profile): string {
 }
 
 function getShareUrl(profile: Profile): string {
-  const base = `${window.location.origin}/l/${profile.username}`;
+  // Canonical public domain so shared profile links work everywhere.
+  const base = `https://slashai.in/l/${profile.username}`;
   const hash = encodeProfile(profile);
   return hash ? `${base}#${hash}` : base;
 }

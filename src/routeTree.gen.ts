@@ -38,6 +38,7 @@ import { Route as RecentRouteImport } from './routes/recent'
 import { Route as RoadmapsRouteImport } from './routes/roadmaps'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SitemapRouteImport } from './routes/sitemap'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TrendingRouteImport } from './routes/trending'
@@ -413,6 +414,11 @@ const SearchRoute = SearchRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapRoute = SitemapRouteImport.update({
+  id: '/sitemap',
+  path: '/sitemap',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -1602,6 +1608,7 @@ export interface FileRoutesByFullPath {
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/sitemap': typeof SitemapRoute
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
@@ -1863,6 +1870,7 @@ export interface FileRoutesByTo {
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/sitemap': typeof SitemapRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/web-search': typeof WebSearchRoute
@@ -2125,6 +2133,7 @@ export interface FileRoutesById {
   '/roadmaps': typeof RoadmapsRoute
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
+  '/sitemap': typeof SitemapRoute
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
@@ -2389,6 +2398,7 @@ export interface FileRouteTypes {
     | '/roadmaps'
     | '/search'
     | '/settings'
+    | '/sitemap'
     | '/terms'
     | '/tools'
     | '/trending'
@@ -2650,6 +2660,7 @@ export interface FileRouteTypes {
     | '/roadmaps'
     | '/search'
     | '/settings'
+    | '/sitemap'
     | '/terms'
     | '/trending'
     | '/web-search'
@@ -2911,6 +2922,7 @@ export interface FileRouteTypes {
     | '/roadmaps'
     | '/search'
     | '/settings'
+    | '/sitemap'
     | '/terms'
     | '/tools'
     | '/trending'
@@ -3174,6 +3186,7 @@ export interface RootRouteChildren {
   RoadmapsRoute: typeof RoadmapsRoute
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
+  SitemapRoute: typeof SitemapRoute
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRouteWithChildren
   TrendingRoute: typeof TrendingRoute
@@ -3410,6 +3423,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap': {
+      id: '/sitemap'
+      path: '/sitemap'
+      fullPath: '/sitemap'
+      preLoaderRoute: typeof SitemapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -5478,6 +5498,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoadmapsRoute: RoadmapsRoute,
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
+  SitemapRoute: SitemapRoute,
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRouteWithChildren,
   TrendingRoute: TrendingRoute,

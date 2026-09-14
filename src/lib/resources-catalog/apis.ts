@@ -119,7 +119,7 @@ export const API_RESOURCES: Resource[] = [
   }),
   r({
     id: "api-open-notify", name: "Open Notify",
-    url: "http://open-notify.org/Open-Notify-API/",
+    url: "https://open-notify.org/Open-Notify-API/",
     description: "Tiny classic API for ISS location and humans currently in space.",
     section: "free-apis", category: "Space", audience: ["Developers"],
     pricing: "Completely Free", type: "API",
@@ -288,14 +288,6 @@ export const API_RESOURCES: Resource[] = [
     tags: ["activities", "fun", "no-key"], notes: "Original bored-api.herokuapp.com was retired; this mirror keeps the same shape.",
   }),
   r({
-    id: "api-numbers", name: "Numbers API",
-    url: "http://numbersapi.com",
-    description: "Trivia, math facts and date facts about any number.",
-    section: "free-apis", category: "Entertainment", audience: ["Developers", "Teachers"],
-    pricing: "Completely Free", type: "API",
-    tags: ["math", "trivia", "no-key"], notes: "Sample: numbersapi.com/42/trivia",
-  }),
-  r({
     id: "api-lyricsovh", name: "Lyrics.ovh",
     url: "https://lyricsovh.docs.apiary.io",
     description: "Simple keyless lyrics lookup by artist and song title.",
@@ -323,7 +315,7 @@ export const API_RESOURCES: Resource[] = [
   // -------------------------------------------------------------- Geolocation
   r({
     id: "api-ipapi", name: "IP-API",
-    url: "http://ip-api.com/docs/",
+    url: "https://ip-api.com/docs/",
     description: "Geolocate an IP to city, ISP and timezone; no key for non-commercial use.",
     section: "free-apis", category: "Geolocation", audience: ["Developers"],
     pricing: "Free Tier", type: "API",
@@ -394,7 +386,7 @@ export const API_RESOURCES: Resource[] = [
   }),
   r({
     id: "api-colormind", name: "Colormind",
-    url: "http://colormind.io/api-access/",
+    url: "https://colormind.io/api-access/",
     description: "Deep-learning color palette generator returning five hex colors per call.",
     section: "free-apis", category: "Utilities", audience: ["Designers", "Developers"],
     pricing: "Completely Free", type: "API",
@@ -439,7 +431,7 @@ export const API_RESOURCES: Resource[] = [
     section: "free-apis", category: "Utilities", audience: ["Developers"],
     pricing: "Free Tier", type: "API",
     eligibility: "~50 req/day free without signup.",
-    tags: ["metadata", "og-image", "screenshots"], notes: "Sample: api.microlink.io/?url=https%3A%2F%2Fslashai.lovable.app",
+    tags: ["metadata", "og-image", "screenshots"], notes: "Sample: api.microlink.io/?url=https%3A%2F%2Fslashai.in",
   }),
   r({
     id: "api-internetdb", name: "Shodan InternetDB",

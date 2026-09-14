@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useLibrary } from "@/hooks/use-library";
 import { commandPath, commandTemplate, type SlashCommand } from "@/lib/commands";
 import { trackInteraction } from "@/lib/intelligence";
+import { SITE_URL } from "@/lib/seo";
 
 /** Small, non-intrusive celebrations at the moments that matter. */
 const COPY_MILESTONES: Record<number, string> = {
@@ -64,10 +65,9 @@ export function useCommandActions() {
 
   const shareCommand = useCallback(
     async (cmd: SlashCommand) => {
-      const url =
-        typeof window === "undefined"
-          ? commandPath(cmd)
-          : new URL(commandPath(cmd), window.location.origin).toString();
+      // Share links always use the canonical public domain so links copied
+      // in the PWA/preview still resolve after deployment.
+      const url = new URL(commandPath(cmd), SITE_URL).toString();
       const canShare = typeof navigator !== "undefined" && typeof navigator.share === "function";
       if (canShare) {
         try {

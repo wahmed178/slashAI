@@ -7,8 +7,9 @@ import {
   useRouterState,
   HeadContent,
   Scripts,
+  type MetaDescriptor,
 } from "@tanstack/react-router";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type JSX, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -25,6 +26,16 @@ import { LibraryProvider } from "@/hooks/use-library";
 import { KeyboardShortcutsProvider } from "@/lib/keyboard-shortcuts.tsx";
 import { Toaster } from "@/components/ui/sonner";
 import { WhatsNewDialog } from "@/components/library/WhatsNewDialog";
+import {
+  SITE_URL,
+  SITE_NAME,
+  OG_IMAGE,
+  canonicalUrl,
+  seoForPath,
+  websiteJsonLd,
+  organizationJsonLd,
+  breadcrumbJsonLd,
+} from "@/lib/seo";
 
 
 function NotFoundComponent() {
@@ -130,43 +141,88 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
+  /**
+   * Re-runs for every navigation (SSR + client) via executeHead, so canonical
+   * URLs, Open Graph / Twitter metadata and JSON-LD stay in sync with the
+   * active page. Per-page titles/descriptions from child routes keep winning
+   * (deepest match wins in buildTagsFromMatches); the registry here only
+   * fills pages whose route has no head() of its own.
+   */
+  head: ({ matches }) => {
+    const deepest = matches[matches.length - 1];
+    const pathname = deepest?.pathname ?? "/";
+    const seo = seoForPath(pathname);
+
+    const meta: Array<MetaDescriptor> = [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      {
-        name: "description",
-        content:
-          "Search and copy 5,635 free AI slash commands, run 150+ browser tools in SlashKits, and browse 319 curated free resources, roadmaps and a daily quiz. Free forever, no account.",
-      },
-      { name: "author", content: "SlashAI" },
-      { title: "SlashAI - 5,635 Free AI Slash Commands, Tools & Resources" },
-      { property: "og:title", content: "SlashAI - 5,635 Free AI Slash Commands, Tools & Resources" },
-      {
-        property: "og:description",
-        content:
-          "Search and copy 5,635 free AI slash commands, run 150+ browser tools in SlashKits, and browse 319 curated free resources. Free forever, no account.",
-      },
+      { title: seo.title },
+      { name: "description", content: seo.description },
+      { name: "author", content: SITE_NAME },
+      // Open Graph
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:title", content: seo.title },
+      { property: "og:description", content: seo.description },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: canonicalUrl(pathname) },
+      { property: "og:image", content: `${SITE_URL}${OG_IMAGE}` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: `${SITE_NAME} - free AI commands, tools and games` },
+      // Twitter/X card
       { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
-      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32.png" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/icons/apple-touch-icon.png" },
-      { rel: "manifest", href: "/manifest.webmanifest" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap",
-      },
-    ],
-  }),
+      { name: "twitter:title", content: seo.title },
+      { name: "twitter:description", content: seo.description },
+      { name: "twitter:image", content: `${SITE_URL}${OG_IMAGE}` },
+      { name: "theme-color", content: "#12161c" },
+    ];
+
+    if (seo.noindex) {
+      meta.push({ name: "robots", content: "noindex, nofollow" });
+    }
+
+    const ld: Array<Record<string, unknown>> = [websiteJsonLd(), organizationJsonLd()];
+    const crumb = breadcrumbJsonLd(pathname);
+    if (crumb) ld.push(crumb);
+
+    // headContentUtils.js handles "script:ld+json" entries at runtime, but the
+    // public head() meta type still lags behind (React meta props only) — cast.
+    return {
+      meta: [...meta, ...ld.map((json) => ({ "script:ld+json": json }))] as unknown as Array<
+        JSX.IntrinsicElements["meta"] | undefined
+      >,
+      links: [
+        // Canonical: https, no query/hash, no trailing slash (except root).
+        // Must live in links (not meta) — this TanStack version renders
+        // tag/attr-style meta entries as broken <meta> tags, and links from
+        // child matches are not key-deduped, so only the root emits it.
+        { rel: "canonical", href: canonicalUrl(pathname) },
+        {
+          rel: "stylesheet",
+          href: appCss,
+        },
+        { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
+        { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32.png" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/icons/apple-touch-icon.png" },
+        { rel: "manifest", href: "/manifest.webmanifest" },
+        // Preconnect + async font CSS: the stylesheet itself stays
+        // render-blocking by necessity, but Google Fonts' own stylesheet is
+        // made async via the media-swap trick, so first paint never waits
+        // on the font CDN.
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+        {
+          rel: "stylesheet",
+          // Optimised font request: Outfit covers every weight the UI uses
+          // (400..800); Space Grotesk was previously loaded but is only a
+          // fallback name in --font-sans and never renders, so it is removed.
+          // display=swap avoids invisible text; preconnects above hide the
+          // connection cost.
+          href: "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap",
+        },
+      ],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

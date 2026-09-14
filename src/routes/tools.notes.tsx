@@ -54,7 +54,7 @@ function QuickNotes() {
   };
 
   return (
-    <AppShell title="Quick Notes">
+    <AppShell title="Quick Notes" srH1="Quick Notes - SlashAI">
       <div className="flex h-[calc(100vh-100px)] gap-0 pt-4">
         {/* Sidebar */}
         <div className="w-64 shrink-0 border-r border-border pr-4">

@@ -5,6 +5,7 @@ import { useState, useCallback } from "react";
 import { AppShell } from "@/components/library/AppShell";
 import { categoryIcon } from "@/components/library/icons";
 import { CATEGORY_TREE, SUBCATEGORY_TOTAL, VERIFIED_TOTAL } from "@/lib/commands";
+import { categoryHref } from "@/lib/explore-slugs";
 
 export const Route = createFileRoute("/explore/")({
   head: () => ({
@@ -213,8 +214,7 @@ function ExplorePage() {
               return (
                 <Link
                   key={c.category}
-                  to="/explore/$category"
-                  params={{ category: c.category }}
+                  to={categoryHref(c.category)}
                   className="group flex min-h-[72px] items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/50"
                 >
                   <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
