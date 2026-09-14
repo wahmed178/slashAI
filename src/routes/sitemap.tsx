@@ -61,7 +61,8 @@ function SitemapPage() {
         {CATEGORY_TREE.map((c) => (
           <li key={c.category}>
             <Link
-              to={`/explore/${slugify(c.category)}`}
+              to="/explore/$category"
+              params={{ category: slugify(c.category) }}
               className="flex min-h-11 items-center rounded-xl border border-border bg-surface px-3.5 text-[13px] text-foreground transition-colors hover:border-primary/50"
             >
               <span className="min-w-0 truncate">{c.category}</span>
