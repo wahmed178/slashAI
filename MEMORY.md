@@ -10,7 +10,7 @@ Daily Quiz with 24 categories, streaks, and timer.
 Content auto-update: GitHub Actions fetch trending tools (Mon), news (daily), prompts (Wed)
 22 browser tools at /tools (image compress/convert, PDF, calculators, timers, screensavers)
 Daily content automation: quotes, artwork via GitHub Actions
-Built on Lovable, deployed on Vercel.
+Self-hosted identity: own domain (slashai.in), no third-party builder branding.
 
 ## Design Identity
 - Dark theme: near-black navy background (#0a0a0f via oklch), darker sidebar, layered surfaces
@@ -26,14 +26,14 @@ Built on Lovable, deployed on Vercel.
 - Light and AMOLED themes preserved with semantic token overrides
 
 ## Architecture
-- Framework: React (via Lovable) + TanStack Start (SSR, but deployed as static SPA on Freebuff)
-- Hosting: Vercel (primary) + Freebuff static hosting (secondary)
+- Framework: React + TanStack Start (SSR)
+- Hosting: Vercel (serves slashai.in) + Freebuff static hosting (secondary)
 - Storage: localStorage only (no auth, no backend database)
 - Data: static TS files + JSON for commands, resources, prompts
 - APIs used: Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD,
   TheSportsDB, HackerNews, Yahoo Finance (unofficial), USGS, OpenAQ,
   WhereTheISS.at, ExchangeRate-API, Free Dictionary API, AlQuran.cloud
-- Android app: Capacitor (loads Vercel URL in WebView)
+- Android app: Capacitor (loads slashai.in in WebView, package in.slashai.app)
 
 ## Pages (as of Aug 2026)
 / — Homepage with live ticker (NIFTY/SENSEX/BTC/ETH/USD/prayer/weather), hero, stats bar, feature cards, icon card grid, emoji chips, collection cards, hub cards, weekly digest, footer

@@ -78,7 +78,7 @@ function AboutPage() {
             Built with
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            React · TanStack Start · Vercel · Inter font
+            React · TanStack Start · Tailwind CSS · Outfit font
             Open-Meteo · CoinGecko · Aladhan · TheSportsDB
             HackerNews · AlQuran.cloud · NASA APOD
             Open Trivia Database · Frankfurter · OpenAQ

@@ -26,7 +26,7 @@ function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="mt-2 text-xs text-muted-foreground">
-            Last updated: January {YEAR} · Applies to all SlashAI products and
+            Last updated: September {YEAR} · Applies to all SlashAI products and
             services.
           </p>
         </header>
@@ -71,7 +71,7 @@ function PrivacyPage() {
             <li>
               <strong className="text-foreground">Error reports</strong> - if
               the app crashes, your browser may send a standard error report to
-              our hosting provider (Vercel). This contains no personal data -
+              our hosting provider. This contains no personal data -
               only technical details like browser version and the page URL.
             </li>
           </ul>
@@ -212,10 +212,10 @@ function PrivacyPage() {
             </a>{" "}
             or email{" "}
             <a
-              href="mailto:hello@slashai.app"
+              href="mailto:hello@slashai.in"
               className="text-primary hover:underline"
             >
-              hello@slashai.app
+              hello@slashai.in
             </a>
             .
           </p>

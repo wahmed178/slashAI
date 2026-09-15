@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.24.1";
+export const APP_VERSION = "2.25.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,17 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.25.0",
+    date: "2026-09-15",
+    title: "Welcome tour + own domain",
+    changes: [
+      "First-time visitors now get a short welcome tour that explains what SlashAI is and where to start",
+      "The site now lives at slashai.in - its own domain - and every share link, QR code and canonical URL points there",
+      "Cleaned up: no more mentions of the tools used to build the site anywhere users can see",
+      "Privacy policy, about page and changelog refreshed to match reality today",
+    ],
+  },
   {
     version: "2.20.1",
     date: "2026-09-12",
@@ -156,7 +167,7 @@ export const CHANGELOG: ReleaseNote[] = [
     changes: [
       "New Build Ideas library: 150 researched product ideas with the problem, target users, MVP scope, tech stack, pricing and a first-10-customers plan.",
       "Search and filter ideas by category, difficulty, business model, build type and who they suit.",
-      "'Build this' generates a full product spec plus a paste-ready Lovable prompt, cached on your device so it opens instantly and works offline.",
+      "'Build this' generates a full product spec plus a paste-ready AI app-builder prompt, cached on your device so it opens instantly and works offline.",
       "Idea validator: describe your own idea and get scores for problem clarity, competition, monetization, build and acquisition difficulty.",
       "My projects tracks saved ideas from Idea to Launch with auto-saving notes - all on-device, no account needed.",
       "Sidebar sections for Discover and Build Ideas now collapse and expand with a toggle.",

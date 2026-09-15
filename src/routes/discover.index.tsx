@@ -416,11 +416,11 @@ const ID_TO_HOST = new Map(
     try {
       return [r.id, new URL(r.url).hostname] as const;
     } catch {
-      return [r.id, "slashai.app"] as const;
+      return [r.id, "slashai.in"] as const;
     }
   }),
 );
 
 function hostOf(path: string): string {
-  return ID_TO_HOST.get(path.replace("/r/", "")) ?? "slashai.app";
+  return ID_TO_HOST.get(path.replace("/r/", "")) ?? "slashai.in";
 }

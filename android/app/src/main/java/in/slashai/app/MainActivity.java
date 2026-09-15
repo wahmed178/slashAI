@@ -1,4 +1,4 @@
-package dev.lovable.slashprompt;
+package in.slashai.app;
 
 import android.Manifest;
 import android.app.DownloadManager;

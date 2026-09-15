@@ -90,12 +90,12 @@ export function BuildSpecDrawer({
               onClick={async () => {
                 await navigator.clipboard.writeText(prompt);
                 setCopied(true);
-                toast.success("Prompt copied - paste it into Lovable");
+                toast.success("Prompt copied - paste it into your AI app builder");
                 setTimeout(() => setCopied(false), 1600);
               }}
             >
               {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-              Copy Lovable prompt
+              Copy app-builder prompt
             </Button>
           ) : null}
 

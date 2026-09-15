@@ -706,7 +706,7 @@ function QuizPage() {
   }, []);
 
   const shareScore = useCallback(async () => {
-    const text = `I scored ${score}/${questions.length} on the ${selectedCategory?.name} quiz! \u{1F9E0} Try it free at slashai.app`;
+    const text = `I scored ${score}/${questions.length} on the ${selectedCategory?.name} quiz! \u{1F9E0} Try it free at slashai.in`;
     if (navigator.share) {
       try {
         await navigator.share({ title: "SlashAI Daily Quiz", text, url: "https://slashai.in/quiz" });

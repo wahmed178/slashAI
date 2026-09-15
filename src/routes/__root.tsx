@@ -9,7 +9,7 @@ import {
   Scripts,
   type MetaDescriptor,
 } from "@tanstack/react-router";
-import { useEffect, useRef, type JSX, type ReactNode } from "react";
+import { useEffect, useRef, useState, type JSX, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -26,6 +26,7 @@ import { LibraryProvider } from "@/hooks/use-library";
 import { KeyboardShortcutsProvider } from "@/lib/keyboard-shortcuts.tsx";
 import { Toaster } from "@/components/ui/sonner";
 import { WhatsNewDialog } from "@/components/library/WhatsNewDialog";
+import { WelcomeTour } from "@/components/library/WelcomeTour";
 import {
   SITE_URL,
   SITE_NAME,
@@ -177,6 +178,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#12161c" },
     ];
 
+    // Google Search Console / webmaster verification: set VITE_GSC_VERIFICATION
+    // (the content value of the meta tag, not the whole tag) in the hosting
+    // environment and it is emitted on every page. Empty = no tag.
+    const gsc = import.meta.env["VITE_GSC_VERIFICATION"] as string | undefined;
+    if (gsc) meta.push({ name: "google-site-verification", content: gsc });
+
     if (seo.noindex) {
       meta.push({ name: "robots", content: "noindex, nofollow" });
     }
@@ -258,6 +265,10 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  // First-visit welcome tour: renders only after hydration on the client,
+  // so SSR HTML (and everything crawlers see) is never affected.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     registerServiceWorker();
@@ -280,6 +291,7 @@ function RootComponent() {
         <KeyboardShortcutsProvider>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
+        {mounted ? <WelcomeTour /> : null}
         <WhatsNewDialog />
         <Toaster position="bottom-right" />
         </KeyboardShortcutsProvider>

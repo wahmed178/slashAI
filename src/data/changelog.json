@@ -1,6 +1,16 @@
 {
-  "version": "2.24.1",
+  "version": "2.25.0",
   "entries": [
+    {
+      "version": "2.25.0",
+      "date": "2026-09-15",
+      "changes": [
+        "First-time visitors now get a short welcome tour that explains what SlashAI is and where to start",
+        "The site now lives at slashai.in - its own domain - and every share link, QR code and canonical URL points there",
+        "Cleaned up: no more mentions of the tools used to build the site anywhere users can see",
+        "Privacy policy, about page and changelog refreshed to match reality today"
+      ]
+    },
     {
       "version": "2.24.1",
       "date": "2026-09-12",

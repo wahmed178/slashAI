@@ -45,7 +45,7 @@ function buildPayload(preset: string, raw: string): string {
 }
 
 function QRCodeGenerator() {
-  const [text, setText] = useState("https://slashai.app");
+  const [text, setText] = useState("https://slashai.in");
   const [preset, setPreset] = useState("URL");
   const [size, setSize] = useState(300);
   const [fg, setFg] = useState("#000000");

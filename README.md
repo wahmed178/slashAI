@@ -7,7 +7,7 @@
 A searchable library of copy-ready slash commands for writing, research, coding, design, documents, data, productivity and more. Find a strong starting point, tune it to your task, and get back to the work.
 
 [![Status](https://img.shields.io/badge/status-live-2dd4bf)](https://slashai.in)
-[![Commands](https://img.shields.io/badge/commands-1%2C499-0ea5e9)](#-command-categories)
+[![Commands](https://img.shields.io/badge/commands-5%2C635-0ea5e9)](#-command-categories)
 [![PWA](https://img.shields.io/badge/PWA-offline--ready-8b5cf6)](#-pwa--offline)
 [![Android](https://img.shields.io/badge/Android-APK-3ddc84)](#-android)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](#-tech-stack)
@@ -315,7 +315,7 @@ Validation enforces unique stable IDs, no duplicate command names, and complete 
 
 ## 🧩 Tech stack
 
-**React** · **TypeScript** · **Vite** · **TanStack Router** · **Tailwind CSS** · **Radix UI** · **Capacitor** · **Lovable**
+**React** · **TypeScript** · **Vite** · **TanStack Router** · **Tailwind CSS** · **Radix UI** · **Capacitor**
 
 ---
 
@@ -357,10 +357,6 @@ No license file is currently present in this repository. Licensing information s
 
 <div align="center">
 
-Deployed on [Vercel](https://slashai.in) — the app is hosted independently so it stays live even if Lovable shuts down.
-
-> **Why Vercel?** Lovable is used for building, but Lovable's hosting can go down or shut down anytime. Vercel ensures the app is always available as the permanent source.
-
-Built with Lovable · Hosted on Vercel
+**[slashai.in](https://slashai.in)** — free forever, no account, works offline.
 
 </div>

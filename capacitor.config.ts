@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "dev.lovable.slashprompt",
+  appId: "in.slashai.app",
   appName: "SlashAI",
   webDir: "android-web",
   bundledWebRuntime: false,

@@ -61,7 +61,7 @@ function ElevatorPitchBuilder() {
             ["audience", "Who is it for?", "e.g. indie hackers and solo founders"],
             ["problem", "What problem does it solve?", "e.g. expensive design tools lock out small teams"],
             ["different", "How is it different?", "e.g. zero signup, works offline, free forever"],
-            ["ask", "What do you want from the listener?", "e.g. try it today at slashai.app"],
+            ["ask", "What do you want from the listener?", "e.g. try it today at slashai.in"],
           ] as [string, string, string][]).map(([k, label, placeholder]) => (
             <div key={k}>
               <label className="mb-1 block text-xs text-muted-foreground">{label}</label>

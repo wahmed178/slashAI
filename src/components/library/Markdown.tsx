@@ -174,7 +174,7 @@ export function Markdown({ source }: { source: string }) {
   return <div className="space-y-2">{blocks}</div>;
 }
 
-/** Pulls the first fenced code block out of a spec - that's the Lovable prompt. */
+/** Pulls the first fenced code block out of a spec - that's the app-builder prompt. */
 export function extractPrompt(markdown: string) {
   const match = markdown.match(/```[a-z]*\n([\s\S]*?)```/i);
   return match?.[1]?.trim() ?? "";

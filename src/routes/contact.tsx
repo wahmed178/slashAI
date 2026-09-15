@@ -191,14 +191,14 @@ function ContactPage() {
           </h2>
           <div className="mt-3 space-y-2">
             <a
-              href="mailto:hello@slashai.app"
+              href="mailto:hello@slashai.in"
               className="flex items-center gap-3 rounded-lg border border-border bg-surface p-3 text-sm text-foreground transition-colors hover:border-primary/40"
             >
               <span className="text-lg">✉️</span>
               <div>
                 <p className="font-medium">Email</p>
                 <p className="text-xs text-muted-foreground">
-                  hello@slashai.app
+                  hello@slashai.in
                 </p>
               </div>
             </a>

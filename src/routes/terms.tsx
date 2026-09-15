@@ -185,10 +185,10 @@ function TermsPage() {
             </a>{" "}
             or email{" "}
             <a
-              href="mailto:hello@slashai.app"
+              href="mailto:hello@slashai.in"
               className="text-primary hover:underline"
             >
-              hello@slashai.app
+              hello@slashai.in
             </a>
             .
           </p>
