@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 
 export const Route = createFileRoute("/tools/sip-calculator")({
   head: () => ({ meta: [{ title: "SIP Calculator - SlashAI" }] }),
@@ -87,6 +88,8 @@ function SipCalculator() {
           Estimated returns based on assumed rate. Actual returns may vary. Not financial advice.
         </p>
       </div>
+
+      <FaqSection />
     </AppShell>
   );
 }

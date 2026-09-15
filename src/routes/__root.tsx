@@ -36,6 +36,7 @@ import {
   websiteJsonLd,
   organizationJsonLd,
   breadcrumbJsonLd,
+  faqJsonLd,
 } from "@/lib/seo";
 
 
@@ -191,6 +192,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     const ld: Array<Record<string, unknown>> = [websiteJsonLd(), organizationJsonLd()];
     const crumb = breadcrumbJsonLd(pathname);
     if (crumb) ld.push(crumb);
+    const faq = faqJsonLd(pathname);
+    if (faq) ld.push(faq);
 
     // headContentUtils.js handles "script:ld+json" entries at runtime, but the
     // public head() meta type still lags behind (React meta props only) — cast.

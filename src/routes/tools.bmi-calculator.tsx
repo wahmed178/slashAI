@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 
 export const Route = createFileRoute("/tools/bmi-calculator")({
   head: () => ({ meta: [{ title: "BMI Calculator - SlashAI" }] }),
@@ -79,6 +80,8 @@ function BmiCalculator() {
         </div>
         <p className="text-[11px] text-muted-foreground">BMI is a screening tool, not a diagnostic measure.</p>
       </div>
+
+      <FaqSection />
     </AppShell>
   );
 }

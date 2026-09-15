@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 import QRCode from "qrcode";
 
 export const Route = createFileRoute("/tools/qr-code")({ component: QRCodeGenerator });
@@ -199,6 +200,8 @@ function QRCodeGenerator() {
           </button>
         </div>
       </div>
+
+      <FaqSection />
     </AppShell>
   );
 }

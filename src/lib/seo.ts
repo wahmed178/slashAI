@@ -179,6 +179,21 @@ const STATIC_PAGES: Record<string, SeoPage> = {
     description:
       "Compare the free tiers of GPT-4o, Claude, Gemini, Grok, DeepSeek, Llama and Mistral - context, coding, reasoning, vision and speed.",
   },
+  "/prompts": {
+    title: "5,600+ Free AI Prompts for ChatGPT, Claude & Gemini | SlashAI",
+    description:
+      "A free library of 5,600+ copy-ready AI prompts for writing, coding, marketing, design, study and business - organised by category, with examples. No sign-up.",
+  },
+  "/prompts/students": {
+    title: "Best Free ChatGPT Prompts for Students (2026) | SlashAI",
+    description:
+      "Copy-ready AI prompts for students: study plans, active recall quizzes, essay outlines, exam prep and research help - free, no account, works in ChatGPT, Claude and Gemini.",
+  },
+  "/prompts/business": {
+    title: "Free AI Prompts for Small Business & Marketing | SlashAI",
+    description:
+      "Free copy-ready AI prompts for small business: marketing copy, emails, business plans, customer analysis and pricing - works in free ChatGPT, Claude and Gemini.",
+  },
   "/designs": {
     title: "Themes & Designs - SlashAI",
     description:
@@ -285,6 +300,107 @@ function patternPage(pathname: string): SeoPage | null {
     };
   }
   return null;
+}
+
+/* ────────────────────────── FAQs (People Also Play) ──────────────────────────
+ * Question/answer content per path. Two consumers:
+ *  1. The root head emits FAQPage JSON-LD for paths listed here (rich results).
+ *  2. The FaqSection component renders the same Q&As visibly on the page —
+ *     Google requires visible content to match the markup.
+ * Deliberately static data: no catalogue imports, stays bundle-safe.
+ */
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+const FAQS: Record<string, FaqItem[]> = {
+  "/tools/sip-calculator": [
+    { q: "What is a SIP calculator?", a: "A SIP (Systematic Investment Plan) calculator estimates the future value of regular monthly investments in mutual funds. Enter your monthly amount, expected annual return and years to see the projected corpus, how much you invested and how much is estimated returns." },
+    { q: "How is SIP return calculated?", a: "This calculator uses the standard future-value-of-annuity formula: FV = P × ((1+r)^n − 1) / r × (1+r), where P is your monthly investment, r is the monthly rate of return (annual ÷ 12) and n is the number of months. It compounds monthly, matching how most SIP platforms report returns." },
+    { q: "Is this SIP calculator free?", a: "Yes — completely free with no ads, no sign-up and no data collection. Everything runs in your browser; your numbers never leave your device." },
+    { q: "What return rate should I assume?", a: "Historically, diversified equity mutual funds in India have averaged around 10–12% annually over long periods, but past performance never guarantees future results. The calculator supports any rate from 1% to 30% so you can compare scenarios." },
+  ],
+  "/tools/emi-calculator": [
+    { q: "What is an EMI?", a: "EMI (Equated Monthly Instalment) is the fixed amount you pay every month towards a loan, covering both principal and interest. It stays constant for fixed-rate loans across the tenure." },
+    { q: "How is EMI calculated?", a: "EMI = P × r × (1+r)^n / ((1+r)^n − 1), where P is the loan principal, r is the monthly interest rate (annual rate ÷ 12 ÷ 100) and n is the number of monthly instalments. The calculator also shows the total interest you will pay over the tenure." },
+    { q: "Can I use it for home, car and personal loans?", a: "Yes. The formula is identical for all amortised loans — enter the loan amount, interest rate and tenure for a home loan, car loan, personal loan or education loan." },
+    { q: "Does this calculator store my data?", a: "No. All calculations run locally in your browser. Nothing is uploaded, saved or shared." },
+  ],
+  "/tools/image-compress": [
+    { q: "How do I compress an image online for free?", a: "Open this tool, pick or drop your image, choose a quality level and download the compressed file. Everything happens in your browser — the image is never uploaded to any server." },
+    { q: "Does compressing an image reduce quality?", a: "JPEG/WebP compression trades some detail for a smaller file. At quality 80–85 the visual difference is usually imperceptible while the file shrinks 60–90%. You can preview the result before downloading." },
+    { q: "What formats can I compress?", a: "JPG, PNG and WebP images up to your browser's memory limit. Converting PNG photos to JPEG or WebP typically saves the most space." },
+    { q: "Is my image uploaded anywhere?", a: "No. Unlike most online compressors, this tool processes the image entirely on your device using the browser's canvas — the file never leaves your computer or phone." },
+  ],
+  "/tools/age-calculator": [
+    { q: "How do I calculate my exact age?", a: "Enter your date of birth and the tool computes your age in years, months and days, plus your next birthday countdown. It accounts for leap years and varying month lengths automatically." },
+    { q: "Can I calculate age on a specific date?", a: "Yes — change the 'age at date' field to any past or future date to see how old you were or will be on that day." },
+    { q: "Does it work for dates before 1970?", a: "Yes. Any valid calendar date works, including historical dates — the calculation is pure date arithmetic." },
+  ],
+  "/tools/qr-code": [
+    { q: "How do I create a QR code for free?", a: "Type or paste any text, link or Wi-Fi credentials, and the QR code generates instantly. Download it as a PNG image — no watermark, no expiry, no sign-up." },
+    { q: "Do these QR codes expire?", a: "Never. The QR pattern encodes your content directly — there is no redirect service that can shut down, unlike 'free' QR sites that expire codes after days." },
+    { q: "Can I make a QR code for a website link?", a: "Yes — paste any URL and phones scanning it will open the site. A common use is printing QR codes for menus, posters, business cards or Wi-Fi sharing." },
+    { q: "Is my data sent to a server?", a: "No. The QR code is drawn in your browser from your input. Nothing you type is transmitted anywhere." },
+  ],
+  "/tools/bmi-calculator": [
+    { q: "How is BMI calculated?", a: "BMI = weight (kg) ÷ height (m)². For imperial units the tool converts first. Enter your height and weight and the result appears instantly with the standard WHO category." },
+    { q: "What is a healthy BMI?", a: "The WHO classifies 18.5–24.9 as healthy weight, 25–29.9 as overweight and 30+ as obese. Below 18.5 is considered underweight. BMI is a population screening tool, not a diagnosis — athletes with high muscle mass can read 'overweight' while being perfectly healthy." },
+    { q: "Is BMI accurate for everyone?", a: "No. It does not distinguish muscle from fat and is not calibrated for children, pregnant women or the elderly. Treat it as a rough indicator and consult a professional for personal guidance." },
+    { q: "Is this BMI calculator free and private?", a: "Completely free, and your height and weight never leave your device — there is no server involved." },
+  ],
+  "/tools/percentage-calculator": [
+    { q: "How do I calculate a percentage of a number?", a: "Multiply the number by the percentage and divide by 100 — or just use this tool: enter the percentage and the number, and it shows the result instantly (e.g. 15% of 240 = 36)." },
+    { q: "How do I find what percentage one number is of another?", a: "Divide the part by the whole and multiply by 100. The tool's 'X is what % of Y' mode does this for you, including increase/decrease comparisons." },
+    { q: "How do I calculate percentage increase?", a: "Percentage change = (new − old) ÷ old × 100. A negative result is a decrease. The calculator has a dedicated change mode so you don't need to remember the formula." },
+  ],
+  "/tools/pomodoro": [
+    { q: "What is the Pomodoro Technique?", a: "A focus method where you work in 25-minute sprints ('pomodoros') separated by 5-minute breaks, with a longer 15-minute break every four sprints. Named after the tomato-shaped kitchen timer its inventor used." },
+    { q: "Does this pomodoro timer work offline?", a: "Yes — once the page loads, the timer runs entirely on your device. No account, no notifications permission, no server." },
+    { q: "Can I change the work and break durations?", a: "The default follows the classic 25/5/15 rhythm, and the presets let you switch to common variants like 50/10 for deep work sessions." },
+    { q: "Is the pomodoro timer free?", a: "Yes, like every tool in SlashKits — free forever with no ads and no sign-up." },
+  ],
+  "/prompts": [
+    { q: "What are AI prompts or slash commands?", a: "A prompt is the instruction you give an AI tool like ChatGPT, Claude or Gemini. Well-structured prompts — with a role, task, context and format — produce far better results than one-line questions. SlashAI's slash commands are battle-tested prompt templates you copy and fill in." },
+    { q: "How many free prompts are on SlashAI?", a: "Over 5,600 curated, copy-ready prompts organised into 25 categories and 379 subcategories — writing, coding, marketing, design, data, business and more. Every prompt includes a description, how-to-use note and a worked example." },
+    { q: "Are the prompts free to use?", a: "Yes — every prompt is free to copy, edit and use for personal or commercial work. No account, no paywall, no attribution required." },
+    { q: "Do these prompts work in ChatGPT, Claude and Gemini?", a: "Yes. The templates are model-agnostic: they rely on clear structure rather than tool-specific tricks, so they work in ChatGPT, Claude, Gemini, Copilot, Llama-based apps and most other AI assistants." },
+    { q: "How do I use a prompt?", a: "Open any command page, read the example, tap Copy, paste it into your AI tool, and replace the placeholder text (shown in angle brackets) with your own details." },
+  ],
+  "/prompts/students": [
+    { q: "What are the best ChatGPT prompts for students?", a: "The highest-value student prompts are: explain-like-I'm-new simplification, active-recall quiz generation, Feynman-technique tutoring, structured essay outlines, and spaced-repetition study plans. SlashAI's student collection includes copy-ready versions of all of them." },
+    { q: "Is using AI prompts for studying cheating?", a: "Using AI to understand material, generate practice questions and get feedback is studying — like a tutor. Submitting AI output as your own work is academic dishonesty. The prompts here are built for learning, not plagiarism." },
+    { q: "How do I use these prompts?", a: "Tap Copy on any prompt, paste it into ChatGPT, Claude or Gemini, and replace the bracketed placeholders with your topic or text. Each prompt page has a worked example showing exactly what to type." },
+    { q: "Are these prompts free for students?", a: "Yes — all 5,600+ prompts on SlashAI are free with no account needed, including the study-specific collections on this page." },
+  ],
+  "/prompts/business": [
+    { q: "What AI prompts help small businesses?", a: "The most-used business prompts cover marketing copy, email sequences, business-plan drafting, customer-feedback analysis, pricing strategy and meeting summaries. This page collects the highest-impact ones from SlashAI's 5,600-prompt library." },
+    { q: "Can I use these prompts for client work?", a: "Yes. Prompts are templates — whatever you produce with them is yours, with no attribution or licence needed." },
+    { q: "Do the business prompts work with free ChatGPT?", a: "Yes. Every prompt is a plain-text template that works in free tiers of ChatGPT, Claude and Gemini — no plugins or paid plans required." },
+    { q: "How do I get better results from AI for my business?", a: "Give the AI a role, your actual context (numbers, audience, constraints) and the exact output format you want. The prompts here bake in that structure so you get usable first drafts instead of generic filler." },
+  ],
+};
+
+/** FAQPage JSON-LD for a path, or null when the path has no FAQs. */
+export function faqJsonLd(pathname: string) {
+  const items = FAQS[pathname.split(/[?#]/)[0]!.replace(/\/+$/, "") || "/"];
+  if (!items || items.length === 0) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+}
+
+/** Q&As for a path, for the visible FaqSection component. */
+export function faqsForPath(pathname: string): FaqItem[] {
+  return FAQS[pathname.split(/[?#]/)[0]!.replace(/\/+$/, "") || "/"] ?? [];
 }
 
 /* ────────────────────────── public API ────────────────────────── */

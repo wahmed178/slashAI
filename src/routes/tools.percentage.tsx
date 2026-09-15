@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 
 export const Route = createFileRoute("/tools/percentage")({
   head: () => ({ meta: [{ title: "Percentage Calculator - SlashAI" }] }),
@@ -57,6 +58,8 @@ function PercentageCalc() {
           )}
         </div>
       </div>
+
+      <FaqSection />
     </AppShell>
   );
 }

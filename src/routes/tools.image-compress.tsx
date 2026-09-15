@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 import { Download, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/tools/image-compress")({
@@ -127,6 +128,8 @@ function ImageCompress() {
           </button>
         </div>
       )}
+
+      <FaqSection />
     </AppShell>
   );
 }

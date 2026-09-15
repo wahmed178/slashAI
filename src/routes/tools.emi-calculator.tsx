@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 
 export const Route = createFileRoute("/tools/emi-calculator")({
   head: () => ({ meta: [{ title: "EMI Calculator - SlashAI" }] }),
@@ -73,6 +74,8 @@ function EmiCalculator() {
           </div>
         </div>
       </div>
+
+      <FaqSection />
     </AppShell>
   );
 }

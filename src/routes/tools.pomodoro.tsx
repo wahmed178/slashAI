@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 import { Play, Pause, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/tools/pomodoro")({
@@ -126,6 +127,8 @@ function Pomodoro() {
           ))}
         </div>
       </div>
+
+      <FaqSection />
     </AppShell>
   );
 }

@@ -757,6 +757,7 @@ function HomePage() {
               title: "AI Tools",
               links: [
                 { label: "Commands", to: "/explore" },
+                { label: "Free AI Prompts", to: "/prompts" },
                 { label: "Generators", to: "/tools" },
                 { label: "Roadmaps", to: "/roadmaps" },
                 { label: "Glossary", to: "/glossary" },

@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { FaqSection } from "@/components/library/FaqSection";
 
 const ZODIAC = [
   { start: [1, 20], end: [2, 18], name: "Aquarius", sign: "♒" },
@@ -95,6 +96,8 @@ function AgeCalculator() {
           </div>
         )}
       </div>
+
+      <FaqSection />
     </AppShell>
   );
 }

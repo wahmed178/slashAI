@@ -31,6 +31,7 @@ import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as PlayRouteImport } from './routes/play'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PromoRouteImport } from './routes/promo'
+import { Route as PromptsRouteImport } from './routes/prompts'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RandomRouteImport } from './routes/random'
@@ -116,6 +117,8 @@ import { Route as PlayTypingTestRouteImport } from './routes/play.typing-test'
 import { Route as PlayWhackAMoleRouteImport } from './routes/play.whack-a-mole'
 import { Route as PlayWordGuessRouteImport } from './routes/play.word-guess'
 import { Route as PlayWouldYouRatherRouteImport } from './routes/play.would-you-rather'
+import { Route as PromptsBusinessRouteImport } from './routes/prompts.business'
+import { Route as PromptsStudentsRouteImport } from './routes/prompts.students'
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as SlashIndexRouteImport } from './routes/slash.index'
 import { Route as SlashAppRouteImport } from './routes/slash.$app'
@@ -379,6 +382,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const PromoRoute = PromoRouteImport.update({
   id: '/promo',
   path: '/promo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PromptsRoute = PromptsRouteImport.update({
+  id: '/prompts',
+  path: '/prompts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizRoute = QuizRouteImport.update({
@@ -805,6 +813,16 @@ const PlayWouldYouRatherRoute = PlayWouldYouRatherRouteImport.update({
   id: '/would-you-rather',
   path: '/would-you-rather',
   getParentRoute: () => PlayRoute,
+} as any)
+const PromptsBusinessRoute = PromptsBusinessRouteImport.update({
+  id: '/business',
+  path: '/business',
+  getParentRoute: () => PromptsRoute,
+} as any)
+const PromptsStudentsRoute = PromptsStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => PromptsRoute,
 } as any)
 const RIdRoute = RIdRouteImport.update({
   id: '/r/$id',
@@ -1601,6 +1619,7 @@ export interface FileRoutesByFullPath {
   '/play': typeof PlayRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/promo': typeof PromoRoute
+  '/prompts': typeof PromptsRouteWithChildren
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/random': typeof RandomRoute
@@ -1680,6 +1699,8 @@ export interface FileRoutesByFullPath {
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
+  '/prompts/business': typeof PromptsBusinessRoute
+  '/prompts/students': typeof PromptsStudentsRoute
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
@@ -1863,6 +1884,7 @@ export interface FileRoutesByTo {
   '/movies': typeof MoviesRoute
   '/privacy': typeof PrivacyRoute
   '/promo': typeof PromoRoute
+  '/prompts': typeof PromptsRouteWithChildren
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/random': typeof RandomRoute
@@ -1941,6 +1963,8 @@ export interface FileRoutesByTo {
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
+  '/prompts/business': typeof PromptsBusinessRoute
+  '/prompts/students': typeof PromptsStudentsRoute
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
@@ -2126,6 +2150,7 @@ export interface FileRoutesById {
   '/play': typeof PlayRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/promo': typeof PromoRoute
+  '/prompts': typeof PromptsRouteWithChildren
   '/quiz': typeof QuizRoute
   '/radar': typeof RadarRoute
   '/random': typeof RandomRoute
@@ -2205,6 +2230,8 @@ export interface FileRoutesById {
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
+  '/prompts/business': typeof PromptsBusinessRoute
+  '/prompts/students': typeof PromptsStudentsRoute
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
@@ -2391,6 +2418,7 @@ export interface FileRouteTypes {
     | '/play'
     | '/privacy'
     | '/promo'
+    | '/prompts'
     | '/quiz'
     | '/radar'
     | '/random'
@@ -2470,6 +2498,8 @@ export interface FileRouteTypes {
     | '/play/whack-a-mole'
     | '/play/word-guess'
     | '/play/would-you-rather'
+    | '/prompts/business'
+    | '/prompts/students'
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
@@ -2653,6 +2683,7 @@ export interface FileRouteTypes {
     | '/movies'
     | '/privacy'
     | '/promo'
+    | '/prompts'
     | '/quiz'
     | '/radar'
     | '/random'
@@ -2731,6 +2762,8 @@ export interface FileRouteTypes {
     | '/play/whack-a-mole'
     | '/play/word-guess'
     | '/play/would-you-rather'
+    | '/prompts/business'
+    | '/prompts/students'
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
@@ -2915,6 +2948,7 @@ export interface FileRouteTypes {
     | '/play'
     | '/privacy'
     | '/promo'
+    | '/prompts'
     | '/quiz'
     | '/radar'
     | '/random'
@@ -2994,6 +3028,8 @@ export interface FileRouteTypes {
     | '/play/whack-a-mole'
     | '/play/word-guess'
     | '/play/would-you-rather'
+    | '/prompts/business'
+    | '/prompts/students'
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
@@ -3179,6 +3215,7 @@ export interface RootRouteChildren {
   PlayRoute: typeof PlayRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   PromoRoute: typeof PromoRoute
+  PromptsRoute: typeof PromptsRouteWithChildren
   QuizRoute: typeof QuizRoute
   RadarRoute: typeof RadarRoute
   RandomRoute: typeof RandomRoute
@@ -3374,6 +3411,13 @@ declare module '@tanstack/react-router' {
       path: '/promo'
       fullPath: '/promo'
       preLoaderRoute: typeof PromoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/prompts': {
+      id: '/prompts'
+      path: '/prompts'
+      fullPath: '/prompts'
+      preLoaderRoute: typeof PromptsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiz': {
@@ -3970,6 +4014,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/play/would-you-rather'
       preLoaderRoute: typeof PlayWouldYouRatherRouteImport
       parentRoute: typeof PlayRoute
+    }
+    '/prompts/business': {
+      id: '/prompts/business'
+      path: '/business'
+      fullPath: '/prompts/business'
+      preLoaderRoute: typeof PromptsBusinessRouteImport
+      parentRoute: typeof PromptsRoute
+    }
+    '/prompts/students': {
+      id: '/prompts/students'
+      path: '/students'
+      fullPath: '/prompts/students'
+      preLoaderRoute: typeof PromptsStudentsRouteImport
+      parentRoute: typeof PromptsRoute
     }
     '/r/$id': {
       id: '/r/$id'
@@ -5164,6 +5222,19 @@ const PlayRouteChildren: PlayRouteChildren = {
 
 const PlayRouteWithChildren = PlayRoute._addFileChildren(PlayRouteChildren)
 
+interface PromptsRouteChildren {
+  PromptsBusinessRoute: typeof PromptsBusinessRoute
+  PromptsStudentsRoute: typeof PromptsStudentsRoute
+}
+
+const PromptsRouteChildren: PromptsRouteChildren = {
+  PromptsBusinessRoute: PromptsBusinessRoute,
+  PromptsStudentsRoute: PromptsStudentsRoute,
+}
+
+const PromptsRouteWithChildren =
+  PromptsRoute._addFileChildren(PromptsRouteChildren)
+
 interface ToolsRouteChildren {
   ToolsAgeCalculatorRoute: typeof ToolsAgeCalculatorRoute
   ToolsAgeOfThingsRoute: typeof ToolsAgeOfThingsRoute
@@ -5491,6 +5562,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlayRoute: PlayRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   PromoRoute: PromoRoute,
+  PromptsRoute: PromptsRouteWithChildren,
   QuizRoute: QuizRoute,
   RadarRoute: RadarRoute,
   RandomRoute: RandomRoute,
@@ -5534,13 +5606,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
