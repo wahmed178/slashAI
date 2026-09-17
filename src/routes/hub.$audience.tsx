@@ -92,16 +92,16 @@ const HUB_SECTION_MAP: Record<string, HubSection[]> = {
   ],
 };
 
-const HUBS: Record<string, { audience: Audience; title: string; blurb: string; collection?: string }> = {
-  students: { audience: "Students", title: "Student Hub", blurb: "Free software, study tools, courses and student offers.", collection: "for-students" },
-  professionals: { audience: "Professionals", title: "Professional Hub", blurb: "Productivity, writing, research and planning tools for everyday desk work.", collection: "for-professionals" },
-  developers: { audience: "Developers", title: "Developer Hub", blurb: "Editors, APIs, open-source projects and references worth keeping bookmarked." },
-  creators: { audience: "Creators", title: "Creator Hub", blurb: "Editing, capture, design and asset tools that do not watermark your work.", collection: "for-creators" },
-  founders: { audience: "Founders", title: "Founders Hub", blurb: "Everything to go from idea to first paying customer." },
-  india: { audience: "India", title: "India Hub", blurb: "Free tools, courses and resources for Indian builders." },
-  finance: { audience: "Finance", title: "Finance Hub", blurb: "Free tools for investors, traders and money-minded builders." },
-  designers: { audience: "Designers", title: "Designers Hub", blurb: "Free design tools, assets and learning for UI/UX designers." },
-  health: { audience: "Health", title: "Health Hub", blurb: "Evidence-based free tools for fitness, nutrition and wellbeing." },
+const HUBS: Record<string, { audience: Audience; title: string; blurb: string; intro?: string; collection?: string }> = {
+  students: { audience: "Students", title: "Student Hub", blurb: "Free software, study tools, courses and student offers.", intro: "Everything a student needs to use AI smarter. Find commands for essays, research, revision, and career prep — all free, no login needed.", collection: "for-students" },
+  professionals: { audience: "Professionals", title: "Professional Hub", blurb: "Productivity, writing, research and planning tools for everyday desk work.", intro: "AI commands and tools for emails, reports, meetings, and career growth. Built for people who want to work smarter every day.", collection: "for-professionals" },
+  developers: { audience: "Developers", title: "Developer Hub", blurb: "Editors, APIs, open-source projects and references worth keeping bookmarked.", intro: "APIs, open-source tools, coding commands, and free dev resources in one place. Built for developers who want to move faster with AI." },
+  creators: { audience: "Creators", title: "Creator Hub", blurb: "Editing, capture, design and asset tools that do not watermark your work.", intro: "Design, write, edit, and publish better with AI. This hub is for content creators, designers, and storytellers.", collection: "for-creators" },
+  founders: { audience: "Founders", title: "Founders Hub", blurb: "Everything to go from idea to first paying customer.", intro: "From idea to first customer — commands, roadmaps, and resources for solo founders and early-stage startups." },
+  india: { audience: "India", title: "India Hub", blurb: "Free tools, courses and resources for Indian builders.", intro: "Free tools, courses and APIs for Indian builders — UPI-era utilities, government portals and learning platforms that actually work here." },
+  finance: { audience: "Finance", title: "Finance Hub", blurb: "Free tools for investors, traders and money-minded builders.", intro: "Markets, money and investing — free tools and AI commands for anyone who wants to understand their finances better." },
+  designers: { audience: "Designers", title: "Designers Hub", blurb: "Free design tools, assets and learning for UI/UX designers.", intro: "Free design tools, assets and learning for UI/UX designers — from first wireframe to polished portfolio." },
+  health: { audience: "Health", title: "Health Hub", blurb: "Evidence-based free tools for fitness, nutrition and wellbeing.", intro: "Evidence-based fitness, nutrition and wellbeing tools — free, practical and without the wellness-industry upsell." },
 };
 
 export const Route = createFileRoute("/hub/$audience")({
@@ -205,6 +205,11 @@ function HubPage() {
       <header className="page-enter pt-2">
         <h1 className="text-2xl font-black tracking-tight text-foreground">{hub.title}</h1>
         <p className="mt-1 text-sm text-muted-foreground">{hub.blurb}</p>
+        {hub.intro && (
+          <p className="mt-2.5 max-w-3xl text-[13.5px] leading-relaxed text-muted-foreground/90">
+            {hub.intro}
+          </p>
+        )}
         {hub.collection && (
           <Button asChild variant="outline" size="sm" className="mt-3">
             <Link to="/collections/$id" params={{ id: hub.collection }}>

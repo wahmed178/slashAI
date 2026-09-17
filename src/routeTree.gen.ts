@@ -46,6 +46,8 @@ import { Route as TrendingRouteImport } from './routes/trending'
 import { Route as WebSearchRouteImport } from './routes/web-search'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as WorkflowRouteImport } from './routes/workflow'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as BuildIdeasIndexRouteImport } from './routes/build-ideas.index'
 import { Route as BuildIdeasSlugRouteImport } from './routes/build-ideas.$slug'
 import { Route as BuildIdeasProjectsRouteImport } from './routes/build-ideas.projects'
@@ -290,7 +292,7 @@ import { Route as ToolsWordScrambleRouteImport } from './routes/tools.word-scram
 import { Route as ToolsWorldClockRouteImport } from './routes/tools.world-clock'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
-import { Route as LearnCourseIdLessonIdRouteImport } from './routes/learn.$courseId.$lessonId'
+import { Route as LearnCourseIdLessonIdRouteImport } from './routes/learn.$courseId_.$lessonId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -475,6 +477,16 @@ const WhatsNewRoute = WhatsNewRouteImport.update({
 const WorkflowRoute = WorkflowRouteImport.update({
   id: '/workflow',
   path: '/workflow',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuildIdeasIndexRoute = BuildIdeasIndexRouteImport.update({
@@ -1700,9 +1712,9 @@ const ExploreCategorySubcategoryRoute =
     getParentRoute: () => rootRouteImport,
   } as any)
 const LearnCourseIdLessonIdRoute = LearnCourseIdLessonIdRouteImport.update({
-  id: '/$lessonId',
-  path: '/$lessonId',
-  getParentRoute: () => LearnCourseIdRoute,
+  id: '/learn/$courseId_/$lessonId',
+  path: '/learn/$courseId/$lessonId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -1743,6 +1755,7 @@ export interface FileRoutesByFullPath {
   '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -1757,7 +1770,7 @@ export interface FileRoutesByFullPath {
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
-  '/learn/$courseId': typeof LearnCourseIdRouteWithChildren
+  '/learn/$courseId': typeof LearnCourseIdRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
@@ -1976,6 +1989,7 @@ export interface FileRoutesByFullPath {
   '/tools/word-frequency': typeof ToolsWordFrequencyRoute
   '/tools/word-scramble': typeof ToolsWordScrambleRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
+  '/blog/': typeof BlogIndexRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
@@ -2025,6 +2039,7 @@ export interface FileRoutesByTo {
   '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -2039,7 +2054,7 @@ export interface FileRoutesByTo {
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
-  '/learn/$courseId': typeof LearnCourseIdRouteWithChildren
+  '/learn/$courseId': typeof LearnCourseIdRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
@@ -2258,6 +2273,7 @@ export interface FileRoutesByTo {
   '/tools/word-frequency': typeof ToolsWordFrequencyRoute
   '/tools/word-scramble': typeof ToolsWordScrambleRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
+  '/blog': typeof BlogIndexRoute
   '/build-ideas': typeof BuildIdeasIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/discover': typeof DiscoverIndexRoute
@@ -2310,6 +2326,7 @@ export interface FileRoutesById {
   '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/build-ideas/$slug': typeof BuildIdeasSlugRoute
   '/build-ideas/projects': typeof BuildIdeasProjectsRoute
   '/build-ideas/validate': typeof BuildIdeasValidateRoute
@@ -2324,7 +2341,7 @@ export interface FileRoutesById {
   '/hub/quotes': typeof HubQuotesRoute
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
-  '/learn/$courseId': typeof LearnCourseIdRouteWithChildren
+  '/learn/$courseId': typeof LearnCourseIdRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
@@ -2543,6 +2560,7 @@ export interface FileRoutesById {
   '/tools/word-frequency': typeof ToolsWordFrequencyRoute
   '/tools/word-scramble': typeof ToolsWordScrambleRoute
   '/tools/world-clock': typeof ToolsWorldClockRoute
+  '/blog/': typeof BlogIndexRoute
   '/build-ideas/': typeof BuildIdeasIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/discover/': typeof DiscoverIndexRoute
@@ -2553,7 +2571,7 @@ export interface FileRoutesById {
   '/slash/': typeof SlashIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
-  '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
+  '/learn/$courseId_/$lessonId': typeof LearnCourseIdLessonIdRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
 }
 export interface FileRouteTypes {
@@ -2596,6 +2614,7 @@ export interface FileRouteTypes {
     | '/web-search'
     | '/whats-new'
     | '/workflow'
+    | '/blog/$slug'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -2829,6 +2848,7 @@ export interface FileRouteTypes {
     | '/tools/word-frequency'
     | '/tools/word-scramble'
     | '/tools/world-clock'
+    | '/blog/'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
@@ -2878,6 +2898,7 @@ export interface FileRouteTypes {
     | '/web-search'
     | '/whats-new'
     | '/workflow'
+    | '/blog/$slug'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -3111,6 +3132,7 @@ export interface FileRouteTypes {
     | '/tools/word-frequency'
     | '/tools/word-scramble'
     | '/tools/world-clock'
+    | '/blog'
     | '/build-ideas'
     | '/collections'
     | '/discover'
@@ -3162,6 +3184,7 @@ export interface FileRouteTypes {
     | '/web-search'
     | '/whats-new'
     | '/workflow'
+    | '/blog/$slug'
     | '/build-ideas/$slug'
     | '/build-ideas/projects'
     | '/build-ideas/validate'
@@ -3395,6 +3418,7 @@ export interface FileRouteTypes {
     | '/tools/word-frequency'
     | '/tools/word-scramble'
     | '/tools/world-clock'
+    | '/blog/'
     | '/build-ideas/'
     | '/collections/'
     | '/discover/'
@@ -3405,7 +3429,7 @@ export interface FileRouteTypes {
     | '/slash/'
     | '/tools/'
     | '/explore/$category/$subcategory'
-    | '/learn/$courseId/$lessonId'
+    | '/learn/$courseId_/$lessonId'
     | '/explore/$category/'
   fileRoutesById: FileRoutesById
 }
@@ -3447,6 +3471,7 @@ export interface RootRouteChildren {
   WebSearchRoute: typeof WebSearchRoute
   WhatsNewRoute: typeof WhatsNewRoute
   WorkflowRoute: typeof WorkflowRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   BuildIdeasSlugRoute: typeof BuildIdeasSlugRoute
   BuildIdeasProjectsRoute: typeof BuildIdeasProjectsRoute
   BuildIdeasValidateRoute: typeof BuildIdeasValidateRoute
@@ -3461,10 +3486,11 @@ export interface RootRouteChildren {
   HubQuotesRoute: typeof HubQuotesRoute
   HubUrduRoute: typeof HubUrduRoute
   LUsernameRoute: typeof LUsernameRoute
-  LearnCourseIdRoute: typeof LearnCourseIdRouteWithChildren
+  LearnCourseIdRoute: typeof LearnCourseIdRoute
   RIdRoute: typeof RIdRoute
   SlashAppRoute: typeof SlashAppRoute
   SlashSlashgramRoute: typeof SlashSlashgramRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
@@ -3473,6 +3499,7 @@ export interface RootRouteChildren {
   LearnIndexRoute: typeof LearnIndexRoute
   SlashIndexRoute: typeof SlashIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
+  LearnCourseIdLessonIdRoute: typeof LearnCourseIdLessonIdRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
 }
 
@@ -3735,6 +3762,20 @@ declare module '@tanstack/react-router' {
       path: '/workflow'
       fullPath: '/workflow'
       preLoaderRoute: typeof WorkflowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/build-ideas/': {
@@ -5445,12 +5486,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreCategorySubcategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/learn/$courseId/$lessonId': {
-      id: '/learn/$courseId/$lessonId'
-      path: '/$lessonId'
+    '/learn/$courseId_/$lessonId': {
+      id: '/learn/$courseId_/$lessonId'
+      path: '/learn/$courseId/$lessonId'
       fullPath: '/learn/$courseId/$lessonId'
       preLoaderRoute: typeof LearnCourseIdLessonIdRouteImport
-      parentRoute: typeof LearnCourseIdRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -5914,18 +5955,6 @@ const ToolsRouteChildren: ToolsRouteChildren = {
 
 const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)
 
-interface LearnCourseIdRouteChildren {
-  LearnCourseIdLessonIdRoute: typeof LearnCourseIdLessonIdRoute
-}
-
-const LearnCourseIdRouteChildren: LearnCourseIdRouteChildren = {
-  LearnCourseIdLessonIdRoute: LearnCourseIdLessonIdRoute,
-}
-
-const LearnCourseIdRouteWithChildren = LearnCourseIdRoute._addFileChildren(
-  LearnCourseIdRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -5964,6 +5993,7 @@ const rootRouteChildren: RootRouteChildren = {
   WebSearchRoute: WebSearchRoute,
   WhatsNewRoute: WhatsNewRoute,
   WorkflowRoute: WorkflowRoute,
+  BlogSlugRoute: BlogSlugRoute,
   BuildIdeasSlugRoute: BuildIdeasSlugRoute,
   BuildIdeasProjectsRoute: BuildIdeasProjectsRoute,
   BuildIdeasValidateRoute: BuildIdeasValidateRoute,
@@ -5978,10 +6008,11 @@ const rootRouteChildren: RootRouteChildren = {
   HubQuotesRoute: HubQuotesRoute,
   HubUrduRoute: HubUrduRoute,
   LUsernameRoute: LUsernameRoute,
-  LearnCourseIdRoute: LearnCourseIdRouteWithChildren,
+  LearnCourseIdRoute: LearnCourseIdRoute,
   RIdRoute: RIdRoute,
   SlashAppRoute: SlashAppRoute,
   SlashSlashgramRoute: SlashSlashgramRoute,
+  BlogIndexRoute: BlogIndexRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
@@ -5990,6 +6021,7 @@ const rootRouteChildren: RootRouteChildren = {
   LearnIndexRoute: LearnIndexRoute,
   SlashIndexRoute: SlashIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
+  LearnCourseIdLessonIdRoute: LearnCourseIdLessonIdRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
 }
 export const routeTree = rootRouteImport

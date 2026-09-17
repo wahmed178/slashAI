@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.26.0";
+export const APP_VERSION = "2.27.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,20 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.27.0",
+    date: "2026-09-17",
+    title: "Founder story, blog, hub intros and a big Learn fix",
+    changes: [
+      "Fixed: course lessons on /learn now open properly - lesson pages were unreachable due to a routing bug",
+      "New blog at /blog, starting with 'Best Free AI Prompts for Professionals in India (2026)' - 10 copy-ready prompts from the library",
+      "About page rewritten as an honest founder story from Waseem Ahmed (Hyderabad, India)",
+      "Every hub now opens with a short intro: who it's for and what's inside",
+      "Homepage additions: 'What is a slash command?' explainer, a library stats bar, and a real always-current week number on weekly finds",
+      "Command of the day now shows 'Best for / Use it in / How to use' - three lines, no guessing",
+      "Footer credits: Built in India by Waseem Ahmed - and it stays free forever",
+    ],
+  },
   {
     version: "2.26.0",
     date: "2026-09-16",

@@ -211,9 +211,19 @@ const STATIC_PAGES: Record<string, SeoPage> = {
     noindex: true,
   },
   "/about": {
-    title: "About - SlashAI",
+    title: "About SlashAI - built by Waseem Ahmed, free forever",
     description:
-      "What SlashAI is, what you get free, how it works, and what it's built with.",
+      "The story behind SlashAI: Waseem Ahmed built a free, no-login library of 5,000+ AI commands, 150+ tools and 50+ games. Free forever, no account, built in India.",
+  },
+  "/blog": {
+    title: "Blog - plain-English AI guides | SlashAI",
+    description:
+      "Free, practical guides on using AI better: copy-ready prompts for work, study and business. No fluff, no jargon, no paywall.",
+  },
+  "/blog/best-free-ai-prompts-for-professionals-in-india-2026": {
+    title: "Best Free AI Prompts for Professionals in India (2026) | SlashAI",
+    description:
+      "10 free copy-ready AI prompts for Indian professionals: emails, meeting notes, reports, resumes and appraisals. Works in free ChatGPT, Gemini and Claude.",
   },
   "/changelog": {
     title: "Changelog - SlashAI",
@@ -399,6 +409,16 @@ const FAQS: Record<string, FaqItem[]> = {
     { q: "Can I use these prompts for client work?", a: "Yes. Prompts are templates — whatever you produce with them is yours, with no attribution or licence needed." },
     { q: "Do the business prompts work with free ChatGPT?", a: "Yes. Every prompt is a plain-text template that works in free tiers of ChatGPT, Claude and Gemini — no plugins or paid plans required." },
     { q: "How do I get better results from AI for my business?", a: "Give the AI a role, your actual context (numbers, audience, constraints) and the exact output format you want. The prompts here bake in that structure so you get usable first drafts instead of generic filler." },
+  ],
+  "/blog": [
+    { q: "Is the SlashAI blog free?", a: "Yes — every guide is free to read with no account and no paywall, like the rest of SlashAI." },
+    { q: "What is the blog about?", a: "Practical, plain-English guides on using AI well: copy-ready prompts for professionals, students and builders, with real examples from the SlashAI library." },
+  ],
+  "/blog/best-free-ai-prompts-for-professionals-in-india-2026": [
+    { q: "What are the best free AI prompts for professionals?", a: "The highest-leverage prompts cover everyday work: drafting and rewriting emails, summarising meeting notes, planning meetings, drafting and polishing reports, and tailoring your resume. This guide collects ten copy-ready versions from the free SlashAI library." },
+    { q: "Do these prompts work in free ChatGPT, Gemini and Claude?", a: "Yes. Every prompt is plain text built on clear structure — role, task, context, format — so it works in free tiers of ChatGPT, Gemini, Claude and most other AI assistants without plugins or paid plans." },
+    { q: "How do I use these prompts?", a: "Tap Copy on any prompt, paste it into your AI tool, and replace the placeholder text (shown in angle brackets) with your own details — audience, numbers, deadlines. The more context you add, the better the output." },
+    { q: "Are these prompts really free?", a: "Yes — they're part of SlashAI's free library of 5,600+ AI commands. No account, no paywall, no attribution required." },
   ],
 };
 

@@ -263,7 +263,7 @@ function MostUsedCommands() {
 }
 
 function HomePage() {
-  const { hydrated, favorites, recents, settings } = useLibrary();
+  const { hydrated, favorites, recents, settings, stats } = useLibrary();
 
 
   const recentCommands = useMemo(
@@ -306,8 +306,17 @@ function HomePage() {
     const offset = (week * perView) % items.length;
     return [...items.slice(offset), ...items.slice(0, offset)].slice(0, perView);
   }, []);
-  const trendingUpdated = (trendingToolsData as any).updated || '';
-  const weekNumber = Math.floor(Date.now() / 604_800_000) % 52 + 1;
+
+  // Always-current date + real ISO week number (never a hardcoded timestamp)
+  const now = new Date();
+  const todayLabel = now.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  const isoWeek = useMemo(() => {
+    const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil(((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
+  }, [todayLabel]);
 
   return (
     <AppShell hideHeaderSearch title="SlashAI">
@@ -407,6 +416,31 @@ function HomePage() {
         <style>{`@keyframes float { 0%, 100% { transform: rotate(15deg) translateY(0px); } 50% { transform: rotate(15deg) translateY(-10px); } }`}</style>
       </section>
 
+      {/* ─── What is a slash command? (minimal explainer) ─── */}
+      <section className="mt-3 rounded-2xl border border-sidebar-border bg-surface p-4 sm:p-5">
+        <h2 className="text-[13px] font-bold uppercase tracking-[0.06em] text-foreground">
+          What is a slash command?
+        </h2>
+        <p className="mt-1.5 max-w-3xl text-[13px] leading-relaxed text-muted-foreground">
+          A slash command is a ready-to-use AI prompt. Copy it, paste it into ChatGPT, Gemini, or
+          any AI tool, and get instant results — no prompt engineering needed.
+        </p>
+      </section>
+
+      {/* ─── Library stats bar ─── */}
+      <section
+        aria-label="SlashAI library size"
+        className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-2xl border border-sidebar-border bg-surface px-4 py-3 text-[12px] text-muted-foreground"
+      >
+        <span>⚡ <b className="font-semibold text-foreground tabular-nums">{VERIFIED_TOTAL.toLocaleString()}</b> Commands</span>
+        <span>🧰 <b className="font-semibold text-foreground tabular-nums">{SLASH_TOOL_COUNT}+</b> Tools</span>
+        <span>🎮 <b className="font-semibold text-foreground tabular-nums">{PLAY_GAME_COUNT}</b> Games</span>
+        <span>📦 <b className="font-semibold text-foreground tabular-nums">{RESOURCE_TOTAL}+</b> Resources</span>
+        {hydrated && stats.copies > 0 && (
+          <span className="text-primary/90">📋 Copied {stats.copies.toLocaleString()} times</span>
+        )}
+      </section>
+
       {/* ─── Journal hero card ─── */}
       <JournalHeroCard />
 
@@ -446,11 +480,41 @@ function HomePage() {
         <Discover />
       </Section>
 
+      {/* ─── From the blog ─── */}
+      <Section
+        title="From the blog"
+        hint="Plain-English guides to using AI better — free, like everything here."
+        action={
+          <Link
+            to="/blog"
+            className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+          >
+            All posts <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        }
+      >
+        <Link
+          to="/blog/best-free-ai-prompts-for-professionals-in-india-2026"
+          className="ripple-press flex items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+        >
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[20px]" aria-hidden>🇮🇳</span>
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-[13.5px] font-bold text-foreground">
+              Best Free AI Prompts for Professionals in India (2026)
+            </span>
+            <span className="block truncate text-[12px] text-muted-foreground">
+              10 copy-ready prompts for email, reports, meetings and career growth.
+            </span>
+          </span>
+          <ArrowRight className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+        </Link>
+      </Section>
+
       <MostUsedCommands />
 
       <Section
         title="This week's free finds"
-        hint={trendingUpdated ? `Auto-updated ${trendingUpdated} · Week ${weekNumber}` : `Rotates every week · Week ${weekNumber}`}
+        hint={`Auto-updated ${todayLabel} · Week ${isoWeek}`}
         action={
           <Link
             to="/whats-new"
@@ -749,29 +813,37 @@ function HomePage() {
       {/* ─── Footer ─── */}
       <footer className="mt-14 border-t border-sidebar-border pt-8">
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-          {[
-            {
-              title: "AI Tools",
-              links: [
-                { label: "Commands", to: "/explore" },
-                { label: "Free AI Prompts", to: "/prompts" },
-                { label: "Generators", to: "/tools" },
-                { label: "Roadmaps", to: "/roadmaps" },
-                { label: "Glossary", to: "/glossary" },
-                { label: "AI Assistant", to: "/ai-tools" },
-              ],
-            },
-            {
-              title: "Explore",
-              links: [
-                { label: "Everything", to: "/everything" },
-                { label: "Discover", to: "/discover" },
-                { label: "Live Dashboard", to: "/live" },
-                { label: "Deals & Offers", to: "/radar" },
-                { label: "What's New", to: "/whats-new" },
-                { label: "Daily Quiz", to: "/quiz" },
-              ],
-            },
+          {[              {
+                title: "AI Tools",
+                links: [
+                  { label: "Commands", to: "/explore" },
+                  { label: "Free AI Prompts", to: "/prompts" },
+                  { label: "Generators", to: "/tools" },
+                  { label: "Roadmaps", to: "/roadmaps" },
+                  { label: "Glossary", to: "/glossary" },
+                  { label: "AI Assistant", to: "/ai-tools" },
+                ],
+              },
+              {
+                title: "Explore",
+                links: [
+                  { label: "Everything", to: "/everything" },
+                  { label: "Discover", to: "/discover" },
+                  { label: "Live Dashboard", to: "/live" },
+                  { label: "Deals & Offers", to: "/radar" },
+                  { label: "What's New", to: "/whats-new" },
+                  { label: "Daily Quiz", to: "/quiz" },
+                ],
+              },
+              {
+                title: "Learn",
+                links: [
+                  { label: "Courses", to: "/learn" },
+                  { label: "Roadmaps", to: "/roadmaps" },
+                  { label: "Blog", to: "/blog" },
+                  { label: "Glossary", to: "/glossary" },
+                ],
+              },
             {
               title: "More",
               links: [
@@ -816,7 +888,9 @@ function HomePage() {
           ))}
         </div>
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-sidebar-border py-5 sm:flex-row">
-          <p className="text-[12px] text-muted-foreground">© {new Date().getFullYear()} SlashAI · Free forever · No account needed</p>
+          <p className="text-center text-[12px] leading-relaxed text-muted-foreground sm:text-left">
+            © {new Date().getFullYear()} SlashAI · Free forever · No account needed · Built in India 🇮🇳 by Waseem Ahmed
+          </p>
           <a href="https://github.com/wahmed178/slashAI" target="_blank" rel="noopener" aria-label="SlashAI on GitHub" className="text-[18px] text-muted-foreground transition-colors hover:text-foreground">
             🐙
           </a>

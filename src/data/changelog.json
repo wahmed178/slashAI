@@ -1,6 +1,19 @@
 {
-  "version": "2.26.0",
+  "version": "2.27.0",
   "entries": [
+    {
+      "version": "2.27.0",
+      "date": "2026-09-17",
+      "changes": [
+        "Fixed: /learn course lessons now open properly (lesson pages were unreachable due to a routing bug)",
+        "New /blog section with the first guide: Best Free AI Prompts for Professionals in India (2026)",
+        "About page rewritten as the founder story of Waseem Ahmed (Hyderabad, India)",
+        "All 6 hubs open with a short intro paragraph explaining who they're for",
+        "Homepage: 'What is a slash command?' explainer, library stats bar, always-current week number on weekly finds",
+        "Command of the day adds a Best for / Use it in / How to use context block",
+        "Footer now credits 'Built in India by Waseem Ahmed'"
+      ]
+    },
     {
       "version": "2.26.0",
       "date": "2026-09-16",

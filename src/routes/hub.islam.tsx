@@ -396,6 +396,11 @@ function IslamHubPage() {
         <p className="mt-1 text-sm text-muted-foreground">
           Free, authentic Islamic resources - Quran, Hadith, prayer, learning and daily tools. Everything here is completely free.
         </p>
+        <p className="mt-2.5 max-w-3xl text-[13.5px] leading-relaxed text-muted-foreground/90">
+          Quran references, Hadith search, Islamic learning resources, and AI commands for
+          reflection and study. Built for anyone who wants authentic sources in one calm,
+          ad-free place — no login, no cost, ever.
+        </p>
         <p className="mt-2 text-xs text-muted-foreground">
           {TOTAL_RESOURCES} resources
         </p>

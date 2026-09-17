@@ -25,11 +25,11 @@ import { COURSE_COUNT, TOTAL_LESSONS } from "@/lib/courses";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About SlashAI - one bar, everything you need" },
+      { title: "About SlashAI - built by Waseem Ahmed, free forever" },
       {
         name: "description",
         content:
-          "What SlashAI is: a free, no-login toolbox with 150+ instant tools, 50+ games, structured courses with tests, a private search engine and 5,000+ copy-ready AI commands. Offline-first, nothing tracked.",
+          "The story behind SlashAI: Waseem Ahmed built a free, no-login library of 5,000+ AI commands, 150+ tools and 50+ games after a decade of deleted side projects. Free forever, no account needed.",
       },
     ],
   }),
@@ -99,15 +99,15 @@ function AboutPage() {
           </span>
           <h1 className="mt-4 font-display text-[26px] font-black leading-tight tracking-tight text-foreground sm:text-[34px]">
             <span className="bg-gradient-to-r from-[#2dd4bf] via-[#818cf8] to-[#f472b6] bg-clip-text text-transparent">
-              One bar.
+              Free AI for everyone.
             </span>{" "}
-            Everything you need.
+            Forever.
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-[14px] leading-relaxed text-muted-foreground">
-            SlashAI started with one idea: the internet's useful things are scattered across a
-            hundred tabs. So we packed them into a single, fast, private app — {SLASH_TOOL_COUNT}+
-            tools, {PLAY_GAME_COUNT}+ games, structured courses, a search engine and{" "}
-            {VERIFIED_TOTAL.toLocaleString()} copy-ready AI commands.
+            SlashAI is one calm place for the internet's useful things — {SLASH_TOOL_COUNT}+
+            instant tools, {PLAY_GAME_COUNT}+ games, structured courses, a private search engine
+            and {VERIFIED_TOTAL.toLocaleString()} copy-ready AI commands. No account. No ads. No
+            paywall. Built in India 🇮🇳.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2.5">
             <Link
@@ -122,6 +122,43 @@ function AboutPage() {
             >
               Take a free course
             </Link>
+          </div>
+        </section>
+
+        {/* founder story */}
+        <section className="mt-5 rounded-3xl border border-border bg-surface p-6 sm:p-7">
+          <h2 className="text-[16px] font-bold text-foreground">The story behind SlashAI</h2>
+          <div className="mt-3 space-y-3.5 text-[13.5px] leading-relaxed text-muted-foreground">
+            <p>
+              Hi — I'm <b className="text-foreground">Waseem Ahmed</b>, from Hyderabad, India. I
+              graduated with a BCA in 2019, and like a lot of people with a laptop and more ideas
+              than money, I kept building things nobody asked for.
+            </p>
+            <p>
+              I ran Instagram pages — <i>motivationaltongue</i>, <i>untold tongue</i>, book-summary
+              blogs. They grew, some did okay, and then one by one I deleted all of them. Not
+              because they failed, but because I was making content I didn't believe in, chasing
+              numbers that meant nothing. Starting over was scary. It was also the most honest
+              thing I'd done.
+            </p>
+            <p>
+              Then the AI boom happened. I watched friends — students, shopkeepers, my own family —
+              bounce off ChatGPT not because AI is hard, but because good prompting is. The people
+              who needed it most got the least out of it.
+            </p>
+            <p>
+              So I rebuilt, from zero, with one rule I actually believe in:{" "}
+              <b className="text-foreground">make AI accessible to everyone — free forever, no
+              account needed</b>. No signup walls, no "free tier", no dark patterns. You open
+              SlashAI, copy a command, paste it into ChatGPT, Gemini or Claude, and it works. That's
+              the whole product.
+            </p>
+            <p>
+              Everything here runs on your device. I can't see your searches, your favourites or
+              your progress — there's no server holding them. If SlashAI ever can't pay for itself,
+              it costs me a cup of chai a month to keep the lights on. That's the deal I made with
+              the version of me who deleted everything and started again.
+            </p>
           </div>
         </section>
 

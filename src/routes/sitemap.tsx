@@ -30,6 +30,7 @@ function SitemapPage() {
     { to: "/learn", label: "Slash Courses" },
     { to: "/glossary", label: "AI Glossary" },
     { to: "/ai-tools", label: "AI Tools Directory" },
+    { to: "/blog", label: "Blog" },
     { to: "/about", label: "About" },
     { to: "/changelog", label: "Changelog" },
   ];

@@ -31,6 +31,8 @@ function DiscoverCard({
   const { isFavorite, toggleFavorite } = useLibrary();
   const favorite = isFavorite(command.id);
 
+  const bestFor = command.subcategory || command.category;
+
   return (
     <article className="panel flex flex-col rounded-2xl p-4">
       <div className="flex items-center gap-2">
@@ -66,6 +68,22 @@ function DiscoverCard({
       </Link>
 
       <p className="mt-2.5 line-clamp-2 text-sm text-muted-foreground">{command.description}</p>
+
+      {/* context block: three lines, always the same shape */}
+      <dl className="mt-3 space-y-1 rounded-xl border border-border/70 bg-surface-elevated/60 px-3 py-2.5 text-[12px] leading-snug">
+        <div className="flex gap-1.5">
+          <dt className="shrink-0 font-semibold text-foreground">Best for:</dt>
+          <dd className="min-w-0 truncate text-muted-foreground">{bestFor}</dd>
+        </div>
+        <div className="flex gap-1.5">
+          <dt className="shrink-0 font-semibold text-foreground">Use it in:</dt>
+          <dd className="text-muted-foreground">ChatGPT / Gemini / Claude</dd>
+        </div>
+        <div className="flex gap-1.5">
+          <dt className="shrink-0 font-semibold text-foreground">How to use:</dt>
+          <dd className="text-muted-foreground">Copy → Paste into your AI tool → Replace placeholders with your details</dd>
+        </div>
+      </dl>
 
       <div className="mt-3 flex items-center gap-1.5">
         <Button asChild size="sm" variant="secondary">

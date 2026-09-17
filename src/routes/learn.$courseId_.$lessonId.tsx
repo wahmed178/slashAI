@@ -28,7 +28,7 @@ import {
   type TestQuestion,
 } from "@/lib/courses";
 
-export const Route = createFileRoute("/learn/$courseId/$lessonId")({
+export const Route = createFileRoute("/learn/$courseId_/$lessonId")({
   loader: ({ params }) => {
     const course = courseByIdSafe(params.courseId);
     if (!course) throw notFound();

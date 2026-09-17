@@ -199,6 +199,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://slashai.in/blog</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/blog/best-free-ai-prompts-for-professionals-in-india-2026</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/changelog</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
