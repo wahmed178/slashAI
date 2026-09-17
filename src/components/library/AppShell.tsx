@@ -97,6 +97,7 @@ const HUB_NAMES: Record<string, string> = {
 };
 
 const TOP_LEVEL_NAMES: Record<string, { label: string; to?: string }> = {
+  learn: { label: "Courses", to: "/learn" },
   roadmaps: { label: "Roadmaps", to: "/roadmaps" },
   glossary: { label: "Glossary", to: "/glossary" },
   quiz: { label: "Quiz", to: "/quiz" },
@@ -378,7 +379,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
           <div className="ml-auto flex items-center gap-0.5">
             <ThemeToggleButton />
             <Link
-              to="/promo"
+              to="/about"
               className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
               aria-label="About SlashAI"
             >

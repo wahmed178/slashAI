@@ -5,7 +5,9 @@ import { AppShell } from "@/components/library/AppShell";
 import { SlashBarWidget } from "@/components/library/SlashBarWidget";
 import { ALL_SLASH_APPS, appBySlug, type Widget } from "@/lib/slashbar";
 import { PLAY_SECTIONS } from "@/lib/slashplay";
+import { COURSES, COURSE_COUNT, TOTAL_LESSONS, lessonProgress, COURSES_CHANGE_EVENT } from "@/lib/courses";
 import { Star, StarOff } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/slash/$app")({
@@ -58,6 +60,8 @@ function SlashAppPage() {
     app.slug === "brain-boosters"
       ? PLAY_SECTIONS.find((s) => s.title === "Brain Training")?.games ?? []
       : [];
+  // Slash Learning embeds the full course catalog inline (same catalog as /learn)
+  const courses = app.slug === "learning" ? COURSES : [];
 
   return (
     <AppShell wide hideHeaderSearch title={app.name}>
@@ -125,13 +129,13 @@ function SlashAppPage() {
         </section>
       )}
 
+      {courses.length > 0 && <LearningCourses tint={app.tint.hex} />}
+
       <div className="stagger-children mt-5 grid gap-3 lg:grid-cols-2">
         {app.widgets.map((w: Widget) => (
           <SlashBarWidget key={w.title} widget={w} tint={app.tint.hex} />
         ))}
       </div>
-
-      {/* SlashKits / SlashPlay apps live on their own sections */}
 
       {app.link && (
         <div className="mt-6 flex justify-center">
@@ -175,5 +179,66 @@ function SlashAppPage() {
         })()}
       </nav>
     </AppShell>
+  );
+}
+
+/* Slash Learning: course catalog cards with live progress, mirroring /learn */
+function LearningCourses({ tint }: { tint: string }) {
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const bump = () => setTick((t) => t + 1);
+    window.addEventListener(COURSES_CHANGE_EVENT, bump);
+    return () => window.removeEventListener(COURSES_CHANGE_EVENT, bump);
+  }, []);
+
+  return (
+    <section className="mt-5">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-sm font-semibold tracking-wide uppercase" style={{ color: tint }}>
+          🎓 Structured courses
+        </h2>
+        <Link to="/learn" className="text-[12px] font-bold text-primary transition-colors hover:text-primary/80">
+          All courses →
+        </Link>
+      </div>
+      <p className="mt-1 text-[12.5px] text-muted-foreground">
+        {COURSE_COUNT} courses · {TOTAL_LESSONS} lessons · graded module tests · progress saved on your device
+      </p>
+      <div className="cat-rule mt-1.5 w-24" />
+      <div className="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+        {COURSES.map((c) => {
+          const pct = Math.round(lessonProgress(c) * 100);
+          return (
+            <Link
+              key={c.id}
+              to="/learn/$courseId"
+              params={{ courseId: c.id }}
+              className="group flex items-start gap-3 rounded-xl border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5"
+              style={{ borderColor: `color-mix(in oklab, ${c.tint} 32%, transparent)` }}
+            >
+              <span
+                className="grid size-11 shrink-0 place-items-center rounded-xl text-[22px]"
+                style={{ background: `color-mix(in oklab, ${c.tint} 15%, transparent)` }}
+                aria-hidden
+              >
+                {c.emoji}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[13.5px] font-bold text-foreground">{c.title}</span>
+                <span className="line-clamp-2 block text-[11.5px] leading-snug text-muted-foreground">{c.tagline}</span>
+                {pct > 0 && (
+                  <span className="mt-1.5 flex items-center gap-2">
+                    <span className="h-1 flex-1 overflow-hidden rounded-full bg-muted">
+                      <span className="block h-full rounded-full" style={{ width: `${pct}%`, background: c.tint }} />
+                    </span>
+                    <span className="text-[10px] font-bold tabular-nums" style={{ color: c.tint }}>{pct}%</span>
+                  </span>
+                )}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </section>
   );
 }

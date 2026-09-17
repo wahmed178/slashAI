@@ -27,6 +27,7 @@ function SitemapPage() {
     { to: "/quiz", label: "Daily Quiz" },
     { to: "/build-ideas", label: "Build Ideas Library" },
     { to: "/roadmaps", label: "Founder Roadmaps" },
+    { to: "/learn", label: "Slash Courses" },
     { to: "/glossary", label: "AI Glossary" },
     { to: "/ai-tools", label: "AI Tools Directory" },
     { to: "/about", label: "About" },

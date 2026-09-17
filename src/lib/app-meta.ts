@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.25.0";
+export const APP_VERSION = "2.26.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,18 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.26.0",
+    date: "2026-09-16",
+    title: "Learn courses, 10 tools, 6 games, one About",
+    changes: [
+      "Slash Learning rebuilt as real courses: 3 full courses with modules, proper lessons and a quiz test at the end of every module - progress and scores saved locally",
+      "SlashKits grows by 10 new tools: Random Picker, Days Between Dates, Click Speed Test, VAT / Sales Tax, Hourly to Salary, Morse Code, Metronome, Nim Strategy Trainer, Word Scramble and Code Breaker",
+      "SlashPlay grows by 6 new games: Word Scramble, Reach 24, Peg Jump, Odd One Out, World Capitals and RPS Lizard Spock",
+      "About merged: the about-the-app page and the full FAQ now live together on /about - one place for everything",
+      "Duplicate game entries removed so every tool and game opens a real page",
+    ],
+  },
   {
     version: "2.25.0",
     date: "2026-09-15",

@@ -53,10 +53,8 @@ const MORE = [
   { to: "/live", emoji: "📡", label: "Live Dashboard", desc: "Markets, weather, prayer, space" },
   { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "24 categories, streaks" },
   { to: "/roadmaps", emoji: "🗺️", label: "Roadmaps", desc: "Founder step-by-step guides" },
-  { to: "/glossary", emoji: "📖", label: "Glossary", desc: "AI & startup terms" },
-  { to: "/journal", emoji: "📝", label: "Journal", desc: "Build log, streaks, badges" },
-  { to: "/trending", emoji: "🔥", label: "Trending", desc: "What's hot right now" },
-  { to: "/promo", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
+  { to: "/learn", emoji: "🎓", label: "Courses", desc: "Free lessons with graded tests" },
+  { to: "/about", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
 ];
 
 function matches(q: string, ...text: string[]) {

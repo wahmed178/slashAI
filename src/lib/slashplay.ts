@@ -71,6 +71,11 @@ export const PLAY_SECTIONS: PlaySection[] = [
     games: [
       { slug: "hangman", name: "Hangman", desc: "Guess the hidden word one letter at a time", icon: "🔤", players: "Solo" },
       { slug: "word-guess", name: "Word Guess", desc: "Crack the 5-letter word in six tries", icon: "📝", players: "Solo" },
+      { slug: "word-scramble", name: "Word Scramble", desc: "Unscramble common words, hint if stuck, streaks", icon: "🔀", players: "Solo" },
+      { slug: "reach-24", name: "Reach 24", desc: "Combine four numbers with + − × ÷ to make 24", icon: "🎯", players: "Solo" },
+      { slug: "peg-jump", name: "Peg Jump", desc: "Jump pegs, remove them, leave exactly one", icon: "🔺", players: "Solo" },
+      { slug: "odd-one-out", name: "Odd One Out", desc: "Find the off-shade tile before the clock dies", icon: "🔍", players: "Solo" },
+      { slug: "capitals", name: "World Capitals", desc: "Name the capital of 60+ countries, streaks", icon: "🌍", players: "Solo" },
     ],
   },
   {
@@ -111,6 +116,7 @@ export const PLAY_SECTIONS: PlaySection[] = [
     icon: "⚡",
     games: [
       { slug: "rock-paper-scissors", name: "Rock Paper Scissors", desc: "Instant duel - vs AI or pass-and-play", icon: "✂️", players: "Solo + 2P" },
+      { slug: "rock-paper-scissors-lizard-spock", name: "RPS Lizard Spock", desc: "5-way duel: each move beats two, loses to two", icon: "🖖", players: "Solo + 2P" },
       { slug: "simon", name: "Simon", desc: "Repeat the growing light and sound pattern", icon: "🎵", players: "Solo" },
       { slug: "whack-a-mole", name: "Whack-a-Mole", desc: "Tap the moles fast before the timer runs out", icon: "🔨", players: "Solo" },
       { slug: "reaction-test", name: "Reaction Test", desc: "Test your reflexes down to the millisecond", icon: "⚡", players: "Solo" },

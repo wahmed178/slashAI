@@ -118,6 +118,11 @@ const STATIC_PAGES: Record<string, SeoPage> = {
     description:
       "20 step-by-step roadmaps for founders - from idea validation to first customers - with progress tracking. Free, on-device, no account.",
   },
+  "/learn": {
+    title: "Free Courses with Real Lessons & Tests | SlashAI",
+    description:
+      "Structured free courses inspired by roadmap.sh: real lessons, graded module tests and progress saved on your device. Prompt engineering, how the web works, shipping your first app.",
+  },
   "/glossary": {
     title: "AI, SaaS & Startup Glossary - 560+ Terms | SlashAI",
     description:
@@ -203,6 +208,7 @@ const STATIC_PAGES: Record<string, SeoPage> = {
     title: "About SlashAI - Your Free AI Command Vault",
     description:
       "What SlashAI is, in one page: 5,000+ free AI commands, 150+ browser tools, curated resources - no account, no tracking, free forever.",
+    noindex: true,
   },
   "/about": {
     title: "About - SlashAI",
@@ -361,6 +367,19 @@ const FAQS: Record<string, FaqItem[]> = {
     { q: "Does this pomodoro timer work offline?", a: "Yes — once the page loads, the timer runs entirely on your device. No account, no notifications permission, no server." },
     { q: "Can I change the work and break durations?", a: "The default follows the classic 25/5/15 rhythm, and the presets let you switch to common variants like 50/10 for deep work sessions." },
     { q: "Is the pomodoro timer free?", a: "Yes, like every tool in SlashKits — free forever with no ads and no sign-up." },
+  ],
+  "/about": [
+    { q: "What is SlashAI?", a: "SlashAI is a free, no-account web app that packs the internet's useful things into one place: 5,000+ copy-ready AI slash commands, 150+ browser tools, 50+ games, structured courses with graded tests, curated resource hubs, a private meta search engine and live dashboards." },
+    { q: "Is SlashAI really free? Do I need an account?", a: "Everything on SlashAI is free and always has been. There is no account, no login, no paywall and no tracking. Everything you save (favourites, progress, notes) is stored on your own device." },
+    { q: "Does SlashAI work offline?", a: "Yes — install it as an app (PWA) and the whole catalog, including tools, games and courses, keeps working with zero connection." },
+    { q: "Is my data private?", a: "Yes. There is no server holding your data and no analytics profile. Tools run entirely in your browser — files you process never upload anywhere — and the meta search engine forwards nothing to SlashAI." },
+  ],
+  "/learn": [
+    { q: "Are the courses on SlashAI really free?", a: "Yes — every course, lesson and test is free with no account and no paywall. Your progress is saved in your browser on your device." },
+    { q: "Do the courses have real lessons and tests?", a: "Yes. Each course is structured into modules of written lessons (5–10 minutes each), and every module ends with a graded multiple-choice test. Score 70% or higher to pass a module; pass all module tests to complete the course." },
+    { q: "Is my progress saved?", a: "Yes — lesson completion and your best test scores are stored on your device automatically. No account is created and nothing is uploaded. Clearing your browser storage clears your progress." },
+    { q: "What courses can I take?", a: "SlashAI currently offers Prompt Engineering: Zero to Reliable, How the Web Actually Works, and Ship Your First Web App — with more courses added over time." },
+    { q: "How is this different from the Founder Roadmaps?", a: "Roadmaps are step-by-step action plans for founder journeys (validate, ship, grow). Courses are structured lessons with graded tests that teach a skill from scratch. They work well together: take a course to learn, then follow a roadmap to apply it." },
   ],
   "/prompts": [
     { q: "What are AI prompts or slash commands?", a: "A prompt is the instruction you give an AI tool like ChatGPT, Claude or Gemini. Well-structured prompts — with a role, task, context and format — produce far better results than one-line questions. SlashAI's slash commands are battle-tested prompt templates you copy and fill in." },

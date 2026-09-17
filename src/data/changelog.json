@@ -1,6 +1,18 @@
 {
-  "version": "2.25.0",
+  "version": "2.26.0",
   "entries": [
+    {
+      "version": "2.26.0",
+      "date": "2026-09-16",
+      "changes": [
+        "Slash Learning rebuilt as real courses (roadmap.sh-style): 3 full courses - Learn AI Prompting, HTML & CSS Basics, Personal Finance Foundations - each with modules, real lessons and a quiz test at the end of every module; progress and quiz scores saved locally",
+        "Courses now open from the Learning app in the SlashBar launcher and get their own pages under /learn",
+        "About merged: the top-right about-the-app page now lives on /about together with the full FAQ, so everything is in one place (old /about-the-app link redirects there)",
+        "SlashKits grows by 10 new tools: Random Picker, Days Between Dates, Click Speed Test, VAT / Sales Tax Calculator, Hourly to Salary Converter, Morse Code Translator, Metronome, Nim Strategy Trainer, Word Scramble and Code Breaker",
+        "SlashPlay grows by 5 new games: Word Scramble, Reach 24, Peg Jump, Odd One Out and World Capitals, plus RPS Lizard Spock as a 2-player duel",
+        "Removed duplicate game entries so every tool and game opens a real page - nothing dead in the catalogue"
+      ]
+    },
     {
       "version": "2.25.0",
       "date": "2026-09-15",

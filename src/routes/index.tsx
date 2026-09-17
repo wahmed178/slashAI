@@ -728,11 +728,8 @@ function HomePage() {
             { to: "/live", emoji: "📡", label: "Live Dashboard", desc: "Markets, weather, prayer, space" },
             { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "24 categories, streaks" },
             { to: "/roadmaps", emoji: "🗺️", label: "Roadmaps", desc: "Founder step-by-step guides" },
-            { to: "/glossary", emoji: "📖", label: "Glossary", desc: "AI & startup terms" },
-            { to: "/trending", emoji: "🔥", label: "Trending", desc: "What's hot right now" },
-            { to: "/whats-new", emoji: "🆕", label: "What's New", desc: "Fresh finds every week" },
-            { to: "/radar", emoji: "🛍️", label: "Deals Radar", desc: "Free offers, checked daily" },
-            { to: "/promo", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
+            { to: "/learn", emoji: "🎓", label: "Courses", desc: "Free lessons with graded tests" },
+            { to: "/about", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
           ].map((m) => (
             <Link
               key={m.to}

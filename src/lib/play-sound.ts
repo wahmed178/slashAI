@@ -27,13 +27,17 @@ export function setMuted(muted: boolean) {
   window.localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
 }
 
-type Tone = "tap" | "flip" | "win" | "roll";
+type Tone = "tap" | "flip" | "win" | "roll" | "success" | "fail" | "copy" | "tick";
 
 const TONES: Record<Tone, { from: number; to: number; ms: number; type: OscillatorType }> = {
   tap: { from: 520, to: 700, ms: 70, type: "triangle" },
   flip: { from: 300, to: 900, ms: 260, type: "sine" },
   roll: { from: 220, to: 480, ms: 200, type: "square" },
   win: { from: 660, to: 1320, ms: 380, type: "sine" },
+  success: { from: 523, to: 1046, ms: 220, type: "sine" },
+  fail: { from: 300, to: 150, ms: 250, type: "sawtooth" },
+  copy: { from: 620, to: 880, ms: 90, type: "triangle" },
+  tick: { from: 880, to: 880, ms: 40, type: "square" },
 };
 
 export function playTone(tone: Tone = "tap") {
