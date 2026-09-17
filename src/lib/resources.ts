@@ -286,6 +286,8 @@ export const SECTIONS: SectionDef[] = [
 ];
 
 const D = "2026-08-22";
+/** "Last checked" date - bumped automatically every week by scripts/refresh-resource-dates.cjs (GitHub Action) */
+const V = "2026-09-17";
 
 /** helper keeps the list readable; every record still carries explicit dates */
 const r = (
@@ -294,7 +296,7 @@ const r = (
 ): Resource => ({
   addedDate: D,
   lastUpdated: D,
-  lastVerified: D,
+  lastVerified: V,
   status: "Active",
   ...x,
 });
@@ -1663,3 +1665,78 @@ export const DROPS: TimedDrop[] = [
 
 export const dropItems = (drop: TimedDrop) =>
   drop.items.map((id) => byId.get(id)).filter((x): x is Resource => Boolean(x));
+
+/* ────────────── auto-current weekly drop ────────────── */
+
+/**
+ * A hand-picked pool of library favourites. Every ISO week the window slides
+ * forward, so "Weekly Free Finds" always shows the CURRENT week number and
+ * today's date with a fresh mix of five resources - no manual edit needed.
+ */
+const WEEKLY_POOL = [
+  "stirling-pdf",
+  "roadmap-sh",
+  "gh-public-apis",
+  "squoosh",
+  "notebooklm",
+  "ollama",
+  "gh-open-webui",
+  "excalidraw",
+  "elicit",
+  "cs50",
+  "keepassxc",
+  "anki",
+  "obsidian",
+  "zotero",
+  "khan-academy",
+  "github-student-pack",
+  "chatgpt",
+  "claude",
+  "libreoffice",
+  "photopea",
+  "obs-studio",
+  "freecodecamp-site",
+  "mdn",
+];
+
+/** ISO-8601 week number (1-53) for a date. */
+export function isoWeekNumber(date: Date = new Date()): number {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86_400_000 + 1) / 7);
+}
+
+/** Today as YYYY-MM-DD (UTC). */
+export function todayIso(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+/** The five resources featured this ISO week - rotates weekly, stable within a week. */
+export function currentWeeklyPicks(): Resource[] {
+  const week = Math.floor(Date.now() / 604_800_000); // weeks since epoch, matches homepage rotation
+  const perView = 5;
+  const offset = ((week % WEEKLY_POOL.length) + WEEKLY_POOL.length) % WEEKLY_POOL.length;
+  const rotated = [...WEEKLY_POOL.slice(offset), ...WEEKLY_POOL.slice(0, offset)];
+  return rotated
+    .slice(0, perView)
+    .map((id) => byId.get(id))
+    .filter((x): x is Resource => Boolean(x));
+}
+
+/**
+ * The always-current weekly drop. The week number and today's date are
+ * computed at call time, so the page never shows a stale "week 34" again.
+ */
+export function currentWeeklyDrop(): TimedDrop {
+  const week = isoWeekNumber();
+  return {
+    id: `weekly-current-w${week}`,
+    title: `Weekly Free Finds - week ${week}`,
+    cadence: "Weekly",
+    blurb: `Five things worth ten minutes each this week. Rotated ${todayIso()} - a fresh mix every week.`,
+    items: currentWeeklyPicks().map((res) => res.id),
+    published: todayIso(),
+  };
+}

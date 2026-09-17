@@ -4,7 +4,14 @@ import { CalendarClock, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import { ResourceGrid } from "@/components/library/ResourceCard";
 import { CHANGELOG } from "@/lib/app-meta";
-import { DROPS, NEWEST_RESOURCES, dropItems } from "@/lib/resources";
+import {
+  DROPS,
+  NEWEST_RESOURCES,
+  currentWeeklyDrop,
+  dropItems,
+  isoWeekNumber,
+  todayIso,
+} from "@/lib/resources";
 
 export const Route = createFileRoute("/whats-new")({
   head: () => ({
@@ -30,6 +37,9 @@ export const Route = createFileRoute("/whats-new")({
 const CADENCE_ORDER = ["Weekly", "Monthly", "Special", "Yearly"] as const;
 
 function WhatsNewPage() {
+  // Always-current: real week number and today's date, computed at render
+  const weekly = currentWeeklyDrop();
+  const dropsWithoutWeekly = DROPS.filter((d) => d.cadence !== "Weekly");
   return (
     <AppShell
       wide
@@ -42,13 +52,30 @@ function WhatsNewPage() {
           <Sparkles className="size-6 text-primary" aria-hidden /> What&apos;s new
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Curated drops are compiled by hand - weekly finds, a monthly batch, special occasions and
-          a yearly toolkit.
+          Fresh finds every week - a monthly batch, special occasions and a yearly toolkit.
+        </p>
+        <p className="mt-1.5 text-xs text-primary">
+          Auto-updated {todayIso()} · Week {isoWeekNumber()} — the weekly picks rotate on their own.
         </p>
       </header>
 
-      {CADENCE_ORDER.map((cadence) => {
-        const drops = DROPS.filter((d) => d.cadence === cadence);
+      {/* Auto-current weekly drop - always this week, never stale */}
+      <section className="mt-8">
+        <h2 className="text-lg font-bold tracking-tight text-foreground">Weekly</h2>
+        <div className="mt-3">
+          <p className="flex flex-wrap items-center gap-1.5 text-sm font-semibold text-foreground">
+            {weekly.title}
+            <span className="flex items-center gap-1 text-[11px] font-normal text-muted-foreground">
+              <CalendarClock className="size-3.5" aria-hidden /> {weekly.published}
+            </span>
+          </p>
+          <p className="mt-0.5 mb-2.5 text-xs text-muted-foreground">{weekly.blurb}</p>
+          <ResourceGrid resources={dropItems(weekly)} />
+        </div>
+      </section>
+
+      {CADENCE_ORDER.filter((c) => c !== "Weekly").map((cadence) => {
+        const drops = dropsWithoutWeekly.filter((d) => d.cadence === cadence);
         if (drops.length === 0) return null;
         return (
           <section key={cadence} className="mt-8">
