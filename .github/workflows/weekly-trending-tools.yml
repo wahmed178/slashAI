@@ -1,22 +1,44 @@
 name: Weekly Trending Tools
+
+# Refreshes the "This week's free finds" pool on the homepage.
+# The `permissions` block is required: this repo's default GITHUB_TOKEN is
+# read-only, so without it the commit step cannot push and the job fails.
 on:
   schedule:
+    # Mondays 06:00 UTC
     - cron: '0 6 * * 1'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+
       - name: Run fetch script
         run: node scripts/fetch-trending-tools.cjs
+
       - name: Commit and push
         run: |
+          set -euo pipefail
           git config user.name "SlashAI Bot"
           git config user.email "bot@slashai.app"
           git add src/data/trending-tools.json
-          git diff --staged --quiet || git commit -m "chore(data): trending tools update $(date +%Y-%m-%d)"
-          git push
+          if git diff --staged --quiet; then
+            echo "No change this week - nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore(data): trending tools update $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
