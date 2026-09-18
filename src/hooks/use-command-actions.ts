@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useLibrary } from "@/hooks/use-library";
 import { commandPath, commandTemplate, type SlashCommand } from "@/lib/commands";
 import { trackInteraction } from "@/lib/intelligence";
+import { recordUxInteraction, setLastCopied } from "@/lib/ux";
 import { SITE_URL } from "@/lib/seo";
 
 /** Small, non-intrusive celebrations at the moments that matter. */
@@ -32,6 +33,9 @@ export function useCommandActions() {
     (cmd: SlashCommand, text: string, message: string) => {
       recordUse(cmd.id);
       trackInteraction(cmd.id, "copy");
+      recordUxInteraction("command", cmd.id, cmd.category);
+      // powers the floating "copy the last command again" pill
+      setLastCopied(text);
       const total = recordCopy();
       const milestone = COPY_MILESTONES[total];
       if (milestone) window.setTimeout(() => toast(milestone), 500);
@@ -61,6 +65,7 @@ export function useCommandActions() {
   const openCommand = useCallback((cmd: SlashCommand) => {
     recordUse(cmd.id);
     trackInteraction(cmd.id, "open");
+    recordUxInteraction("command", cmd.id, cmd.category);
   }, [recordUse]);
 
   const shareCommand = useCallback(

@@ -7,7 +7,7 @@
 A searchable library of copy-ready slash commands for writing, research, coding, design, documents, data, productivity and more. Find a strong starting point, tune it to your task, and get back to the work.
 
 [![Status](https://img.shields.io/badge/status-live-2dd4bf)](https://slashai.in)
-[![Commands](https://img.shields.io/badge/commands-5%2C635-0ea5e9)](#-command-categories)
+[![Commands](https://img.shields.io/badge/commands-5%2C682-0ea5e9)](https://slashai.in/explore)
 [![PWA](https://img.shields.io/badge/PWA-offline--ready-8b5cf6)](#-pwa--offline)
 [![Android](https://img.shields.io/badge/Android-APK-3ddc84)](#-android)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](#-tech-stack)
@@ -44,12 +44,21 @@ A searchable library of copy-ready slash commands for writing, research, coding,
 
 | | |
 | --- | --- |
-| **Commands** | 5,635 curated, de-duplicated slash commands |
-| **Categories** | 25 categories across 244 subcategories |
+| **Commands** | 5,682 curated, de-duplicated slash commands |
+| **Categories** | 45 categories across 381 subcategories |
+| **SlashKits** | 150+ free browser tools — image, PDF, calculators, timers, screensavers |
+| **SlashPlay** | 57 browser games — solo, vs AI and pass-and-play multiplayer |
+| **Slash Courses** | 3 courses with real lessons and graded module tests, plus 4 learning paths |
 | **Search** | Instant fuzzy search with typo tolerance and highlighted matches |
 | **Offline** | Static catalog + PWA shell designed for offline use |
 | **Android** | Signed APK built with Capacitor and a native WebView |
-| **Account** | None required — favorites and settings persist locally |
+| **Account** | None required — favorites, progress and settings persist locally |
+
+**New in v2.28 (Sep 2026):** difficulty badges and a first-run command guide,
+"Try in ChatGPT / Gemini / Claude" quick-launch buttons, 🆕/🔥 badges across
+SlashKits and SlashPlay, learning paths with progress tracking, a floating
+re-copy pill, 14 ready-made HTML Compiler starter projects, and a much deeper
+cricket game (4 formats, shareable scores, frame-rate independent physics).
 
 ---
 
@@ -65,7 +74,8 @@ Every command carries a plain-language description, a "how to use" note, a worke
 
 - **Discovery over recall** — you don't have to remember prompt patterns; you search for them.
 - **Copy-ready, not abstract** — each entry ships with a filled-in example you can edit in seconds.
-- **Structured by design** — category → subcategory → command keeps 5,635 entries navigable.
+- **Structured by design** — category → subcategory → command keeps 5,682 entries navigable.
+- **More than commands** — free browser tools, games and courses, all on the same no-account basis.
 - **Fast and quiet** — a dark-first, scan-friendly interface with restrained motion and no clutter.
 - **Yours, locally** — favorites, recents, theme, accent and density stay on your device.
 - **Everywhere you work** — desktop browser, installable PWA, or the Android app.
@@ -168,7 +178,10 @@ The taxonomy below is generated from the catalog itself.
 | Travel & Local | 48 | 6 |
 | Video | 61 | 10 |
 | Writing & Communication | 61 | 10 |
-| **Total** | **5,635** | **379** |
+| **Total** | **5,682** | **381** |
+
+> The live total is the source of truth (5,682 commands). Per-category rows above
+> are refreshed in batches, so they can lag a release behind.
 
 ---
 
@@ -315,19 +328,25 @@ Validation enforces unique stable IDs, no duplicate command names, and complete 
 
 ## 🧩 Tech stack
 
-**React** · **TypeScript** · **Vite** · **TanStack Router** · **Tailwind CSS** · **Radix UI** · **Capacitor**
+**React 19** · **TypeScript** · **Vite** · **TanStack Start / Router** · **Tailwind CSS 4** · **Radix UI** · **Capacitor** · **vite-plugin-pwa**
 
 ---
 
 ## 🗺 Roadmap
 
-Ideas under consideration — not yet implemented.
+Shipped in v2.28:
+
+- [x] Guided discovery — difficulty badges, a first-run "how to use" guide, and "You might also like"
+- [x] Quick-launch straight into ChatGPT, Gemini or Claude with the command already copied
+- [x] Learning paths with progress tracking across Slash Courses
+- [x] Deeper personalisation — popular badges, personal bests and a locally-driven "You might like" row
+- [x] Richer SlashKits and SlashPlay catalogues with honest ⏱ time / 🎯 difficulty labels
+
+Still on the list:
 
 - [ ] Continued catalog growth across existing and new categories
-- [ ] Smarter discovery: better related-command suggestions and guided browsing
-- [ ] Richer sharing: shareable collections and curated command sets
+- [ ] Sharable collections and curated command sets
 - [ ] Expanded mobile and PWA capabilities
-- [ ] Deeper personalisation of the dashboard
 
 ---
 

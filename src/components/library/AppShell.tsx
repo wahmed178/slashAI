@@ -19,14 +19,17 @@ import {
 } from "lucide-react";
 
 import { useLibrary } from "@/hooks/use-library";
-import { getSlashTool } from "@/lib/slashkits";
-import { getPlayGame } from "@/lib/slashplay";
+import { getSlashTool, toolSection } from "@/lib/slashkits";
+import { gameSection, getPlayGame } from "@/lib/slashplay";
 import { appBySlug, ALL_SLASH_APPS } from "@/lib/slashbar";
 import { pickRandom } from "@/lib/random-pick";
 import { OfflineBanner } from "./OfflineBanner";
 import { InstallBanner } from "./InstallBanner";
 import { CookieBanner } from "./CookieBanner";
 import { SlashBarOverlay } from "./SlashBarOverlay";
+import { CatalogueExtras } from "./CatalogueExtras";
+import { FloatingActions } from "./FloatingActions";
+import { bumpToolClick, recordUxInteraction } from "@/lib/ux";
 
 /**
  * Bottom dock: Home · Discovery · 🎲 Random (elevated shiny centre, instant roll) ·
@@ -305,6 +308,27 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { isToolFavorite, toggleToolFavorite } = useLibrary();
 
+  // Count each tool/game screen once per browser session — that powers the
+  // 🔥 Popular badge without a backend, and keeps a page refresh honest.
+  const trackKey = screenItem(pathname)?.slug ?? "";
+  useEffect(() => {
+    if (!trackKey) return;
+    const skey = `slashai-counted:${trackKey}`;
+    try {
+      if (sessionStorage.getItem(skey)) return;
+      sessionStorage.setItem(skey, "1");
+    } catch {
+      /* private mode — count it anyway */
+    }
+    const item = screenItem(pathname);
+    if (!item) return;
+    bumpToolClick(item.slug);
+    // the section/category tag feeds the homepage "You might like" row
+    const tag =
+      item.kind === "game" ? gameSection(item.slug)?.title : toolSection(item.slug)?.title;
+    recordUxInteraction(item.kind === "game" ? "game" : "tool", item.slug, tag);
+  }, [trackKey, pathname]);
+
   // Did the matched route contribute its own head()? The root always
   // contributes one (canonical/OG), so look for a non-root match with meta.
   const matches = useRouterState({ select: (s) => s.matches });
@@ -428,8 +452,15 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
           />
           {srH1 && <h1 className="sr-only">{srH1}</h1>}
           {children}
+          {/* consistent onboarding + cross-links on every tool & game page */}
+          {screen && (screen.kind === "tool" || screen.kind === "game") && (
+            <CatalogueExtras kind={screen.kind} slug={screen.slug} />
+          )}
         </div>
       </main>
+
+      {/* floating "copy again" pill + back-to-top, above the dock */}
+      <FloatingActions />
 
       {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
           Home · Discovery · 🎲 Random (centre) · Hubs · ⚡ Slash (overlay) */}

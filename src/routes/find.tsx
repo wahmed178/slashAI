@@ -192,7 +192,7 @@ function FindPage() {
               <h2 className="mb-2.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
                 Matching commands ({result.commands.length})
               </h2>
-              <CommandGrid commands={result.commands} query={q} />
+              <CommandGrid commands={result.commands} query={q} guide />
             </section>
           )}
 

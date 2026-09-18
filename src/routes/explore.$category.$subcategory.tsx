@@ -88,7 +88,7 @@ function SubcategoryPage() {
 
       <div className="mt-5">
         {commands.length > 0 ? (
-          <CommandGrid commands={commands} />
+          <CommandGrid commands={commands} guide />
         ) : (
           <EmptyState
             title="Nothing here yet"

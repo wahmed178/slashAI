@@ -1,235 +1,165 @@
 # SlashAI — Project Memory
 
+_Last updated: 18 September 2026 · v2.28.0_
+
 ## What This Is
-SlashAI (https://slashai.in/) is a free, offline-first,
-no-account AI command and resource library. 5,635 commands, 317+ curated
-resources, 50+ viral prompts, 80 trending /commands, 25 generators,
-20 roadmaps, 560+ glossary terms, 32 South Asia resources, 40+ new APIs,
-53 Islam Hub resources (Quran, Hadith, prayer, scholars, daily tools).
-Daily Quiz with 24 categories, streaks, and timer.
-Content auto-update: GitHub Actions fetch trending tools (Mon), news (daily), prompts (Wed)
-22 browser tools at /tools (image compress/convert, PDF, calculators, timers, screensavers)
-Daily content automation: quotes, artwork via GitHub Actions
-Self-hosted identity: own domain (slashai.in), no third-party builder branding.
+SlashAI (**https://slashai.in**) is a free, offline-first, no-account AI command
+and resource library. Copy a slash command, paste it into ChatGPT / Gemini /
+Claude, get a real result. Alongside the library it ships a browser-tool suite
+(SlashKits), a games arcade (SlashPlay), structured courses (Slash Courses),
+curated hubs, a live dashboard and a large free-resource directory.
+
+Everything is client-side. There is no backend, no auth, no database and no
+tracking — personal state lives in localStorage and never leaves the device.
+
+- **5,682 AI slash commands** across 45 categories / 379 subcategories
+- **150+ browser tools** on `/tools` (SlashKits)
+- **57 browser games** on `/play` (SlashPlay)
+- **300+ curated free resources** on `/discover` + hubs
+- **3 full courses with graded tests** + 4 learning paths on `/learn`
+- 100+ free APIs documented, 560+ glossary terms, 20 founder roadmaps,
+  16 curated collections, 24-category daily quiz, 12-hub network
+- Android app via Capacitor (`in.slashai.app`)
+
+## Positioning & Voice
+- Free forever. No account. No credit card. No upsell, no premium tier.
+- Calm, minimal, human, honest. Real counts and real limitations — nothing
+  invented, no placeholder copy, no fake testimonials.
+- Built in India (Hyderabad) by Waseem Ahmed. Domain and branding are self-owned;
+  no third-party builder branding anywhere users can see.
+- Primary audience: students, developers, creators, professionals and founders,
+  with a strong India / South-Asia and Islamic-tools angle.
 
 ## Design Identity
-- Dark theme: near-black navy background (#0a0a0f via oklch), darker sidebar, layered surfaces
-- Primary accent: electric cyan/teal (#2dd4bf via oklch)
-- Background: oklch(0.135 0.014 255) | Surface: oklch(0.175 0.016 253) | Sidebar: oklch(0.12 0.012 255)
-- Border: subtle blue-gray oklch(0.265 0.016 254) | Text: near-white oklch(0.965 0.004 250)
-- Font: Space Grotesk (body), JetBrains Mono (code/commands)
-- Semantic tokens: all colors via CSS custom properties — no hard-coded hex in components
-- Feel: premium AI command vault — calm, polished, fast
-- Subtle glass morphism, micro-interactions, skeleton loading, snap scroll
-- Ambient radial glow on body background
-- Mobile-first, 375px minimum width
-- Light and AMOLED themes preserved with semantic token overrides
+- Dark theme: near-black navy found via oklch tokens, layered surfaces,
+  subtle ambient radial glow
+- Primary accent: electric cyan/teal (`oklch(0.79 0.15 178)`)
+- Themes: **dark → light → amoled → brutal** (one header button cycles them);
+  `glass` remains on `/designs`; accents switch via `data-accent`
+- Font: Outfit (UI) + JetBrains Mono (commands/code)
+- All colour through semantic CSS variables in `src/styles.css` — no hard-coded
+  hex in components (exception: the category tint palette)
+- Card radius 10–16px · button radius 6–10px · badge 4px
+- Motion: `page-enter` fade+slide, `stagger-children`, shimmer skeletons,
+  copy-feedback flash; all disabled under `data-motion="reduced"`
+- Mobile-first, 375px minimum; desktop widens the column (1500 / 1700px)
 
 ## Architecture
-- Framework: React + TanStack Start (SSR)
-- Hosting: Vercel (serves slashai.in) + Freebuff static hosting (secondary)
-- Storage: localStorage only (no auth, no backend database)
-- Data: static TS files + JSON for commands, resources, prompts
-- APIs used: Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD,
-  TheSportsDB, HackerNews, Yahoo Finance (unofficial), USGS, OpenAQ,
-  WhereTheISS.at, ExchangeRate-API, Free Dictionary API, AlQuran.cloud
-- Android app: Capacitor (loads slashai.in in WebView, package in.slashai.app)
+- **React 19 + TanStack Start (SSR)** with file-based routes in `src/routes/`
+- **Vercel** serves slashai.in; an `isolate/` folder keeps a static mirror
+- **Capacitor** Android wrapper (`android/`, package `in.slashai.app`)
+- **Tailwind CSS 4** + shadcn/ui (Radix) + lucide-react + sonner
+- **vite-plugin-pwa** — precached app shell, offline support, install banner
+- **Storage: localStorage only** (see the key table below)
+- Data: static TS modules + JSON in `src/data/`
+- Package manager: **bun**
 
-## Pages (as of Aug 2026)
-/ — Homepage with live ticker (NIFTY/SENSEX/BTC/ETH/USD/prayer/weather), hero, stats bar, feature cards, icon card grid, emoji chips, collection cards, hub cards, weekly digest, footer
-/search — Full command search (5,635 commands)
-/find — Advanced keyword search
-/explore — 45 categories, 379 subcategories
-/discover — Category grid with icons, inline search, recently added section with enhanced resource cards
-/discover/reels — TikTok-style full-screen vertical prompt scroll
-/trending — All-in-one trending: 80 /commands, resources, generators, roadmaps, glossary spotlight, collections, live dashboard preview — with filter tabs
-/live — Live dashboard (markets, gold/silver, global indices, earthquakes, weather, cricket, prayer, space, word of day)
-/generators — 25 AI generators across 4 categories (Business, Content, Legal & Ops, Growth)
-/roadmaps — 20 founder roadmaps with step completion tracking
-/glossary — 560+ AI/SaaS/startup/design/data terms across 8 categories
-/quiz — Daily Quiz (24 categories, Open TDB API, streaks, timer, share score)
-/tools — 22 browser tools: image compress/convert, PDF generators, SIP/EMI/GST/BMI calculators, world clock, pomodoro, flip clock, focus/rain/starfield screens, new tab, quote screen
-/journal — Build journal with mood chips, streaks + 12 achievement badges
-/collections — 16 curated command collections
-/hub — Hub listing page with visual emoji cards (all 9 hubs)
-/hub/students — Student Hub (grouped into 8 named sections with section headers)
-/hub/developers — Developer Hub (grouped into 8 named sections with section headers)
-/hub/creators — Creator Hub (grouped into 6 named sections with section headers)
-/hub/professionals — Professional Hub (grouped into 6 named sections with section headers)
-/hub/founders — Founder Hub
-/hub/india — India Hub
-/hub/finance — Finance Hub
-/hub/designers — Designers Hub
-/hub/health — Health Hub
-/hub/islam — Islam Hub (53 resources, 10 sections, live prayer + Quran widgets)
-/movies — Regional film finder
-/youtube — YouTube search
-/play — Toss, dice, random
-/whats-new — Weekly free finds
-/radar — Free offers
-/alternatives — Free alternatives list
-/assistant — Local browser AI (WebLLM, Llama models, private, no API keys)
-/about — About SlashAI (editorial, real content)
-/changelog — Version history timeline (v2.0-v2.5)
-/glass — Premium waitlist page (email capture, localStorage)
-/keyboard — Keyboard shortcuts (planned)
+### localStorage keys
+| Key | Purpose |
+| --- | --- |
+| `slashai.settings` | theme, density, accent, view, pageSize, persona, homeMode |
+| `slashai.favorites` / `slashai.recents` / `slashai.searches` | commands |
+| `slashai.toolFavorites` | saved tools and games (shared list) |
+| `slashai.streak` / `slashai.stats` / `slashai.journal` | engagement |
+| `slashai-intelligence` | copy/open/save log powering personalised search |
+| `slashai-progress` (courses) | lesson completion + module test scores |
+| `slash_first_visit` | first-time-visitor flag (command guide auto-opens once) |
+| `slashai-tool-clicks` | per-tool open counts → 🔥 Popular badges |
+| `slashai-game-best` | personal bests per game slug |
+| `slashai-started` | courses/tools/paths opened → ✅ + "My progress" |
+| `slashai-last-copy` | text for the floating re-copy pill |
+| `slashai-ux-interactions` | rolling log (kind, id, tag) → "You might like" |
 
-## v2.16 (Sep 2026) — Scanner, interview, graph, analyser, PWA prompts
-- /tools/scanner — Document Scanner: camera capture (rear on mobile) or file
-  upload on desktop; enhance Original/Enhanced/B&W/Grayscale; multi-page
-  session with thumbnail strip + delete; export single JPG or multi-page PDF
-  (jsPDF). Pages kept in memory, not uploaded anywhere.
-- /tools/interview — Mock Interview (src/lib/interview-questions.ts, 500+
-  questions): role/level/type/duration setup; voice (Web Speech) or typed
-  answers; per-question feedback engine (length, filler words, STAR coverage
-  for behavioral, question keywords, speaking pace) and final summary with
-  grade + jsPDF report download.
-- /tools/analyze — Website Analyser: audits any URL via allorigins CORS
-  proxy + PageSpeed Insights (no key): SEO basics, social meta, security
-  headers, robots/sitemap probes, tech fingerprinting; A–F grade + section
-  cards. Best-effort: PSI failures degrade gracefully.
-- /graph — Personal Knowledge Graph: hand-rolled force simulation (no d3
-  dependency) over saved commands, saved resources (localStorage
-  "slashai-saved-resources"), collections containing your commands and
-  journal notes. Filters, node search, zoom/reset, hover tracing, drag,
-  click-through to items. Nav: sidebar + mobile drawer (SECONDARY_ITEMS in
-  AppShell/DesktopSidebar) + CTA card on /favorites.
-- PWA UX: InstallBanner (beforeinstallprompt after 3 visits,
-  "slashai-visits"/"slashai-install-dismissed") + OfflineBanner (full-width,
-  dismissible, auto-hide on reconnect) rendered under the header in AppShell.
-  SW itself already precaches the whole catalog — no IndexedDB needed.
-- APP_VERSION/changelog bumped to 2.16.0 (app-meta.ts + changelog.json).
+## Navigation
+**No sidebar, no drawer.** One bottom dock on every screen:
+`Home · Discovery · 🎲 Random (elevated centre) · Hubs · ⚡ Slash`
+The ⚡ tab opens the full-screen **SlashBar** launcher overlay. The header holds
+the logo, Live Dashboard pill, command search (`/` shortcut), theme cycle,
+About, Saved and Settings. Breadcrumbs render automatically for `/tools/*`,
+`/hub/*`, `/c/*`, `/r/*`, `/learn`, `/play` and other sections, with a Save pill
+for the item currently open.
 
-## v2.18 (Sep 2026) — Clean-up release (no paywalls, honest catalogue)
-- Removed the paid "Glass" tier app-wide: /glass now redirects home, no
-  upgrade/Pro/premium prompts anywhere, sidebar/drawer user cards simplified to
-  "No account · Local only", every theme + /designs theme systems free
-  (designs.tsx gate removed, all themes visible in /me).
-- Homepage: deleted dead email-subscribe section + non-working "More ↓" chip;
-  stats bar uses live counts (VERIFIED_TOTAL / RESOURCE_TOTAL / GENERATORS /
-  ALL_ROADMAPS / GLOSSARY_TOTAL) with lucide icons; Explore grid = requested
-  8 cards; SlashKits preview section added; Collections orphan "See all tools"
-  link removed; footer rebuilt as 4 verified columns.
-- SlashKits (/tools): catalog moved to src/lib/slashkits.ts (single source of
-  truth). Removed duplicates (regex-tester, diff-viewer, markdown-html2,
-  JSON Formatter dupes), merged Developer Utilities into Developer, moved dev
-  tools out of Screens; filled Health & Body (9), Learning (6), Languages (5 +
-  Urdu/Arabic hub links); renamed sections; 152 tools. Tool of the Day rotates
-  daily (date seed). Search shows "X tools found" + empty state.
-- Settings (/me): no gated themes, clear buttons show counts (searches,
-  recents, saved commands via new clearFavorites, clear everything), removed
-  "Language — planned" placeholder, About shows "Free forever", added
-  Changelog/GitHub/About links + full /keyboard shortcut reference link.
-- Breadcrumbs auto-rendered in AppShell (Home › Section › Page) for /tools/*,
-  /hub/*, /c/*, /r/*, /generators, /roadmaps, /glossary, /quiz, /deals, /live.
-- About page rewritten with real live counts; hub index lists only real hubs
-  with runtime counts (incl. Urdu 8 + Arabic 4 hubs); Discover search shows
-  full-catalogue live matches + count.
-- Honesty: Islamic names desc (50 ✓ kept), temp-email page notes Guerrilla
-  Mail dependency, age-of-things desc reworded, Urdu hub broken URLs fixed.
-- APP_VERSION bumped to 2.18.0; changelog.json + app-meta CHANGELOG updated.
+## Feature Map (v2.28)
 
-## v2.17 (Sep 2026) — AI Tools Directory (100+)
-- /ai-tools rebuilt as a full AI tools directory (src/lib/tools.ts now 107 tools, 16
-  categories: General AI, Writing, Image, Video, Audio, Coding, Learning,
-  Productivity, Research, Design, Voice, Marketing, Data, Automation, 3D, Music).
-  Each tool: pricing (Free/Freemium/Paid/Open Source), freeTier, icon, tags,
-  trending/featured flags, and a `query` linking to matching commands on /search.
-- Page features: hero with live search, Tool of the Day spotlight, Featured +
-  Trending rows, category chips with counts, "Free first" sort, per-tool
-  Visit + Commands buttons.
-- AI Tools added to sidebar nav (DesktopSidebar + AppShell NAV_ITEMS, Cpu icon,
-  "100+" badge) and homepage Explore grid card.
-- APP_VERSION bumped to 2.17.0; changelog.json + app-meta CHANGELOG updated.
+### Commands
+- Difficulty badge on every card and detail page: 🟢 Beginner / 🟡 Intermediate /
+  🔴 Advanced, inferred from `[bracket]` placeholder count (`inferComplexity`)
+- 4-step **"How to use this command"** guide — expands for first-time visitors,
+  collapse state remembered via `slash_first_visit`
+- **Try in ChatGPT / Gemini / Claude** quick-launch buttons (copy + open, with
+  `?q=` prefill where the assistant supports it — see `targetUrl` in ai-targets.ts)
+- Detail page: What it does · How to use · Example · editable template · Run it
+  in · **You might also like** · "Something wrong? Report it" (mailto)
 
-## v2.15 (Sep 2026) — Intelligence, voice, workflows
-- Command Intelligence Engine (src/lib/intelligence.ts, localStorage "slashai-intelligence"):
-  tracks copy/open/save interactions (bounded log), session co-occurrence for related
-  commands, per-command personal scores
-- Search personalisation kicks in after 20 interactions: blended ranking
-  (relevance 0.7 + personal 0.3) + "Based on your usage" strip on /search
-- Homepage "Your most used" section (top 5, shown after 10 interactions; reacts to
-  window "slashai-intelligence-change" events)
-- Voice search (src/components/library/VoiceSearchButton.tsx): mic button on homepage
-  hero + SearchBox (used by /search etc.) — EN-US / hi-IN / ar-SA / ur-PK
-- /workflow — AI Workflows: chain commands into one copy-ready multi-step prompt.
-  Step picker (live search), drag + arrow reorder, per-step "uses output of step N"
-  toggle, saved workflows in localStorage "slashai-workflows", active chain autosaved
-  to sessionStorage, char/token estimate. New "New" badge nav item + homepage card.
+### SlashKits (`/tools`)
+- 16 sections, live search, "Just added" shelf, 🆕 New / 🔥 Popular badges
+- Every card carries "🔒 Runs in your browser · Nothing uploaded"
+- Every tool page gets a shared **How to use (3 steps) + Similar tools** block
+  rendered by `CatalogueExtras` from AppShell — no per-route duplication
+- Tool of the Day rotates on a date seed
 
-## v2.24.1 (Sep 2026) — self-healing updates (fixes "This page didn't load" on phones)
-- Root cause: PWA precache + rapid deploys. Old cached app shell lazy-imports /assets
-  chunks that the new deploy no longer serves (Vercel purges old hashes) → chunk-load
-  error → root ErrorComponent. Storage eviction can corrupt the precache on any device.
-- src/lib/app-update.ts: installChunkErrorRecovery() listens for vite:preloadError /
-  unhandledrejection / capture-phase resource errors; on first chunk failure per session
-  it hardReloadFresh() = delete all caches + unregister SW + location.reload().
-- ErrorComponent: if the error is a chunk-load error, offer "Try again" = hard reload
-  fresh and auto-attempt recovery once.
-- setupServiceWorkerUpdates(): waiting SW is SKIP_WAITING-nudged via postMessage
-  (generateSW injects the message handler), controllerchange with flag in
-  sessionStorage reloads once so users never stay on a superseded asset set.
-- register-sw.ts still refuses SW in previews/dev and unregisters strays.
+### SlashPlay (`/play`)
+- 8 sections, search, ⏱ session length and 🎯 difficulty on every card
+- "🎲 Surprise me" random-game button; New Games row
+- 🏆 personal bests shown on scoring-game cards
+- **Cricket** is the flagship: 4 formats (Blitz 12 balls, Solo 24, Chase AI,
+  2P duel), beat-your-best challenge, share-score button, and delta-time physics
+  so 120Hz and 60Hz screens play identically
 
-## Navigation (v2.24 — sidebar removed, Random-centred dock)
-- NO sidebar / NO drawer anywhere: DesktopSidebar.tsx and nav-groups.ts were deleted in v2.21.
-  The bottom dock is the ONLY navigation on every screen size:
-  Home (/) · Discovery (/discover) · 🎲 Random (elevated shiny centre button, instant roll via
-  src/lib/random-pick.ts) · Hubs (/hub) · ⚡ Slash (side tab, opens the SlashBar overlay).
-- Header (v2.24): ⚡ SlashAI logo · Live Dashboard mini-pill (≥480px) · command search
-  (→ /search, ≥420px) · theme cycle button (Dark → Light → AMOLED, one tap each) ·
-  About (i) · Saved · Settings. Theme/design settings removed from /me (Settings).
-- Desktop uses the space: AppShell default max-w 1500px, `wide` pages 1700px (explore,
-  discover, hubs, collections, favorites, find…). No horizontal scroll (html/body overflow-x hidden).
-- /everything — "Explore Everything" page: all Slash apps, all tools, all games, hubs and
-  more on one page with its own filter + the universal search at top. Linked from homepage
-  pills and footer.
-- UniversalSearch (src/components/library/UniversalSearch.tsx) powers the homepage hero:
-  live results across commands/tools/games/web, recent searches, keyboard nav (/ or ⌘K),
-  and a Search Engine pill linking to /web-search (which now honors ?q= deep links).
-- SlashBar leaves, hub routes and page headers: see v2.20/v2.19 notes below.
-- ResourceCardEnhanced component: favicon + pricing badge + save button, used on Discover, hubs, trending
-- Hub pages: resources grouped into named sections with section headers
-- Keyboard shortcuts: / (search), ? (guide), G+H/D/T/L (go to), Escape (close)
-- Theme toggle: Sun/Moon icon in desktop header only
-- Splash screen: first-visit only via localStorage "slashai-visited"
-- SITE_VERSION: 2.8.0 (used by WhatsNewDialog popup)
-- LiveTicker: src/components/library/LiveTicker.tsx — fetches NIFTY, SENSEX, BTC, ETH, USD/INR, prayer, weather with localStorage caching
-- FOUC prevention: inline script in <head> applies theme before paint
-- Scroll reset: to top on every route change
-- Smooth scroll: scroll-behavior: smooth + 80px scroll-margin-top
-- Global motion: page-enter (200ms fade+slide), shimmer skeleton, card stagger
+### Slash Courses (`/learn`)
+- 4 learning paths (AI Beginner, Developer, Creator, Career Growth) with step
+  lists, hour estimates and per-path completion
+- Topic filters (All / Beginner / Intermediate / Advanced / AI / Web & Dev / Shipping)
+- "My progress: N of M courses started", ✅ Started badges
+- Courses contain real modules → lessons → graded module tests (70% pass)
 
-## Free APIs Integrated (100+)
-Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD (DEMO_KEY),
-TheSportsDB, HackerNews, Yahoo Finance unofficial, USGS Earthquakes,
-OpenAQ, WhereTheISS.at, ExchangeRate-API, AMFI NAV India,
-+ 40 new: data.gov.in, data.gov, data.europa.eu, World Bank, UN Data,
-  IMF Data, WHO GHO, OECD Data, Calendarific, TimeZoneDB, MediaStack,
-  NewsData.io, GDELT, Polygon.io, Alpha Vantage, Art Institute Chicago,
-  Metropolitan Museum, Harvard Art Museums, NASA Images, Smithsonian OA,
-  Library of Congress, Gutendex, Open Trivia DB, The Trivia API, Quotable, Affirmations.dev
+### Discover & Hubs
+- `/discover` opens with **Start Here** (student / professional / developer) which
+  also records the matching persona
+- 12 hubs with grouped resource sections, intro paragraphs and live widgets
+- `/everything` puts every app, tool, game and hub on one page
 
-## Monetisation Strategy
-Currently: 100% free, no account required.
-Planned: Glass tier (premium features, account-based) — waitlist page live.
-Free tier must always remain fully functional.
+### Global chrome
+- Floating **copy-again pill** (re-copies the last command, hides after 30s) and
+  **back-to-top** after 400px of scroll
+- Keyboard shortcuts: `/` search, `?` guide, `G`+H/D/T/L, `Escape`
+- Offline banner, install banner, cookie notice, first-visit welcome tour
+- "You might like" row on the homepage, driven only by local interaction history
 
-## Key Rules for Any Agent
-1. Never break existing features
-2. Inspect codebase before changing anything
-3. No placeholder content — everything must be real
-4. Mobile-first (375px minimum)
-5. All free APIs: no credit card required
-6. localStorage only — no backend auth
-7. Keep the premium, calm, Linear-style aesthetic
-8. Run `git commit` with clear message after every meaningful change
-9. Update /changelog data file with every feature added
-10. Update README.md on GitHub with latest feature list
-11. For Freebuff deploys: build outputs to `dist/`, entry JS must be patched
-    (hydrateRoot→createRoot, server adapter removed) via `scripts/patch-entry.py`
-12. Build command: `sh scripts/build-for-freebuff.sh`
+### HTML Compiler (`/tools/html-compiler`)
+- 14 ready-made starter projects in `src/lib/html-samples.ts`: blank starter,
+  landing page, portfolio, pricing table, contact form, to-do app, gallery,
+  login, dashboard, countdown, quiz, clock & stopwatch, responsive navbar,
+  canvas particles, blog article
+- Sample picker, page-title field, New page, Run, Copy, Export to a single
+  `.html` file, console capture from the sandboxed preview iframe, auto-save
+
+## Content Automation
+GitHub Actions keep the site current:
+- `weekly-refresh-dates.yml` — refreshes every "Last checked" date each Monday
+- trending tools (Mon), daily news (daily), trending prompts (Wed), daily
+  content (quotes + artwork) via `scripts/fetch-*.cjs` and `scripts/refresh-resource-dates.cjs`
+- Output lands in `src/data/*.json`; `/whats-new` computes the live ISO week and
+  today's date at render time, so it never shows a stale week
+
+## Free APIs Used
+Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD, TheSportsDB, HackerNews,
+Yahoo Finance (unofficial), USGS Earthquakes, OpenAQ, WhereTheISS.at,
+ExchangeRate-API, AMFI NAV India, AlQuran.cloud, World Bank, UN Data, IMF, WHO,
+OECD, Calendarific, GDELT, Art Institute Chicago, Metropolitan Museum,
+Smithsonian, Library of Congress, Gutendex, Open Trivia DB, Quotable — 100+ in total.
+
+## Rules For Any Agent
+1. Never break published URLs; every route renders inside `AppShell`.
+2. Keep the bottom-dock-only navigation.
+3. Mobile-first (375px), semantic tokens only.
+4. localStorage only — no backend, no accounts, no tracking.
+5. No placeholder content: counts and claims must match the catalogue.
+6. Keep the catalogues duplicate-free (`slashkits.ts`, `slashplay.ts`, `courses.ts`).
+7. Bump `APP_VERSION` **and** both changelogs (`app-meta.ts` + `src/data/changelog.json`).
+8. Keep `README.md`, `CLAUDE.md` and this file current after shipping.
+9. Run `bun tsc -b --noEmit` before finishing. Freebuff build:
+   `sh scripts/build-for-freebuff.sh`.
 
 ## Owner
-Waseem ( Waseem Ahmed ) — Hyderabad, India
-GitHub: [wahmed178]
+Waseem Ahmed — Hyderabad, India · GitHub: [wahmed178]

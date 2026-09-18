@@ -2,6 +2,7 @@ import { Star, Copy, ArrowUpRight } from "lucide-react";
 import { Highlight } from "./Highlight";
 import { categoryIcon } from "./icons";
 import { CATEGORY_ICONS, type SlashCommand } from "@/lib/commands";
+import { inferComplexity } from "@/lib/ux";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -15,9 +16,10 @@ interface Props {
   onCopy: (cmd: SlashCommand) => void;
 }
 
-const difficultyStyles: Record<string, string> = {
-  easy: "border-chart-2/40 text-chart-2",
-  medium: "border-chart-3/40 text-chart-3",
+/** Complexity is inferred from the command's placeholders, not the stored label. */
+const complexityStyles: Record<string, string> = {
+  beginner: "border-chart-2/40 text-chart-2",
+  intermediate: "border-chart-3/40 text-chart-3",
   advanced: "border-chart-5/40 text-chart-5",
 };
 
@@ -32,6 +34,7 @@ export function CommandCard({
   onCopy,
 }: Props) {
   const Icon = categoryIcon(CATEGORY_ICONS[command.category]);
+  const complexity = inferComplexity(`${command.command}\n${command.example}`);
 
   return (
     <article
@@ -74,12 +77,13 @@ export function CommandCard({
                 {command.category}
               </span>
               <span
+                title={complexity.hint}
                 className={cn(
-                  "rounded-md border px-1.5 py-0.5 text-[11px] capitalize",
-                  difficultyStyles[command.difficulty],
+                  "rounded-md border px-1.5 py-0.5 text-[11px] font-medium",
+                  complexityStyles[complexity.level],
                 )}
               >
-                {command.difficulty}
+                {complexity.emoji} {complexity.label}
               </span>
               {command.tags.slice(0, view === "list" ? 4 : 2).map((tag) => (
                 <span key={tag} className="text-[11px] text-muted-foreground/80">

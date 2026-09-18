@@ -3,6 +3,9 @@ import { Star, Copy, Wand2, Hash, Share2, Shuffle, Check, ExternalLink } from "l
 
 import { Button } from "@/components/ui/button";
 import { categoryIcon } from "./icons";
+import { HowToUse } from "./HowToUse";
+import { TryInRow } from "./TryInRow";
+import { ReportProblem } from "./ReportProblem";
 import { useCommandActions } from "@/hooks/use-command-actions";
 import {
   CATEGORY_ICONS,
@@ -12,6 +15,7 @@ import {
   type SlashCommand,
 } from "@/lib/commands";
 import { AI_TARGETS, defaultAiTarget } from "@/lib/ai-targets";
+import { inferComplexity } from "@/lib/ux";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -29,6 +33,7 @@ export function CommandDetailContent({
 }: Props) {
   const Icon = categoryIcon(CATEGORY_ICONS[command.category]);
   const related = relatedCommands(command);
+  const complexity = inferComplexity(`${command.command}\n${command.example}`);
   const { copyCommand, copyPrompt, runCommand, shareCommand } = useCommandActions();
   const [template, setTemplate] = useState(() => commandTemplate(command));
   const [copied, setCopied] = useState(false);
@@ -73,13 +78,26 @@ export function CommandDetailContent({
         <span>{command.category}</span>
         <span aria-hidden>/</span>
         <span>{command.subcategory}</span>
-        <span className="rounded-md border border-border px-1.5 py-0.5 capitalize">
-          {command.difficulty}
+        <span
+          title={complexity.hint}
+          className="rounded-md border border-primary/30 bg-primary/5 px-1.5 py-0.5 font-medium text-primary"
+        >
+          {complexity.emoji} {complexity.label}
         </span>
         <span className="rounded-md border border-border px-1.5 py-0.5 capitalize">
           {command.type}
         </span>
       </div>
+
+      {/* first-run 4-step guide, then the one-tap assistants */}
+      <HowToUse />
+
+      <section>
+        <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          Try it in
+        </h4>
+        <TryInRow className="mt-2" prompt={template} compact />
+      </section>
 
       <section>
         <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
@@ -178,9 +196,9 @@ export function CommandDetailContent({
       {related.length > 0 && (
         <section>
           <div className="flex items-center justify-between gap-2">
-            <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-              Related commands
-            </h4>
+        <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          You might also like
+        </h4>
             <Button
               variant="ghost"
               size="sm"
@@ -230,6 +248,8 @@ export function CommandDetailContent({
           {favorite ? "Favorited" : "Favorite"}
         </Button>
       </div>
+
+      <ReportProblem subject={command.command} context={`/c/${command.id}`} />
     </div>
   );
 }

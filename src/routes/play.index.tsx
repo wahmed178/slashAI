@@ -5,9 +5,14 @@ import { AppShell } from "@/components/library/AppShell";
 import {
   PLAY_SECTIONS,
   PLAY_GAME_COUNT,
+  NEW_GAME_SLUGS,
+  SCORING_GAMES,
+  gameMeta,
   playModeCounts,
   type PlayGame,
 } from "@/lib/slashplay";
+import { getGameBest, isNewItem } from "@/lib/ux";
+import { useUxTick } from "@/hooks/use-ux";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 import { playSectionColor } from "@/lib/category-colors";
 import { useLibrary } from "@/hooks/use-library";
@@ -28,6 +33,8 @@ export const Route = createFileRoute("/play/")({
 const FILTERS = ["All", ...PLAY_SECTIONS.map((s) => s.title)] as const;
 type FilterType = (typeof FILTERS)[number];
 
+/** Filter tabs stay route-free: filtering is pure client-side state. */
+
 const MODES = playModeCounts();
 
 function matches(game: PlayGame, q: string) {
@@ -36,8 +43,10 @@ function matches(game: PlayGame, q: string) {
 }
 
 function GameCard({ game, color }: { game: PlayGame; color: string }) {
-  const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
+  const { isToolFavorite, toggleToolFavorite } = useLibrary();
   const saved = isToolFavorite(game.slug);
+  const meta = gameMeta(game.slug);
+  const best = SCORING_GAMES.has(game.slug) ? getGameBest(game.slug) : null;
   return (
     <Link
       to={`/play/${game.slug}` as string}
@@ -60,8 +69,20 @@ function GameCard({ game, color }: { game: PlayGame; color: string }) {
           </span>
         </div>
       </div>
-      <span className="mt-2.5 block text-[13px] font-bold text-foreground">{game.name}</span>
+      <span className="mt-2.5 flex flex-wrap items-center gap-1.5">
+        <span className="text-[13px] font-bold text-foreground">{game.name}</span>
+        {isNewItem(game.added) && (
+          <span className="rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[9px] font-bold text-emerald-500">
+            🆕 New
+          </span>
+        )}
+      </span>
       <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{game.desc}</span>
+      <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-muted-foreground/90">
+        <span>⏱ {meta.minutes} min</span>
+        <span>🎯 {meta.level}</span>
+        {best !== null && <span className="font-semibold text-amber-400">🏆 Your best: {best}</span>}
+      </span>
       <span className="cat-text mt-2.5 text-[11px] font-semibold opacity-0 transition-opacity duration-150 group-hover:opacity-100">
         Play now →
       </span>
@@ -69,9 +90,44 @@ function GameCard({ game, color }: { game: PlayGame; color: string }) {
   );
 }
 
+/** One-tap random game — no filters, no thinking. */
+function SurpriseMe() {
+  const roll = () => {
+    const all = PLAY_SECTIONS.flatMap((s) => s.games);
+    const pick = all[Math.floor(Math.random() * all.length)];
+    if (pick) window.location.assign(`/play/${pick.slug}`);
+  };
+  return (
+    <button
+      type="button"
+      onClick={roll}
+      className="group flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-colors"
+      style={{
+        borderColor: "rgba(168,85,247,0.35)",
+        background: "linear-gradient(135deg, rgba(168,85,247,0.10), rgba(251,113,133,0.07))",
+      }}
+    >
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-[16px] transition-transform duration-150 group-hover:rotate-12">
+        🎲
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[13px] font-bold text-foreground">Surprise me</span>
+        <span className="block text-[11px] text-muted-foreground">
+          One tap opens a random game from all {PLAY_GAME_COUNT}
+        </span>
+      </span>
+      <span className="shrink-0 text-[11px] font-semibold" style={{ color: "#c084fc" }}>
+        Roll →
+      </span>
+    </button>
+  );
+}
+
 function PlayIndex() {
   const [filter, setFilter] = useState<FilterType>("All");
   const [search, setSearch] = useState("");
+  // one subscription for the whole grid — cards read bests/clicks on render
+  useUxTick();
   const q = search.trim().toLowerCase();
 
   const visibleSections =
@@ -112,6 +168,33 @@ function PlayIndex() {
         </span>
         <span className="ml-auto shrink-0 text-[11px] font-semibold text-primary">Feeling lucky →</span>
       </Link>
+
+      <div className="mt-3">
+        <SurpriseMe />
+      </div>
+
+      {/* New games - only while something is genuinely fresh */}
+      {filter === "All" && !q && (
+        <section className="mt-5">
+          <h2 className="flex items-center gap-2 text-[15px] font-bold text-emerald-500">
+            <span>🆕</span> New Games
+            <span className="text-[11px] font-medium text-muted-foreground">
+              freshly added to SlashPlay
+            </span>
+          </h2>
+          <div className="cat-rule mt-1.5 mb-2.5 w-24" />
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
+            {PLAY_SECTIONS.flatMap((s) => s.games)
+              .filter(
+                (g) => NEW_GAME_SLUGS.includes(g.slug as (typeof NEW_GAME_SLUGS)[number]) || isNewItem(g.added),
+              )
+              .slice(0, 3)
+              .map((g) => (
+                <GameCard key={`new-${g.slug}`} game={g} color="#34d399" />
+              ))}
+          </div>
+        </section>
+      )}
 
       {/* Multiplayer spotlight - tinted with the Multiplayer colour */}
       <div
@@ -162,7 +245,7 @@ function PlayIndex() {
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search games..."
+          placeholder="Search games…"
           className="w-full rounded-xl border border-border bg-surface py-2.5 pr-10 pl-10 text-[13px] text-foreground placeholder-muted-foreground focus:border-primary/50 focus:outline-none"
         />
         {search && (

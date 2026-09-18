@@ -16,6 +16,7 @@ import { LiveTicker } from "@/components/library/LiveTicker";
 import { UniversalSearch } from "@/components/library/UniversalSearch";
 import { Discover } from "@/components/library/Discover";
 import { ResourceGrid } from "@/components/library/ResourceCard";
+import { YouMightLike } from "@/components/library/YouMightLike";
 import { categoryIcon } from "@/components/library/icons";
 import { useLibrary } from "@/hooks/use-library";
 import {
@@ -511,6 +512,8 @@ function HomePage() {
       </Section>
 
       <MostUsedCommands />
+
+      <YouMightLike />
 
       <Section
         title="This week's free finds"
