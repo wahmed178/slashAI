@@ -48,7 +48,7 @@ A searchable library of copy-ready slash commands for writing, research, coding,
 | **Categories** | 45 categories across 381 subcategories |
 | **SlashKits** | 150+ free browser tools — image, PDF, calculators, timers, screensavers |
 | **SlashPlay** | 57 browser games — solo, vs AI and pass-and-play multiplayer |
-| **Slash Courses** | 3 courses with real lessons and graded module tests, plus 4 learning paths |
+| **Slash Courses** | 5 courses with real lessons and graded module tests, plus 4 learning paths |
 | **Search** | Instant fuzzy search with typo tolerance and highlighted matches |
 | **Offline** | Static catalog + PWA shell designed for offline use |
 | **Android** | Signed APK built with Capacitor and a native WebView |
