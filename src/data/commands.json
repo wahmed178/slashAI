@@ -144647,5 +144647,597 @@
     "aliases": [],
     "popularity": 70,
     "addedAt": "2026-09-12"
+  },
+  {
+    "id": "agentreactloop",
+    "command": "/AgentReactLoop",
+    "title": "Agent ReAct Loop - reason, act, observe engine",
+    "description": "Structures a complete autonomous ReAct agent loop: step-by-step thought generation, precise JSON tool invocation schema, and environment observation handling with cycle prevention.",
+    "howToUse": "Fill in the agent role, available tools, and stopping criteria. Tip: force intermediate reasoning before tool selection to improve argument precision by 30%.",
+    "example": "/AgentReactLoop\nAgent Goal: [Build a competitor pricing monitor]\nTools: [[search_products, fetch_page, extract_prices, save_to_db]]\nMax Iterations: [8]\nLoop Breaker: [Halt if same tool called 3x consecutively]",
+    "category": "AI Agents & Prompting",
+    "subcategory": "Agent Architecture",
+    "tags": [
+      "agent",
+      "react",
+      "loop",
+      "llm",
+      "tools",
+      "autonomy"
+    ],
+    "type": "text",
+    "difficulty": "advanced",
+    "featured": true,
+    "aliases": [
+      "/react-loop",
+      "/agent-cycle"
+    ],
+    "popularity": 94,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "pgexplainanalyze",
+    "command": "/PgExplainAnalyze",
+    "title": "Postgres EXPLAIN ANALYZE - execution plan optimizer",
+    "description": "Breaks down complex PostgreSQL query plans, flags hidden sequential scans, nested loop bottlenecks, buffer cache misses, and generates targeted index recommendations.",
+    "howToUse": "Paste your raw EXPLAIN (ANALYZE, BUFFERS) output. Tip: check if rows filtered by filter clause exceed 20% of table size before adding compound indexes.",
+    "example": "/PgExplainAnalyze\nQuery Plan: [Seq Scan on orders (cost=0.00..4520.00 rows=12000 width=72)]\nTarget Table: [orders]\nExpected QPS: [500 req/sec]\nMemory Limit: [work_mem=64MB]",
+    "category": "Databases & SQL",
+    "subcategory": "Query Authoring",
+    "tags": [
+      "postgres",
+      "explain",
+      "sql",
+      "performance",
+      "indexing",
+      "database"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": true,
+    "aliases": [
+      "/explain-analyze",
+      "/pg-plan"
+    ],
+    "popularity": 91,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "tailwindv4audit",
+    "command": "/TailwindV4Audit",
+    "title": "Tailwind CSS v4 Audit - clean up legacy syntax",
+    "description": "Audits Tailwind markup to migrate deprecated v3 patterns to Tailwind v4 CSS-first theme variables, modern grid directives, and clean container queries.",
+    "howToUse": "Provide component template or CSS file. Tip: replace custom config colors with CSS variables defined in @theme for instantaneous build times.",
+    "example": "/TailwindV4Audit\nFramework: [React / Vite]\nComponent: [<div className=\"bg-gray-900/80 backdrop-blur text-white px-4 py-2 ring-1 ring-white/10\">[Button Content]</div>]\nTheme Tokens: [--color-primary, --color-surface]",
+    "category": "Web & Frontend",
+    "subcategory": "Styling",
+    "tags": [
+      "tailwind",
+      "css",
+      "styling",
+      "frontend",
+      "modernization",
+      "v4"
+    ],
+    "type": "text",
+    "difficulty": "easy",
+    "featured": false,
+    "aliases": [
+      "/tailwind-v4",
+      "/tw-audit"
+    ],
+    "popularity": 88,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "zodschemagenerator",
+    "command": "/ZodSchemaGenerator",
+    "title": "Zod Schema Generator - strict runtime validator",
+    "description": "Transforms TypeScript interfaces or raw API payloads into airtight Zod validation schemas with custom error messages, transformations, and coerced primitives.",
+    "howToUse": "Paste sample JSON payload or TypeScript interface. Tip: use .safeParse() in handlers and return issue paths directly in 422 Unprocessable Entity responses.",
+    "example": "/ZodSchemaGenerator\nSource Type: [UserSignupPayload]\nFields: [name: string (min 2, max 50), email: email string, age: integer >= 18, acceptsTerms: boolean]\nCoercion: [Coerce numeric query params]",
+    "category": "Backend & APIs",
+    "subcategory": "DataLayer",
+    "tags": [
+      "zod",
+      "typescript",
+      "validation",
+      "schema",
+      "api",
+      "runtime"
+    ],
+    "type": "text",
+    "difficulty": "easy",
+    "featured": true,
+    "aliases": [
+      "/zod-schema",
+      "/infer-zod"
+    ],
+    "popularity": 92,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "gitbisectassistant",
+    "command": "/GitBisectAssistant",
+    "title": "Git Bisect Assistant - binary search regression hunt",
+    "description": "Generates an automated Git bisect script with automated test runner command to locate the exact commit that introduced a production regression.",
+    "howToUse": "Specify the known bad commit, last known good commit, and test command. Tip: use 'git bisect run ./test.sh' for zero-human-intervention regression hunting.",
+    "example": "/GitBisectAssistant\nKnown Good Commit: [v2.4.0]\nKnown Bad Commit: [main (HEAD)]\nVerification Script: [npm run test:e2e -- --grep=\"checkout-cart\"]",
+    "category": "DevOps & Cloud",
+    "subcategory": "CICD",
+    "tags": [
+      "git",
+      "bisect",
+      "debugging",
+      "regression",
+      "automation",
+      "devops"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": false,
+    "aliases": [
+      "/git-bisect",
+      "/bisect-runner"
+    ],
+    "popularity": 86,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "openapi3specbuilder",
+    "command": "/OpenApi3SpecBuilder",
+    "title": "OpenAPI 3.1 Spec Builder - contract-first endpoint generator",
+    "description": "Creates clean, production-ready OpenAPI 3.1 / Swagger YAML specifications with request body schemas, response statuses, query parameters, and JWT security schemes.",
+    "howToUse": "List route path, HTTP method, request payload, and status codes. Tip: define 400 and 500 error envelopes under components/schemas to keep contracts DRY.",
+    "example": "/OpenApi3SpecBuilder\nEndpoint: [POST /api/v1/workspaces/{workspaceId}/invitations]\nAuth Scheme: [Bearer JWT]\nRequest Body: [{ email: string, role: 'admin' | 'member' }]\nExpected Responses: [201 Created, 400 Bad Request, 403 Forbidden]",
+    "category": "Backend & APIs",
+    "subcategory": "ApiDesign",
+    "tags": [
+      "openapi",
+      "swagger",
+      "api",
+      "rest",
+      "schema",
+      "contract"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": false,
+    "aliases": [
+      "/openapi-builder",
+      "/swagger-spec"
+    ],
+    "popularity": 87,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "dockerhardeningaudit",
+    "command": "/DockerHardeningAudit",
+    "title": "Docker Hardening Audit - container security checklist",
+    "description": "Inspects Dockerfiles and Compose configurations to strip root privileges, minimize multi-stage layer sizes, pin SHA256 digests, and eliminate secret leakage.",
+    "howToUse": "Paste your current Dockerfile. Tip: always set USER node or USER nonroot before the final ENTRYPOINT to prevent privilege escalation.",
+    "example": "/DockerHardeningAudit\nBase Image: [node:22-alpine]\nWorkdir: [/app]\nPort: [3000]\nBuild Tool: [pnpm build]\nNon-Root User: [appuser:10001]",
+    "category": "DevOps & Cloud",
+    "subcategory": "Infra",
+    "tags": [
+      "docker",
+      "container",
+      "security",
+      "hardening",
+      "devops",
+      "cloud"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": false,
+    "aliases": [
+      "/docker-hardening",
+      "/dockerfile-audit"
+    ],
+    "popularity": 85,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "jwtsecurityaudit",
+    "command": "/JwtSecurityAudit",
+    "title": "JWT Security Audit - token vulnerability scanner",
+    "description": "Evaluates JSON Web Token implementation against signature bypass, 'none' algorithm exploitation, weak symmetric secrets, missing expiration, and storage risks.",
+    "howToUse": "Specify token algorithm, issuer, expiration, and where the token is stored. Tip: store refresh tokens in HttpOnly, SameSite=Strict cookies to block XSS extraction.",
+    "example": "/JwtSecurityAudit\nAlgorithm: [RS256 or HS256]\nExpiry Duration: [15 minutes access, 7 days refresh]\nStorage Location: [HttpOnly Cookie vs localStorage]\nAudience Validation: [api.slashai.in]",
+    "category": "Backend & APIs",
+    "subcategory": "Auth",
+    "tags": [
+      "jwt",
+      "auth",
+      "security",
+      "tokens",
+      "session",
+      "oauth"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": true,
+    "aliases": [
+      "/jwt-audit",
+      "/jwt-security"
+    ],
+    "popularity": 90,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "promptdriftbenchmark",
+    "command": "/PromptDriftBenchmark",
+    "title": "Prompt Drift Benchmark - model migration evaluation",
+    "description": "Compares prompt outputs between two model generations (e.g. GPT-4o vs Claude 3.5 Sonnet or Gemini 2.0) across format adherence, tone consistency, and latency.",
+    "howToUse": "Provide original system prompt and 3 evaluation test cases. Tip: define strict assertions (must contain key X, cannot exceed Y words) for programmatic pass/fail.",
+    "example": "/PromptDriftBenchmark\nBaseline Model: [Claude 3.5 Sonnet]\nCandidate Model: [Gemini 1.5 Pro]\nEvaluation Metric: [JSON schema validity, reasoning brevity, token cost]\nTest Cases: [3 complex user edge cases]",
+    "category": "AI Agents & Prompting",
+    "subcategory": "Model Ops",
+    "tags": [
+      "prompt",
+      "eval",
+      "benchmark",
+      "llm",
+      "drift",
+      "testing"
+    ],
+    "type": "text",
+    "difficulty": "advanced",
+    "featured": false,
+    "aliases": [
+      "/prompt-drift",
+      "/eval-models"
+    ],
+    "popularity": 89,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "sqldatabasemigration",
+    "command": "/SqlDatabaseMigration",
+    "title": "SQL Database Migration - zero-downtime schema evolution",
+    "description": "Generates expand-and-contract migration scripts (PostgreSQL/MySQL) for renaming columns, adding non-null columns, and splitting tables without table locks.",
+    "howToUse": "Define table name, existing schema, and proposed change. Tip: never add NOT NULL without a DEFAULT on large tables in Postgres to avoid blocking writes.",
+    "example": "/SqlDatabaseMigration\nEngine: [PostgreSQL 16]\nTable: [users]\nChange: [Rename username to display_name without downtime]\nTable Size: [5,000,000 rows]",
+    "category": "Databases & SQL",
+    "subcategory": "Schema Design",
+    "tags": [
+      "sql",
+      "migration",
+      "database",
+      "postgres",
+      "zero-downtime",
+      "schema"
+    ],
+    "type": "text",
+    "difficulty": "advanced",
+    "featured": false,
+    "aliases": [
+      "/db-migration",
+      "/zero-downtime-migration"
+    ],
+    "popularity": 88,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "typescriptstrictmigration",
+    "command": "/TypeScriptStrictMigration",
+    "title": "TypeScript Strict Migration - eradicate 'any' safely",
+    "description": "Step-by-step refactoring strategy to resolve 'noImplicitAny', 'strictNullChecks', and eliminate untyped third-party library boundaries with generics and unknown.",
+    "howToUse": "Paste untyped function or module. Tip: use unknown with type guards (typeof x === 'string') instead of casting with as any.",
+    "example": "/TypeScriptStrictMigration\nLegacy Code: [function handleEvent(e: any) { return e.target.value.trim(); }]\nTarget Strictness: [strictNullChecks: true, noImplicitAny: true]",
+    "category": "Coding & Development",
+    "subcategory": "Typing",
+    "tags": [
+      "typescript",
+      "typing",
+      "refactoring",
+      "strict",
+      "migration"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": false,
+    "aliases": [
+      "/ts-strict",
+      "/kill-any"
+    ],
+    "popularity": 89,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "vitebundleoptimization",
+    "command": "/ViteBundleOptimization",
+    "title": "Vite Bundle Optimization - chunk splitting & tree shaking",
+    "description": "Analyzes rollup / Vite build outputs to eliminate bloated vendor chunks, configure dynamic imports, configure manualChunks, and trim unused iconography.",
+    "howToUse": "Paste bundle analyzer report or large dependencies. Tip: split heavy chart or syntax highlighter libraries into separate lazy-loaded route chunks.",
+    "example": "/ViteBundleOptimization\nLargest Chunks: [vendor.js (850KB), index.js (420KB)]\nHeavy Packages: [lucide-react, echarts, highlight.js]\nTarget Chunk Size: [< 150KB gzip]",
+    "category": "Web & Frontend",
+    "subcategory": "Performance",
+    "tags": [
+      "vite",
+      "bundle",
+      "performance",
+      "rollup",
+      "frontend",
+      "optimization"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": true,
+    "aliases": [
+      "/vite-bundle",
+      "/chunk-split"
+    ],
+    "popularity": 91,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "promptinjectiondefense",
+    "command": "/PromptInjectionDefense",
+    "title": "Prompt Injection Defense - untrusted input sanitization",
+    "description": "Hardens AI system prompts against direct and indirect prompt injection attacks, delimiter escapes, instruction overrides, and data exfiltration vectors.",
+    "howToUse": "Share your system prompt and user input channel. Tip: wrap user inputs in XML tags (<user_content>...</user_content>) and explicitly forbid the model from obeying instructions inside those tags.",
+    "example": "/PromptInjectionDefense\nSystem Prompt: [You are a customer support agent that queries order status...]\nInput Channel: [User chat message with arbitrary text]\nDelimiters: [XML tags <untrusted_input>]</untrusted_input>]",
+    "category": "Security & Privacy",
+    "subcategory": "Hardening",
+    "tags": [
+      "security",
+      "prompt-injection",
+      "jailbreak",
+      "llm",
+      "defense",
+      "hardening"
+    ],
+    "type": "text",
+    "difficulty": "advanced",
+    "featured": true,
+    "aliases": [
+      "/prompt-security",
+      "/anti-injection"
+    ],
+    "popularity": 95,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "apiratelimitdesigner",
+    "command": "/ApiRateLimitDesigner",
+    "title": "API Rate Limit Designer - token bucket & sliding window",
+    "description": "Architects distributed rate-limiting strategies using Redis sliding-window logs or token buckets with standard 429 Retry-After headers.",
+    "howToUse": "Specify endpoint tier, target limit per window, and storage engine. Tip: use sliding-window counters in Redis using sorted sets (ZADD/ZREMRANGEBYSCORE).",
+    "example": "/ApiRateLimitDesigner\nEndpoint Tier: [Free: 60 req/min, Pro: 600 req/min]\nAlgorithm: [Sliding Window Counter]\nStorage: [Redis / Upstash]\nHeaders: [X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After]",
+    "category": "Backend & APIs",
+    "subcategory": "Reliability",
+    "tags": [
+      "rate-limiting",
+      "redis",
+      "api",
+      "reliability",
+      "backend",
+      "scalability"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": false,
+    "aliases": [
+      "/rate-limit",
+      "/api-throttling"
+    ],
+    "popularity": 87,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "offlinefirstdatasync",
+    "command": "/OfflineFirstDataSync",
+    "title": "Offline-First Data Sync - IndexedDB & conflict resolution",
+    "description": "Designs client-side local storage and IndexedDB sync architectures with Last-Write-Wins or vector clock conflict resolution and online event listeners.",
+    "howToUse": "Define data entities, local cache layer, and sync trigger. Tip: store dirty mutation records in an outbox queue and flush when navigator.onLine is true.",
+    "example": "/OfflineFirstDataSync\nLocal Engine: [IndexedDB (via idb) / localStorage]\nEntity: [User Notes & Commands]\nSync Strategy: [Optimistic UI with Background Outbox Queue]",
+    "category": "Web & Frontend",
+    "subcategory": "Tooling",
+    "tags": [
+      "offline",
+      "indexeddb",
+      "pwa",
+      "sync",
+      "storage",
+      "frontend"
+    ],
+    "type": "text",
+    "difficulty": "advanced",
+    "featured": false,
+    "aliases": [
+      "/offline-sync",
+      "/pwa-sync"
+    ],
+    "popularity": 88,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "systemdesigndocbuilder",
+    "command": "/SystemDesignDocBuilder",
+    "title": "System Design Doc Builder - RFC architecture blueprint",
+    "description": "Generates an exhaustive RFC-style technical specification covering service architecture, data models, SLAs, latency targets, and failure mode mitigations.",
+    "howToUse": "Input feature name, business goals, and scale targets. Tip: include non-functional requirements (p99 latency < 150ms, 99.99% availability) upfront.",
+    "example": "/SystemDesignDocBuilder\nSystem Name: [Realtime Collaborative Document Vault]\nTarget Scale: [100,000 DAU, 2,000 concurrent socket connections]\nKey Constraints: [End-to-end encrypted, zero central plaintext storage]",
+    "category": "AI Agents & Prompting",
+    "subcategory": "Agent Architecture",
+    "tags": [
+      "architecture",
+      "system-design",
+      "rfc",
+      "spec",
+      "engineering"
+    ],
+    "type": "text",
+    "difficulty": "advanced",
+    "featured": true,
+    "aliases": [
+      "/system-design",
+      "/tech-spec"
+    ],
+    "popularity": 93,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "graphqlschemaaudit",
+    "command": "/GraphqlSchemaAudit",
+    "title": "GraphQL Schema Audit - N+1 query & depth prevention",
+    "description": "Reviews GraphQL type definitions and resolvers to detect recursive depth DOS attacks, circular references, and missing DataLoader batching.",
+    "howToUse": "Paste schema SDL or query tree. Tip: enforce query depth limiting (max depth 6) and query complexity analysis to protect database CPU.",
+    "example": "/GraphqlSchemaAudit\nSchema Snippet: [type User { id: ID!, posts: [Post!]! } type Post { author: User! }]\nDataLoader: [Missing for author field on Post]\nMax Depth Allowed: [5 levels]",
+    "category": "Backend & APIs",
+    "subcategory": "ApiDesign",
+    "tags": [
+      "graphql",
+      "schema",
+      "dataloader",
+      "api",
+      "backend",
+      "performance"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": false,
+    "aliases": [
+      "/graphql-audit",
+      "/graphql-n-plus-1"
+    ],
+    "popularity": 84,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "cronexpressionadvisor",
+    "command": "/CronExpressionAdvisor",
+    "title": "Cron Expression Advisor - schedule architect & timezone validator",
+    "description": "Generates, explains, and verifies standard 5-part and 6-part cron expressions with human-readable schedules, daylight savings warnings, and next 5 run times.",
+    "howToUse": "Provide plain English cadence (e.g. 'Every weekday at 6:30 AM IST'). Tip: always use UTC in cron configurations to avoid daylight savings jumps.",
+    "example": "/CronExpressionAdvisor\nDesired Schedule: [Every Monday, Wednesday, and Friday at 9:15 AM]\nTimezone: [Asia/Kolkata (IST) -> UTC conversion]\nEngine: [Unix crontab / GitHub Actions / AWS EventBridge]",
+    "category": "DevOps & Cloud",
+    "subcategory": "Observability",
+    "tags": [
+      "cron",
+      "schedule",
+      "devops",
+      "automation",
+      "time",
+      "backend"
+    ],
+    "type": "text",
+    "difficulty": "easy",
+    "featured": false,
+    "aliases": [
+      "/cron-advisor",
+      "/cron-schedule"
+    ],
+    "popularity": 86,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "browsermemoryleakhunt",
+    "command": "/BrowserMemoryLeakHunt",
+    "title": "Browser Memory Leak Hunt - heap snapshot diagnostics",
+    "description": "Identifies recurring single-page app memory leaks: detached DOM trees, lingering event listeners, unclosed WebSocket connections, and React useEffect cleanups.",
+    "howToUse": "Describe component lifecycle or share suspected hook. Tip: check Chrome DevTools Memory tab for (detached) HTML elements retaining MBs of memory.",
+    "example": "/BrowserMemoryLeakHunt\nComponent Type: [Realtime dashboard with chart canvas]\nSymptoms: [Browser tab memory climbs from 80MB to 750MB after 1 hour]\nSuspected Hook: [useEffect with window.addEventListener('resize') without cleanup return]",
+    "category": "Web & Frontend",
+    "subcategory": "Performance",
+    "tags": [
+      "memory-leak",
+      "performance",
+      "browser",
+      "react",
+      "devtools",
+      "heap"
+    ],
+    "type": "text",
+    "difficulty": "advanced",
+    "featured": false,
+    "aliases": [
+      "/memory-leak",
+      "/heap-audit"
+    ],
+    "popularity": 87,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "accessibleformaudit",
+    "command": "/AccessibleFormAudit",
+    "title": "Accessible Form Audit - WCAG 2.2 AA validation",
+    "description": "Audits form controls against WCAG 2.2 accessibility standards: aria-describedby error associations, visible focus rings, screen-reader labels, and keyboard tabs.",
+    "howToUse": "Paste HTML form markup or component code. Tip: always associate error messages with input fields using aria-invalid='true' and aria-describedby='error-id'.",
+    "example": "/AccessibleFormAudit\nForm Purpose: [Multi-step checkout payment form]\nComponents: [Custom select dropdown, credit card input, promo code accordion]\nStandard: [WCAG 2.2 Level AA]",
+    "category": "Web & Frontend",
+    "subcategory": "Accessibility",
+    "tags": [
+      "accessibility",
+      "a11y",
+      "wcag",
+      "forms",
+      "frontend",
+      "html"
+    ],
+    "type": "text",
+    "difficulty": "easy",
+    "featured": false,
+    "aliases": [
+      "/a11y-form",
+      "/wcag-audit"
+    ],
+    "popularity": 86,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "reactcustomhookbuilder",
+    "command": "/ReactCustomHookBuilder",
+    "title": "React Custom Hook Builder - reusable state encapsulation",
+    "description": "Generates clean, idiomatic TypeScript React custom hooks with stable callback references, abort controller cancellation, and local storage synchronization.",
+    "howToUse": "Define hook name, input parameters, and return shape. Tip: use useCallback and useRef to avoid triggering unnecessary re-renders in consuming components.",
+    "example": "/ReactCustomHookBuilder\nHook Name: [useLocalStorageState]\nParameters: [key: string, initialValue: T, options?: { serialize, deserialize }]\nFeatures: [Multi-tab window storage event sync, type-safe setter]",
+    "category": "Web & Frontend",
+    "subcategory": "Components",
+    "tags": [
+      "react",
+      "hooks",
+      "typescript",
+      "frontend",
+      "state",
+      "custom-hooks"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": false,
+    "aliases": [
+      "/custom-hook",
+      "/react-hook"
+    ],
+    "popularity": 90,
+    "addedAt": "2026-09-18"
+  },
+  {
+    "id": "sqlindexadvisor",
+    "command": "/SqlIndexAdvisor",
+    "title": "SQL Index Advisor - composite index & write-load balancer",
+    "description": "Designs optimal B-tree, GiST, or GIN composite indexes for heavy filter and sort queries while measuring write overhead and disk bloat.",
+    "howToUse": "Provide the slow query WHERE and ORDER BY clauses. Tip: order composite index columns: equality filters first, then range filters, then sorting columns.",
+    "example": "/SqlIndexAdvisor\nQuery: [SELECT * FROM transactions WHERE tenant_id = [tenant_123] AND status = 'COMPLETED' AND created_at >= [2026-01-01] ORDER BY created_at DESC LIMIT 50]\nTable Name: [transactions (20M rows)]\nEngine: [PostgreSQL 16]",
+    "category": "Databases & SQL",
+    "subcategory": "Operations",
+    "tags": [
+      "sql",
+      "index",
+      "database",
+      "postgres",
+      "query-optimization",
+      "btree"
+    ],
+    "type": "text",
+    "difficulty": "medium",
+    "featured": true,
+    "aliases": [
+      "/sql-index",
+      "/index-advisor"
+    ],
+    "popularity": 92,
+    "addedAt": "2026-09-18"
   }
 ]

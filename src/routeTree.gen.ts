@@ -99,8 +99,10 @@ import { Route as PlayHigherLowerRouteImport } from './routes/play.higher-lower'
 import { Route as PlayKindleRouteImport } from './routes/play.kindle'
 import { Route as PlayLightsOutRouteImport } from './routes/play.lights-out'
 import { Route as PlayMathDuelRouteImport } from './routes/play.math-duel'
+import { Route as PlayMathSprintRouteImport } from './routes/play.math-sprint'
 import { Route as PlayMazeRunnerRouteImport } from './routes/play.maze-runner'
 import { Route as PlayMemoryMatchRouteImport } from './routes/play.memory-match'
+import { Route as PlayMemoryMatrixRouteImport } from './routes/play.memory-matrix'
 import { Route as PlayMemoryPalaceRouteImport } from './routes/play.memory-palace'
 import { Route as PlayMinesweeperRouteImport } from './routes/play.minesweeper'
 import { Route as PlayOddOneOutRouteImport } from './routes/play.odd-one-out'
@@ -200,6 +202,7 @@ import { Route as ToolsIpRouteImport } from './routes/tools.ip'
 import { Route as ToolsIsItRouteImport } from './routes/tools.is-it'
 import { Route as ToolsJsonDiffRouteImport } from './routes/tools.json-diff'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
+import { Route as ToolsJsonToTsRouteImport } from './routes/tools.json-to-ts'
 import { Route as ToolsJsonYamlRouteImport } from './routes/tools.json-yaml'
 import { Route as ToolsJwtDecoderRouteImport } from './routes/tools.jwt-decoder'
 import { Route as ToolsKharchRouteImport } from './routes/tools.kharch'
@@ -258,6 +261,7 @@ import { Route as ToolsSignatureMakerRouteImport } from './routes/tools.signatur
 import { Route as ToolsSilkRouteImport } from './routes/tools.silk'
 import { Route as ToolsSipCalculatorRouteImport } from './routes/tools.sip-calculator'
 import { Route as ToolsSizeRouteImport } from './routes/tools.size'
+import { Route as ToolsSlugCleanerRouteImport } from './routes/tools.slug-cleaner'
 import { Route as ToolsSmartPasteRouteImport } from './routes/tools.smart-paste'
 import { Route as ToolsSpeechToTextRouteImport } from './routes/tools.speech-to-text'
 import { Route as ToolsSpellingRouteImport } from './routes/tools.spelling'
@@ -268,6 +272,7 @@ import { Route as ToolsStickerRouteImport } from './routes/tools.sticker'
 import { Route as ToolsStopwatchRouteImport } from './routes/tools.stopwatch'
 import { Route as ToolsStoryRouteImport } from './routes/tools.story'
 import { Route as ToolsTableRouteImport } from './routes/tools.table'
+import { Route as ToolsTableGeneratorRouteImport } from './routes/tools.table-generator'
 import { Route as ToolsTasbeehRouteImport } from './routes/tools.tasbeeh'
 import { Route as ToolsTextCaseRouteImport } from './routes/tools.text-case'
 import { Route as ToolsTextStatsRouteImport } from './routes/tools.text-stats'
@@ -746,6 +751,11 @@ const PlayMathDuelRoute = PlayMathDuelRouteImport.update({
   path: '/math-duel',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayMathSprintRoute = PlayMathSprintRouteImport.update({
+  id: '/math-sprint',
+  path: '/math-sprint',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayMazeRunnerRoute = PlayMazeRunnerRouteImport.update({
   id: '/maze-runner',
   path: '/maze-runner',
@@ -754,6 +764,11 @@ const PlayMazeRunnerRoute = PlayMazeRunnerRouteImport.update({
 const PlayMemoryMatchRoute = PlayMemoryMatchRouteImport.update({
   id: '/memory-match',
   path: '/memory-match',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayMemoryMatrixRoute = PlayMemoryMatrixRouteImport.update({
+  id: '/memory-matrix',
+  path: '/memory-matrix',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayMemoryPalaceRoute = PlayMemoryPalaceRouteImport.update({
@@ -1252,6 +1267,11 @@ const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
   path: '/json-formatter',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsJsonToTsRoute = ToolsJsonToTsRouteImport.update({
+  id: '/json-to-ts',
+  path: '/json-to-ts',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsJsonYamlRoute = ToolsJsonYamlRouteImport.update({
   id: '/json-yaml',
   path: '/json-yaml',
@@ -1542,6 +1562,11 @@ const ToolsSizeRoute = ToolsSizeRouteImport.update({
   path: '/size',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsSlugCleanerRoute = ToolsSlugCleanerRouteImport.update({
+  id: '/slug-cleaner',
+  path: '/slug-cleaner',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsSmartPasteRoute = ToolsSmartPasteRouteImport.update({
   id: '/smart-paste',
   path: '/smart-paste',
@@ -1590,6 +1615,11 @@ const ToolsStoryRoute = ToolsStoryRouteImport.update({
 const ToolsTableRoute = ToolsTableRouteImport.update({
   id: '/table',
   path: '/table',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsTableGeneratorRoute = ToolsTableGeneratorRouteImport.update({
+  id: '/table-generator',
+  path: '/table-generator',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsTasbeehRoute = ToolsTasbeehRouteImport.update({
@@ -1812,8 +1842,10 @@ export interface FileRoutesByFullPath {
   '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
+  '/play/math-sprint': typeof PlayMathSprintRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
+  '/play/memory-matrix': typeof PlayMemoryMatrixRoute
   '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/odd-one-out': typeof PlayOddOneOutRoute
@@ -1911,6 +1943,7 @@ export interface FileRoutesByFullPath {
   '/tools/is-it': typeof ToolsIsItRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/json-to-ts': typeof ToolsJsonToTsRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/kharch': typeof ToolsKharchRoute
@@ -1969,6 +2002,7 @@ export interface FileRoutesByFullPath {
   '/tools/silk': typeof ToolsSilkRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
+  '/tools/slug-cleaner': typeof ToolsSlugCleanerRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
   '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
@@ -1979,6 +2013,7 @@ export interface FileRoutesByFullPath {
   '/tools/stopwatch': typeof ToolsStopwatchRoute
   '/tools/story': typeof ToolsStoryRoute
   '/tools/table': typeof ToolsTableRoute
+  '/tools/table-generator': typeof ToolsTableGeneratorRoute
   '/tools/tasbeeh': typeof ToolsTasbeehRoute
   '/tools/text-case': typeof ToolsTextCaseRoute
   '/tools/text-stats': typeof ToolsTextStatsRoute
@@ -2098,8 +2133,10 @@ export interface FileRoutesByTo {
   '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
+  '/play/math-sprint': typeof PlayMathSprintRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
+  '/play/memory-matrix': typeof PlayMemoryMatrixRoute
   '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/odd-one-out': typeof PlayOddOneOutRoute
@@ -2197,6 +2234,7 @@ export interface FileRoutesByTo {
   '/tools/is-it': typeof ToolsIsItRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/json-to-ts': typeof ToolsJsonToTsRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/kharch': typeof ToolsKharchRoute
@@ -2255,6 +2293,7 @@ export interface FileRoutesByTo {
   '/tools/silk': typeof ToolsSilkRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
+  '/tools/slug-cleaner': typeof ToolsSlugCleanerRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
   '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
@@ -2265,6 +2304,7 @@ export interface FileRoutesByTo {
   '/tools/stopwatch': typeof ToolsStopwatchRoute
   '/tools/story': typeof ToolsStoryRoute
   '/tools/table': typeof ToolsTableRoute
+  '/tools/table-generator': typeof ToolsTableGeneratorRoute
   '/tools/tasbeeh': typeof ToolsTasbeehRoute
   '/tools/text-case': typeof ToolsTextCaseRoute
   '/tools/text-stats': typeof ToolsTextStatsRoute
@@ -2387,8 +2427,10 @@ export interface FileRoutesById {
   '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
   '/play/math-duel': typeof PlayMathDuelRoute
+  '/play/math-sprint': typeof PlayMathSprintRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
   '/play/memory-match': typeof PlayMemoryMatchRoute
+  '/play/memory-matrix': typeof PlayMemoryMatrixRoute
   '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
   '/play/odd-one-out': typeof PlayOddOneOutRoute
@@ -2486,6 +2528,7 @@ export interface FileRoutesById {
   '/tools/is-it': typeof ToolsIsItRoute
   '/tools/json-diff': typeof ToolsJsonDiffRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/json-to-ts': typeof ToolsJsonToTsRoute
   '/tools/json-yaml': typeof ToolsJsonYamlRoute
   '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/kharch': typeof ToolsKharchRoute
@@ -2544,6 +2587,7 @@ export interface FileRoutesById {
   '/tools/silk': typeof ToolsSilkRoute
   '/tools/sip-calculator': typeof ToolsSipCalculatorRoute
   '/tools/size': typeof ToolsSizeRoute
+  '/tools/slug-cleaner': typeof ToolsSlugCleanerRoute
   '/tools/smart-paste': typeof ToolsSmartPasteRoute
   '/tools/speech-to-text': typeof ToolsSpeechToTextRoute
   '/tools/spelling': typeof ToolsSpellingRoute
@@ -2554,6 +2598,7 @@ export interface FileRoutesById {
   '/tools/stopwatch': typeof ToolsStopwatchRoute
   '/tools/story': typeof ToolsStoryRoute
   '/tools/table': typeof ToolsTableRoute
+  '/tools/table-generator': typeof ToolsTableGeneratorRoute
   '/tools/tasbeeh': typeof ToolsTasbeehRoute
   '/tools/text-case': typeof ToolsTextCaseRoute
   '/tools/text-stats': typeof ToolsTextStatsRoute
@@ -2677,8 +2722,10 @@ export interface FileRouteTypes {
     | '/play/kindle'
     | '/play/lights-out'
     | '/play/math-duel'
+    | '/play/math-sprint'
     | '/play/maze-runner'
     | '/play/memory-match'
+    | '/play/memory-matrix'
     | '/play/memory-palace'
     | '/play/minesweeper'
     | '/play/odd-one-out'
@@ -2776,6 +2823,7 @@ export interface FileRouteTypes {
     | '/tools/is-it'
     | '/tools/json-diff'
     | '/tools/json-formatter'
+    | '/tools/json-to-ts'
     | '/tools/json-yaml'
     | '/tools/jwt-decoder'
     | '/tools/kharch'
@@ -2834,6 +2882,7 @@ export interface FileRouteTypes {
     | '/tools/silk'
     | '/tools/sip-calculator'
     | '/tools/size'
+    | '/tools/slug-cleaner'
     | '/tools/smart-paste'
     | '/tools/speech-to-text'
     | '/tools/spelling'
@@ -2844,6 +2893,7 @@ export interface FileRouteTypes {
     | '/tools/stopwatch'
     | '/tools/story'
     | '/tools/table'
+    | '/tools/table-generator'
     | '/tools/tasbeeh'
     | '/tools/text-case'
     | '/tools/text-stats'
@@ -2963,8 +3013,10 @@ export interface FileRouteTypes {
     | '/play/kindle'
     | '/play/lights-out'
     | '/play/math-duel'
+    | '/play/math-sprint'
     | '/play/maze-runner'
     | '/play/memory-match'
+    | '/play/memory-matrix'
     | '/play/memory-palace'
     | '/play/minesweeper'
     | '/play/odd-one-out'
@@ -3062,6 +3114,7 @@ export interface FileRouteTypes {
     | '/tools/is-it'
     | '/tools/json-diff'
     | '/tools/json-formatter'
+    | '/tools/json-to-ts'
     | '/tools/json-yaml'
     | '/tools/jwt-decoder'
     | '/tools/kharch'
@@ -3120,6 +3173,7 @@ export interface FileRouteTypes {
     | '/tools/silk'
     | '/tools/sip-calculator'
     | '/tools/size'
+    | '/tools/slug-cleaner'
     | '/tools/smart-paste'
     | '/tools/speech-to-text'
     | '/tools/spelling'
@@ -3130,6 +3184,7 @@ export interface FileRouteTypes {
     | '/tools/stopwatch'
     | '/tools/story'
     | '/tools/table'
+    | '/tools/table-generator'
     | '/tools/tasbeeh'
     | '/tools/text-case'
     | '/tools/text-stats'
@@ -3251,8 +3306,10 @@ export interface FileRouteTypes {
     | '/play/kindle'
     | '/play/lights-out'
     | '/play/math-duel'
+    | '/play/math-sprint'
     | '/play/maze-runner'
     | '/play/memory-match'
+    | '/play/memory-matrix'
     | '/play/memory-palace'
     | '/play/minesweeper'
     | '/play/odd-one-out'
@@ -3350,6 +3407,7 @@ export interface FileRouteTypes {
     | '/tools/is-it'
     | '/tools/json-diff'
     | '/tools/json-formatter'
+    | '/tools/json-to-ts'
     | '/tools/json-yaml'
     | '/tools/jwt-decoder'
     | '/tools/kharch'
@@ -3408,6 +3466,7 @@ export interface FileRouteTypes {
     | '/tools/silk'
     | '/tools/sip-calculator'
     | '/tools/size'
+    | '/tools/slug-cleaner'
     | '/tools/smart-paste'
     | '/tools/speech-to-text'
     | '/tools/spelling'
@@ -3418,6 +3477,7 @@ export interface FileRouteTypes {
     | '/tools/stopwatch'
     | '/tools/story'
     | '/tools/table'
+    | '/tools/table-generator'
     | '/tools/tasbeeh'
     | '/tools/text-case'
     | '/tools/text-stats'
@@ -4161,6 +4221,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayMathDuelRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/math-sprint': {
+      id: '/play/math-sprint'
+      path: '/math-sprint'
+      fullPath: '/play/math-sprint'
+      preLoaderRoute: typeof PlayMathSprintRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/maze-runner': {
       id: '/play/maze-runner'
       path: '/maze-runner'
@@ -4173,6 +4240,13 @@ declare module '@tanstack/react-router' {
       path: '/memory-match'
       fullPath: '/play/memory-match'
       preLoaderRoute: typeof PlayMemoryMatchRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/memory-matrix': {
+      id: '/play/memory-matrix'
+      path: '/memory-matrix'
+      fullPath: '/play/memory-matrix'
+      preLoaderRoute: typeof PlayMemoryMatrixRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/memory-palace': {
@@ -4868,6 +4942,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsJsonFormatterRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/json-to-ts': {
+      id: '/tools/json-to-ts'
+      path: '/json-to-ts'
+      fullPath: '/tools/json-to-ts'
+      preLoaderRoute: typeof ToolsJsonToTsRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/json-yaml': {
       id: '/tools/json-yaml'
       path: '/json-yaml'
@@ -5274,6 +5355,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSizeRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/slug-cleaner': {
+      id: '/tools/slug-cleaner'
+      path: '/slug-cleaner'
+      fullPath: '/tools/slug-cleaner'
+      preLoaderRoute: typeof ToolsSlugCleanerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/smart-paste': {
       id: '/tools/smart-paste'
       path: '/smart-paste'
@@ -5342,6 +5430,13 @@ declare module '@tanstack/react-router' {
       path: '/table'
       fullPath: '/tools/table'
       preLoaderRoute: typeof ToolsTableRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/table-generator': {
+      id: '/tools/table-generator'
+      path: '/table-generator'
+      fullPath: '/tools/table-generator'
+      preLoaderRoute: typeof ToolsTableGeneratorRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/tasbeeh': {
@@ -5564,8 +5659,10 @@ interface PlayRouteChildren {
   PlayKindleRoute: typeof PlayKindleRoute
   PlayLightsOutRoute: typeof PlayLightsOutRoute
   PlayMathDuelRoute: typeof PlayMathDuelRoute
+  PlayMathSprintRoute: typeof PlayMathSprintRoute
   PlayMazeRunnerRoute: typeof PlayMazeRunnerRoute
   PlayMemoryMatchRoute: typeof PlayMemoryMatchRoute
+  PlayMemoryMatrixRoute: typeof PlayMemoryMatrixRoute
   PlayMemoryPalaceRoute: typeof PlayMemoryPalaceRoute
   PlayMinesweeperRoute: typeof PlayMinesweeperRoute
   PlayOddOneOutRoute: typeof PlayOddOneOutRoute
@@ -5624,8 +5721,10 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayKindleRoute: PlayKindleRoute,
   PlayLightsOutRoute: PlayLightsOutRoute,
   PlayMathDuelRoute: PlayMathDuelRoute,
+  PlayMathSprintRoute: PlayMathSprintRoute,
   PlayMazeRunnerRoute: PlayMazeRunnerRoute,
   PlayMemoryMatchRoute: PlayMemoryMatchRoute,
+  PlayMemoryMatrixRoute: PlayMemoryMatrixRoute,
   PlayMemoryPalaceRoute: PlayMemoryPalaceRoute,
   PlayMinesweeperRoute: PlayMinesweeperRoute,
   PlayOddOneOutRoute: PlayOddOneOutRoute,
@@ -5737,6 +5836,7 @@ interface ToolsRouteChildren {
   ToolsIsItRoute: typeof ToolsIsItRoute
   ToolsJsonDiffRoute: typeof ToolsJsonDiffRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
+  ToolsJsonToTsRoute: typeof ToolsJsonToTsRoute
   ToolsJsonYamlRoute: typeof ToolsJsonYamlRoute
   ToolsJwtDecoderRoute: typeof ToolsJwtDecoderRoute
   ToolsKharchRoute: typeof ToolsKharchRoute
@@ -5795,6 +5895,7 @@ interface ToolsRouteChildren {
   ToolsSilkRoute: typeof ToolsSilkRoute
   ToolsSipCalculatorRoute: typeof ToolsSipCalculatorRoute
   ToolsSizeRoute: typeof ToolsSizeRoute
+  ToolsSlugCleanerRoute: typeof ToolsSlugCleanerRoute
   ToolsSmartPasteRoute: typeof ToolsSmartPasteRoute
   ToolsSpeechToTextRoute: typeof ToolsSpeechToTextRoute
   ToolsSpellingRoute: typeof ToolsSpellingRoute
@@ -5805,6 +5906,7 @@ interface ToolsRouteChildren {
   ToolsStopwatchRoute: typeof ToolsStopwatchRoute
   ToolsStoryRoute: typeof ToolsStoryRoute
   ToolsTableRoute: typeof ToolsTableRoute
+  ToolsTableGeneratorRoute: typeof ToolsTableGeneratorRoute
   ToolsTasbeehRoute: typeof ToolsTasbeehRoute
   ToolsTextCaseRoute: typeof ToolsTextCaseRoute
   ToolsTextStatsRoute: typeof ToolsTextStatsRoute
@@ -5898,6 +6000,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsIsItRoute: ToolsIsItRoute,
   ToolsJsonDiffRoute: ToolsJsonDiffRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
+  ToolsJsonToTsRoute: ToolsJsonToTsRoute,
   ToolsJsonYamlRoute: ToolsJsonYamlRoute,
   ToolsJwtDecoderRoute: ToolsJwtDecoderRoute,
   ToolsKharchRoute: ToolsKharchRoute,
@@ -5956,6 +6059,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsSilkRoute: ToolsSilkRoute,
   ToolsSipCalculatorRoute: ToolsSipCalculatorRoute,
   ToolsSizeRoute: ToolsSizeRoute,
+  ToolsSlugCleanerRoute: ToolsSlugCleanerRoute,
   ToolsSmartPasteRoute: ToolsSmartPasteRoute,
   ToolsSpeechToTextRoute: ToolsSpeechToTextRoute,
   ToolsSpellingRoute: ToolsSpellingRoute,
@@ -5966,6 +6070,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsStopwatchRoute: ToolsStopwatchRoute,
   ToolsStoryRoute: ToolsStoryRoute,
   ToolsTableRoute: ToolsTableRoute,
+  ToolsTableGeneratorRoute: ToolsTableGeneratorRoute,
   ToolsTasbeehRoute: ToolsTasbeehRoute,
   ToolsTextCaseRoute: ToolsTextCaseRoute,
   ToolsTextStatsRoute: ToolsTextStatsRoute,

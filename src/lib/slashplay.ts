@@ -95,6 +95,7 @@ export const PLAY_SECTIONS: PlaySection[] = [
       { slug: "stop-the-color", name: "Stop the Color", desc: "Quick-fire Stroop - 30 seconds, most correct taps wins", icon: "🎨", players: "Solo", added: "2026-09-10" },
       { slug: "digit-span", name: "Digit Span", desc: "Digits flash once - type them back, forward or reversed", icon: "🔢", players: "Solo" },
       { slug: "schulte-table", name: "Schulte Table", desc: "Tap 1-N in order, eyes fixed on centre - pilot vision drill", icon: "🎯", players: "Solo", added: "2026-09-10" },
+      { slug: "memory-matrix", name: "Memory Matrix", desc: "Memorize flashing tile patterns across progressive spatial stages", icon: "🧩", players: "Solo", added: "2026-09-18" },
     ],
   },
   {
@@ -131,6 +132,7 @@ export const PLAY_SECTIONS: PlaySection[] = [
       { slug: "dice", name: "Dice Roller", desc: "Roll D4-D100 for any tabletop game", icon: "🎲", players: "Solo" },
       { slug: "coin-flip", name: "Coin Flipper", desc: "Virtual coin flip with history", icon: "🪙", players: "Solo" },
       { slug: "typing-test", name: "Typing Speed Test", desc: "60-second test - WPM, accuracy, streaks", icon: "⌨️", players: "Solo" },
+      { slug: "math-sprint", name: "Speed Math Sprint", desc: "60-second mental arithmetic sprint - speed and streaks", icon: "⚡", players: "Solo", added: "2026-09-18" },
       { slug: "random-number", name: "Random Number", desc: "Generate numbers in any range", icon: "🔢", players: "Solo" },
     ],
   },

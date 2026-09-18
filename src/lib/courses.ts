@@ -1471,6 +1471,346 @@ export const COURSES: Course[] = [
       },
     ],
   },
+  {
+    id: "autonomous-ai-agents",
+    title: "Building Autonomous AI Agents",
+    tagline: "From simple prompt chains to multi-tool autonomous loops with self-correction.",
+    emoji: "🤖",
+    tint: "#6366f1",
+    level: "Intermediate",
+    audience: "Developers and technical builders engineering real-world agent workflows",
+    outcome: [
+      "Implement the ReAct (Reasoning + Acting) loop from first principles",
+      "Design strict tool definitions and deterministic JSON schemas",
+      "Manage agent scratchpads, context windows, and cycle prevention",
+      "Build resilient fallbacks, sandboxes, and verification guardrails",
+    ],
+    modules: [
+      {
+        title: "Module 1 · The ReAct Loop & Tool Calling",
+        lessons: [
+          {
+            id: "agent-react-core",
+            title: "Thought, Action, and Observation",
+            minutes: 7,
+            body: [
+              {
+                t: "p",
+                text: "A standard LLM call is single-shot: input in, output out. An autonomous agent, however, runs in an iterative loop known as ReAct (Reasoning + Acting). At every turn, the agent thinks about what it needs, selects an action (such as executing a tool or querying a database), and waits for the environment's observation before deciding the next step.",
+              },
+              { t: "h", text: "The Three Phases of ReAct" },
+              {
+                t: "list",
+                items: [
+                  "Thought: The model explicitly articulates its current state and reasoning (e.g. 'I need the user's order history before calculating their discount tier').",
+                  "Action: The model outputs a structured tool invocation with exact arguments (e.g. `getUserOrders({ userId: 'u_102' })`).",
+                  "Observation: Your runtime executes the tool and injects the actual result back into the prompt history as system/tool feedback.",
+                ],
+              },
+              {
+                t: "code",
+                lang: "typescript",
+                text: "type AgentStep =\n  | { type: 'thought'; reasoning: string }\n  | { type: 'action'; tool: string; args: Record<string, unknown> }\n  | { type: 'observation'; output: unknown }\n  | { type: 'finish'; response: string };",
+              },
+              {
+                t: "callout",
+                tone: "tip",
+                text: "Always force the model to emit its thought before its action. Asking the model to reason first primes its autoregressive attention weights, dramatically reducing erroneous tool parameters.",
+              },
+              {
+                t: "practice",
+                text: "Map out a 3-step ReAct sequence for an agent that checks weather in Paris and drafts an outfit recommendation.",
+              },
+            ],
+          },
+          {
+            id: "agent-tool-schemas",
+            title: "Designing Foolproof Tool Schemas",
+            minutes: 6,
+            body: [
+              {
+                t: "p",
+                text: "Tools are the hands and eyes of an agent. If your tool definitions are ambiguous, the agent will guess or hallucinate arguments. Great tool definitions rely on strict JSON schema specifications with concise field descriptions and enum constraints.",
+              },
+              { t: "h", text: "Three Rules for Tool Definitions" },
+              {
+                t: "list",
+                items: [
+                  "Atomic responsibility: One tool should do one thing well. Prefer `search_docs` and `fetch_doc_by_id` over a massive `do_everything_with_docs` tool.",
+                  "Explicit constraints: If a date must be ISO-8601, state 'ISO-8601 string (e.g. 2026-09-18)' directly in the parameter description.",
+                  "Typed errors: When an API fails, return a clear, diagnostic string (e.g. 'Error: User ID 404 not found') rather than throwing an unhandled exception.",
+                ],
+              },
+              {
+                t: "code",
+                lang: "json",
+                text: "{\n  \"name\": \"calculate_tax\",\n  \"description\": \"Calculates total sales tax given a subtotal in cents and a 2-letter state code.\",\n  \"parameters\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"subtotalCents\": { \"type\": \"integer\", \"minimum\": 0 },\n      \"state\": { \"type\": \"string\", \"pattern\": \"^[A-Z]{2}$\" }\n    },\n    \"required\": [\"subtotalCents\", \"state\"]\n  }\n}",
+              },
+              {
+                t: "callout",
+                tone: "warn",
+                text: "Never pass sensitive credentials (like DB connection strings or internal API keys) into tool parameters. Keep secrets strictly in your server-side tool execution handlers.",
+              },
+              {
+                t: "practice",
+                text: "Write a JSON schema for a tool named `search_flight_tickets` that accepts departure, destination, date, and maxPrice.",
+              },
+            ],
+          },
+        ],
+        test: {
+          passScore: 0.7,
+          questions: [
+            {
+              q: "What does ReAct stand for in agent architectures?",
+              options: [
+                "Reactive Action Framework",
+                "Reasoning and Acting",
+                "Recursive Artificial Context Transformer",
+                "Realtime Active Tokenization",
+              ],
+              a: 1,
+              why: "ReAct stands for Reasoning + Acting, interleaving thoughts with tool actions.",
+            },
+            {
+              q: "Why should an agent generate its 'Thought' before invoking an 'Action'?",
+              options: [
+                "It makes the API call cheaper",
+                "It primes attention weights and reduces invalid parameter errors",
+                "It eliminates the need for JSON parsing",
+                "It prevents the model from exceeding rate limits",
+              ],
+              a: 1,
+              why: "Generating intermediate reasoning first helps LLMs compute better subsequent tokens.",
+            },
+            {
+              q: "What should a tool return when a requested resource is missing?",
+              options: [
+                "Crash the entire process immediately",
+                "Return an empty 500 error code with no text",
+                "Return an explicit, diagnostic error message for the agent to adapt",
+                "Return fake mock data silently",
+              ],
+              a: 2,
+              why: "Providing a clear error observation lets the agent self-correct or try an alternative approach.",
+            },
+          ],
+        },
+      },
+      {
+        title: "Module 2 · Memory, Scratchpads & Context Windows",
+        lessons: [
+          {
+            id: "agent-scratchpad",
+            title: "Managing the Agent Scratchpad",
+            minutes: 6,
+            body: [
+              {
+                t: "p",
+                text: "As an agent loops through 5, 10, or 20 tool executions, its message history grows rapidly. This working log is called the scratchpad. Without careful management, the scratchpad will quickly exhaust the context window and trigger exponential latency and cost.",
+              },
+              { t: "h", text: "Effective Pruning Strategies" },
+              {
+                t: "list",
+                items: [
+                  "Sliding Window with Summary: Retain the original system prompt and the last N turns, while condensing older intermediate tool outputs into a brief summary paragraph.",
+                  "Observation Truncation: Never dump raw 5MB JSON payloads into the scratchpad. Filter the tool response to only include relevant fields before feeding it to the agent.",
+                  "Deduplication: If the agent calls the same lookup tool multiple times with identical arguments, suppress redundant logs.",
+                ],
+              },
+              {
+                t: "code",
+                lang: "typescript",
+                text: "function sanitizeToolOutput(raw: Record<string, unknown>) {\n  // Extract only needed properties to preserve token budget\n  const { id, status, totalAmount, itemsCount } = raw;\n  return { id, status, totalAmount, itemsCount };\n}",
+              },
+              {
+                t: "callout",
+                tone: "tip",
+                text: "Always track total token usage per step. If an agent hits 80% of its max token budget, trigger an emergency summarization step before the next action.",
+              },
+              {
+                t: "practice",
+                text: "Take a sample raw API payload with 40 fields and write a filter function that extracts only the 4 most critical values for an LLM.",
+              },
+            ],
+          },
+          {
+            id: "agent-loop-prevention",
+            title: "Detecting and Breaking Infinite Loops",
+            minutes: 5,
+            body: [
+              {
+                t: "p",
+                text: "One of the most common failure modes of autonomous agents is getting stuck in repetitive loops: repeatedly searching for the same failing query or calling the same failing tool. Robust production systems must have hard programmatic loop breakers.",
+              },
+              { t: "h", text: "The Loop Breaker Pattern" },
+              {
+                t: "list",
+                items: [
+                  "Max Iterations Cap: Always enforce a hard ceiling (e.g. 10 or 15 iterations maximum) regardless of what the LLM desires.",
+                  "Action Fingerprinting: Hash the combination of `tool_name + JSON.stringify(args)`. If the exact same hash occurs 3 times consecutively, intervene immediately.",
+                  "Nudge Prompt: When a loop is detected, inject a system message: 'Warning: You have repeated this exact action without new progress. Choose a different approach or report your blocker to the user.'",
+                ],
+              },
+              {
+                t: "code",
+                lang: "typescript",
+                text: "const historyHashes = new Set<string>();\nfor (let step = 0; step < MAX_STEPS; step++) {\n  const action = await getNextAction();\n  const hash = `${action.tool}:${JSON.stringify(action.args)}`;\n  if (historyHashes.has(hash)) {\n    injectSystemMessage('Loop detected! Do not repeat previous actions.');\n  }\n  historyHashes.add(hash);\n}",
+              },
+              {
+                t: "practice",
+                text: "Draft a system prompt directive that explicitly instructs the agent how to proceed when it receives a loop warning.",
+              },
+            ],
+          },
+        ],
+        test: {
+          passScore: 0.7,
+          questions: [
+            {
+              q: "What is an agent's scratchpad?",
+              options: [
+                "A scratchpad is a text file saved to your desktop",
+                "The message history containing system instructions, thoughts, tool calls, and observations",
+                "A physical notepad used by developers during training",
+                "The weights inside the transformer model",
+              ],
+              a: 1,
+              why: "The scratchpad is the working conversational context where the agent logs its steps and observations.",
+            },
+            {
+              q: "What is the most effective safeguard against runaway costs in agent execution?",
+              options: [
+                "Hoping the model stops on its own",
+                "Setting a hard maximum iteration cap and token budget per session",
+                "Using smaller font sizes in the user interface",
+                "Removing all system prompts",
+              ],
+              a: 1,
+              why: "Enforcing strict iteration caps and token thresholds guarantees the agent cannot loop indefinitely.",
+            },
+            {
+              q: "How should large tool output payloads (like 100KB of raw JSON) be handled?",
+              options: [
+                "Dump the entire payload into the context window as-is",
+                "Convert the payload into a base64 string",
+                "Filter and extract only the relevant fields before passing to the model",
+                "Ignore the tool output entirely",
+              ],
+              a: 2,
+              why: "Filtering large outputs prevents token bloat and keeps the agent focused on relevant data.",
+            },
+          ],
+        },
+      },
+      {
+        title: "Module 3 · Guardrails, Sandboxing & Verification",
+        lessons: [
+          {
+            id: "agent-sandboxing",
+            title: "Sandboxing & Privilege Boundaries",
+            minutes: 7,
+            body: [
+              {
+                t: "p",
+                text: "Allowing an autonomous agent to execute arbitrary code, shell commands, or database writes carries serious risks. Production agent architectures enforce strict privilege boundaries and sandboxing to guarantee system security.",
+              },
+              { t: "h", text: "Key Security Boundaries" },
+              {
+                t: "list",
+                items: [
+                  "Read vs Write Separation: Allow safe read operations (e.g. `read_file`, `query_catalog`) autonomously, but require human confirmation for destructive write operations (`delete_record`, `send_email_blast`).",
+                  "Execution Sandboxing: If the agent executes user-supplied code or shell commands, isolate execution within isolated containers or WebAssembly runtimes with no host filesystem or network access.",
+                  "Path Traversal Prevention: Ensure file-access tools resolve all paths against an explicit workspace directory root and reject attempts to escape via `../`.",
+                ],
+              },
+              {
+                t: "callout",
+                tone: "warn",
+                text: "Never allow an agent to run destructive commands (DROP TABLE, rm -rf, sending payments) without an explicit Human-in-the-Loop approval gate.",
+              },
+              {
+                t: "practice",
+                text: "Identify three potential risks in an agent that has direct access to run arbitrary SQL queries on a production database, and design guardrails for each.",
+              },
+            ],
+          },
+          {
+            id: "agent-self-correction",
+            title: "Verification Loops & Self-Correction",
+            minutes: 6,
+            body: [
+              {
+                t: "p",
+                text: "The difference between an amateur agent and a production system is self-correction. Instead of assuming the first generated output is correct, top agent architectures run an explicit validation check before delivering results to the user.",
+              },
+              { t: "h", text: "The Critic / Verifier Pattern" },
+              {
+                t: "list",
+                items: [
+                  "Unit Test Verification: If the agent generates code, run an automated test runner against the code. Feed compiler or test errors back into the agent to trigger a fix cycle.",
+                  "Deterministic Schema Validation: Pass the output through a schema validator like Zod. If validation fails, return the exact schema error to the LLM with instructions to repair the JSON.",
+                  "Secondary Verifier Pass: Use a secondary, lightweight model call acting as an objective critic to verify that all constraints in the initial user prompt were satisfied.",
+                ],
+              },
+              {
+                t: "code",
+                lang: "typescript",
+                text: "const result = OutputSchema.safeParse(agentResponse);\nif (!result.success) {\n  // Feed exact issue back to agent for deterministic repair\n  return agent.repair({\n    errors: result.error.issues,\n    previousOutput: agentResponse,\n  });\n}",
+              },
+              {
+                t: "callout",
+                tone: "tip",
+                text: "Automated verification loops often boost agent task completion rates from ~60% to over 90% without requiring larger models.",
+              },
+              {
+                t: "practice",
+                text: "Design a verification loop that verifies whether an agent-generated markdown report contains all 4 required sections and at least 2 cited sources.",
+              },
+            ],
+          },
+        ],
+        test: {
+          passScore: 0.7,
+          questions: [
+            {
+              q: "What is Human-in-the-Loop (HITL) in agent architecture?",
+              options: [
+                "Requiring humans to manually write every single code line",
+                "Pausing agent execution to get human confirmation before irreversible or destructive actions",
+                "A game where humans compete with AI models",
+                "An algorithm for training recurrent neural networks",
+              ],
+              a: 1,
+              why: "HITL pauses execution so a human can inspect and approve sensitive actions like transfers or deletions.",
+            },
+            {
+              q: "How should an agent handle a schema validation failure (e.g. missing required JSON keys)?",
+              options: [
+                "Discard the entire task and crash the application",
+                "Deliver the invalid data to the end user anyway",
+                "Pass the specific schema error back to the agent in a repair prompt to self-correct",
+                "Guess the missing values randomly",
+              ],
+              a: 2,
+              why: "Feeding the exact schema error back allows the agent to surgically patch and fix its output.",
+            },
+            {
+              q: "Which of the following is a critical sandbox rule for agent code execution?",
+              options: [
+                "Provide unrestricted root access to the host server",
+                "Allow arbitrary outbound internet requests without filtering",
+                "Isolate execution in ephemeral containers with restricted filesystem access and bounded timeouts",
+                "Disable all logs and monitoring",
+              ],
+              a: 2,
+              why: "Restricting filesystem access, networking, and timeouts protects the host environment from malicious or buggy code.",
+            },
+          ],
+        },
+      },
+    ],
+  },
 ];
 
 /* ────────────────────── lookups & progress ────────────────────── */

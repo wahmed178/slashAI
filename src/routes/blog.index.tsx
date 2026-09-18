@@ -4,6 +4,7 @@ import { ArrowRight, Newspaper } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import { FaqSection } from "@/components/library/FaqSection";
 import { VERIFIED_TOTAL } from "@/lib/commands";
+import { BLOG_POSTS } from "@/lib/blogs";
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/blog/")({
       {
         name: "description",
         content:
-          "Free, practical guides on using AI better: copy-ready prompts for work, study and business in India and beyond. No fluff, no jargon, no paywall.",
+          "Free, practical guides on using AI better: copy-ready prompts for work, study, and engineering workflows. No fluff, no jargon, no paywall.",
       },
       { property: "og:title", content: "SlashAI Blog - free AI guides" },
       {
@@ -26,17 +27,7 @@ export const Route = createFileRoute("/blog/")({
   component: BlogIndex,
 });
 
-const POSTS = [
-  {
-    slug: "best-free-ai-prompts-for-professionals-in-india-2026",
-    title: "Best Free AI Prompts for Professionals in India (2026)",
-    emoji: "🇮🇳",
-    desc: "10 copy-ready prompts for email, reports, meetings and career growth — built for Indian workplaces and free AI tools.",
-    date: "16 Sep 2026",
-    readTime: "7 min read",
-    tag: "Prompts",
-  },
-];
+const POSTS = BLOG_POSTS;
 
 function BlogIndex() {
   return (

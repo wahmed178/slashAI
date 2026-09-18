@@ -1,110 +1,53 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Copy, CalendarDays } from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, CalendarDays, Check } from "lucide-react";
+import { useState } from "react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { FaqSection } from "@/components/library/FaqSection";
 import { getCommand, type SlashCommand } from "@/lib/commands";
 import { useCommandActions } from "@/hooks/use-command-actions";
+import { getBlogPost, type BlogBlock, type BlogPost as BlogPostData, type BlogSection } from "@/lib/blogs";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
-    const post = POSTS.find((p) => p.slug === params.slug);
+    const post = getBlogPost(params.slug);
     if (!post) throw notFound();
     return { post };
   },
   head: ({ loaderData }) => {
-    if (!loaderData) {
+    const post = loaderData?.post;
+    if (!post) {
       return { meta: [{ title: "Not found - SlashAI" }, { name: "robots", content: "noindex" }] };
     }
     return {
       meta: [
-        {
-          title: "Best Free AI Prompts for Professionals in India (2026) | SlashAI",
-        },
-        {
-          name: "description",
-          content:
-            "10 free copy-ready AI prompts for Indian professionals: emails, meeting notes, reports, resumes and appraisals. Works in free ChatGPT, Gemini and Claude. No account needed.",
-        },
-        { property: "og:title", content: "Best Free AI Prompts for Professionals in India (2026)" },
-        {
-          property: "og:description",
-          content:
-            "10 copy-ready prompts for email, reports, meetings and career growth — free, no account, works in ChatGPT, Gemini and Claude.",
-        },
+        { title: `${post.metaTitle}` },
+        { name: "description", content: post.metaDesc },
+        { property: "og:title", content: post.title },
+        { property: "og:description", content: post.desc },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: "https://slashai.in/blog/best-free-ai-prompts-for-professionals-in-india-2026" },
+        { property: "og:url", content: `https://slashai.in/blog/${post.slug}` },
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: "Best Free AI Prompts for Professionals in India (2026)" },
-        {
-          name: "twitter:description",
-          content: "10 free copy-ready AI prompts for Indian professionals. No signup, works in free AI tools.",
-        },
+        { name: "twitter:title", content: post.title },
+        { name: "twitter:description", content: post.desc },
       ],
-      links: [{ rel: "canonical", href: "https://slashai.in/blog/best-free-ai-prompts-for-professionals-in-india-2026" }],
+      links: [{ rel: "canonical", href: `https://slashai.in/blog/${post.slug}` }],
     };
   },
   notFoundComponent: PostNotFound,
   component: BlogPost,
 });
 
-const POSTS = [
-  {
-    slug: "best-free-ai-prompts-for-professionals-in-india-2026",
-    title: "Best Free AI Prompts for Professionals in India (2026)",
-    date: "16 Sep 2026",
-    readTime: "7 min read",
-  },
-];
-
-const PROMPT_IDS = [
-  "draftemail",
-  "rewriteemail",
-  "shortenemail",
-  "meetingrecap",
-  "prioritizemeeting",
-  "planmeeting",
-  "draftreport",
-  "rewritereport",
-  "tailorresume",
-  "reviewresume",
-] as const;
-
-interface Section {
-  id: string;
-  heading: string;
-  intro: string;
-}
-
-const SECTIONS: Section[] = [
-  {
-    id: "email",
-    heading: "Email prompts that get replies",
-    intro:
-      "Indian workplace email is a genre of its own: polite, hierarchical, and often written at 11pm. These three prompts draft, soften and shrink emails so you send better ones faster.",
-  },
-  {
-    id: "meetings",
-    heading: "Meeting prompts that save an hour a week",
-    intro:
-      "Meetings multiply in Indian offices — and so do the notes nobody reads. Use AI to summarise, prioritise and plan instead of typing minutes by hand.",
-  },
-  {
-    id: "reports",
-    heading: "Report prompts for the weekly grind",
-    intro:
-      "Whether it's a status update to your manager or a monthly review, these prompts turn rough points into a structured draft you can defend in the meeting.",
-  },
-  {
-    id: "career",
-    heading: "Career prompts for the next move",
-    intro:
-      "From tailoring your resume for an ATS to practising tough interview answers — the highest-leverage AI use for your career is preparation.",
-  },
-];
-
 function PromptCard({ cmd }: { cmd: SlashCommand }) {
   const { copyCommand } = useCommandActions();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    copyCommand(cmd);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <article className="rounded-xl border border-border bg-surface p-4">
       <div className="flex items-start justify-between gap-2">
@@ -117,20 +60,99 @@ function PromptCard({ cmd }: { cmd: SlashCommand }) {
         </Link>
         <button
           type="button"
-          onClick={() => copyCommand(cmd)}
+          onClick={handleCopy}
           className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border border-border bg-surface-elevated px-3 text-[12px] font-bold text-foreground transition-colors hover:border-primary/40"
         >
-          <Copy className="size-3.5" aria-hidden /> Copy
+          {copied ? (
+            <>
+              <Check className="size-3.5 text-primary" aria-hidden /> Copied
+            </>
+          ) : (
+            <>
+              <Copy className="size-3.5" aria-hidden /> Copy
+            </>
+          )}
         </button>
       </div>
       <p className="mt-0.5 text-[12px] font-semibold text-foreground">{cmd.title}</p>
       <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">{cmd.description}</p>
       <p className="mt-2 rounded-lg bg-surface-elevated/70 px-2.5 py-1.5 text-[11.5px] text-muted-foreground">
         <b className="text-foreground">Use it in:</b> ChatGPT / Gemini / Claude · copy → paste →
-        replace the placeholders with your details
+        replace bracketed placeholders with your details
       </p>
     </article>
   );
+}
+
+function RenderBlock({ block }: { block: BlogBlock }) {
+  if (block.type === "p" && block.text) {
+    return <p className="text-[14px] leading-relaxed text-muted-foreground">{block.text}</p>;
+  }
+
+  if (block.type === "h" && block.text) {
+    return (
+      <h3 className="pt-2 text-[16px] font-bold tracking-tight text-foreground">{block.text}</h3>
+    );
+  }
+
+  if (block.type === "list" && block.items) {
+    return (
+      <ul className="space-y-1.5 pl-5 text-[13.5px] text-muted-foreground list-disc marker:text-primary">
+        {block.items.map((it, idx) => (
+          <li key={idx} className="leading-relaxed">
+            {it}
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  if (block.type === "code" && block.text) {
+    return (
+      <div className="overflow-hidden rounded-xl border border-border bg-surface-elevated">
+        {block.lang && (
+          <div className="border-b border-border/60 bg-surface/50 px-3.5 py-1 text-[11px] font-mono font-medium text-muted-foreground">
+            {block.lang}
+          </div>
+        )}
+        <pre className="overflow-x-auto p-3.5 font-mono text-[12.5px] leading-relaxed text-foreground">
+          <code>{block.text}</code>
+        </pre>
+      </div>
+    );
+  }
+
+  if (block.type === "callout" && block.text) {
+    const isWarn = block.tone === "warn";
+    return (
+      <div
+        className={`rounded-xl border p-3.5 text-[13px] leading-relaxed ${
+          isWarn
+            ? "border-amber-500/30 bg-amber-500/10 text-amber-200"
+            : "border-primary/30 bg-primary/10 text-foreground"
+        }`}
+      >
+        <span className="font-semibold">{isWarn ? "⚠️ Note: " : "💡 Pro Tip: "}</span>
+        {block.text}
+      </div>
+    );
+  }
+
+  if (block.type === "prompts" && block.promptIds) {
+    const commands = block.promptIds
+      .map((id) => getCommand(id))
+      .filter((c): c is SlashCommand => Boolean(c));
+
+    return (
+      <div className="space-y-3 pt-1">
+        {commands.map((cmd) => (
+          <PromptCard key={cmd.id} cmd={cmd} />
+        ))}
+      </div>
+    );
+  }
+
+  return null;
 }
 
 function PostNotFound() {
@@ -151,97 +173,76 @@ function PostNotFound() {
 }
 
 function BlogPost() {
-  const prompts = PROMPT_IDS.map((id) => getCommand(id)).filter(
-    (c): c is SlashCommand => Boolean(c),
-  );
+  const { post } = Route.useLoaderData() as { post: BlogPostData };
 
   return (
-    <AppShell wide hideHeaderSearch title="Blog">
+    <AppShell wide hideHeaderSearch title={post.title}>
       <article className="mx-auto max-w-3xl pb-10">
         <nav aria-label="Breadcrumb" className="pt-2">
           <Link
             to="/blog"
             className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-muted-foreground transition-colors hover:text-foreground"
           >
-            <ArrowLeft className="size-3.5" aria-hidden /> Blog
+            <ArrowLeft className="size-3.5" aria-hidden /> Back to Blog
           </Link>
         </nav>
 
-        <header className="mt-3">
-          <p className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-primary">
-            <CalendarDays className="size-3" aria-hidden /> 16 Sep 2026 · 7 min read · Prompts
-          </p>
-          <h1 className="mt-3 text-[24px] font-black leading-tight tracking-tight text-foreground sm:text-[30px]">
-            Best Free AI Prompts for Professionals in India (2026)
+        <header className="mt-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+              <CalendarDays className="size-3" aria-hidden /> {post.date} · {post.readTime}
+            </span>
+            <span className="rounded-full bg-surface-elevated px-2.5 py-1 text-[10.5px] font-semibold text-muted-foreground border border-border">
+              {post.tag}
+            </span>
+          </div>
+
+          <h1 className="mt-3.5 text-[24px] font-black leading-tight tracking-tight text-foreground sm:text-[32px]">
+            {post.title}
           </h1>
+
           <p className="mt-3 text-[14.5px] leading-relaxed text-muted-foreground">
-            AI tools are free. Knowing what to type into them is the real skill — and it's the
-            part nobody teaches. This guide fixes that with ten copy-ready prompts built for the
-            realities of Indian work life: the polite email to your manager, the meeting that
-            needed to be an email, the weekly report nobody reads, and the resume stuck in 2022.
-          </p>
-          <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">
-            Every prompt works in the free tiers of <b className="text-foreground">ChatGPT</b>,{" "}
-            <b className="text-foreground">Gemini</b> and <b className="text-foreground">Claude</b>.
-            Tap Copy, paste, and replace anything in &lt;angle brackets&gt; with your own details.
-            No account, no paywall — every prompt lives in the{" "}
-            <Link to="/prompts" className="font-semibold text-primary hover:underline">
-              free SlashAI library
-            </Link>{" "}
-            of 5,600+ commands.
+            {post.summary}
           </p>
         </header>
 
-        <div className="mt-7 space-y-8">
-          {SECTIONS.map((section) => {
-            const sectionPrompts = prompts.filter((p) => {
-              if (section.id === "email") return ["draftemail", "rewriteemail", "shortenemail"].includes(p.id);
-              if (section.id === "meetings") return ["meetingrecap", "prioritizemeeting", "planmeeting"].includes(p.id);
-              if (section.id === "reports") return ["draftreport", "rewritereport"].includes(p.id);
-              return ["tailorresume", "reviewresume"].includes(p.id);
-            });
-            if (sectionPrompts.length === 0) return null;
-            return (
-              <section key={section.id} aria-labelledby={`h-${section.id}`}>
-                <h2 id={`h-${section.id}`} className="text-[18px] font-bold tracking-tight text-foreground">
-                  {section.heading}
-                </h2>
-                <p className="mt-1.5 text-[13.5px] leading-relaxed text-muted-foreground">{section.intro}</p>
-                <div className="mt-3 space-y-3">
-                  {sectionPrompts.map((cmd) => (
-                    <PromptCard key={cmd.id} cmd={cmd} />
-                  ))}
-                </div>
-              </section>
-            );
-          })}
+        <div className="mt-8 space-y-9">
+          {post.sections.map((section) => (
+            <section key={section.id} aria-labelledby={`h-${section.id}`} className="space-y-3">
+              <h2
+                id={`h-${section.id}`}
+                className="text-[18px] font-bold tracking-tight text-foreground sm:text-[20px]"
+              >
+                {section.heading}
+              </h2>
+              {section.intro && (
+                <p className="text-[13.5px] leading-relaxed text-muted-foreground">
+                  {section.intro}
+                </p>
+              )}
+              <div className="space-y-3">
+                {section.blocks.map((b, i) => (
+                  <RenderBlock key={i} block={b} />
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
 
-        {/* how to get better results */}
-        <section className="mt-9 rounded-2xl border border-border bg-surface p-5">
-          <h2 className="text-[16px] font-bold text-foreground">One rule for better output</h2>
-          <p className="mt-2 text-[13.5px] leading-relaxed text-muted-foreground">
-            Every prompt above follows the same skeleton: <b className="text-foreground">role, task,
-            context, format</b>. If a result feels generic, you're usually missing context — the
-            specifics only you know (your audience, your numbers, your constraints). Add one line of
-            context before regenerating, and the output improves more than any clever trick.
-          </p>
-        </section>
-
-        {/* CTA back to the library */}
-        <section className="mt-5 rounded-2xl border border-primary/25 bg-gradient-to-br from-primary/10 via-surface to-surface p-6 text-center">
+        {/* CTA back to library */}
+        <section className="mt-10 rounded-2xl border border-primary/25 bg-gradient-to-br from-primary/10 via-surface to-surface p-6 text-center">
           <h2 className="font-display text-[19px] font-black text-foreground">
-            Ready for the full library?
+            Explore the Full SlashAI Library
           </h2>
           <p className="mx-auto mt-2 max-w-md text-[13px] leading-relaxed text-muted-foreground">
-            These 10 prompts are a taste — SlashAI has 5,600+ copy-ready commands across writing,
-            coding, marketing, study and business. Search by what you want to get done.
+            Every prompt in our guides is part of our offline-ready vault of verified commands
+            and instant browser tools. Free forever, no account required.
           </p>
           <Link
             to="/explore"
             className="ripple-press mt-4 inline-flex h-11 items-center gap-2 rounded-xl bg-gradient-to-r from-[#2dd4bf] to-[#818cf8] px-5 text-[14px] font-black text-white shadow-lg transition-transform active:scale-95"
           >
-            Explore all commands <ArrowRight className="size-4" aria-hidden />
+            Browse All Commands <ArrowRight className="size-4" aria-hidden />
           </Link>
         </section>
 
