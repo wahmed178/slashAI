@@ -23,6 +23,7 @@ import { Route as FindRouteImport } from './routes/find'
 import { Route as GlassRouteImport } from './routes/glass'
 import { Route as GlossaryRouteImport } from './routes/glossary'
 import { Route as GraphRouteImport } from './routes/graph'
+import { Route as HistoryRouteImport } from './routes/history'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as KeyboardRouteImport } from './routes/keyboard'
 import { Route as LiveRouteImport } from './routes/live'
@@ -40,6 +41,7 @@ import { Route as RoadmapsRouteImport } from './routes/roadmaps'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SitemapRouteImport } from './routes/sitemap'
+import { Route as SuggestRouteImport } from './routes/suggest'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TrendingRouteImport } from './routes/trending'
@@ -364,6 +366,11 @@ const GraphRoute = GraphRouteImport.update({
   path: '/graph',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JournalRoute = JournalRouteImport.update({
   id: '/journal',
   path: '/journal',
@@ -447,6 +454,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const SitemapRoute = SitemapRouteImport.update({
   id: '/sitemap',
   path: '/sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuggestRoute = SuggestRouteImport.update({
+  id: '/suggest',
+  path: '/suggest',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -1732,6 +1744,7 @@ export interface FileRoutesByFullPath {
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/graph': typeof GraphRoute
+  '/history': typeof HistoryRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
@@ -1749,6 +1762,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
+  '/suggest': typeof SuggestRoute
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
@@ -2018,6 +2032,7 @@ export interface FileRoutesByTo {
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/graph': typeof GraphRoute
+  '/history': typeof HistoryRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
@@ -2034,6 +2049,7 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
+  '/suggest': typeof SuggestRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
   '/web-search': typeof WebSearchRoute
@@ -2303,6 +2319,7 @@ export interface FileRoutesById {
   '/glass': typeof GlassRoute
   '/glossary': typeof GlossaryRoute
   '/graph': typeof GraphRoute
+  '/history': typeof HistoryRoute
   '/journal': typeof JournalRoute
   '/keyboard': typeof KeyboardRoute
   '/live': typeof LiveRoute
@@ -2320,6 +2337,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/settings': typeof SettingsRoute
   '/sitemap': typeof SitemapRoute
+  '/suggest': typeof SuggestRoute
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
@@ -2591,6 +2609,7 @@ export interface FileRouteTypes {
     | '/glass'
     | '/glossary'
     | '/graph'
+    | '/history'
     | '/journal'
     | '/keyboard'
     | '/live'
@@ -2608,6 +2627,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/sitemap'
+    | '/suggest'
     | '/terms'
     | '/tools'
     | '/trending'
@@ -2877,6 +2897,7 @@ export interface FileRouteTypes {
     | '/glass'
     | '/glossary'
     | '/graph'
+    | '/history'
     | '/journal'
     | '/keyboard'
     | '/live'
@@ -2893,6 +2914,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/sitemap'
+    | '/suggest'
     | '/terms'
     | '/trending'
     | '/web-search'
@@ -3161,6 +3183,7 @@ export interface FileRouteTypes {
     | '/glass'
     | '/glossary'
     | '/graph'
+    | '/history'
     | '/journal'
     | '/keyboard'
     | '/live'
@@ -3178,6 +3201,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/settings'
     | '/sitemap'
+    | '/suggest'
     | '/terms'
     | '/tools'
     | '/trending'
@@ -3448,6 +3472,7 @@ export interface RootRouteChildren {
   GlassRoute: typeof GlassRoute
   GlossaryRoute: typeof GlossaryRoute
   GraphRoute: typeof GraphRoute
+  HistoryRoute: typeof HistoryRoute
   JournalRoute: typeof JournalRoute
   KeyboardRoute: typeof KeyboardRoute
   LiveRoute: typeof LiveRoute
@@ -3465,6 +3490,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SettingsRoute: typeof SettingsRoute
   SitemapRoute: typeof SitemapRoute
+  SuggestRoute: typeof SuggestRoute
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRouteWithChildren
   TrendingRoute: typeof TrendingRoute
@@ -3603,6 +3629,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GraphRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/journal': {
       id: '/journal'
       path: '/journal'
@@ -3720,6 +3753,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap'
       fullPath: '/sitemap'
       preLoaderRoute: typeof SitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suggest': {
+      id: '/suggest'
+      path: '/suggest'
+      fullPath: '/suggest'
+      preLoaderRoute: typeof SuggestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -5970,6 +6010,7 @@ const rootRouteChildren: RootRouteChildren = {
   GlassRoute: GlassRoute,
   GlossaryRoute: GlossaryRoute,
   GraphRoute: GraphRoute,
+  HistoryRoute: HistoryRoute,
   JournalRoute: JournalRoute,
   KeyboardRoute: KeyboardRoute,
   LiveRoute: LiveRoute,
@@ -5987,6 +6028,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SettingsRoute: SettingsRoute,
   SitemapRoute: SitemapRoute,
+  SuggestRoute: SuggestRoute,
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRouteWithChildren,
   TrendingRoute: TrendingRoute,

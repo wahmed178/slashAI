@@ -7,7 +7,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_META } from "@/lib/commands";
 
-export const Route = createFileRoute("/suggest" as any)({
+export const Route = createFileRoute("/suggest")({
   head: () => ({
     meta: [
       { title: "Suggest a Command - SlashAI" },

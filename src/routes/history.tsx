@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { getCopyHistory, clearCopyHistory, timeAgo, type CopyHistoryItem } from "@/lib/ux";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/history" as any)({
+export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
       { title: "Copy History - SlashAI" },
