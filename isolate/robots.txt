@@ -1,14 +1,22 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
+# SlashAI — https://slashai.in
+# All public content is crawlable. CSS/JS/images are never blocked so
+# Googlebot can render pages correctly.
 
 User-agent: *
 Allow: /
+
+# Private, per-user or utility pages - no unique content for search.
+# (The app also sends noindex meta for these, in case they are linked.)
+Disallow: /search
+Disallow: /find
+Disallow: /web-search
+Disallow: /favorites
+Disallow: /recent
+Disallow: /settings
+Disallow: /me
+Disallow: /glass
+Disallow: /graph
+Disallow: /journal
+Disallow: /random
+
+Sitemap: https://slashai.in/sitemap.xml

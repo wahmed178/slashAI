@@ -1,0 +1,1 @@
+import{o as e}from"./rolldown-runtime-C0FnF6B9.js";import{t}from"./react-C21x__mS.js";import{qt as n}from"./index-C4s1Eqpk.js";var r=e(t());function i(){let e=n();return(0,r.useEffect)(()=>{e({to:`/me`,replace:!0})},[e]),null}export{i as component};
