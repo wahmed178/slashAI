@@ -1,58 +1,58 @@
 {
-  "updated": "2026-09-18T10:45:42.161Z",
+  "updated": "2026-09-18T12:03:02.731Z",
   "articles": [
-    {
-      "title": "Hister: A private search engine for the pages you visit and the files you keep",
-      "url": "https://github.com/asciimoo/hister",
-      "source": "HackerNews",
-      "score": 622,
-      "publishedAt": "2026-09-17"
-    },
     {
       "title": "Astra for Law",
       "url": "https://openai.com/index/astra-for-law/",
       "source": "HackerNews",
-      "score": 499,
+      "score": 513,
       "publishedAt": "2026-09-17"
     },
     {
       "title": "Bend – A language that blocks AI mistakes via proof, on CPU and GPU",
       "url": "https://bend-lang.com/",
       "source": "HackerNews",
-      "score": 482,
+      "score": 502,
       "publishedAt": "2026-09-17"
     },
     {
       "title": "Bonsai 2 27B: Near-Lossless Compression in a 9x Smaller Footprint",
       "url": "https://prismml.com/news/bonsai-2-27b",
       "source": "HackerNews",
-      "score": 460,
+      "score": 475,
       "publishedAt": "2026-09-17"
     },
     {
-      "title": "Qwen 3.8 Omni Flash",
-      "url": "https://qwen.ai/blog?id=qwen3.8-omni-flash",
+      "title": "Microsoft exec called AI scraping 'the largest theft of labor in human history'",
+      "url": "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal/",
       "source": "HackerNews",
-      "score": 232,
-      "publishedAt": "2026-09-17"
+      "score": 242,
+      "publishedAt": "2026-09-18"
     },
     {
       "title": "Jemalloc 5.4.0",
       "url": "https://github.com/jemalloc/jemalloc/releases/tag/5.4.0",
       "source": "HackerNews",
-      "score": 162,
+      "score": 193,
       "publishedAt": "2026-09-18"
     },
     {
       "title": "The scourge of x86 emulation",
       "url": "https://fex-emu.com/Scourge-of-emulation/",
       "source": "HackerNews",
-      "score": 155,
+      "score": 173,
       "publishedAt": "2026-09-18"
     },
     {
       "title": "OpenJev",
       "url": "https://openjev.com/",
+      "source": "HackerNews",
+      "score": 171,
+      "publishedAt": "2026-09-18"
+    },
+    {
+      "title": "ZCode, the GLM coding agent, silently uploads your Git history",
+      "url": "https://tokenstead.ai/guides/zcode-silent-git-history-upload",
       "source": "HackerNews",
       "score": 79,
       "publishedAt": "2026-09-18"
