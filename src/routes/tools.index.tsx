@@ -5,9 +5,12 @@ import { AppShell } from "@/components/library/AppShell";
 import {
   TOOL_SECTIONS,
   SLASH_TOOL_COUNT,
+  newTools,
   toolOfTheDay,
   type SlashTool,
 } from "@/lib/slashkits";
+import { isNewItem, popularFromUsage } from "@/lib/ux";
+import { useUxTick } from "@/hooks/use-ux";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 import { kitSectionColor } from "@/lib/category-colors";
@@ -45,6 +48,10 @@ function ToolsIndex() {
   const [search, setSearch] = useState("");
   const q = search.trim().toLowerCase();
   const { toolFavorites, isToolFavorite, toggleToolFavorite } = useLibrary();
+  // 🔥 comes from your own usage; 🆕 from the catalogue's `added` date.
+  useUxTick();
+  const fresh = newTools();
+  const popular = popularFromUsage(3);
 
   const visibleSections = filter === "All" ? TOOL_SECTIONS_PRERENDER : TOOL_SECTIONS_PRERENDER.filter((s) => s.title === filter);
 
@@ -125,13 +132,50 @@ function ToolsIndex() {
         </div>
       </div>
 
+      {/* Just added - only rendered while something is genuinely new */}
+      {filter === "All" && !q && fresh.length > 0 && (
+        <section className="mt-4">
+          <h2 className="flex items-center gap-2 text-sm font-semibold tracking-wide uppercase text-emerald-500">
+            <span className="text-lg">🆕</span> Just added
+            <span className="text-[11px] font-medium normal-case text-muted-foreground">
+              {fresh.length} new tool{fresh.length === 1 ? "" : "s"} in the last 45 days
+            </span>
+          </h2>
+          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            {fresh.slice(0, 6).map((tool) => (
+              <Link
+                key={`new-${tool.slug}`}
+                to={`/tools/${tool.slug}`}
+                className="group flex items-start gap-3 rounded-[10px] border border-emerald-500/30 bg-surface p-4 transition-colors hover:border-emerald-500/60"
+              >
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent text-[22px]">
+                  {tool.icon}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex items-center gap-2">
+                    <span className="text-[15px] font-semibold text-foreground">{tool.name}</span>
+                    <span className="shrink-0 rounded-full bg-emerald-500/12 px-1.5 py-0.5 text-[9px] font-bold text-emerald-500">
+                      NEW
+                    </span>
+                  </span>
+                  <span className="mt-0.5 block line-clamp-1 text-[13px] text-muted-foreground">
+                    {tool.desc}
+                  </span>
+                </span>
+                <span className="mt-1 shrink-0 text-[13px] text-primary transition-transform group-hover:translate-x-0.5">→</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Search */}
       <div className="relative mt-4">
         <Search className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search tools by name or use case…"
+          placeholder="Search tools by name or use case… (press / for commands)"
           aria-label="Search tools"
           className="h-11 w-full rounded-xl border border-border bg-surface pl-10 pr-10 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40"
         />
@@ -236,6 +280,19 @@ function ToolsIndex() {
                         <span className="cat-chip shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-semibold">
                           Free
                         </span>
+{popular.has(tool.slug) && (
+                          <span
+                            title="You use this tool a lot"
+                            className="shrink-0 rounded-full bg-orange-500/15 px-1.5 py-0.5 text-[9px] font-bold text-orange-400"
+                          >
+                            🔥 Popular
+                          </span>
+                        )}
+                        {isNewItem(tool.added) && (
+                          <span className="shrink-0 rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[9px] font-bold text-emerald-500">
+                            🆕 New
+                          </span>
+                        )}
                         {tool.noUpload ? (
                           <span className="rounded border px-1.5 py-0.5 text-[9px] font-medium text-green" style={{ background: "rgba(63,185,80,0.08)", borderColor: "rgba(63,185,80,0.3)" }}>
                             No upload
@@ -244,6 +301,9 @@ function ToolsIndex() {
                       </span>
                       <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">
                         {tool.desc}
+                      </span>
+                      <span className="mt-1 block text-[10.5px] text-muted-foreground/85">
+                        🔒 Runs in your browser · Nothing uploaded
                       </span>
                     </span>
                     <div className="flex items-center gap-1">

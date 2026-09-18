@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.27.0";
+export const APP_VERSION = "2.28.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,23 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.28.0",
+    date: "2026-09-18",
+    title: "Guided commands, smarter browsing, a deeper cricket game",
+    changes: [
+      "Every command now shows a difficulty badge (🟢 Beginner / 🟡 Intermediate / 🔴 Advanced) worked out from its placeholders, plus a 4-step 'How to use this command' guide that opens for first-time visitors and collapses afterwards",
+      "One-tap 'Try in ChatGPT / Gemini / Claude' buttons copy the command and open the assistant for you; the command detail page also links to 'You might also like' and a one-tap 'Something wrong? Report it'",
+      "SlashKits: a 'Just added' shelf for new tools, 🆕 New and 🔥 Popular badges, a '🔒 Runs in your browser · Nothing uploaded' trust line on every card, and a 'How to use / Similar tools' block on every tool page",
+      "SlashPlay: session length and difficulty on every game card (⏱ 2 min · 🎯 Easy), a 'Surprise me' random-game button, a New Games row and your personal best shown right on the card",
+      "Slash Courses: 4 structured learning paths (AI, Developer, Creator, Career), topic filters, hour estimates and progress tracking that remembers what you have started",
+      "Discover now opens with 'Start Here' — pick student, professional or developer and jump straight to the right hub",
+      "New floating 'copy the last command again' pill (fades after 30s) and a back-to-top button that appears once you scroll",
+      "Cricket got a real upgrade: 4 formats (Blitz 12, Solo 24, Chase AI, 2P duel), a share-your-score button, a beat-your-best challenge, and physics that run at the same speed on 60Hz and 120Hz screens",
+      "HTML Compiler ships 14 ready-made starter projects — landing page, portfolio, pricing table, to-do app, gallery, login, dashboard, countdown, quiz, clock, navbar, particles and more. Load one, preview it, edit it and download a single .html file",
+      "The homepage suggests 4 things 'You might like' once you have browsed a little — based only on your own device",
+    ],
+  },
   {
     version: "2.27.0",
     date: "2026-09-17",

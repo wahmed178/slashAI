@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Copy, Download, Play, RotateCcw, Check, Code2 } from "lucide-react";
+import { Copy, Download, Play, RotateCcw, Check, Code2, FilePlus2, LayoutTemplate, X } from "lucide-react";
+
+import { HTML_SAMPLES, type HtmlSample } from "@/lib/html-samples";
 
 export const Route = createFileRoute("/tools/html-compiler")({
   head: () => ({
@@ -18,6 +20,8 @@ interface SavedCode {
   html: string;
   css: string;
   js: string;
+  /** document title used for the <title> tag and the download filename */
+  title?: string;
 }
 
 const DEFAULT_HTML = `<div class="container">
@@ -103,9 +107,11 @@ function HtmlCompiler() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) return JSON.parse(saved);
     } catch { /* ignore */ }
-    return { html: DEFAULT_HTML, css: DEFAULT_CSS, js: DEFAULT_JS };
+    return { html: DEFAULT_HTML, css: DEFAULT_CSS, js: DEFAULT_JS, title: "My Page" };
   });
 
+  const [showSamples, setShowSamples] = useState(false);
+  const [loadedSample, setLoadedSample] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>("html");
   const [consoleLog, setConsoleLog] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
@@ -200,8 +206,32 @@ function HtmlCompiler() {
   };
 
   const reset = () => {
-    setCode({ html: DEFAULT_HTML, css: DEFAULT_CSS, js: DEFAULT_JS });
+    setCode({ html: DEFAULT_HTML, css: DEFAULT_CSS, js: DEFAULT_JS, title: "My Page" });
+    setLoadedSample(null);
     setConsoleLog([]);
+  };
+
+  /** Load one of the ready-made starter projects. */
+  const loadSample = (sample: HtmlSample) => {
+    setCode({ html: sample.html, css: sample.css, js: sample.js, title: sample.name });
+    setLoadedSample(sample.id);
+    setConsoleLog([]);
+    setShowSamples(false);
+    setActiveTab("html");
+    setViewMode("split");
+  };
+
+  /** Start a clean, minimal page without wiping the whole tool. */
+  const newPage = () => {
+    setCode({
+      html: '<h1>New page</h1>\n<p>Start building.</p>',
+      css: 'body {\n  font-family: system-ui, sans-serif;\n  background: #0f172a;\n  color: #e2e8f0;\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n}',
+      js: 'console.log("Ready.");',
+      title: "Untitled page",
+    });
+    setLoadedSample(null);
+    setConsoleLog([]);
+    setActiveTab("html");
   };
 
   const copyCode = async () => {
@@ -212,12 +242,16 @@ function HtmlCompiler() {
   };
 
   const download = () => {
-    const full = `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>My Page</title>\n<style>\n${code.css}\n</style>\n</head>\n<body>\n${code.html}\n<script>\n${code.js}\n<\/script>\n</body>\n</html>`;
+    const full = `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>${code.title || "My Page"}</title>\n<style>\n${code.css}\n</style>\n</head>\n<body>\n${code.html}\n<script>\n${code.js}\n<\/script>\n</body>\n</html>`;
     const blob = new Blob([full], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
+    const slug = (code.title || "page")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
     a.href = url;
-    a.download = "page.html";
+    a.download = `${slug || "page"}.html`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -251,12 +285,38 @@ function HtmlCompiler() {
     <div className="flex h-[100dvh] flex-col overflow-hidden bg-[#0a0a0f] text-slate-200">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-[#0f1318] border-b border-slate-800">
-        <div className="flex items-center gap-2">
-          <Code2 className="w-5 h-5 text-cyan-400" />
-          <span className="font-semibold text-sm">HTML Compiler</span>
-          <span className="text-[11px] text-slate-500 hidden sm:inline">Live Preview</span>
+        <div className="flex min-w-0 items-center gap-2">
+          <Code2 className="w-5 h-5 shrink-0 text-cyan-400" />
+          <span className="hidden font-semibold text-sm sm:inline">HTML Compiler</span>
+          <input
+            value={code.title ?? ""}
+            onChange={(e) => setCode((prev) => ({ ...prev, title: e.target.value }))}
+            aria-label="Page title"
+            placeholder="Untitled page"
+            className="h-7 w-[110px] min-w-0 rounded-md border border-slate-700 bg-[#0d1117] px-2 text-[12px] text-slate-200 placeholder:text-slate-600 focus:border-cyan-500/60 focus:outline-none sm:w-[170px]"
+          />
         </div>
         <div className="flex items-center gap-1.5">
+          <button
+            onClick={newPage}
+            className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:text-cyan-300 sm:bg-slate-700/50 sm:hover:bg-slate-700"
+            title="Start a new, empty page"
+          >
+            <FilePlus2 className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">New</span>
+          </button>
+          <button
+            onClick={() => setShowSamples((v) => !v)}
+            aria-expanded={showSamples}
+            className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${
+              showSamples ? "bg-cyan-500/20 text-cyan-300" : "text-slate-300 hover:text-cyan-300 sm:bg-slate-700/50 sm:hover:bg-slate-700"
+            }`}
+            title="Browse ready-made starter projects"
+          >
+            <LayoutTemplate className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Samples</span>
+            <span className="font-mono text-[10px] text-slate-500">{HTML_SAMPLES.length}</span>
+          </button>
           {/* View mode switcher - lives here so it is reachable in EVERY mode */}
           <div className="mr-0.5 flex items-center rounded-md border border-slate-700 p-0.5">
             {(["code", "split", "preview"] as const).map((mode) => (
@@ -288,6 +348,53 @@ function HtmlCompiler() {
           </button>
         </div>
       </div>
+
+      {/* Samples — full starter projects you can open, edit and download */}
+      {showSamples && (
+        <div className="max-h-[46vh] shrink-0 overflow-y-auto border-b border-slate-800 bg-[#0d1117] px-3 py-3">
+          <div className="mb-2 flex items-center justify-between">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+              Start from a sample
+            </p>
+            <button
+              onClick={() => setShowSamples(false)}
+              aria-label="Close samples"
+              className="rounded-md p-1 text-slate-500 transition-colors hover:text-slate-200"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {HTML_SAMPLES.map((sample) => (
+              <button
+                key={sample.id}
+                onClick={() => loadSample(sample)}
+                className={`flex items-start gap-2.5 rounded-lg border p-3 text-left transition-colors ${
+                  loadedSample === sample.id
+                    ? "border-cyan-500/60 bg-cyan-500/10"
+                    : "border-slate-800 bg-[#0f1318] hover:border-cyan-500/40"
+                }`}
+              >
+                <span className="text-[20px] leading-none" aria-hidden>
+                  {sample.emoji}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[12.5px] font-semibold text-slate-100">
+                    {sample.name}
+                  </span>
+                  <span className="mt-0.5 block text-[11px] leading-snug text-slate-400">
+                    {sample.desc}
+                  </span>
+                </span>
+              </button>
+            ))}
+          </div>
+          <p className="mt-2.5 text-[11px] text-slate-500">
+            Loading a sample replaces the current draft — use Export first if you want to keep it.
+            Your work auto-saves locally.
+          </p>
+        </div>
+      )}
 
       {/* Main content */}
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row overflow-hidden">

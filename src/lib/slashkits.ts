@@ -9,6 +9,8 @@
  * - Descriptions describe exactly what the tool does.
  */
 
+import { isNewItem } from "./ux";
+
 export interface SlashTool {
   slug: string;
   name: string;
@@ -17,6 +19,11 @@ export interface SlashTool {
   noUpload?: boolean;
   /** when true the slug is a full route (a hub), not a /tools page */
   hub?: boolean;
+  /**
+   * ISO date the tool shipped. Anything inside the freshness window
+   * (see `isNewItem` in lib/ux) is badged 🆕, so badges expire by themselves.
+   */
+  added?: string;
 }
 
 export interface SlashKitSection {
@@ -252,18 +259,18 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
     title: "Curiosities",
     icon: "🧭",
     tools: [
-      { slug: "spend-money", name: "Spend Billions", desc: "You have $100B. Spend every cent on burgers or islands", icon: "💸", noUpload: true },
-      { slug: "life-in-weeks", name: "Life in Weeks", desc: "Your whole life as one grid of tiny boxes", icon: "🗓️", noUpload: true },
-      { slug: "life-stats", name: "Your Life in Numbers", desc: "Heartbeats, blinks, steps - what your body has done", icon: "📊", noUpload: true },
-      { slug: "deep-sea", name: "Deep Sea", desc: "Scroll 11 km down and meet what lives at every depth", icon: "🌊", noUpload: true },
-      { slug: "trolley", name: "Trolley Problems", desc: "Ten ethical dilemmas that reveal what you value", icon: "🚋", noUpload: true },
-      { slug: "wiki-speedrun", name: "Wiki Speedrun", desc: "Race from one Wikipedia page to another via links", icon: "🏃" },
-      { slug: "hacker-typer", name: "Hacker Typer", desc: "Mash any keys, produce flawless movie-hacker code", icon: "💻", noUpload: true },
-      { slug: "dangerous-writing", name: "Dangerous Writing", desc: "Stop typing for 15s and everything vanishes. Keep going", icon: "✍️", noUpload: true },
-      { slug: "pixel-thoughts", name: "Pixel Thoughts", desc: "Put a worry in a star and watch it shrink away", icon: "🌠", noUpload: true },
-      { slug: "void", name: "Scream Into The Void", desc: "Type or shout it out, then watch it dissolve. Nothing saved", icon: "🕳️", noUpload: true },
-      { slug: "is-it", name: "Is It…?", desc: "Is it Friday? Christmas? A full moon? Committed answers", icon: "❓", noUpload: true },
-      { slug: "silk", name: "Silk Painter", desc: "Draw glowing symmetric thread art, download as PNG", icon: "🎨", noUpload: true },
+      { slug: "spend-money", name: "Spend Billions", desc: "You have $100B. Spend every cent on burgers or islands", icon: "💸", noUpload: true, added: "2026-09-12" },
+      { slug: "life-in-weeks", name: "Life in Weeks", desc: "Your whole life as one grid of tiny boxes", icon: "🗓️", noUpload: true, added: "2026-09-12" },
+      { slug: "life-stats", name: "Your Life in Numbers", desc: "Heartbeats, blinks, steps - what your body has done", icon: "📊", noUpload: true, added: "2026-09-12" },
+      { slug: "deep-sea", name: "Deep Sea", desc: "Scroll 11 km down and meet what lives at every depth", icon: "🌊", noUpload: true, added: "2026-09-12" },
+      { slug: "trolley", name: "Trolley Problems", desc: "Ten ethical dilemmas that reveal what you value", icon: "🚋", noUpload: true, added: "2026-09-12" },
+      { slug: "wiki-speedrun", name: "Wiki Speedrun", desc: "Race from one Wikipedia page to another via links", icon: "🏃", added: "2026-09-12" },
+      { slug: "hacker-typer", name: "Hacker Typer", desc: "Mash any keys, produce flawless movie-hacker code", icon: "💻", noUpload: true, added: "2026-09-12" },
+      { slug: "dangerous-writing", name: "Dangerous Writing", desc: "Stop typing for 15s and everything vanishes. Keep going", icon: "✍️", noUpload: true, added: "2026-09-12" },
+      { slug: "pixel-thoughts", name: "Pixel Thoughts", desc: "Put a worry in a star and watch it shrink away", icon: "🌠", noUpload: true, added: "2026-09-12" },
+      { slug: "void", name: "Scream Into The Void", desc: "Type or shout it out, then watch it dissolve. Nothing saved", icon: "🕳️", noUpload: true, added: "2026-09-12" },
+      { slug: "is-it", name: "Is It…?", desc: "Is it Friday? Christmas? A full moon? Committed answers", icon: "❓", noUpload: true, added: "2026-09-12" },
+      { slug: "silk", name: "Silk Painter", desc: "Draw glowing symmetric thread art, download as PNG", icon: "🎨", noUpload: true, added: "2026-09-12" },
     ],
   },
   {
@@ -295,6 +302,31 @@ const toolByName = new Map(ALL_SLASH_TOOLS.map((t) => [t.slug, t]));
 
 export const getSlashTool = (slug: string | undefined) =>
   slug ? toolByName.get(slug) : undefined;
+
+/** The section a tool belongs to, or undefined for hub links / unknown slugs. */
+export function toolSection(slug: string): SlashKitSection | undefined {
+  return TOOL_SECTIONS.find((s) => s.tools.some((t) => t.slug === slug));
+}
+
+/**
+ * Other tools from the same section, for the "Similar tools" row on a tool
+ * page. Falls back to the Popular section early on, when a category is small.
+ */
+export function similarTools(slug: string, limit = 3): SlashTool[] {
+  const section = toolSection(slug);
+  const pool = section ? section.tools : (TOOL_SECTIONS[0]?.tools ?? []);
+  const picked = pool.filter((t) => t.slug !== slug && !t.hub).slice(0, limit);
+  if (picked.length >= limit) return picked;
+  const extra = (TOOL_SECTIONS[0]?.tools ?? []).filter(
+    (t) => t.slug !== slug && !picked.some((p) => p.slug === t.slug),
+  );
+  return [...picked, ...extra].slice(0, limit);
+}
+
+/** Tools currently inside the freshness window, newest first. */
+export function newTools(): SlashTool[] {
+  return ALL_SLASH_TOOLS.filter((t) => t.added && isNewItem(t.added));
+}
 
 /** deterministic daily pick for the "Tool of the Day" spotlight */
 export function toolOfTheDay(): SlashTool {

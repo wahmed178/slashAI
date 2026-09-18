@@ -240,7 +240,7 @@ function SearchPage() {
 
       <div className="mt-5">
         {visible.length > 0 ? (
-          <CommandGrid commands={visible} query={q} />
+          <CommandGrid commands={visible} query={q} guide />
         ) : (
           <EmptyState
             title="No commands match that yet"

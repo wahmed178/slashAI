@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search, X, LoaderCircle, Star, StarOff } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
+import { StartHere } from "@/components/library/StartHere";
 import {
   SECTIONS,
   RESOURCES,
@@ -207,6 +208,11 @@ function DiscoverPage() {
           <span className="text-[#3fb950]">All free</span>
         </div>
       </header>
+
+      {/* ── first-time visitors: pick who you are, get pointed at the right shelf ── */}
+      <div className="mt-4">
+        <StartHere />
+      </div>
 
       {/* ── search (IG-style pill) ── */}
       <div className="relative mt-4">

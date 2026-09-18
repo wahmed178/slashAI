@@ -1,125 +1,98 @@
 # claude.md — SlashAI Agent Continuity File
 
 ## Last Updated
-August 2026
+18 September 2026 · APP_VERSION 2.28.0
 
-## Completed Features (confirmed live)
-- 5,635 AI slash commands with full search
-- 317+ curated free resources in Discover
-- 100+ free APIs documented
-- 62 YouTube channels in Discover
-- 25 Founder Generators (Claude-powered, 5/day free)
-- 20 Founder Roadmaps with step completion tracking
-- 560+ AI glossary terms across 8 categories
-- 80 viral /commands on /trending with Command of the Week
-- Build Journal with streaks + 12 badges
-- Live dashboard: NIFTY/SENSEX, gold/silver, global indices, earthquakes,
-  crypto, forex, weather, AQI, prayer times, cricket, football, NASA APOD,
-  ISS location, word of day
-- Hubs: Students, Developers, Creators, Professionals, Founders,
-  India, Finance, Designers, Health, Islam (53 resources, live widgets)
-- 16 curated command collections
-- 32 South Asia resources (India, Pakistan, Bangladesh, Arab)
-- About page with editorial content
-- Changelog page with timeline layout (v2.0-v2.5)
-- Glass tier waitlist page (/glass)
-- Hub listing page (/hub)
-- Bottom tab bar: Home | Commands | Discover | Tools | Hubs (5 tabs, route-based active states)
-- Saved accessible from sidebar + /favorites route
-- Global keyboard shortcuts: /, ?, G+H/D/T/L, Escape
-- PWA (offline, installable)
+## What This Is
+SlashAI (https://slashai.in) — a free, offline-first, no-account AI command and
+resource library. React + TanStack Start (SSR), hosted on Vercel, real Android
+wrapper via Capacitor. No backend, no auth, no database: everything personal
+lives in localStorage.
 
-## Local AI Assistant (/assistant)
-- Local browser AI powered by WebLLM (@mlc-ai/web-llm)
-- 3 models: Fast (1B, 760MB), Balanced (3B, 1.8GB), Quality (8B, 4.9GB)
-- WebGPU required — Chrome/Edge/Brave recommended
-- States: Welcome (model picker), Loading (download progress), Chat (streaming), Unsupported
-- Features: streaming tokens, markdown rendering, code blocks with copy, file attachments (PDF/DOCX/TXT)
-- COOP/COEP headers in vite.config.ts and vercel.json for SharedArrayBuffer support
-- /assistant/about: instructions page with browser compat, model comparison, troubleshooting
-- Worker: src/workers/ai-worker.ts (WebLLM in background thread)
-- Model preference saved in localStorage, conversation history (last 50 messages)
-- 100% private, no API keys, no cloud, no tracking
+## Stack (do not add to it casually)
+- React 19 + TanStack Start 1.168 / TanStack Router 1.170 (file-based routes in `src/routes/`)
+- Tailwind CSS 4 via `@tailwindcss/vite`, semantic CSS tokens in `src/styles.css`
+- shadcn/ui (Radix primitives) in `src/components/ui/`
+- lucide-react icons; sonner for toasts; framer-motion-style CSS animations
+- vite-plugin-pwa (precache + offline), Capacitor for the Android build
+- Package manager: **bun**. Typecheck: `bun tsc -b --noEmit`
 
-## In Progress / Planned
-- Top nav dropdown menus (desktop)
-- Persona onboarding overlay (first visit)
-- Glass badge system on premium features
-- /keyboard page
-- /compare AI models page
-- Top nav redesign with dropdowns
+## Route Map (current)
+- `/` homepage — live ticker, hero + UniversalSearch, library stats, SlashKits
+  preview, "Your most used", "You might like", weekly finds, footer
+- `/search` · `/find` · `/explore` (+ `/$category` / `/$category/$subcategory`)
+- `/c/$slug` command detail · `/collections` · `/trending` · `/favorites` · `/recent`
+- `/discover` feed (+ `/discover/reels`) — opens with **Start Here**
+- `/tools` SlashKits index · `/tools/<slug>` 150+ browser tools (each its own route file)
+- `/play` SlashPlay index · `/play/<slug>` 57 games (each its own route file)
+- `/learn` Slash Courses (paths + filters) · `/learn/$courseId` · `/learn/$courseId/$lessonId`
+- `/hub` + `/hub/<audience>` · `/live` · `/glossary` · `/roadmaps` · `/generators`
+- `/quiz` · `/journal` · `/graph` · `/workflow` · `/ai-tools` · `/assistant`
+- `/whats-new` · `/radar` · `/alternatives` · `/movies` · `/youtube` · `/blog`
+- `/about` (founder story + FAQ) · `/changelog` · `/keyboard` · `/privacy` · `/terms` · `/contact`
+- `/me` settings · `/everything` · `/random`
 
-## Free APIs Currently Integrated
-Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD (DEMO_KEY),
-TheSportsDB, HackerNews, Yahoo Finance unofficial, USGS Earthquakes,
-OpenAQ, WhereTheISS.at, ExchangeRate-API, AMFI NAV India, AlQuran.cloud,
-data.gov.in, data.gov, data.europa.eu, World Bank, UN Data,
-IMF Data, WHO GHO, OECD Data, Calendarific, TimeZoneDB, MediaStack,
-NewsData.io, GDELT, Polygon.io, Alpha Vantage, Art Institute Chicago,
-Metropolitan Museum, Harvard Art Museums, NASA Images, Smithsonian OA,
-Library of Congress, Gutendex, Open Trivia DB, The Trivia API, Quotable, Affirmations.dev
+## Navigation (important)
+There is **no sidebar and no drawer**. The bottom dock is the only navigation:
+Home · Discovery · 🎲 Random (elevated centre) · Hubs · ⚡ Slash (opens SlashBar
+overlay). Header holds ⚡ SlashAI logo, Live Dashboard pill, command search,
+theme cycle, About, Saved, Settings. Desktop uses `wide` (1700px) on dense pages.
 
-## Daily Quiz
-- Route: /quiz (3 views: category picker, quiz in progress, results)
-- API: Open Trivia Database (opentdb.com) — free, no key, 24 categories
-- Fallback API: The Trivia API (the-trivia-api.com)
-- Session token: localStorage "quiz-session-token"
-- Daily cache: localStorage "quiz-cache-{categoryId}-{difficulty}" — same questions all day, fresh at midnight
-- Streak: localStorage "quiz-streak", "quiz-best-streak", "quiz-last-date"
-- Timer: 25s (easy), 20s (medium), 15s (hard) — pauses on tab hidden
-- All API text decoded via textarea.innerHTML (HTML entities)
+## Theme System
+Themes: `dark` (default CSS) → `light` → `amoled` → `brutal`, cycled by one
+header button; `glass` still exists on `/designs`. Legacy theme ids are mapped in
+`LEGACY_THEME_MAP` (use-library.tsx). Accent palettes via `data-accent`.
+FOUC is prevented by the inline script in `__root.tsx`; keep it in sync with
+`DEFAULT_SETTINGS.theme` if you change the default.
 
-## Content Automation (GitHub Actions)
-- 3 workflows: weekly trending tools (Mon 6am), daily news (7am), weekly prompts (Wed 6am)
-- Scripts: scripts/fetch-trending-tools.cjs, scripts/fetch-daily-news.cjs, scripts/fetch-trending-prompts.cjs
-- Data files: src/data/trending-tools.json, src/data/daily-news.json, src/data/trending-prompts.json, src/data/changelog.json
-- Homepage reads trending-tools.json for "This week's free finds" (fallback to DROPS if empty)
-- All workflows support workflow_dispatch for manual triggers
-- daily-content.yml: fetches ZenQuotes + Art Institute Chicago artwork daily
+## UX / Personalisation layer (v2.28)
+`src/lib/ux.ts` is the single home for client-side personalisation:
+- `slash_first_visit` — absent ⇒ first-time visitor; `HowToUse` auto-expands and
+  then sets the flag so it is collapsed on later visits
+- `slashai-tool-clicks` — per-slug open counts → 🔥 Popular badges
+- `slashai-game-best` — personal bests (`getGameBest` / `saveGameBest`); cricket
+  migrates the legacy `play-cricket-best` key
+- `slashai-started` — courses/tools/paths the user has opened → ✅ badges + "My progress"
+- `slashai-last-copy` — powers the floating re-copy pill
+- `slashai-ux-interactions` — rolling interaction log (kind, id, tag) → "You might like"
+- `isNewItem(added)` — 🆕 badges age out automatically after `NEW_WINDOW_DAYS` (45)
+- `inferComplexity(text)` — placeholder-count difficulty used on command cards/pages
+- `ux.ts` dispatches `UX_CHANGE_EVENT` / `LAST_COPY_EVENT` on window;
+  `src/hooks/use-ux.ts` exposes `useUxTick()`, `useMounted()`, `useLastCopied()`
 
-## Free Tools (/tools)
-- 22 browser-based utility tools, all client-side, no uploads
-- File tools: image-compress, image-convert, images-to-pdf (jsPDF), html-to-pdf, markdown-to-html, csv-to-json
-- Calculators: sip-calculator, emi-calculator, gst-calculator, bmi-calculator, percentage, age-calculator
-- Time: world-clock (12 cities), pomodoro (25/5/15), countdown (save up to 5)
-- Screens: flip-clock, focus-screen, rain-screen, starfield, new-tab, quote-screen
-- Index page at /tools with 4 grouped sections and "No upload" badges
-- Tool routes: /tools/[slug] — each a separate static route file
-- jsPDF library used for images-to-pdf (installed via bun)
+Shared components added in v2.28 (all in `src/components/library/`):
+`HowToUse.tsx` · `TryInRow.tsx` · `ReportProblem.tsx` · `FloatingActions.tsx`
+(re-copy pill + back-to-top) · `CatalogueExtras.tsx` (how-to + similar row,
+rendered by AppShell on every `/tools/*` and `/play/*` screen) · `StartHere.tsx` ·
+`YouMightLike.tsx`.
 
-## Design Tokens (semantic CSS variables)
-All colors are defined as CSS custom properties in src/styles.css.
-Use Tailwind semantic classes (bg-background, bg-surface, text-foreground, etc.)
-instead of hard-coded hex values.
+## Catalogues — single sources of truth
+- Commands: `src/lib/commands.ts` over `src/data/commands.json`; helpers
+  `relatedCommands`, `commandTemplate`, `getRandomCommand`, `filterCommands`
+- SlashKits: `src/lib/slashkits.ts` (`TOOL_SECTIONS`, `similarTools`, `newTools`,
+  `toolOfTheDay`). `added` dates drive the 🆕 badge — no duplicates allowed.
+- SlashPlay: `src/lib/slashplay.ts` (`PLAY_SECTIONS`, `GAME_META`/`gameMeta`,
+  `SCORING_GAMES`, `NEW_GAME_SLUGS`, `newGames`, `gameSection`). 57 games.
+- Slash Courses: `src/lib/courses.ts` + `src/lib/learning-paths.ts`
+  (`LEARNING_PATHS`, `pathSummary`, `pathCourseIds`). `pathsCoverAllCourses()`
+  is a cheap integrity check — every course must appear in a path.
+- HTML Compiler samples: `src/lib/html-samples.ts` (`HTML_SAMPLES`, 14 projects).
+  Rule for that file: plain template literals only — no backticks or `${` inside
+  sample code, so nothing needs escaping.
 
-Dark theme: oklch-based near-black navy with electric cyan/teal primary
-Light theme: preserved via .light class override
-AMOLED theme: preserved via .amoled class override
+## Rules When Editing
+1. Never break published URLs. Any new route must render under AppShell.
+2. Keep the bottom-dock-only navigation; do not reintroduce a sidebar.
+3. Mobile-first (375px), semantic colour tokens only — no hard-coded hex in
+   components (exceptions: category tint palettes in `src/lib/category-colors.ts`).
+4. localStorage only. No accounts, no tracking, no backend calls for UX state.
+5. No placeholder content — counts and claims must match the real catalogue.
+6. Bump `APP_VERSION` in `src/lib/app-meta.ts` **and** add the matching entry to
+   both `CHANGELOG` (app-meta.ts) and `src/data/changelog.json`.
+7. Keep `README.md` current with the shipped feature list.
+8. Freebuff builds: `dist/` output, entry JS patched via `scripts/patch-entry.py`,
+   build command `sh scripts/build-for-freebuff.sh`.
+9. Run `bun tsc -b --noEmit` before finishing; never hand-edit `src/convex/_generated`.
 
-Card radius: 10px | Button radius: 6px | Badge radius: 4px
-Transitions: 150ms ease | Hover: translateY(-2px) + border lightens
-ResourceCardEnhanced: src/components/library/ResourceCardEnhanced.tsx
-- Favicon (40x40, Google Favicon API with letter fallback)
-- Pricing badge: green (Completely Free), blue (Free Tier), yellow (Open Source)
-- Save button: localStorage bookmark toggle
-
-Hub section grouping: HUB_SECTION_MAP in src/routes/hub.$audience.tsx
-- Each hub has named sections with icon + title + match function
-- Unmatched resources go into "More Resources" fallback
-
-LiveTicker: src/components/library/LiveTicker.tsx
-- Client-side fetch: NIFTY (Yahoo), SENSEX (Yahoo), BTC/ETH (CoinGecko), USD/INR (open.er-api), Prayer (Aladhan), Weather (Open-Meteo)
-- Each data point cached in localStorage with different TTLs
-- CSS ticker animation: 40s linear infinite, pauses on hover
-- Skeleton shimmer while loading, fails gracefully (skips missing items)
-
-## Motion & Animation
-- page-enter: 200ms fade+slide on main content wrappers
-- shimmer: skeleton loading blocks with gradient animation
-- smooth scroll: scroll-behavior: smooth on html
-- copy-feedback: green flash + "Copied" text, self-resets after 2s
-- stagger-children: cascade animation for card grids (up to 8 items)
-
-## Next Agent Instructions
-Read this file first. Read memory.md. Check /changelog.
-Then proceed with the task described. Commit after every page built.
+## Owner
+Waseem Ahmed — Hyderabad, India · GitHub: [wahmed178]

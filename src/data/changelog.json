@@ -1,6 +1,22 @@
 {
-  "version": "2.27.0",
+  "version": "2.28.0",
   "entries": [
+    {
+      "version": "2.28.0",
+      "date": "2026-09-18",
+      "changes": [
+        "Commands now carry a difficulty badge (🟢 Beginner / 🟡 Intermediate / 🔴 Advanced) inferred from their placeholders, plus a 4-step 'How to use this command' guide that opens for first-time visitors and stays collapsed afterwards",
+        "New 'Try in ChatGPT / Gemini / Claude' quick-launch buttons copy the command and open the assistant; command pages add a 'You might also like' row and a one-tap 'Something wrong? Report it' link",
+        "SlashKits: 'Just added' shelf, 🆕 New and 🔥 Popular badges, a '🔒 Runs in your browser · Nothing uploaded' trust line on every card, and a 'How to use / Similar tools' block under every tool",
+        "SlashPlay: ⏱ session length and 🎯 difficulty on every game card, a 'Surprise me' random-game button, a New Games row, and 🏆 your personal best shown on the card",
+        "Slash Courses: 4 learning paths (AI Beginner, Developer, Creator, Career Growth), topic filters, hour estimates and started-course progress tracking",
+        "Discover opens with 'Start Here' so new visitors can pick student, professional or developer and land on the right hub",
+        "Floating 'copy the last command again' pill (auto-hides after 30 seconds) and a back-to-top button after 400px of scrolling",
+        "Cricket: 4 formats (Blitz 12 balls, Solo 24, Chase AI, 2P duel), share-your-score, a beat-your-best challenge, and frame-rate independent physics so 120Hz screens play at the same speed as 60Hz",
+        "HTML Compiler ships 14 ready-made starter projects (landing page, portfolio, pricing table, to-do app, gallery, login, dashboard, countdown, quiz, clock, navbar, particles, blog, blank) — load, preview, edit and download as one .html file",
+        "Homepage adds a 'You might like' row with 4 suggestions drawn from what you opened on this device"
+      ]
+    },
     {
       "version": "2.27.0",
       "date": "2026-09-17",

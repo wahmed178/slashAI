@@ -108,7 +108,7 @@ function CategoryPage() {
       <h2 className="mt-8 mb-3 text-lg font-bold tracking-tight text-foreground">
         Popular in {node.category}
       </h2>
-      <CommandGrid commands={popular} />
+      <CommandGrid commands={popular} guide />
     </AppShell>
   );
 }

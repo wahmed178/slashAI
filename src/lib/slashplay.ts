@@ -12,12 +12,20 @@
 
 export type Players = "Solo" | "2P" | "2P + AI" | "Solo + 2P";
 
+/** How demanding a game is to pick up. */
+export type Difficulty = "Easy" | "Medium" | "Hard";
+
 export interface PlayGame {
   slug: string;
   name: string;
   desc: string;
   icon: string;
   players: Players;
+  /**
+   * ISO date the game shipped. Items added within `NEW_WINDOW_DAYS`
+   * (see lib/ux) get the 🆕 badge, so the badge ages out on its own.
+   */
+  added?: string;
 }
 
 export interface PlaySection {
@@ -82,11 +90,11 @@ export const PLAY_SECTIONS: PlaySection[] = [
     title: "Brain Training",
     icon: "🧠",
     games: [
-      { slug: "memory-palace", name: "Memory Palace", desc: "Place items in rooms, then recall every room - method of loci", icon: "🏛️", players: "Solo" },
+      { slug: "memory-palace", name: "Memory Palace", desc: "Place items in rooms, then recall every room - method of loci", icon: "🏛️", players: "Solo", added: "2026-09-10" },
       { slug: "stroop-test", name: "Stroop Test", desc: "The 1935 psychology classic - name the ink, fight the reflex", icon: "🌈", players: "Solo" },
-      { slug: "stop-the-color", name: "Stop the Color", desc: "Quick-fire Stroop - 30 seconds, most correct taps wins", icon: "🎨", players: "Solo" },
+      { slug: "stop-the-color", name: "Stop the Color", desc: "Quick-fire Stroop - 30 seconds, most correct taps wins", icon: "🎨", players: "Solo", added: "2026-09-10" },
       { slug: "digit-span", name: "Digit Span", desc: "Digits flash once - type them back, forward or reversed", icon: "🔢", players: "Solo" },
-      { slug: "schulte-table", name: "Schulte Table", desc: "Tap 1-N in order, eyes fixed on centre - pilot vision drill", icon: "🎯", players: "Solo" },
+      { slug: "schulte-table", name: "Schulte Table", desc: "Tap 1-N in order, eyes fixed on centre - pilot vision drill", icon: "🎯", players: "Solo", added: "2026-09-10" },
     ],
   },
   {
@@ -129,6 +137,125 @@ export const PLAY_SECTIONS: PlaySection[] = [
 ];
 
 /** all games, preserving section order */
+/* ─────────────────────────── card metadata ───────────────────────────
+ * Typical session length (minutes) and pick-up difficulty, shown on every
+ * game card as "⏱ 2 min · 🎯 Easy". Kept as a lookup so the catalogue rows
+ * stay short; `gameMeta()` supplies an honest fallback for anything unlisted.
+ */
+export interface GameMeta {
+  minutes: number;
+  level: Difficulty;
+}
+
+const GAME_META: Record<string, GameMeta> = {
+  // Multiplayer
+  cricket: { minutes: 3, level: "Medium" },
+  "tic-tac-toe": { minutes: 1, level: "Easy" },
+  "connect-four": { minutes: 3, level: "Easy" },
+  "dots-boxes": { minutes: 4, level: "Easy" },
+  battleship: { minutes: 6, level: "Medium" },
+  "dice-duel": { minutes: 4, level: "Easy" },
+  checkers: { minutes: 6, level: "Medium" },
+  reversi: { minutes: 6, level: "Medium" },
+  "snakes-ladders": { minutes: 5, level: "Easy" },
+  "math-duel": { minutes: 2, level: "Easy" },
+  // Card
+  blackjack: { minutes: 4, level: "Easy" },
+  "go-fish": { minutes: 5, level: "Easy" },
+  "memory-match": { minutes: 3, level: "Easy" },
+  "higher-lower": { minutes: 2, level: "Easy" },
+  // Arcade
+  snake: { minutes: 3, level: "Medium" },
+  "2048": { minutes: 6, level: "Medium" },
+  minesweeper: { minutes: 7, level: "Hard" },
+  pong: { minutes: 3, level: "Medium" },
+  breakout: { minutes: 4, level: "Medium" },
+  "sky-dash": { minutes: 2, level: "Hard" },
+  // Word & Puzzle
+  hangman: { minutes: 3, level: "Easy" },
+  "word-guess": { minutes: 3, level: "Medium" },
+  "word-scramble": { minutes: 2, level: "Easy" },
+  "reach-24": { minutes: 3, level: "Hard" },
+  "peg-jump": { minutes: 4, level: "Medium" },
+  "odd-one-out": { minutes: 1, level: "Easy" },
+  capitals: { minutes: 3, level: "Medium" },
+  // Brain training
+  "memory-palace": { minutes: 5, level: "Medium" },
+  "stroop-test": { minutes: 2, level: "Medium" },
+  "stop-the-color": { minutes: 2, level: "Medium" },
+  "digit-span": { minutes: 3, level: "Medium" },
+  "schulte-table": { minutes: 2, level: "Hard" },
+  // Viral & zen
+  "perfect-circle": { minutes: 1, level: "Easy" },
+  "password-game": { minutes: 15, level: "Hard" },
+  kindle: { minutes: 2, level: "Easy" },
+  "guess-the-year": { minutes: 3, level: "Medium" },
+  "cosmic-dive": { minutes: 3, level: "Easy" },
+  "maze-runner": { minutes: 4, level: "Medium" },
+  "tap-the-difference": { minutes: 2, level: "Medium" },
+  bounce: { minutes: 2, level: "Hard" },
+  "flag-guess": { minutes: 3, level: "Medium" },
+  "would-you-rather": { minutes: 4, level: "Easy" },
+  "bubble-wrap": { minutes: 2, level: "Easy" },
+  "ten-seconds": { minutes: 1, level: "Easy" },
+  "aim-trainer": { minutes: 2, level: "Medium" },
+  "lights-out": { minutes: 5, level: "Hard" },
+  "fake-or-fact": { minutes: 3, level: "Medium" },
+  "emoji-phrase": { minutes: 3, level: "Medium" },
+  // Quick plays
+  "rock-paper-scissors": { minutes: 1, level: "Easy" },
+  "rock-paper-scissors-lizard-spock": { minutes: 1, level: "Easy" },
+  simon: { minutes: 2, level: "Medium" },
+  "whack-a-mole": { minutes: 2, level: "Easy" },
+  "reaction-test": { minutes: 1, level: "Easy" },
+  dice: { minutes: 1, level: "Easy" },
+  "coin-flip": { minutes: 1, level: "Easy" },
+  "typing-test": { minutes: 2, level: "Medium" },
+  "random-number": { minutes: 1, level: "Easy" },
+};
+
+/** The section a game belongs to, or undefined for an unknown slug. */
+export function gameSection(slug: string): PlaySection | undefined {
+  return PLAY_SECTIONS.find((s) => s.games.some((g) => g.slug === slug));
+}
+
+/** Games inside the freshness window, newest first. */
+export function newGames(): PlayGame[] {
+  return ALL_PLAY_GAMES.filter((g) => {
+    if (g.added) return true;
+    return (NEW_GAME_SLUGS as readonly string[]).includes(g.slug);
+  });
+}
+
+/** Session length + difficulty for a game, with a safe fallback. */
+export function gameMeta(slug: string): GameMeta {
+  return GAME_META[slug] ?? { minutes: 3, level: "Medium" };
+}
+
+/** Games that keep a score worth beating, so cards can show "Your best". */
+export const SCORING_GAMES = new Set([
+  "cricket",
+  "snake",
+  "2048",
+  "breakout",
+  "sky-dash",
+  "higher-lower",
+  "word-scramble",
+  "capitals",
+  "simon",
+  "whack-a-mole",
+  "typing-test",
+  "reaction-test",
+  "number-guess",
+  "aim-trainer",
+  "schulte-table",
+  "digit-span",
+  "flag-guess",
+]);
+
+/** Games listed under "New Games" at the top of /play - newest release first. */
+export const NEW_GAME_SLUGS = ["schulte-table", "stop-the-color", "memory-palace"] as const;
+
 export const ALL_PLAY_GAMES: PlayGame[] = PLAY_SECTIONS.flatMap((s) => s.games);
 
 /** total game count (deduped - slugs are unique by rule) */
