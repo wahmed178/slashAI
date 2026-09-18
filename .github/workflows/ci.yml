@@ -34,5 +34,13 @@ jobs:
       - name: Check the command catalogue
         run: bun run catalog:validate
 
+      - name: Syntax-check the data scripts
+        run: |
+          # These run on a schedule and only fail silently otherwise, so a
+          # syntax error would stay invisible until the next cron tick.
+          for f in scripts/*.cjs scripts/lib/*.cjs; do
+            node --check "$f"
+          done
+
       - name: Typecheck
         run: bun tsc -b --noEmit
