@@ -31,6 +31,8 @@ function SitemapPage() {
     { to: "/glossary", label: "AI Glossary" },
     { to: "/ai-tools", label: "AI Tools Directory" },
     { to: "/blog", label: "Blog" },
+    { to: "/suggest", label: "Suggest a Command" },
+    { to: "/history", label: "Copy History" },
     { to: "/about", label: "About" },
     { to: "/changelog", label: "Changelog" },
   ];

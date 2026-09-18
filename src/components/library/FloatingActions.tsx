@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, Check, Copy } from "lucide-react";
+import { ArrowUp, Check, Copy, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { useLastCopied } from "@/hooks/use-ux";
-import { getLastCopied } from "@/lib/ux";
+import { getLastCopied, clearLastCopied } from "@/lib/ux";
 
 /** How long the re-copy pill lingers after a copy with no further activity. */
-const COPY_PILL_MS = 30_000;
+const COPY_PILL_MS = 15_000;
 /** Scroll distance before the back-to-top button appears. */
 const TOP_THRESHOLD = 400;
 
@@ -28,15 +28,29 @@ export function FloatingActions() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // every new copy re-arms the pill; it fades out after a quiet spell
+  // every new copy re-arms the pill (unless disabled in settings); it fades out after a quiet spell
   useEffect(() => {
-    if (!last) return;
+    if (!last) {
+      setShowCopy(false);
+      return;
+    }
+    if (typeof window !== "undefined" && window.localStorage.getItem("slashai.hideCopyPill") === "true") {
+      setShowCopy(false);
+      return;
+    }
     setShowCopy(true);
     setRecopied(false);
     window.clearTimeout(hideTimer.current);
     hideTimer.current = window.setTimeout(() => setShowCopy(false), COPY_PILL_MS);
     return () => window.clearTimeout(hideTimer.current);
   }, [last]);
+
+  const dismiss = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowCopy(false);
+    clearLastCopied();
+    toast.info("Dismissed. You can disable this permanently in Settings (/me)");
+  };
 
   const recopy = () => {
     const text = last ?? getLastCopied();
@@ -71,25 +85,36 @@ export function FloatingActions() {
       )}
 
       {showCopy && preview && (
-        <button
-          type="button"
-          onClick={recopy}
-          aria-label="Copy the last command again"
-          title={preview}
-          className="pointer-events-auto flex max-w-[min(72vw,320px)] items-center gap-2 rounded-full border border-primary/40 bg-surface/95 py-1.5 pr-3.5 pl-2 text-left shadow-lg backdrop-blur transition-colors hover:border-primary"
-        >
-          <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
-            {recopied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
-          </span>
-          <span className="min-w-0">
-            <span className="block text-[9px] font-bold tracking-wider text-primary uppercase">
-              {recopied ? "Copied" : "Copy again"}
+        <div className="pointer-events-auto flex items-center gap-1 rounded-full border border-primary/40 bg-surface/95 py-1 pr-1.5 pl-2 shadow-lg backdrop-blur transition-colors hover:border-primary">
+          <button
+            type="button"
+            onClick={recopy}
+            aria-label="Copy the last command again"
+            title={preview}
+            className="flex max-w-[min(65vw,280px)] items-center gap-2 text-left"
+          >
+            <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+              {recopied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
             </span>
-            <span className="block truncate font-mono text-[11px] text-muted-foreground">
-              {preview.slice(0, 48)}
+            <span className="min-w-0">
+              <span className="block text-[9px] font-bold tracking-wider text-primary uppercase">
+                {recopied ? "Copied" : "Copy again"}
+              </span>
+              <span className="block truncate font-mono text-[11px] text-muted-foreground">
+                {preview.slice(0, 40)}
+              </span>
             </span>
-          </span>
-        </button>
+          </button>
+          <button
+            type="button"
+            onClick={dismiss}
+            aria-label="Dismiss"
+            title="Dismiss"
+            className="ml-1 flex size-6 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            <X className="size-3.5" />
+          </button>
+        </div>
       )}
     </div>
   );

@@ -78,7 +78,7 @@ export const ROADMAPS: Roadmap[] = [
         name: "Weeks 2-3 · Build the spine",
         steps: [
           { title: "Walk the happy path daily", detail: "Every evening, use your own app end-to-end. Broken today means fix tomorrow morning." },
-          { title: "Hardcode what you can", detail: "Fake the data, skip the admin panel, email from your own address. Real infrastructure comes after demand." },
+          { title: "Hardcode what you can", detail: "Seed static data, skip the admin panel, email from your own address. Real infrastructure comes after demand." },
           { title: "Instrument as you go", detail: "One analytics event per key action (signup, core action, upgrade) so week 4 isn't guesswork." },
         ],
       },

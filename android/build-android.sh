@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Build script for the SlashAI Android app (Capacitor native WebView wrapper).
-# This runs on your local machine, not inside the Lovable editor.
+# This runs on your local development machine.
 #
 # Requirements:
 #   - bun (https://bun.sh)

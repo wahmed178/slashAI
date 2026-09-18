@@ -21,7 +21,7 @@ export const EXTRA_ROADMAPS: Roadmap[] = [
         { title: "Test with 5 real users", detail: "Share the link. Watch them use it. Fix the 3 biggest friction points." },
       ]},
       { name: "Week 3 · Launch & iterate", steps: [
-        { title: "Polish the landing page", detail: "Headline, 3 benefits, social proof (even if fake testimonials from testers), pricing, FAQ." },
+        { title: "Polish the landing page", detail: "Headline, 3 benefits, social proof (early feedback from beta testers), pricing, FAQ." },
         { title: "Launch on Product Hunt + Twitter", detail: "Prepare your PH listing 3 days early. Schedule tweets. Ask friends to support on launch day." },
         { title: "Collect feedback religiously", detail: "Add a feedback widget or a simple Typeform. Every response is gold for the next iteration." },
         { title: "Ship 2 improvements in week 1 post-launch", detail: "Show you're listening. Public changelog or tweets about what you fixed." },
@@ -236,7 +236,7 @@ export const EXTRA_ROADMAPS: Roadmap[] = [
   {
     id: "ai-wrapper-7",
     title: "Build an AI Wrapper Product in 7 Days",
-    tagline: "Claude/OpenAI API + Lovable/Cursor - ship fast, validate faster.",
+    tagline: "Claude/OpenAI API + Cursor/v0 - ship fast, validate faster.",
     audience: "Developers, Founders",
     duration: "7 days",
     phases: [

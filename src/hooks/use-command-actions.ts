@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useLibrary } from "@/hooks/use-library";
 import { commandPath, commandTemplate, type SlashCommand } from "@/lib/commands";
 import { trackInteraction } from "@/lib/intelligence";
-import { recordUxInteraction, setLastCopied } from "@/lib/ux";
+import { recordUxInteraction, setLastCopied, recordCopyHistory } from "@/lib/ux";
 import { SITE_URL } from "@/lib/seo";
 
 /** Small, non-intrusive celebrations at the moments that matter. */
@@ -36,6 +36,12 @@ export function useCommandActions() {
       recordUxInteraction("command", cmd.id, cmd.category);
       // powers the floating "copy the last command again" pill
       setLastCopied(text);
+      recordCopyHistory({
+        id: cmd.id,
+        name: cmd.command,
+        category: cmd.category,
+        text,
+      });
       const total = recordCopy();
       const milestone = COPY_MILESTONES[total];
       if (milestone) window.setTimeout(() => toast(milestone), 500);

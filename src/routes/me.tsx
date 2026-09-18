@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Check,
+  Copy,
   Flame,
   History,
   Info,
@@ -24,6 +25,7 @@ import { getCommand, type SlashCommand } from "@/lib/commands";
 import { streakMessage } from "@/lib/engagement";
 import { APP_DETAILS } from "@/lib/app-meta";
 import { CATEGORY_TREE, VERIFIED_TOTAL } from "@/lib/commands";
+import { clearLastCopied } from "@/lib/ux";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/me")({
@@ -83,6 +85,10 @@ function MePage() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [editingPersona, setEditingPersona] = useState(false);
   const [editingName, setEditingName] = useState(false);
+  const [hideCopyPill, setHideCopyPill] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("slashai.hideCopyPill") === "true";
+  });
 
   const persona = getPersona(settings.persona);
   const [nameDraft, setNameDraft] = useState("");
@@ -308,13 +314,53 @@ function MePage() {
       {recent.length > 0 && (
         <Section title="Recent">
           <CommandGrid commands={recent} />
-          <Button asChild variant="ghost" size="sm" className="mt-2 gap-1.5">
-            <Link to="/recent">
-              <History className="size-3.5" /> Full history
-            </Link>
-          </Button>
+          <div className="mt-2.5 flex flex-wrap items-center gap-2">
+            <Button asChild variant="ghost" size="sm" className="gap-1.5">
+              <Link to="/recent">
+                <History className="size-3.5" /> Recently opened
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="gap-1.5">
+              <Link to="/history">
+                <Copy className="size-3.5" /> View copy history
+              </Link>
+            </Button>
+          </div>
         </Section>
       )}
+
+      {/* ── Interface preferences ── */}
+      <Section title="Interface preferences">
+        <div className="panel divide-y divide-border rounded-xl">
+          <label className="flex items-center justify-between gap-4 p-3.5 cursor-pointer">
+            <div className="min-w-0 flex-1">
+              <span className="block text-sm font-medium text-foreground">
+                Floating re-copy button
+              </span>
+              <span className="block text-xs text-muted-foreground">
+                Show a floating bar above the dock when you copy a command so you can re-copy it in one tap.
+              </span>
+            </div>
+            <input
+              type="checkbox"
+              checked={!hideCopyPill}
+              onChange={(e) => {
+                const hide = !e.target.checked;
+                setHideCopyPill(hide);
+                if (hide) {
+                  window.localStorage.setItem("slashai.hideCopyPill", "true");
+                  clearLastCopied();
+                  toast.success("Floating copy bar disabled");
+                } else {
+                  window.localStorage.removeItem("slashai.hideCopyPill");
+                  toast.success("Floating copy bar enabled");
+                }
+              }}
+              className="size-4 rounded border-border text-primary focus:ring-primary accent-primary"
+            />
+          </label>
+        </div>
+      </Section>
 
       {/* ── Backup & restore ── */}
       <Section title="Backup & restore">

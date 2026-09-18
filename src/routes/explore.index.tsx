@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronRight, Copy, Check } from "lucide-react";
+import { ChevronRight, Copy, Check, Sparkles } from "lucide-react";
 import { useState, useCallback } from "react";
 
 import { AppShell } from "@/components/library/AppShell";
+import { Button } from "@/components/ui/button";
 import { categoryIcon } from "@/components/library/icons";
 import { CATEGORY_TREE, SUBCATEGORY_TOTAL, VERIFIED_TOTAL } from "@/lib/commands";
 import { categoryHref } from "@/lib/explore-slugs";
@@ -237,6 +238,21 @@ function ExplorePage() {
             })}
           </div>
         </section>
+
+        {/* ── Suggest a command prompt ── */}
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-surface p-5 text-center sm:text-left">
+          <div>
+            <h3 className="text-sm font-bold text-foreground">Have a command that saves you time?</h3>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              Suggest your favorite prompt to be added to the free catalog.
+            </p>
+          </div>
+          <Button asChild size="sm" className="gap-1.5 shrink-0">
+            <Link to="/suggest">
+              <Sparkles className="size-3.5" /> Suggest a command
+            </Link>
+          </Button>
+        </div>
       </div>
     </AppShell>
   );

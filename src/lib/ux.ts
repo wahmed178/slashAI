@@ -20,6 +20,8 @@ export const UX_KEYS = {
   lastCopy: "slashai-last-copy",
   /** [{ kind, id, at }] — rolling interaction log for "you might like" */
   interactions: "slashai-ux-interactions",
+  /** [{ id, name, category, text, timestamp }] — copy history */
+  copyHistory: "slash_history",
 } as const;
 
 /** Fired on window whenever any UX helper changes stored state. */
@@ -287,3 +289,45 @@ export function complexityBadge(text: string): string {
   const c = inferComplexity(text);
   return `${c.emoji} ${c.label}`;
 }
+
+/* ─────────────────────────── copy history ─────────────────────────────── */
+
+export interface CopyHistoryItem {
+  id: string;
+  name: string;
+  category: string;
+  text: string;
+  timestamp: number;
+}
+
+const MAX_COPY_HISTORY = 50;
+
+export function getCopyHistory(): CopyHistoryItem[] {
+  return readJson<CopyHistoryItem[]>(UX_KEYS.copyHistory, []);
+}
+
+export function recordCopyHistory(item: { id: string; name: string; category: string; text: string }): void {
+  const current = getCopyHistory();
+  const next: CopyHistoryItem[] = [
+    { ...item, timestamp: Date.now() },
+    ...current.filter((c) => c.text !== item.text),
+  ].slice(0, MAX_COPY_HISTORY);
+  writeJson(UX_KEYS.copyHistory, next);
+}
+
+export function clearCopyHistory(): void {
+  writeJson(UX_KEYS.copyHistory, []);
+}
+
+export function timeAgo(timestamp: number): string {
+  const diff = Date.now() - timestamp;
+  const mins = Math.floor(diff / 60_000);
+  if (mins < 1) return "Just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days === 1) return "Yesterday";
+  return `${days}d ago`;
+}
+

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Star, Copy, Wand2, Hash, Share2, Shuffle, Check, ExternalLink } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -6,9 +6,12 @@ import { categoryIcon } from "./icons";
 import { HowToUse } from "./HowToUse";
 import { TryInRow } from "./TryInRow";
 import { ReportProblem } from "./ReportProblem";
+import { CommandVariableEditor } from "./CommandVariableEditor";
+import { CommandRating } from "./CommandRating";
 import { useCommandActions } from "@/hooks/use-command-actions";
 import {
   CATEGORY_ICONS,
+  COMMANDS,
   commandTemplate,
   getRandomCommand,
   relatedCommands,
@@ -32,13 +35,26 @@ export function CommandDetailContent({
   onOpenCommand,
 }: Props) {
   const Icon = categoryIcon(CATEGORY_ICONS[command.category]);
-  const related = relatedCommands(command);
   const complexity = inferComplexity(`${command.command}\n${command.example}`);
   const { copyCommand, copyPrompt, runCommand, shareCommand } = useCommandActions();
   const [template, setTemplate] = useState(() => commandTemplate(command));
   const [copied, setCopied] = useState(false);
+  const [copiedRelatedId, setCopiedRelatedId] = useState<string | null>(null);
   const [targetId, setTargetId] = useState(defaultAiTarget.id);
   const target = AI_TARGETS.find((t) => t.id === targetId) ?? defaultAiTarget;
+
+  // 4 related commands from same category, excluding current command
+  const related = useMemo(() => {
+    const list = relatedCommands(command, 6).filter((c) => c.id !== command.id);
+    if (list.length >= 4) return list.slice(0, 4);
+    const sameCat = COMMANDS.filter((c) => c.category === command.category && c.id !== command.id);
+    const combined = [...list];
+    for (const c of sameCat) {
+      if (!combined.some((x) => x.id === c.id)) combined.push(c);
+      if (combined.length >= 4) break;
+    }
+    return combined.slice(0, 4);
+  }, [command]);
 
   useEffect(() => {
     setTemplate(commandTemplate(command));
@@ -48,6 +64,12 @@ export function CommandDetailContent({
   const flash = () => {
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
+  };
+
+  const copyRelated = (cmd: SlashCommand) => {
+    copyCommand(cmd);
+    setCopiedRelatedId(cmd.id);
+    window.setTimeout(() => setCopiedRelatedId(null), 1600);
   };
 
   return (
@@ -88,6 +110,14 @@ export function CommandDetailContent({
           {command.type}
         </span>
       </div>
+
+      {/* Interactive Variable Customizer / Highlighter */}
+      <CommandVariableEditor
+        command={command}
+        onCustomizedCopy={(text) => {
+          setTemplate(text);
+        }}
+      />
 
       {/* first-run 4-step guide, then the one-tap assistants */}
       <HowToUse />
@@ -193,16 +223,20 @@ export function CommandDetailContent({
         ))}
       </section>
 
+      {/* Client-side 👍 👎 Rating System */}
+      <CommandRating slug={command.id} />
+
+      {/* Related Commands Section: 4 commands, same category, scroll on mobile, 2x2 on desktop */}
       {related.length > 0 && (
-        <section>
+        <section className="space-y-3">
           <div className="flex items-center justify-between gap-2">
-        <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-          You might also like
-        </h4>
+            <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              You might also like
+            </h4>
             <Button
               variant="ghost"
               size="sm"
-              className="h-7 gap-1.5 text-xs"
+              className="h-7 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
               onClick={() =>
                 onOpenCommand(
                   related[Math.floor(Math.random() * related.length)] ??
@@ -213,17 +247,47 @@ export function CommandDetailContent({
               <Shuffle className="size-3.5" /> Random related
             </Button>
           </div>
-          <div className="mt-2 flex flex-wrap gap-1.5">
-            {related.map((r) => (
-              <button
-                key={r.id}
-                type="button"
-                onClick={() => onOpenCommand(r)}
-                className="rounded-md border border-border bg-muted px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              >
-                {r.command}
-              </button>
-            ))}
+
+          <div className="flex gap-3 overflow-x-auto pb-2 sm:pb-0 sm:grid sm:grid-cols-2">
+            {related.map((r) => {
+              const isCopied = copiedRelatedId === r.id;
+              return (
+                <div
+                  key={r.id}
+                  onClick={() => onOpenCommand(r)}
+                  className="group relative flex min-w-[240px] sm:min-w-0 flex-col justify-between rounded-xl border border-border bg-surface p-3.5 transition-all hover:border-primary/50 cursor-pointer"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="rounded-md border border-border bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
+                        {r.category}
+                      </span>
+                      <button
+                        type="button"
+                        aria-label={`Copy ${r.command}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          copyRelated(r);
+                        }}
+                        className="rounded-md p-1.5 text-muted-foreground hover:bg-surface-elevated hover:text-foreground transition-colors"
+                      >
+                        {isCopied ? (
+                          <Check className="size-3.5 text-primary" />
+                        ) : (
+                          <Copy className="size-3.5" />
+                        )}
+                      </button>
+                    </div>
+                    <p className="mt-2 font-mono text-xs font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+                      {r.command}
+                    </p>
+                    <p className="mt-1 text-[11px] text-muted-foreground line-clamp-2">
+                      {r.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
       )}

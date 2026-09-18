@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   Activity,
+  Check,
   Copy,
   NotebookPen,
   Sparkles,
@@ -10,6 +11,7 @@ import {
   History,
   Flame,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { AppShell } from "@/components/library/AppShell";
 import { LiveTicker } from "@/components/library/LiveTicker";
@@ -17,8 +19,16 @@ import { UniversalSearch } from "@/components/library/UniversalSearch";
 import { Discover } from "@/components/library/Discover";
 import { ResourceGrid } from "@/components/library/ResourceCard";
 import { YouMightLike } from "@/components/library/YouMightLike";
+import { DailyTipCard } from "@/components/library/DailyTipCard";
 import { categoryIcon } from "@/components/library/icons";
 import { useLibrary } from "@/hooks/use-library";
+import {
+  getCopyHistory,
+  timeAgo,
+  UX_CHANGE_EVENT,
+  LAST_COPY_EVENT,
+  type CopyHistoryItem,
+} from "@/lib/ux";
 import {
   CATEGORY_ICONS,
   CATEGORY_TREE,
@@ -150,6 +160,93 @@ function YourWeekDigest() {
       </div>
       )}
 
+    </section>
+  );
+}
+
+/* ─────────────── Recently Copied Section ─────────────── */
+function RecentlyCopiedHomeSection() {
+  const [items, setItems] = useState<CopyHistoryItem[]>([]);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const refresh = () => {
+    setItems(getCopyHistory().slice(0, 3));
+  };
+
+  useEffect(() => {
+    refresh();
+    const handleUpdate = () => refresh();
+    window.addEventListener(UX_CHANGE_EVENT, handleUpdate);
+    window.addEventListener(LAST_COPY_EVENT, handleUpdate);
+    return () => {
+      window.removeEventListener(UX_CHANGE_EVENT, handleUpdate);
+      window.removeEventListener(LAST_COPY_EVENT, handleUpdate);
+    };
+  }, []);
+
+  if (items.length === 0) return null;
+
+  const copyItem = async (item: CopyHistoryItem) => {
+    try {
+      await navigator.clipboard.writeText(item.text);
+      setCopiedId(item.id + item.timestamp);
+      toast.success(`Copied ${item.name}`);
+      window.setTimeout(() => setCopiedId(null), 1800);
+    } catch {
+      toast.error("Clipboard blocked");
+    }
+  };
+
+  return (
+    <section className="mt-6 rounded-2xl border border-border bg-surface p-4">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+          <History className="size-3.5 text-primary" /> Recently Copied
+        </h2>
+        <Link
+          to="/history"
+          className="flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+        >
+          Full history <ArrowRight className="size-3.5" />
+        </Link>
+      </div>
+
+      <div className="mt-3 grid gap-2 sm:grid-cols-3">
+        {items.map((item) => (
+          <div
+            key={item.id + item.timestamp}
+            className="flex flex-col justify-between rounded-xl border border-border bg-surface-elevated p-3 text-xs"
+          >
+            <div>
+              <div className="flex items-center justify-between gap-1 text-[10px] text-muted-foreground">
+                <span className="rounded bg-muted px-1.5 py-0.5">{item.category}</span>
+                <span>{timeAgo(item.timestamp)}</span>
+              </div>
+              <p className="mt-1.5 font-mono font-semibold text-foreground truncate">
+                {item.name}
+              </p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground line-clamp-1">
+                {item.text}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => copyItem(item)}
+              className="mt-2.5 flex items-center justify-center gap-1.5 rounded-lg border border-border bg-surface py-1 text-[11px] font-medium text-muted-foreground hover:border-primary/50 hover:text-foreground transition-colors cursor-pointer"
+            >
+              {copiedId === item.id + item.timestamp ? (
+                <>
+                  <Check className="size-3 text-primary" /> Copied
+                </>
+              ) : (
+                <>
+                  <Copy className="size-3" /> Re-copy
+                </>
+              )}
+            </button>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
@@ -474,6 +571,9 @@ function HomePage() {
       {/* ─── Your week digest ─── */}
       <YourWeekDigest />
 
+      {/* ─── Recently copied commands ─── */}
+      <RecentlyCopiedHomeSection />
+
       <Section
         title="Command of the day"
         hint="One fresh pick a day, plus a reroll whenever you want one."
@@ -514,6 +614,9 @@ function HomePage() {
       <MostUsedCommands />
 
       <YouMightLike />
+
+      {/* ─── Daily AI Tip Widget ─── */}
+      <DailyTipCard className="mt-8 mb-3" />
 
       <Section
         title="This week's free finds"
@@ -851,6 +954,7 @@ function HomePage() {
               title: "More",
               links: [
                 { label: "Build Ideas Library", to: "/build-ideas" },
+                { label: "Suggest a Command", to: "/suggest" },
                 { label: "Compare AI Models", to: "/compare" },
                 { label: "Designs & Themes", to: "/designs" },
                 { label: "Sitemap", to: "/sitemap" },
@@ -863,6 +967,7 @@ function HomePage() {
                 { label: "SlashPlay", to: "/play" },
                 { label: "SlashBar", to: "/slash" },
                 { label: "Journal", to: "/journal" },
+                { label: "Copy History", to: "/history" },
                 { label: "Settings", to: "/me" },
               ],
             },

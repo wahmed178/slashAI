@@ -95,6 +95,18 @@ export function CommandCard({
         </div>
       </div>
 
+      {/* Top-right complexity pill (visible by default, hidden on hover to reveal quick actions) */}
+      <span
+        title={complexity.hint}
+        className={cn(
+          "absolute top-2.5 right-2.5 rounded-md border px-1.5 py-0.5 text-[10px] font-medium transition-opacity",
+          "hidden sm:inline-block group-hover:opacity-0 group-focus-within:opacity-0",
+          complexityStyles[complexity.level],
+        )}
+      >
+        {complexity.emoji} {complexity.label}
+      </span>
+
       <div className="absolute top-2 right-2 flex items-center gap-0.5 opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
         <button
           type="button"
