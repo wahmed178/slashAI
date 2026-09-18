@@ -1,61 +1,61 @@
 {
-  "updated": "2026-08-28T21:47:56.578Z",
+  "updated": "2026-09-18T10:45:42.161Z",
   "articles": [
     {
-      "title": "GLM-5.3 is now open-weight",
-      "url": "https://huggingface.co/zai-org/GLM-5.3",
+      "title": "Hister: A private search engine for the pages you visit and the files you keep",
+      "url": "https://github.com/asciimoo/hister",
       "source": "HackerNews",
-      "score": 490,
-      "publishedAt": "2026-08-28"
+      "score": 622,
+      "publishedAt": "2026-09-17"
     },
     {
-      "title": "GUIs should be fully keyboard-driven",
-      "url": "https://ckardaris.com/blog/2026/08/28/keyboard-driven-guis.html",
+      "title": "Astra for Law",
+      "url": "https://openai.com/index/astra-for-law/",
       "source": "HackerNews",
-      "score": 447,
-      "publishedAt": "2026-08-28"
+      "score": 499,
+      "publishedAt": "2026-09-17"
     },
     {
-      "title": "Htmx 4.0",
-      "url": "https://four.htmx.org/announcements/2026-08-28-htmx-4.0.0-is-released",
+      "title": "Bend – A language that blocks AI mistakes via proof, on CPU and GPU",
+      "url": "https://bend-lang.com/",
       "source": "HackerNews",
-      "score": 410,
-      "publishedAt": "2026-08-28"
+      "score": 482,
+      "publishedAt": "2026-09-17"
     },
     {
-      "title": "U.S. sanctions against the A/I Collective",
-      "url": "https://www.inventati.org/",
+      "title": "Bonsai 2 27B: Near-Lossless Compression in a 9x Smaller Footprint",
+      "url": "https://prismml.com/news/bonsai-2-27b",
       "source": "HackerNews",
-      "score": 405,
-      "publishedAt": "2026-08-28"
+      "score": 460,
+      "publishedAt": "2026-09-17"
     },
     {
-      "title": "Inception-style curved map for turn-by-turn directions",
-      "url": "https://www.orbify.eu/demo/",
+      "title": "Qwen 3.8 Omni Flash",
+      "url": "https://qwen.ai/blog?id=qwen3.8-omni-flash",
       "source": "HackerNews",
-      "score": 363,
-      "publishedAt": "2026-08-28"
+      "score": 232,
+      "publishedAt": "2026-09-17"
     },
     {
-      "title": "Just the rumour of a bug is enough to find an exploit these days",
-      "url": "https://anil.recoil.org/notes/rumour-is-the-exploit",
+      "title": "Jemalloc 5.4.0",
+      "url": "https://github.com/jemalloc/jemalloc/releases/tag/5.4.0",
       "source": "HackerNews",
-      "score": 188,
-      "publishedAt": "2026-08-28"
+      "score": 162,
+      "publishedAt": "2026-09-18"
     },
     {
-      "title": "25,000 Lbs. Of Chicken Products Recalled in 5 States: USDA",
-      "url": "https://www.thehealthy.com/news/chicken-recall-fsis-august-2026/",
+      "title": "The scourge of x86 emulation",
+      "url": "https://fex-emu.com/Scourge-of-emulation/",
       "source": "HackerNews",
-      "score": 147,
-      "publishedAt": "2026-08-28"
+      "score": 155,
+      "publishedAt": "2026-09-18"
     },
     {
-      "title": "Autonomous Mathematical Discovery in an Open-World Multi-Agent Environment",
-      "url": "https://arxiv.org/abs/2608.23691",
+      "title": "OpenJev",
+      "url": "https://openjev.com/",
       "source": "HackerNews",
-      "score": 60,
-      "publishedAt": "2026-08-28"
+      "score": 79,
+      "publishedAt": "2026-09-18"
     }
   ]
 }

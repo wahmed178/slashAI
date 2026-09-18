@@ -80,6 +80,21 @@ rendered by AppShell on every `/tools/*` and `/play/*` screen) · `StartHere.tsx
   Rule for that file: plain template literals only — no backticks or `${` inside
   sample code, so nothing needs escaping.
 
+## Scheduled automation (`src/data/*.json`)
+Bots, not editors, keep the live data fresh. Read MEMORY.md for the full cron
+table; the two rules that bite most often:
+
+- Every scheduled workflow needs `permissions: contents: write`. The repo's
+  default `GITHUB_TOKEN` is read-only, so a missing block means
+  `403 denied to github-actions[bot]` on push and the content silently stops
+  updating (this broke four workflows for weeks).
+- Every `scripts/fetch-*.cjs` must write through `scripts/lib/data-write.cjs`,
+  which refuses to replace populated data with an empty payload.
+- If you add a new fetch script, wire its JSON into a real screen. Three files
+  were fetched daily for months with nothing rendering them.
+- `gh workflow run` cannot dispatch these workflows; to verify one, let cron fire
+  or push a temporary probe workflow and delete it afterwards.
+
 ## Rules When Editing
 1. Never break published URLs. Any new route must render under AppShell.
 2. Keep the bottom-dock-only navigation; do not reintroduce a sidebar.

@@ -1,6 +1,13 @@
 {
-  "updated": "",
-  "quote": { "text": "", "author": "" },
-  "advice": "",
-  "artwork": { "title": "", "artist": "", "imageId": "" }
+  "updated": "2026-09-18",
+  "quote": {
+    "text": "Happiness is a quality of the soul...not a function of one's material circumstances.",
+    "author": "Aristotle"
+  },
+  "advice": "Alway do anything for love, but don't do that.",
+  "artwork": {
+    "title": "On the Bank of the Seine, Bennecourt",
+    "artist": "Claude Monet (French, 1840–1926)",
+    "imageId": "66f95ea3-a11a-1cf4-6599-d0a49bb25744"
+  }
 }

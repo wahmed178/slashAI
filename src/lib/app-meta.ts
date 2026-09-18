@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.28.0";
+export const APP_VERSION = "2.29.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,17 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.29.0",
+    date: "2026-09-18",
+    title: "The site updates itself again",
+    changes: [
+      "Fixed the reason nothing refreshed for weeks: every scheduled job was failing to push because its GitHub token was read-only, so daily news, deals, quotes and the weekly trending lists silently stopped updating. They commit cleanly now",
+      "Trending tools are real tools again — Product Hunt's feed is Atom rather than RSS and was parsing to zero items, and two Hacker News articles about Nvidia were being listed as tools",
+      "New Live tab on /trending: today's AI headlines, trending prompt libraries, and a quote plus artwork of the day, all refreshed automatically",
+      "Gathering jobs now refuse to overwrite good data with an empty result, so a source going down can no longer blank a page",
+    ],
+  },
   {
     version: "2.28.0",
     date: "2026-09-18",
