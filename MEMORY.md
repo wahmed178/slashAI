@@ -135,12 +135,33 @@ for the item currently open.
   `.html` file, console capture from the sandboxed preview iframe, auto-save
 
 ## Content Automation
-GitHub Actions keep the site current:
-- `weekly-refresh-dates.yml` — refreshes every "Last checked" date each Monday
-- trending tools (Mon), daily news (daily), trending prompts (Wed), daily
-  content (quotes + artwork) via `scripts/fetch-*.cjs` and `scripts/refresh-resource-dates.cjs`
-- Output lands in `src/data/*.json`; `/whats-new` computes the live ISO week and
-  today's date at render time, so it never shows a stale week
+Six scheduled GitHub Actions keep the site current. All of them need
+`permissions: contents: write`, because the workflow's default `GITHUB_TOKEN`
+is read-only in this repo and every `git push` fails with
+`403 denied to github-actions[bot]` without it. They also can't be triggered
+with `gh workflow run` (dispatch returns 403 for the managed credential), so the
+only way to test one is to let cron fire or push a temporary probe workflow.
+
+| Workflow | Cron (UTC) | Writes | Consumed by |
+|---|---|---|---|
+| `daily-content.yml` | `0 0 * * *` | `daily-content.json` | `/trending` → Live tab |
+| `daily-deals.yml` | `30 1 * * *` | `products.json` | **nothing yet** |
+| `daily-news.yml` | `0 7 * * *` | `daily-news.json` | `/trending` → Live tab |
+| `weekly-refresh-dates.yml` | `0 4 * * 1` | `lastVerified` in `resources*.ts` | every resource card |
+| `weekly-trending-tools.yml` | `0 6 * * 1` | `trending-tools.json` | homepage "free finds" |
+| `weekly-trending-prompts.yml` | `0 6 * * 3` | `trending-prompts.json` | `/trending` → Live tab |
+
+- Generators: `scripts/fetch-*.cjs` + `scripts/refresh-resource-dates.cjs`.
+- Every generator writes through `scripts/lib/data-write.cjs`, which refuses to
+  overwrite a populated file with an empty payload. Without that guard a bad
+  fetch silently blanks the data (this is how `daily-content.json` and
+  `trending-prompts.json` ended up empty).
+- Reddit 403s from GitHub runner IPs — it is treated as best effort and every
+  script keeps working with its other sources.
+- `products.json` is fetched daily but currently rendered nowhere: the Deals page
+  was removed in `531d5f9` while the workflow kept running.
+- `/whats-new` computes the live ISO week and today's date at render time, so it
+  never shows a stale week.
 
 ## Free APIs Used
 Open-Meteo, CoinGecko, Frankfurter, Aladhan, NASA APOD, TheSportsDB, HackerNews,

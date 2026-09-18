@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Copy, Check, ExternalLink, ArrowRight } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
+import { LiveFeed } from "@/components/library/LiveFeed";
 import { ResourceCardEnhanced } from "@/components/library/ResourceCardEnhanced";
 import {
   TRENDING_COMMANDS,
@@ -20,8 +21,23 @@ import { resourcesBySection } from "@/lib/resources";
 /* ═══════════════════════════════════════════════════════════════════
    FILTER TABS
    ═══════════════════════════════════════════════════════════════════ */
-type FilterTab = "All" | "Commands" | "Resources" | "Roadmaps" | "Glossary" | "Collections";
-const TABS: FilterTab[] = ["All", "Commands", "Resources", "Roadmaps", "Glossary", "Collections"];
+type FilterTab =
+  | "All"
+  | "Live"
+  | "Commands"
+  | "Resources"
+  | "Roadmaps"
+  | "Glossary"
+  | "Collections";
+const TABS: FilterTab[] = [
+  "All",
+  "Live",
+  "Commands",
+  "Resources",
+  "Roadmaps",
+  "Glossary",
+  "Collections",
+];
 
 /* ═══════════════════════════════════════════════════════════════════
    COPY BUTTON
@@ -191,6 +207,9 @@ function TrendingPage() {
           ))}
         </div>
       </div>
+
+      {/* ──────── Section: Live (bot-refreshed data) ──────── */}
+      {showSection("Live") && <LiveFeed />}
 
       {/* ──────── Section: Trending /commands ──────── */}
       {showSection("Commands") && (
