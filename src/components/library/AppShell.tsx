@@ -367,9 +367,25 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
           {back && <BackButton to={back.to} label={back.label} />}
 
           {/* logo */}
-          <Link to="/" className="flex shrink-0 items-center gap-2">
-            <span className="text-[18px]">⚡</span>
-            <span className="text-[16px] font-bold text-foreground">SlashAI</span>
+          <Link to="/" className="group flex shrink-0 items-center gap-2.5 transition-transform active:scale-95">
+            <div className="relative flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#2dd4bf] to-[#818cf8] p-0.5 shadow-[0_0_12px_rgba(45,212,191,0.25)] transition-shadow group-hover:shadow-[0_0_16px_rgba(45,212,191,0.4)]">
+              <div className="flex size-full items-center justify-center rounded-[10px] bg-[#12161c]">
+                <svg viewBox="0 0 24 24" className="size-4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 19L14 5" stroke="#2dd4bf" strokeWidth="2.5" strokeLinecap="round" opacity="0.45" />
+                  <path d="M13 2L4 13H11L9 22L20 10H13L15 2Z" fill="url(#headerBrandGrad)" />
+                  <defs>
+                    <linearGradient id="headerBrandGrad" x1="4" y1="22" x2="20" y2="2" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#38bdf8" />
+                      <stop offset="0.5" stopColor="#2dd4bf" />
+                      <stop offset="1" stopColor="#ffffff" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+            <span className="flex items-center text-[16.5px] font-black tracking-tight text-foreground">
+              Slash<span className="bg-gradient-to-r from-[#2dd4bf] to-[#818cf8] bg-clip-text text-transparent">AI</span>
+            </span>
           </Link>
 
           {/* live dashboard — mini icon pill beside the logo */}

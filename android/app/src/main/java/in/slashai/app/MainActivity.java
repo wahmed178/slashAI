@@ -11,12 +11,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -54,6 +56,15 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Modern Android 13+ (API 33+) gesture and system back handling:
+        // Navigates back to the last feature instead of closing the app.
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                handleBackButton();
+            }
+        });
 
         WebView webView = getBridge().getWebView();
         if (webView == null) return;
@@ -250,24 +261,31 @@ public class MainActivity extends BridgeActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    /* ─────────────── hardware back = webview history ─────────────── */
+    /* ─────────────── hardware & gesture back = webview history ─────────────── */
+
+    private void handleBackButton() {
+        try {
+            WebView webView = getBridge() != null ? getBridge().getWebView() : null;
+            if (webView != null && webView.canGoBack()) {
+                // Navigate back to the previous screen/feature in WebView history
+                webView.goBack();
+                return;
+            }
+        } catch (Exception ignored) {
+        }
+        // If at the root/home screen, smoothly minimize to Android background rather than killing the app
+        moveTaskToBack(true);
+    }
 
     @Override
     public void onBackPressed() {
-        // Try to go back in the WebView history instead of closing the app
-        WebView webView = getBridge().getWebView();
-        if (webView != null && webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            // If no history, move task to back (minimize) instead of finishing
-            moveTaskToBack(true);
-        }
+        handleBackButton();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
+            handleBackButton();
             return true;
         }
         return super.onKeyDown(keyCode, event);
