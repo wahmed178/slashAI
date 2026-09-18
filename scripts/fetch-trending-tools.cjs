@@ -1,5 +1,5 @@
-const fs = require('fs');
 const path = require('path');
+const { writeData } = require('./lib/data-write.cjs');
 
 async function fetchProductHuntRSS() {
   try {
@@ -108,9 +108,11 @@ async function main() {
     items: unique
   };
 
-  const filePath = path.join(__dirname, '../src/data/trending-tools.json');
-  fs.writeFileSync(filePath, JSON.stringify(output, null, 2));
-  console.log(`Written ${unique.length} trending tools to ${filePath}`);
+  writeData(path.join(__dirname, '../src/data/trending-tools.json'), output, {
+    count: unique.length,
+    previousCount: (prev) => (Array.isArray(prev.items) ? prev.items.length : 0),
+    label: 'trending tools',
+  });
 }
 
 main();

@@ -1,5 +1,5 @@
-const fs = require('fs');
 const path = require('path');
+const { writeData } = require('./lib/data-write.cjs');
 
 async function fetchHackerNewsTop() {
   try {
@@ -75,9 +75,11 @@ async function main() {
     articles: all
   };
 
-  const filePath = path.join(__dirname, '../src/data/daily-news.json');
-  fs.writeFileSync(filePath, JSON.stringify(output, null, 2));
-  console.log(`Written ${all.length} news articles`);
+  writeData(path.join(__dirname, '../src/data/daily-news.json'), output, {
+    count: all.length,
+    previousCount: (prev) => (Array.isArray(prev.articles) ? prev.articles.length : 0),
+    label: 'news articles',
+  });
 }
 
 main();

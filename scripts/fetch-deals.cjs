@@ -1,8 +1,91 @@
-const fs = require('fs');
 const path = require('path');
+const { writeData } = require('./lib/data-write.cjs');
 
-const HEADERS = { 'User-Agent': 'SlashAI-Bot/1.0' };
-const TIMEOUT = 8000;
+const HEADERS = { 'User-Agent': 'SlashAI-Bot/1.0 (+https://slashai.in)' };
+const TIMEOUT = 10000;
+
+/**
+ * Reddit blocks datacenter IPs (every *.json call below returns 403 from CI),
+ * so the real work is done by these Indian deal RSS feeds, which do respond.
+ */
+/** How many items to keep from each feed per run. */
+const PER_FEED_LIMIT = 30;
+
+const RSS_FEEDS = [
+  { url: 'https://www.dealsmagnet.com/feed', source: 'DealsMagnet' },
+  { url: 'https://freekaamaal.com/feed', source: 'Freekaamaal' },
+];
+
+function decodeEntities(text) {
+  return String(text)
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function rssField(block, tag) {
+  const match = block.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`));
+  return match ? decodeEntities(match[1]) : '';
+}
+
+async function fetchRssFeed({ url, source }) {
+  try {
+    const res = await fetch(url, { headers: HEADERS, signal: AbortSignal.timeout(TIMEOUT) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const xml = await res.text();
+
+    const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
+    return items
+      .map((block) => {
+        const title = rssField(block, 'title');
+        const link = rssField(block, 'link');
+        const description = rssField(block, 'description').slice(0, 160);
+        if (!title || !link) return null;
+
+        const price = extractPrice(`${title} ${description}`);
+        const discount = extractDiscount(`${title} ${description}`);
+
+        return {
+          id: `${source.toLowerCase()}-${Buffer.from(link).toString('base64url').slice(0, 12)}`,
+          title: title.slice(0, 90),
+          description: description || `Live deal from ${source}`,
+          price,
+          discount,
+          rating: 0,
+          votes: 0,
+          image: '',
+          url: link,
+          redditUrl: '',
+          platform: detectPlatform(title, link),
+          category: detectCategory(title),
+          source,
+          badge:
+            discount > 40
+              ? `${discount}% OFF`
+              : price > 0 && price < 500
+                ? 'Under ₹500'
+                : price > 0 && price < 999
+                  ? 'Under ₹999'
+                  : 'Live Deal',
+          fetchedAt: new Date().toISOString().split('T')[0],
+        };
+      })
+      .filter(Boolean)
+      // The feeds publish hundreds of items a day; we only need the freshest
+      // slice, otherwise every daily commit adds tens of thousands of lines.
+      .slice(0, PER_FEED_LIMIT);
+  } catch (e) {
+    console.log(`${source} failed:`, e.message);
+    return [];
+  }
+}
 
 function detectCategory(title) {
   const t = title.toLowerCase();
@@ -129,6 +212,8 @@ async function main() {
   console.log('Fetching deals from free sources...');
   const today = new Date().toISOString().split('T')[0];
 
+  const rssFeeds = await Promise.all(RSS_FEEDS.map(fetchRssFeed));
+
   const [
     desiDeal,
     indianGaming,
@@ -162,6 +247,7 @@ async function main() {
   ]);
 
   const all = [
+    ...rssFeeds.flat(),
     ...desiDeal, ...indianGaming, ...india,
     ...amazonIndia, ...frugalIn, ...phoneDeals,
     ...books, ...buildapc
@@ -238,15 +324,22 @@ async function main() {
     categories,
     platforms,
     sources: [
+      ...RSS_FEEDS.map((f) => f.source),
       'r/DesiDeal', 'r/AmazonIndia', 'r/PhoneDealsIndia',
       'r/IndianGaming', 'r/Frugal_in', 'r/booksofindia',
       'r/buildapc', 'r/india'
     ]
   };
 
-  const filePath = path.join(__dirname, '../src/data/products.json');
-  fs.writeFileSync(filePath, JSON.stringify(output, null, 2));
-  console.log(`Done — ${unique.length} deals written to products.json`);
+  writeData(path.join(__dirname, '../src/data/products.json'), output, {
+    count: unique.length,
+    previousCount: (prev) =>
+      Array.isArray(prev.trending) ? prev.trending.length : Number(prev.total) || 0,
+    label: 'deals',
+  });
 }
 
-main().catch(console.error);
+main().catch((error) => {
+  console.error('Fatal:', error);
+  process.exit(1);
+});

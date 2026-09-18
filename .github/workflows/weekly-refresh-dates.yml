@@ -1,28 +1,42 @@
 name: Weekly Resource Date Refresh
 
+# Mondays 04:00 UTC — keeps every "Last checked" date across the resource
+# catalogs current, so the site never shows a stale freshness date.
 on:
   schedule:
-    # Mondays 04:00 UTC - keeps "Last checked" dates current every week
     - cron: '0 4 * * 1'
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+
       - name: Refresh resource dates
         run: node scripts/refresh-resource-dates.cjs
+
       - name: Commit and push
         run: |
+          set -euo pipefail
           git config user.name "SlashAI Bot"
           git config user.email "bot@slashai.app"
-          git add src/lib/
-          git diff --staged --quiet || git commit -m "chore(data): refresh resource check dates $(date +%Y-%m-%d)"
-          git push
+          git add src/lib/ src/data/
+          if git diff --staged --quiet; then
+            echo "Nothing to refresh this week."
+            exit 0
+          fi
+          git commit -m "chore(data): refresh resource check dates $(date -u +%Y-%m-%d)"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
