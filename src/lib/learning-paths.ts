@@ -31,7 +31,9 @@ export interface LearningPath {
 /** Which track each course belongs to, for the topic filter chips. */
 export const COURSE_TRACK: Record<string, string> = {
   "prompt-engineering": "AI",
+  "ai-study": "AI",
   "web-fundamentals": "Web & Dev",
+  "build-a-website": "Web & Dev",
   "ship-a-web-app": "Shipping",
 };
 
@@ -48,6 +50,11 @@ export const LEARNING_PATHS: LearningPath[] = [
         title: "Prompt Engineering: Zero to Reliable",
         courseId: "prompt-engineering",
       },
+      {
+        id: "ai-study",
+        title: "AI for Study & Research",
+        courseId: "ai-study",
+      },
       { id: "glossary", title: "Learn the vocabulary", to: "/glossary", minutes: 25 },
       { id: "workflow", title: "Chain prompts into a workflow", to: "/workflow", minutes: 15 },
     ],
@@ -61,6 +68,7 @@ export const LEARNING_PATHS: LearningPath[] = [
     audience: "New and self-taught developers",
     steps: [
       { id: "web-fundamentals", title: "How the Web Actually Works", courseId: "web-fundamentals" },
+      { id: "build-a-website", title: "Build a Real Website", courseId: "build-a-website" },
       { id: "ship-a-web-app", title: "Ship Your First Web App", courseId: "ship-a-web-app" },
       {
         id: "api-tester",

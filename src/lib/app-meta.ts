@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.29.0";
+export const APP_VERSION = "2.30.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,19 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.30.0",
+    date: "2026-09-18",
+    title: "Two new courses, a regex trainer and smarter everyday tools",
+    changes: [
+      "Two new courses on /learn: AI for Study & Research (study plans, quizzes, honest summaries, academic integrity) and Build a Real Website (HTML, CSS flexbox, shipping free to a live URL) — both with real lessons and graded module tests",
+      "Learning paths updated: the AI Beginner and Developer paths now sequence the new courses, taking the catalogue to 5 courses · 24 lessons · 37 test questions",
+      "The Regex Playground now teaches: a 5-challenge Regex Trainer with hints and a personal best, plus a tappable cheat sheet that inserts syntax into your pattern",
+      "SEO Meta Tag Generator: live Google search preview, WhatsApp/X-style social card preview, character counters against the 60/155 limits, and a checks list that explains what to fix",
+      "URL Encoder/Decoder breaks any link into origin, path and a query-parameter table with encoded-value flags — paste a share link to see exactly what it carries",
+      "Percentage Calculator shows the worked line behind every answer, with quick chips for 18% GST, 5% GST, 10% tips and 50% off",
+    ],
+  },
   {
     version: "2.29.0",
     date: "2026-09-18",

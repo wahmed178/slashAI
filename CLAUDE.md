@@ -1,7 +1,7 @@
 # claude.md — SlashAI Agent Continuity File
 
 ## Last Updated
-18 September 2026 · APP_VERSION 2.28.0
+18 September 2026 · APP_VERSION 2.30.0
 
 ## What This Is
 SlashAI (https://slashai.in) — a free, offline-first, no-account AI command and
@@ -65,6 +65,15 @@ Shared components added in v2.28 (all in `src/components/library/`):
 (re-copy pill + back-to-top) · `CatalogueExtras.tsx` (how-to + similar row,
 rendered by AppShell on every `/tools/*` and `/play/*` screen) · `StartHere.tsx` ·
 `YouMightLike.tsx`.
+
+## Interactive tool depth (v2.30)
+Several thin tools were upgraded from one-shot calculators into teaching tools:
+`/tools/regex` (Regex Trainer with 5 challenges, hints, best score via
+`getGameBest("regex-trainer-best")`, tappable cheat sheet) · `/tools/meta`
+(live Google + social card previews, 60/155 character checks) ·
+`/tools/url-encoder` (query-parameter breakdown table) · `/tools/percentage`
+(worked answer line + quick chips). When you touch one of these, keep the
+existing one-shot behaviour working — the interactive part is additive.
 
 ## Catalogues — single sources of truth
 - Commands: `src/lib/commands.ts` over `src/data/commands.json`; helpers

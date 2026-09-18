@@ -1,6 +1,6 @@
 # SlashAI — Project Memory
 
-_Last updated: 18 September 2026 · v2.28.0_
+_Last updated: 18 September 2026 · v2.30.0_
 
 ## What This Is
 SlashAI (**https://slashai.in**) is a free, offline-first, no-account AI command
@@ -16,7 +16,7 @@ tracking — personal state lives in localStorage and never leaves the device.
 - **150+ browser tools** on `/tools` (SlashKits)
 - **57 browser games** on `/play` (SlashPlay)
 - **300+ curated free resources** on `/discover` + hubs
-- **3 full courses with graded tests** + 4 learning paths on `/learn`
+- **5 full courses with graded tests** + 4 learning paths on `/learn`
 - 100+ free APIs documented, 560+ glossary terms, 20 founder roadmaps,
   16 curated collections, 24-category daily quiz, 12-hub network
 - Android app via Capacitor (`in.slashai.app`)
@@ -107,11 +107,23 @@ for the item currently open.
   so 120Hz and 60Hz screens play identically
 
 ### Slash Courses (`/learn`)
+- **5 courses**: Prompt Engineering · How the Web Actually Works · Ship Your
+  First Web App · AI for Study & Research · Build a Real Website
 - 4 learning paths (AI Beginner, Developer, Creator, Career Growth) with step
-  lists, hour estimates and per-path completion
+  lists, hour estimates and per-path completion; `pathsCoverAllCourses()` must
+  stay true — every course appears in a path
 - Topic filters (All / Beginner / Intermediate / Advanced / AI / Web & Dev / Shipping)
 - "My progress: N of M courses started", ✅ Started badges
 - Courses contain real modules → lessons → graded module tests (70% pass)
+
+### Interactive tool depth (v2.30)
+- `/tools/regex` — 5-challenge **Regex Trainer** (hints, personal best in
+  `slashai-game-best` under key `regex-trainer-best`) + tappable cheat sheet
+- `/tools/meta` — live Google search preview, social card preview, 60/155 char
+  counters, checks list
+- `/tools/url-encoder` — URL breakdown: origin, path, query-param table with
+  encoded-value flags
+- `/tools/percentage` — worked answer line + GST/tip/discount quick chips
 
 ### Discover & Hubs
 - `/discover` opens with **Start Here** (student / professional / developer) which

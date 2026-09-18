@@ -1,6 +1,18 @@
 {
-  "version": "2.29.0",
+  "version": "2.30.0",
   "entries": [
+    {
+      "version": "2.30.0",
+      "date": "2026-09-18",
+      "changes": [
+        "Two new courses on /learn: AI for Study & Research and Build a Real Website — real lessons, graded module tests, progress saved on your device",
+        "AI Beginner and Developer learning paths now sequence the new courses (5 courses · 24 lessons · 37 test questions)",
+        "Regex Playground gains a 5-challenge Regex Trainer with hints and a personal best, plus a tappable cheat sheet",
+        "SEO Meta Generator: live Google search preview, social card preview, character counters and a fix-it checks list",
+        "URL Encoder/Decoder now breaks links into origin, path and a query-parameter table with encoded-value flags",
+        "Percentage Calculator shows the worked line behind every answer plus quick chips for GST, tips and discounts"
+      ]
+    },
     {
       "version": "2.29.0",
       "date": "2026-09-18",
