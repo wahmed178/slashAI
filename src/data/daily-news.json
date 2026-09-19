@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-18T12:03:02.731Z",
+  "updated": "2026-09-19T11:45:41.339Z",
   "articles": [
     {
-      "title": "Astra for Law",
-      "url": "https://openai.com/index/astra-for-law/",
+      "title": "Android 17 is the first since 3.x to add new APIs without releasing to the AOSP",
+      "url": "https://grapheneos.social/@GrapheneOS/117282080803799576",
       "source": "HackerNews",
-      "score": 513,
-      "publishedAt": "2026-09-17"
-    },
-    {
-      "title": "Bend – A language that blocks AI mistakes via proof, on CPU and GPU",
-      "url": "https://bend-lang.com/",
-      "source": "HackerNews",
-      "score": 502,
-      "publishedAt": "2026-09-17"
-    },
-    {
-      "title": "Bonsai 2 27B: Near-Lossless Compression in a 9x Smaller Footprint",
-      "url": "https://prismml.com/news/bonsai-2-27b",
-      "source": "HackerNews",
-      "score": 475,
-      "publishedAt": "2026-09-17"
-    },
-    {
-      "title": "Microsoft exec called AI scraping 'the largest theft of labor in human history'",
-      "url": "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal/",
-      "source": "HackerNews",
-      "score": 242,
+      "score": 867,
       "publishedAt": "2026-09-18"
     },
     {
-      "title": "Jemalloc 5.4.0",
-      "url": "https://github.com/jemalloc/jemalloc/releases/tag/5.4.0",
+      "title": "Cloudflare Quick Tunnels",
+      "url": "https://try.cloudflare.com/",
       "source": "HackerNews",
-      "score": 193,
+      "score": 723,
       "publishedAt": "2026-09-18"
     },
     {
-      "title": "The scourge of x86 emulation",
-      "url": "https://fex-emu.com/Scourge-of-emulation/",
+      "title": "Human brain is two separate organs, Stanford Medicine-led research finds",
+      "url": "https://med.stanford.edu/news/all-news/2026/09/two-separate-brains.html",
       "source": "HackerNews",
-      "score": 173,
-      "publishedAt": "2026-09-18"
+      "score": 286,
+      "publishedAt": "2026-09-19"
     },
     {
-      "title": "OpenJev",
-      "url": "https://openjev.com/",
+      "title": "AI-generated posters don’t have to be horrible",
+      "url": "https://john.hartnup.uk/2026/06/07/ai-event-posters.html",
       "source": "HackerNews",
-      "score": 171,
-      "publishedAt": "2026-09-18"
+      "score": 220,
+      "publishedAt": "2026-09-19"
     },
     {
-      "title": "ZCode, the GLM coding agent, silently uploads your Git history",
-      "url": "https://tokenstead.ai/guides/zcode-silent-git-history-upload",
+      "title": "San Francisco Onion Futures Company",
+      "url": "https://onionfutures.com/",
       "source": "HackerNews",
-      "score": 79,
-      "publishedAt": "2026-09-18"
+      "score": 213,
+      "publishedAt": "2026-09-19"
+    },
+    {
+      "title": "GPT-6 Astra Solves a WWI German Radio Cipher",
+      "url": "https://www.prinzai.com/p/gpt-6-astra-solves-a-wwi-german-radio",
+      "source": "HackerNews",
+      "score": 141,
+      "publishedAt": "2026-09-19"
+    },
+    {
+      "title": "If math is more than proof, we need to better celebrate the rest of it",
+      "url": "https://terrytao.wordpress.com/2026/09/18/if-math-is-more-than-proof-we-need-to-better-celebrate-the-rest-of-it/",
+      "source": "HackerNews",
+      "score": 132,
+      "publishedAt": "2026-09-19"
+    },
+    {
+      "title": "“The Secret Life of Circuits” is here",
+      "url": "https://blog.coredump.cx/p/the-secret-life-of-circuits-is-here",
+      "source": "HackerNews",
+      "score": 62,
+      "publishedAt": "2026-09-15"
     }
   ]
 }
