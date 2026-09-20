@@ -2,15 +2,21 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
+  Coffee,
   Compass,
+  Copy,
+  Check,
+  ExternalLink,
   Gauge,
   Heart,
+  QrCode,
   Search,
   Shield,
   Sparkles,
   Terminal,
   Zap,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { AppShell } from "@/components/library/AppShell";
 import { FaqSection } from "@/components/library/FaqSection";
@@ -88,6 +94,19 @@ const PILLARS = [
 ];
 
 function AboutPage() {
+  const [copiedUpi, setCopiedUpi] = useState(false);
+
+  const copyUpi = async () => {
+    try {
+      await navigator.clipboard.writeText("wahmed178-1@okhdfcbank");
+      setCopiedUpi(true);
+      toast.success("UPI ID copied!");
+      setTimeout(() => setCopiedUpi(false), 2200);
+    } catch {
+      toast.error("Please copy manually: wahmed178-1@okhdfcbank");
+    }
+  };
+
   return (
     <AppShell wide hideHeaderSearch title="About SlashAI">
       <div className="mx-auto max-w-3xl pb-10">
@@ -159,6 +178,102 @@ function AboutPage() {
               it costs me a cup of chai a month to keep the lights on. That's the deal I made with
               the version of me who deleted everything and started again.
             </p>
+          </div>
+        </section>
+
+        {/* Support Waseem / Buy Me a Coffee Section */}
+        <section className="mt-5 rounded-3xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-surface to-surface p-6 sm:p-7">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <span className="grid size-10 place-items-center rounded-2xl bg-[#FFDD00] text-black shadow-sm">
+                <Coffee className="size-5" aria-hidden />
+              </span>
+              <div>
+                <h2 className="text-[17px] font-bold text-foreground">Support SlashAI & Buy Waseem a Coffee</h2>
+                <p className="text-[12.5px] text-muted-foreground">Keep the app 100% free, private, and ad-free forever</p>
+              </div>
+            </div>
+            <Link
+              to="/coffee"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-1.5 text-[12px] font-semibold text-foreground hover:border-primary/40"
+            >
+              Full details <ArrowRight className="size-3" aria-hidden />
+            </Link>
+          </div>
+
+          <p className="mt-3.5 text-[13.5px] leading-relaxed text-muted-foreground">
+            SlashAI costs nothing to use and will never sell your data or lock tools behind paywalls.
+            If SlashAI helped you with a task, saved you hours of work, or taught you something new,
+            you can support the journey via UPI or Buy Me a Coffee.
+          </p>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            {/* UPI & QR Quick Card */}
+            <div className="rounded-2xl border border-border bg-surface p-4 flex flex-col justify-between">
+              <div>
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-primary">
+                  <QrCode className="size-3.5" aria-hidden /> UPI / Google Pay / PhonePe
+                </span>
+                <div className="mt-2.5 flex items-center gap-3">
+                  <img
+                    src="/images/upi-qr.png"
+                    alt="UPI QR Code"
+                    className="size-16 rounded-xl border border-border bg-white p-1 object-contain shrink-0"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] text-muted-foreground">UPI ID (India & NRI):</p>
+                    <code className="block truncate font-mono text-[12.5px] font-bold text-foreground">
+                      wahmed178-1@okhdfcbank
+                    </code>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 flex gap-2">
+                <button
+                  type="button"
+                  onClick={copyUpi}
+                  className="flex-1 inline-flex h-9 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface-elevated text-[12px] font-semibold text-foreground transition-colors hover:border-primary/40 active:scale-95"
+                >
+                  {copiedUpi ? (
+                    <>
+                      <Check className="size-3.5 text-primary" aria-hidden /> Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="size-3.5" aria-hidden /> Copy UPI
+                    </>
+                  )}
+                </button>
+                <a
+                  href="upi://pay?pa=wahmed178-1@okhdfcbank&pn=Waseem%20Ahmed&cu=INR"
+                  className="inline-flex h-9 items-center justify-center rounded-xl bg-primary/15 px-3 text-[12px] font-bold text-primary hover:bg-primary/25"
+                >
+                  Pay in App
+                </a>
+              </div>
+            </div>
+
+            {/* Buy Me a Coffee Card */}
+            <div className="rounded-2xl border border-border bg-surface p-4 flex flex-col justify-between">
+              <div>
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-amber-400">
+                  <Coffee className="size-3.5" aria-hidden /> Card / International
+                </span>
+                <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+                  Support using Credit/Debit Card, Apple Pay, or PayPal on Buy Me a Coffee.
+                </p>
+              </div>
+              <a
+                href="https://buymeacoffee.com/wahmed178"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ripple-press mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-[#FFDD00] px-4 text-[13px] font-black text-black shadow-sm transition-transform active:scale-95 hover:brightness-105"
+              >
+                <Coffee className="size-4" aria-hidden />
+                <span>buymeacoffee.com/wahmed178</span>
+                <ExternalLink className="size-3 opacity-60" aria-hidden />
+              </a>
+            </div>
           </div>
         </section>
 

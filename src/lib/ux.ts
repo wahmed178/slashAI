@@ -5,6 +5,8 @@
  * reader is defensive: a corrupt or unavailable store must never break a page.
  */
 
+import { recordEngagementAction } from "@/lib/coffee-nudge";
+
 /* ─────────────────────────── storage primitives ─────────────────────────── */
 
 export const UX_KEYS = {
@@ -120,6 +122,7 @@ export function saveGameBest(slug: string, score: number): boolean {
   if (prev !== null && score <= prev) return false;
   map[slug] = score;
   writeJson(UX_KEYS.best, map);
+  recordEngagementAction("game_play");
   return true;
 }
 
@@ -206,6 +209,11 @@ export function recordUxInteraction(kind: UxInteractionKind, id: string, tag?: s
     { kind, id, at: Date.now(), ...(tag ? { tag } : {}) },
     ...uxInteractions().filter((e) => !(e.kind === kind && e.id === id)),
   ].slice(0, MAX_INTERACTIONS);
+  if (kind === "game") {
+    recordEngagementAction("game_play");
+  } else if (kind === "tool") {
+    recordEngagementAction("tool_run");
+  }
   writeJson(UX_KEYS.interactions, next);
 }
 

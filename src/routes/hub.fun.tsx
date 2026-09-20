@@ -7,11 +7,11 @@ import { funCategoryColor } from "@/lib/category-colors";
 export const Route = createFileRoute("/hub/fun")({
   head: () => ({
     meta: [
-      { title: "Fun Sites Hub - 100 Weird Websites, Curated | SlashAI" },
+      { title: "Fun Sites Hub - 130+ Weird Websites, Curated | SlashAI" },
       {
         name: "description",
         content:
-          "A hand-picked directory of the 100 most weirdly wonderful websites ever made: neal.fun, the Useless Web, Pointer Pointer, Zoomquilt, Window Swap and more. All free, no signups — with in-app versions of the classics.",
+          "A hand-picked directory of 130+ of the most weirdly wonderful websites ever made: Infinite Craft, Asteroid Launcher, neal.fun, the Useless Web, Procatinator, Zoomquilt, Window Swap and more. All free, no signups — with in-app versions of the classics.",
       },
     ],
   }),
@@ -148,6 +148,30 @@ const SITES: FunSite[] = [
   { name: "HyperPhysics", url: "http://hyperphysics.phy-astr.gsu.edu", emoji: "⚛️", category: "Learning", desc: "Looks ancient, still invaluable. The whole of physics as a concept map." },
   { name: "Internet Archive Texts", url: "https://archive.org/details/texts", emoji: "📖", category: "Learning", desc: "An endless reading rabbit hole. Millions of free books." },
   { name: "CodePen", url: "https://codepen.io", emoji: "🧪", category: "Learning", desc: "An endless stream of front-end experiments. Pick a pen, read the code." },
+  { name: "Asteroid Launcher (Neal)", url: "https://neal.fun/asteroid-launcher/", emoji: "☄️", category: "Interactive", desc: "Pick an asteroid size and crash site. See the crater size, fireball, and shockwave damage in real-time." },
+  { name: "Infinite Craft (Neal)", url: "https://neal.fun/infinite-craft/", emoji: "🔮", category: "Games", desc: "Combine Earth, Fire, Water, and Wind with AI to invent thousands of elements, celebrities, and concepts." },
+  { name: "Procatinator", url: "https://procatinator.com", emoji: "😼", category: "Weird", desc: "A random animated cat matched with a perfectly suited looping music track. Peak internet procrastination." },
+  { name: "Radiooooo", url: "https://radiooooo.com", emoji: "📻", category: "Interactive", desc: "The musical time machine. Pick any country on the world map and any decade from 1900 to today." },
+  { name: "Drive & Listen", url: "https://driveandlisten.herokuapp.com", emoji: "🚗", category: "Calm", desc: "Drive through streets of Tokyo, Paris, New York, or Amsterdam while tuned to real local car radio stations." },
+  { name: "Sandspiel", url: "https://sandspiel.club", emoji: "🏖️", category: "Interactive", desc: "Falling sand cellular automata physics game. Mix sand, water, fire, plant, acid, and oil in the browser." },
+  { name: "WebGL Water", url: "https://madebyevan.com/webgl-water/", emoji: "💧", category: "Interactive", desc: "Incredible photorealistic water simulation in WebGL with raytraced caustics and a draggable floating sphere." },
+  { name: "Line Rider", url: "https://www.linerider.com", emoji: "🛷", category: "Games", desc: "Draw hills, ramps, and loops for a little guy on a sled to ride. The eternal physics sandbox." },
+  { name: "Museum of Endangered Sounds", url: "http://savethesounds.info", emoji: "📼", category: "Weird", desc: "Hear dial-up modems, dot matrix printers, rotary phones, and Windows 95 boot sounds before they are forgotten." },
+  { name: "Do Nothing for 2 Minutes", url: "http://www.donothingfor2minutes.com", emoji: "🧘", category: "Calm", desc: "Just listen to ocean waves for 120 seconds. If you touch your mouse or keyboard, the timer fails." },
+  { name: "Stellarium Web", url: "https://stellarium-web.org", emoji: "✨", category: "Interactive", desc: "A realistic 3D planetarium in your browser showing planets, constellations, and satellites in real time." },
+  { name: "Bored Button", url: "https://www.boredbutton.com", emoji: "🔴", category: "Weird", desc: "Press the big red button to get teleported to a random fun or bizarre interactive mini-site." },
+  { name: "Earth 2050", url: "https://2050.earth", emoji: "🌆", category: "Interactive", desc: "Kaspersky's interactive futuristic globe crowdsourcing concept art and predictions for cities in 2030, 2040, and 2050." },
+  { name: "Geacron", url: "https://geacron.com", emoji: "🗺️", category: "Interactive", desc: "World history interactive geopolitical atlas. Change the year from 3000 BC to 2026 to watch empire borders shift." },
+  { name: "Wonders of Street View (Neal)", url: "https://neal.fun/wonders-of-street-view/", emoji: "👀", category: "Interactive", desc: "Teleport to the weirdest, funniest, and most stunning hidden spots captured on Google Street View." },
+  { name: "Design the Next iPhone (Neal)", url: "https://neal.fun/design-the-next-iphone/", emoji: "📱", category: "Interactive", desc: "Drag rotary dials, cup holders, 12 cameras, and HDMI ports onto a phone. Ridiculously entertaining." },
+  { name: "Printing Money (Neal)", url: "https://neal.fun/printing-money/", emoji: "💵", category: "Interactive", desc: "Watch how fast Jeff Bezos, Apple, and US minimum-wage workers accumulate cash in real-time visual stacks." },
+  { name: "A Good Movie to Watch", url: "https://agoodmovietowatch.com", emoji: "🍿", category: "Learning", desc: "Randomly pick highly-rated but little-known movies streaming on Netflix, Prime, and HBO." },
+  { name: "MuscleWiki", url: "https://musclewiki.com", emoji: "💪", category: "Learning", desc: "Click any muscle on the human body diagram to see direct video tutorials for workouts targeting it." },
+  { name: "Chordify", url: "https://chordify.net", emoji: "🎸", category: "Interactive", desc: "Turns any YouTube video, song, or sound file into synced guitar, piano, and ukulele chords automatically." },
+  { name: "MapCrunch", url: "https://www.mapcrunch.com", emoji: "🌍", category: "Interactive", desc: "Random Street View teleportation. Press the button and guess where in the world you just landed." },
+  { name: "Draw Logos From Memory (Neal)", url: "https://neal.fun/logos-from-memory/", emoji: "🎨", category: "Games", desc: "Try to accurately draw the Apple, Starbucks, or Adidas logos from pure memory." },
+  { name: "Space Elevator (Neal)", url: "https://neal.fun/space-elevator/", emoji: "🛰️", category: "Interactive", desc: "Ride an elevator into orbit. Watch clouds, satellites, the aurora, and the exosphere roll past." },
+  { name: "The Auction Game (Neal)", url: "https://neal.fun/auction-game/", emoji: "🏛️", category: "Games", desc: "Guess how much modern and classical art pieces sold for at Sotheby's auctions." },
 ];
 
 const CATEGORIES = ["All", ...new Set(SITES.map((s) => s.category))];

@@ -49,7 +49,7 @@ const HUBS: HubCard[] = [
   { audience: "urdu", label: "Urdu Hub", icon: Languages, desc: "Urdu poetry, dictionaries, fonts and learning", staticCount: 8 },
   { audience: "arabic", label: "Arabic Hub", icon: Languages, desc: "Arabic alphabet, courses, keyboard and phrases", staticCount: 4, countLabel: "4 curated + alphabet" },
   { audience: "designers", label: "Designers Hub", icon: Paintbrush, desc: "Free design tools, assets and learning", audienceKey: "Designers" },
-  { audience: "fun", label: "Fun Sites Hub", icon: PartyPopper, desc: "neal.fun, the Useless Web, Pointer Pointer and 100+ gloriously pointless websites", staticCount: 108, countLabel: "108 weird sites" },
+  { audience: "fun", label: "Fun Sites Hub", icon: PartyPopper, desc: "neal.fun, the Useless Web, Pointer Pointer and 132 gloriously pointless websites", staticCount: 132, countLabel: "132 weird sites" },
   { audience: "finance", label: "Finance Hub", icon: TrendingUp, desc: "Markets, crypto and money tools", dedicated: "finance" },
   { audience: "health", label: "Health Hub", icon: Stethoscope, desc: "Evidence-based health and fitness tools", dedicated: "health" },
 ];

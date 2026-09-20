@@ -27,6 +27,7 @@ import { KeyboardShortcutsProvider } from "@/lib/keyboard-shortcuts.tsx";
 import { Toaster } from "@/components/ui/sonner";
 import { WhatsNewDialog } from "@/components/library/WhatsNewDialog";
 import { WelcomeTour } from "@/components/library/WelcomeTour";
+import { CoffeeNudge } from "@/components/library/CoffeeNudge";
 import {
   SITE_URL,
   SITE_NAME,
@@ -295,6 +296,7 @@ function RootComponent() {
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         {mounted ? <WelcomeTour /> : null}
+        {mounted ? <CoffeeNudge /> : null}
         <WhatsNewDialog />
         <Toaster position="bottom-right" />
         </KeyboardShortcutsProvider>

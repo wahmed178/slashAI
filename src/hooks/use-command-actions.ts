@@ -5,6 +5,7 @@ import { useLibrary } from "@/hooks/use-library";
 import { commandPath, commandTemplate, type SlashCommand } from "@/lib/commands";
 import { trackInteraction } from "@/lib/intelligence";
 import { recordUxInteraction, setLastCopied, recordCopyHistory } from "@/lib/ux";
+import { recordEngagementAction } from "@/lib/coffee-nudge";
 import { SITE_URL } from "@/lib/seo";
 
 /** Small, non-intrusive celebrations at the moments that matter. */
@@ -42,6 +43,7 @@ export function useCommandActions() {
         category: cmd.category,
         text,
       });
+      recordEngagementAction("command_copy");
       const total = recordCopy();
       const milestone = COPY_MILESTONES[total];
       if (milestone) window.setTimeout(() => toast(milestone), 500);
