@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.32.0";
+export const APP_VERSION = "2.33.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,20 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.33.0",
+    date: "2026-09-21",
+    title: "Quality pass: real games and real tools replace the filler",
+    changes: [
+      "Removed the 1,000+ generated converter kits and the 500 auto-chunked game packs. They inflated the counts without earning a place, so they are gone",
+      "Commands trimmed back to the curated catalogue — the platform-variant padding is out, leaving 5,700 hand-picked commands across 45 categories",
+      "Six real sports games: Table Tennis (top-down table, 11-point scoring, spin), Air Hockey, Penalty Shootout (five each way, you shoot then you keep), Darts (a true 501 board with trebles, doubles and busts), Basketball (60-second shootout) and Bowling (ten frames with real strike and spare scoring)",
+      "Six new brain boosters: Sudoku (generated in your browser, guaranteed single solution, four difficulties), Nonogram (11 hand-drawn pictures with real run-length clues), Sliding Puzzle (8/15/24, always solvable), Mastermind, Tower of Hanoi, a 12-theme Word Search and Word Scramble",
+      "New SlashKits toolkit: 130 honest tools at /tools/<name> — text and case utilities, JSON/CSV/regex/diff, SHA hashing, Base64/URL/HTML/hex/binary/Morse/Unicode encoding, colour conversion and CSS generators, date maths, meta tags and sitemaps, passwords and passphrases",
+      "Where a new tool would have duplicated an existing one (JSON formatter, CSV to JSON, JWT decoder, UUID generator, word frequency), it was dropped rather than shipped twice",
+      "Every new tool runs fully in the browser and says what it does — no uploads, no accounts, no unit-converter permutations",
+    ],
+  },
   {
     version: "2.32.0",
     date: "2026-09-20",

@@ -5,18 +5,17 @@ import { AppShell } from "@/components/library/AppShell";
 import {
   PLAY_SECTIONS,
   PLAY_GAME_COUNT,
+  ALL_PLAY_GAMES,
   NEW_GAME_SLUGS,
   SCORING_GAMES,
   gameMeta,
   playModeCounts,
   randomGameSlug,
-  dailyPack,
+  dailyPick,
   FIELD_TRIP_SITES,
   randomFieldTrip,
   type PlayGame,
 } from "@/lib/slashplay";
-import { PACKS, PACK_GROUP_ORDER, packCards, packLevel, type PackCard } from "@/lib/packs/registry";
-import { usePackBest } from "@/components/games/PackPlayer";
 import { getGameBest, isNewItem } from "@/lib/ux";
 import { useUxTick } from "@/hooks/use-ux";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
@@ -29,34 +28,21 @@ export const Route = createFileRoute("/play/")({
       { title: `SlashPlay - ${TOTAL_GAMES} free browser games | SlashAI` },
       {
         name: "description",
-        content: `SlashPlay: ${TOTAL_GAMES} free browser games - tic tac toe, snake, 2048, cricket, 500+ quiz, word, memory and puzzle packs. Multiplayer pass-and-play, no download, works offline.`,
+        content: `SlashPlay: ${TOTAL_GAMES} free browser games - tic tac toe, snake, 2048, cricket, table tennis, sudoku, chess and brain trainers. Multiplayer pass-and-play, no download, works offline.`,
       },
     ],
   }),
   component: PlayIndex,
 });
 
-const FILTERS = ["All", ...PLAY_SECTIONS.map((s) => s.title), ...PACK_GROUP_ORDER.map((g) => g.title)] as const;
+const FILTERS = ["All", ...PLAY_SECTIONS.map((s) => s.title)] as const;
 type FilterType = (typeof FILTERS)[number];
 
 /** Filter tabs stay route-free: filtering is pure client-side state. */
 
 const MODES = playModeCounts();
-/** static games + generated packs = everything playable */
-const TOTAL_GAMES = PLAY_GAME_COUNT + PACKS.length;
-
-/** pack groups rendered in the same shape as static sections */
-const PACK_SECTIONS = PACK_GROUP_ORDER.map((g) => ({
-  title: g.title,
-  icon: g.icon,
-  blurb: g.blurb,
-  games: packCards(g.title),
-}));
-
-function packMatches(card: PackCard, q: string) {
-  const text = `${card.name} ${card.desc}`.toLowerCase();
-  return q.split(/\s+/).every((word) => text.includes(word));
-}
+/** every playable game in the catalogue */
+const TOTAL_GAMES = PLAY_GAME_COUNT;
 
 function matches(game: PlayGame, q: string) {
   const text = `${game.name} ${game.desc} ${game.players}`.toLowerCase();
@@ -139,57 +125,22 @@ function SurpriseMe() {
   );
 }
 
-/** Today's featured pack — rotates every day, deterministic. */
-function DailyPack() {
-  const pack = dailyPack();
+/** Today's featured game — rotates every day, deterministic the whole day. */
+function DailyGame() {
+  const game = dailyPick(ALL_PLAY_GAMES);
   return (
     <Link
-      to={`/play/${pack.slug}` as string}
+      to={`/play/${game.slug}` as string}
       className="group mt-3 flex items-center gap-3 rounded-xl border border-amber-500/25 bg-amber-500/5 px-4 py-3 transition-colors hover:border-amber-500/50"
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-[16px] transition-transform duration-150 group-hover:scale-110">{pack.icon}</span>
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-[16px] transition-transform duration-150 group-hover:scale-110">{game.icon}</span>
       <span className="min-w-0">
-        <span className="block text-[13px] font-bold text-foreground">Today's puzzle — {pack.name}</span>
-        <span className="block text-[11px] text-muted-foreground">{pack.desc}</span>
+        <span className="block text-[13px] font-bold text-foreground">Today's game — {game.name}</span>
+        <span className="block text-[11px] text-muted-foreground">{game.desc}</span>
       </span>
       <span className="ml-auto shrink-0 text-[11px] font-semibold text-amber-500">Play today's →</span>
     </Link>
   );
-}
-
-/** Pack card — mirrors GameCard but reads the pack best-score store. */
-function PackCardItem({ card }: { card: PackCard }) {
-  const [best] = usePackBest(card.slug);
-  return (
-    <Link
-      to={`/play/${card.slug}` as string}
-      className="cat cat-glow group flex flex-col rounded-xl border bg-surface p-3.5"
-      style={{ "--cat": "#a78bfa" } as React.CSSProperties}
-    >
-      <span className="cat-tile flex size-9 items-center justify-center rounded-lg text-[24px] leading-none">{card.icon}</span>
-      <span className="mt-2.5 flex flex-wrap items-center gap-1.5">
-        <span className="text-[13px] font-bold text-foreground">{card.name}</span>
-        <span className="rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[9px] font-bold text-emerald-500">🆕 New</span>
-      </span>
-      <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{card.desc}</span>
-      <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-muted-foreground/90">
-        <span>⏱ {packMinutesFor(card)} min</span>
-        <span>🎯 {packLevelFromCard(card)}</span>
-        {best !== null && <span className="font-semibold text-amber-400">🏆 Your best: {best}</span>}
-      </span>
-      <span className="cat-text mt-2.5 text-[11px] font-semibold opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-        Play now →
-      </span>
-    </Link>
-  );
-}
-
-function packMinutesFor(card: PackCard): number {
-  return PACKS.find((p) => p.slug === card.slug)?.minutes ?? 3;
-}
-function packLevelFromCard(card: PackCard): string {
-  const p = PACKS.find((x) => x.slug === card.slug);
-  return p ? packLevel(p) : "Easy";
 }
 
 function PlayIndex() {
@@ -202,26 +153,16 @@ function PlayIndex() {
   const visibleSections =
     filter === "All" ? PLAY_SECTIONS : PLAY_SECTIONS.filter((s) => s.title === filter);
 
-  const visiblePackSections =
-    filter === "All" ? PACK_SECTIONS : PACK_SECTIONS.filter((s) => s.title === filter);
-
   const filtered = q
-    ? [
-        ...PLAY_SECTIONS.map((s) => ({
-          ...s,
-          games: s.games.filter((g) => matches(g, q)),
-        })).filter((s) => s.games.length > 0),
-        ...PACK_SECTIONS.map((s) => ({
-          ...s,
-          games: s.games.filter((g) => packMatches(g, q)),
-        })).filter((s) => s.games.length > 0),
-      ]
-    : [...visibleSections, ...visiblePackSections];
+    ? PLAY_SECTIONS.map((s) => ({
+        ...s,
+        games: s.games.filter((g) => matches(g, q)),
+      })).filter((s) => s.games.length > 0)
+    : visibleSections;
 
   const foundCount = q
-    ? PLAY_SECTIONS.reduce((acc, s) => acc + s.games.filter((g) => matches(g, q)).length, 0) +
-      PACK_SECTIONS.reduce((acc, s) => acc + s.games.filter((g) => packMatches(g, q)).length, 0)
-    : [...visibleSections, ...visiblePackSections].reduce((acc, s) => acc + s.games.length, 0);
+    ? PLAY_SECTIONS.reduce((acc, s) => acc + s.games.filter((g) => matches(g, q)).length, 0)
+    : visibleSections.reduce((acc, s) => acc + s.games.length, 0);
 
   return (
     <AppShell wide title="SlashPlay">
@@ -230,8 +171,8 @@ function PlayIndex() {
           🎮 SlashPlay
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {TOTAL_GAMES} free browser games — classics, quizzes and 500+ fresh packs. Solo, vs AI, and
-          pass-and-play multiplayer. No downloads needed. <span className="text-[12px] font-semibold">Works offline</span>
+          {TOTAL_GAMES} free browser games — classics, sports, board games, brain trainers and
+          puzzles. Solo, vs AI, and pass-and-play multiplayer. No downloads needed. <span className="text-[12px] font-semibold">Works offline</span>
         </p>
       </header>
 
@@ -252,7 +193,7 @@ function PlayIndex() {
         <SurpriseMe />
       </div>
 
-      <DailyPack />
+      <DailyGame />
 
       {/* New games - only while something is genuinely fresh */}
       {filter === "All" && !q && (
@@ -308,7 +249,6 @@ function PlayIndex() {
       <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {[
           { label: "Games", value: TOTAL_GAMES, icon: "🎮" },
-          { label: "Packs", value: PACKS.length, icon: "🧩" },
           { label: "Multiplayer", value: MODES.multiplayer, icon: "👥" },
           { label: "Vs AI modes", value: MODES.vsAi, icon: "🤖" },
         ].map((s) => (
@@ -371,46 +311,27 @@ function PlayIndex() {
         <p className="mt-10 text-center text-sm text-muted-foreground">No games match "{search}".</p>
       ) : (
         filtered.map((section) => {
-          const isPack = (PACK_SECTIONS as { title: string }[]).some((s) => s.title === section.title);
           return (
             <section
               key={section.title}
               className="mt-7"
-              style={{ "--cat": isPack ? "#a78bfa" : playSectionColor(section.title).hex } as React.CSSProperties}
+              style={{ "--cat": playSectionColor(section.title).hex } as React.CSSProperties}
             >
-              {isPack ? (
-                <>
-                  <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold text-[#a78bfa]">
-                    <span>{section.icon}</span>
-                    {section.title}
-                    <span className="text-[11px] font-medium text-muted-foreground">
-                      {section.games.length} pack{section.games.length === 1 ? "" : "s"} · {PACK_GROUP_ORDER.find((g) => g.title === section.title)?.blurb}
-                    </span>
-                  </h2>
-                  <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
-                    {(section.games as PackCard[]).map((card) => (
-                      <PackCardItem key={card.slug} card={card} />
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold" style={{ color: playSectionColor(section.title).hex }}>
-                    <span>{section.icon}</span>
-                    {section.title}
-                    <span className="text-[11px] font-medium text-muted-foreground">
-                      {section.games.length} game{section.games.length === 1 ? "" : "s"}
-                    </span>
-                  </h2>
-                  <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
-                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
-                    {section.games.map((game) => (
-                      <GameCard key={game.slug} game={game as PlayGame} color={playSectionColor(section.title).hex} />
-                    ))}
-                  </div>
-                </>
-              )}
+              <>
+                <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold" style={{ color: playSectionColor(section.title).hex }}>
+                  <span>{section.icon}</span>
+                  {section.title}
+                  <span className="text-[11px] font-medium text-muted-foreground">
+                    {section.games.length} game{section.games.length === 1 ? "" : "s"}
+                  </span>
+                </h2>
+                <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
+                  {section.games.map((game) => (
+                    <GameCard key={game.slug} game={game as PlayGame} color={playSectionColor(section.title).hex} />
+                  ))}
+                </div>
+              </>
             </section>
           );
         })

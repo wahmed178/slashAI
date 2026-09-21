@@ -15,7 +15,7 @@ import { PLAY_SECTIONS } from "@/lib/slashplay";
 import { SLASH_APPS } from "@/lib/slashbar";
 import {
   CAT_PALETTE,
-  kitSectionColor,
+  toolSectionColor,
   playSectionColor,
   type CatColor,
 } from "@/lib/category-colors";
@@ -91,7 +91,7 @@ function buildFeed(): FeedItem[] {
 
   // tools - tinted with their SlashKits section colour
   for (const s of TOOL_SECTIONS) {
-    const tint = kitSectionColor(s.title);
+    const tint = toolSectionColor(s.title);
     for (const t of s.tools) {
       items.push({
         key: `tool-${t.slug}`,

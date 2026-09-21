@@ -13,24 +13,33 @@ import { isNewItem, popularFromUsage } from "@/lib/ux";
 import { useUxTick } from "@/hooks/use-ux";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
-import { kitSectionColor } from "@/lib/category-colors";
+import { toolSectionColor } from "@/lib/category-colors";
 import { useLibrary } from "@/hooks/use-library";
-import { KITS, KIT_COUNT, kitSections, searchKits, type Kit } from "@/lib/kits/registry";
+import {
+  DECLARATIVE_TOOLS,
+  DECLARATIVE_TOOL_COUNT,
+  TOOL_SECTION_ORDER,
+  toolsInSection,
+  type DeclarativeTool,
+  type ToolSection,
+} from "@/lib/toolkit/catalog";
+
+const GRAND_TOTAL = SLASH_TOOL_COUNT + DECLARATIVE_TOOL_COUNT;
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
     meta: [
-      { title: `SlashKits - ${SLASH_TOOL_COUNT} free browser tools | SlashAI` },
+      { title: `SlashKits — ${GRAND_TOTAL} free browser tools | SlashAI` },
       {
         name: "description",
-        content: `SlashKits: ${SLASH_TOOL_COUNT} free browser tools - image compress, calculators, noise, tasbeeh, timers, screensavers. No upload, no account.`,
+        content: `SlashKits: ${GRAND_TOTAL} free browser tools — image compress, JSON and CSV utilities, text tools, colour, CSS, passwords and everyday utilities. No upload, no account.`,
       },
     ],
   }),
   component: ToolsIndex,
 });
 
-const FILTERS = ["All", ...TOOL_SECTIONS.map((s) => s.title), "Instant Kits"] as const;
+const FILTERS = ["All", ...TOOL_SECTIONS.map((s) => s.title), ...TOOL_SECTION_ORDER.map((s) => s.title)] as const;
 
 type FilterType = (typeof FILTERS)[number];
 
@@ -54,24 +63,25 @@ function ToolsIndex() {
   const fresh = newTools();
   const popular = popularFromUsage(3);
 
-  const visibleSections = filter === "All" || filter === "Instant Kits"
-    ? (filter === "Instant Kits" ? [] : TOOL_SECTIONS_PRERENDER)
+  const visibleSections = filter === "All"
+    ? TOOL_SECTIONS_PRERENDER
     : TOOL_SECTIONS_PRERENDER.filter((s) => s.title === filter);
-  const showKits = filter === "All" || filter === "Instant Kits";
-  const KIT_SECTIONS = kitSections();
-  const visibleKitSections = q
-    ? []
-    : KIT_SECTIONS.filter((s) => (showKits ? true : false));
 
-  const matchingKits = q && showKits ? searchKits(q) : [];
+  const visibleKitSections = filter === "All"
+    ? TOOL_SECTION_ORDER
+    : TOOL_SECTION_ORDER.filter((s) => s.title === filter);
+
+  const matchesKit = (t: DeclarativeTool, needle: string) =>
+    `${t.name} ${t.desc} ${t.section} ${t.slug}`.toLowerCase().includes(needle);
 
   // count matching tools across every visible section (or globally while searching)
   const matchingTools = !q
     ? visibleSections.flatMap((s) => s.tools)
     : TOOL_SECTIONS.flatMap((s) => s.tools).filter((t) => matches(t, q));
+  const matchingKits = q ? DECLARATIVE_TOOLS.filter((t) => matchesKit(t, q)) : [];
   const foundCount = q
-    ? TOOL_SECTIONS.reduce((acc, s) => acc + [...s.tools, ...(s.hubTools ?? [])].filter((t) => matches(t, q)).length, 0) + (showKits ? matchingKits.length : 0)
-    : matchingTools.length + (showKits ? KIT_COUNT : 0);
+    ? TOOL_SECTIONS.reduce((acc, s) => acc + [...s.tools, ...(s.hubTools ?? [])].filter((t) => matches(t, q)).length, 0) + matchingKits.length
+    : matchingTools.length + visibleKitSections.reduce((acc, s) => acc + toolsInSection(s.title).length, 0);
 
   return (
     <AppShell wide title="SlashKits">
@@ -80,8 +90,9 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {SLASH_TOOL_COUNT}+ free browser tools plus {KIT_COUNT}+ instant kits — converters, tables, cheat sheets and curated web tools.
-          Nothing uploads. No account needed. <span className="text-[12px] font-semibold">All free · Works offline</span>
+          {GRAND_TOTAL} free browser tools — files and images, text and data, colour and CSS, passwords
+          and converters, plus everyday utilities. Nothing uploads. No account needed.{" "}
+          <span className="text-[12px] font-semibold">All free · Works offline</span>
         </p>
       </header>
 
@@ -215,7 +226,7 @@ function ToolsIndex() {
       {/* Filter chips - the active chip takes its section colour */}
       <div className="mt-3 flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
         {FILTERS.map((f) => {
-          const cc = f === "All" ? undefined : kitSectionColor(f);
+          const cc = f === "All" ? undefined : toolSectionColor(f);
           const active = filter === f;
           return (
             <button
@@ -265,7 +276,7 @@ function ToolsIndex() {
         })
         .filter(({ tools }) => tools.length > 0)
         .map(({ section, tools }, si) => {
-          const cc = kitSectionColor(section.title);
+          const cc = toolSectionColor(section.title);
           return (
             <section
               key={section.title}
@@ -348,65 +359,60 @@ function ToolsIndex() {
           );
         })}
 
-      {/* ── Instant Kits: 1,000+ generated tools ─────────────────────── */}
+
+      {/* ── Declarative toolkit — real utilities, one page each ───────── */}
       {q && matchingKits.length > 0 && (
         <section className="mt-10">
-          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style={{ color: "#a78bfa" }}>
-            <span className="text-lg">⚡</span> Instant Kits matching “{search.trim()}”
+          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style={{ color: "#38bdf8" }}>
+            <span className="text-lg">🧰</span> Toolkit matches for “{search.trim()}”
           </h2>
           <div className="cat-rule mt-1.5 w-24" />
           <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {matchingKits.map((k) => (
-              <KitCard key={k.slug} kit={k} />
+            {matchingKits.slice(0, 30).map((t) => (
+              <DeclarativeCard key={t.slug} tool={t} />
             ))}
           </div>
         </section>
       )}
-      {!q && visibleKitSections.map((section, si) => (
-        <section key={section.title} className={si === 0 ? "mt-10" : "mt-10"}>
-          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style={{ color: "#a78bfa" }}>
-            <span className="text-lg">{section.icon}</span> {section.title}
-            <span className="text-[11px] font-medium normal-case text-muted-foreground">{section.blurb} · {section.kits.length} kits</span>
-          </h2>
-          <div className="cat-rule mt-1.5 w-24" />
-          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {section.kits.slice(0, 12).map((k) => (
-              <KitCard key={k.slug} kit={k} />
-            ))}
-          </div>
-          {section.kits.length > 12 && (
-            <Link
-              to="/search"
-              search={{ q: section.title.toLowerCase() }}
-              className="mt-2.5 inline-block text-[12px] font-semibold text-primary hover:underline"
-            >
-              See all {section.kits.length} {section.title.toLowerCase()} →
-            </Link>
-          )}
-        </section>
-      ))}
+
+      {!q &&
+        visibleKitSections.map((section) => {
+          const tools = toolsInSection(section.title as ToolSection);
+          if (tools.length === 0) return null;
+          return (
+            <section key={section.title} className="mt-10">
+              <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style={{ color: "#38bdf8" }}>
+                <span className="text-lg">{section.icon}</span> {section.title}
+                <span className="text-[11px] font-medium normal-case text-muted-foreground">
+                  {section.blurb} · {tools.length}
+                </span>
+              </h2>
+              <div className="cat-rule mt-1.5 w-24" />
+              <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+                {tools.map((t) => (
+                  <DeclarativeCard key={t.slug} tool={t} />
+                ))}
+              </div>
+            </section>
+          );
+        })}
     </AppShell>
   );
 }
 
-/** Kit card — mirrors the tool card at half weight. */
-function KitCard({ kit }: { kit: Kit }) {
+/** Declarative toolkit card — identical weight to the authored tool cards. */
+function DeclarativeCard({ tool }: { tool: DeclarativeTool }) {
   return (
     <Link
-      to={`/tools/kit/${kit.slug}` as string}
-      className="cat cat-glow group flex items-start gap-3 rounded-[10px] border bg-surface p-4"
-      style={{ "--cat": "#a78bfa" } as React.CSSProperties}
+      to={`/tools/${tool.slug}` as string}
+      className={`cat cat-glow group flex items-start gap-3 rounded-[10px] border bg-surface p-4${tool.noInput ? "" : ""}`}
+      style={{ "--cat": "#38bdf8" } as React.CSSProperties}
     >
-      <span className="cat-tile flex size-10 shrink-0 items-center justify-center rounded-lg text-[22px]">
-        {kit.icon}
-      </span>
+      <span className="cat-tile flex size-10 shrink-0 items-center justify-center rounded-lg text-[22px]">{tool.icon}</span>
       <span className="min-w-0 flex-1">
-        <span className="flex items-center gap-2">
-          <span className="text-[15px] font-semibold text-foreground">{kit.name}</span>
-          <span className="cat-chip shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-semibold">Kit</span>
-        </span>
-        <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">{kit.desc}</span>
-        <span className="mt-1 block text-[10.5px] text-muted-foreground/85">⚡ Instant · No upload · Free</span>
+        <span className="block text-[15px] font-semibold text-foreground">{tool.name}</span>
+        <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-2">{tool.desc}</span>
+        <span className="mt-1 block text-[10.5px] text-muted-foreground/85">In-browser · Nothing uploaded · Free</span>
       </span>
       <span className="cat-text mt-1 shrink-0 text-[13px] transition-colors">→</span>
     </Link>

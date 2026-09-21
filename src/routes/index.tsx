@@ -48,10 +48,10 @@ import {
 import trendingToolsData from "@/../src/data/trending-tools.json";
 import { ALL_SLASH_TOOLS, SLASH_TOOL_COUNT, toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
-import { KIT_COUNT } from "@/lib/kits/registry";
-import { PACKS } from "@/lib/packs/registry";
+import { DECLARATIVE_TOOL_COUNT } from "@/lib/toolkit/catalog";
 
-const TOTAL_PLAY_COUNT = PLAY_GAME_COUNT + PACKS.length;
+const TOTAL_PLAY_COUNT = PLAY_GAME_COUNT;
+const TOTAL_TOOL_COUNT = SLASH_TOOL_COUNT + DECLARATIVE_TOOL_COUNT;
 
 const HERO_TOOL = heroToolOfTheDay();
 const GENERATOR_TOTAL = ALL_SLASH_TOOLS.filter((t) =>
@@ -535,7 +535,7 @@ function HomePage() {
         className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-2xl border border-sidebar-border bg-surface px-4 py-3 text-[12px] text-muted-foreground"
       >
         <span>⚡ <b className="font-semibold text-foreground tabular-nums">{VERIFIED_TOTAL.toLocaleString()}</b> Commands</span>
-        <span>🧰 <b className="font-semibold text-foreground tabular-nums">{(SLASH_TOOL_COUNT + KIT_COUNT).toLocaleString()}+</b> Tools</span>
+        <span>🧰 <b className="font-semibold text-foreground tabular-nums">{TOTAL_TOOL_COUNT.toLocaleString()}</b> Tools</span>
         <span>🎮 <b className="font-semibold text-foreground tabular-nums">{TOTAL_PLAY_COUNT}</b> Games</span>
         <span>📦 <b className="font-semibold text-foreground tabular-nums">{RESOURCE_TOTAL}+</b> Resources</span>
         {hydrated && stats.copies > 0 && (

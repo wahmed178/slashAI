@@ -42,8 +42,8 @@ export const CAT_PALETTE = {
   green: c(148, "#4ade80"),
 } as const;
 
-/** SlashKits section → colour */
-export const KIT_SECTION_COLORS: Record<string, CatColor> = {
+/** Authored SlashKits section → colour */
+export const TOOL_SECTION_COLORS: Record<string, CatColor> = {
   Popular: CAT_PALETTE.teal,
   "File & Document": CAT_PALETTE.sky,
   "Image & Media": CAT_PALETTE.violet,
@@ -69,6 +69,19 @@ export const PLAY_SECTION_COLORS: Record<string, CatColor> = {
   "Word & Puzzle": CAT_PALETTE.sky,
   "Viral & Zen": CAT_PALETTE.fuchsia,
   "Quick Plays": CAT_PALETTE.cyan,
+  Sports: CAT_PALETTE.emerald,
+  "Brain Training": CAT_PALETTE.indigo,
+};
+
+/** Declarative toolkit section → colour (lib/toolkit/catalog) */
+export const TOOLKIT_SECTION_COLORS: Record<string, CatColor> = {
+  "Text & Writing": CAT_PALETTE.sky,
+  "Data & Code": CAT_PALETTE.indigo,
+  "Encoding & Security": CAT_PALETTE.emerald,
+  "Colour & Design": CAT_PALETTE.fuchsia,
+  "Dates & Time": CAT_PALETTE.orange,
+  "Web & SEO": CAT_PALETTE.teal,
+  Generators: CAT_PALETTE.cyan,
 };
 
 /** Fun Sites hub category → colour */
@@ -81,8 +94,8 @@ export const FUN_CATEGORY_COLORS: Record<string, CatColor> = {
   Learning: CAT_PALETTE.lime,
 };
 
-export const kitSectionColor = (title: string): CatColor =>
-  KIT_SECTION_COLORS[title] ?? CAT_PALETTE.teal;
+export const toolSectionColor = (title: string): CatColor =>
+  TOOL_SECTION_COLORS[title] ?? TOOLKIT_SECTION_COLORS[title] ?? CAT_PALETTE.teal;
 
 export const playSectionColor = (title: string): CatColor =>
   PLAY_SECTION_COLORS[title] ?? CAT_PALETTE.rose;
@@ -93,7 +106,7 @@ export const funCategoryColor = (name: string): CatColor =>
 /** resolve the colour of any tool by slug (first section that lists it) */
 export function toolColorOf(slug: string): CatColor {
   for (const s of TOOL_SECTIONS) {
-    if (s.tools.some((t) => t.slug === slug)) return kitSectionColor(s.title);
+    if (s.tools.some((t) => t.slug === slug)) return toolSectionColor(s.title);
   }
   return CAT_PALETTE.teal;
 }
