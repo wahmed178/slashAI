@@ -987,7 +987,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     tags: ["trivia", "quiz", "free-api", "no-key"],
     addedDate: "2026-08-28",
     lastUpdated: "2026-08-28",
-    lastVerified: "2026-09-17",
+    lastVerified: "2026-09-21",
     status: "Active" as const,
   },
   {
@@ -1004,7 +1004,7 @@ export const EXTRA_RESOURCES: Resource[] = [
     tags: ["trivia", "quiz", "free-api", "no-key"],
     addedDate: "2026-08-28",
     lastUpdated: "2026-08-28",
-    lastVerified: "2026-09-17",
+    lastVerified: "2026-09-21",
     status: "Active" as const,
   },
 ];
