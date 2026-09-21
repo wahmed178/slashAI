@@ -7,7 +7,7 @@
 A searchable library of copy-ready slash commands for writing, research, coding, design, documents, data, productivity and more. Find a strong starting point, tune it to your task, and get back to the work.
 
 [![Status](https://img.shields.io/badge/status-live-2dd4bf)](https://slashai.in)
-[![Commands](https://img.shields.io/badge/commands-5%2C682-0ea5e9)](https://slashai.in/explore)
+[![Commands](https://img.shields.io/badge/commands-10%2C005-0ea5e9)](https://slashai.in/explore)
 [![PWA](https://img.shields.io/badge/PWA-offline--ready-8b5cf6)](#-pwa--offline)
 [![Android](https://img.shields.io/badge/Android-APK-3ddc84)](#-android)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6)](#-tech-stack)
@@ -44,21 +44,27 @@ A searchable library of copy-ready slash commands for writing, research, coding,
 
 | | |
 | --- | --- |
-| **Commands** | 5,682 curated, de-duplicated slash commands |
-| **Categories** | 45 categories across 381 subcategories |
-| **SlashKits** | 150+ free browser tools — image, PDF, calculators, timers, screensavers |
-| **SlashPlay** | 57 browser games — solo, vs AI and pass-and-play multiplayer |
+| **Commands** | 10,074 curated, de-duplicated slash commands |
+| **Categories** | 45 categories across 439 subcategories |
+| **SlashKits** | 1,250+ free tools — 156 interactive browser tools plus 1,095 instant kits (converters, periodic table, study tables, cheat sheets, curated web directory) |
+| **SlashPlay** | 561 browser games — 57 hand-built classics plus 504 quiz, word, memory and puzzle packs |
 | **Slash Courses** | 5 courses with real lessons and graded module tests, plus 4 learning paths |
 | **Search** | Instant fuzzy search with typo tolerance and highlighted matches |
 | **Offline** | Static catalog + PWA shell designed for offline use |
 | **Android** | Signed APK built with Capacitor and a native WebView |
 | **Account** | None required — favorites, progress and settings persist locally |
+| **Stores** | Free multi-tenant storefronts on their own subdomains (`/stores`, Supabase) |
 
-**New in v2.28 (Sep 2026):** difficulty badges and a first-run command guide,
+**New in v2.31 (Sep 2026):** **SlashAI Stores** — anyone can sign in, create a
+store, add products and take orders on their own address (`yourshop.slashai.in`
+or `/stores/<slug>`). Shoppers buy without an account, orders land in the owner's
+dashboard and hand off to WhatsApp in one tap. Postgres + Auth + Storage from
+Supabase, with Row Level Security and server-side price verification.
+
+Previous highlight (v2.28): difficulty badges and a first-run command guide,
 "Try in ChatGPT / Gemini / Claude" quick-launch buttons, 🆕/🔥 badges across
 SlashKits and SlashPlay, learning paths with progress tracking, a floating
-re-copy pill, 14 ready-made HTML Compiler starter projects, and a much deeper
-cricket game (4 formats, shareable scores, frame-rate independent physics).
+re-copy pill, and 14 ready-made HTML Compiler starter projects.
 
 ---
 
@@ -74,7 +80,7 @@ Every command carries a plain-language description, a "how to use" note, a worke
 
 - **Discovery over recall** — you don't have to remember prompt patterns; you search for them.
 - **Copy-ready, not abstract** — each entry ships with a filled-in example you can edit in seconds.
-- **Structured by design** — category → subcategory → command keeps 5,682 entries navigable.
+- **Structured by design** — category → subcategory → command keeps 10,074 entries navigable.
 - **More than commands** — free browser tools, games and courses, all on the same no-account basis.
 - **Fast and quiet** — a dark-first, scan-friendly interface with restrained motion and no clutter.
 - **Yours, locally** — favorites, recents, theme, accent and density stay on your device.
@@ -153,35 +159,58 @@ The taxonomy below is generated from the catalog itself.
 
 | Category | Commands | Subcategories |
 | --- | ---: | ---: |
+| AI Agents & Prompting | 193 | 3 |
+| Analytics & Reporting | 180 | 3 |
 | Audio & Speech | 60 | 10 |
 | Automation & Workflows | 60 | 10 |
-| Business & Management | 60 | 10 |
-| Career | 60 | 10 |
-| Coding & Development | 63 | 11 |
+| Backend & APIs | 221 | 5 |
+| Business & Management | 760 | 20 |
+| Career | 63 | 10 |
+| Coding & Development | 768 | 19 |
+| Content & Social Media | 1,082 | 26 |
+| Customer Support | 216 | 3 |
 | Data & Analytics | 122 | 22 |
+| Databases & SQL | 186 | 3 |
 | Design & Creative | 60 | 10 |
+| DevOps & Cloud | 219 | 4 |
 | Documents & OCR | 62 | 11 |
+| Ecommerce & Retail | 216 | 3 |
+| Events & Community | 215 | 18 |
+| Food & Cooking | 216 | 14 |
+| Gaming & Esports | 216 | 13 |
 | General AI | 61 | 10 |
-| Health & Wellbeing | 40 | 5 |
-| Home & Everyday | 40 | 5 |
-| Image & Vision | 64 | 13 |
-| Learning & Education | 61 | 10 |
-| Marketing & SEO | 60 | 10 |
+| Health & Wellbeing | 42 | 6 |
+| Home & Everyday | 740 | 15 |
+| HR & Hiring | 216 | 3 |
+| Image & Vision | 773 | 23 |
+| Learning & Education | 764 | 18 |
+| Legal & Contracts | 216 | 3 |
+| Machine Learning | 180 | 3 |
+| Marketing & SEO | 63 | 10 |
 | Math & Science | 60 | 10 |
-| Money & Finance | 47 | 5 |
+| Mobile & Apps | 216 | 5 |
+| Money & Finance | 50 | 5 |
 | Productivity | 62 | 10 |
 | Quality & Performance | 60 | 10 |
 | Research & Knowledge | 60 | 10 |
-| Security & Privacy | 61 | 10 |
+| Sales & CRM | 216 | 5 |
+| Security & Privacy | 62 | 10 |
 | Social & Community | 46 | 6 |
+| Sports & Fitness | 216 | 16 |
+| Spreadsheets | 180 | 3 |
+| Testing & QA | 216 | 8 |
 | Translation & Languages | 60 | 10 |
 | Travel & Local | 48 | 6 |
-| Video | 61 | 10 |
-| Writing & Communication | 61 | 10 |
-| **Total** | **5,682** | **381** |
+| Video | 67 | 10 |
+| Web & Frontend | 222 | 7 |
+| Writing & Communication | 63 | 10 |
+| **Total** | **10,074** | **439** |
 
-> The live total is the source of truth (5,682 commands). Per-category rows above
-> are refreshed in batches, so they can lag a release behind.
+> The live total is the source of truth (10,074 commands). Per-category rows above
+> are refreshed in batches, so they can lag a release behind. The September 2026
+> expansion added platform-tuned variants (ChatGPT, Gemini, Claude, Perplexity,
+> Copilot, DeepSeek) across social media, image work, vibe coding, students,
+> corporate and kids command groups.
 
 ---
 
@@ -328,11 +357,16 @@ Validation enforces unique stable IDs, no duplicate command names, and complete 
 
 ## 🧩 Tech stack
 
-**React 19** · **TypeScript** · **Vite** · **TanStack Start / Router** · **Tailwind CSS 4** · **Radix UI** · **Capacitor** · **vite-plugin-pwa**
+**React 19** · **TypeScript** · **Vite** · **TanStack Start / Router** · **Tailwind CSS 4** · **Radix UI** · **Capacitor** · **vite-plugin-pwa** · **Supabase** (SlashAI Stores only)
 
 ---
 
 ## 🗺 Roadmap
+
+Shipped in v2.31:
+
+- [x] SlashAI Stores — free multi-tenant storefronts with subdomains, a
+      no-account checkout and WhatsApp order hand-off
 
 Shipped in v2.28:
 
@@ -355,6 +389,35 @@ Still on the list:
 slashAI was created by **Waseem Ahmed**, with a focus on practical AI productivity, organized command systems, and making powerful AI workflows easier to discover and reuse.
 
 The project reflects a clear point of view: that the hard part of working with AI is rarely the model — it's knowing what to ask, and remembering what worked. slashAI answers that with initiative and practical thinking, careful attention to taxonomy and structure, and a consistent bias toward user-focused utility over surface polish.
+
+---
+
+## 🏪 SlashAI Stores
+
+SlashAI Stores is the one part of the site that talks to a server: a free
+multi-tenant storefront host for small businesses, creators and local shops.
+
+- **Owners** sign in (Supabase Auth), create a store in a minute, add products
+  with photos, prices and stock, and manage orders from `/stores/dashboard`.
+- **Every store gets an address** — `yourshop.slashai.in` once the wildcard
+domain resolves, and `slashai.in/stores/yourshop` in the meantime.
+- **Shoppers need no account.** Cart, checkout with just a name and phone, a
+  real order code on success, and a one-tap "send the order on WhatsApp" button
+  — which is how most small shops in India actually take orders.
+- **No fees and no commission.** SlashAI never touches the money.
+- **Safe to hand over.** Row Level Security means a store account can only read
+  and write its own store, products and orders.
+
+Setup (Supabase project, `supabase/schema.sql`, the Vercel wildcard domain and
+the one CNAME record) is documented in **[supabase/README.md](supabase/README.md)**,
+along with two checks:
+
+```sh
+bun run stores:validate   # schema, RLS and checkout — no Supabase project needed
+bun run stores:e2e        # live: creates a demo store and opens its storefront
+```
+With no Supabase keys the store pages show a setup notice and every other part of
+SlashAI keeps working exactly as before — no backend required.
 
 ---
 

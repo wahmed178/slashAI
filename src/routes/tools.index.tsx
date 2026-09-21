@@ -15,6 +15,7 @@ import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 import { kitSectionColor } from "@/lib/category-colors";
 import { useLibrary } from "@/hooks/use-library";
+import { KITS, KIT_COUNT, kitSections, searchKits, type Kit } from "@/lib/kits/registry";
 
 export const Route = createFileRoute("/tools/")({
   head: () => ({
@@ -29,7 +30,7 @@ export const Route = createFileRoute("/tools/")({
   component: ToolsIndex,
 });
 
-const FILTERS = ["All", ...TOOL_SECTIONS.map((s) => s.title)] as const;
+const FILTERS = ["All", ...TOOL_SECTIONS.map((s) => s.title), "Instant Kits"] as const;
 
 type FilterType = (typeof FILTERS)[number];
 
@@ -53,13 +54,24 @@ function ToolsIndex() {
   const fresh = newTools();
   const popular = popularFromUsage(3);
 
-  const visibleSections = filter === "All" ? TOOL_SECTIONS_PRERENDER : TOOL_SECTIONS_PRERENDER.filter((s) => s.title === filter);
+  const visibleSections = filter === "All" || filter === "Instant Kits"
+    ? (filter === "Instant Kits" ? [] : TOOL_SECTIONS_PRERENDER)
+    : TOOL_SECTIONS_PRERENDER.filter((s) => s.title === filter);
+  const showKits = filter === "All" || filter === "Instant Kits";
+  const KIT_SECTIONS = kitSections();
+  const visibleKitSections = q
+    ? []
+    : KIT_SECTIONS.filter((s) => (showKits ? true : false));
+
+  const matchingKits = q && showKits ? searchKits(q) : [];
 
   // count matching tools across every visible section (or globally while searching)
   const matchingTools = !q
     ? visibleSections.flatMap((s) => s.tools)
     : TOOL_SECTIONS.flatMap((s) => s.tools).filter((t) => matches(t, q));
-  const foundCount = q ? TOOL_SECTIONS.reduce((acc, s) => acc + [...s.tools, ...(s.hubTools ?? [])].filter((t) => matches(t, q)).length, 0) : matchingTools.length;
+  const foundCount = q
+    ? TOOL_SECTIONS.reduce((acc, s) => acc + [...s.tools, ...(s.hubTools ?? [])].filter((t) => matches(t, q)).length, 0) + (showKits ? matchingKits.length : 0)
+    : matchingTools.length + (showKits ? KIT_COUNT : 0);
 
   return (
     <AppShell wide title="SlashKits">
@@ -68,7 +80,7 @@ function ToolsIndex() {
           SlashKits
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {SLASH_TOOL_COUNT}+ free browser tools — calculators, converters, file tools and more.
+          {SLASH_TOOL_COUNT}+ free browser tools plus {KIT_COUNT}+ instant kits — converters, tables, cheat sheets and curated web tools.
           Nothing uploads. No account needed. <span className="text-[12px] font-semibold">All free · Works offline</span>
         </p>
       </header>
@@ -143,9 +155,12 @@ function ToolsIndex() {
           </h2>
           <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {fresh.slice(0, 6).map((tool) => (
-              <Link
+              // `<a>` rather than <Link>: `newTools()` widens the slug to string, so
+              // it cannot be matched to a route id at compile time. Same as the
+              // Tool of the Day card above.
+              <a
                 key={`new-${tool.slug}`}
-                to={`/tools/${tool.slug}`}
+                href={`/tools/${tool.slug}`}
                 className="group flex items-start gap-3 rounded-[10px] border border-emerald-500/30 bg-surface p-4 transition-colors hover:border-emerald-500/60"
               >
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent text-[22px]">
@@ -163,7 +178,7 @@ function ToolsIndex() {
                   </span>
                 </span>
                 <span className="mt-1 shrink-0 text-[13px] text-primary transition-transform group-hover:translate-x-0.5">→</span>
-              </Link>
+              </a>
             ))}
           </div>
         </section>
@@ -332,6 +347,68 @@ function ToolsIndex() {
             </section>
           );
         })}
+
+      {/* ── Instant Kits: 1,000+ generated tools ─────────────────────── */}
+      {q && matchingKits.length > 0 && (
+        <section className="mt-10">
+          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style={{ color: "#a78bfa" }}>
+            <span className="text-lg">⚡</span> Instant Kits matching “{search.trim()}”
+          </h2>
+          <div className="cat-rule mt-1.5 w-24" />
+          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            {matchingKits.map((k) => (
+              <KitCard key={k.slug} kit={k} />
+            ))}
+          </div>
+        </section>
+      )}
+      {!q && visibleKitSections.map((section, si) => (
+        <section key={section.title} className={si === 0 ? "mt-10" : "mt-10"}>
+          <h2 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style={{ color: "#a78bfa" }}>
+            <span className="text-lg">{section.icon}</span> {section.title}
+            <span className="text-[11px] font-medium normal-case text-muted-foreground">{section.blurb} · {section.kits.length} kits</span>
+          </h2>
+          <div className="cat-rule mt-1.5 w-24" />
+          <div className="mt-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            {section.kits.slice(0, 12).map((k) => (
+              <KitCard key={k.slug} kit={k} />
+            ))}
+          </div>
+          {section.kits.length > 12 && (
+            <Link
+              to="/search"
+              search={{ q: section.title.toLowerCase() }}
+              className="mt-2.5 inline-block text-[12px] font-semibold text-primary hover:underline"
+            >
+              See all {section.kits.length} {section.title.toLowerCase()} →
+            </Link>
+          )}
+        </section>
+      ))}
     </AppShell>
+  );
+}
+
+/** Kit card — mirrors the tool card at half weight. */
+function KitCard({ kit }: { kit: Kit }) {
+  return (
+    <Link
+      to={`/tools/kit/${kit.slug}` as string}
+      className="cat cat-glow group flex items-start gap-3 rounded-[10px] border bg-surface p-4"
+      style={{ "--cat": "#a78bfa" } as React.CSSProperties}
+    >
+      <span className="cat-tile flex size-10 shrink-0 items-center justify-center rounded-lg text-[22px]">
+        {kit.icon}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-2">
+          <span className="text-[15px] font-semibold text-foreground">{kit.name}</span>
+          <span className="cat-chip shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-semibold">Kit</span>
+        </span>
+        <span className="mt-0.5 block text-[13px] text-muted-foreground line-clamp-1">{kit.desc}</span>
+        <span className="mt-1 block text-[10.5px] text-muted-foreground/85">⚡ Instant · No upload · Free</span>
+      </span>
+      <span className="cat-text mt-1 shrink-0 text-[13px] transition-colors">→</span>
+    </Link>
   );
 }

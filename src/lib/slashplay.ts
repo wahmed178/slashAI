@@ -9,6 +9,7 @@
  * - All games run fully in the browser (no downloads, works offline).
  *   Multiplayer means pass-and-play on one device.
  */
+import { PACKS, packCards, packLevel, type Pack, type PackCard, type PackGroup } from "./packs/registry";
 
 export type Players = "Solo" | "2P" | "2P + AI" | "Solo + 2P";
 
@@ -139,6 +140,106 @@ export const PLAY_SECTIONS: PlaySection[] = [
 ];
 
 /** all games, preserving section order */
+export const ALL_PLAY_GAMES: PlayGame[] = PLAY_SECTIONS.flatMap((s) => s.games);
+
+/** total game count (deduped - slugs are unique by rule) */
+export const PLAY_GAME_COUNT = new Set(ALL_PLAY_GAMES.map((g) => g.slug)).size;
+
+const gameBySlug = new Map(ALL_PLAY_GAMES.map((g) => [g.slug, g]));
+
+export const getPlayGame = (slug: string | undefined) =>
+  slug ? gameBySlug.get(slug) : undefined;
+
+/** counts per mode for hub stats */
+export function playModeCounts() {
+  let multiplayer = 2;
+  let vsAi = 0;
+  let solo = 0;
+  for (const g of ALL_PLAY_GAMES) {
+    if (g.players === "2P" || g.players === "2P + AI") multiplayer++;
+  }
+  for (const p of PACKS) {
+    if (p.kind === "wouldyourather") multiplayer++;
+    else solo++;
+  }
+  vsAi = 4; // tic-tac-toe, connect-four, checkers, reversi AIs
+  return { multiplayer, vsAi, solo };
+}
+
+export type { Pack, PackCard, PackGroup };
+export { PACKS, packCards, packLevel };
+
+/** hub stats — pack breakdown for the /play hero counts */
+export function packKindCounts() {
+  const counts: Record<string, number> = {};
+  for (const p of PACKS) counts[p.kind] = (counts[p.kind] || 0) + 1;
+  return counts;
+}
+
+/* ── daily pick + surprise me ──────────────────────────────────────── */
+
+/** day number since epoch, stable across timezones (UTC) */
+function dayNumber(now = new Date()): number {
+  return Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+}
+
+/** deterministic day-index picker shared by the daily puzzle + daily shuffle */
+export function dailyPick<T>(list: readonly T[], now = new Date()): T {
+  return list[dayNumber(now) % list.length]!;
+}
+
+/** today's featured pack (rotates daily, stable all day) */
+export function dailyPack(): Pack {
+  return dailyPick(PACKS);
+}
+
+/** 🎲 Surprise me — weighted toward static games but includes packs */
+export function randomGameSlug(): string {
+  const pool = [...ALL_PLAY_GAMES.map((g) => g.slug), ...PACKS.map((p) => p.slug)];
+  return pool[Math.floor(Math.random() * pool.length)]!;
+}
+
+/* ── field trip: the useless-web, curated + explained ───────────────── */
+
+/**
+ * Field trip — a curated slice of the useless web. Every site is real and
+ * free; the explainer tells you what it does before you click, which is what
+ * random web-surfing buttons always miss. Filtered by mood and kid-safety.
+ */
+export interface FieldTripSite {
+  name: string;
+  url: string;
+  what: string;
+  group: "Curiosity" | "Create" | "Relax" | "Play" | "Learn";
+  kidsOk: boolean;
+}
+
+export const FIELD_TRIP_SITES: FieldTripSite[] = [
+  { name: "The Useless Web", url: "https://theuselessweb.com/", what: "A button that flings you to a random pointless-yet-delightful website", group: "Play", kidsOk: false },
+  { name: "Window Swap", url: "https://window-swap.com/", what: "Look through strangers' windows from cities around the world", group: "Relax", kidsOk: true },
+  { name: "Radio Garden", url: "https://radio.garden/", what: "Spin a 3D globe and tune into live radio from anywhere on Earth", group: "Learn", kidsOk: true },
+  { name: "This Word Does Not Exist", url: "https://www.thisworddoesnotexist.com/", what: "An AI invents a brand-new English word and its definition", group: "Learn", kidsOk: true },
+  { name: " Neal.fun", url: "https://neal.fun/", what: "A playground of clever toys: spend Bill Gates' money, scale the universe, more", group: "Play", kidsOk: true },
+  { name: "Zoom Quilt", url: "https://zoomquilt.org/", what: "An endlessly zooming collaborative artwork that never repeats", group: "Relax", kidsOk: true },
+  { name: "A Soft Murmur", url: "https://asoftmurmur.com/", what: "Mix rain, waves, fires and coffee-shop sounds into your own ambience", group: "Relax", kidsOk: true },
+  { name: "This Is Sand", url: "https://thisissand.com/", what: "Pour digital sand into glittering layered landscapes", group: "Create", kidsOk: true },
+  { name: "Quick, Draw!", url: "https://quickdraw.withgoogle.com/", what: "Google's neural net guesses your doodles in 20 seconds", group: "Play", kidsOk: true },
+  { name: "Silk", url: "http://weavesilk.com/", what: "Mirror-draw glowing silky patterns with your cursor", group: "Create", kidsOk: true },
+  { name: "GeoGuessr (free daily)", url: "https://www.geoguessr.com/", what: "Dropped somewhere on Earth in Street View — guess where", group: "Learn", kidsOk: true },
+  { name: "Patatap", url: "https://patatap.com/", what: "Every keypress makes an animation and a musical sound", group: "Create", kidsOk: true },
+  { name: "The Deep Sea", url: "https://neal.fun/deep-sea/", what: "Scroll from the surface to the Mariana Trench and meet what lives there", group: "Learn", kidsOk: true },
+  { name: "Stars Chrome Experiment", url: "https://stars.chromeexperiments.com/", what: "Fly through 100,000 stars of the Milky Way in 3D", group: "Learn", kidsOk: true },
+  { name: "Blob Opera", url: "https://artsandculture.google.com/experiment/blob-opera", what: "Four opera blobs sing anything you drag — machine-learned harmonies", group: "Create", kidsOk: true },
+  { name: "Lines. Cat Bounce", url: "https://catbounce.net/", what: "Bouncing cats. That's it. Drag them, fling them, be happy", group: "Relax", kidsOk: true },
+];
+
+export function fieldTripSites(kidsOnly: boolean): FieldTripSite[] {
+  return kidsOnly ? FIELD_TRIP_SITES.filter((s) => s.kidsOk) : FIELD_TRIP_SITES;
+}
+
+export function randomFieldTrip(): FieldTripSite {
+  return FIELD_TRIP_SITES[Math.floor(Math.random() * FIELD_TRIP_SITES.length)]!;
+}
 /* ─────────────────────────── card metadata ───────────────────────────
  * Typical session length (minutes) and pick-up difficulty, shown on every
  * game card as "⏱ 2 min · 🎯 Easy". Kept as a lookup so the catalogue rows
@@ -257,26 +358,3 @@ export const SCORING_GAMES = new Set([
 
 /** Games listed under "New Games" at the top of /play - newest release first. */
 export const NEW_GAME_SLUGS = ["schulte-table", "stop-the-color", "memory-palace"] as const;
-
-export const ALL_PLAY_GAMES: PlayGame[] = PLAY_SECTIONS.flatMap((s) => s.games);
-
-/** total game count (deduped - slugs are unique by rule) */
-export const PLAY_GAME_COUNT = new Set(ALL_PLAY_GAMES.map((g) => g.slug)).size;
-
-const gameBySlug = new Map(ALL_PLAY_GAMES.map((g) => [g.slug, g]));
-
-export const getPlayGame = (slug: string | undefined) =>
-  slug ? gameBySlug.get(slug) : undefined;
-
-/** counts per mode for hub stats */
-export function playModeCounts() {
-  let multiplayer = 0;
-  let vsAi = 0;
-  let solo = 0;
-  for (const g of ALL_PLAY_GAMES) {
-    if (g.players === "2P" || g.players === "2P + AI") multiplayer++;
-    if (g.players.includes("AI")) vsAi++;
-    if (g.players !== "2P") solo++;
-  }
-  return { multiplayer, vsAi, solo };
-}

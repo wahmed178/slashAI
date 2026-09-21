@@ -1,6 +1,18 @@
 {
-  "version": "2.30.0",
+  "version": "2.31.0",
   "entries": [
+    {
+      "version": "2.31.0",
+      "date": "2026-09-20",
+      "changes": [
+        "SlashAI Stores at /stores — free hosted storefronts for small businesses: sign in, name your shop, claim your address, add products and take orders. No fees, no commission, no shopper accounts",
+        "Every store gets its own subdomain (yourshop.slashai.in) as well as a /stores/<slug> page — a wildcard *.slashai.in domain in Vercel plus one CNAME is all that is needed (see supabase/README.md)",
+        "Shoppers get a real checkout without signing up: cart that survives a refresh, name and phone only, a real order code, and a one-tap 'send the order on WhatsApp' hand-off",
+        "Owners get a dashboard: products with photos, prices and stock, orders with customer details and a New → Confirmed → Shipped → Delivered flow, and one-tap WhatsApp replies to buyers",
+        "Store data lives in Supabase Postgres with Row Level Security — the public reads only published stores, owners touch only their own rows, and checkout runs through a server-side price-verified function",
+        "Remote sync: kept all 22 signature commands and 47 trending additions that landed on the main branch while building Stores, catalog:build now re-appends curated commands automatically, and every 10k+ count updated to the merged 10,074 total"
+      ]
+    },
     {
       "version": "2.30.0",
       "date": "2026-09-18",

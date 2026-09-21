@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.30.0";
+export const APP_VERSION = "2.32.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,33 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.32.0",
+    date: "2026-09-20",
+    title: "The big content wave: 10k commands, 500 games, 1,100 kits",
+    changes: [
+      "The command library doubles past 10,000, with whole new wings for social media creators (reels, carousels, CapCut-style editing), image enhancement, vibe coding, students (boards, JEE, NEET, placements), corporate work and kids",
+      "SlashPlay jumps to 560+ games: hundreds of new quiz packs (capitals, flags, currencies, science, cricket, movies), word packs (scramble, hangman, spelling, opposites), memory boards, emoji puzzles and would-you-rather decks — every pack fully playable, most kid-friendly",
+      "New Daily 8-Puzzle: a fresh sliding challenge every day, plus Sliding Numbers up to 5×5",
+      "Kids Corner groups the gentle stuff in one place, and 'Take me somewhere fun' flings you to the best of the useless web — each site explained before you click",
+      "SlashKits gains 1,000+ instant kits: every unit-pair converter you can think of, the full periodic table as fact pages, Indian state guides, world currencies, times tables and squares up to 20, copyable cheat sheets (git, Excel, flexbox, Hindi alphabet, VS Code), and a curated directory of free web tools with honest explanations",
+      "Today's puzzle banner on SlashPlay rotates through every pack, once a day, forever",
+    ],
+  },
+  {
+    version: "2.31.0",
+    date: "2026-09-20",
+    title: "SlashAI Stores — free storefronts for small businesses",
+    changes: [
+      "New at /stores: a multi-tenant store platform. Anybody can sign in, create a store, add products and take orders — free, with no platform fees and no commission",
+      "Each store gets its own web address: yourstore.slashai.in once the wildcard domain is live, and /stores/<slug> today. Both point at the same live shop",
+      "Shoppers buy without an account — cart, checkout with just a name and phone, a real order code, and a one-tap WhatsApp hand-off for the order",
+      "Store owner dashboard: products with photo upload, prices, stock and 'was' prices; orders with customer details, address and notes, moving through New → Confirmed → Shipped → Delivered",
+      "Built on Supabase (Postgres + Auth + Storage) with Row Level Security, so a store account can only ever see its own store — safe to hand a subdomain to a friend or client",
+      "Checkout runs through a server-side place_order function that re-reads every price from the database, so client prices can never be trusted",
+      "Every existing feature keeps working with no backend at all until the Supabase keys are added — the store screens show a setup notice until then",
+    ],
+  },
   {
     version: "2.30.0",
     date: "2026-09-18",

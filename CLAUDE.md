@@ -1,13 +1,14 @@
 # claude.md — SlashAI Agent Continuity File
 
 ## Last Updated
-18 September 2026 · APP_VERSION 2.30.0
+20 September 2026 · APP_VERSION 2.31.0
 
 ## What This Is
 SlashAI (https://slashai.in) — a free, offline-first, no-account AI command and
 resource library. React + TanStack Start (SSR), hosted on Vercel, real Android
-wrapper via Capacitor. No backend, no auth, no database: everything personal
-lives in localStorage.
+wrapper via Capacitor. Everything personal lives in localStorage, with one
+deliberate exception: **SlashAI Stores** (`/stores`), a multi-tenant storefront
+host on Supabase (Postgres + Auth + Storage).
 
 ## Stack (do not add to it casually)
 - React 19 + TanStack Start 1.168 / TanStack Router 1.170 (file-based routes in `src/routes/`)
@@ -15,7 +16,32 @@ lives in localStorage.
 - shadcn/ui (Radix primitives) in `src/components/ui/`
 - lucide-react icons; sonner for toasts; framer-motion-style CSS animations
 - vite-plugin-pwa (precache + offline), Capacitor for the Android build
+- @supabase/supabase-js — **only** for SlashAI Stores
 - Package manager: **bun**. Typecheck: `bun tsc -b --noEmit`
+
+## SlashAI Stores (v2.31)
+- Routes: `/stores` (directory) · `/stores/<slug>` (storefront) ·
+  `/stores/dashboard` (owner). Static `stores.dashboard.tsx` intentionally wins
+  over `stores.$slug.index.tsx`.
+- Subdirectory files each own a piece: `src/lib/stores.ts` (client + queries +
+  slug/host helpers + tenant themes), `src/hooks/use-stores.ts`,
+  `src/components/stores/{Storefront,StoreManager,StoreHostGate,StoreBits}.tsx`.
+- `StoreHostGate` in `__root.tsx` serves a store standalone when the host is
+  `<slug>.<VITE_STORES_ROOT_DOMAIN>`; reserved slugs live in `RESERVED_SLUGS`.
+- Database: `supabase/schema.sql` (idempotent, RLS, `place_order` RPC that
+  recomputes prices server-side). Setup + wildcard DNS walkthrough:
+  `supabase/README.md`.
+- Env: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, optional
+  `VITE_STORES_ROOT_DOMAIN`. Anon key only; RLS is the protection.
+- Without those keys everything must keep working — show `SetupNotice`, never
+  throw. Test by deleting the keys locally.
+- Verification: `bun run stores:validate` (schema + RLS + checkout in PGlite,
+  no keys needed) and `bun run stores:e2e` (live project, creates a demo store
+  and loads its storefront). `supabase/README.md` explains both.
+- Schema rules that bite: helper functions go **after** the tables (SQL function
+  bodies are validated at creation), `place_order` counts matched items rather
+  than a non-zero subtotal (free items must be orderable), and a published
+  store's catalogue is deliberately public.
 
 ## Route Map (current)
 - `/` homepage — live ticker, hero + UniversalSearch, library stats, SlashKits
@@ -23,8 +49,15 @@ lives in localStorage.
 - `/search` · `/find` · `/explore` (+ `/$category` / `/$category/$subcategory`)
 - `/c/$slug` command detail · `/collections` · `/trending` · `/favorites` · `/recent`
 - `/discover` feed (+ `/discover/reels`) — opens with **Start Here**
-- `/tools` SlashKits index · `/tools/<slug>` 150+ browser tools (each its own route file)
-- `/play` SlashPlay index · `/play/<slug>` 57 games (each its own route file)
+- `/tools` SlashKits index · `/tools/<slug>` 156 interactive tools (each its own route file)
+  · `/tools/kit/$slug` — 1,095 instant kits from `src/lib/kits/registry.ts` (converters,
+  elements, states, currencies, study tables, cheat sheets, web directory; renderer in
+  `src/components/tools/KitView.tsx`)
+- `/play` SlashPlay index · `/play/<slug>` 57 hand-built games (each its own route file)
+  + the same dynamic route serves 504 generated packs from `src/lib/packs/registry.ts`
+  (quiz/scramble/hangman/memory/emoji/wyr/sliding; renderer in
+  `src/components/games/PackPlayer.tsx`; seed data in `src/lib/packs/quiz-data.ts` +
+  `quiz-facts.ts`)
 - `/learn` Slash Courses (paths + filters) · `/learn/$courseId` · `/learn/$courseId/$lessonId`
 - `/hub` + `/hub/<audience>` · `/live` · `/glossary` · `/roadmaps` · `/generators`
 - `/quiz` · `/journal` · `/graph` · `/workflow` · `/ai-tools` · `/assistant`
@@ -81,7 +114,7 @@ existing one-shot behaviour working — the interactive part is additive.
 - SlashKits: `src/lib/slashkits.ts` (`TOOL_SECTIONS`, `similarTools`, `newTools`,
   `toolOfTheDay`). `added` dates drive the 🆕 badge — no duplicates allowed.
 - SlashPlay: `src/lib/slashplay.ts` (`PLAY_SECTIONS`, `GAME_META`/`gameMeta`,
-  `SCORING_GAMES`, `NEW_GAME_SLUGS`, `newGames`, `gameSection`). 57 games.
+  `SCORING_GAMES`, `NEW_GAME_SLUGS`, `newGames`, `gameSection`). 57 games + 504 packs.
 - Slash Courses: `src/lib/courses.ts` + `src/lib/learning-paths.ts`
   (`LEARNING_PATHS`, `pathSummary`, `pathCourseIds`). `pathsCoverAllCourses()`
   is a cheap integrity check — every course must appear in a path.
@@ -109,7 +142,8 @@ table; the two rules that bite most often:
 2. Keep the bottom-dock-only navigation; do not reintroduce a sidebar.
 3. Mobile-first (375px), semantic colour tokens only — no hard-coded hex in
    components (exceptions: category tint palettes in `src/lib/category-colors.ts`).
-4. localStorage only. No accounts, no tracking, no backend calls for UX state.
+4. localStorage only for personal UX state. The single backend surface is
+   Slash Stores; do not add backend calls for anything else.
 5. No placeholder content — counts and claims must match the real catalogue.
 6. Bump `APP_VERSION` in `src/lib/app-meta.ts` **and** add the matching entry to
    both `CHANGELOG` (app-meta.ts) and `src/data/changelog.json`.

@@ -1,6 +1,6 @@
 # SlashAI — Project Memory
 
-_Last updated: 18 September 2026 · v2.30.0_
+_Last updated: 20 September 2026 · v2.32.0_
 
 ## What This Is
 SlashAI (**https://slashai.in**) is a free, offline-first, no-account AI command
@@ -9,17 +9,28 @@ Claude, get a real result. Alongside the library it ships a browser-tool suite
 (SlashKits), a games arcade (SlashPlay), structured courses (Slash Courses),
 curated hubs, a live dashboard and a large free-resource directory.
 
-Everything is client-side. There is no backend, no auth, no database and no
-tracking — personal state lives in localStorage and never leaves the device.
+Everything personal is client-side: no tracking, no analytics profile, and
+favourites/progress/settings live in localStorage. The single exception is
+**SlashAI Stores** (v2.31) — a multi-tenant storefront host backed by Supabase
+(Postgres + Auth + Storage) that lets anyone create a store on a subdomain. It
+is opt-in: with no Supabase keys the store screens show a setup notice and the
+rest of the app stays exactly as it was.
 
-- **5,682 AI slash commands** across 45 categories / 379 subcategories
-- **150+ browser tools** on `/tools` (SlashKits)
-- **57 browser games** on `/play` (SlashPlay)
+- **10,074 AI slash commands** across 45 categories / 439 subcategories
+- **1,250+ browser tools** on `/tools` (SlashKits: 156 interactive tools + 1,095 instant kits —
+  unit-pair converters, periodic table fact pages, Indian states, currencies, study tables,
+  cheat sheets, curated web-tool directory; served from `src/lib/kits/registry.ts` at
+  `/tools/kit/<slug>`)
+- **561 browser games** on `/play` (SlashPlay: 57 hand-built games + 504 generated packs —
+  quiz sprints, word scramble, hangman, memory, emoji puzzles, would-you-rather and sliding
+  puzzles incl. the Daily 8-Puzzle; registry at `src/lib/packs/registry.ts`, served at
+  `/play/<slug>`)
 - **300+ curated free resources** on `/discover` + hubs
 - **5 full courses with graded tests** + 4 learning paths on `/learn`
 - 100+ free APIs documented, 560+ glossary terms, 20 founder roadmaps,
   16 curated collections, 24-category daily quiz, 12-hub network
 - Android app via Capacitor (`in.slashai.app`)
+- **SlashAI Stores** — free multi-tenant storefronts (`/stores`, Supabase)
 
 ## Positioning & Voice
 - Free forever. No account. No credit card. No upsell, no premium tier.
@@ -46,6 +57,7 @@ tracking — personal state lives in localStorage and never leaves the device.
 
 ## Architecture
 - **React 19 + TanStack Start (SSR)** with file-based routes in `src/routes/`
+- **Supabase** — only for SlashAI Stores (see below); everything else is local
 - **Vercel** serves slashai.in; an `isolate/` folder keeps a static mirror
 - **Capacitor** Android wrapper (`android/`, package `in.slashai.app`)
 - **Tailwind CSS 4** + shadcn/ui (Radix) + lucide-react + sonner
@@ -69,6 +81,7 @@ tracking — personal state lives in localStorage and never leaves the device.
 | `slashai-started` | courses/tools/paths opened → ✅ + "My progress" |
 | `slashai-last-copy` | text for the floating re-copy pill |
 | `slashai-ux-interactions` | rolling log (kind, id, tag) → "You might like" |
+| `slashai.cart.<store-slug>` | the one server-backed feature's shopper cart |
 
 ## Navigation
 **No sidebar, no drawer.** One bottom dock on every screen:
@@ -138,6 +151,48 @@ for the item currently open.
 - Offline banner, install banner, cookie notice, first-visit welcome tour
 - "You might like" row on the homepage, driven only by local interaction history
 
+### SlashAI Stores (v2.31) — the one server-backed feature
+- **Routes**: `/stores` directory · `/stores/<slug>` storefront ·
+  `/stores/dashboard` (owner: auth, store settings, products, orders). A route
+  named `stores.dashboard.tsx` intentionally beats `stores.$slug.index.tsx`.
+- **Subdomains**: `StoreHostGate` (mounted in `__root.tsx`) reads
+  `window.location.host`; when it is `<slug>.<STORES_ROOT_DOMAIN>` it renders the
+  storefront standalone instead of the app shell. `RESERVED_SLUGS` in
+  `src/lib/stores.ts` protects www/api/app/mail/dashboard… Setup, DNS and the
+  Vercel wildcard steps live in `supabase/README.md`.
+- **Schema**: `supabase/schema.sql` (idempotent) — `stores`, `products`,
+  `orders`, `order_items`, RLS, a public `store-images` bucket keyed on
+  `<store_id>/`, and the `place_order` RPC. **Checkout prices are recomputed
+  server-side** and quantities clamped 1–99; the client never sends prices.
+- **Client**: `src/lib/stores.ts` (client, types, queries, slug/host/money/cart
+  helpers, four tenant theme palettes — a deliberate literal-colour exception
+  like `category-colors.ts`) · `src/hooks/use-stores.ts` (auth + async loaders) ·
+  `src/components/stores/{Storefront,StoreManager,StoreHostGate,StoreBits}.tsx`.
+- Keys: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, optional
+  `VITE_STORES_ROOT_DOMAIN`. Anon key only — never `service_role`.
+- **Verification** (run both after touching anything store-shaped):
+  - `bun run stores:validate` — runs `supabase/schema.sql` in PGlite (Postgres 16
+    in WASM, devDependency `@electric-sql/pglite`) behind a Supabase-shaped
+    `auth`/`storage` harness, then drives 51 checks as `anon`/`authenticated`:
+    tenant isolation, published-only reads, price verification, quantity
+    clamping, free products, junk carts, address rules, image folders. No keys,
+    no network. Run it before pasting the SQL into Supabase.
+  - `bun run stores:e2e` — real project + the app's own `src/lib/stores.ts`:
+    signs in, creates a store, adds products, orders as a signed-out shopper,
+    loads `/stores/<slug>` over HTTP, confirms the owner sees the order.
+- **Schema gotchas that already bit once**: `public.owns_store()` is a
+  `language sql` function, so it must be created *after* `public.stores` (Postgres
+  validates SQL function bodies at creation: 42P01 otherwise); pgcrypto is
+  created inside a `do $$ … exception … $$` block because not every Postgres
+  build ships it; `place_order` counts matched items rather than requiring a
+  non-zero subtotal, so 0-price products can be ordered.
+- A published store's catalogue is readable by *anyone*, signed in or not — that
+  is the point of a shop window. Unpublished stores are invisible to everyone
+  except their owner.
+- An owner account owns stores; RLS means handing a subdomain to a friend or a
+  client is safe — they sign up with their own email and only ever see their own
+  store, products and orders.
+
 ### HTML Compiler (`/tools/html-compiler`)
 - 14 ready-made starter projects in `src/lib/html-samples.ts`: blank starter,
   landing page, portfolio, pricing table, contact form, to-do app, gallery,
@@ -186,7 +241,8 @@ Smithsonian, Library of Congress, Gutendex, Open Trivia DB, Quotable — 100+ in
 1. Never break published URLs; every route renders inside `AppShell`.
 2. Keep the bottom-dock-only navigation.
 3. Mobile-first (375px), semantic tokens only.
-4. localStorage only — no backend, no accounts, no tracking.
+4. localStorage only for personal state. The only server-backed surface is
+   SlashAI Stores (Supabase); do not move catalogue or personal data there.
 5. No placeholder content: counts and claims must match the catalogue.
 6. Keep the catalogues duplicate-free (`slashkits.ts`, `slashplay.ts`, `courses.ts`).
 7. Bump `APP_VERSION` **and** both changelogs (`app-meta.ts` + `src/data/changelog.json`).

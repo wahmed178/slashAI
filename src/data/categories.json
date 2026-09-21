@@ -5,16 +5,26 @@
     "type": "image",
     "subcategories": [
       "Accessibility",
+      "Aesthetics",
       "Background Removal",
+      "Backgrounds",
       "Captioning",
       "Colorize",
       "Diagrams",
       "Enhance",
+      "Enhancement",
+      "Grading",
+      "Memes",
+      "Products",
       "Relighting",
       "Restoration",
       "Restore",
       "Retouch",
+      "Retouching",
+      "Stories",
       "Style Transfer",
+      "Styles",
+      "Thumbnails",
       "Upscaling",
       "Variations"
     ]
@@ -105,17 +115,25 @@
     "icon": "Code2",
     "type": "coding",
     "subcategories": [
+      "Clones",
       "Code Review",
       "Debugging",
+      "Deployment",
       "Documentation",
       "Explanation",
       "Migration",
       "Performance",
+      "Prompt Stacks",
       "Refactoring",
       "Regex",
+      "Retrospectives",
+      "Scoping",
       "Security",
+      "Shipping",
+      "Stack Choice",
       "Testing",
-      "Typing"
+      "Typing",
+      "Vibe Coding"
     ]
   },
   {
@@ -140,7 +158,13 @@
     "icon": "Briefcase",
     "type": "business",
     "subcategories": [
+      "1:1s",
       "Competition",
+      "Decks",
+      "Docs",
+      "Emails",
+      "Hiring",
+      "Meetings",
       "Metrics",
       "Modeling",
       "Negotiation",
@@ -148,8 +172,12 @@
       "Personas",
       "Positioning",
       "Pricing",
+      "Prioritising",
       "Proposals",
-      "Roadmaps"
+      "Reviews",
+      "Roadmaps",
+      "Sprints",
+      "Updates"
     ]
   },
   {
@@ -176,14 +204,22 @@
     "subcategories": [
       "Analogies",
       "Curricula",
+      "Doubts",
       "Explainers",
       "Flashcards",
+      "Formulas",
+      "Notes",
       "Pitfalls",
+      "Planning",
       "Practice",
+      "Projects",
       "Quizzes",
+      "Quizzing",
       "Retrieval",
+      "Revision",
       "Teaching",
-      "Technique"
+      "Technique",
+      "Vivas"
     ]
   },
   {
@@ -412,10 +448,20 @@
     "icon": "House",
     "type": "general",
     "subcategories": [
+      "Activities",
+      "Bedtime",
+      "Chores",
       "Correspondence",
+      "Curiosity",
       "Estimates",
+      "Homework",
+      "Learning",
+      "Manners",
       "Organising",
+      "Parties",
       "Planning",
+      "Screen Time",
+      "Siblings",
       "Troubleshooting"
     ]
   },
@@ -591,19 +637,31 @@
     "type": "text",
     "subcategories": [
       "Analytics",
+      "Captions",
+      "Carousels",
+      "Collabs",
+      "Comments",
       "CommunityOps",
       "Distribution",
       "Documentation",
       "Drafting",
+      "Duets",
       "Editing",
+      "Hooks",
       "Identity",
       "Optimization",
       "Partnerships",
       "Planning",
+      "Reels",
+      "Repurposing",
       "Research",
       "Revenue",
+      "Saves",
+      "Series",
       "Strategy",
-      "Repurposing"
+      "Templates",
+      "Trends",
+      "Voice"
     ]
   },
   {

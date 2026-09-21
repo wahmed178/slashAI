@@ -51,7 +51,8 @@ function BlogIndex() {
           {POSTS.map((p) => (
             <Link
               key={p.slug}
-              to={`/blog/${p.slug}`}
+              to="/blog/$slug"
+              params={{ slug: p.slug }}
               className="ripple-press block rounded-2xl border border-border bg-surface p-5 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
             >
               <div className="flex items-start gap-4">

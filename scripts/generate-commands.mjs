@@ -18,6 +18,12 @@ import part6 from "./catalog/part-6.mjs";
 import part7 from "./catalog/part-7.mjs";
 import part8 from "./catalog/part-8.mjs";
 import part9 from "./catalog/part-9.mjs";
+import part10 from "./catalog/part-10.mjs";
+import part11 from "./catalog/part-11.mjs";
+import part12 from "./catalog/part-12.mjs";
+import part13 from "./catalog/part-13.mjs";
+import part14 from "./catalog/part-14.mjs";
+import part15 from "./catalog/part-15.mjs";
 
 const CATEGORIES = [
   ...part1,
@@ -29,7 +35,73 @@ const CATEGORIES = [
   ...part7,
   ...part8,
   ...part9,
+  ...part10,
+  ...part11,
+  ...part12,
+  ...part13,
+  ...part14,
+  ...part15,
 ];
+
+/* Platform-variant expansion.
+ *
+ * Groups in the newer parts (10-15) declare `variants`: a list of AI-platform
+ * keys. One group becomes (verbs × objects × (1 + platforms)) unique commands,
+ * e.g. 12 verbs × 10 objects × 7 = 840 hook commands. Each variant gets its
+ * own platform-specific sentence woven into description, howToUse and example
+ * so copy stays unique (the validator rejects duplicated descriptions) and
+ * search still lands on the right tool. Groups without `variants` behave
+ * exactly as they did in parts 1-9: a single expansion.
+ */
+const PLATFORMS = {
+  chatgpt: {
+    suffix: "ForChatGPT",
+    name: "ChatGPT",
+    note: "Lean on ChatGPT's long context, tool use and clean formatting.",
+  },
+  gemini: {
+    suffix: "ForGemini",
+    name: "Gemini",
+    note: "Pair it with Gemini's search grounding and Google Workspace.",
+  },
+  claude: {
+    suffix: "ForClaude",
+    name: "Claude",
+    note: "Use Claude's careful reasoning over long documents.",
+  },
+  perplexity: {
+    suffix: "ForPerplexity",
+    name: "Perplexity",
+    note: "Expect cited, search-first answers out of Perplexity.",
+  },
+  copilot: {
+    suffix: "ForCopilot",
+    name: "Microsoft Copilot",
+    note: "Work inside Office files and Windows with Microsoft Copilot.",
+  },
+  deepseek: {
+    suffix: "ForDeepSeek",
+    name: "DeepSeek",
+    note: "DeepSeek's strong reasoning costs nothing to run.",
+  },
+};
+
+const expandGroup = (group) => {
+  if (!group.variants) return [{ verbs: group.verbs, objects: group.objects }];
+  return [
+    { verbs: group.verbs, objects: group.objects },
+    ...group.variants.map((key) => ({
+      platform: PLATFORMS[key],
+      verbs: group.verbs,
+      objects: group.objects.map(([objName, objPhrase, objTags, sample]) => [
+        `${objName}${PLATFORMS[key].suffix}`,
+        objPhrase,
+        objTags,
+        sample,
+      ]),
+    })),
+  ];
+};
 
 
 /** Signature, hand-written commands shown as featured entries. */
@@ -357,11 +429,13 @@ for (const [
 let seq = 0;
 for (const cat of CATEGORIES) {
   for (const group of cat.groups) {
-    for (const [verb, sub, phrase, ask, deliverable] of group.verbs) {
-      for (const [objName, objPhrase, objTags, sample] of group.objects) {
+  for (const g of expandGroup(group)) {
+    for (const [verb, sub, phrase, ask, deliverable] of g.verbs) {
+      for (const [objName, objPhrase, objTags, sample] of g.objects) {
         seq += 1;
         const command = `/${verb}${objName}`;
         const h = hash(command);
+        const platform = g.platform; // undefined for the base variant
         const title = `${verb.replace(/([a-z])([A-Z0-9])/g, "$1 $2")} ${objName}`;
         // prefer the first clause of the sample so descriptions never end mid-phrase
         const firstClause = sample.split(/[,;–—]/)[0].trim();
@@ -370,26 +444,33 @@ for (const cat of CATEGORIES) {
             ? firstClause.split(/\s+/).slice(0, 10).join(" ")
             : sample.split(/\s+/).slice(0, 10).join(" ")
         ).replace(/[.,;:]+$/, "");
-        const description = `${capitalize(phrase)} ${objPhrase} — e.g. ${shortSample}.`;
+        const description = platform
+          ? `${capitalize(phrase)} ${objPhrase} on ${platform.name}. ${platform.note} Example: ${shortSample}.`
+          : `${capitalize(phrase)} ${objPhrase} — e.g. ${shortSample}.`;
 
         const howToUse = [
           `${ask} Bring ${objPhrase} — for example ${sample}. You get back ${deliverable}.`,
           `Start from ${objPhrase} such as ${sample}. ${ask} The result is ${deliverable}.`,
           `${ask} Works on ${objPhrase} (${sample}); the reply is ${deliverable}.`,
         ][h % 3];
+        const platformHint = platform
+          ? ` Run it in ${platform.name}: ${platform.note}`
+          : "";
 
-        const example = [
-          `${command}\nInput: ${sample}\nAsk: ${ask}\nReturn: ${deliverable}`,
-          `${command}\n${objName}: ${sample}\nNotes: ${ask}\nOutput: ${deliverable}`,
-          `${command}\nSource: ${sample}\nRequirements: ${ask}\nDeliverable: ${deliverable}`,
-        ][h % 3];
+        const example = (
+          [
+            `${command}\nInput: ${sample}\nAsk: ${ask}\nReturn: ${deliverable}`,
+            `${command}\n${objName}: ${sample}\nNotes: ${ask}\nOutput: ${deliverable}`,
+            `${command}\nSource: ${sample}\nRequirements: ${ask}\nDeliverable: ${deliverable}`,
+          ][h % 3] + (platform ? `\nTool: ${platform.name}` : "")
+        );
 
         push({
           id: slug(command),
           command,
           title,
           description,
-          howToUse,
+          howToUse: howToUse + platformHint,
           example,
           category: cat.category,
           subcategory: sub,
@@ -398,6 +479,7 @@ for (const cat of CATEGORIES) {
             sub.split(" ")[0].toLowerCase(),
             verb.toLowerCase(),
             cat.type,
+            platform ? platform.name.toLowerCase().replace(/\s+/g, "-") : "",
           ]),
           type: cat.type,
           difficulty: DIFFICULTIES[seq % 3],
@@ -407,6 +489,7 @@ for (const cat of CATEGORIES) {
         });
       }
     }
+  }
   }
 }
 
@@ -422,12 +505,20 @@ writeFileSync("src/data/commands.json", JSON.stringify(commands, null, 0));
 const subsByCategory = {};
 for (const c of commands) (subsByCategory[c.category] ??= new Set()).add(c.subcategory);
 
-const meta = CATEGORIES.map((c) => ({
-  category: c.category,
-  icon: c.icon,
-  type: c.type,
-  subcategories: [...(subsByCategory[c.category] ?? [])].sort(),
-}));
+// One row per unique category — newer parts add a second entry for a category
+// they extend (e.g. the CapCut block in part-10), which must not duplicate rows.
+const meta = [];
+const seenCats = new Set();
+for (const c of CATEGORIES) {
+  if (seenCats.has(c.category)) continue;
+  seenCats.add(c.category);
+  meta.push({
+    category: c.category,
+    icon: c.icon,
+    type: c.type,
+    subcategories: [...(subsByCategory[c.category] ?? [])].sort(),
+  });
+}
 writeFileSync("src/data/categories.json", JSON.stringify(meta, null, 2));
 
 const byCat = {};

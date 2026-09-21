@@ -48,6 +48,10 @@ import {
 import trendingToolsData from "@/../src/data/trending-tools.json";
 import { ALL_SLASH_TOOLS, SLASH_TOOL_COUNT, toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
+import { KIT_COUNT } from "@/lib/kits/registry";
+import { PACKS } from "@/lib/packs/registry";
+
+const TOTAL_PLAY_COUNT = PLAY_GAME_COUNT + PACKS.length;
 
 const HERO_TOOL = heroToolOfTheDay();
 const GENERATOR_TOTAL = ALL_SLASH_TOOLS.filter((t) =>
@@ -531,8 +535,8 @@ function HomePage() {
         className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-2xl border border-sidebar-border bg-surface px-4 py-3 text-[12px] text-muted-foreground"
       >
         <span>⚡ <b className="font-semibold text-foreground tabular-nums">{VERIFIED_TOTAL.toLocaleString()}</b> Commands</span>
-        <span>🧰 <b className="font-semibold text-foreground tabular-nums">{SLASH_TOOL_COUNT}+</b> Tools</span>
-        <span>🎮 <b className="font-semibold text-foreground tabular-nums">{PLAY_GAME_COUNT}</b> Games</span>
+        <span>🧰 <b className="font-semibold text-foreground tabular-nums">{(SLASH_TOOL_COUNT + KIT_COUNT).toLocaleString()}+</b> Tools</span>
+        <span>🎮 <b className="font-semibold text-foreground tabular-nums">{TOTAL_PLAY_COUNT}</b> Games</span>
         <span>📦 <b className="font-semibold text-foreground tabular-nums">{RESOURCE_TOTAL}+</b> Resources</span>
         {hydrated && stats.copies > 0 && (
           <span className="text-primary/90">📋 Copied {stats.copies.toLocaleString()} times</span>
@@ -595,7 +599,8 @@ function HomePage() {
         }
       >
         <Link
-          to="/blog/best-free-ai-prompts-for-professionals-in-india-2026"
+          to="/blog/$slug"
+          params={{ slug: "best-free-ai-prompts-for-professionals-in-india-2026" }}
           className="ripple-press flex items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
         >
           <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[20px]" aria-hidden>🇮🇳</span>
@@ -899,6 +904,7 @@ function HomePage() {
             { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "24 categories, streaks" },
             { to: "/roadmaps", emoji: "🗺️", label: "Roadmaps", desc: "Founder step-by-step guides" },
             { to: "/learn", emoji: "🎓", label: "Courses", desc: "Free lessons with graded tests" },
+            { to: "/stores", emoji: "🏪", label: "SlashAI Stores", desc: "Free storefronts for small businesses" },
             { to: "/about", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
           ].map((m) => (
             <Link
@@ -966,6 +972,7 @@ function HomePage() {
                 { label: "SlashKits", to: "/tools" },
                 { label: "SlashPlay", to: "/play" },
                 { label: "SlashBar", to: "/slash" },
+                { label: "Stores", to: "/stores" },
                 { label: "Journal", to: "/journal" },
                 { label: "Copy History", to: "/history" },
                 { label: "Settings", to: "/me" },

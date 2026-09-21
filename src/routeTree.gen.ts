@@ -73,6 +73,7 @@ import { Route as LUsernameRouteImport } from './routes/l.$username'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnCourseIdRouteImport } from './routes/learn.$courseId'
 import { Route as PlayIndexRouteImport } from './routes/play.index'
+import { Route as PlaySlugRouteImport } from './routes/play.$slug'
 import { Route as Play2048RouteImport } from './routes/play.2048'
 import { Route as PlayAimTrainerRouteImport } from './routes/play.aim-trainer'
 import { Route as PlayBattleshipRouteImport } from './routes/play.battleship'
@@ -137,6 +138,8 @@ import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as SlashIndexRouteImport } from './routes/slash.index'
 import { Route as SlashAppRouteImport } from './routes/slash.$app'
 import { Route as SlashSlashgramRouteImport } from './routes/slash.slashgram'
+import { Route as StoresIndexRouteImport } from './routes/stores.index'
+import { Route as StoresDashboardRouteImport } from './routes/stores.dashboard'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as ToolsAgeOfThingsRouteImport } from './routes/tools.age-of-things'
@@ -301,6 +304,8 @@ import { Route as ToolsWorldClockRouteImport } from './routes/tools.world-clock'
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 import { Route as LearnCourseIdLessonIdRouteImport } from './routes/learn.$courseId_.$lessonId'
+import { Route as StoresSlugIndexRouteImport } from './routes/stores.$slug.index'
+import { Route as ToolsKitSlugRouteImport } from './routes/tools.kit.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -622,6 +627,11 @@ const PlayIndexRoute = PlayIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlaySlugRoute = PlaySlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => PlayRoute,
+} as any)
 const Play2048Route = Play2048RouteImport.update({
   id: '/2048',
   path: '/2048',
@@ -941,6 +951,16 @@ const SlashAppRoute = SlashAppRouteImport.update({
 const SlashSlashgramRoute = SlashSlashgramRouteImport.update({
   id: '/slash/slashgram',
   path: '/slash/slashgram',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoresIndexRoute = StoresIndexRouteImport.update({
+  id: '/stores/',
+  path: '/stores/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoresDashboardRoute = StoresDashboardRouteImport.update({
+  id: '/stores/dashboard',
+  path: '/stores/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
@@ -1764,6 +1784,16 @@ const LearnCourseIdLessonIdRoute = LearnCourseIdLessonIdRouteImport.update({
   path: '/learn/$courseId/$lessonId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StoresSlugIndexRoute = StoresSlugIndexRouteImport.update({
+  id: '/stores/$slug/',
+  path: '/stores/$slug/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsKitSlugRoute = ToolsKitSlugRouteImport.update({
+  id: '/kit/$slug',
+  path: '/kit/$slug',
+  getParentRoute: () => ToolsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -1822,6 +1852,7 @@ export interface FileRoutesByFullPath {
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
+  '/play/$slug': typeof PlaySlugRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
@@ -1885,6 +1916,7 @@ export interface FileRoutesByFullPath {
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
+  '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2054,10 +2086,13 @@ export interface FileRoutesByFullPath {
   '/learn/': typeof LearnIndexRoute
   '/play/': typeof PlayIndexRoute
   '/slash/': typeof SlashIndexRoute
+  '/stores/': typeof StoresIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
+  '/tools/kit/$slug': typeof ToolsKitSlugRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
+  '/stores/$slug/': typeof StoresSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -2114,6 +2149,7 @@ export interface FileRoutesByTo {
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
+  '/play/$slug': typeof PlaySlugRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
@@ -2177,6 +2213,7 @@ export interface FileRoutesByTo {
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
+  '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2346,10 +2383,13 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnIndexRoute
   '/play': typeof PlayIndexRoute
   '/slash': typeof SlashIndexRoute
+  '/stores': typeof StoresIndexRoute
   '/tools': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
+  '/tools/kit/$slug': typeof ToolsKitSlugRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
+  '/stores/$slug': typeof StoresSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -2409,6 +2449,7 @@ export interface FileRoutesById {
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
+  '/play/$slug': typeof PlaySlugRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
   '/play/battleship': typeof PlayBattleshipRoute
@@ -2472,6 +2513,7 @@ export interface FileRoutesById {
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
+  '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2641,10 +2683,13 @@ export interface FileRoutesById {
   '/learn/': typeof LearnIndexRoute
   '/play/': typeof PlayIndexRoute
   '/slash/': typeof SlashIndexRoute
+  '/stores/': typeof StoresIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId_/$lessonId': typeof LearnCourseIdLessonIdRoute
+  '/tools/kit/$slug': typeof ToolsKitSlugRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
+  '/stores/$slug/': typeof StoresSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -2705,6 +2750,7 @@ export interface FileRouteTypes {
     | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
+    | '/play/$slug'
     | '/play/2048'
     | '/play/aim-trainer'
     | '/play/battleship'
@@ -2768,6 +2814,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
+    | '/stores/dashboard'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2937,10 +2984,13 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/play/'
     | '/slash/'
+    | '/stores/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
+    | '/tools/kit/$slug'
     | '/explore/$category/'
+    | '/stores/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -2997,6 +3047,7 @@ export interface FileRouteTypes {
     | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
+    | '/play/$slug'
     | '/play/2048'
     | '/play/aim-trainer'
     | '/play/battleship'
@@ -3060,6 +3111,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
+    | '/stores/dashboard'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -3229,10 +3281,13 @@ export interface FileRouteTypes {
     | '/learn'
     | '/play'
     | '/slash'
+    | '/stores'
     | '/tools'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
+    | '/tools/kit/$slug'
     | '/explore/$category'
+    | '/stores/$slug'
   id:
     | '__root__'
     | '/'
@@ -3291,6 +3346,7 @@ export interface FileRouteTypes {
     | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
+    | '/play/$slug'
     | '/play/2048'
     | '/play/aim-trainer'
     | '/play/battleship'
@@ -3354,6 +3410,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
+    | '/stores/dashboard'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -3523,10 +3580,13 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/play/'
     | '/slash/'
+    | '/stores/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId_/$lessonId'
+    | '/tools/kit/$slug'
     | '/explore/$category/'
+    | '/stores/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -3589,6 +3649,7 @@ export interface RootRouteChildren {
   RIdRoute: typeof RIdRoute
   SlashAppRoute: typeof SlashAppRoute
   SlashSlashgramRoute: typeof SlashSlashgramRoute
+  StoresDashboardRoute: typeof StoresDashboardRoute
   BlogIndexRoute: typeof BlogIndexRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
@@ -3597,9 +3658,11 @@ export interface RootRouteChildren {
   HubIndexRoute: typeof HubIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
   SlashIndexRoute: typeof SlashIndexRoute
+  StoresIndexRoute: typeof StoresIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   LearnCourseIdLessonIdRoute: typeof LearnCourseIdLessonIdRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
+  StoresSlugIndexRoute: typeof StoresSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -4052,6 +4115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayIndexRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/$slug': {
+      id: '/play/$slug'
+      path: '/$slug'
+      fullPath: '/play/$slug'
+      preLoaderRoute: typeof PlaySlugRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/2048': {
       id: '/play/2048'
       path: '/2048'
@@ -4498,6 +4568,20 @@ declare module '@tanstack/react-router' {
       path: '/slash/slashgram'
       fullPath: '/slash/slashgram'
       preLoaderRoute: typeof SlashSlashgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stores/': {
+      id: '/stores/'
+      path: '/stores'
+      fullPath: '/stores/'
+      preLoaderRoute: typeof StoresIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stores/dashboard': {
+      id: '/stores/dashboard'
+      path: '/stores/dashboard'
+      fullPath: '/stores/dashboard'
+      preLoaderRoute: typeof StoresDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/': {
@@ -5648,10 +5732,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnCourseIdLessonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stores/$slug/': {
+      id: '/stores/$slug/'
+      path: '/stores/$slug'
+      fullPath: '/stores/$slug/'
+      preLoaderRoute: typeof StoresSlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/kit/$slug': {
+      id: '/tools/kit/$slug'
+      path: '/kit/$slug'
+      fullPath: '/tools/kit/$slug'
+      preLoaderRoute: typeof ToolsKitSlugRouteImport
+      parentRoute: typeof ToolsRoute
+    }
   }
 }
 
 interface PlayRouteChildren {
+  PlaySlugRoute: typeof PlaySlugRoute
   Play2048Route: typeof Play2048Route
   PlayAimTrainerRoute: typeof PlayAimTrainerRoute
   PlayBattleshipRoute: typeof PlayBattleshipRoute
@@ -5714,6 +5813,7 @@ interface PlayRouteChildren {
 }
 
 const PlayRouteChildren: PlayRouteChildren = {
+  PlaySlugRoute: PlaySlugRoute,
   Play2048Route: Play2048Route,
   PlayAimTrainerRoute: PlayAimTrainerRoute,
   PlayBattleshipRoute: PlayBattleshipRoute,
@@ -5952,6 +6052,7 @@ interface ToolsRouteChildren {
   ToolsWordScrambleRoute: typeof ToolsWordScrambleRoute
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
+  ToolsKitSlugRoute: typeof ToolsKitSlugRoute
 }
 
 const ToolsRouteChildren: ToolsRouteChildren = {
@@ -6116,6 +6217,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsWordScrambleRoute: ToolsWordScrambleRoute,
   ToolsWorldClockRoute: ToolsWorldClockRoute,
   ToolsIndexRoute: ToolsIndexRoute,
+  ToolsKitSlugRoute: ToolsKitSlugRoute,
 }
 
 const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)
@@ -6180,6 +6282,7 @@ const rootRouteChildren: RootRouteChildren = {
   RIdRoute: RIdRoute,
   SlashAppRoute: SlashAppRoute,
   SlashSlashgramRoute: SlashSlashgramRoute,
+  StoresDashboardRoute: StoresDashboardRoute,
   BlogIndexRoute: BlogIndexRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
@@ -6188,10 +6291,22 @@ const rootRouteChildren: RootRouteChildren = {
   HubIndexRoute: HubIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
   SlashIndexRoute: SlashIndexRoute,
+  StoresIndexRoute: StoresIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   LearnCourseIdLessonIdRoute: LearnCourseIdLessonIdRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
+  StoresSlugIndexRoute: StoresSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

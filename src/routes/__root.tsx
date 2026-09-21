@@ -23,6 +23,7 @@ import {
   setupServiceWorkerUpdates,
 } from "../lib/app-update";
 import { LibraryProvider } from "@/hooks/use-library";
+import { StoreHostGate } from "@/components/stores/StoreHostGate";
 import { KeyboardShortcutsProvider } from "@/lib/keyboard-shortcuts.tsx";
 import { Toaster } from "@/components/ui/sonner";
 import { WhatsNewDialog } from "@/components/library/WhatsNewDialog";
@@ -293,8 +294,11 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <LibraryProvider>
         <KeyboardShortcutsProvider>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes.
+              StoreHostGate serves a storefront instead when the host is <slug>.slashai.in. */}
+        <StoreHostGate>
+          <Outlet />
+        </StoreHostGate>
         {mounted ? <WelcomeTour /> : null}
         {mounted ? <CoffeeNudge /> : null}
         <WhatsNewDialog />

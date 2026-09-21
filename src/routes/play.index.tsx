@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, X, Star, StarOff } from "lucide-react";
+import { Search, X, Star, StarOff, ExternalLink } from "lucide-react";
 import { AppShell } from "@/components/library/AppShell";
 import {
   PLAY_SECTIONS,
@@ -9,8 +9,14 @@ import {
   SCORING_GAMES,
   gameMeta,
   playModeCounts,
+  randomGameSlug,
+  dailyPack,
+  FIELD_TRIP_SITES,
+  randomFieldTrip,
   type PlayGame,
 } from "@/lib/slashplay";
+import { PACKS, PACK_GROUP_ORDER, packCards, packLevel, type PackCard } from "@/lib/packs/registry";
+import { usePackBest } from "@/components/games/PackPlayer";
 import { getGameBest, isNewItem } from "@/lib/ux";
 import { useUxTick } from "@/hooks/use-ux";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
@@ -20,22 +26,37 @@ import { useLibrary } from "@/hooks/use-library";
 export const Route = createFileRoute("/play/")({
   head: () => ({
     meta: [
-      { title: `SlashPlay - ${PLAY_GAME_COUNT} free browser games | SlashAI` },
+      { title: `SlashPlay - ${TOTAL_GAMES} free browser games | SlashAI` },
       {
         name: "description",
-        content: `SlashPlay: ${PLAY_GAME_COUNT} free browser games - tic tac toe, connect four, battleship, blackjack, snake, 2048 and more. Multiplayer pass-and-play, no download, works offline.`,
+        content: `SlashPlay: ${TOTAL_GAMES} free browser games - tic tac toe, snake, 2048, cricket, 500+ quiz, word, memory and puzzle packs. Multiplayer pass-and-play, no download, works offline.`,
       },
     ],
   }),
   component: PlayIndex,
 });
 
-const FILTERS = ["All", ...PLAY_SECTIONS.map((s) => s.title)] as const;
+const FILTERS = ["All", ...PLAY_SECTIONS.map((s) => s.title), ...PACK_GROUP_ORDER.map((g) => g.title)] as const;
 type FilterType = (typeof FILTERS)[number];
 
 /** Filter tabs stay route-free: filtering is pure client-side state. */
 
 const MODES = playModeCounts();
+/** static games + generated packs = everything playable */
+const TOTAL_GAMES = PLAY_GAME_COUNT + PACKS.length;
+
+/** pack groups rendered in the same shape as static sections */
+const PACK_SECTIONS = PACK_GROUP_ORDER.map((g) => ({
+  title: g.title,
+  icon: g.icon,
+  blurb: g.blurb,
+  games: packCards(g.title),
+}));
+
+function packMatches(card: PackCard, q: string) {
+  const text = `${card.name} ${card.desc}`.toLowerCase();
+  return q.split(/\s+/).every((word) => text.includes(word));
+}
 
 function matches(game: PlayGame, q: string) {
   const text = `${game.name} ${game.desc} ${game.players}`.toLowerCase();
@@ -88,14 +109,11 @@ function GameCard({ game, color }: { game: PlayGame; color: string }) {
       </span>
     </Link>
   );
-}
-
-/** One-tap random game — no filters, no thinking. */
+}/** One-tap random game — no filters, no thinking. */
 function SurpriseMe() {
   const roll = () => {
-    const all = PLAY_SECTIONS.flatMap((s) => s.games);
-    const pick = all[Math.floor(Math.random() * all.length)];
-    if (pick) window.location.assign(`/play/${pick.slug}`);
+    const slug = randomGameSlug();
+    if (slug) window.location.assign(`/play/${slug}`);
   };
   return (
     <button
@@ -107,13 +125,11 @@ function SurpriseMe() {
         background: "linear-gradient(135deg, rgba(168,85,247,0.10), rgba(251,113,133,0.07))",
       }}
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-[16px] transition-transform duration-150 group-hover:rotate-12">
-        🎲
-      </span>
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-[16px] transition-transform duration-150 group-hover:rotate-12">🎲</span>
       <span className="min-w-0 flex-1">
         <span className="block text-[13px] font-bold text-foreground">Surprise me</span>
         <span className="block text-[11px] text-muted-foreground">
-          One tap opens a random game from all {PLAY_GAME_COUNT}
+          One tap opens a random game from all {TOTAL_GAMES}
         </span>
       </span>
       <span className="shrink-0 text-[11px] font-semibold" style={{ color: "#c084fc" }}>
@@ -121,6 +137,59 @@ function SurpriseMe() {
       </span>
     </button>
   );
+}
+
+/** Today's featured pack — rotates every day, deterministic. */
+function DailyPack() {
+  const pack = dailyPack();
+  return (
+    <Link
+      to={`/play/${pack.slug}` as string}
+      className="group mt-3 flex items-center gap-3 rounded-xl border border-amber-500/25 bg-amber-500/5 px-4 py-3 transition-colors hover:border-amber-500/50"
+    >
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-[16px] transition-transform duration-150 group-hover:scale-110">{pack.icon}</span>
+      <span className="min-w-0">
+        <span className="block text-[13px] font-bold text-foreground">Today's puzzle — {pack.name}</span>
+        <span className="block text-[11px] text-muted-foreground">{pack.desc}</span>
+      </span>
+      <span className="ml-auto shrink-0 text-[11px] font-semibold text-amber-500">Play today's →</span>
+    </Link>
+  );
+}
+
+/** Pack card — mirrors GameCard but reads the pack best-score store. */
+function PackCardItem({ card }: { card: PackCard }) {
+  const [best] = usePackBest(card.slug);
+  return (
+    <Link
+      to={`/play/${card.slug}` as string}
+      className="cat cat-glow group flex flex-col rounded-xl border bg-surface p-3.5"
+      style={{ "--cat": "#a78bfa" } as React.CSSProperties}
+    >
+      <span className="cat-tile flex size-9 items-center justify-center rounded-lg text-[24px] leading-none">{card.icon}</span>
+      <span className="mt-2.5 flex flex-wrap items-center gap-1.5">
+        <span className="text-[13px] font-bold text-foreground">{card.name}</span>
+        <span className="rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[9px] font-bold text-emerald-500">🆕 New</span>
+      </span>
+      <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{card.desc}</span>
+      <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-muted-foreground/90">
+        <span>⏱ {packMinutesFor(card)} min</span>
+        <span>🎯 {packLevelFromCard(card)}</span>
+        {best !== null && <span className="font-semibold text-amber-400">🏆 Your best: {best}</span>}
+      </span>
+      <span className="cat-text mt-2.5 text-[11px] font-semibold opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+        Play now →
+      </span>
+    </Link>
+  );
+}
+
+function packMinutesFor(card: PackCard): number {
+  return PACKS.find((p) => p.slug === card.slug)?.minutes ?? 3;
+}
+function packLevelFromCard(card: PackCard): string {
+  const p = PACKS.find((x) => x.slug === card.slug);
+  return p ? packLevel(p) : "Easy";
 }
 
 function PlayIndex() {
@@ -133,16 +202,26 @@ function PlayIndex() {
   const visibleSections =
     filter === "All" ? PLAY_SECTIONS : PLAY_SECTIONS.filter((s) => s.title === filter);
 
+  const visiblePackSections =
+    filter === "All" ? PACK_SECTIONS : PACK_SECTIONS.filter((s) => s.title === filter);
+
   const filtered = q
-    ? PLAY_SECTIONS.map((s) => ({
-        ...s,
-        games: s.games.filter((g) => matches(g, q)),
-      })).filter((s) => s.games.length > 0)
-    : visibleSections;
+    ? [
+        ...PLAY_SECTIONS.map((s) => ({
+          ...s,
+          games: s.games.filter((g) => matches(g, q)),
+        })).filter((s) => s.games.length > 0),
+        ...PACK_SECTIONS.map((s) => ({
+          ...s,
+          games: s.games.filter((g) => packMatches(g, q)),
+        })).filter((s) => s.games.length > 0),
+      ]
+    : [...visibleSections, ...visiblePackSections];
 
   const foundCount = q
-    ? PLAY_SECTIONS.reduce((acc, s) => acc + s.games.filter((g) => matches(g, q)).length, 0)
-    : PLAY_SECTIONS.reduce((acc, s) => (filter === "All" || s.title === filter ? acc + s.games.length : acc), 0);
+    ? PLAY_SECTIONS.reduce((acc, s) => acc + s.games.filter((g) => matches(g, q)).length, 0) +
+      PACK_SECTIONS.reduce((acc, s) => acc + s.games.filter((g) => packMatches(g, q)).length, 0)
+    : [...visibleSections, ...visiblePackSections].reduce((acc, s) => acc + s.games.length, 0);
 
   return (
     <AppShell wide title="SlashPlay">
@@ -151,8 +230,8 @@ function PlayIndex() {
           🎮 SlashPlay
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
-          {PLAY_GAME_COUNT} free browser games — solo, vs AI, and pass-and-play multiplayer.
-          No downloads needed. <span className="text-[12px] font-semibold">Works offline</span>
+          {TOTAL_GAMES} free browser games — classics, quizzes and 500+ fresh packs. Solo, vs AI, and
+          pass-and-play multiplayer. No downloads needed. <span className="text-[12px] font-semibold">Works offline</span>
         </p>
       </header>
 
@@ -172,6 +251,8 @@ function PlayIndex() {
       <div className="mt-3">
         <SurpriseMe />
       </div>
+
+      <DailyPack />
 
       {/* New games - only while something is genuinely fresh */}
       {filter === "All" && !q && (
@@ -224,9 +305,10 @@ function PlayIndex() {
       </div>
 
       {/* Stats strip */}
-      <div className="mt-3 grid grid-cols-3 gap-2">
+      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {[
-          { label: "Games", value: PLAY_GAME_COUNT, icon: "🎮" },
+          { label: "Games", value: TOTAL_GAMES, icon: "🎮" },
+          { label: "Packs", value: PACKS.length, icon: "🧩" },
           { label: "Multiplayer", value: MODES.multiplayer, icon: "👥" },
           { label: "Vs AI modes", value: MODES.vsAi, icon: "🤖" },
         ].map((s) => (
@@ -289,34 +371,115 @@ function PlayIndex() {
         <p className="mt-10 text-center text-sm text-muted-foreground">No games match "{search}".</p>
       ) : (
         filtered.map((section) => {
-          const cc = playSectionColor(section.title);
+          const isPack = (PACK_SECTIONS as { title: string }[]).some((s) => s.title === section.title);
           return (
             <section
               key={section.title}
               className="mt-7"
-              style={{ "--cat": cc.hex } as React.CSSProperties}
+              style={{ "--cat": isPack ? "#a78bfa" : playSectionColor(section.title).hex } as React.CSSProperties}
             >
-              <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold" style={{ color: cc.hex }}>
-                <span>{section.icon}</span>
-                {section.title}
-                <span className="text-[11px] font-medium text-muted-foreground">
-                  {section.games.length} game{section.games.length === 1 ? "" : "s"}
-                </span>
-              </h2>
-              <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
-                {section.games.map((game) => (
-                  <GameCard key={game.slug} game={game} color={cc.hex} />
-                ))}
-              </div>
+              {isPack ? (
+                <>
+                  <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold text-[#a78bfa]">
+                    <span>{section.icon}</span>
+                    {section.title}
+                    <span className="text-[11px] font-medium text-muted-foreground">
+                      {section.games.length} pack{section.games.length === 1 ? "" : "s"} · {PACK_GROUP_ORDER.find((g) => g.title === section.title)?.blurb}
+                    </span>
+                  </h2>
+                  <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
+                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
+                    {(section.games as PackCard[]).map((card) => (
+                      <PackCardItem key={card.slug} card={card} />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold" style={{ color: playSectionColor(section.title).hex }}>
+                    <span>{section.icon}</span>
+                    {section.title}
+                    <span className="text-[11px] font-medium text-muted-foreground">
+                      {section.games.length} game{section.games.length === 1 ? "" : "s"}
+                    </span>
+                  </h2>
+                  <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
+                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
+                    {section.games.map((game) => (
+                      <GameCard key={game.slug} game={game as PlayGame} color={playSectionColor(section.title).hex} />
+                    ))}
+                  </div>
+                </>
+              )}
             </section>
           );
         })
       )}
 
+      {filter === "All" && !q && <FieldTrip />}
+
       <p className="mt-8 text-center text-[11px] text-muted-foreground">
         Multiplayer games are pass-and-play: share one device and take turns. Everything saves locally - your scores never leave your browser.
       </p>
     </AppShell>
+  );
+}
+
+/** Take a field trip — curated useless-web destinations, each explained. */
+function FieldTrip() {
+  const [site, setSite] = useState<(typeof FIELD_TRIP_SITES)[number] | null>(null);
+  const roll = () => setSite(randomFieldTrip());
+  return (
+    <section className="mt-8">
+      <h2 className="flex items-center gap-2 text-[15px] font-bold text-sky-400">
+        <span>🚌</span> Take a field trip
+        <span className="text-[11px] font-medium text-muted-foreground">the best of the useless web — explained before you click</span>
+      </h2>
+      <div className="cat-rule mt-1.5 mb-2.5 w-24" />
+      <button
+        type="button"
+        onClick={roll}
+        className="group flex w-full items-center gap-3 rounded-xl border border-sky-500/25 bg-sky-500/5 px-4 py-3 text-left transition-colors hover:border-sky-500/50"
+      >
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sky-500/15 text-[16px] transition-transform duration-150 group-hover:-rotate-12">🎯</span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-[13px] font-bold text-foreground">Take me somewhere fun</span>
+          <span className="block text-[11px] text-muted-foreground">Random pick from {FIELD_TRIP_SITES.length} hand-picked internet oddities</span>
+        </span>
+        <span className="shrink-0 text-[11px] font-semibold text-sky-400">Go →</span>
+      </button>
+      {site && (
+        <a
+          href={site.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 flex items-start gap-3 rounded-xl border bg-surface p-3.5 transition-colors hover:bg-surface-elevated"
+        >
+          <span className="min-w-0 flex-1">
+            <span className="block text-[13px] font-bold text-foreground">
+              {site.name} <ExternalLink className="inline size-3 text-muted-foreground" />
+            </span>
+            <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{site.what}</span>
+            <span className="mt-1 block text-[10px] text-muted-foreground/80">{site.group}{site.kidsOk ? " · kid-friendly" : ""}</span>
+          </span>
+        </a>
+      )}
+      <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+        {FIELD_TRIP_SITES.slice(0, 8).map((s) => (
+          <a
+            key={s.url}
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-xl border bg-surface p-3 transition-colors hover:bg-surface-elevated"
+          >
+            <span className="block text-[12px] font-bold text-foreground">
+              {s.name} <ExternalLink className="inline size-3 text-muted-foreground" />
+            </span>
+            <span className="mt-0.5 block text-[10px] leading-snug text-muted-foreground">{s.what}</span>
+          </a>
+        ))}
+      </div>
+    </section>
   );
 }

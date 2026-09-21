@@ -210,6 +210,16 @@ const STATIC_PAGES: Record<string, SeoPage> = {
       "What SlashAI is, in one page: 5,000+ free AI commands, 150+ browser tools, curated resources - no account, no tracking, free forever.",
     noindex: true,
   },
+  "/stores": {
+    title: "SlashAI Stores - free online shops for small businesses",
+    description:
+      "Free hosted storefronts for small businesses, creators and local shops: your own subdomain, your products, orders straight to WhatsApp. No fees, no commission, no shopper accounts.",
+  },
+  "/stores/dashboard": {
+    title: "Your store - SlashAI Stores",
+    description: "Run your SlashAI store: products, orders and settings.",
+    noindex: true,
+  },
   "/about": {
     title: "About SlashAI - built by Waseem Ahmed, free forever",
     description:
