@@ -16,15 +16,19 @@ favourites/progress/settings live in localStorage. The single exception is
 is opt-in: with no Supabase keys the store screens show a setup notice and the
 rest of the app stays exactly as it was.
 
-- **10,074 AI slash commands** across 45 categories / 439 subcategories
-- **1,250+ browser tools** on `/tools` (SlashKits: 156 interactive tools + 1,095 instant kits —
-  unit-pair converters, periodic table fact pages, Indian states, currencies, study tables,
-  cheat sheets, curated web-tool directory; served from `src/lib/kits/registry.ts` at
-  `/tools/kit/<slug>`)
-- **561 browser games** on `/play` (SlashPlay: 57 hand-built games + 504 generated packs —
-  quiz sprints, word scramble, hangman, memory, emoji puzzles, would-you-rather and sliding
-  puzzles incl. the Daily 8-Puzzle; registry at `src/lib/packs/registry.ts`, served at
-  `/play/<slug>`)
+- **5,704 AI slash commands** across 45 categories / 381 subcategories
+- **289 browser tools** on `/tools` — 159 authored interactive tools (each its own route file)
+  plus 130 declarative toolkit utilities in `src/lib/toolkit` (ops in `ops.ts`, catalogue in
+  `catalog.ts`, rendered by `src/components/tools/ToolRunner.tsx` and served by the dynamic
+  route `src/routes/tools.$slug.tsx`), covering text, data/code, encoding, colour/CSS, dates,
+  SEO and generators
+- **71 browser games** on `/play` — 57 hand-built classics plus a Sports wing (table tennis,
+  air hockey, penalty shootout, darts, basketball, bowling) and brain boosters (sudoku with a
+  verified single-solution generator in `src/lib/games/sudoku.ts`, nonogram with 11 hand-drawn
+  pictures, sliding puzzle, mastermind, tower of hanoi, word search, word scramble)
+  - **Removed in v2.33:** the 1,095 generated converter kits (`src/lib/kits`) and 504
+    auto-chunked game packs (`src/lib/packs`) were deleted as low-value filler, along with the
+    generated command platform-variant padding (10,074 → 5,704 commands)
 - **300+ curated free resources** on `/discover` + hubs
 - **5 full courses with graded tests** + 4 learning paths on `/learn`
 - 100+ free APIs documented, 560+ glossary terms, 20 founder roadmaps,

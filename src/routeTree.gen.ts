@@ -73,12 +73,14 @@ import { Route as LUsernameRouteImport } from './routes/l.$username'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnCourseIdRouteImport } from './routes/learn.$courseId'
 import { Route as PlayIndexRouteImport } from './routes/play.index'
-import { Route as PlaySlugRouteImport } from './routes/play.$slug'
 import { Route as Play2048RouteImport } from './routes/play.2048'
 import { Route as PlayAimTrainerRouteImport } from './routes/play.aim-trainer'
+import { Route as PlayAirHockeyRouteImport } from './routes/play.air-hockey'
+import { Route as PlayBasketballRouteImport } from './routes/play.basketball'
 import { Route as PlayBattleshipRouteImport } from './routes/play.battleship'
 import { Route as PlayBlackjackRouteImport } from './routes/play.blackjack'
 import { Route as PlayBounceRouteImport } from './routes/play.bounce'
+import { Route as PlayBowlingRouteImport } from './routes/play.bowling'
 import { Route as PlayBreakoutRouteImport } from './routes/play.breakout'
 import { Route as PlayBubbleWrapRouteImport } from './routes/play.bubble-wrap'
 import { Route as PlayCapitalsRouteImport } from './routes/play.capitals'
@@ -87,6 +89,7 @@ import { Route as PlayCoinFlipRouteImport } from './routes/play.coin-flip'
 import { Route as PlayConnectFourRouteImport } from './routes/play.connect-four'
 import { Route as PlayCosmicDiveRouteImport } from './routes/play.cosmic-dive'
 import { Route as PlayCricketRouteImport } from './routes/play.cricket'
+import { Route as PlayDartsRouteImport } from './routes/play.darts'
 import { Route as PlayDiceRouteImport } from './routes/play.dice'
 import { Route as PlayDiceDuelRouteImport } from './routes/play.dice-duel'
 import { Route as PlayDigitSpanRouteImport } from './routes/play.digit-span'
@@ -100,6 +103,7 @@ import { Route as PlayHangmanRouteImport } from './routes/play.hangman'
 import { Route as PlayHigherLowerRouteImport } from './routes/play.higher-lower'
 import { Route as PlayKindleRouteImport } from './routes/play.kindle'
 import { Route as PlayLightsOutRouteImport } from './routes/play.lights-out'
+import { Route as PlayMastermindRouteImport } from './routes/play.mastermind'
 import { Route as PlayMathDuelRouteImport } from './routes/play.math-duel'
 import { Route as PlayMathSprintRouteImport } from './routes/play.math-sprint'
 import { Route as PlayMazeRunnerRouteImport } from './routes/play.maze-runner'
@@ -107,9 +111,11 @@ import { Route as PlayMemoryMatchRouteImport } from './routes/play.memory-match'
 import { Route as PlayMemoryMatrixRouteImport } from './routes/play.memory-matrix'
 import { Route as PlayMemoryPalaceRouteImport } from './routes/play.memory-palace'
 import { Route as PlayMinesweeperRouteImport } from './routes/play.minesweeper'
+import { Route as PlayNonogramRouteImport } from './routes/play.nonogram'
 import { Route as PlayOddOneOutRouteImport } from './routes/play.odd-one-out'
 import { Route as PlayPasswordGameRouteImport } from './routes/play.password-game'
 import { Route as PlayPegJumpRouteImport } from './routes/play.peg-jump'
+import { Route as PlayPenaltyShootoutRouteImport } from './routes/play.penalty-shootout'
 import { Route as PlayPerfectCircleRouteImport } from './routes/play.perfect-circle'
 import { Route as PlayPongRouteImport } from './routes/play.pong'
 import { Route as PlayRandomNumberRouteImport } from './routes/play.random-number'
@@ -121,16 +127,22 @@ import { Route as PlayRockPaperScissorsLizardSpockRouteImport } from './routes/p
 import { Route as PlaySchulteTableRouteImport } from './routes/play.schulte-table'
 import { Route as PlaySimonRouteImport } from './routes/play.simon'
 import { Route as PlaySkyDashRouteImport } from './routes/play.sky-dash'
+import { Route as PlaySlidingPuzzleRouteImport } from './routes/play.sliding-puzzle'
 import { Route as PlaySnakeRouteImport } from './routes/play.snake'
 import { Route as PlaySnakesLaddersRouteImport } from './routes/play.snakes-ladders'
 import { Route as PlayStopTheColorRouteImport } from './routes/play.stop-the-color'
 import { Route as PlayStroopTestRouteImport } from './routes/play.stroop-test'
+import { Route as PlaySudokuRouteImport } from './routes/play.sudoku'
+import { Route as PlayTableTennisRouteImport } from './routes/play.table-tennis'
 import { Route as PlayTapTheDifferenceRouteImport } from './routes/play.tap-the-difference'
 import { Route as PlayTenSecondsRouteImport } from './routes/play.ten-seconds'
 import { Route as PlayTicTacToeRouteImport } from './routes/play.tic-tac-toe'
+import { Route as PlayTowerOfHanoiRouteImport } from './routes/play.tower-of-hanoi'
 import { Route as PlayTypingTestRouteImport } from './routes/play.typing-test'
 import { Route as PlayWhackAMoleRouteImport } from './routes/play.whack-a-mole'
 import { Route as PlayWordGuessRouteImport } from './routes/play.word-guess'
+import { Route as PlayWordScrambleRouteImport } from './routes/play.word-scramble'
+import { Route as PlayWordSearchRouteImport } from './routes/play.word-search'
 import { Route as PlayWouldYouRatherRouteImport } from './routes/play.would-you-rather'
 import { Route as PromptsBusinessRouteImport } from './routes/prompts.business'
 import { Route as PromptsStudentsRouteImport } from './routes/prompts.students'
@@ -141,6 +153,7 @@ import { Route as SlashSlashgramRouteImport } from './routes/slash.slashgram'
 import { Route as StoresIndexRouteImport } from './routes/stores.index'
 import { Route as StoresDashboardRouteImport } from './routes/stores.dashboard'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
+import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as ToolsAgeOfThingsRouteImport } from './routes/tools.age-of-things'
 import { Route as ToolsAnalyzeRouteImport } from './routes/tools.analyze'
@@ -305,7 +318,6 @@ import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$cate
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 import { Route as LearnCourseIdLessonIdRouteImport } from './routes/learn.$courseId_.$lessonId'
 import { Route as StoresSlugIndexRouteImport } from './routes/stores.$slug.index'
-import { Route as ToolsKitSlugRouteImport } from './routes/tools.kit.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -627,11 +639,6 @@ const PlayIndexRoute = PlayIndexRouteImport.update({
   path: '/',
   getParentRoute: () => PlayRoute,
 } as any)
-const PlaySlugRoute = PlaySlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => PlayRoute,
-} as any)
 const Play2048Route = Play2048RouteImport.update({
   id: '/2048',
   path: '/2048',
@@ -640,6 +647,16 @@ const Play2048Route = Play2048RouteImport.update({
 const PlayAimTrainerRoute = PlayAimTrainerRouteImport.update({
   id: '/aim-trainer',
   path: '/aim-trainer',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayAirHockeyRoute = PlayAirHockeyRouteImport.update({
+  id: '/air-hockey',
+  path: '/air-hockey',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayBasketballRoute = PlayBasketballRouteImport.update({
+  id: '/basketball',
+  path: '/basketball',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayBattleshipRoute = PlayBattleshipRouteImport.update({
@@ -655,6 +672,11 @@ const PlayBlackjackRoute = PlayBlackjackRouteImport.update({
 const PlayBounceRoute = PlayBounceRouteImport.update({
   id: '/bounce',
   path: '/bounce',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayBowlingRoute = PlayBowlingRouteImport.update({
+  id: '/bowling',
+  path: '/bowling',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayBreakoutRoute = PlayBreakoutRouteImport.update({
@@ -695,6 +717,11 @@ const PlayCosmicDiveRoute = PlayCosmicDiveRouteImport.update({
 const PlayCricketRoute = PlayCricketRouteImport.update({
   id: '/cricket',
   path: '/cricket',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayDartsRoute = PlayDartsRouteImport.update({
+  id: '/darts',
+  path: '/darts',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayDiceRoute = PlayDiceRouteImport.update({
@@ -762,6 +789,11 @@ const PlayLightsOutRoute = PlayLightsOutRouteImport.update({
   path: '/lights-out',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayMastermindRoute = PlayMastermindRouteImport.update({
+  id: '/mastermind',
+  path: '/mastermind',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayMathDuelRoute = PlayMathDuelRouteImport.update({
   id: '/math-duel',
   path: '/math-duel',
@@ -797,6 +829,11 @@ const PlayMinesweeperRoute = PlayMinesweeperRouteImport.update({
   path: '/minesweeper',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayNonogramRoute = PlayNonogramRouteImport.update({
+  id: '/nonogram',
+  path: '/nonogram',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayOddOneOutRoute = PlayOddOneOutRouteImport.update({
   id: '/odd-one-out',
   path: '/odd-one-out',
@@ -810,6 +847,11 @@ const PlayPasswordGameRoute = PlayPasswordGameRouteImport.update({
 const PlayPegJumpRoute = PlayPegJumpRouteImport.update({
   id: '/peg-jump',
   path: '/peg-jump',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayPenaltyShootoutRoute = PlayPenaltyShootoutRouteImport.update({
+  id: '/penalty-shootout',
+  path: '/penalty-shootout',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayPerfectCircleRoute = PlayPerfectCircleRouteImport.update({
@@ -868,6 +910,11 @@ const PlaySkyDashRoute = PlaySkyDashRouteImport.update({
   path: '/sky-dash',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlaySlidingPuzzleRoute = PlaySlidingPuzzleRouteImport.update({
+  id: '/sliding-puzzle',
+  path: '/sliding-puzzle',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlaySnakeRoute = PlaySnakeRouteImport.update({
   id: '/snake',
   path: '/snake',
@@ -888,6 +935,16 @@ const PlayStroopTestRoute = PlayStroopTestRouteImport.update({
   path: '/stroop-test',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlaySudokuRoute = PlaySudokuRouteImport.update({
+  id: '/sudoku',
+  path: '/sudoku',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayTableTennisRoute = PlayTableTennisRouteImport.update({
+  id: '/table-tennis',
+  path: '/table-tennis',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayTapTheDifferenceRoute = PlayTapTheDifferenceRouteImport.update({
   id: '/tap-the-difference',
   path: '/tap-the-difference',
@@ -903,6 +960,11 @@ const PlayTicTacToeRoute = PlayTicTacToeRouteImport.update({
   path: '/tic-tac-toe',
   getParentRoute: () => PlayRoute,
 } as any)
+const PlayTowerOfHanoiRoute = PlayTowerOfHanoiRouteImport.update({
+  id: '/tower-of-hanoi',
+  path: '/tower-of-hanoi',
+  getParentRoute: () => PlayRoute,
+} as any)
 const PlayTypingTestRoute = PlayTypingTestRouteImport.update({
   id: '/typing-test',
   path: '/typing-test',
@@ -916,6 +978,16 @@ const PlayWhackAMoleRoute = PlayWhackAMoleRouteImport.update({
 const PlayWordGuessRoute = PlayWordGuessRouteImport.update({
   id: '/word-guess',
   path: '/word-guess',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayWordScrambleRoute = PlayWordScrambleRouteImport.update({
+  id: '/word-scramble',
+  path: '/word-scramble',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayWordSearchRoute = PlayWordSearchRouteImport.update({
+  id: '/word-search',
+  path: '/word-search',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayWouldYouRatherRoute = PlayWouldYouRatherRouteImport.update({
@@ -966,6 +1038,11 @@ const StoresDashboardRoute = StoresDashboardRouteImport.update({
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => ToolsRoute,
+} as any)
+const ToolsSlugRoute = ToolsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
   getParentRoute: () => ToolsRoute,
 } as any)
 const ToolsAgeCalculatorRoute = ToolsAgeCalculatorRouteImport.update({
@@ -1789,11 +1866,6 @@ const StoresSlugIndexRoute = StoresSlugIndexRouteImport.update({
   path: '/stores/$slug/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ToolsKitSlugRoute = ToolsKitSlugRouteImport.update({
-  id: '/kit/$slug',
-  path: '/kit/$slug',
-  getParentRoute: () => ToolsRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -1852,12 +1924,14 @@ export interface FileRoutesByFullPath {
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
-  '/play/$slug': typeof PlaySlugRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
+  '/play/air-hockey': typeof PlayAirHockeyRoute
+  '/play/basketball': typeof PlayBasketballRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
   '/play/bounce': typeof PlayBounceRoute
+  '/play/bowling': typeof PlayBowlingRoute
   '/play/breakout': typeof PlayBreakoutRoute
   '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/capitals': typeof PlayCapitalsRoute
@@ -1866,6 +1940,7 @@ export interface FileRoutesByFullPath {
   '/play/connect-four': typeof PlayConnectFourRoute
   '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
+  '/play/darts': typeof PlayDartsRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
   '/play/digit-span': typeof PlayDigitSpanRoute
@@ -1879,6 +1954,7 @@ export interface FileRoutesByFullPath {
   '/play/higher-lower': typeof PlayHigherLowerRoute
   '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
+  '/play/mastermind': typeof PlayMastermindRoute
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/math-sprint': typeof PlayMathSprintRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
@@ -1886,9 +1962,11 @@ export interface FileRoutesByFullPath {
   '/play/memory-matrix': typeof PlayMemoryMatrixRoute
   '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
+  '/play/nonogram': typeof PlayNonogramRoute
   '/play/odd-one-out': typeof PlayOddOneOutRoute
   '/play/password-game': typeof PlayPasswordGameRoute
   '/play/peg-jump': typeof PlayPegJumpRoute
+  '/play/penalty-shootout': typeof PlayPenaltyShootoutRoute
   '/play/perfect-circle': typeof PlayPerfectCircleRoute
   '/play/pong': typeof PlayPongRoute
   '/play/random-number': typeof PlayRandomNumberRoute
@@ -1900,16 +1978,22 @@ export interface FileRoutesByFullPath {
   '/play/schulte-table': typeof PlaySchulteTableRoute
   '/play/simon': typeof PlaySimonRoute
   '/play/sky-dash': typeof PlaySkyDashRoute
+  '/play/sliding-puzzle': typeof PlaySlidingPuzzleRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
   '/play/stop-the-color': typeof PlayStopTheColorRoute
   '/play/stroop-test': typeof PlayStroopTestRoute
+  '/play/sudoku': typeof PlaySudokuRoute
+  '/play/table-tennis': typeof PlayTableTennisRoute
   '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
+  '/play/tower-of-hanoi': typeof PlayTowerOfHanoiRoute
   '/play/typing-test': typeof PlayTypingTestRoute
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
+  '/play/word-scramble': typeof PlayWordScrambleRoute
+  '/play/word-search': typeof PlayWordSearchRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/prompts/business': typeof PromptsBusinessRoute
   '/prompts/students': typeof PromptsStudentsRoute
@@ -1917,6 +2001,7 @@ export interface FileRoutesByFullPath {
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
   '/stores/dashboard': typeof StoresDashboardRoute
+  '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2090,7 +2175,6 @@ export interface FileRoutesByFullPath {
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
-  '/tools/kit/$slug': typeof ToolsKitSlugRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
   '/stores/$slug/': typeof StoresSlugIndexRoute
 }
@@ -2149,12 +2233,14 @@ export interface FileRoutesByTo {
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
-  '/play/$slug': typeof PlaySlugRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
+  '/play/air-hockey': typeof PlayAirHockeyRoute
+  '/play/basketball': typeof PlayBasketballRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
   '/play/bounce': typeof PlayBounceRoute
+  '/play/bowling': typeof PlayBowlingRoute
   '/play/breakout': typeof PlayBreakoutRoute
   '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/capitals': typeof PlayCapitalsRoute
@@ -2163,6 +2249,7 @@ export interface FileRoutesByTo {
   '/play/connect-four': typeof PlayConnectFourRoute
   '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
+  '/play/darts': typeof PlayDartsRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
   '/play/digit-span': typeof PlayDigitSpanRoute
@@ -2176,6 +2263,7 @@ export interface FileRoutesByTo {
   '/play/higher-lower': typeof PlayHigherLowerRoute
   '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
+  '/play/mastermind': typeof PlayMastermindRoute
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/math-sprint': typeof PlayMathSprintRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
@@ -2183,9 +2271,11 @@ export interface FileRoutesByTo {
   '/play/memory-matrix': typeof PlayMemoryMatrixRoute
   '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
+  '/play/nonogram': typeof PlayNonogramRoute
   '/play/odd-one-out': typeof PlayOddOneOutRoute
   '/play/password-game': typeof PlayPasswordGameRoute
   '/play/peg-jump': typeof PlayPegJumpRoute
+  '/play/penalty-shootout': typeof PlayPenaltyShootoutRoute
   '/play/perfect-circle': typeof PlayPerfectCircleRoute
   '/play/pong': typeof PlayPongRoute
   '/play/random-number': typeof PlayRandomNumberRoute
@@ -2197,16 +2287,22 @@ export interface FileRoutesByTo {
   '/play/schulte-table': typeof PlaySchulteTableRoute
   '/play/simon': typeof PlaySimonRoute
   '/play/sky-dash': typeof PlaySkyDashRoute
+  '/play/sliding-puzzle': typeof PlaySlidingPuzzleRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
   '/play/stop-the-color': typeof PlayStopTheColorRoute
   '/play/stroop-test': typeof PlayStroopTestRoute
+  '/play/sudoku': typeof PlaySudokuRoute
+  '/play/table-tennis': typeof PlayTableTennisRoute
   '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
+  '/play/tower-of-hanoi': typeof PlayTowerOfHanoiRoute
   '/play/typing-test': typeof PlayTypingTestRoute
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
+  '/play/word-scramble': typeof PlayWordScrambleRoute
+  '/play/word-search': typeof PlayWordSearchRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/prompts/business': typeof PromptsBusinessRoute
   '/prompts/students': typeof PromptsStudentsRoute
@@ -2214,6 +2310,7 @@ export interface FileRoutesByTo {
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
   '/stores/dashboard': typeof StoresDashboardRoute
+  '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2387,7 +2484,6 @@ export interface FileRoutesByTo {
   '/tools': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
-  '/tools/kit/$slug': typeof ToolsKitSlugRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
   '/stores/$slug': typeof StoresSlugIndexRoute
 }
@@ -2449,12 +2545,14 @@ export interface FileRoutesById {
   '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
-  '/play/$slug': typeof PlaySlugRoute
   '/play/2048': typeof Play2048Route
   '/play/aim-trainer': typeof PlayAimTrainerRoute
+  '/play/air-hockey': typeof PlayAirHockeyRoute
+  '/play/basketball': typeof PlayBasketballRoute
   '/play/battleship': typeof PlayBattleshipRoute
   '/play/blackjack': typeof PlayBlackjackRoute
   '/play/bounce': typeof PlayBounceRoute
+  '/play/bowling': typeof PlayBowlingRoute
   '/play/breakout': typeof PlayBreakoutRoute
   '/play/bubble-wrap': typeof PlayBubbleWrapRoute
   '/play/capitals': typeof PlayCapitalsRoute
@@ -2463,6 +2561,7 @@ export interface FileRoutesById {
   '/play/connect-four': typeof PlayConnectFourRoute
   '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
+  '/play/darts': typeof PlayDartsRoute
   '/play/dice': typeof PlayDiceRoute
   '/play/dice-duel': typeof PlayDiceDuelRoute
   '/play/digit-span': typeof PlayDigitSpanRoute
@@ -2476,6 +2575,7 @@ export interface FileRoutesById {
   '/play/higher-lower': typeof PlayHigherLowerRoute
   '/play/kindle': typeof PlayKindleRoute
   '/play/lights-out': typeof PlayLightsOutRoute
+  '/play/mastermind': typeof PlayMastermindRoute
   '/play/math-duel': typeof PlayMathDuelRoute
   '/play/math-sprint': typeof PlayMathSprintRoute
   '/play/maze-runner': typeof PlayMazeRunnerRoute
@@ -2483,9 +2583,11 @@ export interface FileRoutesById {
   '/play/memory-matrix': typeof PlayMemoryMatrixRoute
   '/play/memory-palace': typeof PlayMemoryPalaceRoute
   '/play/minesweeper': typeof PlayMinesweeperRoute
+  '/play/nonogram': typeof PlayNonogramRoute
   '/play/odd-one-out': typeof PlayOddOneOutRoute
   '/play/password-game': typeof PlayPasswordGameRoute
   '/play/peg-jump': typeof PlayPegJumpRoute
+  '/play/penalty-shootout': typeof PlayPenaltyShootoutRoute
   '/play/perfect-circle': typeof PlayPerfectCircleRoute
   '/play/pong': typeof PlayPongRoute
   '/play/random-number': typeof PlayRandomNumberRoute
@@ -2497,16 +2599,22 @@ export interface FileRoutesById {
   '/play/schulte-table': typeof PlaySchulteTableRoute
   '/play/simon': typeof PlaySimonRoute
   '/play/sky-dash': typeof PlaySkyDashRoute
+  '/play/sliding-puzzle': typeof PlaySlidingPuzzleRoute
   '/play/snake': typeof PlaySnakeRoute
   '/play/snakes-ladders': typeof PlaySnakesLaddersRoute
   '/play/stop-the-color': typeof PlayStopTheColorRoute
   '/play/stroop-test': typeof PlayStroopTestRoute
+  '/play/sudoku': typeof PlaySudokuRoute
+  '/play/table-tennis': typeof PlayTableTennisRoute
   '/play/tap-the-difference': typeof PlayTapTheDifferenceRoute
   '/play/ten-seconds': typeof PlayTenSecondsRoute
   '/play/tic-tac-toe': typeof PlayTicTacToeRoute
+  '/play/tower-of-hanoi': typeof PlayTowerOfHanoiRoute
   '/play/typing-test': typeof PlayTypingTestRoute
   '/play/whack-a-mole': typeof PlayWhackAMoleRoute
   '/play/word-guess': typeof PlayWordGuessRoute
+  '/play/word-scramble': typeof PlayWordScrambleRoute
+  '/play/word-search': typeof PlayWordSearchRoute
   '/play/would-you-rather': typeof PlayWouldYouRatherRoute
   '/prompts/business': typeof PromptsBusinessRoute
   '/prompts/students': typeof PromptsStudentsRoute
@@ -2514,6 +2622,7 @@ export interface FileRoutesById {
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
   '/stores/dashboard': typeof StoresDashboardRoute
+  '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
   '/tools/analyze': typeof ToolsAnalyzeRoute
@@ -2687,7 +2796,6 @@ export interface FileRoutesById {
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId_/$lessonId': typeof LearnCourseIdLessonIdRoute
-  '/tools/kit/$slug': typeof ToolsKitSlugRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
   '/stores/$slug/': typeof StoresSlugIndexRoute
 }
@@ -2750,12 +2858,14 @@ export interface FileRouteTypes {
     | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
-    | '/play/$slug'
     | '/play/2048'
     | '/play/aim-trainer'
+    | '/play/air-hockey'
+    | '/play/basketball'
     | '/play/battleship'
     | '/play/blackjack'
     | '/play/bounce'
+    | '/play/bowling'
     | '/play/breakout'
     | '/play/bubble-wrap'
     | '/play/capitals'
@@ -2764,6 +2874,7 @@ export interface FileRouteTypes {
     | '/play/connect-four'
     | '/play/cosmic-dive'
     | '/play/cricket'
+    | '/play/darts'
     | '/play/dice'
     | '/play/dice-duel'
     | '/play/digit-span'
@@ -2777,6 +2888,7 @@ export interface FileRouteTypes {
     | '/play/higher-lower'
     | '/play/kindle'
     | '/play/lights-out'
+    | '/play/mastermind'
     | '/play/math-duel'
     | '/play/math-sprint'
     | '/play/maze-runner'
@@ -2784,9 +2896,11 @@ export interface FileRouteTypes {
     | '/play/memory-matrix'
     | '/play/memory-palace'
     | '/play/minesweeper'
+    | '/play/nonogram'
     | '/play/odd-one-out'
     | '/play/password-game'
     | '/play/peg-jump'
+    | '/play/penalty-shootout'
     | '/play/perfect-circle'
     | '/play/pong'
     | '/play/random-number'
@@ -2798,16 +2912,22 @@ export interface FileRouteTypes {
     | '/play/schulte-table'
     | '/play/simon'
     | '/play/sky-dash'
+    | '/play/sliding-puzzle'
     | '/play/snake'
     | '/play/snakes-ladders'
     | '/play/stop-the-color'
     | '/play/stroop-test'
+    | '/play/sudoku'
+    | '/play/table-tennis'
     | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
+    | '/play/tower-of-hanoi'
     | '/play/typing-test'
     | '/play/whack-a-mole'
     | '/play/word-guess'
+    | '/play/word-scramble'
+    | '/play/word-search'
     | '/play/would-you-rather'
     | '/prompts/business'
     | '/prompts/students'
@@ -2815,6 +2935,7 @@ export interface FileRouteTypes {
     | '/slash/$app'
     | '/slash/slashgram'
     | '/stores/dashboard'
+    | '/tools/$slug'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -2988,7 +3109,6 @@ export interface FileRouteTypes {
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
-    | '/tools/kit/$slug'
     | '/explore/$category/'
     | '/stores/$slug/'
   fileRoutesByTo: FileRoutesByTo
@@ -3047,12 +3167,14 @@ export interface FileRouteTypes {
     | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
-    | '/play/$slug'
     | '/play/2048'
     | '/play/aim-trainer'
+    | '/play/air-hockey'
+    | '/play/basketball'
     | '/play/battleship'
     | '/play/blackjack'
     | '/play/bounce'
+    | '/play/bowling'
     | '/play/breakout'
     | '/play/bubble-wrap'
     | '/play/capitals'
@@ -3061,6 +3183,7 @@ export interface FileRouteTypes {
     | '/play/connect-four'
     | '/play/cosmic-dive'
     | '/play/cricket'
+    | '/play/darts'
     | '/play/dice'
     | '/play/dice-duel'
     | '/play/digit-span'
@@ -3074,6 +3197,7 @@ export interface FileRouteTypes {
     | '/play/higher-lower'
     | '/play/kindle'
     | '/play/lights-out'
+    | '/play/mastermind'
     | '/play/math-duel'
     | '/play/math-sprint'
     | '/play/maze-runner'
@@ -3081,9 +3205,11 @@ export interface FileRouteTypes {
     | '/play/memory-matrix'
     | '/play/memory-palace'
     | '/play/minesweeper'
+    | '/play/nonogram'
     | '/play/odd-one-out'
     | '/play/password-game'
     | '/play/peg-jump'
+    | '/play/penalty-shootout'
     | '/play/perfect-circle'
     | '/play/pong'
     | '/play/random-number'
@@ -3095,16 +3221,22 @@ export interface FileRouteTypes {
     | '/play/schulte-table'
     | '/play/simon'
     | '/play/sky-dash'
+    | '/play/sliding-puzzle'
     | '/play/snake'
     | '/play/snakes-ladders'
     | '/play/stop-the-color'
     | '/play/stroop-test'
+    | '/play/sudoku'
+    | '/play/table-tennis'
     | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
+    | '/play/tower-of-hanoi'
     | '/play/typing-test'
     | '/play/whack-a-mole'
     | '/play/word-guess'
+    | '/play/word-scramble'
+    | '/play/word-search'
     | '/play/would-you-rather'
     | '/prompts/business'
     | '/prompts/students'
@@ -3112,6 +3244,7 @@ export interface FileRouteTypes {
     | '/slash/$app'
     | '/slash/slashgram'
     | '/stores/dashboard'
+    | '/tools/$slug'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -3285,7 +3418,6 @@ export interface FileRouteTypes {
     | '/tools'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
-    | '/tools/kit/$slug'
     | '/explore/$category'
     | '/stores/$slug'
   id:
@@ -3346,12 +3478,14 @@ export interface FileRouteTypes {
     | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
-    | '/play/$slug'
     | '/play/2048'
     | '/play/aim-trainer'
+    | '/play/air-hockey'
+    | '/play/basketball'
     | '/play/battleship'
     | '/play/blackjack'
     | '/play/bounce'
+    | '/play/bowling'
     | '/play/breakout'
     | '/play/bubble-wrap'
     | '/play/capitals'
@@ -3360,6 +3494,7 @@ export interface FileRouteTypes {
     | '/play/connect-four'
     | '/play/cosmic-dive'
     | '/play/cricket'
+    | '/play/darts'
     | '/play/dice'
     | '/play/dice-duel'
     | '/play/digit-span'
@@ -3373,6 +3508,7 @@ export interface FileRouteTypes {
     | '/play/higher-lower'
     | '/play/kindle'
     | '/play/lights-out'
+    | '/play/mastermind'
     | '/play/math-duel'
     | '/play/math-sprint'
     | '/play/maze-runner'
@@ -3380,9 +3516,11 @@ export interface FileRouteTypes {
     | '/play/memory-matrix'
     | '/play/memory-palace'
     | '/play/minesweeper'
+    | '/play/nonogram'
     | '/play/odd-one-out'
     | '/play/password-game'
     | '/play/peg-jump'
+    | '/play/penalty-shootout'
     | '/play/perfect-circle'
     | '/play/pong'
     | '/play/random-number'
@@ -3394,16 +3532,22 @@ export interface FileRouteTypes {
     | '/play/schulte-table'
     | '/play/simon'
     | '/play/sky-dash'
+    | '/play/sliding-puzzle'
     | '/play/snake'
     | '/play/snakes-ladders'
     | '/play/stop-the-color'
     | '/play/stroop-test'
+    | '/play/sudoku'
+    | '/play/table-tennis'
     | '/play/tap-the-difference'
     | '/play/ten-seconds'
     | '/play/tic-tac-toe'
+    | '/play/tower-of-hanoi'
     | '/play/typing-test'
     | '/play/whack-a-mole'
     | '/play/word-guess'
+    | '/play/word-scramble'
+    | '/play/word-search'
     | '/play/would-you-rather'
     | '/prompts/business'
     | '/prompts/students'
@@ -3411,6 +3555,7 @@ export interface FileRouteTypes {
     | '/slash/$app'
     | '/slash/slashgram'
     | '/stores/dashboard'
+    | '/tools/$slug'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
     | '/tools/analyze'
@@ -3584,7 +3729,6 @@ export interface FileRouteTypes {
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId_/$lessonId'
-    | '/tools/kit/$slug'
     | '/explore/$category/'
     | '/stores/$slug/'
   fileRoutesById: FileRoutesById
@@ -4115,13 +4259,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayIndexRouteImport
       parentRoute: typeof PlayRoute
     }
-    '/play/$slug': {
-      id: '/play/$slug'
-      path: '/$slug'
-      fullPath: '/play/$slug'
-      preLoaderRoute: typeof PlaySlugRouteImport
-      parentRoute: typeof PlayRoute
-    }
     '/play/2048': {
       id: '/play/2048'
       path: '/2048'
@@ -4134,6 +4271,20 @@ declare module '@tanstack/react-router' {
       path: '/aim-trainer'
       fullPath: '/play/aim-trainer'
       preLoaderRoute: typeof PlayAimTrainerRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/air-hockey': {
+      id: '/play/air-hockey'
+      path: '/air-hockey'
+      fullPath: '/play/air-hockey'
+      preLoaderRoute: typeof PlayAirHockeyRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/basketball': {
+      id: '/play/basketball'
+      path: '/basketball'
+      fullPath: '/play/basketball'
+      preLoaderRoute: typeof PlayBasketballRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/battleship': {
@@ -4155,6 +4306,13 @@ declare module '@tanstack/react-router' {
       path: '/bounce'
       fullPath: '/play/bounce'
       preLoaderRoute: typeof PlayBounceRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/bowling': {
+      id: '/play/bowling'
+      path: '/bowling'
+      fullPath: '/play/bowling'
+      preLoaderRoute: typeof PlayBowlingRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/breakout': {
@@ -4211,6 +4369,13 @@ declare module '@tanstack/react-router' {
       path: '/cricket'
       fullPath: '/play/cricket'
       preLoaderRoute: typeof PlayCricketRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/darts': {
+      id: '/play/darts'
+      path: '/darts'
+      fullPath: '/play/darts'
+      preLoaderRoute: typeof PlayDartsRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/dice': {
@@ -4304,6 +4469,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayLightsOutRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/mastermind': {
+      id: '/play/mastermind'
+      path: '/mastermind'
+      fullPath: '/play/mastermind'
+      preLoaderRoute: typeof PlayMastermindRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/math-duel': {
       id: '/play/math-duel'
       path: '/math-duel'
@@ -4353,6 +4525,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayMinesweeperRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/nonogram': {
+      id: '/play/nonogram'
+      path: '/nonogram'
+      fullPath: '/play/nonogram'
+      preLoaderRoute: typeof PlayNonogramRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/odd-one-out': {
       id: '/play/odd-one-out'
       path: '/odd-one-out'
@@ -4372,6 +4551,13 @@ declare module '@tanstack/react-router' {
       path: '/peg-jump'
       fullPath: '/play/peg-jump'
       preLoaderRoute: typeof PlayPegJumpRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/penalty-shootout': {
+      id: '/play/penalty-shootout'
+      path: '/penalty-shootout'
+      fullPath: '/play/penalty-shootout'
+      preLoaderRoute: typeof PlayPenaltyShootoutRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/perfect-circle': {
@@ -4451,6 +4637,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlaySkyDashRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/sliding-puzzle': {
+      id: '/play/sliding-puzzle'
+      path: '/sliding-puzzle'
+      fullPath: '/play/sliding-puzzle'
+      preLoaderRoute: typeof PlaySlidingPuzzleRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/snake': {
       id: '/play/snake'
       path: '/snake'
@@ -4479,6 +4672,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayStroopTestRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/sudoku': {
+      id: '/play/sudoku'
+      path: '/sudoku'
+      fullPath: '/play/sudoku'
+      preLoaderRoute: typeof PlaySudokuRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/table-tennis': {
+      id: '/play/table-tennis'
+      path: '/table-tennis'
+      fullPath: '/play/table-tennis'
+      preLoaderRoute: typeof PlayTableTennisRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/tap-the-difference': {
       id: '/play/tap-the-difference'
       path: '/tap-the-difference'
@@ -4500,6 +4707,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayTicTacToeRouteImport
       parentRoute: typeof PlayRoute
     }
+    '/play/tower-of-hanoi': {
+      id: '/play/tower-of-hanoi'
+      path: '/tower-of-hanoi'
+      fullPath: '/play/tower-of-hanoi'
+      preLoaderRoute: typeof PlayTowerOfHanoiRouteImport
+      parentRoute: typeof PlayRoute
+    }
     '/play/typing-test': {
       id: '/play/typing-test'
       path: '/typing-test'
@@ -4519,6 +4733,20 @@ declare module '@tanstack/react-router' {
       path: '/word-guess'
       fullPath: '/play/word-guess'
       preLoaderRoute: typeof PlayWordGuessRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/word-scramble': {
+      id: '/play/word-scramble'
+      path: '/word-scramble'
+      fullPath: '/play/word-scramble'
+      preLoaderRoute: typeof PlayWordScrambleRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/word-search': {
+      id: '/play/word-search'
+      path: '/word-search'
+      fullPath: '/play/word-search'
+      preLoaderRoute: typeof PlayWordSearchRouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/would-you-rather': {
@@ -4589,6 +4817,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/tools/'
       preLoaderRoute: typeof ToolsIndexRouteImport
+      parentRoute: typeof ToolsRoute
+    }
+    '/tools/$slug': {
+      id: '/tools/$slug'
+      path: '/$slug'
+      fullPath: '/tools/$slug'
+      preLoaderRoute: typeof ToolsSlugRouteImport
       parentRoute: typeof ToolsRoute
     }
     '/tools/age-calculator': {
@@ -5739,23 +5974,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StoresSlugIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/tools/kit/$slug': {
-      id: '/tools/kit/$slug'
-      path: '/kit/$slug'
-      fullPath: '/tools/kit/$slug'
-      preLoaderRoute: typeof ToolsKitSlugRouteImport
-      parentRoute: typeof ToolsRoute
-    }
   }
 }
 
 interface PlayRouteChildren {
-  PlaySlugRoute: typeof PlaySlugRoute
   Play2048Route: typeof Play2048Route
   PlayAimTrainerRoute: typeof PlayAimTrainerRoute
+  PlayAirHockeyRoute: typeof PlayAirHockeyRoute
+  PlayBasketballRoute: typeof PlayBasketballRoute
   PlayBattleshipRoute: typeof PlayBattleshipRoute
   PlayBlackjackRoute: typeof PlayBlackjackRoute
   PlayBounceRoute: typeof PlayBounceRoute
+  PlayBowlingRoute: typeof PlayBowlingRoute
   PlayBreakoutRoute: typeof PlayBreakoutRoute
   PlayBubbleWrapRoute: typeof PlayBubbleWrapRoute
   PlayCapitalsRoute: typeof PlayCapitalsRoute
@@ -5764,6 +5994,7 @@ interface PlayRouteChildren {
   PlayConnectFourRoute: typeof PlayConnectFourRoute
   PlayCosmicDiveRoute: typeof PlayCosmicDiveRoute
   PlayCricketRoute: typeof PlayCricketRoute
+  PlayDartsRoute: typeof PlayDartsRoute
   PlayDiceRoute: typeof PlayDiceRoute
   PlayDiceDuelRoute: typeof PlayDiceDuelRoute
   PlayDigitSpanRoute: typeof PlayDigitSpanRoute
@@ -5777,6 +6008,7 @@ interface PlayRouteChildren {
   PlayHigherLowerRoute: typeof PlayHigherLowerRoute
   PlayKindleRoute: typeof PlayKindleRoute
   PlayLightsOutRoute: typeof PlayLightsOutRoute
+  PlayMastermindRoute: typeof PlayMastermindRoute
   PlayMathDuelRoute: typeof PlayMathDuelRoute
   PlayMathSprintRoute: typeof PlayMathSprintRoute
   PlayMazeRunnerRoute: typeof PlayMazeRunnerRoute
@@ -5784,9 +6016,11 @@ interface PlayRouteChildren {
   PlayMemoryMatrixRoute: typeof PlayMemoryMatrixRoute
   PlayMemoryPalaceRoute: typeof PlayMemoryPalaceRoute
   PlayMinesweeperRoute: typeof PlayMinesweeperRoute
+  PlayNonogramRoute: typeof PlayNonogramRoute
   PlayOddOneOutRoute: typeof PlayOddOneOutRoute
   PlayPasswordGameRoute: typeof PlayPasswordGameRoute
   PlayPegJumpRoute: typeof PlayPegJumpRoute
+  PlayPenaltyShootoutRoute: typeof PlayPenaltyShootoutRoute
   PlayPerfectCircleRoute: typeof PlayPerfectCircleRoute
   PlayPongRoute: typeof PlayPongRoute
   PlayRandomNumberRoute: typeof PlayRandomNumberRoute
@@ -5798,27 +6032,35 @@ interface PlayRouteChildren {
   PlaySchulteTableRoute: typeof PlaySchulteTableRoute
   PlaySimonRoute: typeof PlaySimonRoute
   PlaySkyDashRoute: typeof PlaySkyDashRoute
+  PlaySlidingPuzzleRoute: typeof PlaySlidingPuzzleRoute
   PlaySnakeRoute: typeof PlaySnakeRoute
   PlaySnakesLaddersRoute: typeof PlaySnakesLaddersRoute
   PlayStopTheColorRoute: typeof PlayStopTheColorRoute
   PlayStroopTestRoute: typeof PlayStroopTestRoute
+  PlaySudokuRoute: typeof PlaySudokuRoute
+  PlayTableTennisRoute: typeof PlayTableTennisRoute
   PlayTapTheDifferenceRoute: typeof PlayTapTheDifferenceRoute
   PlayTenSecondsRoute: typeof PlayTenSecondsRoute
   PlayTicTacToeRoute: typeof PlayTicTacToeRoute
+  PlayTowerOfHanoiRoute: typeof PlayTowerOfHanoiRoute
   PlayTypingTestRoute: typeof PlayTypingTestRoute
   PlayWhackAMoleRoute: typeof PlayWhackAMoleRoute
   PlayWordGuessRoute: typeof PlayWordGuessRoute
+  PlayWordScrambleRoute: typeof PlayWordScrambleRoute
+  PlayWordSearchRoute: typeof PlayWordSearchRoute
   PlayWouldYouRatherRoute: typeof PlayWouldYouRatherRoute
   PlayIndexRoute: typeof PlayIndexRoute
 }
 
 const PlayRouteChildren: PlayRouteChildren = {
-  PlaySlugRoute: PlaySlugRoute,
   Play2048Route: Play2048Route,
   PlayAimTrainerRoute: PlayAimTrainerRoute,
+  PlayAirHockeyRoute: PlayAirHockeyRoute,
+  PlayBasketballRoute: PlayBasketballRoute,
   PlayBattleshipRoute: PlayBattleshipRoute,
   PlayBlackjackRoute: PlayBlackjackRoute,
   PlayBounceRoute: PlayBounceRoute,
+  PlayBowlingRoute: PlayBowlingRoute,
   PlayBreakoutRoute: PlayBreakoutRoute,
   PlayBubbleWrapRoute: PlayBubbleWrapRoute,
   PlayCapitalsRoute: PlayCapitalsRoute,
@@ -5827,6 +6069,7 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayConnectFourRoute: PlayConnectFourRoute,
   PlayCosmicDiveRoute: PlayCosmicDiveRoute,
   PlayCricketRoute: PlayCricketRoute,
+  PlayDartsRoute: PlayDartsRoute,
   PlayDiceRoute: PlayDiceRoute,
   PlayDiceDuelRoute: PlayDiceDuelRoute,
   PlayDigitSpanRoute: PlayDigitSpanRoute,
@@ -5840,6 +6083,7 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayHigherLowerRoute: PlayHigherLowerRoute,
   PlayKindleRoute: PlayKindleRoute,
   PlayLightsOutRoute: PlayLightsOutRoute,
+  PlayMastermindRoute: PlayMastermindRoute,
   PlayMathDuelRoute: PlayMathDuelRoute,
   PlayMathSprintRoute: PlayMathSprintRoute,
   PlayMazeRunnerRoute: PlayMazeRunnerRoute,
@@ -5847,9 +6091,11 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayMemoryMatrixRoute: PlayMemoryMatrixRoute,
   PlayMemoryPalaceRoute: PlayMemoryPalaceRoute,
   PlayMinesweeperRoute: PlayMinesweeperRoute,
+  PlayNonogramRoute: PlayNonogramRoute,
   PlayOddOneOutRoute: PlayOddOneOutRoute,
   PlayPasswordGameRoute: PlayPasswordGameRoute,
   PlayPegJumpRoute: PlayPegJumpRoute,
+  PlayPenaltyShootoutRoute: PlayPenaltyShootoutRoute,
   PlayPerfectCircleRoute: PlayPerfectCircleRoute,
   PlayPongRoute: PlayPongRoute,
   PlayRandomNumberRoute: PlayRandomNumberRoute,
@@ -5861,16 +6107,22 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlaySchulteTableRoute: PlaySchulteTableRoute,
   PlaySimonRoute: PlaySimonRoute,
   PlaySkyDashRoute: PlaySkyDashRoute,
+  PlaySlidingPuzzleRoute: PlaySlidingPuzzleRoute,
   PlaySnakeRoute: PlaySnakeRoute,
   PlaySnakesLaddersRoute: PlaySnakesLaddersRoute,
   PlayStopTheColorRoute: PlayStopTheColorRoute,
   PlayStroopTestRoute: PlayStroopTestRoute,
+  PlaySudokuRoute: PlaySudokuRoute,
+  PlayTableTennisRoute: PlayTableTennisRoute,
   PlayTapTheDifferenceRoute: PlayTapTheDifferenceRoute,
   PlayTenSecondsRoute: PlayTenSecondsRoute,
   PlayTicTacToeRoute: PlayTicTacToeRoute,
+  PlayTowerOfHanoiRoute: PlayTowerOfHanoiRoute,
   PlayTypingTestRoute: PlayTypingTestRoute,
   PlayWhackAMoleRoute: PlayWhackAMoleRoute,
   PlayWordGuessRoute: PlayWordGuessRoute,
+  PlayWordScrambleRoute: PlayWordScrambleRoute,
+  PlayWordSearchRoute: PlayWordSearchRoute,
   PlayWouldYouRatherRoute: PlayWouldYouRatherRoute,
   PlayIndexRoute: PlayIndexRoute,
 }
@@ -5891,6 +6143,7 @@ const PromptsRouteWithChildren =
   PromptsRoute._addFileChildren(PromptsRouteChildren)
 
 interface ToolsRouteChildren {
+  ToolsSlugRoute: typeof ToolsSlugRoute
   ToolsAgeCalculatorRoute: typeof ToolsAgeCalculatorRoute
   ToolsAgeOfThingsRoute: typeof ToolsAgeOfThingsRoute
   ToolsAnalyzeRoute: typeof ToolsAnalyzeRoute
@@ -6052,10 +6305,10 @@ interface ToolsRouteChildren {
   ToolsWordScrambleRoute: typeof ToolsWordScrambleRoute
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
-  ToolsKitSlugRoute: typeof ToolsKitSlugRoute
 }
 
 const ToolsRouteChildren: ToolsRouteChildren = {
+  ToolsSlugRoute: ToolsSlugRoute,
   ToolsAgeCalculatorRoute: ToolsAgeCalculatorRoute,
   ToolsAgeOfThingsRoute: ToolsAgeOfThingsRoute,
   ToolsAnalyzeRoute: ToolsAnalyzeRoute,
@@ -6217,7 +6470,6 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsWordScrambleRoute: ToolsWordScrambleRoute,
   ToolsWorldClockRoute: ToolsWorldClockRoute,
   ToolsIndexRoute: ToolsIndexRoute,
-  ToolsKitSlugRoute: ToolsKitSlugRoute,
 }
 
 const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)
@@ -6300,13 +6552,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

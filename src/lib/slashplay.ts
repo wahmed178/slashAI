@@ -9,7 +9,6 @@
  * - All games run fully in the browser (no downloads, works offline).
  *   Multiplayer means pass-and-play on one device.
  */
-import { PACKS, packCards, packLevel, type Pack, type PackCard, type PackGroup } from "./packs/registry";
 
 export type Players = "Solo" | "2P" | "2P + AI" | "Solo + 2P";
 
@@ -53,6 +52,18 @@ export const PLAY_SECTIONS: PlaySection[] = [
     ],
   },
   {
+    title: "Sports",
+    icon: "🏅",
+    games: [
+      { slug: "table-tennis", name: "Table Tennis", desc: "Top-down table, real 11-point scoring - beat the AI or a friend", icon: "🏓", players: "Solo + 2P", added: "2026-09-21" },
+      { slug: "air-hockey", name: "Air Hockey", desc: "Smash the puck past the AI mallet - first to seven", icon: "🏒", players: "Solo", added: "2026-09-21" },
+      { slug: "penalty-shootout", name: "Penalty Shootout", desc: "Five penalties each way: you shoot, then you dive", icon: "⚽", players: "Solo", added: "2026-09-21" },
+      { slug: "darts", name: "Darts", desc: "Real 501 board with trebles, doubles and busts", icon: "🎯", players: "Solo", added: "2026-09-21" },
+      { slug: "basketball", name: "Basketball", desc: "Sixty seconds of shooting - timing and streaks", icon: "🏀", players: "Solo", added: "2026-09-21" },
+      { slug: "bowling", name: "Bowling", desc: "Ten frames, two balls, real strike and spare scoring", icon: "🎳", players: "Solo", added: "2026-09-21" },
+    ],
+  },
+  {
     title: "Card Games",
     icon: "🃏",
     games: [
@@ -85,6 +96,7 @@ export const PLAY_SECTIONS: PlaySection[] = [
       { slug: "peg-jump", name: "Peg Jump", desc: "Jump pegs, remove them, leave exactly one", icon: "🔺", players: "Solo" },
       { slug: "odd-one-out", name: "Odd One Out", desc: "Find the off-shade tile before the clock dies", icon: "🔍", players: "Solo" },
       { slug: "capitals", name: "World Capitals", desc: "Name the capital of 60+ countries, streaks", icon: "🌍", players: "Solo" },
+      { slug: "word-search", name: "Word Search", desc: "Twelve themes, words hidden in eight directions", icon: "🔍", players: "Solo", added: "2026-09-21" },
     ],
   },
   {
@@ -97,6 +109,11 @@ export const PLAY_SECTIONS: PlaySection[] = [
       { slug: "digit-span", name: "Digit Span", desc: "Digits flash once - type them back, forward or reversed", icon: "🔢", players: "Solo" },
       { slug: "schulte-table", name: "Schulte Table", desc: "Tap 1-N in order, eyes fixed on centre - pilot vision drill", icon: "🎯", players: "Solo", added: "2026-09-10" },
       { slug: "memory-matrix", name: "Memory Matrix", desc: "Memorize flashing tile patterns across progressive spatial stages", icon: "🧩", players: "Solo", added: "2026-09-18" },
+      { slug: "sudoku", name: "Sudoku", desc: "Brand-new puzzles with one solution - four difficulty tiers", icon: "🧮", players: "Solo", added: "2026-09-21" },
+      { slug: "sliding-puzzle", name: "Sliding Puzzle", desc: "8, 15 and 24 puzzles - every shuffle is solvable", icon: "🔢", players: "Solo", added: "2026-09-21" },
+      { slug: "mastermind", name: "Mastermind", desc: "Break the hidden colour code with black and white pegs", icon: "🔐", players: "Solo", added: "2026-09-21" },
+      { slug: "tower-of-hanoi", name: "Tower of Hanoi", desc: "Move the stack in 2^n-1 moves - recursion you can touch", icon: "🗼", players: "Solo", added: "2026-09-21" },
+      { slug: "nonogram", name: "Nonogram", desc: "Reveal a hidden picture from run-length clues - 11 hand-drawn puzzles", icon: "🖼️", players: "Solo", added: "2026-09-21" },
     ],
   },
   {
@@ -152,28 +169,23 @@ export const getPlayGame = (slug: string | undefined) =>
 
 /** counts per mode for hub stats */
 export function playModeCounts() {
-  let multiplayer = 2;
+  let multiplayer = 0;
   let vsAi = 0;
   let solo = 0;
   for (const g of ALL_PLAY_GAMES) {
-    if (g.players === "2P" || g.players === "2P + AI") multiplayer++;
+    if (g.players === "2P + AI") {
+      multiplayer++;
+      vsAi++;
+    } else if (g.players === "Solo + 2P") {
+      multiplayer++;
+      solo++;
+    } else if (g.players === "2P") {
+      multiplayer++;
+    } else {
+      solo++;
+    }
   }
-  for (const p of PACKS) {
-    if (p.kind === "wouldyourather") multiplayer++;
-    else solo++;
-  }
-  vsAi = 4; // tic-tac-toe, connect-four, checkers, reversi AIs
   return { multiplayer, vsAi, solo };
-}
-
-export type { Pack, PackCard, PackGroup };
-export { PACKS, packCards, packLevel };
-
-/** hub stats — pack breakdown for the /play hero counts */
-export function packKindCounts() {
-  const counts: Record<string, number> = {};
-  for (const p of PACKS) counts[p.kind] = (counts[p.kind] || 0) + 1;
-  return counts;
 }
 
 /* ── daily pick + surprise me ──────────────────────────────────────── */
@@ -188,15 +200,9 @@ export function dailyPick<T>(list: readonly T[], now = new Date()): T {
   return list[dayNumber(now) % list.length]!;
 }
 
-/** today's featured pack (rotates daily, stable all day) */
-export function dailyPack(): Pack {
-  return dailyPick(PACKS);
-}
-
-/** 🎲 Surprise me — weighted toward static games but includes packs */
+/** 🎲 Surprise me — any game in the catalogue */
 export function randomGameSlug(): string {
-  const pool = [...ALL_PLAY_GAMES.map((g) => g.slug), ...PACKS.map((p) => p.slug)];
-  return pool[Math.floor(Math.random() * pool.length)]!;
+  return dailyPick(ALL_PLAY_GAMES).slug;
 }
 
 /* ── field trip: the useless-web, curated + explained ───────────────── */
@@ -251,6 +257,13 @@ export interface GameMeta {
 }
 
 const GAME_META: Record<string, GameMeta> = {
+  // Sports
+  "table-tennis": { minutes: 4, level: "Medium" },
+  "air-hockey": { minutes: 4, level: "Medium" },
+  "penalty-shootout": { minutes: 4, level: "Easy" },
+  darts: { minutes: 7, level: "Medium" },
+  basketball: { minutes: 2, level: "Easy" },
+  bowling: { minutes: 10, level: "Medium" },
   // Multiplayer
   cricket: { minutes: 3, level: "Medium" },
   "tic-tac-toe": { minutes: 1, level: "Easy" },
@@ -267,6 +280,13 @@ const GAME_META: Record<string, GameMeta> = {
   "go-fish": { minutes: 5, level: "Easy" },
   "memory-match": { minutes: 3, level: "Easy" },
   "higher-lower": { minutes: 2, level: "Easy" },
+  // Brain boosters
+  sudoku: { minutes: 9, level: "Hard" },
+  "sliding-puzzle": { minutes: 6, level: "Medium" },
+  mastermind: { minutes: 6, level: "Hard" },
+  "tower-of-hanoi": { minutes: 5, level: "Medium" },
+  "word-search": { minutes: 6, level: "Easy" },
+  nonogram: { minutes: 7, level: "Hard" },
   // Arcade
   snake: { minutes: 3, level: "Medium" },
   "2048": { minutes: 6, level: "Medium" },

@@ -7,8 +7,7 @@
 
 import { ALL_SLASH_TOOLS } from "./slashkits";
 import { ALL_PLAY_GAMES } from "./slashplay";
-import { PACKS } from "./packs/registry";
-import { KITS } from "./kits/registry";
+import { DECLARATIVE_TOOLS } from "./toolkit/catalog";
 
 export interface RandomPick {
   path: string;
@@ -38,21 +37,12 @@ function buildPool(): RandomPick[] {
       kind: "game",
     });
   }
-  for (const p of PACKS) {
+  for (const t of DECLARATIVE_TOOLS) {
     pool.push({
-      path: `/play/${p.slug}`,
-      name: p.name,
-      desc: p.desc,
-      icon: p.icon,
-      kind: "game",
-    });
-  }
-  for (const k of KITS) {
-    pool.push({
-      path: `/tools/kit/${k.slug}`,
-      name: k.name,
-      desc: k.desc,
-      icon: k.icon,
+      path: `/tools/${t.slug}`,
+      name: t.name,
+      desc: t.desc,
+      icon: t.icon,
       kind: "tool",
     });
   }

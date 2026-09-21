@@ -49,15 +49,15 @@ host on Supabase (Postgres + Auth + Storage).
 - `/search` · `/find` · `/explore` (+ `/$category` / `/$category/$subcategory`)
 - `/c/$slug` command detail · `/collections` · `/trending` · `/favorites` · `/recent`
 - `/discover` feed (+ `/discover/reels`) — opens with **Start Here**
-- `/tools` SlashKits index · `/tools/<slug>` 156 interactive tools (each its own route file)
-  · `/tools/kit/$slug` — 1,095 instant kits from `src/lib/kits/registry.ts` (converters,
-  elements, states, currencies, study tables, cheat sheets, web directory; renderer in
-  `src/components/tools/KitView.tsx`)
-- `/play` SlashPlay index · `/play/<slug>` 57 hand-built games (each its own route file)
-  + the same dynamic route serves 504 generated packs from `src/lib/packs/registry.ts`
-  (quiz/scramble/hangman/memory/emoji/wyr/sliding; renderer in
-  `src/components/games/PackPlayer.tsx`; seed data in `src/lib/packs/quiz-data.ts` +
-  `quiz-facts.ts`)
+- `/tools` SlashKits index · `/tools/<slug>` 159 authored interactive tools (each its own
+  route file) · the same URL pattern also serves the 130 declarative toolkit tools from
+  `src/lib/toolkit/catalog.ts` (ops in `src/lib/toolkit/ops.ts`, UI in
+  `src/components/tools/ToolRunner.tsx`, dynamic route `src/routes/tools.$slug.tsx`).
+  Authored routes always win over the dynamic one.
+- `/play` SlashPlay index · `/play/<slug>` 71 hand-built games (each its own route file),
+  including the Sports wing (table tennis, air hockey, penalty shootout, darts, basketball,
+  bowling) and brain boosters (sudoku — engine in `src/lib/games/sudoku.ts`, sliding puzzle,
+  mastermind, tower of hanoi, word search)
 - `/learn` Slash Courses (paths + filters) · `/learn/$courseId` · `/learn/$courseId/$lessonId`
 - `/hub` + `/hub/<audience>` · `/live` · `/glossary` · `/roadmaps` · `/generators`
 - `/quiz` · `/journal` · `/graph` · `/workflow` · `/ai-tools` · `/assistant`
@@ -114,7 +114,7 @@ existing one-shot behaviour working — the interactive part is additive.
 - SlashKits: `src/lib/slashkits.ts` (`TOOL_SECTIONS`, `similarTools`, `newTools`,
   `toolOfTheDay`). `added` dates drive the 🆕 badge — no duplicates allowed.
 - SlashPlay: `src/lib/slashplay.ts` (`PLAY_SECTIONS`, `GAME_META`/`gameMeta`,
-  `SCORING_GAMES`, `NEW_GAME_SLUGS`, `newGames`, `gameSection`). 57 games + 504 packs.
+  `SCORING_GAMES`, `NEW_GAME_SLUGS`, `newGames`, `gameSection`). 70 games, all hand-built.
 - Slash Courses: `src/lib/courses.ts` + `src/lib/learning-paths.ts`
   (`LEARNING_PATHS`, `pathSummary`, `pathCourseIds`). `pathsCoverAllCourses()`
   is a cheap integrity check — every course must appear in a path.

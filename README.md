@@ -44,10 +44,10 @@ A searchable library of copy-ready slash commands for writing, research, coding,
 
 | | |
 | --- | --- |
-| **Commands** | 10,074 curated, de-duplicated slash commands |
-| **Categories** | 45 categories across 439 subcategories |
-| **SlashKits** | 1,250+ free tools — 156 interactive browser tools plus 1,095 instant kits (converters, periodic table, study tables, cheat sheets, curated web directory) |
-| **SlashPlay** | 561 browser games — 57 hand-built classics plus 504 quiz, word, memory and puzzle packs |
+| **Commands** | 5,704 curated, de-duplicated slash commands |
+| **Categories** | 45 categories across 381 subcategories |
+| **SlashKits** | 289 free tools — 159 interactive browser tools plus 130 declarative toolkit utilities (text, data, encoding, colour, dates, SEO, generators) served from `src/lib/toolkit` |
+| **SlashPlay** | 71 browser games — 57 hand-built classics plus a Sports wing (table tennis, air hockey, penalty shootout, darts, basketball, bowling) and new brain boosters (sudoku, nonogram, sliding puzzle, mastermind, tower of hanoi, word search, word scramble) |
 | **Slash Courses** | 5 courses with real lessons and graded module tests, plus 4 learning paths |
 | **Search** | Instant fuzzy search with typo tolerance and highlighted matches |
 | **Offline** | Static catalog + PWA shell designed for offline use |
@@ -80,7 +80,7 @@ Every command carries a plain-language description, a "how to use" note, a worke
 
 - **Discovery over recall** — you don't have to remember prompt patterns; you search for them.
 - **Copy-ready, not abstract** — each entry ships with a filled-in example you can edit in seconds.
-- **Structured by design** — category → subcategory → command keeps 10,074 entries navigable.
+- **Structured by design** — category → subcategory → command keeps 5,704 entries navigable.
 - **More than commands** — free browser tools, games and courses, all on the same no-account basis.
 - **Fast and quiet** — a dark-first, scan-friendly interface with restrained motion and no clutter.
 - **Yours, locally** — favorites, recents, theme, accent and density stay on your device.
@@ -164,10 +164,10 @@ The taxonomy below is generated from the catalog itself.
 | Audio & Speech | 60 | 10 |
 | Automation & Workflows | 60 | 10 |
 | Backend & APIs | 221 | 5 |
-| Business & Management | 760 | 20 |
+| Business & Management | 60 | 10 |
 | Career | 63 | 10 |
-| Coding & Development | 768 | 19 |
-| Content & Social Media | 1,082 | 26 |
+| Coding & Development | 68 | 11 |
+| Content & Social Media | 212 | 14 |
 | Customer Support | 216 | 3 |
 | Data & Analytics | 122 | 22 |
 | Databases & SQL | 186 | 3 |
@@ -180,10 +180,10 @@ The taxonomy below is generated from the catalog itself.
 | Gaming & Esports | 216 | 13 |
 | General AI | 61 | 10 |
 | Health & Wellbeing | 42 | 6 |
-| Home & Everyday | 740 | 15 |
+| Home & Everyday | 40 | 5 |
 | HR & Hiring | 216 | 3 |
-| Image & Vision | 773 | 23 |
-| Learning & Education | 764 | 18 |
+| Image & Vision | 73 | 13 |
+| Learning & Education | 64 | 10 |
 | Legal & Contracts | 216 | 3 |
 | Machine Learning | 180 | 3 |
 | Marketing & SEO | 63 | 10 |
@@ -204,9 +204,9 @@ The taxonomy below is generated from the catalog itself.
 | Video | 67 | 10 |
 | Web & Frontend | 222 | 7 |
 | Writing & Communication | 63 | 10 |
-| **Total** | **10,074** | **439** |
+| **Total** | **5,704** | **381** |
 
-> The live total is the source of truth (10,074 commands). Per-category rows above
+> The live total is the source of truth (5,704 commands). Per-category rows above
 > are refreshed in batches, so they can lag a release behind. The September 2026
 > expansion added platform-tuned variants (ChatGPT, Gemini, Claude, Perplexity,
 > Copilot, DeepSeek) across social media, image work, vibe coding, students,

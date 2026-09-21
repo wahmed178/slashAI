@@ -83,22 +83,19 @@ async function main() {
   }
   urls.push(url("/discover/reels", { priority: "0.5" }));
 
+  /* ── declarative toolkit tools (served by the dynamic /tools/$slug route) ──
+     Only the toolkit catalogue is read here: authored tools have their own
+     route files and are matched by the catalogue in src/lib/slashkits.ts. */
+  const catalogSrc = readFileSync("src/lib/toolkit/catalog.ts", "utf8");
+  for (const m of catalogSrc.matchAll(/\{\s*slug: "([a-z0-9-]+)", name:/g)) {
+    urls.push(url(`/tools/${m[1]}`, { changefreq: "monthly", priority: "0.6" }));
+  }
+
   /* ── games (static play routes) ── */
   const gameRoutes = execSync("ls src/routes | grep '^play.' | grep -v index", { encoding: "utf8" })
     .trim().split("\n")
     .map((f) => f.replace(/^play\./, "/play/").replace(/\.tsx$/, ""));
   for (const g of gameRoutes) urls.push(url(g, { changefreq: "monthly", priority: "0.6" }));
-
-  /* ── featured game packs (dynamic /play/$slug) — hub groups only, not all 500 */
-  const packsSrc = readFileSync("src/lib/packs/registry.ts", "utf8");
-  for (const m of packsSrc.matchAll(/slug: "((?:capitals-asia|capitals-europe|capitals-africa|capitals-americas|capitals-oceania|sliding-daily|sliding-numbers|sliding-emoji|word-scramble-animals|emoji-movies|would-you-rather-classic|memory-farm|mega-mix-set-1|india-gk-warmup|cricket-quiz-warmup))"/g)) {
-    urls.push(url(`/play/${m[1]}`, { changefreq: "weekly", priority: "0.6" }));
-  }
-
-  /* ── instant kit group hubs + a sample of kit pages (dynamic /tools/kit/$slug) */
-  for (const k of ["web-image", "web-text", "web-productivity", "web-developer", "web-generator", "web-fun", "table-7", "table-12", "squares", "cubes", "primes", "powers-2", "element-au", "element-fe", "element-o", "element-c", "state-rajasthan", "state-kerala", "currency-inr", "currency-usd", "sheet-git", "sheet-excel", "sheet-css-flex", "temperature-1-to-2", "temperature-1-to-3", "length-1-to-2", "weight-1-to-5", "data-1-to-4"]) {
-    urls.push(url(`/tools/kit/${k}`, { changefreq: "monthly", priority: "0.5" }));
-  }
 
   /* ── slash apps that actually render at /slash/<slug> ──
      Apps with a `link:` field redirect elsewhere (loader throws notFound),
