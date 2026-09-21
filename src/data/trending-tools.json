@@ -1,67 +1,67 @@
 {
-  "updated": "2026-09-18",
+  "updated": "2026-09-21",
   "week": "2026-W38",
   "items": [
     {
-      "name": "AtlasAlign",
-      "url": "https://www.producthunt.com/products/atlasalign",
-      "description": "Align brain microscopy to an atlas, review and export ROIs Discussion | Link",
+      "name": "Turfs",
+      "url": "https://www.producthunt.com/products/turfs-fences-on-the-mac-desktop",
+      "description": "Keep content across your Mac organized in defined areas Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Yoetz",
-      "url": "https://www.producthunt.com/products/yoetz",
-      "description": "Check to see if AI really completed a task or if it had gaps Discussion | Link",
+      "name": "Cronhq",
+      "url": "https://www.producthunt.com/products/cronhq",
+      "description": "Cron jobs that actually run Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Sutura",
-      "url": "https://www.producthunt.com/products/sutura",
-      "description": "Verified self-healing CI that proves the fix Discussion | Link",
+      "name": "Plume",
+      "url": "https://www.producthunt.com/products/plume-11",
+      "description": "Import your old CV, get a polished ATS-ready one in minutes Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Dictation API by AssemblyAI",
-      "url": "https://www.producthunt.com/products/assemblyai",
-      "description": "Add fast, accurate dictation with a single line API call Discussion | Link",
+      "name": "Simha Digital",
+      "url": "https://www.producthunt.com/products/simha-digital",
+      "description": "SEO workspace that tells you what to fix with a plan Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "ChinaMarketing.AI GEO Workspace",
-      "url": "https://www.producthunt.com/products/chinamarketing-ai-geo-workspace",
-      "description": "From Chinese AI evidence to implementation with Astra Discussion | Link",
+      "name": "OmniDICOM",
+      "url": "https://www.producthunt.com/products/omnidicom",
+      "description": "DICOM viewing and metadata editing on Mac and Windows Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Poke Battle Announcer",
-      "url": "https://www.producthunt.com/products/poke-battle-announcer",
-      "description": "Give your Pokémon Champions battles a live announcer Discussion | Link",
+      "name": "SecAIQ Watch",
+      "url": "https://www.producthunt.com/products/secaiq-watch",
+      "description": "What are your AI tools really doing on your machine? Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Simple Commenter AI",
-      "url": "https://www.producthunt.com/products/simple-commenter-for-freelance-web-devs",
-      "description": "Get feedback on sites and have GPT-6 Astra prep the fix Discussion | Link",
+      "name": "Osmotic",
+      "url": "https://www.producthunt.com/products/osmotic-2",
+      "description": "Download your DJI Osmo footage to your Mac over Wi-Fi Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Second Eyes",
-      "url": "https://www.producthunt.com/products/second-eyes",
-      "description": "Automatically shortlist photos for faster publishing Discussion | Link",
+      "name": "Supacut",
+      "url": "https://www.producthunt.com/products/supacut",
+      "description": "Quickly turn interview footage into a rough cut Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
@@ -69,7 +69,7 @@
     {
       "name": "Pizza Bot – An inbox for AI agents that work in the backgrou",
       "url": "https://github.com/pizza-bot-app/pizza-bot",
-      "description": "59 points on Hacker News",
+      "description": "61 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
@@ -77,7 +77,23 @@
     {
       "name": "Share your AI Setup, Learn from others",
       "url": "https://mysetup.ai/",
-      "description": "215 points on Hacker News",
+      "description": "248 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Nari Qwen3-TTS and Qwen3-ASR – High accuracy, low latency an",
+      "url": "https://narilabs.com/blog/nari-labs-leads-coval-voice-ai-benchmarks/",
+      "description": "91 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Scry, programmable internet search w/ congestion pricing",
+      "url": "https://scry.io/",
+      "description": "60 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
