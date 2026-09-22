@@ -213,8 +213,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           rel: "stylesheet",
           href: appCss,
         },
-        { rel: "icon", type: "image/png", sizes: "64x64", href: "/favicon.png" },
-        { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32.png" },
+        // Favicons. Google's crawler requires a square icon that is a multiple
+        // of 48px, and it also requests /favicon.ico directly - the previous
+        // 64x64 + 32x32 pair broke both rules, which is why search results
+        // showed a blank icon. Order matters: the .ico first, then the sizes.
+        { rel: "icon", href: "/favicon.ico", sizes: "any" },
+        { rel: "icon", type: "image/png", sizes: "48x48", href: "/favicon-48.png" },
+        { rel: "icon", type: "image/png", sizes: "96x96", href: "/favicon-96.png" },
+        { rel: "icon", type: "image/png", sizes: "192x192", href: "/icons/icon-192.png" },
         { rel: "apple-touch-icon", sizes: "180x180", href: "/icons/apple-touch-icon.png" },
         { rel: "manifest", href: "/manifest.webmanifest" },
         // Preconnect + async font CSS: the stylesheet itself stays

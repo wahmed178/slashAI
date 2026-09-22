@@ -426,8 +426,10 @@ async function fetchCategories(): Promise<{ id: number; name: string }[]> {
 export const Route = createFileRoute("/quiz")({
   head: () => ({
     meta: [
-      { title: "Daily Quiz - SlashAI" },
-      { name: "description", content: "Test your knowledge with daily trivia quizzes across 24 categories. Fresh questions every day." },
+      { title: "Daily Quiz - Fresh Trivia Every Day | SlashAI" },
+      // No category count: the list is fetched from the Open Trivia DB at
+      // runtime, so a hardcoded "24 categories" was not a real number.
+      { name: "description", content: "Test your knowledge with a fresh trivia quiz every day across a wide range of categories, with streaks and a timer." },
     ],
   }),
   component: QuizPage,

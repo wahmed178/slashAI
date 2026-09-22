@@ -1,6 +1,6 @@
 # SlashAI — Project Memory
 
-_Last updated: 20 September 2026 · v2.32.0_
+_Last updated: 21 September 2026 · v2.33.1_
 
 ## What This Is
 SlashAI (**https://slashai.in**) is a free, offline-first, no-account AI command
@@ -29,12 +29,38 @@ rest of the app stays exactly as it was.
   - **Removed in v2.33:** the 1,095 generated converter kits (`src/lib/kits`) and 504
     auto-chunked game packs (`src/lib/packs`) were deleted as low-value filler, along with the
     generated command platform-variant padding (10,074 → 5,704 commands)
-- **300+ curated free resources** on `/discover` + hubs
-- **5 full courses with graded tests** + 4 learning paths on `/learn`
-- 100+ free APIs documented, 560+ glossary terms, 20 founder roadmaps,
-  16 curated collections, 24-category daily quiz, 12-hub network
+- **171 curated free resources** on `/discover` + hubs (each with its own `/r/<id>` page)
+- **6 courses · 30 lessons · 46 graded test questions** + 4 learning paths on `/learn`
+- 117 AI tools documented on `/ai-tools`, 138 glossary terms, 20 founder roadmaps,
+  150 build ideas, 16 curated collections, daily quiz, 12-hub network
 - Android app via Capacitor (`in.slashai.app`)
 - **SlashAI Stores** — free multi-tenant storefronts (`/stores`, Supabase)
+
+## SEO & Icons (read before touching search metadata)
+- **Numbers are generated, never typed.** `bun run seo:counts` reads the catalogues and
+  writes `src/lib/seo-counts.ts` (plain literals, so the root SEO layer can quote real
+  totals without pulling a catalogue into the entry bundle). `bun run seo:generate` runs
+  that plus the sitemap and the PWA manifest description, and is wired as `prebuild`.
+  Titles, snippets, the OG card, `/changelog` copy and the terms page all read from it.
+- **Anything numeric in a `head()` is a claim.** Several routes (`/prompts`, `/about`,
+  `/quiz`) define their own `head()`, and a child route's meta always beats the root
+  `seo.ts` values — so stale strings hide there even when `seo.ts` looks clean.
+- **Favicon rules Google actually enforces:** the icon must be square AND a multiple of
+  48px, and `/favicon.ico` must exist. The site previously shipped 64px + 32px and no
+  `.ico`, which is why search results showed a blank icon. Regenerate with
+  `bun scripts/generate-icons.mjs` (writes `favicon.ico` 16/32/48, `favicon-48.png`,
+  `favicon-96.png`). Do not link a favicon that is not a multiple of 48.
+- **Sitemap** (`bun scripts/generate-sitemap.mjs` → `public/sitemap.xml`): hubs,
+  categories, collections, every authored tool route, every toolkit tool and every game
+  route. `/c/<slug>` command pages are deliberately excluded (5.7k URLs would dilute
+  crawl budget); categories cover them.
+- **No SearchAction in the JSON-LD.** The only search route, `/search`, is disallowed in
+  `robots.txt` and carries an `X-Robots-Tag: noindex` header from `vercel.json`, so a
+  sitelinks-searchbox target there would be uncrawlable markup. Add it back only if
+  `/search` becomes crawlable.
+- `vercel.json` is off limits (per AGENTS.md), so its cache-header regex does not list
+  `favicon.ico` / `favicon-48.png` / `favicon-96.png`; they still serve fine, just with
+  default caching.
 
 ## Positioning & Voice
 - Free forever. No account. No credit card. No upsell, no premium tier.

@@ -1,6 +1,17 @@
 {
-  "version": "2.31.0",
+  "version": "2.33.1",
   "entries": [
+    {
+      "version": "2.33.1",
+      "date": "2026-09-21",
+      "changes": [
+        "Fixed the blank icon in Google search results — the site shipped a 64px and a 32px favicon and no /favicon.ico at all, and Google needs a square icon that is a multiple of 48px. There is now a real 16/32/48 favicon.ico plus 48px and 96px PNGs, linked on every page",
+        "Every tool page is in the sitemap now: the 160 hand-built tools (BMI, EMI, cron, colour picker and the rest) were missing from it entirely — sitemap.xml went from 518 to 677 URLs",
+        "Titles and search snippets quote the real catalogue totals (5,704 commands, 289 tools, 71 games, 138 glossary terms) instead of stale guesses like '5,000+', '150+' and '560+', generated from the data so they cannot drift again",
+        "Removed an invalid search-box block from the structured data that pointed Google at a page the site tells it not to crawl",
+        "The share card reads those same live counts, and the sitemap regenerates on every build"
+      ]
+    },
     {
       "version": "2.31.0",
       "date": "2026-09-20",

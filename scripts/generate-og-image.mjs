@@ -3,10 +3,17 @@
  * devDependency via the icon pipeline). SlashAI lightning mark, product name
  * and tagline on the brand's dark-navy + teal palette.
  *
+ * The stat chips read the real catalogue totals from the generated
+ * src/lib/seo-counts.ts, so this card can never advertise numbers the site
+ * does not have (it used to say "5,000+ / 150+ / 50+" long after those
+ * stopped being true).
+ *
  * Run: bun scripts/generate-og-image.mjs
  */
 import sharp from "sharp";
 import { mkdir } from "node:fs/promises";
+
+import { SEO_COUNTS } from "../src/lib/seo-counts.ts";
 
 const W = 1200;
 const H = 630;
@@ -45,16 +52,16 @@ const svg = `
   <!-- stat chips -->
   <g font-family="Verdana, DejaVu Sans, sans-serif" font-size="26" font-weight="bold">
     <rect x="410" y="408" rx="24" width="218" height="52" fill="#161b22" stroke="#30363d"/>
-    <text x="436" y="443" fill="#2dd4bf">5,000+</text>
-    <text x="540" y="443" fill="#8b949e" font-weight="normal" font-size="22">commands</text>
+    <text x="436" y="443" fill="#2dd4bf">${SEO_COUNTS.commands.toLocaleString("en-US")}</text>
+    <text x="556" y="443" fill="#8b949e" font-weight="normal" font-size="22">commands</text>
 
     <rect x="648" y="408" rx="24" width="218" height="52" fill="#161b22" stroke="#30363d"/>
-    <text x="674" y="443" fill="#2dd4bf">150+</text>
-    <text x="756" y="443" fill="#8b949e" font-weight="normal" font-size="22">tools</text>
+    <text x="674" y="443" fill="#2dd4bf">${SEO_COUNTS.tools}</text>
+    <text x="760" y="443" fill="#8b949e" font-weight="normal" font-size="22">tools</text>
 
     <rect x="886" y="408" rx="24" width="212" height="52" fill="#161b22" stroke="#30363d"/>
-    <text x="912" y="443" fill="#2dd4bf">50+</text>
-    <text x="988" y="443" fill="#8b949e" font-weight="normal" font-size="22">games</text>
+    <text x="912" y="443" fill="#2dd4bf">${SEO_COUNTS.games}</text>
+    <text x="972" y="443" fill="#8b949e" font-weight="normal" font-size="22">games</text>
   </g>
 
   <text x="410" y="530" font-family="Verdana, DejaVu Sans, sans-serif" font-size="24" fill="#6e7681">slashai.in  -  free forever, no account</text>

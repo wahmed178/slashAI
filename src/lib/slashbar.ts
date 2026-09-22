@@ -12,6 +12,7 @@
  */
 
 import { CAT_PALETTE, type CatColor } from "./category-colors";
+import { SEO_COUNTS } from "./seo-counts";
 import {
   MEGA_FACTS, MEGA_MYTHS, MEGA_TEASERS, MEGA_HACKS, MEGA_BRAKES, MEGA_STACK,
   MEGA_SAFE_SALE, MEGA_FIRST_VISIT, MEGA_ROLES, MEGA_HOW_TO, MEGA_PROMPTS,
@@ -102,7 +103,7 @@ export const SLASH_APPS: SlashApp[] = [
     slug: "kits",
     name: "SlashKits",
     emoji: "🧰",
-    desc: "150+ free browser tools - compress, convert, calculate, focus.",
+    desc: `${SEO_COUNTS.tools} free browser tools - text, JSON, encoding, colour, calculate, focus.`,
     tint: T.teal,
     link: "/tools",
     widgets: [],

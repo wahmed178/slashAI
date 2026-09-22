@@ -46,6 +46,7 @@ import {
   topPersonalCommands,
 } from "@/lib/intelligence";
 import trendingToolsData from "@/../src/data/trending-tools.json";
+import { SEO_COUNTS } from "@/lib/seo-counts";
 import { ALL_SLASH_TOOLS, SLASH_TOOL_COUNT, toolOfTheDay as heroToolOfTheDay } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { DECLARATIVE_TOOL_COUNT } from "@/lib/toolkit/catalog";
@@ -897,11 +898,11 @@ function HomePage() {
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
           {[
             { to: "/explore", emoji: "⌨️", label: "AI Commands", desc: `${VERIFIED_TOTAL.toLocaleString()} copy-ready prompts` },
-            { to: "/ai-tools", emoji: "🤖", label: "AI Tools", desc: "100+ curated AI directory" },
+            { to: "/ai-tools", emoji: "🤖", label: "AI Tools", desc: `${SEO_COUNTS.aiTools} curated AI tools` },
             { to: "/workflow", emoji: "🔗", label: "AI Workflows", desc: "Chain commands into one prompt" },
             { to: "/web-search", emoji: "🌐", label: "Search Engine", desc: "Free meta search, zero tracking" },
             { to: "/live", emoji: "📡", label: "Live Dashboard", desc: "Markets, weather, prayer, space" },
-            { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "24 categories, streaks" },
+            { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "Fresh trivia daily, streaks" },
             { to: "/roadmaps", emoji: "🗺️", label: "Roadmaps", desc: "Founder step-by-step guides" },
             { to: "/learn", emoji: "🎓", label: "Courses", desc: "Free lessons with graded tests" },
             { to: "/stores", emoji: "🏪", label: "SlashAI Stores", desc: "Free storefronts for small businesses" },
