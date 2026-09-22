@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Download, X } from "lucide-react";
+import { SEO_COUNTS } from "@/lib/seo-counts";
 
 /**
  * Progressive install prompt. Appears after the 3rd visit (per device),
@@ -83,7 +84,7 @@ export function InstallBanner() {
     <div className="flex items-center gap-3 border-b border-[rgba(210,153,34,0.25)] bg-[rgba(210,153,34,0.08)] px-4 py-2.5 md:px-8">
       <Download className="size-4 shrink-0 text-[#d29922]" aria-hidden />
       <p className="min-w-0 flex-1 text-[12.5px] text-foreground/90">
-        Add SlashAI to your home screen for full offline access - all 5,635 commands stay available with no connection.
+        Add SlashAI to your home screen for full offline access - all {SEO_COUNTS.commands.toLocaleString("en-US")} commands stay available with no connection.
       </p>
       <button
         onClick={install}

@@ -7,8 +7,11 @@
  *   maskable/monochrome variants handled per output
  *
  * Generates:
+ *   public/favicon.ico                16/32/48 multi-size (Google + browsers)
+ *   public/favicon-48.png             48×48  (Google's minimum favicon size)
+ *   public/favicon-96.png             96×96  (2x, still a multiple of 48)
  *   public/favicon.png                64×64
- *   public/favicon.ico-style 32px     (public/favicon-32.png, linked in __root)
+ *   public/favicon-32.png             32×32
  *   public/icons/icon-192.png         PWA any
  *   public/icons/icon-512.png         PWA any
  *   public/icons/icon-maskable-512.png  (mark at 66% safe zone)
@@ -20,7 +23,7 @@
  */
 
 import sharp from "sharp";
-import { mkdir } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 
 const BG = "#12161C";
 const GRAD_A = "#58a6ff";
@@ -90,7 +93,7 @@ function roundIcon() {
 </svg>`;
 }
 
-async function render(svg, size, out, opts = {}) {
+async function render(svg, size, out) {
   await sharp(Buffer.from(svg), { density: 384 })
     .resize(size, size, { fit: "cover" })
     .png({ compressionLevel: 9 })
@@ -98,10 +101,58 @@ async function render(svg, size, out, opts = {}) {
   console.log("✓", out, `${size}×${size}`);
 }
 
+/** Same render, kept in memory (for the multi-size .ico bundle). */
+function pngBuffer(svg, size) {
+  return sharp(Buffer.from(svg), { density: 384 })
+    .resize(size, size, { fit: "cover" })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+}
+
+/**
+ * Writes a real multi-size .ico.
+ *
+ * Google's favicon crawler and virtually every browser request /favicon.ico
+ * directly, and the site had no such file at all — a blank icon in search
+ * results. Entries are PNG-compressed (fine for every current browser), and
+ * the ICO format itself is what makes the `/favicon.ico` request a 200.
+ *
+ * Google also requires the favicon to be square and a multiple of 48px, which
+ * is why 48 (and 96) exist — the old 64px/32px pair was silently ignored.
+ */
+async function writeIco(svg, sizes, out) {
+  const images = await Promise.all(sizes.map((s) => pngBuffer(svg, s)));
+  const header = Buffer.alloc(6 + images.length * 16);
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // type: 1 = icon
+  header.writeUInt16LE(images.length, 4); // image count
+
+  let offset = header.length;
+  images.forEach((buf, i) => {
+    const e = 6 + i * 16;
+    const size = sizes[i];
+    header.writeUInt8(size >= 256 ? 0 : size, e); // width (0 = 256)
+    header.writeUInt8(size >= 256 ? 0 : size, e + 1); // height
+    header.writeUInt8(0, e + 2); // palette size
+    header.writeUInt8(0, e + 3); // reserved
+    header.writeUInt16LE(1, e + 4); // colour planes
+    header.writeUInt16LE(32, e + 6); // bits per pixel
+    header.writeUInt32LE(buf.length, e + 8); // image data size
+    header.writeUInt32LE(offset, e + 12); // image data offset
+    offset += buf.length;
+  });
+
+  await writeFile(out, Buffer.concat([header, ...images]));
+  console.log("✓", out, `${sizes.join("/")}px`);
+}
+
 async function main() {
   await mkdir("public/icons", { recursive: true });
 
   /* ── Web / PWA ── */
+  await writeIco(squareIcon(), [16, 32, 48], "public/favicon.ico");
+  await render(squareIcon(), 48, "public/favicon-48.png");
+  await render(squareIcon(), 96, "public/favicon-96.png");
   await render(squareIcon(), 64, "public/favicon.png");
   await render(squareIcon(), 32, "public/favicon-32.png");
   await render(squareIcon(), 180, "public/icons/apple-touch-icon.png");

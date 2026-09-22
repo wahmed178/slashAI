@@ -13,9 +13,18 @@
  * are derived from the URL slug with a small acronym-aware humanizer.
  */
 
+import { SEO_COUNTS } from "./seo-counts";
+
 export const SITE_URL = "https://slashai.in";
 export const SITE_NAME = "SlashAI";
 export const OG_IMAGE = "/og-image.png";
+
+/**
+ * 5704 -> "5,704". Titles and snippets carry the real catalogue totals
+ * (generated from the data, never rounded up) - this project's rule is
+ * "real counts only", and a search snippet is the easiest place to lie.
+ */
+const num = (n: number) => n.toLocaleString("en-US");
 
 export interface SeoPage {
   title: string;
@@ -54,14 +63,13 @@ export function canonicalUrl(pathname: string): string {
 
 const STATIC_PAGES: Record<string, SeoPage> = {
   "/": {
-    title: "SlashAI - 5,000+ Free AI Slash Commands, Tools & Games",
-    description:
-      "Search and copy 5,000+ free AI slash commands, run 150+ browser tools in SlashKits, play 50 browser games and browse 300+ curated free resources. Free forever, no account.",
+    title: `SlashAI - ${num(SEO_COUNTS.commands)} Free AI Slash Commands, Tools & Games`,
+    description: `Search and copy ${num(SEO_COUNTS.commands)} free AI slash commands, run ${num(SEO_COUNTS.tools)} browser tools, play ${SEO_COUNTS.games} games and browse curated free resources. Free forever, no account.`,
   },
   "/explore": {
     title: "Explore AI Commands by Category - SlashAI",
     description:
-      "Browse thousands of copy-ready AI slash commands across 25 categories and 379 subcategories - writing, coding, marketing, data, design and more.",
+      `Browse thousands of copy-ready AI slash commands across ${SEO_COUNTS.categories} categories and ${SEO_COUNTS.subcategories} subcategories - writing, coding, marketing, data, design and more.`,
   },
   "/discover": {
     title: "Discover Free Tools, APIs & Learning Resources - SlashAI",
@@ -74,14 +82,12 @@ const STATIC_PAGES: Record<string, SeoPage> = {
       "A full-screen, swipeable feed of copy-ready AI prompts. Swipe up, find a prompt, tap to copy - no account needed.",
   },
   "/tools": {
-    title: "SlashKits - 150+ Free Browser Tools | SlashAI",
-    description:
-      "Run 150+ free browser tools without uploading anything: calculators, converters, generators, PDF tools, timers, Islamic tools and more. Free forever, no account.",
+    title: `SlashKits - ${num(SEO_COUNTS.tools)} Free Browser Tools | SlashAI`,
+    description: `Run ${num(SEO_COUNTS.tools)} free browser tools with nothing uploaded - text and case utilities, JSON, CSV, regex, hashing, encoding, colour, CSS and date maths. No account, ever.`,
   },
   "/play": {
-    title: "SlashPlay - 50 Free Browser Games | SlashAI",
-    description:
-      "Play 50 free browser games - tic tac toe, connect four, battleship, blackjack, snake, 2048 and more. Solo, vs AI or pass-and-play. No download, works offline.",
+    title: `SlashPlay - ${SEO_COUNTS.games} Free Browser Games | SlashAI`,
+    description: `Play ${SEO_COUNTS.games} free browser games - Sudoku, Nonogram, table tennis, darts, bowling, cricket, checkers, word search, 2048 and more. Solo, vs AI or pass-and-play.`,
   },
   "/slash": {
     title: "SlashBar - Every Slash App in One Rail | SlashAI",
@@ -96,7 +102,7 @@ const STATIC_PAGES: Record<string, SeoPage> = {
   "/collections": {
     title: "Command Collections - SlashAI",
     description:
-      "16 curated AI command collections - for students, creators, professionals and entrepreneurs, plus work, study, fitness, travel and more.",
+      `${SEO_COUNTS.collections} curated AI command collections - for students, creators, professionals and entrepreneurs, plus work, study, fitness, travel and more.`,
   },
   "/trending": {
     title: "Trending AI Commands & Tools - SlashAI",
@@ -109,29 +115,29 @@ const STATIC_PAGES: Record<string, SeoPage> = {
       "A free live dashboard: NIFTY & SENSEX, crypto, forex, gold, earthquakes, weather, AQI, prayer times, cricket, NASA APOD and the ISS - in one calm view.",
   },
   "/quiz": {
-    title: "Daily Quiz - 24 Categories, Streaks & Timer | SlashAI",
+    title: "Daily Quiz - Fresh Trivia Every Day | SlashAI",
+    // No category count on purpose: /quiz pulls its category list from the
+    // Open Trivia DB at runtime, so any fixed number here would be invented.
     description:
-      "A fresh trivia quiz every day across 24 categories. Beat the timer, keep your streak, and share your score. Completely free, no account.",
+      "A fresh trivia quiz every day across a wide range of categories. Beat the timer, keep your streak, and share your score. Completely free, no account.",
   },
   "/roadmaps": {
     title: "Founder Roadmaps - Step-by-Step Guides | SlashAI",
     description:
-      "20 step-by-step roadmaps for founders - from idea validation to first customers - with progress tracking. Free, on-device, no account.",
+      `${SEO_COUNTS.roadmaps} step-by-step roadmaps for founders - from idea validation to first customers - with progress tracking. Free, on-device, no account.`,
   },
   "/learn": {
     title: "Free Courses with Real Lessons & Tests | SlashAI",
     description:
-      "Structured free courses inspired by roadmap.sh: real lessons, graded module tests and progress saved on your device. Prompt engineering, how the web works, shipping your first app.",
+      `${SEO_COUNTS.courses} structured free courses with ${SEO_COUNTS.lessons} real lessons and ${SEO_COUNTS.testQuestions} graded test questions. Progress is saved on your device - no account, no tracking.`,
   },
   "/glossary": {
-    title: "AI, SaaS & Startup Glossary - 560+ Terms | SlashAI",
-    description:
-      "Plain-English definitions for 560+ AI, SaaS, startup, design and data terms - searchable and grouped into 8 categories.",
+    title: `AI, SaaS & Startup Glossary - ${SEO_COUNTS.glossaryTerms} Terms | SlashAI`,
+    description: `Plain-English definitions for ${SEO_COUNTS.glossaryTerms} AI, SaaS, startup, design and data terms - searchable and grouped into ${SEO_COUNTS.glossaryCategories} categories.`,
   },
   "/ai-tools": {
-    title: "AI Tools Directory - 100+ Curated Tools | SlashAI",
-    description:
-      "A hand-curated directory of 100+ AI tools across 16 categories, with pricing, free-tier limits and links to matching SlashAI commands.",
+    title: `AI Tools Directory - ${SEO_COUNTS.aiTools} Curated Tools | SlashAI`,
+    description: `A hand-curated directory of ${SEO_COUNTS.aiTools} AI tools across ${SEO_COUNTS.aiToolCategories} categories, with pricing, free-tier limits and links to matching SlashAI commands.`,
   },
   "/workflow": {
     title: "AI Workflows - Chain Commands Into One Prompt | SlashAI",
@@ -165,9 +171,8 @@ const STATIC_PAGES: Record<string, SeoPage> = {
       "Find where to legally watch regional and world cinema for free - public-domain films, free-with-ads platforms and more.",
   },
   "/build-ideas": {
-    title: "Build Ideas Library - 150+ Researched Product Ideas | SlashAI",
-    description:
-      "150+ researched product ideas with the problem, target users, MVP scope, tech stack, pricing and a first-10-customers plan. Validate your own idea too.",
+    title: `Build Ideas Library - ${SEO_COUNTS.buildIdeas} Researched Product Ideas | SlashAI`,
+    description: `${SEO_COUNTS.buildIdeas} researched product ideas with the problem, target users, MVP scope, tech stack, pricing and a first-10-customers plan. Validate your own idea too.`,
   },
   "/journal": {
     title: "Build Journal - Streaks & Badges | SlashAI",
@@ -185,9 +190,8 @@ const STATIC_PAGES: Record<string, SeoPage> = {
       "Compare the free tiers of GPT-4o, Claude, Gemini, Grok, DeepSeek, Llama and Mistral - context, coding, reasoning, vision and speed.",
   },
   "/prompts": {
-    title: "5,600+ Free AI Prompts for ChatGPT, Claude & Gemini | SlashAI",
-    description:
-      "A free library of 5,600+ copy-ready AI prompts for writing, coding, marketing, design, study and business - organised by category, with examples. No sign-up.",
+    title: `${num(SEO_COUNTS.commands)} Free AI Prompts for ChatGPT, Claude & Gemini | SlashAI`,
+    description: `A free library of ${num(SEO_COUNTS.commands)} copy-ready AI prompts for writing, coding, marketing, design, study and business - organised by category, with examples. No sign-up.`,
   },
   "/prompts/students": {
     title: "Best Free ChatGPT Prompts for Students (2026) | SlashAI",
@@ -207,7 +211,7 @@ const STATIC_PAGES: Record<string, SeoPage> = {
   "/promo": {
     title: "About SlashAI - Your Free AI Command Vault",
     description:
-      "What SlashAI is, in one page: 5,000+ free AI commands, 150+ browser tools, curated resources - no account, no tracking, free forever.",
+      `What SlashAI is, in one page: ${num(SEO_COUNTS.commands)} free AI commands, ${num(SEO_COUNTS.tools)} browser tools, ${SEO_COUNTS.games} games, curated resources - no account, no tracking, free forever.`,
     noindex: true,
   },
   "/stores": {
@@ -223,7 +227,7 @@ const STATIC_PAGES: Record<string, SeoPage> = {
   "/about": {
     title: "About SlashAI - built by Waseem Ahmed, free forever",
     description:
-      "The story behind SlashAI: Waseem Ahmed built a free, no-login library of 5,000+ AI commands, 150+ tools and 50+ games. Free forever, no account, built in India.",
+      `The story behind SlashAI: Waseem Ahmed built a free, no-login library of ${num(SEO_COUNTS.commands)} AI commands, ${num(SEO_COUNTS.tools)} tools and ${SEO_COUNTS.games} games. Free forever, no account, built in India.`,
   },
   "/blog": {
     title: "Blog - plain-English AI guides | SlashAI",
@@ -287,7 +291,7 @@ const STATIC_PAGES: Record<string, SeoPage> = {
   },
   "/search": {
     title: "Search AI Commands - SlashAI",
-    description: "Search 5,000+ copy-ready AI slash commands by task, category or keyword.",
+    description: `Search ${num(SEO_COUNTS.commands)} copy-ready AI slash commands by task, category or keyword.`,
     noindex: true,
   },
   "/find": {
@@ -389,7 +393,7 @@ const FAQS: Record<string, FaqItem[]> = {
     { q: "Is the pomodoro timer free?", a: "Yes, like every tool in SlashKits — free forever with no ads and no sign-up." },
   ],
   "/about": [
-    { q: "What is SlashAI?", a: "SlashAI is a free, no-account web app that packs the internet's useful things into one place: 5,000+ copy-ready AI slash commands, 150+ browser tools, 50+ games, structured courses with graded tests, curated resource hubs, a private meta search engine and live dashboards." },
+    { q: "What is SlashAI?", a: `SlashAI is a free, no-account web app that packs the internet's useful things into one place: ${num(SEO_COUNTS.commands)} copy-ready AI slash commands, ${num(SEO_COUNTS.tools)} browser tools, ${SEO_COUNTS.games} games, structured courses with graded tests, curated resource hubs, a private meta search engine and live dashboards.` },
     { q: "Is SlashAI really free? Do I need an account?", a: "Everything on SlashAI is free and always has been. There is no account, no login, no paywall and no tracking. Everything you save (favourites, progress, notes) is stored on your own device." },
     { q: "Does SlashAI work offline?", a: "Yes — install it as an app (PWA) and the whole catalog, including tools, games and courses, keeps working with zero connection." },
     { q: "Is my data private?", a: "Yes. There is no server holding your data and no analytics profile. Tools run entirely in your browser — files you process never upload anywhere — and the meta search engine forwards nothing to SlashAI." },
@@ -403,7 +407,7 @@ const FAQS: Record<string, FaqItem[]> = {
   ],
   "/prompts": [
     { q: "What are AI prompts or slash commands?", a: "A prompt is the instruction you give an AI tool like ChatGPT, Claude or Gemini. Well-structured prompts — with a role, task, context and format — produce far better results than one-line questions. SlashAI's slash commands are battle-tested prompt templates you copy and fill in." },
-    { q: "How many free prompts are on SlashAI?", a: "Over 5,600 curated, copy-ready prompts organised into 25 categories and 379 subcategories — writing, coding, marketing, design, data, business and more. Every prompt includes a description, how-to-use note and a worked example." },
+    { q: "How many free prompts are on SlashAI?", a: `${num(SEO_COUNTS.commands)} curated, copy-ready prompts organised into ${SEO_COUNTS.categories} categories and ${SEO_COUNTS.subcategories} subcategories — writing, coding, marketing, design, data, business and more. Every prompt includes a description, how-to-use note and a worked example.` },
     { q: "Are the prompts free to use?", a: "Yes — every prompt is free to copy, edit and use for personal or commercial work. No account, no paywall, no attribution required." },
     { q: "Do these prompts work in ChatGPT, Claude and Gemini?", a: "Yes. The templates are model-agnostic: they rely on clear structure rather than tool-specific tricks, so they work in ChatGPT, Claude, Gemini, Copilot, Llama-based apps and most other AI assistants." },
     { q: "How do I use a prompt?", a: "Open any command page, read the example, tap Copy, paste it into your AI tool, and replace the placeholder text (shown in angle brackets) with your own details." },
@@ -412,7 +416,7 @@ const FAQS: Record<string, FaqItem[]> = {
     { q: "What are the best ChatGPT prompts for students?", a: "The highest-value student prompts are: explain-like-I'm-new simplification, active-recall quiz generation, Feynman-technique tutoring, structured essay outlines, and spaced-repetition study plans. SlashAI's student collection includes copy-ready versions of all of them." },
     { q: "Is using AI prompts for studying cheating?", a: "Using AI to understand material, generate practice questions and get feedback is studying — like a tutor. Submitting AI output as your own work is academic dishonesty. The prompts here are built for learning, not plagiarism." },
     { q: "How do I use these prompts?", a: "Tap Copy on any prompt, paste it into ChatGPT, Claude or Gemini, and replace the bracketed placeholders with your topic or text. Each prompt page has a worked example showing exactly what to type." },
-    { q: "Are these prompts free for students?", a: "Yes — all 5,600+ prompts on SlashAI are free with no account needed, including the study-specific collections on this page." },
+    { q: "Are these prompts free for students?", a: `Yes — all ${num(SEO_COUNTS.commands)} prompts on SlashAI are free with no account needed, including the study-specific collections on this page.` },
   ],
   "/prompts/business": [
     { q: "What AI prompts help small businesses?", a: "The most-used business prompts cover marketing copy, email sequences, business-plan drafting, customer-feedback analysis, pricing strategy and meeting summaries. This page collects the highest-impact ones from SlashAI's 5,600-prompt library." },
@@ -428,7 +432,7 @@ const FAQS: Record<string, FaqItem[]> = {
     { q: "What are the best free AI prompts for professionals?", a: "The highest-leverage prompts cover everyday work: drafting and rewriting emails, summarising meeting notes, planning meetings, drafting and polishing reports, and tailoring your resume. This guide collects ten copy-ready versions from the free SlashAI library." },
     { q: "Do these prompts work in free ChatGPT, Gemini and Claude?", a: "Yes. Every prompt is plain text built on clear structure — role, task, context, format — so it works in free tiers of ChatGPT, Gemini, Claude and most other AI assistants without plugins or paid plans." },
     { q: "How do I use these prompts?", a: "Tap Copy on any prompt, paste it into your AI tool, and replace the placeholder text (shown in angle brackets) with your own details — audience, numbers, deadlines. The more context you add, the better the output." },
-    { q: "Are these prompts really free?", a: "Yes — they're part of SlashAI's free library of 5,600+ AI commands. No account, no paywall, no attribution required." },
+    { q: "Are these prompts really free?", a: `Yes — they're part of SlashAI's free library of ${num(SEO_COUNTS.commands)} AI commands. No account, no paywall, no attribution required.` },
   ],
 };
 
@@ -475,7 +479,7 @@ export function seoForPath(pathname: string): SeoPage {
   return {
     title: "SlashAI - Free AI Commands, Tools & Resources",
     description:
-      "Search and copy 5,000+ free AI slash commands, run 150+ browser tools, play browser games and browse curated free resources. Free forever, no account.",
+      `Search and copy ${num(SEO_COUNTS.commands)} free AI slash commands, run ${num(SEO_COUNTS.tools)} browser tools, play ${SEO_COUNTS.games} browser games and browse curated free resources. Free forever, no account.`,
   };
 }
 
@@ -488,14 +492,10 @@ export function websiteJsonLd() {
     url: SITE_URL + "/",
     description: STATIC_PAGES["/"]!.description,
     inLanguage: "en",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
+    // Deliberately no SearchAction (sitelinks searchbox). The only search route,
+    // /search, is disallowed in robots.txt and carries an X-Robots-Tag noindex
+    // header (vercel.json), so Google could never crawl the target and the
+    // markup would be invalid. Add it back if /search is ever made crawlable.
   };
 }
 

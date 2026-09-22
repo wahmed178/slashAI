@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { SEO_COUNTS } from "@/lib/seo-counts";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -49,11 +50,12 @@ function TermsPage() {
             processing of your data.
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-            <li>5,635+ AI slash commands with copy-ready prompt templates</li>
-            <li>317+ curated free resources across 12 categories</li>
-            <li>20 founder roadmaps with step tracking</li>
-            <li>560+ glossary terms across 8 categories</li>
-            <li>22 browser-based utility tools (calculators, converters, screensavers)</li>
+            <li>{SEO_COUNTS.commands.toLocaleString("en-US")} AI slash commands with copy-ready prompt templates</li>
+            <li>{SEO_COUNTS.resources} curated free resources, each hand-checked</li>
+            <li>{SEO_COUNTS.roadmaps} founder roadmaps with step tracking</li>
+            <li>{SEO_COUNTS.glossaryTerms} glossary terms across {SEO_COUNTS.glossaryCategories} categories</li>
+            <li>{SEO_COUNTS.tools} browser-based tools (text, JSON and encoding utilities, calculators, screensavers)</li>
+            <li>{SEO_COUNTS.games} browser games, from brain boosters to sports</li>
             <li>Daily quiz with streaks, live dashboard, build journal</li>
             <li>Local AI assistant (WebLLM - runs in your browser)</li>
           </ul>

@@ -72,7 +72,7 @@ async function main() {
     s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   for (const c of categories) urls.push(url(`/explore/${slug(c.category)}`, { priority: "0.7" }));
 
-  /* ── 26 command collections ── */
+  /* ── command collections ── */
   const collectionsSrc = readFileSync("src/lib/collections.ts", "utf8");
   const colIds = [...collectionsSrc.matchAll(/^\s{4}id: "([a-z0-9-]+)",$/gm)].map((m) => m[1]);
   for (const id of colIds) urls.push(url(`/collections/${id}`, { priority: "0.6" }));
@@ -83,19 +83,33 @@ async function main() {
   }
   urls.push(url("/discover/reels", { priority: "0.5" }));
 
-  /* ── declarative toolkit tools (served by the dynamic /tools/$slug route) ──
-     Only the toolkit catalogue is read here: authored tools have their own
-     route files and are matched by the catalogue in src/lib/slashkits.ts. */
-  const catalogSrc = readFileSync("src/lib/toolkit/catalog.ts", "utf8");
-  for (const m of catalogSrc.matchAll(/\{\s*slug: "([a-z0-9-]+)", name:/g)) {
-    urls.push(url(`/tools/${m[1]}`, { changefreq: "monthly", priority: "0.6" }));
-  }
+  /* ── tools ──
+     Two families of indexable tool pages:
+       1. authored tools — one route file each (src/routes/tools.<slug>.tsx)
+       2. the declarative toolkit — served by the dynamic /tools/$slug route
+     The authored half was missing from this sitemap entirely, so every
+     hand-built tool page (BMI, EMI, cron, colour picker, ...) stayed out of
+     search results until somebody linked to it. */
+  const routeFiles = execSync("ls src/routes", { encoding: "utf8" }).trim().split("\n");
 
-  /* ── games (static play routes) ── */
-  const gameRoutes = execSync("ls src/routes | grep '^play.' | grep -v index", { encoding: "utf8" })
-    .trim().split("\n")
-    .map((f) => f.replace(/^play\./, "/play/").replace(/\.tsx$/, ""));
-  for (const g of gameRoutes) urls.push(url(g, { changefreq: "monthly", priority: "0.6" }));
+  const toolSlugs = new Set();
+  for (const file of routeFiles) {
+    const m = /^tools\.([a-z0-9-]+)\.tsx$/.exec(file);
+    // "index" is the /tools hub itself and is already listed above.
+    if (m && m[1] !== "index") toolSlugs.add(m[1]);
+  }
+  const catalogSrc = readFileSync("src/lib/toolkit/catalog.ts", "utf8");
+  for (const m of catalogSrc.matchAll(/\{\s*slug: "([a-z0-9-]+)", name:/g)) toolSlugs.add(m[1]);
+  for (const slug of toolSlugs) urls.push(url(`/tools/${slug}`, { changefreq: "monthly", priority: "0.6" }));
+
+  /* ── games (one route file per game) ── */
+  const gameSlugs = new Set();
+  for (const file of routeFiles) {
+    const m = /^play\.([a-z0-9-]+)\.tsx$/.exec(file);
+    // "index" is the /play hub itself and is already listed above.
+    if (m && m[1] !== "index") gameSlugs.add(m[1]);
+  }
+  for (const slug of gameSlugs) urls.push(url(`/play/${slug}`, { changefreq: "monthly", priority: "0.6" }));
 
   /* ── slash apps that actually render at /slash/<slug> ──
      Apps with a `link:` field redirect elsewhere (loader throws notFound),

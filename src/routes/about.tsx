@@ -20,6 +20,7 @@ import { toast } from "sonner";
 
 import { AppShell } from "@/components/library/AppShell";
 import { FaqSection } from "@/components/library/FaqSection";
+import { SEO_COUNTS } from "@/lib/seo-counts";
 import { VERIFIED_TOTAL } from "@/lib/commands";
 import { RESOURCE_TOTAL } from "@/lib/resources";
 import { ALL_ROADMAPS } from "@/lib/roadmaps";
@@ -34,8 +35,7 @@ export const Route = createFileRoute("/about")({
       { title: "About SlashAI - built by Waseem Ahmed, free forever" },
       {
         name: "description",
-        content:
-          "The story behind SlashAI: Waseem Ahmed built a free, no-login library of 5,000+ AI commands, 150+ tools and 50+ games after a decade of deleted side projects. Free forever, no account needed.",
+        content: `The story behind SlashAI: Waseem Ahmed built a free, no-login library of ${SEO_COUNTS.commands.toLocaleString("en-US")} AI commands, ${SEO_COUNTS.tools} tools and ${SEO_COUNTS.games} games after a decade of deleted side projects. Free forever, no account needed.`,
       },
     ],
   }),
@@ -47,7 +47,7 @@ const PILLARS = [
     icon: Zap,
     tint: "#2dd4bf",
     title: "SlashKits",
-    desc: "150+ real utilities that finish in seconds: calculators, converters, image tools, text helpers, timers — no signup, no ads, no waiting.",
+    desc: `${SEO_COUNTS.tools} real utilities that finish in seconds: calculators, image tools, text helpers, timers — no signup, no ads, no waiting.`,
     to: "/tools",
     cta: "Open the kits",
   },
@@ -55,7 +55,7 @@ const PILLARS = [
     icon: Gauge,
     tint: "#f472b6",
     title: "SlashPlay",
-    desc: "50+ games you can actually play — quick solo plays, zen toys and pass-and-play duels. Every game runs offline once loaded.",
+    desc: `${SEO_COUNTS.games} games you can actually play — quick solo plays, zen toys and pass-and-play duels. Every game runs offline once loaded.`,
     to: "/play",
     cta: "Play something",
   },

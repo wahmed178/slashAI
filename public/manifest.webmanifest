@@ -1,7 +1,7 @@
 {
   "name": "SlashAI",
   "short_name": "SlashAI",
-  "description": "Search and copy 5,650 free AI slash commands, run 150+ browser tools, and browse curated free resources — free forever, no account.",
+  "description": "Search and copy 5,704 free AI slash commands, run 289 browser tools, play 71 games and browse curated free resources - free forever, no account.",
   "start_url": "/",
   "id": "/",
   "scope": "/",
@@ -9,7 +9,11 @@
   "orientation": "portrait-primary",
   "background_color": "#12161c",
   "theme_color": "#12161c",
-  "categories": ["productivity", "utilities", "education"],
+  "categories": [
+    "productivity",
+    "utilities",
+    "education"
+  ],
   "lang": "en",
   "dir": "ltr",
   "icons": [
@@ -44,14 +48,24 @@
       "short_name": "Favorites",
       "description": "Open your favorite slash commands",
       "url": "/?fav=true",
-      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Daily Command",
       "short_name": "Daily",
       "description": "See today's featured slash command",
       "url": "/?cmd=daily",
-      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

@@ -10,11 +10,12 @@ import { VERIFIED_TOTAL, CATEGORY_TREE } from "@/lib/commands";
 export const Route = createFileRoute("/prompts")({
   head: () => ({
     meta: [
-      { title: "5,600+ Free AI Prompts for ChatGPT, Claude & Gemini | SlashAI" },
+      // Real count, from the same catalogue the page renders (this head() wins
+      // over the root SEO layer, so it has to stay honest on its own).
+      { title: `${VERIFIED_TOTAL.toLocaleString("en-US")} Free AI Prompts for ChatGPT, Claude & Gemini | SlashAI` },
       {
         name: "description",
-        content:
-          "A free library of 5,600+ copy-ready AI prompts for writing, coding, marketing, design, study and business - organised by category, with examples. No sign-up.",
+        content: `A free library of ${VERIFIED_TOTAL.toLocaleString("en-US")} copy-ready AI prompts for writing, coding, marketing, design, study and business - organised by category, with examples. No sign-up.`,
       },
     ],
   }),
@@ -61,7 +62,7 @@ function PromptsPage() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search 5,600+ prompts - e.g. essay, invoice, instagram caption…"
+              placeholder={`Search ${VERIFIED_TOTAL.toLocaleString("en-US")} prompts - e.g. essay, invoice, instagram caption…`}
               aria-label="Search AI prompts"
               className="h-11 w-full rounded-lg border border-border bg-surface pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none"
             />

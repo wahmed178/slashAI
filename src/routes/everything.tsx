@@ -4,6 +4,7 @@ import { Search, X, Star, StarOff } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { UniversalSearch } from "@/components/library/UniversalSearch";
+import { SEO_COUNTS } from "@/lib/seo-counts";
 import { SLASH_APPS, ALL_SLASH_APPS } from "@/lib/slashbar";
 import { TOOL_SECTIONS, ALL_SLASH_TOOLS, SLASH_TOOL_COUNT } from "@/lib/slashkits";
 import { PLAY_SECTIONS, ALL_PLAY_GAMES, PLAY_GAME_COUNT } from "@/lib/slashplay";
@@ -46,12 +47,12 @@ const HUBS = [
 
 const MORE = [
   { to: "/explore", emoji: "⌨️", label: "AI Commands", desc: `${VERIFIED_TOTAL.toLocaleString()} copy-ready prompts` },
-  { to: "/ai-tools", emoji: "🤖", label: "AI Tools", desc: "100+ curated AI directory" },
+  { to: "/ai-tools", emoji: "🤖", label: "AI Tools", desc: `${SEO_COUNTS.aiTools} curated AI tools` },
   { to: "/workflow", emoji: "🔗", label: "AI Workflows", desc: "Chain commands into one prompt" },
   { to: "/discover", emoji: "🧭", label: "Discovery", desc: `${RESOURCE_TOTAL}+ free resources` },
   { to: "/web-search", emoji: "🌐", label: "Search Engine", desc: "Free meta search, zero tracking" },
   { to: "/live", emoji: "📡", label: "Live Dashboard", desc: "Markets, weather, prayer, space" },
-  { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "24 categories, streaks" },
+  { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "Fresh trivia daily, streaks" },
   { to: "/roadmaps", emoji: "🗺️", label: "Roadmaps", desc: "Founder step-by-step guides" },
   { to: "/learn", emoji: "🎓", label: "Courses", desc: "Free lessons with graded tests" },
   { to: "/about", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
