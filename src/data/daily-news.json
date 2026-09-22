@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-21T13:34:50.072Z",
+  "updated": "2026-09-22T12:19:17.803Z",
   "articles": [
     {
-      "title": "AX – Google’s Open Agentic Orchestrator",
-      "url": "https://agentexecutor.io",
+      "title": "MiMo v2.6",
+      "url": "https://mimo.xiaomi.com/mimo-v2-6",
       "source": "HackerNews",
-      "score": 556,
-      "publishedAt": "2026-09-20"
-    },
-    {
-      "title": "ZuckOff Know when a camera is in the room",
-      "url": "https://zuckoff.app/",
-      "source": "HackerNews",
-      "score": 435,
+      "score": 946,
       "publishedAt": "2026-09-21"
     },
     {
-      "title": "Grim Fandango Puzzle Document (1996) [pdf]",
-      "url": "http://gameshelf.jmac.org/2008/11/13/GrimPuzzleDoc_small.pdf",
+      "title": "Attention is all you have",
+      "url": "https://alicegg.tech/2026/09/21/attention",
       "source": "HackerNews",
-      "score": 256,
+      "score": 862,
       "publishedAt": "2026-09-21"
     },
     {
-      "title": "ZuckOff Is a Free App That Sees Meta Glasses Before They See You",
-      "url": "https://www.wired.me/story/meta-smart-glasses-detector-app-zuckoff",
+      "title": "Spymarks, Not Watermarks",
+      "url": "https://brand.io/article/spymarks/",
       "source": "HackerNews",
-      "score": 224,
+      "score": 492,
       "publishedAt": "2026-09-21"
     },
     {
-      "title": "Disney+: New user agreement allows ads before movies in all subscriptions",
-      "url": "https://consumerrights.wiki/w/Disney%2B_ad_policy_change",
+      "title": "Transformers Explained Visually",
+      "url": "https://poloclub.github.io/transformer-explainer/",
       "source": "HackerNews",
-      "score": 210,
+      "score": 457,
       "publishedAt": "2026-09-21"
     },
     {
-      "title": "Kev: Tiny Jev-like family of decision models built on top of Qwen3.5",
-      "url": "https://github.com/jaredpalmer/kev/tree/main",
+      "title": "I said no and Apple said yes",
+      "url": "https://dbushell.com/2026/09/22/apple-intelligence/",
       "source": "HackerNews",
-      "score": 197,
-      "publishedAt": "2026-09-21"
+      "score": 315,
+      "publishedAt": "2026-09-22"
     },
     {
-      "title": "Jev-Leftpad",
-      "url": "https://github.com/f/jev-leftpad",
+      "title": "Can gzip be a language model?",
+      "url": "https://nathan.rs/posts/gzip-lm/",
       "source": "HackerNews",
-      "score": 142,
-      "publishedAt": "2026-09-21"
+      "score": 202,
+      "publishedAt": "2026-09-22"
     },
     {
-      "title": "Raspberry Pi blocks changing RAM chips",
-      "url": "https://forums.raspberrypi.com/viewtopic.php?p=2380887#p2380888",
+      "title": "AMD's random number generator can't generate a 0?",
+      "url": "https://board.flatassembler.net/topic.php?t=24261",
       "source": "HackerNews",
-      "score": 52,
-      "publishedAt": "2026-09-21"
+      "score": 112,
+      "publishedAt": "2026-09-22"
+    },
+    {
+      "title": "9 Ads per Minute: FIFA Cup 26 – \"the price of the beautiful game\"",
+      "url": "https://www.bristol.ac.uk/news/2026/september/world-cup-viewers.html",
+      "source": "HackerNews",
+      "score": 90,
+      "publishedAt": "2026-09-22"
     }
   ]
 }
