@@ -434,6 +434,64 @@ const FAQS: Record<string, FaqItem[]> = {
     { q: "How do I use these prompts?", a: "Tap Copy on any prompt, paste it into your AI tool, and replace the placeholder text (shown in angle brackets) with your own details — audience, numbers, deadlines. The more context you add, the better the output." },
     { q: "Are these prompts really free?", a: `Yes — they're part of SlashAI's free library of ${num(SEO_COUNTS.commands)} AI commands. No account, no paywall, no attribution required.` },
   ],
+  "/tools/pdf-merge": [
+    { q: "How do I merge PDF files for free?", a: "Add two or more PDFs to this tool, drag them into the order you want, and press merge. The combined file downloads instantly — free, with no watermark and no page limits." },
+    { q: "Are my files uploaded to a server?", a: "No. The merge runs entirely in your browser using JavaScript — nothing is sent to any server, unlike most online PDF mergers." },
+    { q: "Is there a file size limit?", a: "Only your device's memory. Typical documents with hundreds of pages merge in a second or two." },
+    { q: "Can I merge password-protected PDFs?", a: "Unlock them first — encrypted files can be read but not copied by any tool without the password." },
+  ],
+  "/tools/yt-thumbnail": [
+    { q: "How do I download a YouTube thumbnail?", a: "Paste any YouTube link — watch, share, Shorts or embed — and every available thumbnail resolution appears with a download button. The HD size (1280×720) downloads when the channel uploaded one." },
+    { q: "Why is the HD thumbnail missing for some videos?", a: "maxresdefault only exists when the channel uploaded a custom thumbnail of 1280×720 or larger. The tool probes each size and hides the ones that don't exist for that video." },
+    { q: "Which URL formats does this support?", a: "youtube.com/watch?v=…, youtu.be/…, /shorts/…, /embed/…, /live/… — or just paste the 11-character video ID on its own." },
+    { q: "Can I use downloaded thumbnails freely?", a: "Thumbnails are copyrighted by their creators. Use them for reference, analysis, thumbnails-in-context or fair-use commentary — not to republish as your own." },
+  ],
+  "/tools/social-resize": [
+    { q: "What image sizes do Instagram, YouTube and WhatsApp need?", a: "Instagram posts are 1080×1080 (square) or 1080×1350 (portrait, best feed reach), Stories and Reels covers are 1080×1920, YouTube thumbnails are 1280×720 and WhatsApp display photos are 640×640. This tool has all of them as one-tap presets." },
+    { q: "What is the difference between crop and fit?", a: "Crop to fill trims the image so it covers the whole canvas — edges may be cut. Fit + padding keeps the whole image visible and fills the leftover space with a colour you choose." },
+    { q: "Is my photo uploaded anywhere?", a: "No. Resizing runs on a canvas inside your browser — the image never leaves your device." },
+    { q: "Does resizing reduce image quality?", a: "Exports happen at each preset's full resolution. For JPG you control the quality slider; PNG is lossless but produces larger files." },
+  ],
+  "/tools/text-to-handwriting": [
+    { q: "How do I convert text to handwriting?", a: "Paste your text, pick an ink colour and handwriting style, and the page renders it as a realistic image on ruled notebook paper — then download the PNG." },
+    { q: "How much text fits on one page?", a: "About 22–26 lines depending on the font size, roughly 350–450 words — similar to a real notebook page." },
+    { q: "Does it look like real handwriting?", a: "It renders in handwriting-style fonts on realistic ruled paper with a red margin line, so assignments and notes look convincingly hand-written. Four ink colours match real pens." },
+    { q: "Is my text uploaded?", a: "Never. Everything renders on a canvas in your browser — nothing leaves your device." },
+  ],
+  "/tools/fancy-font": [
+    { q: "How do I get fancy fonts on Instagram?", a: "Type your text above, tap Copy on a style you like, and paste it straight into your Instagram bio, caption or comments. The styles are Unicode characters, so they work everywhere text does." },
+    { q: "Do fancy fonts work on WhatsApp and YouTube?", a: "Yes — these are real Unicode symbols, not images or webfonts. They paste into WhatsApp statuses, YouTube names, Snapchat, Twitter/X and virtually any text field." },
+    { q: "Why do some letters stay plain?", a: "A few rare letters have no styled Unicode equivalent in some styles (especially Script and Fraktur); those fall back to the normal letter. Known gaps use the official alternative code points." },
+    { q: "Are fancy fonts bad for accessibility?", a: "Screen readers may pronounce styled letters oddly, so use them for names and short accents rather than whole paragraphs." },
+  ],
+  "/tools/cgpa-percentage": [
+    { q: "How do I convert CGPA to percentage?", a: "It depends on your board or university's official formula. Most Indian institutions and CBSE use CGPA × 9.5, Anna University uses × 10, VTU/JNTU use (CGPA − 0.75) × 10 and Gujarat Technological University uses (CGPA − 0.5) × 10. Pick yours in the tool and it applies the exact rule." },
+    { q: "Is CGPA × 9.5 always correct?", a: "It's the official UGC conversion used by most universities, but some institutions publish their own. Always quote your institution's formula on applications — this tool matches whichever you select, including a custom scale." },
+    { q: "Can I convert percentage back to CGPA?", a: "Yes — the tool converts both ways with the algebraic inverse of each formula, so 81.7% gives the same CGPA that CGPA would give 81.7%." },
+  ],
+  "/tools/team-generator": [
+    { q: "How do I split people into random teams?", a: "Paste names (one per line or comma-separated), choose how many teams you need, and press Generate. Names are shuffled and dealt round-robin so every team differs by at most one member." },
+    { q: "Can I paste names from Excel or WhatsApp?", a: "Yes — new lines and commas both split names, so a pasted spreadsheet column or a WhatsApp group list works as-is." },
+    { q: "Is the team split really random?", a: "Each generate press shuffles with a Fisher–Yates pass using the browser's crypto-quality randomness, then deals evenly. The same list produces different teams every time." },
+  ],
+  "/tools/text-to-speech": [
+    { q: "How do I convert text to speech for free?", a: "Type or paste your text, pick a voice, and press Speak — the browser reads it aloud instantly. No account, no character limits, no watermarks." },
+    { q: "Which languages and voices are available?", a: "Everything your operating system has installed — usually 20+ languages including English, Hindi, Urdu, Arabic and Spanish. The dropdown groups all installed voices by language." },
+    { q: "Can I download the audio as an MP3?", a: "This tool plays the speech live rather than exporting files. To save audio, play it while recording with the Voice Recorder tool — or use a dedicated TTS file service." },
+    { q: "Does text to speech work offline?", a: "Most system voices run fully offline. Some cloud voices (marked Online in certain browsers) need a connection." },
+  ],
+  "/tools/voice-recorder": [
+    { q: "How do I record my voice online?", a: "Press Start, allow microphone access, and speak. Stop to get an instant player and a download button — the clip never leaves your device." },
+    { q: "Where are my recordings stored?", a: "In this page's memory only. Download any clip you want to keep — refreshing the page clears the list by design, since nothing touches a server." },
+    { q: "Why is the recording a .webm file?", a: "WebM is the browser's native recording format and plays in Chrome, VLC and most players. Free converters turn it into MP3 if a platform demands that format." },
+    { q: "The microphone won't turn on.", a: "Your browser needs permission: click the lock or camera icon in the address bar, set Microphone to Allow, then reload the page." },
+  ],
+  "/tools/screen-recorder": [
+    { q: "How do I record my screen for free?", a: "Press Start, choose a tab, window or the whole screen in the browser's share picker, and record. Stop to preview and download — no install, no watermark, no time limit." },
+    { q: "Can it record my voice along with the screen?", a: "Yes — tick 'Include microphone' before starting. Tab audio records automatically when you share a tab that plays sound." },
+    { q: "Is there a recording length limit?", a: "Only your device's memory. Recordings encode at about 5 Mbps — roughly 37 MB per minute — so ten-minute tutorials are comfortable." },
+    { q: "Why is the recording a .webm file?", a: "WebM is what browsers natively encode. It uploads directly to YouTube and plays in VLC; converters handle MP4 when a specific app requires it." },
+  ],
 };
 
 /** FAQPage JSON-LD for a path, or null when the path has no FAQs. */

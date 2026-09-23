@@ -71,6 +71,19 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
     ],
   },
   {
+    title: "Creator Essentials",
+    icon: "🚀",
+    tools: [
+      { slug: "yt-thumbnail", name: "YouTube Thumbnail Downloader", desc: "Grab any video's thumbnail in HD, SD and more", icon: "▶️", noUpload: true, added: "2026-09-22" },
+      { slug: "social-resize", name: "Social Media Resizer", desc: "One image → every platform size (IG, YT, WA)", icon: "📱", noUpload: true, added: "2026-09-22" },
+      { slug: "fancy-font", name: "Fancy Font Generator", desc: "Unicode styles for Instagram bios & WhatsApp", icon: "✨", added: "2026-09-22" },
+      { slug: "text-to-handwriting", name: "Text to Handwriting", desc: "Notes as realistic handwriting on ruled paper", icon: "✍️", noUpload: true, added: "2026-09-22" },
+      { slug: "screen-recorder", name: "Screen Recorder", desc: "Record tab, window or screen with mic — no install", icon: "🎥", added: "2026-09-22" },
+      { slug: "voice-recorder", name: "Voice Recorder", desc: "One-tap voice notes, playback & download", icon: "🎙️", added: "2026-09-22" },
+      { slug: "text-to-speech", name: "Text to Speech", desc: "Read text aloud in every installed voice & language", icon: "🔊", added: "2026-09-22" },
+    ],
+  },
+  {
     title: "File & Document",
     icon: "📄",
     tools: [
@@ -87,6 +100,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "meta", name: "SEO Meta Tags", desc: "OG, Twitter Card, Schema.org tags", icon: "🔍" },
       { slug: "whitespace", name: "Whitespace Remover", desc: "Clean text: spaces, tabs, line breaks", icon: "🧹" },
       { slug: "url-encoder", name: "URL Encoder/Decoder", desc: "Encode and decode URLs", icon: "🔗" },
+      { slug: "pdf-merge", name: "PDF Merger", desc: "Combine PDFs in your browser — nothing uploaded", icon: "📎", noUpload: true, added: "2026-09-22" },
     ],
   },
   {
@@ -110,6 +124,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "gst-calculator", name: "GST Calculator", desc: "Add or remove Indian GST with CGST/SGST", icon: "💵" },
       { slug: "percentage", name: "Percentage Calculator", desc: "3 modes: of, what %, increase/decrease", icon: "🔢" },
       { slug: "age-calculator", name: "Age Calculator", desc: "Exact age, zodiac, birthday countdown", icon: "🕰️" },
+      { slug: "cgpa-percentage", name: "CGPA ⇄ Percentage", desc: "UGC, Anna, VTU, GTU, Mumbai formulas, both ways", icon: "🎓", added: "2026-09-22" },
       { slug: "upi", name: "UPI Link Generator", desc: "Generate UPI payment links + QR codes", icon: "💳" },
       { slug: "budget", name: "Budget Tracker", desc: "Monthly income vs expenses - Indian categories", icon: "📈" },
       { slug: "kharch", name: "Urdu/Hindi Budget", desc: "Bilingual expense tracker with Indian categories", icon: "💴" },
@@ -204,6 +219,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "poll", name: "Instant Poll Creator", desc: "Create polls, share links, see results", icon: "📊" },
       { slug: "namecard", name: "Digital Business Card", desc: "Create and share a digital card", icon: "💼" },
       { slug: "emoji", name: "Emoji Picker", desc: "Search 3,600+ emojis, recently used", icon: "😀" },
+      { slug: "team-generator", name: "Random Team Generator", desc: "Split names into fair, balanced teams", icon: "👥", added: "2026-09-22" },
       { slug: "signature-maker", name: "Signature Maker", desc: "Draw a signature, download transparent PNG", icon: "✒️" },
       { slug: "quote-maker", name: "Quote Card Maker", desc: "Design quote cards with fonts, backgrounds & templates", icon: "💬" },
     ],

@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.33.1";
+export const APP_VERSION = "2.34.0";
 
 export interface ReleaseNote {
   version: string;
@@ -13,7 +13,7 @@ export interface ReleaseNote {
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
   {
-    version: "2.33.1",
+    version: "2.34.0",
     date: "2026-09-21",
     title: "Search visibility: a real icon, honest counts, every page in the sitemap",
     changes: [

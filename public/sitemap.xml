@@ -811,6 +811,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/cgpa-percentage</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/changelog-maker</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -944,6 +950,12 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/fake-email</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/fancy-font</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1303,6 +1315,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/pdf-merge</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/percentage</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -1441,6 +1459,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/screen-recorder</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/screenshot</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -1484,6 +1508,12 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/smart-paste</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/social-resize</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1555,6 +1585,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/team-generator</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/text-case</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -1562,6 +1598,18 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/text-stats</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/text-to-handwriting</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/text-to-speech</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1633,6 +1681,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/voice-recorder</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/void</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -1688,6 +1742,12 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/world-clock</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/yt-thumbnail</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

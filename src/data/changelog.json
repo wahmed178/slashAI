@@ -1,6 +1,15 @@
 {
-  "version": "2.33.1",
+  "version": "2.34.0",
   "entries": [
+    {
+      "version": "2.34.0",
+      "date": "2026-09-22",
+      "changes": [
+        "Ten new most-searched tools, all working fully offline in your browser: PDF Merger (combine PDFs with reorder, nothing uploaded), YouTube Thumbnail Downloader (every resolution from any link shape), Social Media Resizer (Instagram/YouTube/WhatsApp presets with crop or fit), Text to Handwriting (ruled paper, four inks, PNG export), Fancy Font Generator (real Unicode styles that paste into bios), CGPA ⇄ Percentage (UGC, Anna, VTU, GTU and Mumbai formulas both ways), Random Team Generator (fair round-robin dealing), Text to Speech (every installed voice, grouped by language), Voice Recorder and Screen Recorder (mic + tab audio, no install, no watermark)",
+        "Every new tool ships with its own FAQ section that also feeds Google FAQ rich results, and all ten are in the sitemap — the tools count is now 299",
+        "A new 'Creator Essentials' section on /tools gathers the YouTube, social and handwriting tools that creators search for most"
+      ]
+    },
     {
       "version": "2.33.1",
       "date": "2026-09-21",
