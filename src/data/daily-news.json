@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-22T12:19:17.803Z",
+  "updated": "2026-09-23T12:31:36.536Z",
   "articles": [
     {
-      "title": "MiMo v2.6",
-      "url": "https://mimo.xiaomi.com/mimo-v2-6",
+      "title": "Claude Opus 5.5",
+      "url": "https://www.anthropic.com/claude-opus-5-5",
       "source": "HackerNews",
-      "score": 946,
-      "publishedAt": "2026-09-21"
-    },
-    {
-      "title": "Attention is all you have",
-      "url": "https://alicegg.tech/2026/09/21/attention",
-      "source": "HackerNews",
-      "score": 862,
-      "publishedAt": "2026-09-21"
-    },
-    {
-      "title": "Spymarks, Not Watermarks",
-      "url": "https://brand.io/article/spymarks/",
-      "source": "HackerNews",
-      "score": 492,
-      "publishedAt": "2026-09-21"
-    },
-    {
-      "title": "Transformers Explained Visually",
-      "url": "https://poloclub.github.io/transformer-explainer/",
-      "source": "HackerNews",
-      "score": 457,
-      "publishedAt": "2026-09-21"
-    },
-    {
-      "title": "I said no and Apple said yes",
-      "url": "https://dbushell.com/2026/09/22/apple-intelligence/",
-      "source": "HackerNews",
-      "score": 315,
+      "score": 1614,
       "publishedAt": "2026-09-22"
     },
     {
-      "title": "Can gzip be a language model?",
-      "url": "https://nathan.rs/posts/gzip-lm/",
+      "title": "GPT-6 Sol and Luna",
+      "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
       "source": "HackerNews",
-      "score": 202,
+      "score": 1602,
       "publishedAt": "2026-09-22"
     },
     {
-      "title": "AMD's random number generator can't generate a 0?",
-      "url": "https://board.flatassembler.net/topic.php?t=24261",
+      "title": "OpenAI GPT–6 Astra breaks Enigma message that has resisted solution since 2005",
+      "url": "https://www.cryptocellar.org/bgac/the-mvueh-break.html",
       "source": "HackerNews",
-      "score": 112,
+      "score": 685,
       "publishedAt": "2026-09-22"
     },
     {
-      "title": "9 Ads per Minute: FIFA Cup 26 – \"the price of the beautiful game\"",
-      "url": "https://www.bristol.ac.uk/news/2026/september/world-cup-viewers.html",
+      "title": "Microsoft killed FoxPro in 2007. Anyway, here's FoxPro revived",
+      "url": "https://foxscript.org/",
       "source": "HackerNews",
-      "score": 90,
+      "score": 366,
       "publishedAt": "2026-09-22"
+    },
+    {
+      "title": "Jev in 25 Lines of Python",
+      "url": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
+      "source": "HackerNews",
+      "score": 281,
+      "publishedAt": "2026-09-23"
+    },
+    {
+      "title": "ReBarUEFI: Resizable BAR for almost any UEFI system",
+      "url": "https://github.com/xCuri0/ReBarUEFI",
+      "source": "HackerNews",
+      "score": 179,
+      "publishedAt": "2026-09-21"
+    },
+    {
+      "title": "Transit rewards",
+      "url": "https://waymo.com/blog/2026/09/transit-rewards/",
+      "source": "HackerNews",
+      "score": 170,
+      "publishedAt": "2026-09-23"
+    },
+    {
+      "title": "The darker side of being a doctor",
+      "url": "https://drericlevi.pages.dev/the-darker-side-of-being-a-doctor/",
+      "source": "HackerNews",
+      "score": 136,
+      "publishedAt": "2026-09-23"
     }
   ]
 }
