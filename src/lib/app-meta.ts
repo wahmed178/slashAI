@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.34.0";
+export const APP_VERSION = "2.35.0";
 
 export interface ReleaseNote {
   version: string;
@@ -19,7 +19,7 @@ export const CHANGELOG: ReleaseNote[] = [
     changes: [
       "Fixed the blank icon in Google results. The site shipped a 64px and a 32px favicon and no /favicon.ico at all — Google ignores both of those, because it needs a square icon that is a multiple of 48px. There is now a real 16/32/48 favicon.ico plus 48px and 96px PNGs, linked on every page",
       "Every tool page is in the sitemap now. The 160 hand-built tools (BMI, EMI, cron, colour picker and the rest) were missing from it entirely, which took sitemap.xml from 518 to 677 URLs",
-      "Titles and search snippets quote the real catalogue totals — 5,704 commands, 289 tools, 71 games, 138 glossary terms — instead of stale guesses like '5,000+', '150+' and '560+'. The numbers are generated from the data, so they cannot drift out of date again",
+      "Titles and search snippets quote the real catalogue totals — 5,704 commands, 289 tools, 91 games, 138 glossary terms — instead of stale guesses like '5,000+', '150+' and '560+'. The numbers are generated from the data, so they cannot drift out of date again",
       "Removed an invalid search-box block from the structured data: it pointed Google at a page the site itself tells it not to crawl",
       "The share card image reads those same live counts, and the sitemap now regenerates on every build instead of only when somebody remembered to run it",
     ],
