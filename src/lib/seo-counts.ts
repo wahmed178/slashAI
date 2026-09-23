@@ -8,7 +8,7 @@ export const SEO_COUNTS = {
   categories: 45,
   subcategories: 381,
   tools: 299,
-  games: 71,
+  games: 91,
   collections: 16,
   glossaryTerms: 138,
   glossaryCategories: 12,
