@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.35.0";
+export const APP_VERSION = "2.36.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,26 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.36.0",
+    date: "2026-09-24",
+    title: "Eleven tools for the things nobody builds a tool for",
+    changes: [
+      "SlashKits gains eleven tools aimed at the money, time and family conversations people actually have — and that every other tool site skips because they are not clean calculator problems",
+      "Raise Negotiator: your gap to the median and P75 pay for your role, what inflation has quietly taken from your salary, what replacing you would cost your employer, and a five-beat script for the conversation itself",
+      "Local Price Parity: the same product priced across countries and corrected for purchasing power, so you can see whether 'cheaper here' is real or just a different currency",
+      "Other People's Money: group trip and shared-household expenses with expense/lend tagging and the minimum number of transfers to settle everyone",
+      "Living Contribution Splitter: couples split costs proportional to take-home income, with a check against the 30%-of-income comfort line and the words for the money conversation",
+      "Inheritance Talk Prep: readiness-tested openers for the family estate conversation, a documents checklist scored on all eight items, and the tension points that turn into disputes",
+      "Deadline Honesty: a deadline planner built from the hours you actually have each day and a real planning fudge factor — if there is not enough time it says 'start tonight' instead of inventing a plan that fails on day two",
+      "Time Left: your remaining time in summers, weekends and football seasons, from published actuarial tables — ranges, never a death date",
+      "Phone Reality Check turns screen time into years of your life, kilometres of thumb-scroll and what an hour a day back would buy you in books and languages",
+      "Pet Log: one-tap feeding, walk and medicine logging for a shared household device, with overdue warnings — long-press to undo a pocket tap",
+      "Speech Rehearsal: read your speech aloud and get pace against the 130–150 wpm sweet spot, per-paragraph timing and filler-word counts where the browser supports on-device recognition",
+      "WiFi QR: guests scan and join — no spelling a 24-character password, and it generates fully offline",
+      "Every tool runs entirely in your browser, says what it does and keeps your numbers on your device — the catalogue is now 310 tools",
+    ],
+  },
   {
     version: "2.34.0",
     date: "2026-09-21",

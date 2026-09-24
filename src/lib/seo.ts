@@ -492,6 +492,72 @@ const FAQS: Record<string, FaqItem[]> = {
     { q: "Is there a recording length limit?", a: "Only your device's memory. Recordings encode at about 5 Mbps — roughly 37 MB per minute — so ten-minute tutorials are comfortable." },
     { q: "Why is the recording a .webm file?", a: "WebM is what browsers natively encode. It uploads directly to YouTube and plays in VLC; converters handle MP4 when a specific app requires it." },
   ],
+  "/tools/negotiate-raise": [
+    { q: "How do I ask for a raise with numbers?", a: "Anchor on market data, not need: what the role pays at median (P50) and what strong performers earn (P75), then position your current pay against it. This tool computes that gap, what inflation has quietly taken from your salary, and the cost your employer would face to replace you — then writes the five-beat script for the conversation." },
+    { q: "What percentage raise should I ask for?", a: "It depends on the gap to market, not a fixed number. If you're 20% below median, an anchor near that gap is defensible; if you're at market, typical merit increases run 8–12%. The tool shows your personal gap and the anchoring number that matches it." },
+    { q: "Is my salary data sent anywhere?", a: "No. Every figure is calculated in your browser and nothing is stored or transmitted — close the tab and it's gone." },
+    { q: "What if my manager says there's no budget?", a: "Ask for the dated alternative: what would need to be true by which month, reviewed against which number. A named future date converts a vague 'not now' into a trackable commitment — and if the date passes empty, you've learned what you needed." },
+  ],
+  "/tools/contribution-split": [
+    { q: "How should a couple split living costs?", a: "The most sustainable default is proportional to take-home income: each partner contributes the same share of what they earn, so neither is squeezed relative to their capacity. This tool computes those shares, checks both against the 30%-of-income comfort rule, and writes the money conversation for you." },
+    { q: "Why not just split 50/50?", a: "50/50 is fair when incomes are equal. When they differ, it silently becomes a bigger burden on the lower earner — the most common source of money resentment in couples. The tool shows what 50/50 costs each of you versus a proportional split so you can decide with numbers." },
+    { q: "What is the 30% rule?", a: "Housing eating more than about 30% of take-home pay is where financial stress measurably rises. The tool flags when either partner's share crosses that line and suggests a sustainable rent for your combined incomes." },
+    { q: "Is our income data saved?", a: "No. All maths runs in your browser and nothing is stored or transmitted — refresh and it's gone." },
+  ],
+  "/tools/price-parity": [
+    { q: "What is purchasing power parity (PPP)?", a: "Exchange rates convert money, not buying power: ₹100 buys a meal in Pune; the same $1.20 buys a napkin in Seattle. PPP factors — how many local currency units buy the same basket as $1 in the US — correct for that. This tool applies them to any product price you enter." },
+    { q: "Why are iPhones more expensive in India than the US?", a: "Import duties plus GST stack roughly 20–40% on top of the US price while local wages are far lower — so in purchasing-power terms, an Indian buyer pays a much larger share of their income than an American buyer. The tool quantifies that gap for any product." },
+    { q: "Is a lower local price always a bargain?", a: "Not always. Adjusted for what wages buy locally, some 'cheap' markets are actually premium-priced. The PPP-adjusted percentage versus the US price is the honest comparison — the tool shows both market-FX and PPP views side by side." },
+    { q: "Where do the PPP numbers come from?", a: "Indicative World Bank PPP conversion factors (rounded), which are directional rather than audited prices. Use the tool to understand relative affordability, not to price a specific purchase." },
+  ],
+  "/tools/money-splitter": [
+    { q: "How do I split group trip expenses fairly?", a: "Record who paid for what, then settle net balances: each person's total paid minus their total share. This tool does the ledger and reduces it to the minimum number of transfers, so three people who all paid for things settle in one or two payments instead of a tangle." },
+    { q: "What's the difference between an expense and a lend?", a: "An expense is shared by the group; a personal lend ('I paid her taxi, she'll pay me back') belongs to exactly two people. Group tools that conflate them produce nonsense balances — this tool tags every entry as one or the other and keeps the maths honest." },
+    { q: "Can people owe different amounts for the same expense?", a: "Yes — enter custom amounts per person (they don't need to sum to the total; the tool scales them proportionally) or leave blank for an equal split." },
+    { q: "Is the group data private?", a: "Everything lives in this page's memory on your device. Nothing is uploaded, and closing the tab clears it." },
+  ],
+  "/tools/inheritance-talk": [
+    { q: "How do I start a conversation about a parent's will?", a: "Start with documents, not money: 'Where are the important papers kept?' opens the same door without the fear 'what do I inherit?' triggers. This tool provides readiness-tested openers for exactly this conversation, tuned to how ready your family's paperwork is." },
+    { q: "Why do families fight over inheritance?", a: "Most disputes are not about fairness — they're about surprises: assets nobody knew existed, stale nominations that override intentions, or caregiving that was never recognised. The tool surfaces those tension points before they detonate." },
+    { q: "What documents should be in place?", a: "A written will signed with the required witnesses, an asset list, updated nominations on every account, listed debts, digital-access arrangements, a named executor who knows it, and someone who knows where the papers are. The tool scores your family on all eight and shows what's missing." },
+    { q: "Is this legal advice?", a: "No. This is a conversation-preparation kit, not legal counsel. For wills, nominations, trusts and tax, consult a qualified professional in your jurisdiction." },
+  ],
+  "/tools/pet-log": [
+    { q: "How does the family share one pet log?", a: "Everyone opens the same page on their own phone and taps the same buttons — the last-fed time each person sees is from this device's storage, so keep one designated device (or a tablet on the fridge stand) as the household's shared log." },
+    { q: "How often should I feed a cat or dog?", a: "Most adult cats eat every 12 hours and adult dogs every 10, which is what the overdue warnings use. Puppies, kittens and pets on vet-prescribed schedules need different cadences — the log still works, just interpret the timing yourself." },
+    { q: "Can I undo a mistaken tap?", a: "Yes — long-press (or right-click on desktop) any event button to remove its most recent entry, so a pocket tap doesn't corrupt the record." },
+    { q: "Does it track medicine doses?", a: "Yes — medicine is one of the one-tap event types, with its own last-given timestamp, useful for pets on courses of antibiotics or supplements." },
+  ],
+  "/tools/wifi-qr": [
+    { q: "How do guests join my WiFi with a QR code?", a: "Generate the QR once and display it on a tablet or print it. Guests open their phone's camera app, point it at the code, and tap the 'Join network' prompt that appears — no password sharing, no typing a 24-character key." },
+    { q: "Does the QR code store my password safely?", a: "The QR encodes your SSID and password in the standard WIFI: format. Anyone who can photograph the code can join the network, so treat the printed code like the password itself — display it inside your home, not in a shop window." },
+    { q: "Does this work without internet?", a: "Yes — the QR is drawn entirely in your browser from the text you type. Nothing is uploaded, and generation works fully offline." },
+    { q: "Which phones can scan it?", a: "Every modern iPhone and Android phone parses the standard WIFI:T:WPA;S:…;P:…;; format natively from the camera app — no third-party scanner needed." },
+  ],
+  "/tools/time-left": [
+    { q: "What does Time Left actually show?", a: "It converts your remaining time — estimated from published actuarial life tables for your age and sex — into lived units: how many summers, weekends, football seasons or books-at-one-a-month you likely have left. It never shows a death date." },
+    { q: "Is this a prediction about my life?", a: "No. It applies population averages to your age, so it describes a cohort, not you. Individuals vary enormously — health, luck and choices move the numbers in ways no table captures. Treat it as perspective, not prognosis." },
+    { q: "Where does the data come from?", a: "Published period life tables (US Social Security Administration 2021 tables and equivalent population statistics), which give the average remaining years for each age. The tool rounds and presents ranges, not false precision." },
+    { q: "Why would I want to know this?", a: "Most people's plans assume unlimited time. Seeing 'about 1,500 more weekends' lands differently than a percentage, and behavioural research on mortality salience suggests that concreteness nudges people to spend time deliberately rather than by default." },
+  ],
+  "/tools/speech-rehearsal": [
+    { q: "How does the speech timing analysis work?", a: "You paste your speech, start the rehearsal, and read it aloud while the tool times you. It compares your actual pace against the 130–150 words-per-minute sweet spot audiences follow best, and shows which paragraphs blow the schedule so you can cut or rehearse them more." },
+    { q: "Does it detect filler words?", a: "On Chrome and other browsers with the Web Speech API, the tool transcribes your rehearsal on-device and counts fillers like 'um', 'like' and 'you know'. Without speech recognition, timing and pace analysis still work — only the filler report is unavailable." },
+    { q: "Is my speech uploaded anywhere?", a: "No. Your text stays in the page and, when available, the microphone transcript is processed locally on your device. Nothing is recorded, stored or transmitted." },
+    { q: "What's a good speaking pace?", a: "130–150 words per minute suits most audiences — fast enough to hold energy, slow enough to follow. Below 120 can drone; above 170 and listeners start losing phrases. The tool shows where you land and how much to trim to hit your target time." },
+  ],
+  "/tools/phone-reality": [
+    { q: "What does the Phone Reality Check show?", a: "You enter your daily screen time and it converts it into units that actually land: days per year, years of your life at your age, kilometres of thumb-scrolling, and what you'd get back by shaving off an hour a day — in books read, languages learned or gym sessions." },
+    { q: "How do I find my screen time number?", a: "On iPhone, Settings → Screen Time; on Android, Digital Wellbeing → Dashboard. Use the daily average. The tool does the rest of the maths locally — nothing you enter leaves the page." },
+    { q: "Is this anti-phone?", a: "No — it's pro-numbers. Screen-time hours are abstract and easy to shrug off; years and kilometres are not. The tool deliberately skips judgement copy and lets the arithmetic make the point, so you can decide what to change, if anything." },
+    { q: "Are the conversions accurate?", a: "They're transparent approximations using published averages (scroll speed, reading pace, session lengths), shown so you can sanity-check them. The point is the order of magnitude, not decimal precision." },
+  ],
+  "/tools/deadline-honesty": [
+    { q: "Why is this deadline calculator different?", a: "Most divide 'days left' by work and call it a plan — which lies to anyone with classes, a job or a commute. This one builds your real calendar from the hours you actually have available each day, applies the planning fudge factor (Hofstadter's law: everything takes longer than you think), and returns a day-by-day schedule." },
+    { q: "What is the fudge factor?", a: "A multiplier on estimated work time that accounts for the universal tendency to underestimate — tasks run over, life intervenes, motivation dips. The tool defaults to a realistic factor and lets you adjust it, so the plan survives contact with reality." },
+    { q: "What if there isn't enough time?", a: "It tells you straight: 'start tonight' with the earliest feasible finish, rather than producing a fantasy plan that fails on day two. An honest warning early is more useful than a comfortable lie." },
+    { q: "Is my schedule saved?", a: "No — everything is computed in your browser from what you enter, and nothing is stored or sent anywhere." },
+  ],
 };
 
 /** FAQPage JSON-LD for a path, or null when the path has no FAQs. */

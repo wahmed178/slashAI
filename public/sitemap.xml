@@ -865,6 +865,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/contribution-split</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/countdown</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -902,6 +908,12 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/days-between</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/deadline-honesty</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1087,6 +1099,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/inheritance-talk</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/interest-calculator</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -1243,6 +1261,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/money-splitter</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/morse-code</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -1268,6 +1292,12 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/namecard</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/negotiate-raise</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1333,6 +1363,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/pet-log</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/phone-reality</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/pitch</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -1364,6 +1406,12 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/prayer-schedule</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/price-parity</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1519,6 +1567,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/speech-rehearsal</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/speech-to-text</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -1627,6 +1681,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/tools/time-left</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/tools/time-zone-meeting</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -1712,6 +1772,12 @@
   </url>
   <url>
     <loc>https://slashai.in/tools/whitespace</loc>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/tools/wifi-qr</loc>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

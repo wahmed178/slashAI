@@ -1,6 +1,14 @@
 {
-  "version": "2.35.0",
+  "version": "2.36.0",
   "entries": [
+    {
+      "version": "2.36.0",
+      "date": "2026-09-24",
+      "changes": [
+        "Eleven new SlashKit tools (299 -> 310), all running fully in your browser with nothing uploaded: Raise Negotiator (market-gap maths, inflation's cut and what replacing you costs your employer, plus a five-beat script for the conversation), Local Price Parity (the same product across countries, corrected for purchasing power), Other People's Money (group expenses with expense/lend tagging and the minimum transfers to settle up), Living Contribution Splitter (couples splitting costs by income share with a 30%-of-income check), Inheritance Talk Prep (readiness-scored openers and an eight-item documents checklist for the family estate conversation), Deadline Honesty (a day-by-day plan from the hours you really have, with a planning fudge factor and an honest 'start tonight' when the maths fails), Time Left (remaining summers, weekends and seasons from published actuarial tables - ranges, never a death date), Phone Reality Check (screen time as years of your life, thumb-kilometres and what an hour a day back buys), Pet Log (one-tap feeding/walk/medicine logging for a shared household device, long-press to undo), Speech Rehearsal (pace against the 130-150 wpm sweet spot, per-paragraph timing and filler counts on-device) and WiFi QR (guests scan to join, no password spelling)",
+        "Every new tool ships with its own FAQ section that also feeds Google FAQ rich results, and all eleven are in the sitemap"
+      ]
+    },
     {
       "version": "2.35.0",
       "date": "2026-09-23",

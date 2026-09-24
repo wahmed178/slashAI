@@ -134,6 +134,8 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "hourly-to-salary", name: "Hourly to Salary Converter", desc: "Hourly ↔ daily ↔ weekly ↔ monthly ↔ yearly", icon: "⏱️" },
       { slug: "unit-converter", name: "Unit Converter", desc: "Temp, length, weight, area, volume, speed", icon: "📐" },
       { slug: "tip-calculator", name: "Tip Calculator", desc: "Split bills and calculate tips", icon: "💰" },
+      { slug: "negotiate-raise", name: "Raise Negotiator", desc: "Market-gap maths + a 5-beat script for the raise talk", icon: "💼", added: "2026-09-23" },
+      { slug: "price-parity", name: "Local Price Parity", desc: "Is it really cheaper here? PPP-adjusted price check", icon: "⚖️", added: "2026-09-23" },
     ],
   },
   {
@@ -193,6 +195,8 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "focus", name: "Deep Work Mode", desc: "Pomodoro + ambient sounds + fullscreen", icon: "🎯" },
       { slug: "habits", name: "Habit Tracker", desc: "GitHub-style contribution grid", icon: "📊" },
       { slug: "interval-timer", name: "Interval Timer", desc: "HIIT work/rest intervals with beeps", icon: "🔔" },
+      { slug: "deadline-honesty", name: "Deadline Honesty", desc: "A day-by-day plan built around your real schedule, not wishful maths", icon: "📅", added: "2026-09-23" },
+      { slug: "time-left", name: "Time Left", desc: "Your remaining time in summers, weekends and big moments — from actuarial data", icon: "⏳", added: "2026-09-23" },
     ],
   },
   {
@@ -234,6 +238,11 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "age-of-things", name: "How Old Is Everything?", desc: "Age comparisons for famous things, places and inventions", icon: "⏳" },
       { slug: "water-tracker", name: "Water Tracker", desc: "Daily hydration goal with tap logging", icon: "💧" },
       { slug: "roman-numeral", name: "Roman Numeral Converter", desc: "Numbers ↔ Roman numerals", icon: "🏛️" },
+      { slug: "pet-log", name: "Pet Log", desc: "One-tap family log for feeding, walks and medicine — never asks twice", icon: "🐾", added: "2026-09-23" },
+      { slug: "phone-reality", name: "Phone Reality Check", desc: "Screen time in units that land: years, thumb-km, what you get back", icon: "📵", added: "2026-09-23" },
+      { slug: "money-splitter", name: "Other People's Money", desc: "Group expenses with expense/lend tagging & min transfers", icon: "👥", added: "2026-09-23" },
+      { slug: "contribution-split", name: "Living Contribution Splitter", desc: "Couples: split costs by income share, 30% rule check", icon: "🏠", added: "2026-09-23" },
+      { slug: "inheritance-talk", name: "Inheritance Talk Prep", desc: "Open the family estate conversation without the dread", icon: "🕊️", added: "2026-09-23" },
     ],
   },
   {
@@ -298,6 +307,8 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
     tools: [
       { slug: "arabic-keyboard", name: "Arabic Keyboard", desc: "Type in Arabic without an Arabic keyboard", icon: "⌨️" },
       { slug: "speech-to-text", name: "Speech to Text", desc: "Real-time speech transcription", icon: "🎤" },
+      { slug: "speech-rehearsal", name: "Speech Rehearsal", desc: "Read your speech aloud, get pace, timing and filler-word analysis", icon: "🎚️", added: "2026-09-23" },
+      { slug: "wifi-qr", name: "WiFi QR", desc: "Guests scan and join your WiFi — no spelling passwords", icon: "📶", added: "2026-09-23" },
     ],
     hubTools: [
       { slug: "/hub/urdu", name: "Urdu Writers Hub", desc: "Poetry, resources, fonts for Urdu", icon: "🇵🇰", hub: true },
