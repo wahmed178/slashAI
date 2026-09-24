@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-23T12:31:36.536Z",
+  "updated": "2026-09-24T12:30:46.571Z",
   "articles": [
     {
-      "title": "Claude Opus 5.5",
-      "url": "https://www.anthropic.com/claude-opus-5-5",
+      "title": "Claude discovers a novel enzyme system with CRISPR-like repeats",
+      "url": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
       "source": "HackerNews",
-      "score": 1614,
-      "publishedAt": "2026-09-22"
-    },
-    {
-      "title": "GPT-6 Sol and Luna",
-      "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
-      "source": "HackerNews",
-      "score": 1602,
-      "publishedAt": "2026-09-22"
-    },
-    {
-      "title": "OpenAI GPT–6 Astra breaks Enigma message that has resisted solution since 2005",
-      "url": "https://www.cryptocellar.org/bgac/the-mvueh-break.html",
-      "source": "HackerNews",
-      "score": 685,
-      "publishedAt": "2026-09-22"
-    },
-    {
-      "title": "Microsoft killed FoxPro in 2007. Anyway, here's FoxPro revived",
-      "url": "https://foxscript.org/",
-      "source": "HackerNews",
-      "score": 366,
-      "publishedAt": "2026-09-22"
-    },
-    {
-      "title": "Jev in 25 Lines of Python",
-      "url": "https://www.nobodywho.ai/posts/jev-in-25-lines/",
-      "source": "HackerNews",
-      "score": 281,
+      "score": 684,
       "publishedAt": "2026-09-23"
     },
     {
-      "title": "ReBarUEFI: Resizable BAR for almost any UEFI system",
-      "url": "https://github.com/xCuri0/ReBarUEFI",
+      "title": "Linux support is coming to Snapdragon X2 Series",
+      "url": "https://www.qualcomm.com/news/onq/2026/09/snapdragon-summit-agentic-ai-pcs-linux",
       "source": "HackerNews",
-      "score": 179,
-      "publishedAt": "2026-09-21"
-    },
-    {
-      "title": "Transit rewards",
-      "url": "https://waymo.com/blog/2026/09/transit-rewards/",
-      "source": "HackerNews",
-      "score": 170,
+      "score": 471,
       "publishedAt": "2026-09-23"
     },
     {
-      "title": "The darker side of being a doctor",
-      "url": "https://drericlevi.pages.dev/the-darker-side-of-being-a-doctor/",
+      "title": "Meta takes down a critical video about meta AI Glasses after filming at Meta",
+      "url": "https://www.reddit.com/r/facebook/comments/1wotwrk/meta_takes_down_a_critical_video_about_meta_ai/",
       "source": "HackerNews",
-      "score": 136,
+      "score": 269,
+      "publishedAt": "2026-09-24"
+    },
+    {
+      "title": "VSCode's SSH Agent Is Bananas (2025)",
+      "url": "https://fly.io/blog/vscode-ssh-wtf/",
+      "source": "HackerNews",
+      "score": 254,
       "publishedAt": "2026-09-23"
+    },
+    {
+      "title": "ArXiv receives multiyear commitments to support it as an independent nonprofit",
+      "url": "https://blog.arxiv.org/2026/09/23/arxiv-receives-multiyear-investment/",
+      "source": "HackerNews",
+      "score": 210,
+      "publishedAt": "2026-09-23"
+    },
+    {
+      "title": "Ideas on modernizing the open-source desktop",
+      "url": "https://lwn.net/SubscriberLink/1095425/2d9f411252325784/",
+      "source": "HackerNews",
+      "score": 193,
+      "publishedAt": "2026-09-24"
+    },
+    {
+      "title": "Early rogue AI agent activity and attempts to hack found on urlquery.net",
+      "url": "https://transluce.org/agent-activity",
+      "source": "HackerNews",
+      "score": 160,
+      "publishedAt": "2026-09-24"
+    },
+    {
+      "title": "Nokia Design Archive (2025)",
+      "url": "https://nokiadesignarchive.aalto.fi/index.html",
+      "source": "HackerNews",
+      "score": 95,
+      "publishedAt": "2026-09-24"
     }
   ]
 }
