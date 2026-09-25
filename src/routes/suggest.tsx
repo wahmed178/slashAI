@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import { Send, Sparkles, Check, ArrowLeft } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ExternalLink, Send, Sparkles, Check, ArrowLeft, Globe, Store } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/library/AppShell";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_META } from "@/lib/commands";
+import { STORE_SIGNUP_FORM_URL } from "@/lib/stores";
 
 export const Route = createFileRoute("/suggest")({
   head: () => ({
@@ -185,6 +186,40 @@ function SuggestCommandPage() {
             </Button>
           </form>
         )}
+
+        {/* ── Suggest a software / website, or list your store ── */}
+        <section className="mt-8 rounded-2xl border border-primary/25 bg-primary/5 p-5">
+          <h2 className="text-sm font-bold text-foreground">
+            Want to suggest a software or website instead?
+          </h2>
+          <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">
+            Found a free tool, app or website the catalogue is missing — or you run a store
+            website / storefront that should be listed? Fill the short Google Form and it goes
+            straight to the review queue:
+          </p>
+          <div className="mt-3.5 flex flex-col gap-2 sm:flex-row">
+            <a
+              href={STORE_SIGNUP_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ripple-press inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-[13px] font-bold text-background"
+            >
+              <ExternalLink className="size-4" aria-hidden />
+              Suggest a software / website
+            </a>
+            <Link
+              to="/stores"
+              className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 text-[13px] font-bold text-foreground transition-colors hover:border-primary/40"
+            >
+              <Store className="size-4" aria-hidden />
+              Free store for your shop
+            </Link>
+          </div>
+          <p className="mt-3 flex items-start gap-1.5 text-[11.5px] text-muted-foreground">
+            <Globe className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+            Works on mobile too — the form opens in a new tab and takes about a minute.
+          </p>
+        </section>
       </div>
     </AppShell>
   );
