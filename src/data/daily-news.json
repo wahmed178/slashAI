@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-24T12:30:46.571Z",
+  "updated": "2026-09-25T12:32:02.918Z",
   "articles": [
     {
-      "title": "Claude discovers a novel enzyme system with CRISPR-like repeats",
-      "url": "https://www.anthropic.com/news/claude-discovers-novel-enzyme-system",
+      "title": "F-Droid 2.0",
+      "url": "https://f-droid.org/2026/09/24/f-droid-2.0-a-new-chapter-for-android-freedom.html",
       "source": "HackerNews",
-      "score": 684,
-      "publishedAt": "2026-09-23"
-    },
-    {
-      "title": "Linux support is coming to Snapdragon X2 Series",
-      "url": "https://www.qualcomm.com/news/onq/2026/09/snapdragon-summit-agentic-ai-pcs-linux",
-      "source": "HackerNews",
-      "score": 471,
-      "publishedAt": "2026-09-23"
-    },
-    {
-      "title": "Meta takes down a critical video about meta AI Glasses after filming at Meta",
-      "url": "https://www.reddit.com/r/facebook/comments/1wotwrk/meta_takes_down_a_critical_video_about_meta_ai/",
-      "source": "HackerNews",
-      "score": 269,
+      "score": 1293,
       "publishedAt": "2026-09-24"
     },
     {
-      "title": "VSCode's SSH Agent Is Bananas (2025)",
-      "url": "https://fly.io/blog/vscode-ssh-wtf/",
+      "title": "Show HN: Make cursed fonts like Times New Bastard",
+      "url": "https://bastardica.mitpit.com",
       "source": "HackerNews",
-      "score": 254,
+      "score": 737,
       "publishedAt": "2026-09-23"
     },
     {
-      "title": "ArXiv receives multiyear commitments to support it as an independent nonprofit",
-      "url": "https://blog.arxiv.org/2026/09/23/arxiv-receives-multiyear-investment/",
+      "title": "Dutch governments builds alternative for Microsoft based on NixOS",
+      "url": "https://www.dawo.community/en/",
       "source": "HackerNews",
-      "score": 210,
-      "publishedAt": "2026-09-23"
+      "score": 408,
+      "publishedAt": "2026-09-25"
     },
     {
-      "title": "Ideas on modernizing the open-source desktop",
-      "url": "https://lwn.net/SubscriberLink/1095425/2d9f411252325784/",
+      "title": "Pentium II at 600Mhz with Voodoo 3 Emulated on 86Box with M6 Mac Mini",
+      "url": "https://nyaa.sh/reviews/mac-mini-m6-emulation",
       "source": "HackerNews",
-      "score": 193,
-      "publishedAt": "2026-09-24"
+      "score": 104,
+      "publishedAt": "2026-09-25"
     },
     {
-      "title": "Early rogue AI agent activity and attempts to hack found on urlquery.net",
-      "url": "https://transluce.org/agent-activity",
+      "title": "The Mafia may be keeping fentanyl out of Italy",
+      "url": "https://economist.com/europe/2026/09/24/the-mafia-may-be-keeping-fentanyl-out-of-italy",
       "source": "HackerNews",
-      "score": 160,
-      "publishedAt": "2026-09-24"
+      "score": 91,
+      "publishedAt": "2026-09-25"
     },
     {
-      "title": "Nokia Design Archive (2025)",
-      "url": "https://nokiadesignarchive.aalto.fi/index.html",
+      "title": "CVE-2025-13032: Entering and Breaking the Avast Antivirus Sandbox Part 2",
+      "url": "https://www.safateam.com/intelligence-hub/research/technical-articles/cve-2025-13032-entering-and-breaking-the-avast-antivirus-sandbox-part-2",
       "source": "HackerNews",
-      "score": 95,
-      "publishedAt": "2026-09-24"
+      "score": 66,
+      "publishedAt": "2026-09-25"
+    },
+    {
+      "title": "Ink and Switch Interactive Homepage",
+      "url": "https://www.inkandswitch.com/",
+      "source": "HackerNews",
+      "score": 60,
+      "publishedAt": "2026-09-25"
+    },
+    {
+      "title": "Oracle on the hook to pay data centre investors even if site has no electricity",
+      "url": "https://www.ft.com/content/a96bf05a-a299-4d6a-a753-b298dd0f4016",
+      "source": "HackerNews",
+      "score": 59,
+      "publishedAt": "2026-09-25"
     }
   ]
 }
