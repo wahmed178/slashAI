@@ -13,6 +13,7 @@ import { toast } from "sonner";
 
 import { Notice, SetupNotice, Skeleton } from "./StoreBits";
 import {
+  STORE_SIGNUP_FORM_URL,
   SUPABASE_READY,
   cartCount,
   cartPayload,
@@ -272,7 +273,15 @@ export function Storefront({ slug, standalone = false }: { slug: string; standal
         <a href="/stores" className="font-semibold text-primary">
           SlashAI Stores
         </a>{" "}
-        · free for every small business
+        · free for every small business ·{" "}
+        <a
+          href={STORE_SIGNUP_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-semibold text-primary hover:text-primary/80"
+        >
+          list your store
+        </a>
       </p>
 
       {/* sticky cart bar */}

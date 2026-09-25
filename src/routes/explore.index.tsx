@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { categoryIcon } from "@/components/library/icons";
 import { CATEGORY_TREE, SUBCATEGORY_TOTAL, VERIFIED_TOTAL } from "@/lib/commands";
 import { categoryHref } from "@/lib/explore-slugs";
+import { STORE_SIGNUP_FORM_URL } from "@/lib/stores";
 
 export const Route = createFileRoute("/explore/")({
   head: () => ({
@@ -247,11 +248,21 @@ function ExplorePage() {
               Suggest your favorite prompt to be added to the free catalog.
             </p>
           </div>
-          <Button asChild size="sm" className="gap-1.5 shrink-0">
-            <Link to="/suggest">
-              <Sparkles className="size-3.5" /> Suggest a command
-            </Link>
-          </Button>
+          <div className="flex shrink-0 flex-wrap items-center justify-center gap-2 sm:justify-end">
+            <Button asChild size="sm" className="gap-1.5">
+              <Link to="/suggest">
+                <Sparkles className="size-3.5" /> Suggest a command
+              </Link>
+            </Button>
+            <a
+              href={STORE_SIGNUP_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border bg-background px-3.5 text-[13px] font-semibold text-foreground transition-colors hover:border-primary/40"
+            >
+              Suggest a software / website →
+            </a>
+          </div>
         </div>
       </div>
     </AppShell>

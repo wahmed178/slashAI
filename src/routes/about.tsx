@@ -28,6 +28,7 @@ import { GLOSSARY_TOTAL } from "@/lib/glossary";
 import { SLASH_TOOL_COUNT } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { COURSE_COUNT, TOTAL_LESSONS } from "@/lib/courses";
+import { STORE_SIGNUP_FORM_URL } from "@/lib/stores";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -426,6 +427,14 @@ function AboutPage() {
             className="font-medium text-primary transition-all hover:text-primary/80"
           >
             Found something we missed? Open an issue →
+          </a>
+          <a
+            href={STORE_SIGNUP_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-primary transition-all hover:text-primary/80"
+          >
+            Suggest a software / website →
           </a>
           <Link to="/changelog" className="font-medium text-muted-foreground transition-colors hover:text-foreground">
             Changelog

@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Globe, ShieldCheck, Store as StoreIcon, Zap } from "lucide-react";
+import { ArrowRight, ClipboardList, Globe, ShieldCheck, Store as StoreIcon, Zap } from "lucide-react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { SetupNotice, Skeleton } from "@/components/stores/StoreBits";
 import { useStoreDirectory } from "@/hooks/use-stores";
-import { STORES_ROOT_DOMAIN, storeTheme } from "@/lib/stores";
+import { STORE_SIGNUP_FORM_URL, STORES_ROOT_DOMAIN, storeTheme } from "@/lib/stores";
 
 export const Route = createFileRoute("/stores/")({
   head: () => ({
@@ -69,7 +69,39 @@ function StoresDirectory() {
             How it works
           </a>
         </div>
+        <p className="mt-3 text-[12.5px] text-muted-foreground">
+          Already have a store website or storefront?{" "}
+          <a
+            href={STORE_SIGNUP_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-primary underline underline-offset-2 transition-colors hover:text-primary/80"
+          >
+            Add it to this directory with a 1-minute form
+          </a>
+          .
+        </p>
       </header>
+
+      <section className="mt-4 flex flex-col gap-3 rounded-2xl border border-primary/25 bg-primary/5 p-4 sm:flex-row sm:items-center">
+        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-primary/15 text-primary">
+          <ClipboardList className="size-4" aria-hidden />
+        </span>
+        <div className="min-w-0">
+          <h2 className="text-[13.5px] font-bold text-foreground">Have a store website or storefront already?</h2>
+          <p className="mt-0.5 text-[12.5px] leading-relaxed text-muted-foreground">
+            List it here so shoppers can find it — fill the short Google Form and we add your store to the directory.
+          </p>
+        </div>
+        <a
+          href={STORE_SIGNUP_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ripple-press inline-flex h-10 shrink-0 items-center gap-2 rounded-xl bg-primary px-4 text-[13px] font-bold text-background sm:ml-auto"
+        >
+          Fill the form <ArrowRight className="size-4" aria-hidden />
+        </a>
+      </section>
 
       <section id="how" className="mt-6 grid gap-3 sm:grid-cols-3">
         {STEPS.map((step) => {
@@ -140,6 +172,18 @@ function StoresDirectory() {
             >
               Create a store
             </Link>
+            <p className="mt-3 text-[12px] text-muted-foreground">
+              Or{" "}
+              <a
+                href={STORE_SIGNUP_FORM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary underline underline-offset-2 hover:text-primary/80"
+              >
+                list your existing store website
+              </a>{" "}
+              with the form.
+            </p>
           </div>
         ) : (
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
