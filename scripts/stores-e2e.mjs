@@ -80,7 +80,9 @@ async function main() {
   const supabase = getSupabase();
   const email =
     process.env.STORES_E2E_EMAIL?.trim() ||
-    `store-owner-${Date.now().toString(36)}@slashai-stores.test`;
+    // Supabase's signup validation rejects reserved TLDs like .test, so use a
+    // plausible subdomain of the real site for the throwaway owner account.
+    `store-owner-${Date.now().toString(36)}@e2e.slashai.in`;
   const password = process.env.STORES_E2E_PASSWORD?.trim() || `Slash-${Date.now().toString(36)}!a`;
 
   let user = null;
@@ -188,7 +190,9 @@ async function main() {
     anonProductsError?.message ?? `got ${anonProducts?.length}`,
   );
 
-  const paid = anonProducts.find((p) => p.price > 0);
+  // PostgREST returns rows in arbitrary order — target the ₹1,200 product
+  // explicitly so the expected total (2 × 1200 + 0) is deterministic.
+  const paid = anonProducts.find((p) => p.price === 1200) ?? anonProducts.find((p) => p.price > 0);
   const free = anonProducts.find((p) => p.price === 0);
 
   const { data: order, error: orderError } = await shopper.rpc("place_order", {
@@ -220,10 +224,13 @@ async function main() {
   }
 
   if (html) {
-    ok("the page carries the store's name in its title", html.includes(name));
-    // Data is fetched client-side, so the SSR HTML proves the route resolves;
-    // the store's own content is asserted below through the same queries the
-    // page runs in the browser.
+    // The page is client-side rendered: the static HTML carries a slug-derived
+    // title, and the real store name is set on document.title once the
+    // storefront's query hydrates (asserted separately below).
+    ok(
+      "the page carries a storefront title",
+      /<title>[^<]*— store on SlashAI<\/title>/.test(html),
+    );
     ok("the route resolves to the storefront (not a 404 page)", !/This page doesn't exist/i.test(html));
   }
 

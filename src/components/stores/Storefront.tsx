@@ -46,6 +46,12 @@ export function Storefront({ slug, standalone = false }: { slug: string; standal
   const [cartOpen, setCartOpen] = useState(false);
   const [placed, setPlaced] = useState<Placed | null>(null);
 
+  // Browser-tab title carries the real store name once the data arrives —
+  // the static head only knows the slug.
+  useEffect(() => {
+    if (store?.name) document.title = `${store.name} — store on SlashAI`;
+  }, [store?.name]);
+
   // Restore this store's saved cart exactly once per store, as soon as the
   // catalogue is known. Re-running later (a refresh, a store reload) would
   // throw away whatever the shopper has added in the meantime.
