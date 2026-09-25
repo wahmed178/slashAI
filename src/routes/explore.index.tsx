@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { categoryIcon } from "@/components/library/icons";
 import { CATEGORY_TREE, SUBCATEGORY_TOTAL, VERIFIED_TOTAL } from "@/lib/commands";
 import { categoryHref } from "@/lib/explore-slugs";
-import { STORE_SIGNUP_FORM_URL } from "@/lib/stores";
+import { SUGGESTION_FORM_URL } from "@/lib/app-meta";
 
 export const Route = createFileRoute("/explore/")({
   head: () => ({
@@ -255,7 +255,7 @@ function ExplorePage() {
               </Link>
             </Button>
             <a
-              href={STORE_SIGNUP_FORM_URL}
+              href={SUGGESTION_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border bg-background px-3.5 text-[13px] font-semibold text-foreground transition-colors hover:border-primary/40"

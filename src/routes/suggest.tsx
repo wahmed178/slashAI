@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { AppShell } from "@/components/library/AppShell";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_META } from "@/lib/commands";
-import { STORE_SIGNUP_FORM_URL } from "@/lib/stores";
+import { SUGGESTION_FORM_URL } from "@/lib/app-meta";
 
 export const Route = createFileRoute("/suggest")({
   head: () => ({
@@ -193,13 +193,12 @@ function SuggestCommandPage() {
             Want to suggest a software or website instead?
           </h2>
           <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">
-            Found a free tool, app or website the catalogue is missing — or you run a store
-            website / storefront that should be listed? Fill the short Google Form and it goes
-            straight to the review queue:
+            Found a free tool, app or website the catalogue is missing? Fill the short Google
+            Form and it goes straight to the review queue:
           </p>
           <div className="mt-3.5 flex flex-col gap-2 sm:flex-row">
             <a
-              href={STORE_SIGNUP_FORM_URL}
+              href={SUGGESTION_FORM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="ripple-press inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-[13px] font-bold text-background"

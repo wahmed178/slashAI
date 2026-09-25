@@ -28,7 +28,7 @@ import { GLOSSARY_TOTAL } from "@/lib/glossary";
 import { SLASH_TOOL_COUNT } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { COURSE_COUNT, TOTAL_LESSONS } from "@/lib/courses";
-import { STORE_SIGNUP_FORM_URL } from "@/lib/stores";
+import { SUGGESTION_FORM_URL } from "@/lib/app-meta";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -429,7 +429,7 @@ function AboutPage() {
             Found something we missed? Open an issue →
           </a>
           <a
-            href={STORE_SIGNUP_FORM_URL}
+            href={SUGGESTION_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="font-medium text-primary transition-all hover:text-primary/80"

@@ -377,3 +377,12 @@ export const APP_DETAILS = {
   website: "https://slashai.in",
   storage: "Everything stays on this device - no account, no tracking.",
 };
+
+/**
+ * Google Form for suggesting a software, tool or website to the SlashAI
+ * catalogue. Used everywhere the site asks "found something we should add?".
+ * Store/website *listings* use their own form — see STORE_SIGNUP_FORM_URL in
+ * src/lib/stores.ts.
+ */
+export const SUGGESTION_FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSe_op-GPK9klYwmpRyJP3Wi2FUyVZG8M0Nfyr3_tQwjNz7TkQ/viewform";
