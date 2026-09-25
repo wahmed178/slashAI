@@ -1,13 +1,13 @@
 {
-  "updated": "2026-09-24",
+  "updated": "2026-09-25",
   "quote": {
-    "text": "Quiet people have the loudest minds.",
-    "author": "Stephen Hawking"
+    "text": "The more you take responsibility for your past and present, the more you are able to create the future you seek.",
+    "author": "Celestine Chua"
   },
-  "advice": "Big things have small beginnings.",
+  "advice": "When painting a room, preparation is key. The actual painting should account for about 40% of the work.",
   "artwork": {
-    "title": "The Crucifixion",
-    "artist": "Austrian or Bavarian",
-    "imageId": "173911e9-689c-234c-ec2b-e8c2c6c76586"
+    "title": "Scholar Playing Qin by a Waterfall",
+    "artist": "Artist unknown (Chinese, 17th century)",
+    "imageId": "304b22a7-2192-0414-bb02-260a515a92ac"
   }
 }
