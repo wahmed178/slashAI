@@ -40,9 +40,10 @@ export const STORES_ROOT_DOMAIN =
   envString("VITE_STORES_ROOT_DOMAIN").toLowerCase() || "slashai.in";
 
 /**
- * Google Form where people suggest a software/website for the catalogue — or
- * list an existing store website / storefront in the SlashAI Stores directory.
- * Linked from /stores, /suggest, /explore, /about and /contact.
+ * Google Form for listing an existing store website / storefront in the
+ * SlashAI Stores directory. Linked from /stores and every storefront footer.
+ * Software/website *suggestions* use their own form — see SUGGESTION_FORM_URL
+ * in src/lib/app-meta.ts.
  */
 export const STORE_SIGNUP_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSfCiX9ZSzngwVvS50nWRuSD1GnmEndfhHnVV8O27wV9IuTTkw/viewform?usp=publish-editor";
