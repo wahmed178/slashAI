@@ -1,5 +1,5 @@
 /**
- * SlashBar — the app rail. 23 Slash mini-apps, each packed with real, useful
+ * SlashBar — the app rail. 24 Slash mini-apps, each packed with real, useful
  * content pools and working generators (no placeholders, no API keys). Single
  * source of truth for the /slash hub, /slash/$app pages, nav and Discovery.
  *
@@ -112,9 +112,18 @@ export const SLASH_APPS: SlashApp[] = [
     slug: "play",
     name: "SlashPlay",
     emoji: "🎮",
-    desc: "47 free games - multiplayer, arcade, cards, puzzles, zen.",
+    desc: `${SEO_COUNTS.games} free games - multiplayer, arcade, cards, puzzles, brain training, zen.`,
     tint: T.rose,
     link: "/play",
+    widgets: [],
+  },
+  {
+    slug: "english",
+    name: "Slash English",
+    emoji: "🇬🇧",
+    desc: "Learn English end to end - vocabulary, grammar, spelling, reading and typing trainers.",
+    tint: T.sky,
+    link: "/english",
     widgets: [],
   },
   {

@@ -119,7 +119,7 @@ export const PLAY_SECTIONS: PlaySection[] = [
     games: [
       { slug: "memory-palace", name: "Memory Palace", desc: "Place items in rooms, then recall every room - method of loci", icon: "🏛️", players: "Solo", added: "2026-09-10" },
       { slug: "stroop-test", name: "Stroop Test", desc: "The 1935 psychology classic - name the ink, fight the reflex", icon: "🌈", players: "Solo" },
-      { slug: "stop-the-color", name: "Stop the Color", desc: "Quick-fire Stroop - 30 seconds, most correct taps wins", icon: "🎨", players: "Solo", added: "2026-09-10" },
+      { slug: "stop-the-color", name: "Stop the Color", desc: "Advanced Stroop lab - 8 inks, 3 task modes, keyboard play, interference score", icon: "🎨", players: "Solo", added: "2026-09-10" },
       { slug: "digit-span", name: "Digit Span", desc: "Digits flash once - type them back, forward or reversed", icon: "🔢", players: "Solo" },
       { slug: "schulte-table", name: "Schulte Table", desc: "Tap 1-N in order, eyes fixed on centre - pilot vision drill", icon: "🎯", players: "Solo", added: "2026-09-10" },
       { slug: "memory-matrix", name: "Memory Matrix", desc: "Memorize flashing tile patterns across progressive spatial stages", icon: "🧩", players: "Solo", added: "2026-09-18" },
@@ -134,6 +134,10 @@ export const PLAY_SECTIONS: PlaySection[] = [
       { slug: "eight-queens", name: "Eight Queens", desc: "Place 8 queens, none attacking - the 1848 chess classic", icon: "♛", players: "Solo", added: "2026-09-23" },
       { slug: "knights-quest", name: "Knight's Quest", desc: "Knight's tour - visit every square exactly once with L-moves", icon: "♞", players: "Solo", added: "2026-09-23" },
       { slug: "takuzu", name: "Takuzu", desc: "Binary logic - no three in a line, equal counts, unique rows", icon: "⚫", players: "Solo", added: "2026-09-23" },
+      { slug: "n-back", name: "N-Back", desc: "1/2/3-back working memory with real d' scoring - the research classic", icon: "🧠", players: "Solo", added: "2026-09-26" },
+      { slug: "go-no-go", name: "Go / No-Go", desc: "Tap green, hold back on blue - inhibitory control and false alarms", icon: "🚦", players: "Solo", added: "2026-09-26" },
+      { slug: "trail-making", name: "Trail Making", desc: "Test A and B - time both, and the gap is your task-switching cost", icon: "🔀", players: "Solo", added: "2026-09-26" },
+      { slug: "hue-hunt", name: "Hue Hunt", desc: "Adaptive colour staircase - find the hue gap your eyes can actually resolve", icon: "🌈", players: "Solo", added: "2026-09-26" },
     ],
   },
   {
@@ -323,6 +327,10 @@ const GAME_META: Record<string, GameMeta> = {
   "eight-queens": { minutes: 8, level: "Hard" },
   "knights-quest": { minutes: 7, level: "Medium" },
   takuzu: { minutes: 8, level: "Hard" },
+  "n-back": { minutes: 4, level: "Hard" },
+  "go-no-go": { minutes: 3, level: "Medium" },
+  "trail-making": { minutes: 4, level: "Medium" },
+  "hue-hunt": { minutes: 3, level: "Hard" },
   // Arcade
   snake: { minutes: 3, level: "Medium" },
   "2048": { minutes: 6, level: "Medium" },
@@ -428,7 +436,12 @@ export const SCORING_GAMES = new Set([
   "eight-queens",
   "knights-quest",
   "takuzu",
+  "stop-the-color",
+  "n-back",
+  "go-no-go",
+  "trail-making",
+  "hue-hunt",
 ]);
 
 /** Games listed under "New Games" at the top of /play - newest release first. */
-export const NEW_GAME_SLUGS = ["schulte-table", "stop-the-color", "memory-palace"] as const;
+export const NEW_GAME_SLUGS = ["n-back", "go-no-go", "trail-making", "hue-hunt"] as const;

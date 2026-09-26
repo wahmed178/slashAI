@@ -27,6 +27,7 @@ async function main() {
     url("/discover", { changefreq: "daily", priority: "0.9" }),
     url("/tools", { changefreq: "daily", priority: "0.9" }),
     url("/play", { changefreq: "weekly", priority: "0.9" }),
+    url("/english", { changefreq: "weekly", priority: "0.8" }),
     url("/slash", { changefreq: "weekly", priority: "0.8" }),
     url("/trending", { changefreq: "daily", priority: "0.8" }),
     url("/live", { changefreq: "hourly", priority: "0.7" }),

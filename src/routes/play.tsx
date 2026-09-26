@@ -1,5 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
+import { SEO_COUNTS } from "@/lib/seo-counts";
+
 export const Route = createFileRoute("/play")({
   component: PlayLayout,
   // The generic SlashPlay title/description must only apply to the /play
@@ -12,8 +14,7 @@ export const Route = createFileRoute("/play")({
         { title: "SlashPlay - Free Browser Games" },
         {
           name: "description",
-          content:
-            "Play 19+ free browser games - tic tac toe, connect four, battleship, blackjack, snake, 2048 and more. Multiplayer pass-and-play, no download, works offline.",
+          content: `Play ${SEO_COUNTS.games} free browser games - tic tac toe, connect four, battleship, blackjack, snake, 2048, sudoku, ludo and more. Multiplayer pass-and-play, no download, works offline.`,
         },
       ],
     };

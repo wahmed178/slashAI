@@ -89,6 +89,11 @@ const STATIC_PAGES: Record<string, SeoPage> = {
     title: `SlashPlay - ${SEO_COUNTS.games} Free Browser Games | SlashAI`,
     description: `Play ${SEO_COUNTS.games} free browser games - Sudoku, Nonogram, table tennis, darts, bowling, cricket, checkers, word search, 2048 and more. Solo, vs AI or pass-and-play.`,
   },
+  "/english": {
+    title: "Slash English - Learn English Free, End to End | SlashAI",
+    description:
+      "Learn English free end to end: a vocabulary trainer with 120 hard words, a grammar clinic that explains every fix, a spelling bee, reading comprehension and every English tool in one place. Works offline.",
+  },
   "/slash": {
     title: "SlashBar - Every Slash App in One Rail | SlashAI",
     description:
