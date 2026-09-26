@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-25T12:32:02.918Z",
+  "updated": "2026-09-26T12:01:46.133Z",
   "articles": [
     {
-      "title": "F-Droid 2.0",
-      "url": "https://f-droid.org/2026/09/24/f-droid-2.0-a-new-chapter-for-android-freedom.html",
+      "title": "Revealing the details of how OpenAI agents hacked Hugging Face",
+      "url": "https://swarmtraces.org/",
       "source": "HackerNews",
-      "score": 1293,
-      "publishedAt": "2026-09-24"
-    },
-    {
-      "title": "Show HN: Make cursed fonts like Times New Bastard",
-      "url": "https://bastardica.mitpit.com",
-      "source": "HackerNews",
-      "score": 737,
-      "publishedAt": "2026-09-23"
-    },
-    {
-      "title": "Dutch governments builds alternative for Microsoft based on NixOS",
-      "url": "https://www.dawo.community/en/",
-      "source": "HackerNews",
-      "score": 408,
+      "score": 520,
       "publishedAt": "2026-09-25"
     },
     {
-      "title": "Pentium II at 600Mhz with Voodoo 3 Emulated on 86Box with M6 Mac Mini",
-      "url": "https://nyaa.sh/reviews/mac-mini-m6-emulation",
+      "title": "Ollaya – Ollama for open-source, Jev-style decision models",
+      "url": "https://ollaya.dev/",
       "source": "HackerNews",
-      "score": 104,
+      "score": 483,
       "publishedAt": "2026-09-25"
     },
     {
-      "title": "The Mafia may be keeping fentanyl out of Italy",
-      "url": "https://economist.com/europe/2026/09/24/the-mafia-may-be-keeping-fentanyl-out-of-italy",
+      "title": "Plan mode is dead",
+      "url": "https://www.aymannadeem.com/artificial/intelligence,/developer/tools/2026/09/24/plan-mode-is-dead.html",
       "source": "HackerNews",
-      "score": 91,
+      "score": 368,
       "publishedAt": "2026-09-25"
     },
     {
-      "title": "CVE-2025-13032: Entering and Breaking the Avast Antivirus Sandbox Part 2",
-      "url": "https://www.safateam.com/intelligence-hub/research/technical-articles/cve-2025-13032-entering-and-breaking-the-avast-antivirus-sandbox-part-2",
+      "title": "We're gonna need a lot more mathematicians",
+      "url": "https://terrytao.wordpress.com/2026/09/24/were-gonna-need-a-lot-more-mathematicians/",
       "source": "HackerNews",
-      "score": 66,
-      "publishedAt": "2026-09-25"
+      "score": 172,
+      "publishedAt": "2026-09-26"
     },
     {
-      "title": "Ink and Switch Interactive Homepage",
-      "url": "https://www.inkandswitch.com/",
+      "title": "A single function Jev-like wrapper for LLMs, including vision models",
+      "url": "http://allanrbo.blogspot.com/2026/09/a-jev-like-wrapper-for-llms-including.html",
       "source": "HackerNews",
-      "score": 60,
-      "publishedAt": "2026-09-25"
+      "score": 96,
+      "publishedAt": "2026-09-26"
     },
     {
-      "title": "Oracle on the hook to pay data centre investors even if site has no electricity",
-      "url": "https://www.ft.com/content/a96bf05a-a299-4d6a-a753-b298dd0f4016",
+      "title": "Breaking Up with Google Play: Why Conversations Is Now Free",
+      "url": "https://gultsch.de/posts/breaking-up-with-google-play/",
       "source": "HackerNews",
-      "score": 59,
-      "publishedAt": "2026-09-25"
+      "score": 79,
+      "publishedAt": "2026-09-26"
+    },
+    {
+      "title": "Fifteen years later, the Apple Cards origin story",
+      "url": "https://lexontech.org/fifteen-years-later-the-apple-cards-origin-story",
+      "source": "HackerNews",
+      "score": 77,
+      "publishedAt": "2026-09-26"
+    },
+    {
+      "title": "One Month Without AI",
+      "url": "https://blog.bustikiller.com/2026/09/25/one-month-without-ai.html",
+      "source": "HackerNews",
+      "score": 54,
+      "publishedAt": "2026-09-26"
     }
   ]
 }
