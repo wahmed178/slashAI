@@ -40,6 +40,7 @@ export const PLAY_SECTIONS: PlaySection[] = [
     icon: "🎯",
     games: [
       { slug: "cricket", name: "Cricket", desc: "Time your shots, hit sixes, chase targets - solo, vs AI or 2P", icon: "🏏", players: "Solo + 2P" },
+      { slug: "cricket-2", name: "Cricket 2", desc: "Tournament edition - toss, call every shot and delivery, chase a target through the bracket", icon: "🏆", players: "Solo", added: "2026-09-26" },
       { slug: "tic-tac-toe", name: "Tic Tac Toe", desc: "Classic 3x3 - play a friend or the unbeatable AI", icon: "❌", players: "2P + AI" },
       { slug: "connect-four", name: "Connect Four", desc: "Drop discs, line up four - friend or AI", icon: "🔴", players: "2P + AI" },
       { slug: "dots-boxes", name: "Dots and Boxes", desc: "Draw lines, claim boxes, outscore your rival", icon: "🔗", players: "2P" },
@@ -295,6 +296,7 @@ const GAME_META: Record<string, GameMeta> = {
   carrom: { minutes: 8, level: "Medium" },
   // Multiplayer
   cricket: { minutes: 3, level: "Medium" },
+  "cricket-2": { minutes: 8, level: "Medium" },
   "tic-tac-toe": { minutes: 1, level: "Easy" },
   "connect-four": { minutes: 3, level: "Easy" },
   "dots-boxes": { minutes: 4, level: "Easy" },
@@ -406,6 +408,7 @@ export function gameMeta(slug: string): GameMeta {
 /** Games that keep a score worth beating, so cards can show "Your best". */
 export const SCORING_GAMES = new Set([
   "cricket",
+  "cricket-2",
   "snake",
   "2048",
   "breakout",
@@ -444,4 +447,4 @@ export const SCORING_GAMES = new Set([
 ]);
 
 /** Games listed under "New Games" at the top of /play - newest release first. */
-export const NEW_GAME_SLUGS = ["n-back", "go-no-go", "trail-making", "hue-hunt"] as const;
+export const NEW_GAME_SLUGS = ["n-back", "go-no-go", "trail-making", "hue-hunt", "cricket-2"] as const;

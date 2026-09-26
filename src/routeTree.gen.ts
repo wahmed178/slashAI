@@ -95,6 +95,7 @@ import { Route as PlayCoinFlipRouteImport } from './routes/play.coin-flip'
 import { Route as PlayConnectFourRouteImport } from './routes/play.connect-four'
 import { Route as PlayCosmicDiveRouteImport } from './routes/play.cosmic-dive'
 import { Route as PlayCricketRouteImport } from './routes/play.cricket'
+import { Route as PlayCricket2RouteImport } from './routes/play.cricket-2'
 import { Route as PlayCricketBowlingRouteImport } from './routes/play.cricket-bowling'
 import { Route as PlayDartsRouteImport } from './routes/play.darts'
 import { Route as PlayDiceRouteImport } from './routes/play.dice'
@@ -793,6 +794,11 @@ const PlayCosmicDiveRoute = PlayCosmicDiveRouteImport.update({
 const PlayCricketRoute = PlayCricketRouteImport.update({
   id: '/cricket',
   path: '/cricket',
+  getParentRoute: () => PlayRoute,
+} as any)
+const PlayCricket2Route = PlayCricket2RouteImport.update({
+  id: '/cricket-2',
+  path: '/cricket-2',
   getParentRoute: () => PlayRoute,
 } as any)
 const PlayCricketBowlingRoute = PlayCricketBowlingRouteImport.update({
@@ -2222,6 +2228,7 @@ export interface FileRoutesByFullPath {
   '/play/connect-four': typeof PlayConnectFourRoute
   '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
+  '/play/cricket-2': typeof PlayCricket2Route
   '/play/cricket-bowling': typeof PlayCricketBowlingRoute
   '/play/darts': typeof PlayDartsRoute
   '/play/dice': typeof PlayDiceRoute
@@ -2577,6 +2584,7 @@ export interface FileRoutesByTo {
   '/play/connect-four': typeof PlayConnectFourRoute
   '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
+  '/play/cricket-2': typeof PlayCricket2Route
   '/play/cricket-bowling': typeof PlayCricketBowlingRoute
   '/play/darts': typeof PlayDartsRoute
   '/play/dice': typeof PlayDiceRoute
@@ -2935,6 +2943,7 @@ export interface FileRoutesById {
   '/play/connect-four': typeof PlayConnectFourRoute
   '/play/cosmic-dive': typeof PlayCosmicDiveRoute
   '/play/cricket': typeof PlayCricketRoute
+  '/play/cricket-2': typeof PlayCricket2Route
   '/play/cricket-bowling': typeof PlayCricketBowlingRoute
   '/play/darts': typeof PlayDartsRoute
   '/play/dice': typeof PlayDiceRoute
@@ -3294,6 +3303,7 @@ export interface FileRouteTypes {
     | '/play/connect-four'
     | '/play/cosmic-dive'
     | '/play/cricket'
+    | '/play/cricket-2'
     | '/play/cricket-bowling'
     | '/play/darts'
     | '/play/dice'
@@ -3649,6 +3659,7 @@ export interface FileRouteTypes {
     | '/play/connect-four'
     | '/play/cosmic-dive'
     | '/play/cricket'
+    | '/play/cricket-2'
     | '/play/cricket-bowling'
     | '/play/darts'
     | '/play/dice'
@@ -4006,6 +4017,7 @@ export interface FileRouteTypes {
     | '/play/connect-four'
     | '/play/cosmic-dive'
     | '/play/cricket'
+    | '/play/cricket-2'
     | '/play/cricket-bowling'
     | '/play/darts'
     | '/play/dice'
@@ -4964,6 +4976,13 @@ declare module '@tanstack/react-router' {
       path: '/cricket'
       fullPath: '/play/cricket'
       preLoaderRoute: typeof PlayCricketRouteImport
+      parentRoute: typeof PlayRoute
+    }
+    '/play/cricket-2': {
+      id: '/play/cricket-2'
+      path: '/cricket-2'
+      fullPath: '/play/cricket-2'
+      preLoaderRoute: typeof PlayCricket2RouteImport
       parentRoute: typeof PlayRoute
     }
     '/play/cricket-bowling': {
@@ -6874,6 +6893,7 @@ interface PlayRouteChildren {
   PlayConnectFourRoute: typeof PlayConnectFourRoute
   PlayCosmicDiveRoute: typeof PlayCosmicDiveRoute
   PlayCricketRoute: typeof PlayCricketRoute
+  PlayCricket2Route: typeof PlayCricket2Route
   PlayCricketBowlingRoute: typeof PlayCricketBowlingRoute
   PlayDartsRoute: typeof PlayDartsRoute
   PlayDiceRoute: typeof PlayDiceRoute
@@ -6973,6 +6993,7 @@ const PlayRouteChildren: PlayRouteChildren = {
   PlayConnectFourRoute: PlayConnectFourRoute,
   PlayCosmicDiveRoute: PlayCosmicDiveRoute,
   PlayCricketRoute: PlayCricketRoute,
+  PlayCricket2Route: PlayCricket2Route,
   PlayCricketBowlingRoute: PlayCricketBowlingRoute,
   PlayDartsRoute: PlayDartsRoute,
   PlayDiceRoute: PlayDiceRoute,
