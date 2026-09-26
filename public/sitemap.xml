@@ -2725,6 +2725,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://slashai.in/play/cricket-2</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://slashai.in/play/cricket-bowling</loc>
     <lastmod>2026-09-26</lastmod>
     <changefreq>monthly</changefreq>
