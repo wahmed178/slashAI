@@ -226,6 +226,7 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
       { slug: "team-generator", name: "Random Team Generator", desc: "Split names into fair, balanced teams", icon: "👥", added: "2026-09-22" },
       { slug: "signature-maker", name: "Signature Maker", desc: "Draw a signature, download transparent PNG", icon: "✒️" },
       { slug: "quote-maker", name: "Quote Card Maker", desc: "Design quote cards with fonts, backgrounds & templates", icon: "💬" },
+      { slug: "bouquet", name: "Digital Bouquet Sender", desc: "Build a flower bouquet and send it as a link", icon: "💐", noUpload: true, added: "2026-09-27" },
     ],
   },
   {
