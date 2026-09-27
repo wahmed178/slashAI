@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/library/AppShell";
@@ -18,7 +19,16 @@ export const Route = createFileRoute("/play/odd-one-out")({
   component: OddOneOut,
 });
 
-const PALETTE = ["#f87171", "#60a5fa", "#4ade80", "#fbbf24", "#a78bfa", "#fb923c", "#22d3ee", "#f472b6"];
+const PALETTE = [
+  "#f87171",
+  "#60a5fa",
+  "#4ade80",
+  "#fbbf24",
+  "#a78bfa",
+  "#fb923c",
+  "#22d3ee",
+  "#f472b6",
+];
 
 interface Board {
   size: number;
@@ -58,7 +68,7 @@ function OddOneOut() {
   const [level, setLevel] = useState(1);
   const [board, setBoard] = useState<Board>(() => makeBoard(1));
   const [timeLeft, setTimeLeft] = useState(10);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("odd-one-out-best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("odd-one-out-best") ?? 0));
   const [over, setOver] = useState(false);
   const timerRef = useRef(0);
 
@@ -118,7 +128,8 @@ function OddOneOut() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🔍 Odd One Out</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          One tile is a slightly different shade. Tap it before time runs out — wrong taps cost 1.5s.
+          One tile is a slightly different shade. Tap it before time runs out — wrong taps cost
+          1.5s.
         </p>
       </header>
 
@@ -128,7 +139,9 @@ function OddOneOut() {
           <span className="text-[13px] font-semibold text-muted-foreground">
             Best: <b className="text-primary tabular-nums">{best}</b>
           </span>
-          <span className={`text-[13px] font-black tabular-nums ${timeLeft < 2.5 ? "text-rose-500" : "text-foreground"}`}>
+          <span
+            className={`text-[13px] font-black tabular-nums ${timeLeft < 2.5 ? "text-rose-500" : "text-foreground"}`}
+          >
             {timeLeft.toFixed(1)}s
           </span>
         </div>
@@ -148,7 +161,9 @@ function OddOneOut() {
               className="ripple-press grid aspect-square place-items-center rounded-lg text-[18px] transition-transform active:scale-95 sm:text-[22px]"
               style={{ background: i === board.oddIndex ? board.odd : board.base }}
             >
-              <span aria-hidden className="opacity-30">{board.emoji}</span>
+              <span aria-hidden className="opacity-30">
+                {board.emoji}
+              </span>
             </button>
           ))}
         </div>
@@ -157,8 +172,8 @@ function OddOneOut() {
           <div className="rounded-2xl border border-border bg-surface p-5 text-center">
             <p className="text-[16px] font-black text-foreground">⏱️ Time's up at level {level}!</p>
             <p className="mt-1 text-[12.5px] text-muted-foreground">
-              You reached level {level} — best {best}. Shades get closer and clocks get shorter every
-              level.
+              You reached level {level} — best {best}. Shades get closer and clocks get shorter
+              every level.
             </p>
             <button
               type="button"

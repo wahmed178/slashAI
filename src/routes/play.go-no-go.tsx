@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/library/AppShell";
-import { saveGameBest } from "@/lib/ux";
+import { readStorage, saveGameBest } from "@/lib/ux";
 
 export const Route = createFileRoute("/play/go-no-go")({
   head: () => ({
@@ -78,7 +78,7 @@ function GoNoGo() {
     omissions: 0,
     rts: [] as number[],
   });
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.gonogo.best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("slashai.gonogo.best") ?? 0));
 
   const plan = useRef<boolean[]>([]);
   const shownAt = useRef(0);

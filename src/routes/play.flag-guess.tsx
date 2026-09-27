@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw } from "lucide-react";
@@ -15,23 +16,56 @@ const BEST_KEY = "flag-guess-best";
 
 /** a compact, stable pool of well-known countries; flags load from FlagsAPI (free, no key) */
 const POOL: Country[] = [
-  { name: "India", code: "in" }, { name: "United States", code: "us" }, { name: "Brazil", code: "br" },
-  { name: "Japan", code: "jp" }, { name: "Germany", code: "de" }, { name: "France", code: "fr" },
-  { name: "Italy", code: "it" }, { name: "Spain", code: "es" }, { name: "Canada", code: "ca" },
-  { name: "Australia", code: "au" }, { name: "Mexico", code: "mx" }, { name: "Argentina", code: "ar" },
-  { name: "United Kingdom", code: "gb" }, { name: "Netherlands", code: "nl" }, { name: "Sweden", code: "se" },
-  { name: "Norway", code: "no" }, { name: "Switzerland", code: "ch" }, { name: "Poland", code: "pl" },
-  { name: "Portugal", code: "pt" }, { name: "Greece", code: "gr" }, { name: "Turkey", code: "tr" },
-  { name: "Egypt", code: "eg" }, { name: "South Africa", code: "za" }, { name: "Nigeria", code: "ng" },
-  { name: "Kenya", code: "ke" }, { name: "Saudi Arabia", code: "sa" }, { name: "Pakistan", code: "pk" },
-  { name: "Bangladesh", code: "bd" }, { name: "Indonesia", code: "id" }, { name: "South Korea", code: "kr" },
-  { name: "China", code: "cn" }, { name: "Russia", code: "ru" }, { name: "Ukraine", code: "ua" },
-  { name: "Vietnam", code: "vn" }, { name: "Thailand", code: "th" }, { name: "Malaysia", code: "my" },
-  { name: "Singapore", code: "sg" }, { name: "New Zealand", code: "nz" }, { name: "Ireland", code: "ie" },
-  { name: "Iceland", code: "is" }, { name: "Finland", code: "fi" }, { name: "Denmark", code: "dk" },
-  { name: "Morocco", code: "ma" }, { name: "Ethiopia", code: "et" }, { name: "Ghana", code: "gh" },
-  { name: "Chile", code: "cl" }, { name: "Colombia", code: "co" }, { name: "Peru", code: "pe" },
-  { name: "Qatar", code: "qa" }, { name: "United Arab Emirates", code: "ae" },
+  { name: "India", code: "in" },
+  { name: "United States", code: "us" },
+  { name: "Brazil", code: "br" },
+  { name: "Japan", code: "jp" },
+  { name: "Germany", code: "de" },
+  { name: "France", code: "fr" },
+  { name: "Italy", code: "it" },
+  { name: "Spain", code: "es" },
+  { name: "Canada", code: "ca" },
+  { name: "Australia", code: "au" },
+  { name: "Mexico", code: "mx" },
+  { name: "Argentina", code: "ar" },
+  { name: "United Kingdom", code: "gb" },
+  { name: "Netherlands", code: "nl" },
+  { name: "Sweden", code: "se" },
+  { name: "Norway", code: "no" },
+  { name: "Switzerland", code: "ch" },
+  { name: "Poland", code: "pl" },
+  { name: "Portugal", code: "pt" },
+  { name: "Greece", code: "gr" },
+  { name: "Turkey", code: "tr" },
+  { name: "Egypt", code: "eg" },
+  { name: "South Africa", code: "za" },
+  { name: "Nigeria", code: "ng" },
+  { name: "Kenya", code: "ke" },
+  { name: "Saudi Arabia", code: "sa" },
+  { name: "Pakistan", code: "pk" },
+  { name: "Bangladesh", code: "bd" },
+  { name: "Indonesia", code: "id" },
+  { name: "South Korea", code: "kr" },
+  { name: "China", code: "cn" },
+  { name: "Russia", code: "ru" },
+  { name: "Ukraine", code: "ua" },
+  { name: "Vietnam", code: "vn" },
+  { name: "Thailand", code: "th" },
+  { name: "Malaysia", code: "my" },
+  { name: "Singapore", code: "sg" },
+  { name: "New Zealand", code: "nz" },
+  { name: "Ireland", code: "ie" },
+  { name: "Iceland", code: "is" },
+  { name: "Finland", code: "fi" },
+  { name: "Denmark", code: "dk" },
+  { name: "Morocco", code: "ma" },
+  { name: "Ethiopia", code: "et" },
+  { name: "Ghana", code: "gh" },
+  { name: "Chile", code: "cl" },
+  { name: "Colombia", code: "co" },
+  { name: "Peru", code: "pe" },
+  { name: "Qatar", code: "qa" },
+  { name: "United Arab Emirates", code: "ae" },
 ];
 
 interface Question {
@@ -58,7 +92,7 @@ function FlagGuess() {
   const [score, setScore] = useState(0);
   const [picked, setPicked] = useState<string | null>(null);
   const [done, setDone] = useState(false);
-  const [best, setBest] = useState(() => Number(localStorage.getItem(BEST_KEY) ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage(BEST_KEY) ?? 0));
   const [imgFailed, setImgFailed] = useState(false);
 
   const choose = (opt: string) => {
@@ -104,11 +138,21 @@ function FlagGuess() {
         <div className="mx-auto max-w-md space-y-4 text-center">
           <div className="rounded-2xl border border-border bg-surface p-8">
             <p className="text-5xl">{score >= 8 ? "🏆" : score >= 5 ? "🌍" : "🗺️"}</p>
-            <p className="mt-3 text-3xl font-bold tabular-nums text-foreground">{score}/{ROUNDS}</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {score >= 9 ? "Geography prodigy." : score >= 7 ? "Impressive atlas knowledge." : score >= 5 ? "Solid - keep exploring." : "The world is big. Try again!"}
+            <p className="mt-3 text-3xl font-bold tabular-nums text-foreground">
+              {score}/{ROUNDS}
             </p>
-            <p className="mt-2 text-xs text-muted-foreground">Best this device: {best}/{ROUNDS}</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {score >= 9
+                ? "Geography prodigy."
+                : score >= 7
+                  ? "Impressive atlas knowledge."
+                  : score >= 5
+                    ? "Solid - keep exploring."
+                    : "The world is big. Try again!"}
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Best this device: {best}/{ROUNDS}
+            </p>
             <button
               onClick={restart}
               className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition-opacity hover:opacity-90"
@@ -125,13 +169,19 @@ function FlagGuess() {
     <AppShell title="Flag Guess">
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🚩 Flag Guess</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Which country does this flag belong to?</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Which country does this flag belong to?
+        </p>
       </header>
 
       <div className="mx-auto max-w-md space-y-4">
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>Round {round} of {ROUNDS}</span>
-          <span>Score: <b className="text-foreground">{score}</b></span>
+          <span>
+            Round {round} of {ROUNDS}
+          </span>
+          <span>
+            Score: <b className="text-foreground">{score}</b>
+          </span>
         </div>
 
         <div className="grid place-items-center rounded-2xl border border-border bg-surface p-8">
@@ -144,7 +194,10 @@ function FlagGuess() {
           {imgFailed && (
             <div className="mt-2 text-center">
               <p className="text-sm text-muted-foreground">Flag image unavailable offline.</p>
-              <button onClick={next} className="mt-1 text-xs font-semibold text-primary hover:underline">
+              <button
+                onClick={next}
+                className="mt-1 text-xs font-semibold text-primary hover:underline"
+              >
                 Skip round
               </button>
             </div>

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { RotateCcw } from "lucide-react";
 
@@ -116,9 +117,12 @@ function CapitalsGame() {
   const [score, setScore] = useState(0);
   const [asked, setAsked] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("capitals-best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("capitals-best") ?? 0));
 
-  const pool = useMemo(() => (region === "Mixed" ? DATA : DATA.filter((d) => d.region === region)), [region]);
+  const pool = useMemo(
+    () => (region === "Mixed" ? DATA : DATA.filter((d) => d.region === region)),
+    [region],
+  );
 
   const nextRound = () => {
     setRound(buildRound(pool));
@@ -178,7 +182,9 @@ function CapitalsGame() {
               type="button"
               onClick={() => setRegion(r)}
               className={`shrink-0 rounded-full px-3 py-1.5 text-[12px] font-bold transition-colors ${
-                region === r ? "bg-primary text-primary-foreground" : "border border-border bg-surface text-muted-foreground hover:text-foreground"
+                region === r
+                  ? "bg-primary text-primary-foreground"
+                  : "border border-border bg-surface text-muted-foreground hover:text-foreground"
               }`}
             >
               {r}
@@ -189,7 +195,8 @@ function CapitalsGame() {
         {/* score row */}
         <div className="flex items-center justify-between rounded-2xl border border-border bg-surface px-4 py-2.5 text-[13px]">
           <span className="font-bold text-foreground">
-            {score}<span className="text-muted-foreground">/{asked}</span>
+            {score}
+            <span className="text-muted-foreground">/{asked}</span>
           </span>
           <span className="font-semibold text-muted-foreground">
             streak {streak} · best {best}

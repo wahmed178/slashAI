@@ -2,88 +2,240 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw, Pause, Play } from "lucide-react";
+import { playTone } from "@/lib/play-sound";
+import { saveGameBest, getGameBest } from "@/lib/ux";
+import {
+  DELTA,
+  SIZE,
+  advance,
+  scoreOf,
+  spawnFood,
+  startSnake,
+  turn,
+  type Dir,
+  type Pt,
+} from "@/lib/games/snake";
 
-export const Route = createFileRoute("/play/snake")({ component: Snake });
+export const Route = createFileRoute("/play/snake")({
+  head: () => ({
+    meta: [
+      { title: "Snake - Free Browser Game | SlashAI" },
+      {
+        name: "description",
+        content:
+          "A modern Snake: the board wraps so you never die on a wall, only on yourself. Speeds up as you grow. Arrow keys, WASD, swipe or the on-screen pad.",
+      },
+    ],
+  }),
+  component: Snake,
+});
 
-const SIZE = 17;
-const SPEED_MS = 130;
-type Pt = { x: number; y: number };
-type Dir = "up" | "down" | "left" | "right";
+const BASE_MS = 145;
+const MIN_MS = 62;
 
-const DELTA: Record<Dir, Pt> = {
-  up: { x: 0, y: -1 },
-  down: { x: 0, y: 1 },
-  left: { x: -1, y: 0 },
-  right: { x: 1, y: 0 },
-};
+/** faster as the snake gets longer, but never unwinnable */
+const tickMs = (len: number) => Math.max(MIN_MS, Math.round(BASE_MS - (len - 4) * 4.2));
 
 const BEST_KEY = "snake-best";
 
 function Snake() {
-  const [snake, setSnake] = useState<Pt[]>([{ x: 8, y: 8 }]);
-  const [food, setFood] = useState<Pt>({ x: 12, y: 8 });
+  const [body, setBody] = useState<Pt[]>(startSnake);
+  const [food, setFood] = useState<Pt | null>(null);
   const [dir, setDir] = useState<Dir>("right");
   const [running, setRunning] = useState(false);
   const [over, setOver] = useState(false);
-  const [best, setBest] = useState<number>(() => Number(localStorage.getItem(BEST_KEY)) || 0);
+  const [won, setWon] = useState(false);
+  const [best, setBest] = useState<number>(() => getGameBest("snake") ?? 0);
+
+  const bodyRef = useRef(body);
+  bodyRef.current = body;
+  const foodRef = useRef(food);
+  foodRef.current = food;
   const dirRef = useRef(dir);
-  dirRef.current = dir;
-  const snakeRef = useRef(snake);
-  snakeRef.current = snake;
 
-  const score = snake.length - 1;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const spawnFood = useCallback((body: Pt[]): Pt => {
-    let p: Pt;
-    do {
-      p = { x: Math.floor(Math.random() * SIZE), y: Math.floor(Math.random() * SIZE) };
-    } while (body.some((s) => s.x === p.x && s.y === p.y));
-    return p;
-  }, []);
+  const score = scoreOf(body);
 
   const reset = useCallback(() => {
-    setSnake([{ x: 8, y: 8 }]);
-    setFood({ x: 12, y: 8 });
+    setBody(startSnake());
+    setFood(null);
     setDir("right");
+    dirRef.current = "right";
     setOver(false);
+    setWon(false);
     setRunning(true);
   }, []);
 
-  // keyboard + swipe controls
+  /** paint the board: grid, food, snake, eyes — all canvas so it stays smooth */
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const size = canvas.width;
+    const cell = size / SIZE;
+
+    ctx.clearRect(0, 0, size, size);
+
+    // playing field
+    const bg = ctx.createLinearGradient(0, 0, size, size);
+    bg.addColorStop(0, "#0f1a12");
+    bg.addColorStop(1, "#060d09");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, size, size);
+
+    // grid
+    ctx.strokeStyle = "rgba(120, 220, 150, 0.07)";
+    ctx.lineWidth = 1;
+    for (let i = 1; i < SIZE; i++) {
+      const p = Math.round(i * cell) + 0.5;
+      ctx.beginPath();
+      ctx.moveTo(p, 0);
+      ctx.lineTo(p, size);
+      ctx.moveTo(0, p);
+      ctx.lineTo(size, p);
+      ctx.stroke();
+    }
+
+    // food — a berry that breathes
+    const f = foodRef.current;
+    if (f) {
+      const pulse = 1 + Math.sin(Date.now() / 190) * 0.12;
+      const cx = (f.x + 0.5) * cell;
+      const cy = (f.y + 0.5) * cell;
+      const r = cell * 0.32 * pulse;
+      const glow = ctx.createRadialGradient(cx, cy, 1, cx, cy, r * 2.6);
+      glow.addColorStop(0, "rgba(248,113,113,0.55)");
+      glow.addColorStop(1, "rgba(248,113,113,0)");
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 2.6, 0, Math.PI * 2);
+      ctx.fill();
+
+      const berry = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.4, r * 0.15, cx, cy, r);
+      berry.addColorStop(0, "#fecaca");
+      berry.addColorStop(0.5, "#f87171");
+      berry.addColorStop(1, "#b91c1c");
+      ctx.fillStyle = berry;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // snake tail -> head so the head sits on top
+    const b = bodyRef.current;
+    for (let i = b.length - 1; i >= 0; i--) {
+      const seg = b[i]!;
+      const t = 1 - i / Math.max(6, b.length);
+      const pad = cell * (0.08 + t * 0.12);
+      const w = cell - pad * 2;
+      const x = seg.x * cell + pad;
+      const y = seg.y * cell + pad;
+      const r = Math.max(3, w * 0.34);
+
+      const isHead = i === 0;
+      const grad = ctx.createLinearGradient(x, y, x + w, y + w);
+      if (isHead) {
+        grad.addColorStop(0, "#a3f7bf");
+        grad.addColorStop(1, "#22c55e");
+      } else {
+        grad.addColorStop(0, `rgba(74, 222, 128, ${0.55 + t * 0.35})`);
+        grad.addColorStop(1, `rgba(21, 128, 61, ${0.55 + t * 0.35})`);
+      }
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, w, r);
+      ctx.fill();
+
+      if (isHead) {
+        const d = DELTA[dirRef.current];
+        // eyes sit on the leading edge, offset either side
+        const ex = (seg.x + 0.5) * cell + d.x * cell * 0.2;
+        const ey = (seg.y + 0.5) * cell + d.y * cell * 0.2;
+        const px = d.y * cell * 0.17;
+        const py = d.x * cell * 0.17;
+        const er = Math.max(1.4, cell * 0.075);
+        ctx.fillStyle = "#05240f";
+        for (const s of [-1, 1]) {
+          ctx.beginPath();
+          ctx.arc(ex + px * s, ey + py * s, er, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        // highlight
+        ctx.fillStyle = "rgba(255,255,255,0.35)";
+        ctx.beginPath();
+        ctx.arc(
+          (seg.x + 0.5) * cell - cell * 0.14,
+          (seg.y + 0.5) * cell - cell * 0.16,
+          cell * 0.09,
+          0,
+          Math.PI * 2,
+        );
+        ctx.fill();
+      }
+    }
+  }, []);
+
+  /* ── keyboard ── */
   useEffect(() => {
+    const map: Record<string, Dir> = {
+      ArrowUp: "up",
+      ArrowDown: "down",
+      ArrowLeft: "left",
+      ArrowRight: "right",
+      w: "up",
+      s: "down",
+      a: "left",
+      d: "right",
+      W: "up",
+      S: "down",
+      A: "left",
+      D: "right",
+    };
     const onKey = (e: KeyboardEvent) => {
-      const map: Record<string, Dir> = {
-        ArrowUp: "up", ArrowDown: "down", ArrowLeft: "left", ArrowRight: "right",
-        w: "up", s: "down", a: "left", d: "right",
-      };
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
       const next = map[e.key];
-      if (!next) return;
-      e.preventDefault();
-      const cur = dirRef.current;
-      const opposite: Record<Dir, Dir> = { up: "down", down: "up", left: "right", right: "left" };
-      if (next === opposite[cur]) return;
-      setDir(next);
+      if (next) {
+        e.preventDefault();
+        const turned = turn(dirRef.current, next);
+        dirRef.current = turned;
+        setDir(turned);
+        if (!over && !running) setRunning(true);
+        return;
+      }
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        if (over || won) reset();
+        else setRunning((r) => !r);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [over, running, won, reset]);
 
+  /* ── swipe ── */
   useEffect(() => {
-    let touchStart: Pt | null = null;
+    let start: Pt | null = null;
     const onStart = (e: TouchEvent) => {
-      const t = e.touches[0]!;
-      touchStart = { x: t.clientX, y: t.clientY };
+      const t = e.touches[0];
+      if (t) start = { x: t.clientX, y: t.clientY };
     };
     const onEnd = (e: TouchEvent) => {
-      if (!touchStart) return;
-      const t = e.changedTouches[0]!;
-      const dx = t.clientX - touchStart.x;
-      const dy = t.clientY - touchStart.y;
-      touchStart = null;
-      if (Math.abs(dx) < 24 && Math.abs(dy) < 24) return;
-      const next: Dir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "right" : "left") : dy > 0 ? "down" : "up";
-      const opposite: Record<Dir, Dir> = { up: "down", down: "up", left: "right", right: "left" };
-      if (next !== opposite[dirRef.current]) setDir(next);
+      if (!start) return;
+      const t = e.changedTouches[0];
+      if (!t) return;
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+      start = null;
+      if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return;
+      const next: Dir =
+        Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "right" : "left") : dy > 0 ? "down" : "up";
+      const turned = turn(dirRef.current, next);
+      dirRef.current = turned;
+      setDir(turned);
+      if (!over && !running) setRunning(true);
     };
     window.addEventListener("touchstart", onStart, { passive: true });
     window.addEventListener("touchend", onEnd, { passive: true });
@@ -91,103 +243,146 @@ function Snake() {
       window.removeEventListener("touchstart", onStart);
       window.removeEventListener("touchend", onEnd);
     };
-  }, []);
+  }, [over, running]);
 
-  // game loop
+  /* ── loop ── */
   useEffect(() => {
-    if (!running || over) return;
+    if (!running || over || won) return;
     const id = setInterval(() => {
-      const body = snakeRef.current;
-      const head = body[0]!;
-      const d = DELTA[dirRef.current];
-      const next: Pt = { x: head.x + d.x, y: head.y + d.y };
-      const hitWall = next.x < 0 || next.x >= SIZE || next.y < 0 || next.y >= SIZE;
-      const hitSelf = body.some((s) => s.x === next.x && s.y === next.y);
-      if (hitWall || hitSelf) {
+      const result = advance(bodyRef.current, dirRef.current, foodRef.current);
+      if (result.dead) {
         setOver(true);
         setRunning(false);
+        playTone("fail");
+        const final = scoreOf(result.body);
         setBest((b) => {
-          const nb = Math.max(b, body.length - 1);
-          localStorage.setItem(BEST_KEY, String(nb));
+          const nb = Math.max(b, final);
+          saveGameBest("snake", nb);
           return nb;
         });
         return;
       }
-      const grew = next.x === food.x && next.y === food.y;
-      const nb = [next, ...body];
-      if (grew) setFood(spawnFood(nb));
-      else nb.pop();
-      snakeRef.current = nb;
-      setSnake(nb);
-    }, SPEED_MS);
+      if (result.won) {
+        setWon(true);
+        setRunning(false);
+        playTone("win");
+        const final = scoreOf(result.body);
+        setBest((b) => {
+          const nb = Math.max(b, final);
+          saveGameBest("snake", nb);
+          return nb;
+        });
+        return;
+      }
+      setBody(result.body);
+      setFood(result.food);
+      if (result.food !== foodRef.current) playTone("tick");
+    }, tickMs(bodyRef.current.length));
     return () => clearInterval(id);
-  }, [running, over, food, spawnFood]);
+  }, [running, over, won]);
+
+  /* ── paint ──
+   * The food breathes even when the snake is holding still, so the board is
+   * driven by one rAF loop rather than by React state. */
+  useEffect(() => {
+    let id = 0;
+    const loop = () => {
+      draw();
+      id = requestAnimationFrame(loop);
+    };
+    id = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(id);
+  }, [draw, body, food]);
+
+  // put something on the board to chase the first time round
+  useEffect(() => {
+    if (food === null && !won) setFood(spawnFood(bodyRef.current));
+  }, [food, won]);
+
+  const steer = (d: Dir) => {
+    const turned = turn(dirRef.current, d);
+    dirRef.current = turned;
+    setDir(turned);
+    if (!over && !won && !running) setRunning(true);
+  };
 
   return (
     <AppShell title="Snake">
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🐍 Snake</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Arrow keys or swipe to steer. Eat, grow, don't crash.</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          The walls wrap, so only you can end your run. Arrow keys, WASD, swipe or the pad.
+        </p>
       </header>
 
-      <div className="mx-auto max-w-md space-y-3">
-        <div className="flex items-center justify-between rounded-xl border border-border bg-surface px-4 py-2.5 text-[13px]">
-          <span className="text-muted-foreground">Score <b className="text-[16px] text-foreground">{score}</b></span>
-          <span className="text-muted-foreground">Best <b className="text-[16px] text-primary">{Math.max(best, score)}</b></span>
+      <div className="mx-auto max-w-md space-y-4">
+        <div className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 text-[13px]">
+          <span className="text-muted-foreground">
+            Score <b className="text-[16px] text-foreground">{score}</b>
+          </span>
+          <span className="text-muted-foreground">
+            Best <b className="text-[16px] text-primary">{Math.max(best, score)}</b>
+          </span>
+          <span className="text-muted-foreground">
+            Len <b className="text-[16px] text-foreground">{body.length}</b>
+          </span>
           <div className="flex gap-1.5">
             <button
               onClick={() => setRunning((r) => !r)}
-              disabled={over}
-              className="rounded-lg border border-border bg-surface-elevated p-2 text-foreground disabled:opacity-40"
+              disabled={over || won}
+              className="rounded-lg border border-border bg-surface-elevated p-2.5 text-foreground disabled:opacity-40"
               aria-label={running ? "Pause" : "Play"}
             >
-              {running ? <Pause className="size-3.5" /> : <Play className="size-3.5" />}
+              {running ? <Pause className="size-4" /> : <Play className="size-4" />}
             </button>
-            <button onClick={reset} className="rounded-lg border border-border bg-surface-elevated p-2 text-foreground" aria-label="Restart">
-              <RotateCcw className="size-3.5" />
+            <button
+              onClick={reset}
+              className="rounded-lg border border-border bg-surface-elevated p-2.5 text-foreground"
+              aria-label="Restart"
+            >
+              <RotateCcw className="size-4" />
             </button>
           </div>
         </div>
 
-        <div className="relative mx-auto aspect-square w-full max-w-[400px] rounded-xl border border-border bg-[#0a0d12] p-1.5">
-          <div
-            className="grid h-full w-full gap-px"
-            style={{ gridTemplateColumns: `repeat(${SIZE}, 1fr)`, gridTemplateRows: `repeat(${SIZE}, 1fr)` }}
-          >
-            {Array.from({ length: SIZE * SIZE }, (_, i) => {
-              const x = i % SIZE;
-              const y = Math.floor(i / SIZE);
-              const isHead = snake[0]!.x === x && snake[0]!.y === y;
-              const isBody = !isHead && snake.some((s) => s.x === x && s.y === y);
-              const isFood = food.x === x && food.y === y;
-              return (
-                <div
-                  key={i}
-                  className={`rounded-[2px] ${
-                    isHead
-                      ? "bg-primary"
-                      : isBody
-                        ? "bg-primary/60"
-                        : isFood
-                          ? "bg-[#f87171] rounded-full"
-                          : "bg-transparent"
-                  }`}
-                />
-              );
-            })}
-          </div>
-          {(!running || over) && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-black/60 text-center">
+        <div className="relative mx-auto aspect-square w-full max-w-[440px] overflow-hidden rounded-2xl border-2 border-emerald-900/60 shadow-[0_0_40px_-12px_rgba(34,197,94,0.5)]">
+          <canvas
+            ref={canvasRef}
+            width={SIZE * 24}
+            height={SIZE * 24}
+            className="h-full w-full"
+            role="img"
+            aria-label={`Snake board. Score ${score}.`}
+          />
+          {(!running || over || won) && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/70 text-center backdrop-blur-[2px]">
               {over ? (
                 <>
-                  <p className="text-[20px] font-black text-foreground">Game over</p>
-                  <p className="text-[13px] text-muted-foreground">You scored {score}</p>
-                  <button onClick={reset} className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
+                  <p className="text-[20px] font-black text-emerald-300">Game over</p>
+                  <p className="text-[13px] text-emerald-100/80">You ran into yourself</p>
+                  <button
+                    onClick={reset}
+                    className="rounded-xl bg-emerald-500 px-5 py-2.5 text-[13px] font-bold text-emerald-950 hover:bg-emerald-400"
+                  >
+                    Play again
+                  </button>
+                </>
+              ) : won ? (
+                <>
+                  <p className="text-[20px] font-black text-amber-300">Board cleared!</p>
+                  <p className="text-[13px] text-emerald-100/80">You filled every square</p>
+                  <button
+                    onClick={reset}
+                    className="rounded-xl bg-amber-400 px-5 py-2.5 text-[13px] font-bold text-amber-950 hover:bg-amber-300"
+                  >
                     Play again
                   </button>
                 </>
               ) : (
-                <button onClick={() => setRunning(true)} className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
+                <button
+                  onClick={() => setRunning(true)}
+                  className="rounded-xl bg-emerald-500 px-5 py-2.5 text-[13px] font-bold text-emerald-950 hover:bg-emerald-400"
+                >
                   Start
                 </button>
               )}
@@ -195,15 +390,51 @@ function Snake() {
           )}
         </div>
 
-        {/* touch d-pad */}
-        <div className="mx-auto grid w-40 grid-cols-3 gap-1 sm:hidden">
+        {/* full-width pad, always visible — the old one was 160px and mobile-only */}
+        <div className="mx-auto grid max-w-[320px] grid-cols-3 gap-2.5">
           <span />
-          <button onClick={() => setDir("up")} className="rounded-lg border border-border bg-surface py-2 text-foreground">▲</button>
+          <button
+            onClick={() => steer("up")}
+            aria-label="Up"
+            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
+          >
+            ▲
+          </button>
           <span />
-          <button onClick={() => setDir("left")} className="rounded-lg border border-border bg-surface py-2 text-foreground">◀</button>
-          <button onClick={() => setDir("down")} className="rounded-lg border border-border bg-surface py-2 text-foreground">▼</button>
-          <button onClick={() => setDir("right")} className="rounded-lg border border-border bg-surface py-2 text-foreground">▶</button>
+          <button
+            onClick={() => steer("left")}
+            aria-label="Left"
+            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
+          >
+            ◀
+          </button>
+          <button
+            onClick={over || won ? reset : () => setRunning((r) => !r)}
+            aria-label={over || won ? "Play again" : running ? "Pause" : "Play"}
+            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-lg font-bold text-foreground transition-colors active:bg-primary active:text-primary-foreground"
+          >
+            {over || won ? "↻" : running ? "❚❚" : "▶"}
+          </button>
+          <button
+            onClick={() => steer("right")}
+            aria-label="Right"
+            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
+          >
+            ▶
+          </button>
+          <span />
+          <button
+            onClick={() => steer("down")}
+            aria-label="Down"
+            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
+          >
+            ▼
+          </button>
         </div>
+
+        <p className="text-center text-xs text-muted-foreground">
+          Walls wrap around. Food every 1 point. It speeds up as you grow.
+        </p>
       </div>
     </AppShell>
   );

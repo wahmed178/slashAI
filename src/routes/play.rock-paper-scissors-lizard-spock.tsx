@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/library/AppShell";
@@ -54,7 +55,11 @@ const BEATS: Record<MoveKey, [MoveKey, string][]> = {
 
 const AI_PERSONALITIES = ["random", "copycat", "winner"] as const;
 
-function aiPick(personality: (typeof AI_PERSONALITIES)[number], lastPlayer: MoveKey | null, lastAi: MoveKey | null): MoveKey {
+function aiPick(
+  personality: (typeof AI_PERSONALITIES)[number],
+  lastPlayer: MoveKey | null,
+  lastAi: MoveKey | null,
+): MoveKey {
   if (personality === "copycat" && lastPlayer) {
     // beat what the player just played
     return counterOf(lastPlayer);
@@ -80,7 +85,7 @@ function Rpsls() {
   const [aiScore, setAiScore] = useState(0);
   const [result, setResult] = useState<null | { you: string; ai: string; verdict: string }>(null);
   const [streak, setStreak] = useState(0);
-  const [bestStreak, setBestStreak] = useState(() => Number(localStorage.getItem("rpsls-best") ?? 0));
+  const [bestStreak, setBestStreak] = useState(() => Number(readStorage("rpsls-best") ?? 0));
 
   const play = (playerMove: MoveKey) => {
     const aiMove = aiPick(personality, lastPlayer, lastAi);
@@ -113,7 +118,11 @@ function Rpsls() {
       const loseLine = BEATS[aiMove].find(([b]) => b === playerMove);
       setAiScore((s) => s + 1);
       setStreak(0);
-      setResult({ you: you.emoji, ai: ai.emoji, verdict: `AI wins — ${loseLine?.[1] ?? "conflict resolved"}` });
+      setResult({
+        you: you.emoji,
+        ai: ai.emoji,
+        verdict: `AI wins — ${loseLine?.[1] ?? "conflict resolved"}`,
+      });
       feedback("tap");
     }
   };
@@ -141,7 +150,8 @@ function Rpsls() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🖖 RPSLS</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Five-way Rock Paper Scissors — each move beats two and loses to two. Fewer ties, more chaos.
+          Five-way Rock Paper Scissors — each move beats two and loses to two. Fewer ties, more
+          chaos.
         </p>
       </header>
 
@@ -149,15 +159,21 @@ function Rpsls() {
         {/* scoreboard */}
         <div className="flex items-center justify-between rounded-2xl border border-border bg-surface px-4 py-3">
           <span className="text-center">
-            <span className="block text-xl font-black tabular-nums text-foreground">{playerScore}</span>
-            <span className="block text-[10px] font-bold uppercase tracking-wider text-muted-foreground">You</span>
+            <span className="block text-xl font-black tabular-nums text-foreground">
+              {playerScore}
+            </span>
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              You
+            </span>
           </span>
           <span className="text-[11.5px] font-semibold text-muted-foreground">
             streak {streak} · best {bestStreak}
           </span>
           <span className="text-center">
             <span className="block text-xl font-black tabular-nums text-foreground">{aiScore}</span>
-            <span className="block text-[10px] font-bold uppercase tracking-wider text-muted-foreground">AI</span>
+            <span className="block text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              AI
+            </span>
           </span>
         </div>
 
@@ -185,7 +201,9 @@ function Rpsls() {
               aria-label={`Play ${m.label}`}
               className="ripple-press flex flex-col items-center gap-1 rounded-xl border border-border bg-surface py-3 transition-all hover:border-primary/40 hover:-translate-y-0.5 active:scale-95"
             >
-              <span className="text-2xl" aria-hidden>{m.emoji}</span>
+              <span className="text-2xl" aria-hidden>
+                {m.emoji}
+              </span>
               <span className="text-[9.5px] font-bold text-muted-foreground">{m.label}</span>
             </button>
           ))}
@@ -204,7 +222,9 @@ function Rpsls() {
                   reset();
                 }}
                 className={`h-8 flex-1 rounded-lg text-[11.5px] font-bold capitalize transition-colors ${
-                  personality === p ? "bg-primary text-primary-foreground" : "bg-surface-elevated text-muted-foreground hover:text-foreground"
+                  personality === p
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-surface-elevated text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {p}
@@ -222,7 +242,9 @@ function Rpsls() {
 
         {/* rules */}
         <details className="rounded-2xl border border-border bg-surface p-4">
-          <summary className="cursor-pointer text-[13px] font-bold text-foreground">📖 All 10 rules</summary>
+          <summary className="cursor-pointer text-[13px] font-bold text-foreground">
+            📖 All 10 rules
+          </summary>
           <ul className="mt-2 space-y-1 text-[12px] text-muted-foreground">
             {Object.values(BEATS)
               .flat()

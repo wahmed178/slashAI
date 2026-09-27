@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw } from "lucide-react";
@@ -48,7 +49,7 @@ function PerfectCircle() {
   const drawing = useRef(false);
   const points = useRef<{ x: number; y: number }[]>([]);
   const [score, setScore] = useState<number | null>(null);
-  const [best, setBest] = useState<number>(() => Number(localStorage.getItem(BEST_KEY) ?? 0));
+  const [best, setBest] = useState<number>(() => Number(readStorage(BEST_KEY) ?? 0));
 
   const pos = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current!;
@@ -132,7 +133,17 @@ function PerfectCircle() {
   };
 
   const verdict =
-    score === null ? "" : score >= 95 ? "Inhuman. A compass is jealous." : score >= 85 ? "Practically perfect." : score >= 70 ? "Very respectable circle." : score >= 50 ? "A humble potato." : "That is... an egg?";
+    score === null
+      ? ""
+      : score >= 95
+        ? "Inhuman. A compass is jealous."
+        : score >= 85
+          ? "Practically perfect."
+          : score >= 70
+            ? "Very respectable circle."
+            : score >= 50
+              ? "A humble potato."
+              : "That is... an egg?";
 
   return (
     <AppShell title="Perfect Circle">
@@ -145,7 +156,9 @@ function PerfectCircle() {
 
       <div className="mx-auto max-w-lg space-y-4">
         <div className="flex items-center justify-between text-xs">
-          <span className="text-muted-foreground">Best: <b className="text-primary">{best}%</b></span>
+          <span className="text-muted-foreground">
+            Best: <b className="text-primary">{best}%</b>
+          </span>
           <button
             onClick={clear}
             className="flex items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"

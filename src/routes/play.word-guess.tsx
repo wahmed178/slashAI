@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw } from "lucide-react";
@@ -6,12 +7,66 @@ import { RotateCcw } from "lucide-react";
 export const Route = createFileRoute("/play/word-guess")({ component: WordGuess });
 
 const WORDS = [
-  "ABOUT", "BRAVE", "CHASE", "DREAM", "EAGER", "FLAME", "GLIDE", "HONOR", "IVORY", "JOKER",
-  "KNACK", "LEMON", "MIRTH", "NOBLE", "OASIS", "PRIDE", "QUEST", "RAPID", "STORM", "TIGER",
-  "ULTRA", "VIVID", "WHALE", "XENON", "YACHT", "ZEBRA", "ANGLE", "BLEND", "CRISP", "DRIFT",
-  "ELBOW", "FROST", "GRAPE", "HOVER", "INPUT", "JUICE", "KOALA", "LUCKY", "MANGO", "NORTH",
-  "OLIVE", "PLAZA", "QUARK", "RIDGE", "SOLAR", "TRACE", "URBAN", "VAPOR", "WIDOW", "YIELD",
-  "ZESTY", "AMBER", "BRAID", "CLOUD", "DONOR", "EPOCH", "FLINT", "GHOST", "HASTE", "IDEAL",
+  "ABOUT",
+  "BRAVE",
+  "CHASE",
+  "DREAM",
+  "EAGER",
+  "FLAME",
+  "GLIDE",
+  "HONOR",
+  "IVORY",
+  "JOKER",
+  "KNACK",
+  "LEMON",
+  "MIRTH",
+  "NOBLE",
+  "OASIS",
+  "PRIDE",
+  "QUEST",
+  "RAPID",
+  "STORM",
+  "TIGER",
+  "ULTRA",
+  "VIVID",
+  "WHALE",
+  "XENON",
+  "YACHT",
+  "ZEBRA",
+  "ANGLE",
+  "BLEND",
+  "CRISP",
+  "DRIFT",
+  "ELBOW",
+  "FROST",
+  "GRAPE",
+  "HOVER",
+  "INPUT",
+  "JUICE",
+  "KOALA",
+  "LUCKY",
+  "MANGO",
+  "NORTH",
+  "OLIVE",
+  "PLAZA",
+  "QUARK",
+  "RIDGE",
+  "SOLAR",
+  "TRACE",
+  "URBAN",
+  "VAPOR",
+  "WIDOW",
+  "YIELD",
+  "ZESTY",
+  "AMBER",
+  "BRAID",
+  "CLOUD",
+  "DONOR",
+  "EPOCH",
+  "FLINT",
+  "GHOST",
+  "HASTE",
+  "IDEAL",
 ];
 
 const KEYS = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
@@ -53,7 +108,7 @@ function WordGuess() {
   const [draft, setDraft] = useState("");
   const [status, setStatus] = useState<"playing" | "won" | "lost">("playing");
   const [shake, setShake] = useState(false);
-  const [streak, setStreak] = useState(() => Number(localStorage.getItem("wordguess-streak")) || 0);
+  const [streak, setStreak] = useState(() => Number(readStorage("wordguess-streak")) || 0);
 
   const gradeCache = rows.map((r) => grade(r, answer));
   const letterStates: Record<string, Feedback> = {};
@@ -62,7 +117,8 @@ function WordGuess() {
     for (let i = 0; i < g.length; i++) {
       const f = gradeCache[r]![i]!;
       const cur = letterStates[g[i]!];
-      if (f === "hit" || cur === undefined || (f === "near" && cur === "miss")) letterStates[g[i]!] = f;
+      if (f === "hit" || cur === undefined || (f === "near" && cur === "miss"))
+        letterStates[g[i]!] = f;
     }
   }
 
@@ -117,7 +173,9 @@ function WordGuess() {
     <AppShell title="Word Guess">
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">📝 Word Guess</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Crack the 5-letter word in {TRIES} tries. 🟩 right spot · 🟨 wrong spot.</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Crack the 5-letter word in {TRIES} tries. 🟩 right spot · 🟨 wrong spot.
+        </p>
       </header>
 
       <div className="mx-auto max-w-md space-y-4">
@@ -138,7 +196,11 @@ function WordGuess() {
                     <span
                       key={c}
                       className={`flex size-11 items-center justify-center rounded-lg border-2 text-[18px] font-black uppercase sm:size-12 ${
-                        filled ? FEED_STYLES[gradeCache[r]![c]!] : ch ? "border-foreground/40 text-foreground" : "border-border text-foreground"
+                        filled
+                          ? FEED_STYLES[gradeCache[r]![c]!]
+                          : ch
+                            ? "border-foreground/40 text-foreground"
+                            : "border-border text-foreground"
                       }`}
                     >
                       {ch}
@@ -155,14 +217,19 @@ function WordGuess() {
             🎉 Nailed it{rows.length === 1 ? " in one guess!" : ` in ${rows.length} tries!`}
           </p>
         )}
-        {status === "lost" && <p className="text-center text-[15px] font-black text-rose-400">The word was {answer}.</p>}
+        {status === "lost" && (
+          <p className="text-center text-[15px] font-black text-rose-400">The word was {answer}.</p>
+        )}
 
         {/* keyboard */}
         <div className="space-y-1.5">
           {KEYS.map((row, ri) => (
             <div key={ri} className="flex justify-center gap-1">
               {ri === 2 && (
-                <button onClick={() => press("↵")} className="rounded-md bg-primary/20 px-2.5 text-[11px] font-bold text-primary hover:bg-primary/30">
+                <button
+                  onClick={() => press("↵")}
+                  className="rounded-md bg-primary/20 px-2.5 text-[11px] font-bold text-primary hover:bg-primary/30"
+                >
                   ↵
                 </button>
               )}
@@ -172,14 +239,19 @@ function WordGuess() {
                   onClick={() => press(k)}
                   disabled={status !== "playing"}
                   className={`h-11 min-w-[8.5%] flex-1 rounded-md text-[13px] font-bold transition-colors ${
-                    letterStates[k] ? FEED_STYLES[letterStates[k]] : "border border-border bg-surface text-foreground hover:bg-primary/10"
+                    letterStates[k]
+                      ? FEED_STYLES[letterStates[k]]
+                      : "border border-border bg-surface text-foreground hover:bg-primary/10"
                   }`}
                 >
                   {k}
                 </button>
               ))}
               {ri === 2 && (
-                <button onClick={() => press("⌫")} className="rounded-md bg-primary/20 px-2.5 text-[11px] font-bold text-primary hover:bg-primary/30">
+                <button
+                  onClick={() => press("⌫")}
+                  className="rounded-md bg-primary/20 px-2.5 text-[11px] font-bold text-primary hover:bg-primary/30"
+                >
                   ⌫
                 </button>
               )}
@@ -188,7 +260,10 @@ function WordGuess() {
         </div>
 
         {status !== "playing" && (
-          <button onClick={next} className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
+          <button
+            onClick={next}
+            className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90"
+          >
             <RotateCcw className="size-3.5" /> Next word
           </button>
         )}

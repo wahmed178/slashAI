@@ -28,6 +28,8 @@ import { InstallBanner } from "./InstallBanner";
 import { CookieBanner } from "./CookieBanner";
 import { SlashBarOverlay } from "./SlashBarOverlay";
 import { CatalogueExtras } from "./CatalogueExtras";
+import { GameBoyFrame } from "./GameBoyFrame";
+import { usesDevice } from "@/lib/gameboy";
 import { FloatingActions } from "./FloatingActions";
 import { bumpToolClick, recordUxInteraction } from "@/lib/ux";
 
@@ -42,7 +44,6 @@ const PRIMARY = [
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
   { to: "", label: "Slash", icon: Zap, slash: true },
 ] as const;
-
 
 function isActive(pathname: string, to: string, exact?: boolean) {
   if (exact) return pathname === to;
@@ -173,7 +174,11 @@ function breadcrumbsFor(pathname: string): Crumb[] | null {
     ];
   }
   if (first === "r") {
-    return [{ label: "Home", to: "/" }, { label: "Discover", to: "/discover" }, { label: "Resource" }];
+    return [
+      { label: "Home", to: "/" },
+      { label: "Discover", to: "/discover" },
+      { label: "Resource" },
+    ];
   }
   const top = TOP_LEVEL_NAMES[first];
   if (top && segs.length === 1) {
@@ -188,7 +193,10 @@ function Breadcrumbs({ pathname, trailing }: { pathname: string; trailing?: Reac
     return trailing ? <div className="mb-4">{trailing}</div> : null;
   }
   return (
-    <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[12px] text-muted-foreground scrollbar-none">
+    <nav
+      aria-label="Breadcrumb"
+      className="mb-4 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap text-[12px] text-muted-foreground scrollbar-none"
+    >
       {crumbs.map((c, i) => {
         const last = i === crumbs.length - 1;
         return (
@@ -241,9 +249,18 @@ function ThemeToggleButton() {
     dark: <Moon className="size-[18px]" />,
     light: <Sun className="size-[18px]" />,
     amoled: <span className="text-[15px] leading-none">⬛</span>,
-    brutal: <span className="text-[15px] font-black leading-none" style={{ color: "var(--primary)" }}>◼</span>,
+    brutal: (
+      <span className="text-[15px] font-black leading-none" style={{ color: "var(--primary)" }}>
+        ◼
+      </span>
+    ),
   } as const;
-  const LABELS: Record<string, string> = { dark: "Dark", light: "Light", amoled: "AMOLED", brutal: "Brutal" };
+  const LABELS: Record<string, string> = {
+    dark: "Dark",
+    light: "Light",
+    amoled: "AMOLED",
+    brutal: "Brutal",
+  };
 
   return (
     <button
@@ -282,7 +299,15 @@ const KIND_LABEL: Record<"tool" | "game" | "app", string> = {
 };
 
 /** small Save pill that sits next to the page label on tool/game/app screens */
-function ScreenStar({ fav, label, onToggle }: { fav: boolean; label: string; onToggle: () => void }) {
+function ScreenStar({
+  fav,
+  label,
+  onToggle,
+}: {
+  fav: boolean;
+  label: string;
+  onToggle: () => void;
+}) {
   return (
     <button
       type="button"
@@ -363,18 +388,41 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
   return (
     <div className="flex min-h-screen w-full flex-col" style={{ background: "var(--background)" }}>
       <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
-        <div className={`mx-auto flex h-[52px] w-full items-center gap-2 px-4 md:gap-3 md:px-6 ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}>
+        <div
+          className={`mx-auto flex h-[52px] w-full items-center gap-2 px-4 md:gap-3 md:px-6 ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
+        >
           {back && <BackButton to={back.to} label={back.label} />}
 
           {/* logo */}
-          <Link to="/" className="group flex shrink-0 items-center gap-2.5 transition-transform active:scale-95">
+          <Link
+            to="/"
+            className="group flex shrink-0 items-center gap-2.5 transition-transform active:scale-95"
+          >
             <div className="relative flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#2dd4bf] to-[#818cf8] p-0.5 shadow-[0_0_12px_rgba(45,212,191,0.25)] transition-shadow group-hover:shadow-[0_0_16px_rgba(45,212,191,0.4)]">
               <div className="flex size-full items-center justify-center rounded-[10px] bg-[#12161c]">
-                <svg viewBox="0 0 24 24" className="size-4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 19L14 5" stroke="#2dd4bf" strokeWidth="2.5" strokeLinecap="round" opacity="0.45" />
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-4"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 19L14 5"
+                    stroke="#2dd4bf"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    opacity="0.45"
+                  />
                   <path d="M13 2L4 13H11L9 22L20 10H13L15 2Z" fill="url(#headerBrandGrad)" />
                   <defs>
-                    <linearGradient id="headerBrandGrad" x1="4" y1="22" x2="20" y2="2" gradientUnits="userSpaceOnUse">
+                    <linearGradient
+                      id="headerBrandGrad"
+                      x1="4"
+                      y1="22"
+                      x2="20"
+                      y2="2"
+                      gradientUnits="userSpaceOnUse"
+                    >
                       <stop stopColor="#38bdf8" />
                       <stop offset="0.5" stopColor="#2dd4bf" />
                       <stop offset="1" stopColor="#ffffff" />
@@ -384,7 +432,10 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
               </div>
             </div>
             <span className="flex items-center text-[16.5px] font-black tracking-tight text-foreground">
-              Slash<span className="bg-gradient-to-r from-[#2dd4bf] to-[#818cf8] bg-clip-text text-transparent">AI</span>
+              Slash
+              <span className="bg-gradient-to-r from-[#2dd4bf] to-[#818cf8] bg-clip-text text-transparent">
+                AI
+              </span>
             </span>
           </Link>
 
@@ -459,15 +510,31 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
       <OfflineBanner />
       <CookieBanner />
 
-      <main className={`mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}>
-        <div className="w-full px-4 py-6 md:px-6 md:py-8" style={{ paddingBottom: "calc(62px + env(safe-area-inset-bottom) + 20px)" }}>
+      <main
+        className={`mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
+      >
+        <div
+          className="w-full px-4 py-6 md:px-6 md:py-8"
+          style={{ paddingBottom: "calc(62px + env(safe-area-inset-bottom) + 20px)" }}
+        >
           {/* the Save pill lives next to the page label (breadcrumbs), not the header */}
           <Breadcrumbs
             pathname={pathname}
-            trailing={screen ? <ScreenStar fav={screenFav} label={kindLabel} onToggle={onStarScreen} /> : undefined}
+            trailing={
+              screen ? (
+                <ScreenStar fav={screenFav} label={kindLabel} onToggle={onStarScreen} />
+              ) : undefined
+            }
           />
           {srH1 && <h1 className="sr-only">{srH1}</h1>}
-          {children}
+          {/* Games that suit the handheld play inside it; the rest, and every
+              tool, render on a normal page. Wrapping here means one change
+              covers the whole catalogue instead of 96 route files. */}
+          {screen && screen.kind === "game" && usesDevice(screen.slug) ? (
+            <GameBoyFrame slug={screen.slug}>{children}</GameBoyFrame>
+          ) : (
+            children
+          )}
           {/* consistent onboarding + cross-links on every tool & game page */}
           {screen && (screen.kind === "tool" || screen.kind === "game") && (
             <CatalogueExtras kind={screen.kind} slug={screen.slug} />
@@ -550,7 +617,11 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                       style={{ background: "var(--primary)" }}
                     />
                   )}
-                  <item.icon className="size-[22px]" aria-hidden strokeWidth={slashActive ? 2.4 : 1.8} />
+                  <item.icon
+                    className="size-[22px]"
+                    aria-hidden
+                    strokeWidth={slashActive ? 2.4 : 1.8}
+                  />
                   {item.label}
                 </button>
               );
@@ -571,11 +642,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                     style={{ background: "var(--primary)" }}
                   />
                 )}
-                <item.icon
-                  className="size-[22px]"
-                  aria-hidden
-                  strokeWidth={active ? 2.4 : 1.8}
-                />
+                <item.icon className="size-[22px]" aria-hidden strokeWidth={active ? 2.4 : 1.8} />
                 {item.label}
               </Link>
             );

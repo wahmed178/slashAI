@@ -17,7 +17,6 @@ const TARGETS = {
 };
 
 const transpiler = new Bun.Transpiler({ loader: "tsx", target: "bun" });
-
 /**
  * Strips the framework shell (JSX, hooks, router registration) and evaluates
  * only the plain data + functions, so the test needs no DOM.
@@ -68,6 +67,71 @@ const ok = (cond, msg) => {
     failures++;
   }
 };
+
+console.log("\nSnake");
+{
+  // a plain module, not a route — imported directly
+  const m = await import("../src/lib/games/snake.ts");
+  const { SIZE, advance, collides, scoreOf, spawnFood, startSnake, turn } = m;
+
+  ok(startSnake().length === 4, "the snake starts four segments long");
+  ok(
+    startSnake().every((p) => p.x >= 0 && p.x < SIZE && p.y >= 0 && p.y < SIZE),
+    "the snake starts inside the board",
+  );
+
+  // the reported bug: a wall must wrap, never kill
+  const edges = [
+    ["left", { x: 0, y: 3 }],
+    ["right", { x: SIZE - 1, y: 3 }],
+    ["up", { x: 3, y: 0 }],
+    ["down", { x: 3, y: SIZE - 1 }],
+  ];
+  let wraps = true;
+  for (const [dir, pos] of edges) {
+    const t = advance([pos], dir, { x: 5, y: 5 });
+    const h = t.body[0];
+    if (t.dead || h.x < 0 || h.x >= SIZE || h.y < 0 || h.y >= SIZE) wraps = false;
+  }
+  ok(wraps, "running into any wall wraps instead of killing");
+
+  // a full lap of the board must survive
+  let b = [{ x: 2, y: 2 }];
+  for (let i = 0; i < SIZE * 4; i++) b = advance(b, "right", null).body;
+  ok(b[0].x === 2 && b[0].y === 2, "four laps of the board survive the wrap");
+
+  // self-collision is still fatal
+  const ring = [
+    { x: 1, y: 1 },
+    { x: 2, y: 1 },
+    { x: 3, y: 1 },
+    { x: 3, y: 2 },
+    { x: 2, y: 2 },
+    { x: 1, y: 2 },
+  ];
+  ok(collides(ring, { x: 2, y: 1 }), "the head landing on the body is a hit");
+  ok(advance(ring, "right", null).dead, "self-collision ends the run");
+  ok(!collides(ring, ring[ring.length - 1]), "the vacated tail cell is safe to enter");
+
+  ok(turn("right", "left") === "right", "the snake cannot reverse into itself");
+  ok(turn("right", "up") === "up", "a 90° turn is allowed");
+
+  const ate = advance(startSnake(), "right", { x: 10, y: 9 });
+  ok(ate.body.length === 5 && !ate.dead, "eating grows the snake by one");
+  ok(scoreOf(ate.body) === 1, "the score counts food eaten");
+  ok(scoreOf(startSnake()) === 0, "the score starts at zero");
+
+  const full = [];
+  for (let y = 0; y < SIZE; y++) for (let x = 0; x < SIZE; x++) full.push({ x, y });
+  ok(spawnFood(full) === null, "a full board has nowhere left to put food");
+
+  let clean = true;
+  for (let i = 0; i < 200; i++) {
+    const f = spawnFood(startSnake());
+    if (!f || startSnake().some((s) => s.x === f.x && s.y === f.y)) clean = false;
+  }
+  ok(clean, "200 spawns all land on a free cell");
+}
 
 console.log("\nN-Back");
 {

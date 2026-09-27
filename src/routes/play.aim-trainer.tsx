@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw } from "lucide-react";
@@ -31,7 +32,7 @@ function AimTrainer() {
   const [misses, setMisses] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   const [best, setBest] = useState<number | null>(() => {
-    const v = localStorage.getItem(BEST_KEY);
+    const v = readStorage(BEST_KEY);
     return v ? Number(v) : null;
   });
   const startRef = useRef(0);
@@ -94,10 +95,18 @@ function AimTrainer() {
 
       <div className="mx-auto max-w-xl space-y-3">
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>Hits: <b className="text-foreground tabular-nums">{hits}</b>/{TARGETS}</span>
-          <span>Misses: <b className="text-foreground tabular-nums">{misses}</b></span>
-          <span>Accuracy: <b className="text-foreground tabular-nums">{accuracy}%</b></span>
-          <span>Time: <b className="text-foreground tabular-nums">{elapsed.toFixed(1)}s</b></span>
+          <span>
+            Hits: <b className="text-foreground tabular-nums">{hits}</b>/{TARGETS}
+          </span>
+          <span>
+            Misses: <b className="text-foreground tabular-nums">{misses}</b>
+          </span>
+          <span>
+            Accuracy: <b className="text-foreground tabular-nums">{accuracy}%</b>
+          </span>
+          <span>
+            Time: <b className="text-foreground tabular-nums">{elapsed.toFixed(1)}s</b>
+          </span>
         </div>
 
         <div
@@ -109,7 +118,10 @@ function AimTrainer() {
               <div className="text-center">
                 <p className="text-sm text-muted-foreground">Ready when you are.</p>
                 <button
-                  onClick={(e) => { e.stopPropagation(); begin(); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    begin();
+                  }}
                   className="mt-3 rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90"
                 >
                   Start
@@ -137,9 +149,15 @@ function AimTrainer() {
           {phase === "done" && (
             <div className="absolute inset-0 grid place-items-center bg-background/70 backdrop-blur-sm">
               <div className="text-center">
-                <p className="text-3xl font-bold tabular-nums text-primary">{elapsed.toFixed(2)}s</p>
+                <p className="text-3xl font-bold tabular-nums text-primary">
+                  {elapsed.toFixed(2)}s
+                </p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  {elapsed / TARGETS < 0.5 ? "Reflexes of a caffeinated cat." : elapsed / TARGETS < 0.75 ? "Sharp shooting." : "Warm-up complete."}
+                  {elapsed / TARGETS < 0.5
+                    ? "Reflexes of a caffeinated cat."
+                    : elapsed / TARGETS < 0.75
+                      ? "Sharp shooting."
+                      : "Warm-up complete."}
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {(elapsed / TARGETS).toFixed(2)}s per target · {accuracy}% accuracy
@@ -148,10 +166,15 @@ function AimTrainer() {
                   <p className="mt-1 text-xs font-bold text-primary">New personal best!</p>
                 )}
                 {best !== null && best > elapsed && (
-                  <p className="mt-1 text-xs text-muted-foreground">Best: <span className="tabular-nums">{best.toFixed(2)}s</span></p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Best: <span className="tabular-nums">{best.toFixed(2)}s</span>
+                  </p>
                 )}
                 <button
-                  onClick={(e) => { e.stopPropagation(); begin(); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    begin();
+                  }}
                   className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-bold text-primary-foreground transition-opacity hover:opacity-90"
                 >
                   <RotateCcw className="size-3.5" /> Go again
@@ -163,7 +186,8 @@ function AimTrainer() {
 
         {best !== null && (
           <p className="text-center text-[11px] text-muted-foreground">
-            Personal best: <b className="text-primary tabular-nums">{best.toFixed(2)}s</b> for {TARGETS} targets
+            Personal best: <b className="text-primary tabular-nums">{best.toFixed(2)}s</b> for{" "}
+            {TARGETS} targets
           </p>
         )}
       </div>

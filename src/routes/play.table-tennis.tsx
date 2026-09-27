@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -20,7 +21,13 @@ const WIN_SCORE = 11;
 const AI_SPEED = { Easy: 2.6, Medium: 4.2, Hard: 6.1 } as const;
 type Level = keyof typeof AI_SPEED;
 
-interface Ball { x: number; y: number; vx: number; vy: number; spin: number }
+interface Ball {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  spin: number;
+}
 interface State {
   ball: Ball;
   playerX: number;
@@ -70,7 +77,7 @@ function TableTennis() {
   const [score, setScore] = useState({ you: 0, ai: 0 });
   const [outcome, setOutcome] = useState<"" | "you" | "ai">("");
   const [playing, setPlaying] = useState(false);
-  const [best, setBest] = useState<number>(() => Number(localStorage.getItem("slashai.tt.wins")) || 0);
+  const [best, setBest] = useState<number>(() => Number(readStorage("slashai.tt.wins")) || 0);
   const levelRef = useRef<Level>(level);
   levelRef.current = level;
 
@@ -97,7 +104,11 @@ function TableTennis() {
           s.playerX = clamp(pointerRef.current, PADDLE_W / 2, W - PADDLE_W / 2);
         } else {
           const k = keyRef.current;
-          s.playerX = clamp(s.playerX + (k.right ? 7 : 0) - (k.left ? 7 : 0), PADDLE_W / 2, W - PADDLE_W / 2);
+          s.playerX = clamp(
+            s.playerX + (k.right ? 7 : 0) - (k.left ? 7 : 0),
+            PADDLE_W / 2,
+            W - PADDLE_W / 2,
+          );
         }
         s.lastPaddleDx = s.playerX - prevX;
 
@@ -210,7 +221,12 @@ function TableTennis() {
         c.fillStyle = color;
         c.fillRect(x - PADDLE_W / 2, y, PADDLE_W, PADDLE_H);
         c.fillStyle = "rgba(255,255,255,0.22)";
-        c.fillRect(x - PADDLE_W / 2, y + (color.startsWith("#2dd4") ? 0 : PADDLE_H - 3), PADDLE_W, 3);
+        c.fillRect(
+          x - PADDLE_W / 2,
+          y + (color.startsWith("#2dd4") ? 0 : PADDLE_H - 3),
+          PADDLE_W,
+          3,
+        );
         c.fillStyle = "#5b3a1e";
         c.fillRect(x - 4, y + (color.startsWith("#2dd4") ? PADDLE_H : -7), 8, 7);
       };
@@ -271,7 +287,8 @@ function TableTennis() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🏓 Table Tennis</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Real top-down table. Drag or use ←/→ to return, first to 11 wins by 2. Sidestep as you hit to add spin.
+          Real top-down table. Drag or use ←/→ to return, first to 11 wins by 2. Sidestep as you hit
+          to add spin.
         </p>
       </header>
 
@@ -317,14 +334,19 @@ function TableTennis() {
                     key={l}
                     onClick={() => setLevel(l)}
                     className={`rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors ${
-                      level === l ? "bg-primary text-background" : "border border-border bg-surface text-muted-foreground"
+                      level === l
+                        ? "bg-primary text-background"
+                        : "border border-border bg-surface text-muted-foreground"
                     }`}
                   >
                     {l}
                   </button>
                 ))}
               </div>
-              <button onClick={newGame} className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background">
+              <button
+                onClick={newGame}
+                className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background"
+              >
                 ▶ Start match
               </button>
             </div>
@@ -338,7 +360,10 @@ function TableTennis() {
               <p className="text-[15px] text-muted-foreground">
                 {score.you} – {score.ai}
               </p>
-              <button onClick={newGame} className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background">
+              <button
+                onClick={newGame}
+                className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background"
+              >
                 ↻ Rematch
               </button>
             </div>
@@ -348,7 +373,10 @@ function TableTennis() {
         <div className="flex items-center justify-between text-[11px] text-muted-foreground">
           <span>Serving: {stateRef.current.server === "you" ? "you" : "AI"}</span>
           {playing && !outcome && (
-            <button onClick={() => setPlaying(false)} className="font-semibold text-primary hover:underline">
+            <button
+              onClick={() => setPlaying(false)}
+              className="font-semibold text-primary hover:underline"
+            >
               Change difficulty
             </button>
           )}

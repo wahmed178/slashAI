@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -22,7 +23,14 @@ const LABEL: Record<Zone, string> = {
 };
 
 /** keepers are stronger at low shots and down the middle — that is real football */
-const SAVE_WEIGHT: Record<Zone, number> = { TL: 0.34, TC: 0.22, TR: 0.34, BL: 0.44, BC: 0.30, BR: 0.44 };
+const SAVE_WEIGHT: Record<Zone, number> = {
+  TL: 0.34,
+  TC: 0.22,
+  TR: 0.34,
+  BL: 0.44,
+  BC: 0.3,
+  BR: 0.44,
+};
 
 const KEEPER_SKILL = { Easy: 0.55, Medium: 0.8, Hard: 1.12 } as const;
 type Level = keyof typeof KEEPER_SKILL;
@@ -55,7 +63,7 @@ function PenaltyShootout() {
   const [last, setLast] = useState<{ text: string; good: boolean } | null>(null);
   const [dive, setDive] = useState<Zone | null>(null);
 
-  const best = useMemo(() => Number(localStorage.getItem("slashai.penalty.wins")) || 0, []);
+  const best = useMemo(() => Number(readStorage("slashai.penalty.wins")) || 0, []);
   const [wins, setWins] = useState(best);
 
   const start = useCallback(() => {
@@ -123,7 +131,8 @@ function PenaltyShootout() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">⚽ Penalty Shootout</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Five penalties each: you shoot, then you dive. Low and central shots are easier to save — that is real goalkeeping.
+          Five penalties each: you shoot, then you dive. Low and central shots are easier to save —
+          that is real goalkeeping.
         </p>
       </header>
 
@@ -133,18 +142,24 @@ function PenaltyShootout() {
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground">You</p>
             <p className="text-[20px] font-black text-[#2dd4bf]">
               {yourGoals}
-              <span className="text-[12px] text-muted-foreground">/{Math.max(yourKicks.length, 5)}</span>
+              <span className="text-[12px] text-muted-foreground">
+                /{Math.max(yourKicks.length, 5)}
+              </span>
             </p>
           </div>
           <div className="rounded-xl border border-border bg-surface px-3 py-2 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Shootout wins</p>
+            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              Shootout wins
+            </p>
             <p className="text-[20px] font-black text-foreground">{wins}</p>
           </div>
           <div className="rounded-xl border border-border bg-surface px-3 py-2 text-center">
             <p className="text-[10px] uppercase tracking-wider text-muted-foreground">AI</p>
             <p className="text-[20px] font-black text-[#f472b6]">
               {aiGoals}
-              <span className="text-[12px] text-muted-foreground">/{Math.max(aiKicks.length, 5)}</span>
+              <span className="text-[12px] text-muted-foreground">
+                /{Math.max(aiKicks.length, 5)}
+              </span>
             </p>
           </div>
         </div>
@@ -197,14 +212,19 @@ function PenaltyShootout() {
                       key={l}
                       onClick={() => setLevel(l)}
                       className={`rounded-full px-3 py-1.5 text-[12px] font-semibold transition-colors ${
-                        level === l ? "bg-primary text-background" : "border border-border bg-surface text-muted-foreground"
+                        level === l
+                          ? "bg-primary text-background"
+                          : "border border-border bg-surface text-muted-foreground"
                       }`}
                     >
                       {l}
                     </button>
                   ))}
                 </div>
-                <button onClick={start} className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background">
+                <button
+                  onClick={start}
+                  className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background"
+                >
                   ▶ Step up
                 </button>
               </div>
@@ -213,12 +233,19 @@ function PenaltyShootout() {
             {phase === "over" && (
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-black/80 px-6 text-center">
                 <p className="text-[26px] font-black text-foreground">
-                  {drawn ? "🤝 All square" : youWon ? "🏆 You win the shootout!" : "😤 AI wins the shootout"}
+                  {drawn
+                    ? "🤝 All square"
+                    : youWon
+                      ? "🏆 You win the shootout!"
+                      : "😤 AI wins the shootout"}
                 </p>
                 <p className="text-[15px] text-muted-foreground">
                   {yourGoals} – {aiGoals}
                 </p>
-                <button onClick={start} className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background">
+                <button
+                  onClick={start}
+                  className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background"
+                >
                   ↻ Another shootout
                 </button>
               </div>
@@ -227,7 +254,11 @@ function PenaltyShootout() {
         </div>
 
         {last && phase !== "idle" && (
-          <p className={`text-center text-[12px] font-semibold ${last.good ? "text-emerald-400" : "text-red-400"}`}>{last.text}</p>
+          <p
+            className={`text-center text-[12px] font-semibold ${last.good ? "text-emerald-400" : "text-red-400"}`}
+          >
+            {last.text}
+          </p>
         )}
 
         <p className="text-center text-[11px] text-muted-foreground">

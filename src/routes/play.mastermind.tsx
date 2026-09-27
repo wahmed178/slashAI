@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -19,10 +20,18 @@ const COLOURS = [
   { key: "O", hex: "#f97316", name: "Orange" },
 ];
 
-const RULES = { Easy: { len: 4, palette: 4, guesses: 10 }, Medium: { len: 4, palette: 5, guesses: 10 }, Hard: { len: 5, palette: 6, guesses: 8 } } as const;
+const RULES = {
+  Easy: { len: 4, palette: 4, guesses: 10 },
+  Medium: { len: 4, palette: 5, guesses: 10 },
+  Hard: { len: 5, palette: 6, guesses: 8 },
+} as const;
 type Level = keyof typeof RULES;
 
-interface Guess { code: string[]; exact: number; partial: number }
+interface Guess {
+  code: string[];
+  exact: number;
+  partial: number;
+}
 
 function score(secret: string[], guess: string[]): { exact: number; partial: number } {
   let exact = 0;
@@ -52,7 +61,7 @@ function Mastermind() {
   const [current, setCurrent] = useState<string[]>([]);
   const [history, setHistory] = useState<Guess[]>([]);
   const [state, setState] = useState<"playing" | "won" | "lost">("playing");
-  const [wins, setWins] = useState(() => Number(localStorage.getItem("slashai.mastermind.wins")) || 0);
+  const [wins, setWins] = useState(() => Number(readStorage("slashai.mastermind.wins")) || 0);
 
   function palette(l: Level) {
     return COLOURS.slice(0, RULES[l].palette);
@@ -95,7 +104,8 @@ function Mastermind() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🧠 Mastermind</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Crack the hidden code. Black peg = right colour, right spot. White peg = right colour, wrong spot.
+          Crack the hidden code. Black peg = right colour, right spot. White peg = right colour,
+          wrong spot.
         </p>
       </header>
 
@@ -128,7 +138,9 @@ function Mastermind() {
             </div>
           ))}
           <p className="pt-1 text-[10.5px] text-muted-foreground">
-            {state === "playing" ? "The code is hidden until the round ends." : `The code was ${secret.join(" ")}.`}
+            {state === "playing"
+              ? "The code is hidden until the round ends."
+              : `The code was ${secret.join(" ")}.`}
           </p>
         </div>
 
@@ -138,13 +150,24 @@ function Mastermind() {
             .slice()
             .reverse()
             .map((g, ri) => (
-              <div key={ri} className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2">
+              <div
+                key={ri}
+                className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2"
+              >
                 {g.code.map((k, i) => (
-                  <span key={i} className="size-6 rounded-full border border-black/40" style={{ background: colourOf(k) }} />
+                  <span
+                    key={i}
+                    className="size-6 rounded-full border border-black/40"
+                    style={{ background: colourOf(k) }}
+                  />
                 ))}
                 <span className="ml-auto flex items-center gap-1.5 text-[11px] font-bold">
-                  <span className="rounded bg-foreground/15 px-1.5 py-0.5 text-foreground">{g.exact} ●</span>
-                  <span className="rounded bg-foreground/8 px-1.5 py-0.5 text-muted-foreground">{g.partial} ○</span>
+                  <span className="rounded bg-foreground/15 px-1.5 py-0.5 text-foreground">
+                    {g.exact} ●
+                  </span>
+                  <span className="rounded bg-foreground/8 px-1.5 py-0.5 text-muted-foreground">
+                    {g.partial} ○
+                  </span>
                 </span>
               </div>
             ))}
@@ -202,11 +225,19 @@ function Mastermind() {
         )}
 
         {state !== "playing" && (
-          <div className={`rounded-xl border p-4 text-center ${state === "won" ? "border-emerald-500/30 bg-emerald-500/10" : "border-red-500/30 bg-red-500/10"}`}>
-            <p className={`text-[15px] font-bold ${state === "won" ? "text-emerald-400" : "text-red-400"}`}>
-              {state === "won" ? `🏆 Cracked it in ${history.length} guess${history.length === 1 ? "" : "es"}!` : "😤 Out of guesses"}
+          <div
+            className={`rounded-xl border p-4 text-center ${state === "won" ? "border-emerald-500/30 bg-emerald-500/10" : "border-red-500/30 bg-red-500/10"}`}
+          >
+            <p
+              className={`text-[15px] font-bold ${state === "won" ? "text-emerald-400" : "text-red-400"}`}
+            >
+              {state === "won"
+                ? `🏆 Cracked it in ${history.length} guess${history.length === 1 ? "" : "es"}!`
+                : "😤 Out of guesses"}
             </p>
-            <p className="mt-1 text-[12px] text-muted-foreground">The code was {secret.join(" ")}.</p>
+            <p className="mt-1 text-[12px] text-muted-foreground">
+              The code was {secret.join(" ")}.
+            </p>
           </div>
         )}
 
@@ -216,7 +247,9 @@ function Mastermind() {
               key={l}
               onClick={() => restart(l)}
               className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold transition-colors ${
-                level === l ? "bg-primary text-background" : "border border-border bg-surface text-muted-foreground hover:text-foreground"
+                level === l
+                  ? "bg-primary text-background"
+                  : "border border-border bg-surface text-muted-foreground hover:text-foreground"
               }`}
             >
               {l}

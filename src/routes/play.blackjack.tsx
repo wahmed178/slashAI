@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw } from "lucide-react";
@@ -13,7 +14,8 @@ const BAL_KEY = "blackjack-chips";
 
 function freshShoe(): Card[] {
   const cards: Card[] = [];
-  for (let d = 0; d < 4; d++) for (const s of SUITS) for (const r of RANKS) cards.push({ rank: r, suit: s });
+  for (let d = 0; d < 4; d++)
+    for (const s of SUITS) for (const r of RANKS) cards.push({ rank: r, suit: s });
   for (let i = cards.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [cards[i], cards[j]] = [cards[j]!, cards[i]!];
@@ -47,7 +49,7 @@ type Phase = "bet" | "player" | "dealer" | "done";
 
 function Blackjack() {
   const [balance, setBalance] = useState<number>(() => {
-    const v = Number(localStorage.getItem(BAL_KEY));
+    const v = Number(readStorage(BAL_KEY));
     return Number.isFinite(v) && v > 0 ? v : 100;
   });
   const [shoe, setShoe] = useState<Card[]>(freshShoe);
@@ -69,7 +71,7 @@ function Blackjack() {
     }
     const p: Card[] = [];
     const d: Card[] = [];
-    let s = shoe.length < 15 ? freshShoe() : [...shoe];
+    const s = shoe.length < 15 ? freshShoe() : [...shoe];
     p.push(s.shift()!);
     d.push(s.shift()!);
     p.push(s.shift()!);
@@ -103,7 +105,7 @@ function Blackjack() {
 
   /** draw n cards, returning the cards and the remaining shoe (reshuffles when low) */
   function drawCards(count: number, from: Card[]): [Card[], Card[]] {
-    let s = from.length < 15 ? freshShoe() : [...from];
+    const s = from.length < 15 ? freshShoe() : [...from];
     const out: Card[] = [];
     for (let i = 0; i < count; i++) out.push(s.shift()!);
     return [out, s];
@@ -128,7 +130,7 @@ function Blackjack() {
 
   /** dealer draws to 17, then settles the bet at `stake` chips */
   function dealerPlay(p: Card[], shoeOverride: Card[], stake: number = bet) {
-    let d = [...dealer];
+    const d = [...dealer];
     let s = [...shoeOverride];
     while (handValue(d).total < 17) {
       if (s.length === 0) s = freshShoe();
@@ -214,7 +216,9 @@ function Blackjack() {
     <AppShell title="Blackjack">
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">♠️ Blackjack</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Get closer to 21 than the dealer without busting. Blackjack pays 3:2.</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Get closer to 21 than the dealer without busting. Blackjack pays 3:2.
+        </p>
       </header>
 
       <div className="mx-auto max-w-md space-y-4">
@@ -222,7 +226,12 @@ function Blackjack() {
         <div className="rounded-2xl border border-[rgba(45,212,191,0.25)] bg-[rgba(45,212,191,0.04)] p-4">
           <div className="flex items-center justify-between">
             <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-              Dealer {revealDealer && dealer.length > 0 ? `- ${dv.total}` : dealer.length > 0 ? `- ${dealer[0]!.rank === "A" ? 11 : handValue([dealer[0]!]).total}+` : ""}
+              Dealer{" "}
+              {revealDealer && dealer.length > 0
+                ? `- ${dv.total}`
+                : dealer.length > 0
+                  ? `- ${dealer[0]!.rank === "A" ? 11 : handValue([dealer[0]!]).total}+`
+                  : ""}
             </p>
           </div>
           <Hand cards={dealer} hideSecond={!revealDealer && phase !== "bet"} />
@@ -235,7 +244,10 @@ function Blackjack() {
 
         {phase === "bet" && (
           <div className="rounded-xl border border-border bg-surface p-4">
-            <p className="text-center text-[13px] text-muted-foreground">Bet: <b className="text-[16px] text-primary">{bet}</b> chips · Balance: <b className="text-foreground">{balance}</b></p>
+            <p className="text-center text-[13px] text-muted-foreground">
+              Bet: <b className="text-[16px] text-primary">{bet}</b> chips · Balance:{" "}
+              <b className="text-foreground">{balance}</b>
+            </p>
             <div className="mt-3 flex flex-wrap justify-center gap-1.5">
               {[5, 10, 25, 50, 100].map((v) => (
                 <button
@@ -246,11 +258,18 @@ function Blackjack() {
                   +{v}
                 </button>
               ))}
-              <button onClick={() => setBet(10)} className="rounded-full border border-border bg-surface-elevated px-3 py-1.5 text-[12px] font-medium text-muted-foreground">
+              <button
+                onClick={() => setBet(10)}
+                className="rounded-full border border-border bg-surface-elevated px-3 py-1.5 text-[12px] font-medium text-muted-foreground"
+              >
                 Clear
               </button>
             </div>
-            <button onClick={deal} disabled={balance <= 0} className="mt-3 w-full rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90 disabled:opacity-40">
+            <button
+              onClick={deal}
+              disabled={balance <= 0}
+              className="mt-3 w-full rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90 disabled:opacity-40"
+            >
               Deal
             </button>
           </div>
@@ -260,19 +279,41 @@ function Blackjack() {
           <div className="space-y-2">
             {phase === "player" && (
               <div className="grid grid-cols-3 gap-2">
-                <button onClick={hit} className="rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">Hit</button>
-                <button onClick={() => dealerPlay(player, shoe)} className="rounded-xl border border-border bg-surface-elevated py-2.5 text-[13px] font-bold text-foreground hover:bg-primary/10">Stand</button>
-                <button onClick={double} disabled={balance < bet} className="rounded-xl border border-border bg-surface-elevated py-2.5 text-[13px] font-bold text-foreground hover:bg-primary/10 disabled:opacity-40">Double</button>
+                <button
+                  onClick={hit}
+                  className="rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90"
+                >
+                  Hit
+                </button>
+                <button
+                  onClick={() => dealerPlay(player, shoe)}
+                  className="rounded-xl border border-border bg-surface-elevated py-2.5 text-[13px] font-bold text-foreground hover:bg-primary/10"
+                >
+                  Stand
+                </button>
+                <button
+                  onClick={double}
+                  disabled={balance < bet}
+                  className="rounded-xl border border-border bg-surface-elevated py-2.5 text-[13px] font-bold text-foreground hover:bg-primary/10 disabled:opacity-40"
+                >
+                  Double
+                </button>
               </div>
             )}
             {phase === "done" && (
               <>
                 <p className="text-center text-[14px] font-bold text-foreground">{message}</p>
                 <div className="grid grid-cols-2 gap-2">
-                  <button onClick={newRound} className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
+                  <button
+                    onClick={newRound}
+                    className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background hover:bg-primary/90"
+                  >
                     <RotateCcw className="size-3.5" /> Next hand
                   </button>
-                  <button onClick={resetChips} className="rounded-xl border border-border bg-surface-elevated py-2.5 text-[13px] font-bold text-muted-foreground hover:text-foreground">
+                  <button
+                    onClick={resetChips}
+                    className="rounded-xl border border-border bg-surface-elevated py-2.5 text-[13px] font-bold text-muted-foreground hover:text-foreground"
+                  >
                     Reset chips (100)
                   </button>
                 </div>
@@ -282,7 +323,9 @@ function Blackjack() {
         )}
 
         {phase === "player" && <p className="text-center text-[12px] text-amber-400">{message}</p>}
-        {phase === "dealer" && <p className="text-center text-[12px] text-amber-400">Dealer plays...</p>}
+        {phase === "dealer" && (
+          <p className="text-center text-[12px] text-amber-400">Dealer plays...</p>
+        )}
       </div>
     </AppShell>
   );

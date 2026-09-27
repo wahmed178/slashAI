@@ -31,6 +31,33 @@ export const UX_CHANGE_EVENT = "slashai-ux-change";
 /** Fired on window when the last-copied command changes (or is cleared). */
 export const LAST_COPY_EVENT = "slashai-last-copy-change";
 
+/**
+ * SSR-safe localStorage read.
+ *
+ * `localStorage` does not exist while the page is being rendered on the server,
+ * so a bare `localStorage.getItem()` inside a `useState` initialiser throws and
+ * forces the whole route to fall back to client rendering — no server HTML, no
+ * meta tags for crawlers, a visible flash. Use this instead.
+ */
+export function readStorage(key: string): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+/** SSR-safe localStorage write that also survives private mode. */
+export function writeStorage(key: string, value: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(key, value);
+  } catch {
+    /* private mode or quota — a high score is not worth breaking over */
+  }
+}
+
 function readJson<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
   try {
@@ -314,7 +341,12 @@ export function getCopyHistory(): CopyHistoryItem[] {
   return readJson<CopyHistoryItem[]>(UX_KEYS.copyHistory, []);
 }
 
-export function recordCopyHistory(item: { id: string; name: string; category: string; text: string }): void {
+export function recordCopyHistory(item: {
+  id: string;
+  name: string;
+  category: string;
+  text: string;
+}): void {
   const current = getCopyHistory();
   const next: CopyHistoryItem[] = [
     { ...item, timestamp: Date.now() },
@@ -338,4 +370,3 @@ export function timeAgo(timestamp: number): string {
   if (days === 1) return "Yesterday";
   return `${days}d ago`;
 }
-
