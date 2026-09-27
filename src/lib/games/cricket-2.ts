@@ -601,15 +601,30 @@ export function pickBowlers(team: Team): Bowler[] {
     .map((p) => ({ name: p.name, balls: 0, runs: 0, wickets: 0 }));
 }
 
-/** Six batting slots so a fifth-wicket collapse still has someone on strike. */
+/**
+ * Six batting slots so a fifth-wicket collapse still has someone on strike.
+ *
+ * Every squad in the data has exactly five players, so slicing to
+ * `WICKETS + 1` used to return only five slots. The match reducer then sets
+ * the next striker to `wickets + 1`, which is index 5 after the fourth
+ * wicket — one past the end of the array — and the following delivery threw
+ * on `batsmen[5].runs`. Pad the order so the slot the reducer reaches always
+ * exists, whatever a squad's real size.
+ */
 export function newInnings(batting: Team, bowling: Team): Innings {
+  const slots = WICKETS + 1;
+  const named = batting.players.slice(0, slots);
+  const order = [...named];
+  for (let i = named.length; i < slots; i++) {
+    order.push({ name: "Next man in", role: "Batsman", stat: "" });
+  }
   return {
     runs: 0,
     wickets: 0,
     balls: 0,
     events: [],
     milestones: [],
-    batsmen: batting.players.slice(0, WICKETS + 1).map((p) => ({
+    batsmen: order.map((p) => ({
       name: p.name,
       role: p.role,
       runs: 0,
@@ -790,4 +805,44 @@ export function oversText(balls: number): string {
 /** Campaign points: your runs, 200 per win, 500 for lifting the trophy. */
 export function campaignScore(careerRuns: number, matchesWon: number, champion: boolean): number {
   return careerRuns + 200 * matchesWon + (champion ? 500 : 0);
+}
+
+export interface StarPerformer {
+  name: string;
+  line: string;
+  impact: number;
+}
+
+/**
+ * Player of the match, worked out from the two scorecards rather than picked
+ * at random.
+ *
+ * Batters are measured on runs. Bowlers are measured on wickets, each worth
+ * about three runs, minus a share of what they conceded — so a tight spell
+ * that goes wicketless still counts for something, and a three-for is not
+ * outranked by a patient fifty.
+ */
+export function playerOfTheMatch(first: Innings, second: Innings): StarPerformer | null {
+  const options: StarPerformer[] = [];
+  for (const inn of [first, second]) {
+    for (const b of inn.batsmen) {
+      if (b.balls === 0) continue;
+      options.push({ name: b.name, line: `${b.runs} off ${b.balls}`, impact: b.runs });
+    }
+    for (const bw of inn.bowlers) {
+      if (bw.balls === 0) continue;
+      const overs = bw.balls / 6;
+      // `wickets`, not `wkts`. Getting that name wrong yields NaN, and a NaN
+      // impact never wins a `>` comparison, so the figure would be dropped
+      // from the reckoning without ever showing up as an error.
+      options.push({
+        name: bw.name,
+        line: `${bw.wickets}/${bw.runs} from ${overs.toFixed(1)}`,
+        impact: bw.wickets * 30 - bw.runs / 4 + Math.min(6, overs),
+      });
+    }
+  }
+  const valid = options.filter((o) => Number.isFinite(o.impact));
+  if (valid.length === 0) return null;
+  return valid.reduce((a, b) => (b.impact > a.impact ? b : a));
 }

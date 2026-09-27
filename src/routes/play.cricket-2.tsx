@@ -29,6 +29,7 @@ import {
   newInnings,
   nextMilestone,
   oversText,
+  playerOfTheMatch,
   poolFor,
   randomCommentary,
   rollOutcome,
@@ -421,6 +422,13 @@ function Cricket2() {
 
   useEffect(() => clearTimers, [clearTimers]);
   useEffect(() => setBest(getGameBest("cricket-2")), []);
+
+  // Only meaningful once a match has actually been played, so the empty
+  // innings of the format and toss screens never produce a "player".
+  const starPlayer = useMemo(
+    () => (s.screen === "result" ? playerOfTheMatch(s.first, s.second) : null),
+    [s.screen, s.first, s.second],
+  );
 
   /** Between every ball: milestone popup, then hand control back. */
   useEffect(() => {
@@ -1101,6 +1109,20 @@ function Cricket2() {
               <InfoRow label="Final opponent" value={`${them(s).logo} ${them(s).name}`} />
               <InfoRow label="Your runs" value={String(s.careerRuns)} />
               <InfoRow label="Matches won" value={String(s.matchesWon)} />
+              {starPlayer && (
+                <div className="mt-3 rounded-xl border border-amber-400/40 bg-amber-400/10 px-3 py-2.5">
+                  <p className="text-[9px] font-bold tracking-[0.18em] text-amber-400/80 uppercase">
+                    Player of the match
+                  </p>
+                  <p className="text-[13px] font-bold text-foreground">
+                    ⭐ {starPlayer.name}
+                    <span className="ml-1.5 font-normal text-muted-foreground">
+                      {starPlayer.line}
+                    </span>
+                  </p>
+                </div>
+              )}
+
               <InfoRow
                 label="Your best"
                 value={s.savedBest !== null ? `${s.savedBest} pts` : "—"}
