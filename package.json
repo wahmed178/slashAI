@@ -18,6 +18,7 @@
     "stores:validate": "node scripts/validate-store-schema.mjs",
     "stores:e2e": "bun scripts/stores-e2e.mjs",
     "games:smoke": "bun scripts/smoke-brain-games.mjs",
+    "links:smoke": "bun scripts/smoke-shorten.mjs",
     "android:build": "bash android/build-android.sh",
     "android:sync": "npm run build && npx cap sync android",
     "android:open": "npx cap open android",

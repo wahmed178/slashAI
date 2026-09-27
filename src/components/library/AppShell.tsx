@@ -29,6 +29,7 @@ import { CookieBanner } from "./CookieBanner";
 import { SlashBarOverlay } from "./SlashBarOverlay";
 import { CatalogueExtras } from "./CatalogueExtras";
 import { GameBoyFrame } from "./GameBoyFrame";
+import { ShortenProvider } from "./shorten-context";
 import { usesDevice } from "@/lib/gameboy";
 import { FloatingActions } from "./FloatingActions";
 import { bumpToolClick, recordUxInteraction } from "@/lib/ux";
@@ -386,272 +387,277 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
   }, [hasSeoHead, title, pathname]);
 
   return (
-    <div className="flex min-h-screen w-full flex-col" style={{ background: "var(--background)" }}>
-      <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
-        <div
-          className={`mx-auto flex h-[52px] w-full items-center gap-2 px-4 md:gap-3 md:px-6 ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
-        >
-          {back && <BackButton to={back.to} label={back.label} />}
-
-          {/* logo */}
-          <Link
-            to="/"
-            className="group flex shrink-0 items-center gap-2.5 transition-transform active:scale-95"
-          >
-            <div className="relative flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#2dd4bf] to-[#818cf8] p-0.5 shadow-[0_0_12px_rgba(45,212,191,0.25)] transition-shadow group-hover:shadow-[0_0_16px_rgba(45,212,191,0.4)]">
-              <div className="flex size-full items-center justify-center rounded-[10px] bg-[#12161c]">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="size-4"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M6 19L14 5"
-                    stroke="#2dd4bf"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    opacity="0.45"
-                  />
-                  <path d="M13 2L4 13H11L9 22L20 10H13L15 2Z" fill="url(#headerBrandGrad)" />
-                  <defs>
-                    <linearGradient
-                      id="headerBrandGrad"
-                      x1="4"
-                      y1="22"
-                      x2="20"
-                      y2="2"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#38bdf8" />
-                      <stop offset="0.5" stopColor="#2dd4bf" />
-                      <stop offset="1" stopColor="#ffffff" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-            </div>
-            <span className="flex items-center text-[16.5px] font-black tracking-tight text-foreground">
-              Slash
-              <span className="bg-gradient-to-r from-[#2dd4bf] to-[#818cf8] bg-clip-text text-transparent">
-                AI
-              </span>
-            </span>
-          </Link>
-
-          {/* live dashboard — mini icon pill beside the logo */}
-          <Link
-            to="/live"
-            title="Live Dashboard"
-            aria-label="Live Dashboard"
-            className="hidden shrink-0 items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground min-[480px]:flex"
-          >
-            <Activity className="size-3.5 text-primary" aria-hidden />
-            <span className="hidden lg:inline">Live Dashboard</span>
-          </Link>
-
-          {/* header command search — sits at the top on every screen */}
-          {!hideHeaderSearch && (
-            <div className="hidden min-[420px]:flex min-w-0 flex-1 justify-center px-2">
-              <Link
-                to="/search"
-                className="flex h-[34px] w-full max-w-[460px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-              >
-                <SearchIcon className="size-[14px] shrink-0" />
-                <span className="flex-1 truncate text-[13px]">Search commands…</span>
-                <span className="hidden h-5 shrink-0 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] sm:flex">
-                  /
-                </span>
-              </Link>
-            </div>
-          )}
-
-          {/* right side - quick links, same on every screen */}
-          <div className="ml-auto flex items-center gap-0.5">
-            <ThemeToggleButton />
-            <Link
-              to="/about"
-              className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
-              aria-label="About SlashAI"
-            >
-              <Info className="size-[19px]" />
-            </Link>
-            <Link
-              to="/favorites"
-              className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
-              aria-label="Saved items"
-            >
-              <Bookmark className="size-[19px]" />
-            </Link>
-            <Link
-              to="/me"
-              className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
-              aria-label="Settings"
-            >
-              <Settings className="size-[19px]" />
-            </Link>
-            {/* small close (X) button for full-screen tool/game pages - no back prop */}
-            {!back && (pathname.startsWith("/tools/") || pathname.startsWith("/play/")) && (
-              <button
-                type="button"
-                onClick={() => window.history.back()}
-                aria-label={pathname.startsWith("/play/") ? "Close game" : "Close tool"}
-                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              >
-                <X className="size-[19px]" />
-              </button>
-            )}
-          </div>
-        </div>
-      </header>
-
-      {/* offline + install strips - dismissed installs stay gone, offline re-appears on every disconnect */}
-      <InstallBanner />
-      <OfflineBanner />
-      <CookieBanner />
-
-      <main
-        className={`mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
+    <ShortenProvider>
+      <div
+        className="flex min-h-screen w-full flex-col"
+        style={{ background: "var(--background)" }}
       >
-        <div
-          className="w-full px-4 py-6 md:px-6 md:py-8"
-          style={{ paddingBottom: "calc(62px + env(safe-area-inset-bottom) + 20px)" }}
+        <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
+          <div
+            className={`mx-auto flex h-[52px] w-full items-center gap-2 px-4 md:gap-3 md:px-6 ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
+          >
+            {back && <BackButton to={back.to} label={back.label} />}
+
+            {/* logo */}
+            <Link
+              to="/"
+              className="group flex shrink-0 items-center gap-2.5 transition-transform active:scale-95"
+            >
+              <div className="relative flex size-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#2dd4bf] to-[#818cf8] p-0.5 shadow-[0_0_12px_rgba(45,212,191,0.25)] transition-shadow group-hover:shadow-[0_0_16px_rgba(45,212,191,0.4)]">
+                <div className="flex size-full items-center justify-center rounded-[10px] bg-[#12161c]">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="size-4"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6 19L14 5"
+                      stroke="#2dd4bf"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      opacity="0.45"
+                    />
+                    <path d="M13 2L4 13H11L9 22L20 10H13L15 2Z" fill="url(#headerBrandGrad)" />
+                    <defs>
+                      <linearGradient
+                        id="headerBrandGrad"
+                        x1="4"
+                        y1="22"
+                        x2="20"
+                        y2="2"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stopColor="#38bdf8" />
+                        <stop offset="0.5" stopColor="#2dd4bf" />
+                        <stop offset="1" stopColor="#ffffff" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+              <span className="flex items-center text-[16.5px] font-black tracking-tight text-foreground">
+                Slash
+                <span className="bg-gradient-to-r from-[#2dd4bf] to-[#818cf8] bg-clip-text text-transparent">
+                  AI
+                </span>
+              </span>
+            </Link>
+
+            {/* live dashboard — mini icon pill beside the logo */}
+            <Link
+              to="/live"
+              title="Live Dashboard"
+              aria-label="Live Dashboard"
+              className="hidden shrink-0 items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground min-[480px]:flex"
+            >
+              <Activity className="size-3.5 text-primary" aria-hidden />
+              <span className="hidden lg:inline">Live Dashboard</span>
+            </Link>
+
+            {/* header command search — sits at the top on every screen */}
+            {!hideHeaderSearch && (
+              <div className="hidden min-[420px]:flex min-w-0 flex-1 justify-center px-2">
+                <Link
+                  to="/search"
+                  className="flex h-[34px] w-full max-w-[460px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+                >
+                  <SearchIcon className="size-[14px] shrink-0" />
+                  <span className="flex-1 truncate text-[13px]">Search commands…</span>
+                  <span className="hidden h-5 shrink-0 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] sm:flex">
+                    /
+                  </span>
+                </Link>
+              </div>
+            )}
+
+            {/* right side - quick links, same on every screen */}
+            <div className="ml-auto flex items-center gap-0.5">
+              <ThemeToggleButton />
+              <Link
+                to="/about"
+                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
+                aria-label="About SlashAI"
+              >
+                <Info className="size-[19px]" />
+              </Link>
+              <Link
+                to="/favorites"
+                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
+                aria-label="Saved items"
+              >
+                <Bookmark className="size-[19px]" />
+              </Link>
+              <Link
+                to="/me"
+                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
+                aria-label="Settings"
+              >
+                <Settings className="size-[19px]" />
+              </Link>
+              {/* small close (X) button for full-screen tool/game pages - no back prop */}
+              {!back && (pathname.startsWith("/tools/") || pathname.startsWith("/play/")) && (
+                <button
+                  type="button"
+                  onClick={() => window.history.back()}
+                  aria-label={pathname.startsWith("/play/") ? "Close game" : "Close tool"}
+                  className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                >
+                  <X className="size-[19px]" />
+                </button>
+              )}
+            </div>
+          </div>
+        </header>
+
+        {/* offline + install strips - dismissed installs stay gone, offline re-appears on every disconnect */}
+        <InstallBanner />
+        <OfflineBanner />
+        <CookieBanner />
+
+        <main
+          className={`mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
         >
-          {/* the Save pill lives next to the page label (breadcrumbs), not the header */}
-          <Breadcrumbs
-            pathname={pathname}
-            trailing={
-              screen ? (
-                <ScreenStar fav={screenFav} label={kindLabel} onToggle={onStarScreen} />
-              ) : undefined
-            }
-          />
-          {srH1 && <h1 className="sr-only">{srH1}</h1>}
-          {/* Games that suit the handheld play inside it; the rest, and every
+          <div
+            className="w-full px-4 py-6 md:px-6 md:py-8"
+            style={{ paddingBottom: "calc(62px + env(safe-area-inset-bottom) + 20px)" }}
+          >
+            {/* the Save pill lives next to the page label (breadcrumbs), not the header */}
+            <Breadcrumbs
+              pathname={pathname}
+              trailing={
+                screen ? (
+                  <ScreenStar fav={screenFav} label={kindLabel} onToggle={onStarScreen} />
+                ) : undefined
+              }
+            />
+            {srH1 && <h1 className="sr-only">{srH1}</h1>}
+            {/* Games that suit the handheld play inside it; the rest, and every
               tool, render on a normal page. Wrapping here means one change
               covers the whole catalogue instead of 96 route files. */}
-          {screen && screen.kind === "game" && usesDevice(screen.slug) ? (
-            <GameBoyFrame slug={screen.slug}>{children}</GameBoyFrame>
-          ) : (
-            children
-          )}
-          {/* consistent onboarding + cross-links on every tool & game page */}
-          {screen && (screen.kind === "tool" || screen.kind === "game") && (
-            <CatalogueExtras kind={screen.kind} slug={screen.slug} />
-          )}
-        </div>
-      </main>
+            {screen && screen.kind === "game" && usesDevice(screen.slug) ? (
+              <GameBoyFrame slug={screen.slug}>{children}</GameBoyFrame>
+            ) : (
+              children
+            )}
+            {/* consistent onboarding + cross-links on every tool & game page */}
+            {screen && (screen.kind === "tool" || screen.kind === "game") && (
+              <CatalogueExtras kind={screen.kind} slug={screen.slug} />
+            )}
+          </div>
+        </main>
 
-      {/* floating "copy again" pill + back-to-top, above the dock */}
-      <FloatingActions />
+        {/* floating "copy again" pill + back-to-top, above the dock */}
+        <FloatingActions />
 
-      {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
+        {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
           Home · Discovery · 🎲 Random (centre) · Hubs · ⚡ Slash (overlay) */}
-      <nav
-        aria-label="Primary"
-        className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
-        style={{ height: "calc(62px + env(safe-area-inset-bottom))" }}
-      >
-        <div className="mx-auto flex w-full max-w-[760px] items-stretch">
-          {PRIMARY.map((item) => {
-            const isRandom = (item as { random?: boolean }).random === true;
-            const isSlash = (item as { slash?: boolean }).slash === true;
+        <nav
+          aria-label="Primary"
+          className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
+          style={{ height: "calc(62px + env(safe-area-inset-bottom))" }}
+        >
+          <div className="mx-auto flex w-full max-w-[760px] items-stretch">
+            {PRIMARY.map((item) => {
+              const isRandom = (item as { random?: boolean }).random === true;
+              const isSlash = (item as { slash?: boolean }).slash === true;
 
-            // Route-based active state - derived from current pathname, not internal state
-            const active = (() => {
-              if (isRandom || isSlash) return false; // action buttons, never route-active
-              if ((item as { exact?: boolean }).exact) return pathname === item.to;
-              const p = item.to as string;
-              if (p === "/hub") return pathname.startsWith("/hub");
-              if (p === "/discover")
+              // Route-based active state - derived from current pathname, not internal state
+              const active = (() => {
+                if (isRandom || isSlash) return false; // action buttons, never route-active
+                if ((item as { exact?: boolean }).exact) return pathname === item.to;
+                const p = item.to as string;
+                if (p === "/hub") return pathname.startsWith("/hub");
+                if (p === "/discover")
+                  return (
+                    pathname.startsWith("/discover") ||
+                    pathname.startsWith("/r/") ||
+                    pathname.startsWith("/whats-new") ||
+                    pathname.startsWith("/radar") ||
+                    pathname.startsWith("/trending")
+                  );
+                return pathname.startsWith(p);
+              })();
+
+              // ── Random: elevated shiny centre button - instant roll to a random destination ──
+              if (isRandom) {
                 return (
-                  pathname.startsWith("/discover") ||
-                  pathname.startsWith("/r/") ||
-                  pathname.startsWith("/whats-new") ||
-                  pathname.startsWith("/radar") ||
-                  pathname.startsWith("/trending")
+                  <button
+                    key={item.label}
+                    type="button"
+                    aria-label="Random — jump somewhere fun"
+                    title="Surprise me"
+                    onClick={() => {
+                      const pick = pickRandom(pathname);
+                      window.location.assign(pick.path);
+                    }}
+                    className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-end pb-[8px] text-[10px] font-medium"
+                    style={{ color: "var(--muted-foreground)" }}
+                  >
+                    <span className="nav-random-btn mb-[3px] flex size-[46px] items-center justify-center rounded-full text-background">
+                      <item.icon className="size-[23px]" aria-hidden strokeWidth={2.2} />
+                    </span>
+                    {item.label}
+                  </button>
                 );
-              return pathname.startsWith(p);
-            })();
+              }
 
-            // ── Random: elevated shiny centre button - instant roll to a random destination ──
-            if (isRandom) {
-              return (
-                <button
-                  key={item.label}
-                  type="button"
-                  aria-label="Random — jump somewhere fun"
-                  title="Surprise me"
-                  onClick={() => {
-                    const pick = pickRandom(pathname);
-                    window.location.assign(pick.path);
-                  }}
-                  className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-end pb-[8px] text-[10px] font-medium"
-                  style={{ color: "var(--muted-foreground)" }}
-                >
-                  <span className="nav-random-btn mb-[3px] flex size-[46px] items-center justify-center rounded-full text-background">
-                    <item.icon className="size-[23px]" aria-hidden strokeWidth={2.2} />
-                  </span>
-                  {item.label}
-                </button>
-              );
-            }
+              // ── Slash: side tab that opens the full-screen SlashBar overlay ──
+              if (isSlash) {
+                const slashActive = pathname.startsWith("/slash");
+                return (
+                  <button
+                    key={item.label}
+                    type="button"
+                    aria-label="Open SlashBar"
+                    aria-haspopup="dialog"
+                    onClick={() => setSlashbarOpen(true)}
+                    className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
+                    style={{ color: slashActive ? "var(--primary)" : "var(--muted-foreground)" }}
+                  >
+                    {slashActive && (
+                      <span
+                        aria-hidden
+                        className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
+                        style={{ background: "var(--primary)" }}
+                      />
+                    )}
+                    <item.icon
+                      className="size-[22px]"
+                      aria-hidden
+                      strokeWidth={slashActive ? 2.4 : 1.8}
+                    />
+                    {item.label}
+                  </button>
+                );
+              }
 
-            // ── Slash: side tab that opens the full-screen SlashBar overlay ──
-            if (isSlash) {
-              const slashActive = pathname.startsWith("/slash");
+              // ── Regular tabs: icon + label, accent dot on active ──
               return (
-                <button
-                  key={item.label}
-                  type="button"
-                  aria-label="Open SlashBar"
-                  aria-haspopup="dialog"
-                  onClick={() => setSlashbarOpen(true)}
+                <Link
+                  key={item.to}
+                  to={item.to as "/"}
                   className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
-                  style={{ color: slashActive ? "var(--primary)" : "var(--muted-foreground)" }}
+                  style={{ color: active ? "var(--primary)" : "var(--muted-foreground)" }}
                 >
-                  {slashActive && (
+                  {active && (
                     <span
                       aria-hidden
                       className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
                       style={{ background: "var(--primary)" }}
                     />
                   )}
-                  <item.icon
-                    className="size-[22px]"
-                    aria-hidden
-                    strokeWidth={slashActive ? 2.4 : 1.8}
-                  />
+                  <item.icon className="size-[22px]" aria-hidden strokeWidth={active ? 2.4 : 1.8} />
                   {item.label}
-                </button>
+                </Link>
               );
-            }
+            })}
+          </div>
+        </nav>
 
-            // ── Regular tabs: icon + label, accent dot on active ──
-            return (
-              <Link
-                key={item.to}
-                to={item.to as "/"}
-                className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
-                style={{ color: active ? "var(--primary)" : "var(--muted-foreground)" }}
-              >
-                {active && (
-                  <span
-                    aria-hidden
-                    className="absolute top-[7px] h-[3px] w-[16px] rounded-full"
-                    style={{ background: "var(--primary)" }}
-                  />
-                )}
-                <item.icon className="size-[22px]" aria-hidden strokeWidth={active ? 2.4 : 1.8} />
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
-
-      {/* full-screen SlashBar launcher overlay (centre button) */}
-      <SlashBarOverlay open={slashbarOpen} onClose={() => setSlashbarOpen(false)} />
-    </div>
+        {/* full-screen SlashBar launcher overlay (centre button) */}
+        <SlashBarOverlay open={slashbarOpen} onClose={() => setSlashbarOpen(false)} />
+      </div>
+    </ShortenProvider>
   );
 }
