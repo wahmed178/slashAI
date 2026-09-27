@@ -62,8 +62,19 @@ async function main() {
 
   /* ── hubs ── */
   const hubAudiences = [
-    "students", "developers", "creators", "professionals", "founders",
-    "india", "finance", "designers", "health", "islam", "urdu", "arabic", "fun",
+    "students",
+    "developers",
+    "creators",
+    "professionals",
+    "founders",
+    "india",
+    "finance",
+    "designers",
+    "health",
+    "islam",
+    "urdu",
+    "arabic",
+    "fun",
   ];
   for (const a of hubAudiences) urls.push(url(`/hub/${a}`, { priority: "0.7" }));
   for (const extra of ["quotes"]) urls.push(url(`/hub/${extra}`, { priority: "0.5" }));
@@ -71,7 +82,11 @@ async function main() {
   /* ── 45 explore categories (slugified) ── */
   const categories = JSON.parse(readFileSync("src/data/categories.json", "utf8"));
   const slug = (s) =>
-    s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    s
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
   for (const c of categories) urls.push(url(`/explore/${slug(c.category)}`, { priority: "0.7" }));
 
   /* ── command collections ── */
@@ -80,7 +95,20 @@ async function main() {
   for (const id of colIds) urls.push(url(`/collections/${id}`, { priority: "0.6" }));
 
   /* ── discover sections (real section ids from the catalog) ── */
-  for (const s of ["free-tools", "free-ai", "ai", "free-apis", "github", "learn", "resources", "youtube", "reddit", "websites", "free-time", "tips"]) {
+  for (const s of [
+    "free-tools",
+    "free-ai",
+    "ai",
+    "free-apis",
+    "github",
+    "learn",
+    "resources",
+    "youtube",
+    "reddit",
+    "websites",
+    "free-time",
+    "tips",
+  ]) {
     urls.push(url(`/discover/${s}`, { priority: "0.6" }));
   }
   urls.push(url("/discover/reels", { priority: "0.5" }));
@@ -102,7 +130,8 @@ async function main() {
   }
   const catalogSrc = readFileSync("src/lib/toolkit/catalog.ts", "utf8");
   for (const m of catalogSrc.matchAll(/\{\s*slug: "([a-z0-9-]+)", name:/g)) toolSlugs.add(m[1]);
-  for (const slug of toolSlugs) urls.push(url(`/tools/${slug}`, { changefreq: "monthly", priority: "0.6" }));
+  for (const slug of toolSlugs)
+    urls.push(url(`/tools/${slug}`, { changefreq: "monthly", priority: "0.6" }));
 
   /* ── games (one route file per game) ── */
   const gameSlugs = new Set();
@@ -111,7 +140,8 @@ async function main() {
     // "index" is the /play hub itself and is already listed above.
     if (m && m[1] !== "index") gameSlugs.add(m[1]);
   }
-  for (const slug of gameSlugs) urls.push(url(`/play/${slug}`, { changefreq: "monthly", priority: "0.6" }));
+  for (const slug of gameSlugs)
+    urls.push(url(`/play/${slug}`, { changefreq: "monthly", priority: "0.6" }));
 
   /* ── slash apps that actually render at /slash/<slug> ──
      Apps with a `link:` field redirect elsewhere (loader throws notFound),
@@ -123,16 +153,23 @@ async function main() {
     const block = slashbar.slice(m.index, next === -1 ? undefined : next);
     if (!/^\s{4}link: /m.test(block)) slashSlugs.push(m[1]);
   }
-  for (const s of slashSlugs) urls.push(url(`/slash/${s}`, { changefreq: "monthly", priority: "0.6" }));
+  for (const s of slashSlugs)
+    urls.push(url(`/slash/${s}`, { changefreq: "monthly", priority: "0.6" }));
 
   /* ── blog guides (/blog/<slug>) ──
-     The catalogue is split across two modules: `src/lib/blogs` holds the
-     original posts, `src/lib/blog-guides` the longer guides that import them.
-     Both declare `slug: "..."` inside a 4-space-indented object literal, and
-     the only other `slug:` in those files is the `slug: string;` interface
-     field, which the quoted-value pattern skips. */
+     The catalogue is split across several modules: `src/lib/blogs` holds the
+     original posts, and the `blog-guides*` files hold the longer guides that
+     compose with it. Each declares `slug: "..."` inside a 4-space-indented
+     object literal, and the only other `slug:` in those files is the
+     `slug: string;` interface field, which the quoted-value pattern skips. */
   const blogSlugs = [];
-  for (const file of ["src/lib/blogs.ts", "src/lib/blog-guides.ts"]) {
+  for (const file of [
+    "src/lib/blogs.ts",
+    "src/lib/blog-guides.ts",
+    "src/lib/blog-guides-dev.ts",
+    "src/lib/blog-guides-craft.ts",
+    "src/lib/blog-guides-life.ts",
+  ]) {
     const src = readFileSync(file, "utf8");
     for (const m of src.matchAll(/^ {4}slug: "([a-z0-9-]+)",$/gm)) blogSlugs.push(m[1]);
   }
@@ -141,7 +178,8 @@ async function main() {
 
   /* ── free resources (/r/<id>) — verified indexable detail pages ── */
   const resources = await collectResourceIds();
-  for (const id of resources) urls.push(url(`/r/${id}`, { changefreq: "monthly", priority: "0.5" }));
+  for (const id of resources)
+    urls.push(url(`/r/${id}`, { changefreq: "monthly", priority: "0.5" }));
 
   // Note: /c/<id> command pages (5,600+) are deliberately NOT listed —
   // they're reachable from category/hub pages and a 5k-entry sitemap would

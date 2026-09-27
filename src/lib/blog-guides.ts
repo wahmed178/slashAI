@@ -10,6 +10,9 @@
  */
 
 import { BLOG_POSTS, type BlogPost } from "@/lib/blogs";
+import { DEV_GUIDES } from "@/lib/blog-guides-dev";
+import { CRAFT_GUIDES } from "@/lib/blog-guides-craft";
+import { LIFE_GUIDES } from "@/lib/blog-guides-life";
 
 export const GUIDE_POSTS: BlogPost[] = [
   {
@@ -836,7 +839,13 @@ export const GUIDE_POSTS: BlogPost[] = [
 ];
 
 /** Every blog post on SlashAI — the originals plus the longer guides. */
-export const ALL_BLOG_POSTS: BlogPost[] = [...BLOG_POSTS, ...GUIDE_POSTS];
+export const ALL_BLOG_POSTS: BlogPost[] = [
+  ...BLOG_POSTS,
+  ...GUIDE_POSTS,
+  ...DEV_GUIDES,
+  ...CRAFT_GUIDES,
+  ...LIFE_GUIDES,
+];
 
 /** Every tag in use, in first-seen order, for the listing filters. */
 export const BLOG_TAGS: string[] = Array.from(new Set(ALL_BLOG_POSTS.map((p) => p.tag))).sort(

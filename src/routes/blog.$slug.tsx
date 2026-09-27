@@ -1,13 +1,53 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Copy, CalendarDays, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Copy, CalendarDays, Check, Wrench } from "lucide-react";
 import { useState } from "react";
 
 import { AppShell } from "@/components/library/AppShell";
 import { FaqSection } from "@/components/library/FaqSection";
 import { getCommand, type SlashCommand } from "@/lib/commands";
 import { useCommandActions } from "@/hooks/use-command-actions";
+import { getSlashTool } from "@/lib/slashkits";
+import { TOOL_BY_SLUG } from "@/lib/toolkit/catalog";
 import { getBlogPost } from "@/lib/blog-guides";
 import type { BlogBlock, BlogPost as BlogPostData, BlogSection } from "@/lib/blogs";
+
+/** Resolve a slug against both tool catalogues, SlashKits first. */
+function resolveTool(slug: string): { name: string; desc: string; icon: string } | null {
+  const kit = getSlashTool(slug);
+  if (kit) return { name: kit.name, desc: kit.desc, icon: kit.icon };
+  const decl = TOOL_BY_SLUG.get(slug);
+  if (decl) return { name: decl.name, desc: decl.desc, icon: decl.icon };
+  return null;
+}
+
+function ToolCard({ slug }: { slug: string }) {
+  const tool = resolveTool(slug);
+  if (!tool) return null;
+  return (
+    <Link
+      to={`/tools/${slug}` as never}
+      className="ripple-press flex items-start gap-3 rounded-xl border border-border bg-surface p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:border-emerald-400/40"
+    >
+      <span
+        className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[17px]"
+        aria-hidden
+      >
+        {tool.icon}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-1.5">
+          <span className="truncate text-[13.5px] font-bold text-foreground">{tool.name}</span>
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-wide text-emerald-400">
+            <Wrench className="size-2.5" aria-hidden /> free
+          </span>
+        </span>
+        <span className="mt-0.5 block text-[12px] leading-relaxed text-muted-foreground">
+          {tool.desc}
+        </span>
+      </span>
+    </Link>
+  );
+}
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
@@ -139,6 +179,26 @@ function RenderBlock({ block }: { block: BlogBlock }) {
     );
   }
 
+  if (block.type === "tools" && block.toolSlugs) {
+    const slugs = block.toolSlugs.filter((s) => resolveTool(s));
+    if (slugs.length === 0) return null;
+    return (
+      <div className="space-y-2 pt-1">
+        {block.text && (
+          <p className="text-[13px] leading-relaxed text-muted-foreground">{block.text}</p>
+        )}
+        <div className="grid gap-2 sm:grid-cols-2">
+          {slugs.map((slug) => (
+            <ToolCard key={slug} slug={slug} />
+          ))}
+        </div>
+        <p className="text-[11.5px] text-muted-foreground">
+          All of these run in your browser — no account, no upload, free forever.
+        </p>
+      </div>
+    );
+  }
+
   if (block.type === "prompts" && block.promptIds) {
     const commands = block.promptIds
       .map((id) => getCommand(id))
@@ -202,9 +262,7 @@ function BlogPost() {
             {post.title}
           </h1>
 
-          <p className="mt-3 text-[14.5px] leading-relaxed text-muted-foreground">
-            {post.summary}
-          </p>
+          <p className="mt-3 text-[14.5px] leading-relaxed text-muted-foreground">{post.summary}</p>
         </header>
 
         <div className="mt-8 space-y-9">
@@ -236,8 +294,8 @@ function BlogPost() {
             Explore the Full SlashAI Library
           </h2>
           <p className="mx-auto mt-2 max-w-md text-[13px] leading-relaxed text-muted-foreground">
-            Every prompt in our guides is part of our offline-ready vault of verified commands
-            and instant browser tools. Free forever, no account required.
+            Every prompt in our guides is part of our offline-ready vault of verified commands and
+            instant browser tools. Free forever, no account required.
           </p>
           <Link
             to="/explore"

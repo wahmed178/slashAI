@@ -4,12 +4,18 @@
  */
 
 export interface BlogBlock {
-  type: "p" | "h" | "list" | "code" | "callout" | "prompts";
+  type: "p" | "h" | "list" | "code" | "callout" | "prompts" | "tools";
   text?: string;
   items?: string[];
   lang?: string;
   tone?: "tip" | "warn";
   promptIds?: string[];
+  /**
+   * SlashKits (or declarative) tool slugs to surface as cards inline in the
+   * article. Unknown slugs are skipped at render time, so a renamed tool
+   * degrades to a smaller row rather than a broken link.
+   */
+  toolSlugs?: string[];
 }
 
 export interface BlogSection {
