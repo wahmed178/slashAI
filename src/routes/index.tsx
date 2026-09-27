@@ -601,7 +601,7 @@ function HomePage() {
         }
       >
         <div className="flex flex-col gap-2">
-          {ALL_BLOG_POSTS.slice(0, 3).map((p) => (
+          {ALL_BLOG_POSTS.slice(-3).map((p) => (
             <Link
               key={p.slug}
               to="/blog/$slug"
