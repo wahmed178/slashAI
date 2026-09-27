@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 import { useLastCopied } from "@/hooks/use-ux";
 import { getLastCopied, clearLastCopied } from "@/lib/ux";
-import { useShortenLink } from "./shorten-context";
+import { useShortenLink } from "./shorten-store";
 
 /** How long the re-copy pill lingers after a copy with no further activity. */
 const COPY_PILL_MS = 15_000;

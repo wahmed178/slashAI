@@ -11,7 +11,7 @@ import { Check, Copy, ExternalLink, Link2, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { savedSummary, shortenUrl } from "@/lib/shorten";
-import { useShortenLink } from "./shorten-context";
+import { useShortenLink } from "./shorten-store";
 
 const HISTORY_KEY = "slashai:shortened";
 
