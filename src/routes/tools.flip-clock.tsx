@@ -265,27 +265,37 @@ function Pill({
   children,
   onClick,
   title,
+  icon,
 }: {
   active?: boolean;
   children: ReactNode;
   onClick: () => void;
   title?: string;
+  icon?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
       title={title}
-      className="h-8 shrink-0 rounded-full border px-3 text-[11px] font-semibold tracking-wider transition-all duration-150"
+      aria-pressed={active}
+      className={`flex h-9 shrink-0 items-center justify-center rounded-xl text-[12px] font-semibold whitespace-nowrap transition-all duration-150 active:scale-[0.96] ${
+        icon ? "w-9 px-0" : "px-3.5"
+      }`}
       style={{
-        borderColor: active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.1)",
-        color: active ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.5)",
-        background: active ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
+        color: active ? "rgba(255,255,255,0.95)" : "rgba(255,255,255,0.55)",
+        background: active ? "rgba(255,255,255,0.14)" : "rgba(255,255,255,0.05)",
+        boxShadow: active ? "0 1px 0 rgba(255,255,255,0.14) inset" : "none",
       }}
     >
       {children}
     </button>
   );
+}
+
+/** Hairline divider between control groups inside the deck. */
+function Divider() {
+  return <span aria-hidden="true" className="mx-1 h-5 w-px shrink-0 bg-white/10" />;
 }
 
 /* ── main component ────────────────────────────────────────── */
@@ -459,13 +469,22 @@ function FlipClock() {
       {/* ── clock ── */}
       <div className="relative z-10 flex flex-1 items-center justify-center px-4 py-6">
         {vertical ? (
-          <div className="flex flex-col items-center gap-4 sm:gap-6">
+          /* A 3-column grid, not three centred rows: the Hours row used to
+             carry an extra AM/PM cell, so each row was a different width and
+             centring them independently left the digit columns visibly out
+             of line. Every row now fills the same three columns, and the
+             meridiem cell is always rendered (empty for the lower two rows)
+             so the grid reserves it too. */
+          <div
+            className="grid items-center gap-x-3 gap-y-4 sm:gap-x-5 sm:gap-y-6"
+            style={{ gridTemplateColumns: "auto auto auto" }}
+          >
             {units.map((u) => (
-              <div key={u.label} className="flex items-center gap-3 sm:gap-5">
-                <span className="w-14 text-right text-[9px] font-semibold tracking-[0.18em] text-white/35 uppercase sm:w-20 sm:text-[10px]">
+              <div key={u.label} className="contents">
+                <span className="text-right text-[9px] font-semibold tracking-[0.18em] text-white/35 uppercase sm:text-[10px]">
                   {u.label}
                 </span>
-                <div className={`flex gap-1.5 sm:gap-2 ${cardBox}`} style={{ aspectRatio: "1.52" }}>
+                <div className={`flex gap-1.5 sm:gap-2 ${cardBox}`} style={{ aspectRatio: "1.44" }}>
                   <div className="flex-1">
                     <FlipDigit char={u.pair[0]} axis={prefs.axis} />
                   </div>
@@ -473,11 +492,9 @@ function FlipClock() {
                     <FlipDigit char={u.pair[1]} axis={prefs.axis} />
                   </div>
                 </div>
-                {u.label === "Hours" && !prefs.h24 && (
-                  <span className="w-8 text-[11px] font-bold tracking-wider text-white/45 sm:w-10 sm:text-sm">
-                    {isPm ? "PM" : "AM"}
-                  </span>
-                )}
+                <span className="text-[11px] font-bold tracking-wider text-white/45 sm:text-sm">
+                  {u.label === "Hours" && !prefs.h24 ? (isPm ? "PM" : "AM") : ""}
+                </span>
               </div>
             ))}
           </div>
@@ -511,9 +528,11 @@ function FlipClock() {
         </div>
       )}
 
-      {/* ── real numbers, not a made-up viewer count ── */}
+      {/* ── real numbers, not a made-up viewer count ──
+          Anchored top-right: the old bottom-left placement collided with the
+          control deck as soon as the pills wrapped on a narrow screen. */}
       <div
-        className={`pointer-events-none fixed bottom-16 left-4 z-30 max-w-[230px] rounded-xl border border-white/10 bg-black/50 px-3 py-2.5 backdrop-blur transition-opacity duration-300 sm:bottom-20 sm:left-6 ${
+        className={`pointer-events-none fixed top-4 right-4 z-30 w-[190px] rounded-2xl border border-white/10 bg-black/50 px-3 py-2.5 backdrop-blur-md transition-opacity duration-300 sm:w-[210px] ${
           showUi ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -541,16 +560,23 @@ function FlipClock() {
         </p>
       </div>
 
-      {/* ── controls ── */}
+      {/* ── control deck ──
+          One non-wrapping row that scrolls sideways on narrow screens. The
+          previous bar used flex-wrap, so on a phone the seven controls spilled
+          onto three ragged lines and the hint text landed on top of them. */}
       <div
-        className={`fixed inset-x-0 bottom-0 z-40 flex flex-col items-center gap-2 pb-4 transition-opacity duration-300 ${
+        className={`fixed inset-x-0 bottom-0 z-40 flex flex-col items-center gap-2 px-3 pb-3 transition-opacity duration-300 sm:pb-4 ${
           showUi ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <div className="flex max-w-[94vw] flex-wrap items-center justify-center gap-1.5 rounded-full border border-white/10 bg-black/55 px-3 py-2 backdrop-blur">
+        <p className="hidden text-[9px] tracking-wider text-white/30 sm:block">
+          Click the background to change it · Space pause · S sound · B background
+        </p>
+        <div className="flex max-w-full items-center gap-1 overflow-x-auto rounded-2xl border border-white/10 bg-black/60 p-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.55)] backdrop-blur-xl">
           <Pill onClick={() => window.history.back()} title="Back">
             Close
           </Pill>
+          <Divider />
           <Pill onClick={togglePause} active={prefs.paused} title="Space">
             {prefs.paused ? "▶ Resume" : "❙❙ Pause"}
           </Pill>
@@ -564,19 +590,17 @@ function FlipClock() {
           >
             {vertical ? "▤ Vertical" : "▥ Horizontal"}
           </Pill>
+          <Divider />
           <Pill onClick={() => set("sound", !prefs.sound)} active={prefs.sound} title="S">
             {prefs.sound ? "🔊 Sound" : "🔇 Muted"}
           </Pill>
           <Pill onClick={cycleBg} title="B">
             {bg.label}
           </Pill>
-          <Pill onClick={toggleFullscreen} title="F">
+          <Pill onClick={toggleFullscreen} title="F" icon>
             ⛶
           </Pill>
         </div>
-        <p className="text-[9px] tracking-wider text-white/25">
-          Click the background to change it · Space pause · S sound · B background
-        </p>
       </div>
 
       <style>{`

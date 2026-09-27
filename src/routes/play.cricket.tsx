@@ -3,8 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { Check, Play, Share2 } from "lucide-react";
 
-import { getGameBest, saveGameBest } from "@/lib/ux";
+import { playTone } from "@/lib/play-sound";
 import { SITE_URL } from "@/lib/seo";
+import { getGameBest, readStorage, saveGameBest } from "@/lib/ux";
 
 export const Route = createFileRoute("/play/cricket")({ component: Cricket });
 
@@ -25,13 +26,20 @@ const WICKETS = 3;
 const FRAME_MS = 1000 / 60;
 
 /** Length of an innings per mode. Longer formats, more shots to time. */
-const MODE_BALLS: Record<Mode, number> = { blitz: 12, solo: 24, chase: 24, duel: 24 };
+const MODE_BALLS: Record<Mode, number> = { blitz: 12, solo: 24, t20: 40, chase: 24, duel: 24 };
 
 const BOWLERS = [
-  { name: "Fast bowler", emoji: "⚡", vy: 7.6, drift: 0.22 },
-  { name: "Medium pacer", emoji: "🎯", vy: 6.0, drift: 0.38 },
-  { name: "Spinner", emoji: "🌀", vy: 4.4, drift: 0.7 },
+  { name: "Fast bowler", short: "Fast", emoji: "⚡", vy: 7.6, drift: 0.22 },
+  { name: "Medium pacer", short: "Med", emoji: "🎯", vy: 6.0, drift: 0.38 },
+  { name: "Spinner", short: "Spin", emoji: "🌀", vy: 4.4, drift: 0.7 },
 ] as const;
+
+/**
+ * Batting order. The reducer brings in a new batter at `wickets + 1`, so the
+ * order needs WICKETS + 1 slots — one short of that and the innings runs off
+ * the end of the array on the last wicket.
+ */
+const BATTERS = ["You", "V. Raghav", "D. Mensah", "K. Soren"] as const;
 
 interface BallState {
   alive: boolean;
@@ -39,7 +47,6 @@ interface BallState {
   y: number;
   vx: number;
   vy: number;
-  bowler: number;
   flight: number;
   flightVx: number;
   flightVy: number;
@@ -51,6 +58,49 @@ interface Score {
   runs: number;
   wkts: number;
   balls: number;
+  fours: number;
+  sixes: number;
+}
+
+interface Batter {
+  name: string;
+  runs: number;
+  balls: number;
+  fours: number;
+  sixes: number;
+  out: boolean;
+}
+
+interface BowlerFig {
+  name: string;
+  balls: number;
+  runs: number;
+  wkts: number;
+}
+
+interface BatCard {
+  order: Batter[];
+  striker: number;
+  nonStriker: number;
+  partnership: number;
+}
+
+/** One delivery's result, plus the call the banner makes. */
+interface Outcome {
+  runs: number;
+  wkt: boolean;
+  text: string;
+  sub: string;
+  big: boolean;
+}
+
+interface Spark {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  colour: string;
 }
 
 function freshBall(): BallState {
@@ -60,7 +110,6 @@ function freshBall(): BallState {
     y: RELEASE_Y,
     vx: 0,
     vy: 0,
-    bowler: 0,
     flight: 0,
     flightVx: 0,
     flightVy: 0,
@@ -69,21 +118,55 @@ function freshBall(): BallState {
   };
 }
 
+function freshScore(): Score {
+  return { runs: 0, wkts: 0, balls: 0, fours: 0, sixes: 0 };
+}
+
+function freshCard(): BatCard {
+  return {
+    order: BATTERS.map((n) => ({ name: n, runs: 0, balls: 0, fours: 0, sixes: 0, out: false })),
+    striker: 0,
+    nonStriker: 1,
+    partnership: 0,
+  };
+}
+
+function freshFigures(): BowlerFig[] {
+  return BOWLERS.map((b) => ({ name: b.short, balls: 0, runs: 0, wkts: 0 }));
+}
+
+/** "12.3" from a raw ball count. */
+function overs(balls: number): string {
+  return `${Math.floor(balls / 6)}.${balls % 6}`;
+}
+
+/** Runs per hundred balls, the way a scorecard quotes it. */
+function strikeRate(runs: number, balls: number): string {
+  if (balls === 0) return "0.00";
+  return ((runs / balls) * 100).toFixed(2);
+}
+
 /**
  * Personal best, read from the shared game-score store. Older installs kept
  * their record under "play-cricket-best" — migrate it once, then forget it.
+ *
+ * `readStorage` rather than `localStorage`: this runs during render, and on the
+ * server a bare `localStorage` throws. `loadBest` is only called from an effect
+ * so the first client render still matches the server's markup.
  */
 function loadBest(): number {
   const stored = getGameBest("cricket");
-  try {
-    const legacy = Number(localStorage.getItem("play-cricket-best") ?? 0) || 0;
-    if (legacy > (stored ?? 0)) {
-      saveGameBest("cricket", legacy);
-      localStorage.removeItem("play-cricket-best");
-      return legacy;
+  const legacy = Number(readStorage("play-cricket-best") ?? 0) || 0;
+  if (legacy > (stored ?? 0)) {
+    saveGameBest("cricket", legacy);
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.removeItem("play-cricket-best");
+      } catch {
+        /* private mode — the legacy key just lingers */
+      }
     }
-  } catch {
-    /* ignore */
+    return legacy;
   }
   return stored ?? 0;
 }
@@ -101,31 +184,42 @@ function simulateInnings(balls: number): number {
   return runs;
 }
 
-type Mode = "blitz" | "solo" | "chase" | "duel";
+type Mode = "blitz" | "solo" | "t20" | "chase" | "duel";
 type Phase = "idle" | "play" | "innings" | "done";
 
 const MODES: { id: Mode; label: string; hint: string }[] = [
   { id: "blitz", label: "Blitz", hint: "12 balls - one quick hit" },
-  { id: "solo", label: "Solo 24", hint: "24 balls - build a big score" },
+  { id: "solo", label: "Solo 24", hint: "24 balls - chase your own best" },
+  { id: "t20", label: "T20", hint: "40 balls - the long haul" },
   { id: "chase", label: "Chase AI", hint: "24 balls - beat the AI's total" },
   { id: "duel", label: "2P duel", hint: "24 balls each - pass and play" },
 ];
+
+/** Modes that are a straight batting innings against your own best. */
+const ATTACK_MODES: Mode[] = ["blitz", "solo", "t20"];
 
 function Cricket() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mode, setMode] = useState<Mode>("solo");
   const [phase, setPhase] = useState<Phase>("idle");
-  const [shared, setShared] = useState(false);
-  const [score, setScore] = useState<Score>({ runs: 0, wkts: 0, balls: 0 });
+  const [score, setScore] = useState<Score>(freshScore);
+  const [card, setCard] = useState<BatCard>(freshCard);
+  const [figs, setFigs] = useState<BowlerFig[]>(freshFigures);
   const [banner, setBanner] = useState<{ text: string; sub: string; big: boolean } | null>(null);
   const [bowlerLabel, setBowlerLabel] = useState("");
   const [innings, setInnings] = useState<1 | 2>(1);
   const [target, setTarget] = useState<number | null>(null);
   const [result, setResult] = useState<{ title: string; sub: string } | null>(null);
-  const [best, setBest] = useState(loadBest);
+  const [best, setBest] = useState(0);
+  const [showCard, setShowCard] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const ballRef = useRef<BallState>(freshBall());
-  const scoreRef = useRef<Score>({ runs: 0, wkts: 0, balls: 0 });
+  const scoreRef = useRef<Score>(freshScore());
+  const cardRef = useRef<BatCard>(freshCard());
+  const figRef = useRef<BowlerFig[]>(freshFigures());
+  const sparksRef = useRef<Spark[]>([]);
+  const overBowlerRef = useRef(0);
   const phaseRef = useRef(phase);
   phaseRef.current = phase;
   const modeRef = useRef(mode);
@@ -139,12 +233,22 @@ function Cricket() {
   const nextTimer = useRef(0);
   const tapCooldown = useRef(0);
 
+  useEffect(() => {
+    setBest(loadBest());
+  }, []);
+
   useEffect(() => () => window.clearTimeout(nextTimer.current), []);
 
   function resetInningsState() {
-    scoreRef.current = { runs: 0, wkts: 0, balls: 0 };
-    setScore({ runs: 0, wkts: 0, balls: 0 });
-    ballRef.current = freshBall();
+    scoreRef.current = freshScore();
+    cardRef.current = freshCard();
+    figRef.current = freshFigures();
+    overBowlerRef.current = 0;
+    sparksRef.current = [];
+    setScore(freshScore());
+    setCard(freshCard());
+    setFigs(freshFigures());
+    setShowCard(false);
     setBanner(null);
   }
 
@@ -153,13 +257,32 @@ function Cricket() {
     nextTimer.current = window.setTimeout(deliver, delay);
   }
 
+  /** Celebration sparks for a six or a wicket. */
+  function burst(x: number, y: number, kind: "six" | "wicket", count: number) {
+    const palette =
+      kind === "wicket" ? ["#f87171", "#fbbf24", "#e5e7eb"] : ["#fde047", "#fb923c", "#22d3ee"];
+    for (let i = 0; i < count; i++) {
+      const a = (Math.PI * 2 * i) / count + Math.random() * 0.4;
+      const sp = 1.6 + Math.random() * 2.6;
+      sparksRef.current.push({
+        x,
+        y,
+        vx: Math.cos(a) * sp,
+        vy: Math.sin(a) * sp - 1,
+        life: 26 + Math.random() * 18,
+        colour: palette[i % palette.length]!,
+      });
+    }
+  }
+
   function deliver() {
     if (phaseRef.current !== "play") return;
     const b = ballRef.current;
-    const bi = Math.floor(Math.random() * BOWLERS.length);
+    // A bowler bowls an over, not a single ball: the over's bowler is chosen
+    // when the innings starts and swapped every six deliveries.
+    const bi = overBowlerRef.current;
     const bow = BOWLERS[bi]!;
     const speedScale = Math.min(1.35, 1 + scoreRef.current.balls * 0.02);
-    b.bowler = bi;
     b.vy = bow.vy * speedScale * (0.93 + Math.random() * 0.14);
     b.vx = (Math.random() < 0.5 ? -1 : 1) * bow.drift;
     b.x = CX;
@@ -168,18 +291,62 @@ function Cricket() {
     b.swung = false;
     b.flight = 0;
     b.batSwing = 0;
-    setBowlerLabel(`${bow.emoji} ${bow.name}`);
+    setBowlerLabel(`${bow.emoji} ${bow.name} · over ${Math.floor(scoreRef.current.balls / 6) + 1}`);
     setBanner(null);
   }
 
-  function resolveBall(out: { runs: number; wkt: boolean; text: string; sub: string }) {
+  function resolveBall(out: Outcome) {
     const s = scoreRef.current;
+    const c = cardRef.current;
+    const f = figRef.current;
     ballRef.current.alive = false;
-    if (out.wkt) s.wkts++;
+
+    // bowler figures
+    const bi = overBowlerRef.current;
+    const fig = f[bi]!;
+    fig.balls += 1;
+    fig.runs += out.runs;
+    if (out.wkt) fig.wkts += 1;
+
+    if (out.wkt) {
+      s.wkts += 1;
+      c.order[c.striker]!.out = true;
+      burst(CX, SWEET_Y, "wicket", 16);
+      playTone("fail");
+    } else {
+      const bat = c.order[c.striker]!;
+      bat.runs += out.runs;
+      bat.balls += 1;
+      if (out.runs === 4) {
+        bat.fours += 1;
+        s.fours += 1;
+        playTone("success");
+      } else if (out.runs === 6) {
+        bat.sixes += 1;
+        s.sixes += 1;
+        burst(ballRef.current.x, ballRef.current.y, "six", 22);
+        playTone("win");
+      } else if (out.runs > 0) {
+        playTone("tap");
+      } else {
+        playTone("tick");
+      }
+      c.partnership += out.runs;
+      // Odd runs put the batters on strike, exactly as in real cricket.
+      if (out.runs % 2 === 1) {
+        const t = c.striker;
+        c.striker = c.nonStriker;
+        c.nonStriker = t;
+      }
+    }
+
     s.runs += out.runs;
-    s.balls++;
+    s.balls += 1;
+
     setScore({ ...s });
-    setBanner({ text: out.text, sub: out.sub, big: out.runs >= 4 || out.wkt });
+    setCard({ ...c, order: c.order.map((b) => ({ ...b })) });
+    setFigs([...f]);
+    setBanner({ text: out.text, sub: out.sub, big: out.big });
 
     const chasing = inningsRef.current === 2;
     const t = targetRef.current;
@@ -191,6 +358,14 @@ function Cricket() {
       endInnings();
       return;
     }
+
+    // End of over: the ends change for a new bowler, and the strike swaps.
+    if (s.balls % 6 === 0) {
+      overBowlerRef.current = (overBowlerRef.current + 1) % BOWLERS.length;
+      const t2 = c.striker;
+      c.striker = c.nonStriker;
+      c.nonStriker = t2;
+    }
     scheduleDelivery(1250);
   }
 
@@ -198,21 +373,23 @@ function Cricket() {
     window.clearTimeout(nextTimer.current);
     const s = scoreRef.current;
     ballRef.current = freshBall();
-    if (modeRef.current === "blitz" || modeRef.current === "solo") {
+    sparksRef.current = [];
+
+    if (ATTACK_MODES.includes(modeRef.current)) {
       const isRecord = saveGameBest("cricket", s.runs);
       setBest((b) => (s.runs > b ? s.runs : b));
       setResult({
-        title: `Innings over - ${s.runs}/${s.wkts}`,
+        title: `Innings over — ${s.runs}/${s.wkts}`,
         sub: isRecord
           ? `🏆 New personal best! ${s.runs} off ${s.balls} balls`
-          : `${s.balls} balls faced - best ${Math.max(bestRef.current, s.runs)}`,
+          : `${s.balls} balls faced — best ${Math.max(bestRef.current, s.runs)}`,
       });
       setPhase("done");
     } else if (inningsRef.current === 1) {
       setTarget(s.runs + 1);
       setResult({
         title: `Player 1 made ${s.runs}/${s.wkts}`,
-        sub: `Pass the device - Player 2 chases ${s.runs + 1} off ${MODE_BALLS[modeRef.current]} balls`,
+        sub: `Pass the device — Player 2 chases ${s.runs + 1} off ${MODE_BALLS[modeRef.current]} balls`,
       });
       setPhase("innings");
     } else {
@@ -220,12 +397,15 @@ function Cricket() {
       if (s.runs >= t) {
         setResult({
           title: "Chase completed! 🏆",
-          sub: `${s.runs}/${s.wkts} - won with ${MODE_BALLS[modeRef.current] - s.balls} ball(s) to spare`,
+          sub: `${s.runs}/${s.wkts} — won with ${MODE_BALLS[modeRef.current] - s.balls} ball(s) to spare`,
         });
       } else if (s.runs === t - 1) {
         setResult({ title: "Tied match! 🤝", sub: `Both sides finished on ${t - 1}` });
       } else {
-        setResult({ title: "Chase fell short 😔", sub: `Needed ${t}, finished on ${s.runs}/${s.wkts}` });
+        setResult({
+          title: "Chase fell short 😔",
+          sub: `Needed ${t}, finished on ${s.runs}/${s.wkts}`,
+        });
       }
       setPhase("done");
     }
@@ -238,7 +418,6 @@ function Cricket() {
     setTarget(null);
     setResult(null);
     setBowlerLabel("");
-    setShared(false);
     const balls = MODE_BALLS[modeRef.current];
     if (modeRef.current === "chase") {
       const ai = simulateInnings(balls);
@@ -249,7 +428,6 @@ function Cricket() {
       });
       setPhase("innings");
     } else if (modeRef.current === "solo" && bestRef.current > 0) {
-      // solo doubles as a challenge: beat your own record
       setTarget(bestRef.current + 1);
       setResult({
         title: `Your best is ${bestRef.current}`,
@@ -285,7 +463,13 @@ function Cricket() {
       b.flight = 40;
       b.flightVx = (Math.random() < 0.5 ? -1 : 1) * (3 + Math.random() * 3);
       b.flightVy = -(4 + Math.random() * 2);
-      resolveBall({ runs: 6, wkt: false, text: "SIX! 🎉", sub: "Perfect timing - out of the park!" });
+      resolveBall({
+        runs: 6,
+        wkt: false,
+        text: "SIX! 🎉",
+        sub: "Perfect timing — out of the park!",
+        big: true,
+      });
     } else if (abs <= 30) {
       b.flight = 34;
       b.flightVx = (d < 0 ? -1 : 1) * (2 + Math.random() * 3);
@@ -295,6 +479,7 @@ function Cricket() {
         wkt: false,
         text: "FOUR! 🏏",
         sub: d < 0 ? "A touch early but middled" : "A touch late but middled",
+        big: true,
       });
     } else if (abs <= 50) {
       b.flight = 26;
@@ -305,19 +490,37 @@ function Cricket() {
         runs: two ? 2 : 1,
         wkt: false,
         text: two ? "Two runs" : "Quick single",
-        sub: d < 0 ? "Early - worked into the gap" : "Late - nudged around the corner",
+        sub: d < 0 ? "Early — worked into the gap" : "Late — nudged around the corner",
+        big: false,
       });
     } else if (abs <= 70) {
       b.flight = 22;
       b.flightVx = (d < 0 ? -1 : 1) * 2.2;
       b.flightVy = -1.6;
       if (Math.random() < 0.35) {
-        resolveBall({ runs: 0, wkt: true, text: "CAUGHT! 😱", sub: "Thick edge - straight to the fielder" });
+        resolveBall({
+          runs: 0,
+          wkt: true,
+          text: "CAUGHT! 😱",
+          sub: "Thick edge — straight to the fielder",
+          big: true,
+        });
       } else {
-        resolveBall({ runs: 1, wkt: false, text: "Edged - single", sub: "Lucky! Flashed past the keeper" });
+        resolveBall({
+          runs: 1,
+          wkt: false,
+          text: "Edged — single",
+          sub: "Lucky! Flashed past the keeper",
+          big: false,
+        });
       }
     } else {
-      setBanner({ text: "Swing and a miss!", sub: d < 0 ? "Way too early" : "Way too late", big: false });
+      playTone("tick");
+      setBanner({
+        text: "Swing and a miss!",
+        sub: d < 0 ? "Way too early" : "Way too late",
+        big: false,
+      });
     }
   }
 
@@ -380,7 +583,10 @@ function Cricket() {
                 runs: 0,
                 wkt: true,
                 text: "BOWLED! 🎳",
-                sub: b.swung ? "Through the gate - timber!" : "Left a straight one - stumps flattened",
+                sub: b.swung
+                  ? "Through the gate — timber!"
+                  : "Left a straight one — stumps flattened",
+                big: true,
               });
             } else {
               resolveBall({
@@ -388,11 +594,22 @@ function Cricket() {
                 wkt: false,
                 text: "Dot ball",
                 sub: b.swung ? "Beaten all ends up" : "Shouldered arms",
+                big: false,
               });
             }
           }
         }
         if (b.batSwing > 0) b.batSwing = Math.max(0, b.batSwing - dt);
+      }
+
+      // sparks
+      for (let i = sparksRef.current.length - 1; i >= 0; i--) {
+        const sp = sparksRef.current[i]!;
+        sp.x += sp.vx * dt;
+        sp.y += sp.vy * dt;
+        sp.vy += 0.14 * dt;
+        sp.life -= dt;
+        if (sp.life <= 0) sparksRef.current.splice(i, 1);
       }
 
       // draw
@@ -404,10 +621,20 @@ function Cricket() {
       ctx.fillStyle = "rgba(255,255,255,0.02)";
       for (let y = 0; y < H; y += 28) ctx.fillRect(0, y, W, 14);
 
+      // boundary rope
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.14)";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.ellipse(W / 2, H / 2 + 30, W / 2 - 12, H / 2 - 26, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
       ctx.fillStyle = "#5d5038";
       ctx.fillRect(PITCH_L, PITCH_TOP, PITCH_R - PITCH_L, PITCH_BOT - PITCH_TOP);
       ctx.fillStyle = "rgba(255,255,255,0.045)";
-      for (let y = PITCH_TOP; y < PITCH_BOT; y += 18) ctx.fillRect(PITCH_L, y, PITCH_R - PITCH_L, 9);
+      for (let y = PITCH_TOP; y < PITCH_BOT; y += 18)
+        ctx.fillRect(PITCH_L, y, PITCH_R - PITCH_L, 9);
 
       ctx.strokeStyle = "rgba(255,255,255,0.5)";
       ctx.lineWidth = 2;
@@ -458,10 +685,25 @@ function Cricket() {
       ctx.arc(201, 402, 9, 0, Math.PI * 2);
       ctx.fill();
 
+      // sparks
+      for (const sp of sparksRef.current) {
+        ctx.globalAlpha = Math.max(0, Math.min(1, sp.life / 30));
+        ctx.fillStyle = sp.colour;
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
       // ball
       if (b.flight > 0 || b.alive) {
         const alpha = b.flight > 0 ? b.flight / 40 : 1;
         ctx.globalAlpha = Math.max(0.15, alpha);
+        // shadow on the pitch
+        ctx.fillStyle = "rgba(0,0,0,0.3)";
+        ctx.beginPath();
+        ctx.ellipse(b.x + 4, b.y + 5, 6, 2.5, 0, 0, Math.PI * 2);
+        ctx.fill();
         ctx.fillStyle = "#e05252";
         ctx.beginPath();
         ctx.arc(b.x, b.y, b.flight > 0 ? 3 + 3 * alpha : 5.5, 0, Math.PI * 2);
@@ -486,9 +728,19 @@ function Cricket() {
   }, []);
 
   const ballsTotal = MODE_BALLS[mode];
-  const chasing = target !== null && (innings === 2 || mode === "chase" || (mode === "solo" && best > 0));
+  const chasing =
+    target !== null && (innings === 2 || mode === "chase" || (mode === "solo" && best > 0));
   const need = chasing ? Math.max(0, target! - score.runs) : 0;
   const ballsLeft = ballsTotal - score.balls;
+  const runRate = score.balls > 0 ? (score.runs / score.balls) * 6 : 0;
+  const inningsName =
+    innings === 1
+      ? mode === "duel"
+        ? "Player 1"
+        : "Your innings"
+      : mode === "duel"
+        ? "Player 2"
+        : "The chase";
 
   const shareScore = async () => {
     const text =
@@ -500,7 +752,7 @@ function Cricket() {
       if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
         await navigator.share({ title: "SlashAI Cricket", text, url });
       } else {
-        await navigator.clipboard.writeText(`${text} - ${url}`);
+        await navigator.clipboard.writeText(`${text} — ${url}`);
       }
       setShared(true);
       window.setTimeout(() => setShared(false), 2200);
@@ -521,31 +773,70 @@ function Cricket() {
 
       <div className="mx-auto max-w-md space-y-3">
         {/* Scoreboard */}
-        <div className="flex items-center justify-between rounded-xl border border-border bg-surface px-3.5 py-2.5">
-          <div>
-            <p className="text-[19px] font-black text-foreground">
-              {score.runs}<span className="text-muted-foreground">/{score.wkts}</span>
-            </p>
-            <p className="text-[10px] text-muted-foreground">
-              {innings === 1 ? (mode === "duel" ? "Player 1" : "Your innings") : mode === "duel" ? "Player 2" : "The chase"}
-            </p>
+        <div className="rounded-xl border border-border bg-surface px-3.5 py-2.5">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-[19px] font-black text-foreground">
+                {score.runs}
+                <span className="text-muted-foreground">/{score.wkts}</span>
+              </p>
+              <p className="text-[10px] text-muted-foreground">
+                {innings === 1
+                  ? mode === "duel"
+                    ? "Player 1"
+                    : "Your innings"
+                  : mode === "duel"
+                    ? "Player 2"
+                    : "The chase"}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-[13px] font-bold text-foreground">
+                {overs(score.balls)} / {overs(ballsTotal)}
+              </p>
+              <p className="text-[10px] text-muted-foreground">{bowlerLabel || "Warming up"}</p>
+            </div>
+            <div className="text-right">
+              {chasing ? (
+                <>
+                  <p className="text-[19px] font-black text-primary">{need}</p>
+                  <p className="text-[10px] text-muted-foreground">need off {ballsLeft}</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-[19px] font-black text-primary">{best}</p>
+                  <p className="text-[10px] text-muted-foreground">best score</p>
+                </>
+              )}
+            </div>
           </div>
-          <div className="text-center">
-            <p className="text-[13px] font-bold text-foreground">Ball {Math.min(score.balls + 1, ballsTotal)}/{ballsTotal}</p>
-            <p className="text-[10px] text-muted-foreground">{bowlerLabel || "Warming up"}</p>
-          </div>
-          <div className="text-right">
-            {chasing ? (
-              <>
-                <p className="text-[19px] font-black text-primary">{need}</p>
-                <p className="text-[10px] text-muted-foreground">need off {ballsLeft}</p>
-              </>
-            ) : (
-              <>
-                <p className="text-[19px] font-black text-primary">{best}</p>
-                <p className="text-[10px] text-muted-foreground">best score</p>
-              </>
-            )}
+
+          {/* live figures strip */}
+          <div className="mt-2 grid grid-cols-4 gap-1 border-t border-border pt-2 text-center">
+            <div>
+              <p className="text-[12px] font-bold text-foreground tabular-nums">
+                {runRate.toFixed(1)}
+              </p>
+              <p className="text-[9px] text-muted-foreground">run rate</p>
+            </div>
+            <div>
+              <p className="text-[12px] font-bold text-foreground tabular-nums">
+                {strikeRate(score.runs, score.balls)}
+              </p>
+              <p className="text-[9px] text-muted-foreground">strike rate</p>
+            </div>
+            <div>
+              <p className="text-[12px] font-bold text-foreground tabular-nums">
+                {score.fours}/{score.sixes}
+              </p>
+              <p className="text-[9px] text-muted-foreground">4s / 6s</p>
+            </div>
+            <div>
+              <p className="text-[12px] font-bold text-foreground tabular-nums">
+                {card.partnership}
+              </p>
+              <p className="text-[9px] text-muted-foreground">partnership</p>
+            </div>
           </div>
         </div>
 
@@ -565,7 +856,11 @@ function Cricket() {
 
           {banner && phase === "play" && (
             <div className="pointer-events-none absolute inset-x-6 top-1/3 rounded-2xl bg-black/70 py-4 text-center">
-              <p className={`font-black text-foreground ${banner.big ? "text-[26px]" : "text-[17px]"}`}>
+              <p
+                className={`font-black text-foreground ${
+                  banner.big ? "text-[26px]" : "text-[17px]"
+                }`}
+              >
                 {banner.text}
               </p>
               <p className="mt-1 text-[11px] text-muted-foreground">{banner.sub}</p>
@@ -573,7 +868,7 @@ function Cricket() {
           )}
 
           {phase === "idle" && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-black/65 p-4 text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 overflow-y-auto rounded-xl bg-black/65 p-4 text-center">
               <p className="text-[18px] font-black text-foreground">🏏 Cricket</p>
               <div className="grid w-full max-w-[320px] grid-cols-2 gap-1.5">
                 {MODES.map((m) => (
@@ -583,7 +878,9 @@ function Cricket() {
                     title={m.hint}
                     aria-pressed={mode === m.id}
                     className={`rounded-lg px-2 py-2 text-[11px] font-bold transition-colors ${
-                      mode === m.id ? "bg-primary text-background" : "border border-border bg-surface text-muted-foreground hover:text-foreground"
+                      mode === m.id
+                        ? "bg-primary text-background"
+                        : "border border-border bg-surface text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {m.label}
@@ -602,7 +899,7 @@ function Cricket() {
               {best > 0 && (
                 <p className="text-[11px] text-muted-foreground">
                   🏆 Your best: <b className="text-amber-400">{best}</b>
-                  {mode === "solo" ? " - Solo 24 makes you chase it" : ""}
+                  {mode === "solo" ? " — Solo 24 makes you chase it" : ""}
                 </p>
               )}
             </div>
@@ -626,7 +923,7 @@ function Cricket() {
           )}
 
           {phase === "done" && result && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-black/70 p-4 text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 overflow-y-auto rounded-xl bg-black/70 p-4 text-center">
               <p className="text-[20px] font-black text-foreground">{result.title}</p>
               <p className="text-[12px] text-muted-foreground">{result.sub}</p>
               <div className="flex flex-wrap justify-center gap-2">
@@ -657,10 +954,113 @@ function Cricket() {
           )}
         </div>
 
+        {/* Scorecard */}
+        <div className="rounded-xl border border-border bg-surface">
+          <button
+            type="button"
+            onClick={() => setShowCard((v) => !v)}
+            aria-expanded={showCard}
+            className="flex w-full items-center justify-between px-3.5 py-2.5 text-left"
+          >
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              Scorecard
+            </span>
+            <span className="text-[11px] text-muted-foreground">
+              {showCard ? "Hide ▲" : "Show ▼"}
+            </span>
+          </button>
+
+          {showCard && (
+            <div className="space-y-3 border-t border-border px-3.5 py-3">
+              <div>
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {inningsName}
+                </p>
+                <table className="w-full text-[11px]">
+                  <thead>
+                    <tr className="text-muted-foreground">
+                      <th className="text-left font-medium">Batter</th>
+                      <th className="text-right font-medium">R</th>
+                      <th className="text-right font-medium">B</th>
+                      <th className="text-right font-medium">4s</th>
+                      <th className="text-right font-medium">6s</th>
+                      <th className="text-right font-medium">SR</th>
+                    </tr>
+                  </thead>
+                  <tbody className="tabular-nums">
+                    {card.order.map((b, i) => (
+                      <tr
+                        key={b.name}
+                        className={
+                          i === card.striker && phase !== "done"
+                            ? "text-foreground"
+                            : "text-muted-foreground"
+                        }
+                      >
+                        <td className="py-0.5 text-left">
+                          {b.name}
+                          {i === card.striker && phase !== "done" ? " *" : ""}
+                          {b.out ? " (c)" : ""}
+                        </td>
+                        <td className="text-right">{b.runs}</td>
+                        <td className="text-right">{b.balls}</td>
+                        <td className="text-right">{b.fours}</td>
+                        <td className="text-right">{b.sixes}</td>
+                        <td className="text-right">{strikeRate(b.runs, b.balls)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div>
+                <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Bowling
+                </p>
+                <table className="w-full text-[11px]">
+                  <thead>
+                    <tr className="text-muted-foreground">
+                      <th className="text-left font-medium">Bowler</th>
+                      <th className="text-right font-medium">O</th>
+                      <th className="text-right font-medium">R</th>
+                      <th className="text-right font-medium">W</th>
+                      <th className="text-right font-medium">Econ</th>
+                    </tr>
+                  </thead>
+                  <tbody className="tabular-nums">
+                    {figs.map((f, i) => (
+                      <tr
+                        key={f.name}
+                        className={
+                          i === overBowlerRef.current && phase === "play"
+                            ? "text-foreground"
+                            : "text-muted-foreground"
+                        }
+                      >
+                        <td className="py-0.5 text-left">
+                          {f.name}
+                          {i === overBowlerRef.current && phase === "play" ? " *" : ""}
+                        </td>
+                        <td className="text-right">{overs(f.balls)}</td>
+                        <td className="text-right">{f.runs}</td>
+                        <td className="text-right">{f.wkts}</td>
+                        <td className="text-right">
+                          {f.balls > 0 ? ((f.runs / f.balls) * 6).toFixed(2) : "0.00"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+
         <p className="text-center text-[11px] text-muted-foreground">
-          Fast bowlers rush in, spinners drift late. Watch the ball out of the hand - early swings go
-          leg side, late ones go over cover. Blitz is 12 balls; Solo 24, Chase AI and the 2P duel run
-          24 each. Beat the target before you run out of balls or wickets, then share your score.
+          Fast bowlers rush in, spinners drift late. Watch the ball out of the hand — early swings
+          go leg side, late ones go over cover. A new bowler comes on every over, and odd runs
+          change the strike. Blitz is 12 balls, T20 is 40; Solo 24, Chase AI and the 2P duel run 24
+          each. Beat the target before you run out of balls or wickets, then share your score.
         </p>
       </div>
     </AppShell>
