@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-26T12:01:46.133Z",
+  "updated": "2026-09-27T12:41:37.498Z",
   "articles": [
     {
-      "title": "Revealing the details of how OpenAI agents hacked Hugging Face",
-      "url": "https://swarmtraces.org/",
+      "title": "PipePipe: NewPipe hard fork implementing SponsorBlock",
+      "url": "https://github.com/InfinityLoop1308/PipePipe",
       "source": "HackerNews",
-      "score": 520,
+      "score": 442,
       "publishedAt": "2026-09-25"
     },
     {
-      "title": "Ollaya – Ollama for open-source, Jev-style decision models",
-      "url": "https://ollaya.dev/",
+      "title": "Does Georgism work? Five years later",
+      "url": "https://www.astralcodexten.com/p/does-georgism-work-five-years-later",
       "source": "HackerNews",
-      "score": 483,
+      "score": 386,
       "publishedAt": "2026-09-25"
     },
     {
-      "title": "Plan mode is dead",
-      "url": "https://www.aymannadeem.com/artificial/intelligence,/developer/tools/2026/09/24/plan-mode-is-dead.html",
+      "title": "Show HN: Reladraw – A diagram language where you decide where to place things",
+      "url": "https://github.com/reladraw/reladraw",
       "source": "HackerNews",
-      "score": 368,
-      "publishedAt": "2026-09-25"
-    },
-    {
-      "title": "We're gonna need a lot more mathematicians",
-      "url": "https://terrytao.wordpress.com/2026/09/24/were-gonna-need-a-lot-more-mathematicians/",
-      "source": "HackerNews",
-      "score": 172,
+      "score": 332,
       "publishedAt": "2026-09-26"
     },
     {
-      "title": "A single function Jev-like wrapper for LLMs, including vision models",
-      "url": "http://allanrbo.blogspot.com/2026/09/a-jev-like-wrapper-for-llms-including.html",
+      "title": "OpenAI Feared \"Optics\" of what might appear on Hacker News",
+      "url": "https://authorsguild.org/news/ag-v-openai-top-execs-knew-mass-book-piracy-was-illegal/",
       "source": "HackerNews",
-      "score": 96,
+      "score": 325,
+      "publishedAt": "2026-09-27"
+    },
+    {
+      "title": "DeepSeek Elastic Compute (DSec)",
+      "url": "https://arxiv.org/abs/2609.22978",
+      "source": "HackerNews",
+      "score": 269,
       "publishedAt": "2026-09-26"
     },
     {
-      "title": "Breaking Up with Google Play: Why Conversations Is Now Free",
-      "url": "https://gultsch.de/posts/breaking-up-with-google-play/",
+      "title": "Go Concurrency Distilled",
+      "url": "https://antonz.org/go-concurrency-distilled/",
       "source": "HackerNews",
-      "score": 79,
+      "score": 260,
       "publishedAt": "2026-09-26"
     },
     {
-      "title": "Fifteen years later, the Apple Cards origin story",
-      "url": "https://lexontech.org/fifteen-years-later-the-apple-cards-origin-story",
+      "title": "Flip Fluid on Flip Dots",
+      "url": "https://mitxela.com/projects/flipflip",
       "source": "HackerNews",
-      "score": 77,
+      "score": 144,
       "publishedAt": "2026-09-26"
     },
     {
-      "title": "One Month Without AI",
-      "url": "https://blog.bustikiller.com/2026/09/25/one-month-without-ai.html",
+      "title": "\"As a Language Model\": Chat Template Switches LLM Self-Referential Voice",
+      "url": "https://arxiv.org/abs/2609.25021",
       "source": "HackerNews",
-      "score": 54,
-      "publishedAt": "2026-09-26"
+      "score": 55,
+      "publishedAt": "2026-09-27"
     }
   ]
 }
