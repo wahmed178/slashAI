@@ -37,6 +37,7 @@ import {
   type SlashCommand,
 } from "@/lib/commands";
 import { COLLECTIONS, recommendedCommands } from "@/lib/collections";
+import { ALL_BLOG_POSTS } from "@/lib/blog-guides";
 import { DROPS, RESOURCE_TOTAL, dropItems } from "@/lib/resources";
 import {
   HOME_MOST_USED_THRESHOLD,
@@ -588,33 +589,38 @@ function HomePage() {
 
       {/* ─── From the blog ─── */}
       <Section
-        title="From the blog"
-        hint="Plain-English guides to using AI better — free, like everything here."
+        title="Slash Blogs"
+        hint={`${ALL_BLOG_POSTS.length} guides on AI, prompting, English, GitHub, SEO, LLMs and learning — free, like everything here.`}
         action={
           <Link
             to="/blog"
             className="flex items-center gap-1 text-sm font-medium text-primary hover:underline"
           >
-            All posts <ArrowRight className="size-4" aria-hidden />
+            All {ALL_BLOG_POSTS.length} guides <ArrowRight className="size-4" aria-hidden />
           </Link>
         }
       >
-        <Link
-          to="/blog/$slug"
-          params={{ slug: "best-free-ai-prompts-for-professionals-in-india-2026" }}
-          className="ripple-press flex items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
-        >
-          <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[20px]" aria-hidden>🇮🇳</span>
-          <span className="min-w-0 flex-1">
-            <span className="block truncate text-[13.5px] font-bold text-foreground">
-              Best Free AI Prompts for Professionals in India (2026)
-            </span>
-            <span className="block truncate text-[12px] text-muted-foreground">
-              10 copy-ready prompts for email, reports, meetings and career growth.
-            </span>
-          </span>
-          <ArrowRight className="size-4 shrink-0 text-muted-foreground" aria-hidden />
-        </Link>
+        <div className="flex flex-col gap-2">
+          {ALL_BLOG_POSTS.slice(0, 3).map((p) => (
+            <Link
+              key={p.slug}
+              to="/blog/$slug"
+              params={{ slug: p.slug }}
+              className="ripple-press flex items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/40"
+            >
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-surface-elevated text-[20px]" aria-hidden>{p.emoji}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[13.5px] font-bold text-foreground">
+                  {p.title}
+                </span>
+                <span className="block truncate text-[12px] text-muted-foreground">
+                  {p.tag} · {p.readTime} · {p.desc}
+                </span>
+              </span>
+              <ArrowRight className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+            </Link>
+          ))}
+        </div>
       </Section>
 
       <MostUsedCommands />
@@ -897,16 +903,72 @@ function HomePage() {
       >
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
           {[
-            { to: "/explore", emoji: "⌨️", label: "AI Commands", desc: `${VERIFIED_TOTAL.toLocaleString()} copy-ready prompts` },
-            { to: "/ai-tools", emoji: "🤖", label: "AI Tools", desc: `${SEO_COUNTS.aiTools} curated AI tools` },
-            { to: "/workflow", emoji: "🔗", label: "AI Workflows", desc: "Chain commands into one prompt" },
-            { to: "/web-search", emoji: "🌐", label: "Search Engine", desc: "Free meta search, zero tracking" },
-            { to: "/live", emoji: "📡", label: "Live Dashboard", desc: "Markets, weather, prayer, space" },
-            { to: "/quiz", emoji: "🧠", label: "Daily Quiz", desc: "Fresh trivia daily, streaks" },
-            { to: "/roadmaps", emoji: "🗺️", label: "Roadmaps", desc: "Founder step-by-step guides" },
-            { to: "/learn", emoji: "🎓", label: "Courses", desc: "Free lessons with graded tests" },
-            { to: "/stores", emoji: "🏪", label: "SlashAI Stores", desc: "Free storefronts for small businesses" },
-            { to: "/about", emoji: "📣", label: "About SlashAI", desc: "What this site is, in one page" },
+            {
+              to: "/explore",
+              emoji: "⌨️",
+              label: "AI Commands",
+              desc: `${VERIFIED_TOTAL.toLocaleString()} copy-ready prompts`,
+            },
+            {
+              to: "/ai-tools",
+              emoji: "🤖",
+              label: "AI Tools",
+              desc: `${SEO_COUNTS.aiTools} curated AI tools`,
+            },
+            {
+              to: "/workflow",
+              emoji: "🔗",
+              label: "AI Workflows",
+              desc: "Chain commands into one prompt",
+            },
+            {
+              to: "/web-search",
+              emoji: "🌐",
+              label: "Search Engine",
+              desc: "Free meta search, zero tracking",
+            },
+            {
+              to: "/live",
+              emoji: "📡",
+              label: "Live Dashboard",
+              desc: "Markets, weather, prayer, space",
+            },
+            {
+              to: "/quiz",
+              emoji: "🧠",
+              label: "Daily Quiz",
+              desc: "Fresh trivia daily, streaks",
+            },
+            {
+              to: "/roadmaps",
+              emoji: "🗺️",
+              label: "Roadmaps",
+              desc: "Founder step-by-step guides",
+            },
+            {
+              to: "/learn",
+              emoji: "🎓",
+              label: "Courses",
+              desc: "Free lessons with graded tests",
+            },
+            {
+              to: "/stores",
+              emoji: "🏪",
+              label: "SlashAI Stores",
+              desc: "Free storefronts for small businesses",
+            },
+            {
+              to: "/blog",
+              emoji: "📰",
+              label: "Slash Blogs",
+              desc: `${ALL_BLOG_POSTS.length} free guides on AI and skills`,
+            },
+            {
+              to: "/about",
+              emoji: "📣",
+              label: "About SlashAI",
+              desc: "What this site is, in one page",
+            },
           ].map((m) => (
             <Link
               key={m.to}

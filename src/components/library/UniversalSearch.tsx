@@ -1,23 +1,43 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Search, X, Command as CommandIcon, Wrench, Gamepad2, Globe, ArrowRight } from "lucide-react";
+import {
+  Search,
+  X,
+  Command as CommandIcon,
+  Wrench,
+  Gamepad2,
+  Globe,
+  Newspaper,
+  Sparkles,
+  LayoutGrid,
+  ArrowRight,
+  type LucideIcon,
+} from "lucide-react";
 
 import { VoiceSearchButton } from "./VoiceSearchButton";
 import { Highlight } from "./Highlight";
 import { useLibrary } from "@/hooks/use-library";
-import { suggestions, VERIFIED_TOTAL, CATEGORY_ICONS } from "@/lib/commands";
+import { suggestions, CATEGORY_ICONS } from "@/lib/commands";
 import { ALL_SLASH_TOOLS } from "@/lib/slashkits";
 import { ALL_PLAY_GAMES } from "@/lib/slashplay";
+import { ALL_SLASH_APPS } from "@/lib/slashbar";
+import { TOOLS as AI_TOOLS } from "@/lib/tools";
+import { DECLARATIVE_TOOLS } from "@/lib/toolkit/catalog";
+import { ALL_BLOG_POSTS } from "@/lib/blog-guides";
 import { cn } from "@/lib/utils";
 
+export type UniversalKind = "command" | "tool" | "aitool" | "game" | "app" | "blog" | "web";
+
 export interface UniversalSugg {
-  kind: "command" | "tool" | "game" | "web";
+  kind: UniversalKind;
   id: string;
   label: string;
   sub: string;
   icon: string;
   to: string;
   mono?: boolean;
+  /** opens off-site in a new tab instead of routing inside the app */
+  external?: boolean;
 }
 
 interface Props {
@@ -28,78 +48,227 @@ interface Props {
   className?: string;
 }
 
-const KIND_STYLE: Record<UniversalSugg["kind"], { chip: string; Icon: typeof CommandIcon }> = {
-  command: { chip: "text-primary", Icon: CommandIcon },
-  tool: { chip: "text-emerald-400", Icon: Wrench },
-  game: { chip: "text-fuchsia-400", Icon: Gamepad2 },
-  web: { chip: "text-muted-foreground", Icon: Globe },
+const KIND_STYLE: Record<UniversalKind, { chip: string; Icon: LucideIcon; label: string }> = {
+  command: { chip: "text-primary", Icon: CommandIcon, label: "Command" },
+  tool: { chip: "text-emerald-400", Icon: Wrench, label: "Tool" },
+  aitool: { chip: "text-sky-400", Icon: Sparkles, label: "AI tool" },
+  game: { chip: "text-fuchsia-400", Icon: Gamepad2, label: "Game" },
+  app: { chip: "text-amber-400", Icon: LayoutGrid, label: "App" },
+  blog: { chip: "text-violet-400", Icon: Newspaper, label: "Guide" },
+  web: { chip: "text-muted-foreground", Icon: Globe, label: "Web" },
 };
 
-/** Build the unified result list for a query: commands + tools + games + web. */
-export function universalResults(q: string): UniversalSugg[] {
-  const query = q.trim().toLowerCase();
-  if (!query) return [];
-  const out: UniversalSugg[] = [];
+/** How many of each kind the panel will ever show — no single kind can crowd the rest out. */
+const PER_KIND: Record<UniversalKind, number> = {
+  command: 6,
+  tool: 4,
+  aitool: 3,
+  game: 3,
+  app: 2,
+  blog: 4,
+  web: 1,
+};
 
-  for (const c of suggestions(q, 5)) {
-    out.push({
-      kind: "command",
-      id: `c-${c.id}`,
-      label: c.command,
-      sub: c.title,
-      icon: CATEGORY_ICONS[c.category] ?? "⌨️",
-      to: `/c/${c.id}`,
-      mono: true,
-    });
+const PANEL_MAX = 14;
+
+/**
+ * Score one catalogue item against the query.
+ *
+ * Name matches dominate; description/category/tag hits only break ties between
+ * items that already matched on the query somewhere. Returns 0 for "no match",
+ * so callers can just filter on truthiness.
+ */
+function scoreItem(name: string, tokens: string[], whole: string, extras: string[]): number {
+  const n = name.toLowerCase();
+  const e = extras.map((x) => x.toLowerCase());
+  let score = 0;
+  let matched = 0;
+
+  for (const t of tokens) {
+    if (n === t) score += 100;
+    else if (n.startsWith(t)) score += 70;
+    else if (n.includes(t)) score += 45;
+    else if (e.some((x) => x.includes(t))) score += 16;
+    else continue;
+    matched += 1;
   }
 
-  const ql = query.replace(/\s+/g, " ");
-  const tools = ALL_SLASH_TOOLS.filter(
-    (t) =>
-      t.name.toLowerCase().includes(ql) ||
-      t.desc.toLowerCase().includes(ql) ||
-      t.slug.toLowerCase().includes(ql.replace(/\s/g, "-")),
-  ).slice(0, 4);
-  for (const t of tools) {
-    out.push({
-      kind: "tool",
-      id: `t-${t.slug}`,
-      label: t.name,
-      sub: t.desc,
-      icon: t.icon,
-      to: t.hub ? t.slug : `/tools/${t.slug}`,
-    });
-  }
+  if (matched === 0) return 0;
 
-  const games = ALL_PLAY_GAMES.filter(
-    (g) => g.name.toLowerCase().includes(ql) || g.desc.toLowerCase().includes(ql),
-  ).slice(0, 3);
-  for (const g of games) {
-    out.push({
-      kind: "game",
-      id: `g-${g.slug}`,
-      label: g.name,
-      sub: g.desc,
-      icon: g.icon,
-      to: `/play/${g.slug}`,
-    });
-  }
+  // The full multi-word query landing inside the name is the strongest signal.
+  if (tokens.length > 1 && n.includes(whole)) score += 60;
+  // Reward matching more of what the user actually typed.
+  score += matched * 10;
 
-  out.push({
-    kind: "web",
-    id: "web",
-    label: `Search the web for "${q.trim()}"`,
-    sub: "Free results - opens the Slash search engine",
-    icon: "🌐",
-    to: `/web-search?q=${encodeURIComponent(q.trim())}`,
-  });
-
-  return out;
+  return score;
 }
 
 /**
- * The one universal search: live results across commands, tools, games and
- * the web. Used on the homepage hero and on /tools/finder.
+ * Build the unified result list for a query: commands, SlashKits and
+ * declarative tools, AI tools, games, Slash apps, blog guides and the web.
+ *
+ * Everything is scored on one scale and sorted together, so an exact tool name
+ * outranks a weak command hit and no single kind can monopolise the panel.
+ */
+export function universalResults(q: string): UniversalSugg[] {
+  const whole = q.trim().toLowerCase();
+  if (!whole) return [];
+  const tokens = whole.split(/\s+/).filter((t) => t.length > 1);
+  if (tokens.length === 0) return [];
+
+  const buckets = new Map<UniversalKind, { sugg: UniversalSugg; score: number }[]>();
+  const push = (kind: UniversalKind, sugg: UniversalSugg, score: number) => {
+    if (score <= 0) return;
+    const list = buckets.get(kind) ?? [];
+    list.push({ sugg, score });
+    buckets.set(kind, list);
+  };
+
+  // ── Commands ────────────────────────────────────────────────────────────
+  // suggestions() is the existing typo-tolerant matcher; we only need its top
+  // slice, and we re-score them so an exact match elsewhere can outrank them.
+  const commandHits = suggestions(q, PER_KIND.command);
+  for (const c of commandHits) {
+    const base = scoreItem(c.command, tokens, whole, [
+      c.title,
+      c.description,
+      c.category,
+      c.subcategory ?? "",
+      ...(c.tags ?? []),
+    ]);
+    // A fuzzy match that never appears in the text still deserves to show,
+    // but must sit below anything that matched by name.
+    push(
+      "command",
+      {
+        kind: "command",
+        id: `c-${c.id}`,
+        label: c.command,
+        sub: c.title,
+        icon: CATEGORY_ICONS[c.category] ?? "⌨️",
+        to: `/c/${c.id}`,
+        mono: true,
+      },
+      Math.max(base, 12) + 20,
+    );
+  }
+
+  // ── SlashKits tools ─────────────────────────────────────────────────────
+  for (const t of ALL_SLASH_TOOLS) {
+    const s = scoreItem(t.name, tokens, whole, [t.desc, t.slug]);
+    push(
+      "tool",
+      {
+        kind: "tool",
+        id: `t-${t.slug}`,
+        label: t.name,
+        sub: t.desc,
+        icon: t.icon,
+        to: t.hub ? t.slug : `/tools/${t.slug}`,
+      },
+      s,
+    );
+  }
+
+  // ── Declarative tools (the other half of the /tools catalogue) ──────────
+  for (const t of DECLARATIVE_TOOLS) {
+    const s = scoreItem(t.name, tokens, whole, [t.desc, t.slug, t.section]);
+    push(
+      "tool",
+      {
+        kind: "tool",
+        id: `td-${t.slug}`,
+        label: t.name,
+        sub: t.desc,
+        icon: t.icon,
+        to: `/tools/${t.slug}`,
+      },
+      s,
+    );
+  }
+
+  // ── AI tools directory ──────────────────────────────────────────────────
+  for (const t of AI_TOOLS) {
+    const s = scoreItem(t.name, tokens, whole, [t.vendor, t.bestFor, t.category, ...t.tags]);
+    push(
+      "aitool",
+      {
+        kind: "aitool",
+        id: `a-${t.id}`,
+        label: t.name,
+        sub: `${t.vendor} · ${t.bestFor}`,
+        icon: t.icon,
+        to: t.url,
+        external: true,
+      },
+      s,
+    );
+  }
+
+  // ── Games ───────────────────────────────────────────────────────────────
+  for (const g of ALL_PLAY_GAMES) {
+    const s = scoreItem(g.name, tokens, whole, [g.desc, g.slug]);
+    push(
+      "game",
+      {
+        kind: "game",
+        id: `g-${g.slug}`,
+        label: g.name,
+        sub: g.desc,
+        icon: g.icon,
+        to: `/play/${g.slug}`,
+      },
+      s,
+    );
+  }
+
+  // ── Slash apps ──────────────────────────────────────────────────────────
+  for (const a of ALL_SLASH_APPS) {
+    const s = scoreItem(a.name, tokens, whole, [a.desc, a.slug]);
+    push(
+      "app",
+      {
+        kind: "app",
+        id: `s-${a.slug}`,
+        label: a.name,
+        sub: a.desc,
+        icon: a.emoji,
+        to: a.link ?? `/slash/${a.slug}`,
+      },
+      s,
+    );
+  }
+
+  // ── Blog guides ─────────────────────────────────────────────────────────
+  for (const b of ALL_BLOG_POSTS) {
+    const s = scoreItem(b.title, tokens, whole, [b.desc, b.tag, b.summary]);
+    push(
+      "blog",
+      {
+        kind: "blog",
+        id: `b-${b.slug}`,
+        label: b.title,
+        sub: `${b.tag} · ${b.readTime}`,
+        icon: b.emoji,
+        to: `/blog/${b.slug}`,
+      },
+      s,
+    );
+  }
+
+  // ── Merge: cap each kind, then rank everything together on one scale ────
+  const capped: { sugg: UniversalSugg; score: number }[] = [];
+  for (const [kind, list] of buckets) {
+    list.sort((a, b) => b.score - a.score);
+    capped.push(...list.slice(0, PER_KIND[kind]));
+  }
+  capped.sort((a, b) => b.score - a.score);
+  return capped.slice(0, PANEL_MAX).map((c) => c.sugg);
+}
+
+/**
+ * The one universal search: live results across commands, tools, AI tools,
+ * games, apps, guides and the web. Used on the homepage hero and /tools/finder.
  */
 export function UniversalSearch({ size = "md", initialQuery, autoFocus, className }: Props) {
   const navigate = useNavigate();
@@ -143,17 +312,26 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
   const go = (s: UniversalSugg) => {
     setOpen(false);
     recordSearch(q.trim());
-    if (s.kind === "web") {
-      window.location.assign(s.to);
+    if (s.external) {
+      window.open(s.to, "_blank", "noopener,noreferrer");
       return;
     }
     void navigate({ to: s.to });
   };
 
-  const submitAll = () => {
+  const openFinder = () => {
     if (!q.trim()) return;
     recordSearch(q.trim());
     void navigate({ to: "/tools/finder", search: { q: q.trim() } });
+  };
+
+  const openCommandsOnly = () => {
+    if (!q.trim()) return;
+    recordSearch(q.trim());
+    void navigate({
+      to: "/search",
+      search: { q: q.trim(), cat: "all", sub: "all", sort: "relevance" },
+    });
   };
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -166,7 +344,7 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
     } else if (e.key === "Enter") {
       e.preventDefault();
       if (results[active]) go(results[active]);
-      else submitAll();
+      else openFinder();
     } else if (e.key === "Escape") {
       setOpen(false);
     }
@@ -175,6 +353,8 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
   const h = size === "lg" ? "h-[52px]" : "h-11";
   const text = size === "lg" ? "text-[15px]" : "text-sm";
   const icon = size === "lg" ? "size-5" : "size-4";
+  const term = q.trim();
+  const short = term.length > 24 ? term.slice(0, 24) + "…" : term;
 
   return (
     <div ref={boxRef} className={cn("relative w-full", className)}>
@@ -197,10 +377,13 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
           onKeyDown={onKey}
           type="text"
           role="searchbox"
-          aria-label="Search everything"
+          aria-label="Search commands, tools, AI tools, games and guides"
           autoFocus={autoFocus}
-          placeholder={`Search ${VERIFIED_TOTAL.toLocaleString()} commands, tools, games…`}
-          className={cn("min-w-0 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground", text)}
+          placeholder={`Search commands, tools, AI tools, games…`}
+          className={cn(
+            "min-w-0 flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground",
+            text,
+          )}
         />
         <VoiceSearchButton
           size="sm"
@@ -231,15 +414,15 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
       </div>
 
       {/* live results panel */}
-      {open && q.trim() && (
+      {open && term && (
         <div className="panel absolute top-[calc(100%+6px)] left-0 z-40 w-full overflow-hidden rounded-xl py-1">
-          {results.length === 1 && results[0]!.kind === "web" && (
-            <p className="px-4 pb-1 pt-2 text-center text-[12px] text-muted-foreground">
-              Nothing in the library matched “{q.trim()}” - the web is one tap away.
+          {results.length === 0 && (
+            <p className="px-4 py-3 text-center text-[12.5px] text-muted-foreground">
+              Nothing in SlashAI matches “{short}”. Try a different word, or search the web.
             </p>
           )}
           {results.map((s, i) => {
-            const { chip, Icon } = KIND_STYLE[s.kind];
+            const { chip, Icon, label: kindLabel } = KIND_STYLE[s.kind];
             return (
               <button
                 key={s.id}
@@ -252,47 +435,80 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
                   i === active ? "bg-accent" : "",
                 )}
               >
-                <span className="grid size-7 shrink-0 place-items-center rounded-md bg-surface-elevated text-[13px]">{s.icon}</span>
+                <span className="grid size-7 shrink-0 place-items-center rounded-md bg-surface-elevated text-[13px]">
+                  {s.icon}
+                </span>
                 <span className="min-w-0 flex-1">
-                  <span className={cn("block truncate text-[13.5px] font-semibold text-foreground", s.mono && "font-mono")}>
-                    <Highlight text={s.label} query={q} />
+                  <span
+                    className={cn(
+                      "block truncate text-[13.5px] font-semibold text-foreground",
+                      s.mono && "font-mono",
+                    )}
+                  >
+                    <Highlight text={s.label} query={term} />
                   </span>
                   <span className="block truncate text-[12px] text-muted-foreground">{s.sub}</span>
                 </span>
-                <Icon className={cn("size-3.5 shrink-0", chip)} />
+                <span className="flex shrink-0 items-center gap-1.5">
+                  <span className={cn("hidden text-[10px] font-semibold sm:inline", chip)}>
+                    {kindLabel}
+                  </span>
+                  <Icon className={cn("size-3.5 shrink-0", chip)} />
+                </span>
               </button>
             );
           })}
-          {/* full results link */}
-          <button
-            type="button"
+          {/* two exits: the universal finder, or commands only */}
+          <div className="mt-0.5 flex border-t border-border">
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={openFinder}
+              className="flex flex-1 items-center justify-center gap-1.5 px-3 py-2.5 text-[12.5px] font-semibold text-primary transition-colors hover:bg-accent"
+            >
+              See everything matching “{short}”
+              <ArrowRight className="size-3.5" />
+            </button>
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={openCommandsOnly}
+              className="flex items-center justify-center gap-1.5 border-l border-border px-3 py-2.5 text-[12.5px] font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              <CommandIcon className="size-3.5" aria-hidden />
+              Commands only
+            </button>
+          </div>
+          <a
+            href={`/web-search?q=${encodeURIComponent(term)}`}
             onMouseDown={(e) => e.preventDefault()}
-            onClick={submitAll}
-            className="mt-0.5 flex w-full items-center justify-center gap-1.5 border-t border-border px-3 py-2.5 text-[12.5px] font-semibold text-primary transition-colors hover:bg-accent"
+            className="flex items-center gap-1.5 border-t border-border px-3 py-2.5 text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
-            See everything matching “{q.trim().length > 24 ? q.trim().slice(0, 24) + "…" : q.trim()}”
-            <ArrowRight className="size-3.5" />
-          </button>
+            <Globe className="size-3.5" aria-hidden />
+            Or search the web for “{short}”
+          </a>
         </div>
       )}
 
       {/* recent searches when empty */}
-      {open && !q.trim() && recentSearches.length > 0 && (
+      {open && !term && recentSearches.length > 0 && (
         <div className="panel absolute top-[calc(100%+6px)] left-0 z-40 w-full overflow-hidden rounded-xl py-2">
-          <p className="px-4 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Recent</p>
-          {recentSearches.slice(0, 5).map((term) => (
+          <p className="px-4 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Recent
+          </p>
+          {recentSearches.slice(0, 5).map((t) => (
             <button
-              key={term}
+              key={t}
               type="button"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => {
-                setQ(term);
+                setQ(t);
                 setOpen(true);
               }}
               className="flex w-full items-center gap-2 px-4 py-2 text-left hover:bg-accent"
             >
               <span className="text-xs text-muted-foreground">🕘</span>
-              <span className="truncate text-xs text-foreground">{term}</span>
+              <span className="truncate text-xs text-foreground">{t}</span>
             </button>
           ))}
         </div>

@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Home,
-  Compass,
+  Terminal,
   LayoutGrid,
   Zap,
   Bookmark,
@@ -35,12 +35,15 @@ import { FloatingActions } from "./FloatingActions";
 import { bumpToolClick, recordUxInteraction } from "@/lib/ux";
 
 /**
- * Bottom dock: Home · Discovery · 🎲 Random (elevated shiny centre, instant roll) ·
+ * Bottom dock: Home · Commands · 🎲 Random (elevated shiny centre, instant roll) ·
  * Hubs · ⚡ Slash (side tab, opens the full-screen SlashBar overlay).
+ *
+ * "Commands" points at /explore, and stays lit for /explore, /search, /find
+ * and /c/* — the whole command vault, not just the browse page.
  */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/discover", label: "Discovery", icon: Compass, exact: false },
+  { to: "/explore", label: "Commands", icon: Terminal, exact: false },
   { to: "", label: "Random", icon: Dices, random: true },
   { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
   { to: "", label: "Slash", icon: Zap, slash: true },
@@ -455,15 +458,18 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
               <span className="hidden lg:inline">Live Dashboard</span>
             </Link>
 
-            {/* header command search — sits at the top on every screen */}
+            {/* header search — sits at the top on every screen. Points at the
+                universal finder (commands + tools + AI tools + games + blogs);
+                /search stays the commands-only search. */}
             {!hideHeaderSearch && (
               <div className="hidden min-[420px]:flex min-w-0 flex-1 justify-center px-2">
                 <Link
-                  to="/search"
+                  to="/tools/finder"
+                  search={{ q: "" }}
                   className="flex h-[34px] w-full max-w-[460px] items-center gap-2 rounded-[6px] border border-sidebar-border bg-surface px-3 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
                 >
                   <SearchIcon className="size-[14px] shrink-0" />
-                  <span className="flex-1 truncate text-[13px]">Search commands…</span>
+                  <span className="flex-1 truncate text-[13px]">Search everything…</span>
                   <span className="hidden h-5 shrink-0 items-center rounded border border-border bg-surface-elevated px-1.5 font-mono text-[10px] sm:flex">
                     /
                   </span>
@@ -551,7 +557,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
         <FloatingActions />
 
         {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
-          Home · Discovery · 🎲 Random (centre) · Hubs · ⚡ Slash (overlay) */}
+          Home · Commands · 🎲 Random (centre) · Hubs · ⚡ Slash (overlay) */}
         <nav
           aria-label="Primary"
           className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
@@ -568,13 +574,12 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                 if ((item as { exact?: boolean }).exact) return pathname === item.to;
                 const p = item.to as string;
                 if (p === "/hub") return pathname.startsWith("/hub");
-                if (p === "/discover")
+                if (p === "/explore")
                   return (
-                    pathname.startsWith("/discover") ||
-                    pathname.startsWith("/r/") ||
-                    pathname.startsWith("/whats-new") ||
-                    pathname.startsWith("/radar") ||
-                    pathname.startsWith("/trending")
+                    pathname.startsWith("/explore") ||
+                    pathname.startsWith("/search") ||
+                    pathname.startsWith("/find") ||
+                    pathname.startsWith("/c/")
                   );
                 return pathname.startsWith(p);
               })();

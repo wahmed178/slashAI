@@ -6,7 +6,8 @@ import { AppShell } from "@/components/library/AppShell";
 import { FaqSection } from "@/components/library/FaqSection";
 import { getCommand, type SlashCommand } from "@/lib/commands";
 import { useCommandActions } from "@/hooks/use-command-actions";
-import { getBlogPost, type BlogBlock, type BlogPost as BlogPostData, type BlogSection } from "@/lib/blogs";
+import { getBlogPost } from "@/lib/blog-guides";
+import type { BlogBlock, BlogPost as BlogPostData, BlogSection } from "@/lib/blogs";
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
