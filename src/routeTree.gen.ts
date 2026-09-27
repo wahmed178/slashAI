@@ -190,6 +190,7 @@ import { Route as ToolsAspectRouteImport } from './routes/tools.aspect'
 import { Route as ToolsBase64RouteImport } from './routes/tools.base64'
 import { Route as ToolsBioRouteImport } from './routes/tools.bio'
 import { Route as ToolsBmiCalculatorRouteImport } from './routes/tools.bmi-calculator'
+import { Route as ToolsBouquetRouteImport } from './routes/tools.bouquet'
 import { Route as ToolsBudgetRouteImport } from './routes/tools.budget'
 import { Route as ToolsCalorieRouteImport } from './routes/tools.calorie'
 import { Route as ToolsCertificateRouteImport } from './routes/tools.certificate'
@@ -1272,6 +1273,11 @@ const ToolsBmiCalculatorRoute = ToolsBmiCalculatorRouteImport.update({
   path: '/bmi-calculator',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsBouquetRoute = ToolsBouquetRouteImport.update({
+  id: '/bouquet',
+  path: '/bouquet',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsBudgetRoute = ToolsBudgetRouteImport.update({
   id: '/budget',
   path: '/budget',
@@ -2320,6 +2326,7 @@ export interface FileRoutesByFullPath {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/bio': typeof ToolsBioRoute
   '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
+  '/tools/bouquet': typeof ToolsBouquetRoute
   '/tools/budget': typeof ToolsBudgetRoute
   '/tools/calorie': typeof ToolsCalorieRoute
   '/tools/certificate': typeof ToolsCertificateRoute
@@ -2676,6 +2683,7 @@ export interface FileRoutesByTo {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/bio': typeof ToolsBioRoute
   '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
+  '/tools/bouquet': typeof ToolsBouquetRoute
   '/tools/budget': typeof ToolsBudgetRoute
   '/tools/calorie': typeof ToolsCalorieRoute
   '/tools/certificate': typeof ToolsCertificateRoute
@@ -3035,6 +3043,7 @@ export interface FileRoutesById {
   '/tools/base64': typeof ToolsBase64Route
   '/tools/bio': typeof ToolsBioRoute
   '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
+  '/tools/bouquet': typeof ToolsBouquetRoute
   '/tools/budget': typeof ToolsBudgetRoute
   '/tools/calorie': typeof ToolsCalorieRoute
   '/tools/certificate': typeof ToolsCertificateRoute
@@ -3395,6 +3404,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/bio'
     | '/tools/bmi-calculator'
+    | '/tools/bouquet'
     | '/tools/budget'
     | '/tools/calorie'
     | '/tools/certificate'
@@ -3751,6 +3761,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/bio'
     | '/tools/bmi-calculator'
+    | '/tools/bouquet'
     | '/tools/budget'
     | '/tools/calorie'
     | '/tools/certificate'
@@ -4109,6 +4120,7 @@ export interface FileRouteTypes {
     | '/tools/base64'
     | '/tools/bio'
     | '/tools/bmi-calculator'
+    | '/tools/bouquet'
     | '/tools/budget'
     | '/tools/calorie'
     | '/tools/certificate'
@@ -5643,6 +5655,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsBmiCalculatorRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/bouquet': {
+      id: '/tools/bouquet'
+      path: '/bouquet'
+      fullPath: '/tools/bouquet'
+      preLoaderRoute: typeof ToolsBouquetRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/budget': {
       id: '/tools/budget'
       path: '/budget'
@@ -7098,6 +7117,7 @@ interface ToolsRouteChildren {
   ToolsBase64Route: typeof ToolsBase64Route
   ToolsBioRoute: typeof ToolsBioRoute
   ToolsBmiCalculatorRoute: typeof ToolsBmiCalculatorRoute
+  ToolsBouquetRoute: typeof ToolsBouquetRoute
   ToolsBudgetRoute: typeof ToolsBudgetRoute
   ToolsCalorieRoute: typeof ToolsCalorieRoute
   ToolsCertificateRoute: typeof ToolsCertificateRoute
@@ -7284,6 +7304,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsBase64Route: ToolsBase64Route,
   ToolsBioRoute: ToolsBioRoute,
   ToolsBmiCalculatorRoute: ToolsBmiCalculatorRoute,
+  ToolsBouquetRoute: ToolsBouquetRoute,
   ToolsBudgetRoute: ToolsBudgetRoute,
   ToolsCalorieRoute: ToolsCalorieRoute,
   ToolsCertificateRoute: ToolsCertificateRoute,
