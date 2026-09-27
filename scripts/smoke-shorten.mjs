@@ -103,9 +103,24 @@ console.log("\nShorten — rubbish in, nothing mangled");
   }
 }
 
+// the imports must point one way. When the context and the dialog lived in the
+// same module the two imported each other in a cycle, which resolved under Bun
+// but left the dialog undefined in the browser build.
+console.log("\nShorten — no circular import");
+{
+  const store = await import("../src/components/library/shorten-store.ts");
+  const provider = await import("../src/components/library/ShortenProvider.tsx");
+  const dialog = await import("../src/components/library/ShortenLinkDialog.tsx");
+  ok(typeof store.useShortenLink === "function", "the hook lives in its own module");
+  ok(typeof provider.ShortenProvider === "function", "the provider is a component");
+  ok(typeof dialog.ShortenLinkDialog === "function", "the dialog is a component");
+  ok(!store.ShortenLinkDialog, "the store does not import the dialog (one-way imports)");
+}
+
 console.log("\nShorten — the popup");
 {
-  const { ShortenProvider } = await import("../src/components/library/shorten-context.tsx");
+  const { ShortenProvider } = await import("../src/components/library/ShortenProvider.tsx");
+  const { useShortenLink } = await import("../src/components/library/shorten-store.ts");
   const render = (url) =>
     renderToStaticMarkup(
       React.createElement(

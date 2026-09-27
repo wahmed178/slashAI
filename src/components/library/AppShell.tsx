@@ -29,7 +29,7 @@ import { CookieBanner } from "./CookieBanner";
 import { SlashBarOverlay } from "./SlashBarOverlay";
 import { CatalogueExtras } from "./CatalogueExtras";
 import { GameBoyFrame } from "./GameBoyFrame";
-import { ShortenProvider } from "./shorten-context";
+import { ShortenProvider } from "./ShortenProvider";
 import { usesDevice } from "@/lib/gameboy";
 import { FloatingActions } from "./FloatingActions";
 import { bumpToolClick, recordUxInteraction } from "@/lib/ux";

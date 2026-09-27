@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { BouquetArt } from "@/components/library/BouquetArt";
 import { playTone } from "@/lib/play-sound";
-import { useShortenLink } from "@/components/library/shorten-context";
+import { useShortenLink } from "@/components/library/shorten-store";
 import { bumpToolClick } from "@/lib/ux";
 import { decodeShare, stemSummary, type Bouquet } from "@/lib/bouquet";
 

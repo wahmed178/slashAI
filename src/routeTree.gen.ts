@@ -257,6 +257,7 @@ import { Route as ToolsJwtDecoderRouteImport } from './routes/tools.jwt-decoder'
 import { Route as ToolsKharchRouteImport } from './routes/tools.kharch'
 import { Route as ToolsLifeInWeeksRouteImport } from './routes/tools.life-in-weeks'
 import { Route as ToolsLifeStatsRouteImport } from './routes/tools.life-stats'
+import { Route as ToolsLinkShortenerRouteImport } from './routes/tools.link-shortener'
 import { Route as ToolsLinktreeRouteImport } from './routes/tools.linktree'
 import { Route as ToolsLoanEligibilityRouteImport } from './routes/tools.loan-eligibility'
 import { Route as ToolsLoremRouteImport } from './routes/tools.lorem'
@@ -1609,6 +1610,11 @@ const ToolsLifeStatsRoute = ToolsLifeStatsRouteImport.update({
   path: '/life-stats',
   getParentRoute: () => ToolsRoute,
 } as any)
+const ToolsLinkShortenerRoute = ToolsLinkShortenerRouteImport.update({
+  id: '/link-shortener',
+  path: '/link-shortener',
+  getParentRoute: () => ToolsRoute,
+} as any)
 const ToolsLinktreeRoute = ToolsLinktreeRouteImport.update({
   id: '/linktree',
   path: '/linktree',
@@ -2399,6 +2405,7 @@ export interface FileRoutesByFullPath {
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
   '/tools/life-stats': typeof ToolsLifeStatsRoute
+  '/tools/link-shortener': typeof ToolsLinkShortenerRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -2757,6 +2764,7 @@ export interface FileRoutesByTo {
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
   '/tools/life-stats': typeof ToolsLifeStatsRoute
+  '/tools/link-shortener': typeof ToolsLinkShortenerRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -3118,6 +3126,7 @@ export interface FileRoutesById {
   '/tools/kharch': typeof ToolsKharchRoute
   '/tools/life-in-weeks': typeof ToolsLifeInWeeksRoute
   '/tools/life-stats': typeof ToolsLifeStatsRoute
+  '/tools/link-shortener': typeof ToolsLinkShortenerRoute
   '/tools/linktree': typeof ToolsLinktreeRoute
   '/tools/loan-eligibility': typeof ToolsLoanEligibilityRoute
   '/tools/lorem': typeof ToolsLoremRoute
@@ -3480,6 +3489,7 @@ export interface FileRouteTypes {
     | '/tools/kharch'
     | '/tools/life-in-weeks'
     | '/tools/life-stats'
+    | '/tools/link-shortener'
     | '/tools/linktree'
     | '/tools/loan-eligibility'
     | '/tools/lorem'
@@ -3838,6 +3848,7 @@ export interface FileRouteTypes {
     | '/tools/kharch'
     | '/tools/life-in-weeks'
     | '/tools/life-stats'
+    | '/tools/link-shortener'
     | '/tools/linktree'
     | '/tools/loan-eligibility'
     | '/tools/lorem'
@@ -4198,6 +4209,7 @@ export interface FileRouteTypes {
     | '/tools/kharch'
     | '/tools/life-in-weeks'
     | '/tools/life-stats'
+    | '/tools/link-shortener'
     | '/tools/linktree'
     | '/tools/loan-eligibility'
     | '/tools/lorem'
@@ -6136,6 +6148,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsLifeStatsRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/tools/link-shortener': {
+      id: '/tools/link-shortener'
+      path: '/link-shortener'
+      fullPath: '/tools/link-shortener'
+      preLoaderRoute: typeof ToolsLinkShortenerRouteImport
+      parentRoute: typeof ToolsRoute
+    }
     '/tools/linktree': {
       id: '/tools/linktree'
       path: '/linktree'
@@ -7203,6 +7222,7 @@ interface ToolsRouteChildren {
   ToolsKharchRoute: typeof ToolsKharchRoute
   ToolsLifeInWeeksRoute: typeof ToolsLifeInWeeksRoute
   ToolsLifeStatsRoute: typeof ToolsLifeStatsRoute
+  ToolsLinkShortenerRoute: typeof ToolsLinkShortenerRoute
   ToolsLinktreeRoute: typeof ToolsLinktreeRoute
   ToolsLoanEligibilityRoute: typeof ToolsLoanEligibilityRoute
   ToolsLoremRoute: typeof ToolsLoremRoute
@@ -7391,6 +7411,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsKharchRoute: ToolsKharchRoute,
   ToolsLifeInWeeksRoute: ToolsLifeInWeeksRoute,
   ToolsLifeStatsRoute: ToolsLifeStatsRoute,
+  ToolsLinkShortenerRoute: ToolsLinkShortenerRoute,
   ToolsLinktreeRoute: ToolsLinktreeRoute,
   ToolsLoanEligibilityRoute: ToolsLoanEligibilityRoute,
   ToolsLoremRoute: ToolsLoremRoute,
