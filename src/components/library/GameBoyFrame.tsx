@@ -7,10 +7,19 @@
  * genuinely steers Snake, 2048 and Breakout without a single game needing to
  * know this component exists.
  *
+ * The screen is PORTRAIT (3:4), not the 4:3 of a real Game Boy. Web games are
+ * near-square or tall — a square board, a score bar, a control row — and a
+ * landscape 4:3 box cropped the board and pushed the controls out of view. The
+ * screen is sized to fit that content, not the other way round.
+ *
+ * Games that carry their own on-screen controls read `useInDevice()` and hide
+ * them, so the hardware d-pad is not duplicated inside its own shell.
+ *
  * Games that suit a normal page (see lib/gameboy) never get wrapped.
  */
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { GameCover } from "@/components/library/GameCover";
+import { DeviceProvider } from "@/components/library/device-context";
 import { getPlayGame } from "@/lib/slashplay";
 import { playTone } from "@/lib/play-sound";
 
@@ -42,15 +51,13 @@ function press(key: string) {
 function HoldButton({
   label,
   onPress,
-  className,
+  className = "",
   children,
-  ariaLabel,
 }: {
   label: string;
   onPress: () => void;
   className?: string;
   children: ReactNode;
-  ariaLabel: string;
 }) {
   const [down, setDown] = useState(false);
   const delay = useRef<number | undefined>(undefined);
@@ -78,7 +85,7 @@ function HoldButton({
   return (
     <button
       type="button"
-      aria-label={ariaLabel}
+      aria-label={label}
       onPointerDown={(e) => {
         e.preventDefault();
         begin();
@@ -96,7 +103,7 @@ function HoldButton({
       onContextMenu={(e) => e.preventDefault()}
       className={`select-none transition-[transform,filter] duration-75 active:scale-95 ${
         down ? "brightness-110" : ""
-      } ${className ?? ""}`}
+      } ${className}`}
     >
       {children}
       <span className="sr-only">{label}</span>
@@ -140,209 +147,197 @@ export function GameBoyFrame({ slug, children }: { slug: string; children: React
   }
 
   return (
-    <div className="mx-auto w-full max-w-[560px]">
-      {/* ── the device ── */}
-      <div
-        className="relative rounded-[2.2rem] p-3 shadow-[0_18px_50px_-18px_rgba(0,0,0,0.8)] sm:rounded-[2.6rem] sm:p-4"
-        style={{
-          background: "linear-gradient(160deg, #e8614f 0%, #d1493a 45%, #a8322a 100%)",
-        }}
-      >
-        {/* power lamp */}
-        <div className="mb-2 flex items-center justify-between px-2 sm:mb-3">
-          <span className="text-[9px] font-black uppercase tracking-[0.28em] text-red-950/70">
-            SlashPlay
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-red-300 shadow-[0_0_8px_2px_rgba(252,165,165,0.9)]" />
-            <span className="text-[8px] font-bold uppercase tracking-widest text-red-950/60">
-              power
+    <DeviceProvider value={true}>
+      <div className="mx-auto w-full max-w-[640px]">
+        {/* ── the device ── */}
+        <div
+          className="relative rounded-[2.2rem] p-2.5 shadow-[0_18px_50px_-18px_rgba(0,0,0,0.8)] sm:rounded-[2.6rem] sm:p-4"
+          style={{
+            background: "linear-gradient(160deg, #e8614f 0%, #d1493a 45%, #a8322a 100%)",
+          }}
+        >
+          {/* power lamp */}
+          <div className="mb-1.5 flex items-center justify-between px-1.5 sm:mb-2 sm:px-2">
+            <span className="text-[9px] font-black uppercase tracking-[0.28em] text-red-950/70">
+              SlashPlay
             </span>
-          </span>
-        </div>
+            <span className="flex items-center gap-1.5">
+              <span className="size-2 rounded-full bg-red-300 shadow-[0_0_8px_2px_rgba(252,165,165,0.9)]" />
+              <span className="text-[8px] font-bold uppercase tracking-widest text-red-950/60">
+                power
+              </span>
+            </span>
+          </div>
 
-        {/* screen bezel */}
-        <div className="rounded-xl bg-gradient-to-b from-[#3b3b46] to-[#22222b] p-2.5 shadow-inner sm:p-3">
-          <div
-            className="relative overflow-hidden rounded-md bg-[#9ead7f] ring-1 ring-black/40"
-            style={{ aspectRatio: "4 / 3" }}
-          >
-            {/* scanlines + screen tint, purely cosmetic and pointer-safe */}
+          {/* screen bezel — thin, to hand as much room as possible to the game */}
+          <div className="rounded-xl bg-gradient-to-b from-[#3b3b46] to-[#22222b] p-1.5 shadow-inner sm:p-2">
             <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 z-10 opacity-[0.16]"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(0deg, rgba(0,0,0,0.55) 0 1px, transparent 1px 3px)",
-              }}
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 z-10"
-              style={{
-                background:
-                  "radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.10), transparent 70%)",
-              }}
-            />
-            <div className="relative h-full w-full overflow-y-auto overscroll-contain p-1.5 sm:p-2">
-              {children}
+              className="relative overflow-hidden rounded-md bg-[#9ead7f] ring-1 ring-black/40"
+              /* portrait: a square board plus a score bar and controls fits here,
+                 where it did not fit a landscape 4:3 box */
+              style={{ aspectRatio: "3 / 4" }}
+            >
+              {/* scanlines + screen tint, cosmetic and pointer-safe */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-10 opacity-[0.14]"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, rgba(0,0,0,0.55) 0 1px, transparent 1px 3px)",
+                }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 z-10"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.10), transparent 70%)",
+                }}
+              />
+              <div className="relative h-full w-full overflow-y-auto overscroll-contain p-1.5 sm:p-2.5">
+                {children}
+              </div>
             </div>
           </div>
 
-          {/* cartridge label below the screen */}
-          <div className="mt-2.5 flex items-center gap-2.5 px-0.5 sm:mt-3">
-            <div className="h-9 w-12 shrink-0 overflow-hidden rounded bg-black/20 ring-1 ring-black/30">
-              <GameCover slug={slug} radius={5} />
+          {/* ── controls, sized for thumbs ── */}
+          <div className="mt-3 flex items-center justify-between gap-1 px-1 sm:mt-4 sm:gap-3 sm:px-3">
+            {/* d-pad — 132px, comfortably past a 44px touch target */}
+            <div className="relative grid size-[124px] shrink-0 grid-cols-3 grid-rows-3 sm:size-[138px]">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-0 h-[62%] w-[34%] -translate-x-1/2 rounded-t-[7px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.55)]"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute bottom-0 left-1/2 h-[62%] w-[34%] -translate-x-1/2 rounded-b-[7px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.55)]"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute left-0 top-1/2 h-[34%] w-[62%] -translate-y-1/2 rounded-l-[7px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.55)]"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute right-0 top-1/2 h-[34%] w-[62%] -translate-y-1/2 rounded-r-[7px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.55)]"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-1/2 size-[34%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4b4b55] shadow-[0_2px_5px_rgba(0,0,0,0.6)]"
+              />
+
+              <HoldButton
+                label="Up"
+                onPress={() => press("up")}
+                className="col-start-2 row-start-1 z-10 flex items-start justify-center pt-0.5 text-[13px] leading-none text-[#e6e6f0]"
+              >
+                ▲
+              </HoldButton>
+              <HoldButton
+                label="Down"
+                onPress={() => press("down")}
+                className="col-start-2 row-start-3 z-10 flex items-end justify-center pb-0.5 text-[13px] leading-none text-[#e6e6f0]"
+              >
+                ▼
+              </HoldButton>
+              <HoldButton
+                label="Left"
+                onPress={() => press("left")}
+                className="col-start-1 row-start-2 z-10 flex items-center justify-start pl-0.5 text-[13px] leading-none text-[#e6e6f0]"
+              >
+                ◀
+              </HoldButton>
+              <HoldButton
+                label="Right"
+                onPress={() => press("right")}
+                className="col-start-3 row-start-2 z-10 flex items-center justify-end pr-0.5 text-[13px] leading-none text-[#e6e6f0]"
+              >
+                ▶
+              </HoldButton>
             </div>
-            <div className="min-w-0">
-              <p className="truncate text-[11px] font-black uppercase tracking-wider text-[#f5e6d3]">
-                {name}
-              </p>
-              <p className="truncate text-[9px] text-[#f5e6d3]/60">
-                {game?.desc ?? "SlashPlay cartridge"}
-              </p>
-            </div>
-          </div>
-        </div>
 
-        {/* ── controls ── */}
-        <div className="mt-3 flex items-center justify-between gap-2 px-1 sm:mt-4 sm:px-2">
-          {/* d-pad */}
-          <div className="relative grid size-[104px] shrink-0 grid-cols-3 grid-rows-3 sm:size-[116px]">
-            <div className="col-start-2 row-start-1" />
-            <div className="col-start-1 row-start-2" />
-            <div className="col-start-2 row-start-2" />
-            <div className="col-start-3 row-start-2" />
-            <div className="col-start-2 row-start-3" />
-
-            <div
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 top-1/2 size-[30%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4b4b55] shadow-[0_2px_5px_rgba(0,0,0,0.6)]"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 top-0 h-[58%] w-[30%] -translate-x-1/2 rounded-t-[6px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.5)]"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute bottom-0 left-1/2 h-[58%] w-[30%] -translate-x-1/2 rounded-b-[6px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.5)]"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute left-0 top-1/2 h-[30%] w-[58%] -translate-y-1/2 rounded-l-[6px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.5)]"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute right-0 top-1/2 h-[30%] w-[58%] -translate-y-1/2 rounded-r-[6px] bg-[#3a3a44] shadow-[0_2px_5px_rgba(0,0,0,0.5)]"
-            />
-
-            <HoldButton
-              label="Up"
-              ariaLabel="Up"
-              onPress={() => press("up")}
-              className="col-start-2 row-start-1 z-10 flex items-start justify-center pt-0.5 text-[#1c1c22]"
-            >
-              <span className="text-[11px] leading-none">▲</span>
-            </HoldButton>
-            <HoldButton
-              label="Down"
-              ariaLabel="Down"
-              onPress={() => press("down")}
-              className="col-start-2 row-start-3 z-10 flex items-end justify-center pb-0.5 text-[#1c1c22]"
-            >
-              <span className="text-[11px] leading-none">▼</span>
-            </HoldButton>
-            <HoldButton
-              label="Left"
-              ariaLabel="Left"
-              onPress={() => press("left")}
-              className="col-start-1 row-start-2 z-10 flex items-center justify-start pl-0.5 text-[#1c1c22]"
-            >
-              <span className="text-[11px] leading-none">◀</span>
-            </HoldButton>
-            <HoldButton
-              label="Right"
-              ariaLabel="Right"
-              onPress={() => press("right")}
-              className="col-start-3 row-start-2 z-10 flex items-center justify-end pr-0.5 text-[#1c1c22]"
-            >
-              <span className="text-[11px] leading-none">▶</span>
-            </HoldButton>
-          </div>
-
-          {/* centre: start / select */}
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex rotate-[-24deg] gap-3">
+            {/* start / select */}
+            <div className="flex shrink-0 rotate-[-24deg] flex-col items-center gap-1.5">
               <HoldButton
                 label="Select"
-                ariaLabel="Select"
                 onPress={() => press("select")}
-                className="rounded-full bg-[#3a3a44] px-3 py-1.5 text-[8px] font-black uppercase tracking-widest text-[#c9c9d4] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                className="rounded-full bg-[#3a3a44] px-3.5 py-2 text-[9px] font-black uppercase tracking-widest text-[#d5d5e0] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
               >
                 Select
               </HoldButton>
               <HoldButton
                 label="Start"
-                ariaLabel="Start"
                 onPress={() => press("start")}
-                className="rounded-full bg-[#3a3a44] px-3 py-1.5 text-[8px] font-black uppercase tracking-widest text-[#c9c9d4] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                className="rounded-full bg-[#3a3a44] px-3.5 py-2 text-[9px] font-black uppercase tracking-widest text-[#d5d5e0] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
               >
                 Start
               </HoldButton>
             </div>
+
+            {/* a / b — 62px, up from 44px */}
+            <div className="flex shrink-0 rotate-[-24deg] items-center gap-2.5 pr-1">
+              <HoldButton
+                label="B"
+                onPress={() => press("b")}
+                className="flex size-[58px] items-center justify-center rounded-full bg-[#2f2f38] text-[13px] font-black text-[#c9c9d4] shadow-[0_3px_6px_rgba(0,0,0,0.6)] ring-1 ring-black/40 sm:size-[62px]"
+              >
+                B
+              </HoldButton>
+              <HoldButton
+                label="A"
+                onPress={() => press("a")}
+                className="flex size-[58px] items-center justify-center rounded-full bg-[#a03a2e] text-[13px] font-black text-[#ffe4d6] shadow-[0_3px_6px_rgba(0,0,0,0.6)] ring-1 ring-black/40 sm:size-[62px]"
+              >
+                A
+              </HoldButton>
+            </div>
           </div>
 
-          {/* a / b */}
-          <div className="flex shrink-0 rotate-[-24deg] items-center gap-3 pr-1">
-            <HoldButton
-              label="B"
-              ariaLabel="B"
-              onPress={() => press("b")}
-              className="flex size-11 items-center justify-center rounded-full bg-[#2f2f38] text-[11px] font-black text-[#b9b9c6] shadow-[0_3px_6px_rgba(0,0,0,0.6)] ring-1 ring-black/40 sm:size-12"
-            >
-              B
-            </HoldButton>
-            <HoldButton
-              label="A"
-              ariaLabel="A"
-              onPress={() => press("a")}
-              className="flex size-11 items-center justify-center rounded-full bg-[#a03a2e] text-[11px] font-black text-[#ffe4d6] shadow-[0_3px_6px_rgba(0,0,0,0.6)] ring-1 ring-black/40 sm:size-12"
-            >
-              A
-            </HoldButton>
+          {/* cartridge label + speaker */}
+          <div className="mt-3 flex items-end justify-between gap-3 sm:mt-4">
+            <div className="flex min-w-0 items-center gap-2">
+              <div className="h-10 w-14 shrink-0 overflow-hidden rounded bg-black/20 ring-1 ring-black/30">
+                <GameCover slug={slug} radius={5} />
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-[11px] font-black uppercase tracking-wider text-[#f5e6d3]">
+                  {name}
+                </p>
+                <p className="truncate text-[9px] text-[#f5e6d3]/60">
+                  {game?.desc ?? "SlashPlay cartridge"}
+                </p>
+              </div>
+            </div>
+            <div aria-hidden className="flex h-2.5 w-12 shrink-0 justify-end gap-1">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <span
+                  key={i}
+                  className="h-full w-1.5 rounded-full bg-[#8f2f24] shadow-[inset_0_1px_1px_rgba(0,0,0,0.5)]"
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* speaker */}
-        <div aria-hidden className="mx-auto mt-3 flex h-2 w-28 justify-end gap-1 sm:mt-4">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <span
-              key={i}
-              className="h-full w-1.5 rounded-full bg-[#8f2f24] shadow-[inset_0_1px_1px_rgba(0,0,0,0.5)]"
-            />
-          ))}
+        <div className="mt-3 flex items-center justify-between gap-2">
+          <p className="text-[11px] text-muted-foreground sm:text-xs">
+            D-pad and buttons work — hold to repeat. Keyboard still fine.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setShell("off");
+              try {
+                localStorage.setItem(SHELL_KEY, "off");
+              } catch {
+                /* private mode */
+              }
+            }}
+            className="shrink-0 rounded-lg border border-border px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+          >
+            Full screen
+          </button>
         </div>
       </div>
-
-      <div className="mt-3 flex items-center justify-between gap-2">
-        <p className="text-center text-[11px] text-muted-foreground sm:text-xs">
-          D-pad and buttons work — hold to repeat. Keyboard still fine.
-        </p>
-        <button
-          type="button"
-          onClick={() => {
-            setShell("off");
-            try {
-              localStorage.setItem(SHELL_KEY, "off");
-            } catch {
-              /* private mode */
-            }
-          }}
-          className="shrink-0 rounded-lg border border-border px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
-        >
-          Full screen
-        </button>
-      </div>
-    </div>
+    </DeviceProvider>
   );
 }
