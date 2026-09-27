@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
+import { useInDevice } from "@/components/library/device-context";
 import { RotateCcw, Pause, Play } from "lucide-react";
 import { playTone } from "@/lib/play-sound";
 import { saveGameBest, getGameBest } from "@/lib/ux";
@@ -37,6 +38,68 @@ const MIN_MS = 62;
 const tickMs = (len: number) => Math.max(MIN_MS, Math.round(BASE_MS - (len - 4) * 4.2));
 
 const BEST_KEY = "snake-best";
+
+/**
+ * The steering pad, as its own component on purpose.
+ *
+ * `useInDevice()` only sees the handheld when it is read from a component that
+ * renders INSIDE the shell's provider. `Snake` itself renders `AppShell`, which
+ * renders the provider, so a hook called in `Snake`'s body sits above it and
+ * always reads false. Anything that must know therefore has to be a child.
+ */
+function SteerPad({
+  onSteer,
+  onCentre,
+  centreLabel,
+  centreGlyph,
+}: {
+  onSteer: (d: Dir) => void;
+  onCentre: () => void;
+  centreLabel: string;
+  centreGlyph: string;
+}) {
+  const inDevice = useInDevice();
+  if (inDevice) return null;
+  const arrow = (label: string, dir: Dir, glyph: string) => (
+    <button
+      onClick={() => onSteer(dir)}
+      aria-label={label}
+      className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
+    >
+      {glyph}
+    </button>
+  );
+  return (
+    <div className="mx-auto grid max-w-[320px] grid-cols-3 gap-2.5">
+      <span />
+      {arrow("Up", "up", "▲")}
+      <span />
+      {arrow("Left", "left", "◀")}
+      <button
+        onClick={onCentre}
+        aria-label={centreLabel}
+        className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-lg font-bold text-foreground transition-colors active:bg-primary active:text-primary-foreground"
+      >
+        {centreGlyph}
+      </button>
+      {arrow("Right", "right", "▶")}
+      <span />
+      {arrow("Down", "down", "▼")}
+    </div>
+  );
+}
+
+/** the same trick: the note adapts to whether the shell is around it */
+function ModeNote() {
+  const inDevice = useInDevice();
+  return (
+    <p className="text-center text-xs text-muted-foreground">
+      {inDevice
+        ? "Use the d-pad below to steer. Walls wrap around."
+        : "Walls wrap around. Food every 1 point. It speeds up as you grow."}
+    </p>
+  );
+}
 
 function Snake() {
   const [body, setBody] = useState<Pt[]>(startSnake);
@@ -390,51 +453,14 @@ function Snake() {
           )}
         </div>
 
-        {/* full-width pad, always visible — the old one was 160px and mobile-only */}
-        <div className="mx-auto grid max-w-[320px] grid-cols-3 gap-2.5">
-          <span />
-          <button
-            onClick={() => steer("up")}
-            aria-label="Up"
-            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
-          >
-            ▲
-          </button>
-          <span />
-          <button
-            onClick={() => steer("left")}
-            aria-label="Left"
-            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
-          >
-            ◀
-          </button>
-          <button
-            onClick={over || won ? reset : () => setRunning((r) => !r)}
-            aria-label={over || won ? "Play again" : running ? "Pause" : "Play"}
-            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-lg font-bold text-foreground transition-colors active:bg-primary active:text-primary-foreground"
-          >
-            {over || won ? "↻" : running ? "❚❚" : "▶"}
-          </button>
-          <button
-            onClick={() => steer("right")}
-            aria-label="Right"
-            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
-          >
-            ▶
-          </button>
-          <span />
-          <button
-            onClick={() => steer("down")}
-            aria-label="Down"
-            className="flex h-16 items-center justify-center rounded-2xl border border-border bg-surface-elevated text-2xl text-foreground transition-colors active:bg-primary active:text-primary-foreground"
-          >
-            ▼
-          </button>
-        </div>
+        <SteerPad
+          onSteer={steer}
+          onCentre={over || won ? reset : () => setRunning((r) => !r)}
+          centreLabel={over || won ? "Play again" : running ? "Pause" : "Play"}
+          centreGlyph={over || won ? "↻" : running ? "❚❚" : "▶"}
+        />
 
-        <p className="text-center text-xs text-muted-foreground">
-          Walls wrap around. Food every 1 point. It speeds up as you grow.
-        </p>
+        <ModeNote />
       </div>
     </AppShell>
   );
