@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -14,7 +15,14 @@ export const Route = createFileRoute("/play/darts")({ component: Darts });
 const ORDER = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
 const R = 168;
 const BOX = R * 2 + 16;
-const RING = { bull: 12, outerBull: 22, singleInner: 92, treble: 104, singleOuter: 146, double: 158 };
+const RING = {
+  bull: 12,
+  outerBull: 22,
+  singleInner: 92,
+  treble: 104,
+  singleOuter: 146,
+  double: 158,
+};
 const AI_ACCURACY = { Easy: 0.4, Medium: 0.62, Hard: 0.8 } as const;
 type Level = keyof typeof AI_ACCURACY;
 
@@ -32,7 +40,12 @@ function scoreAt(dx: number, dy: number): { score: number; label: string } {
   return { score: base, label: `Single ${base}` };
 }
 
-interface Dart { x: number; y: number; label: string; score: number }
+interface Dart {
+  x: number;
+  y: number;
+  label: string;
+  score: number;
+}
 
 function Darts() {
   const [level, setLevel] = useState<Level>("Medium");
@@ -43,7 +56,7 @@ function Darts() {
   const [turnDarts, setTurnDarts] = useState<Dart[]>([]);
   const [message, setMessage] = useState("You throw first — 501, straight out.");
   const [winner, setWinner] = useState<"" | "you" | "ai">("");
-  const [wins, setWins] = useState(() => Number(localStorage.getItem("slashai.darts.wins")) || 0);
+  const [wins, setWins] = useState(() => Number(readStorage("slashai.darts.wins")) || 0);
 
   const restart = useCallback(() => {
     setYouLeft(501);
@@ -74,7 +87,8 @@ function Darts() {
         const aimDx = left > 170 ? 0 : left % 2 === 0 ? -58 : 58;
         const dx = aimDx + (Math.random() - 0.5) * scatter;
         const dy = (left > 170 ? -58 : 0) + (Math.random() - 0.5) * scatter;
-        const hit = Math.hypot(dx, dy) > RING.double ? { score: 0, label: "Off the board" } : scoreAt(dx, dy);
+        const hit =
+          Math.hypot(dx, dy) > RING.double ? { score: 0, label: "Off the board" } : scoreAt(dx, dy);
         thrown.push({ x: dx, y: dy, ...hit });
         left -= hit.score;
         if (left === 0) break;
@@ -154,7 +168,8 @@ function Darts() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🎯 Darts</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          501, straight out. Tap the board to throw — three darts a turn, then the AI throws. Land exactly on zero.
+          501, straight out. Tap the board to throw — three darts a turn, then the AI throws. Land
+          exactly on zero.
         </p>
       </header>
 
@@ -184,9 +199,15 @@ function Darts() {
             {ORDER.map((n, i) => (
               <g key={n}>
                 <path d={sectorPath(i, RING.outerBull, RING.singleInner)} fill={SEG[i % 2]} />
-                <path d={sectorPath(i, RING.singleInner, RING.treble)} fill={i % 2 === 0 ? "#dc2626" : "#16a34a"} />
+                <path
+                  d={sectorPath(i, RING.singleInner, RING.treble)}
+                  fill={i % 2 === 0 ? "#dc2626" : "#16a34a"}
+                />
                 <path d={sectorPath(i, RING.treble, RING.singleOuter)} fill={SEG[i % 2]} />
-                <path d={sectorPath(i, RING.singleOuter, RING.double)} fill={i % 2 === 0 ? "#dc2626" : "#16a34a"} />
+                <path
+                  d={sectorPath(i, RING.singleOuter, RING.double)}
+                  fill={i % 2 === 0 ? "#dc2626" : "#16a34a"}
+                />
                 <text
                   x={Math.cos(((i * 18 - 90) * Math.PI) / 180) * (RING.singleOuter + 10)}
                   y={Math.sin(((i * 18 - 90) * Math.PI) / 180) * (RING.singleOuter + 10)}
@@ -203,7 +224,15 @@ function Darts() {
             <circle r={RING.outerBull} fill="#16a34a" />
             <circle r={RING.bull} fill="#dc2626" />
             {onBoard.map((d, i) => (
-              <circle key={i} cx={d.x} cy={d.y} r={5} fill="#fbbf24" stroke="#78350f" strokeWidth={1.5} />
+              <circle
+                key={i}
+                cx={d.x}
+                cy={d.y}
+                r={5}
+                fill="#fbbf24"
+                stroke="#78350f"
+                strokeWidth={1.5}
+              />
             ))}
           </svg>
 
@@ -212,7 +241,10 @@ function Darts() {
               <p className="text-[24px] font-black text-foreground">
                 {winner === "you" ? "🏆 Checkout — you win!" : "😤 AI checks out"}
               </p>
-              <button onClick={restart} className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background">
+              <button
+                onClick={restart}
+                className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background"
+              >
                 ↻ New leg
               </button>
             </div>
@@ -239,13 +271,18 @@ function Darts() {
               key={l}
               onClick={() => setLevel(l)}
               className={`rounded-full px-3 py-1 text-[11px] font-semibold transition-colors ${
-                level === l ? "bg-primary text-background" : "border border-border bg-surface text-muted-foreground"
+                level === l
+                  ? "bg-primary text-background"
+                  : "border border-border bg-surface text-muted-foreground"
               }`}
             >
               {l}
             </button>
           ))}
-          <button onClick={restart} className="rounded-full border border-border bg-surface px-3 py-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground">
+          <button
+            onClick={restart}
+            className="rounded-full border border-border bg-surface px-3 py-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground"
+          >
             Reset
           </button>
         </div>

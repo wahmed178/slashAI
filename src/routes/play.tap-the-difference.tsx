@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -30,7 +31,7 @@ function TapTheDifference() {
   const [tiles, setTiles] = useState<Tile[]>([]);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME);
   const [score, setScore] = useState(0);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.diff.best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("slashai.diff.best") ?? 0));
   const timer = useRef<number | null>(null);
 
   const startRound = (r: number) => {
@@ -94,23 +95,38 @@ function TapTheDifference() {
     <AppShell title="Tap the Difference">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">👁️ Tap the Difference</h1>
-        <p className="mt-1 text-sm text-muted-foreground">One tile is a shade off. Find it fast - wrong taps cost 2 seconds.</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          One tile is a shade off. Find it fast - wrong taps cost 2 seconds.
+        </p>
       </header>
       <div className="mx-auto max-w-md space-y-4">
         {state === "idle" && (
           <div className="space-y-4 text-center">
             <div className="rounded-2xl border border-border bg-surface p-8">
               <p className="text-5xl">🔎</p>
-              <p className="mt-3 text-sm text-muted-foreground">20 seconds, unlimited rounds. Each find scores more the faster you spot it. Wrong tiles burn the clock.</p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                20 seconds, unlimited rounds. Each find scores more the faster you spot it. Wrong
+                tiles burn the clock.
+              </p>
             </div>
-            <button onClick={start} className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground">▶ Start</button>
+            <button
+              onClick={start}
+              className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+            >
+              ▶ Start
+            </button>
           </div>
         )}
         {state === "playing" && (
           <>
             <div className="flex items-center justify-between text-[13px] font-semibold">
-              <span className="text-muted-foreground">Round <b className="text-foreground">{round}</b> · Score <b className="text-foreground">{score}</b></span>
-              <span className={timeLeft <= 5 ? "text-red-400" : "text-muted-foreground"}>⏱ {timeLeft.toFixed(1)}s</span>
+              <span className="text-muted-foreground">
+                Round <b className="text-foreground">{round}</b> · Score{" "}
+                <b className="text-foreground">{score}</b>
+              </span>
+              <span className={timeLeft <= 5 ? "text-red-400" : "text-muted-foreground"}>
+                ⏱ {timeLeft.toFixed(1)}s
+              </span>
             </div>
             <div className="grid grid-cols-6 gap-1.5">
               {tiles.map((t, i) => (
@@ -118,7 +134,11 @@ function TapTheDifference() {
                   key={i}
                   onClick={() => tap(i)}
                   className="aspect-square transition-transform duration-150 active:scale-90"
-                  style={{ background: t.base, borderRadius: t.radius, boxShadow: `inset 0 -2px 0 ${t.shadow}` }}
+                  style={{
+                    background: t.base,
+                    borderRadius: t.radius,
+                    boxShadow: `inset 0 -2px 0 ${t.shadow}`,
+                  }}
                   aria-label={`tile ${i + 1}`}
                 />
               ))}
@@ -128,11 +148,20 @@ function TapTheDifference() {
         {state === "over" && (
           <div className="space-y-4 text-center">
             <div className="rounded-2xl border border-border bg-surface p-8">
-              <p className="text-[13px] uppercase tracking-widest text-muted-foreground">Eagle eyes score</p>
+              <p className="text-[13px] uppercase tracking-widest text-muted-foreground">
+                Eagle eyes score
+              </p>
               <p className="mt-2 text-5xl font-black text-foreground">{score}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{round} rounds cleared · Best: {best}</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {round} rounds cleared · Best: {best}
+              </p>
             </div>
-            <button onClick={start} className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground">↻ Play again</button>
+            <button
+              onClick={start}
+              className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+            >
+              ↻ Play again
+            </button>
           </div>
         )}
       </div>

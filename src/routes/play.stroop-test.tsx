@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -55,7 +56,7 @@ function StroopTest() {
   const [timeLeft, setTimeLeft] = useState(30);
   const [result, setResult] = useState<Result>({ correct: 0, wrong: 0, times: [] });
   const [flash, setFlash] = useState<"ok" | "no" | null>(null);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.stroop.best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("slashai.stroop.best") ?? 0));
   const askTime = useRef<number>(Date.now());
   const timer = useRef<number | null>(null);
 
@@ -120,16 +121,21 @@ function StroopTest() {
     }
   }, [phase]);
 
-  const avg = result.times.length > 0 ? result.times.reduce((a, b) => a + b, 0) / result.times.length : 0;
+  const avg =
+    result.times.length > 0 ? result.times.reduce((a, b) => a + b, 0) / result.times.length : 0;
   const fastest = result.times.length > 0 ? Math.min(...result.times) : 0;
-  const accuracy = result.correct + result.wrong > 0 ? Math.round((result.correct / (result.correct + result.wrong)) * 100) : 0;
+  const accuracy =
+    result.correct + result.wrong > 0
+      ? Math.round((result.correct / (result.correct + result.wrong)) * 100)
+      : 0;
 
   return (
     <AppShell title="Stroop Test">
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🌈 Stroop Test</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          The 1935 psychology classic. Tap the INK colour the word is printed in - reading is the enemy.
+          The 1935 psychology classic. Tap the INK colour the word is printed in - reading is the
+          enemy.
         </p>
       </header>
 
@@ -148,7 +154,9 @@ function StroopTest() {
                   key={m}
                   onClick={() => setMode(m)}
                   className={`rounded-xl border p-3 text-center transition-colors ${
-                    mode === m ? "border-primary/60 bg-primary/10" : "border-border bg-surface hover:border-primary/30"
+                    mode === m
+                      ? "border-primary/60 bg-primary/10"
+                      : "border-border bg-surface hover:border-primary/30"
                   }`}
                 >
                   <span className="block text-[12.5px] font-bold text-foreground">{label}</span>
@@ -159,7 +167,12 @@ function StroopTest() {
             <div className="rounded-2xl border border-border bg-surface p-6 text-center">
               <p className="text-4xl">🌈</p>
               <p className="mt-3 text-sm text-muted-foreground">
-                Words lie: <span className="font-bold" style={{ color: "#3fb950" }}>RED</span> might be printed green.<br />
+                Words lie:{" "}
+                <span className="font-bold" style={{ color: "#3fb950" }}>
+                  RED
+                </span>{" "}
+                might be printed green.
+                <br />
                 Always answer the <b className="text-foreground">colour of the ink</b>.<br />
                 Matched words are traps worth double in Sprint.
               </p>
@@ -167,8 +180,16 @@ function StroopTest() {
                 <p className="mt-2 text-[13px] font-semibold text-primary">Sprint best: {best}</p>
               )}
             </div>
-            <button onClick={start} className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground">
-              ▶ Start {mode === "practice" ? "practising" : mode === "sprint" ? "the sprint" : "the precision run"}
+            <button
+              onClick={start}
+              className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+            >
+              ▶ Start{" "}
+              {mode === "practice"
+                ? "practising"
+                : mode === "sprint"
+                  ? "the sprint"
+                  : "the precision run"}
             </button>
           </div>
         )}
@@ -178,21 +199,37 @@ function StroopTest() {
             <div className="flex items-center justify-between text-[13px] font-semibold">
               <span className="text-muted-foreground">
                 {mode === "precision" ? (
-                  <>Answer <b className="text-foreground">{result.correct + result.wrong}/20</b></>
+                  <>
+                    Answer <b className="text-foreground">{result.correct + result.wrong}/20</b>
+                  </>
                 ) : (
-                  <>Score <b className="text-foreground">{result.correct}</b>{best > 0 && <span className="text-muted-foreground"> · best {best}</span>}</>
+                  <>
+                    Score <b className="text-foreground">{result.correct}</b>
+                    {best > 0 && <span className="text-muted-foreground"> · best {best}</span>}
+                  </>
                 )}
               </span>
-              {mode === "sprint" && <span className={timeLeft <= 5 ? "text-red-400" : "text-muted-foreground"}>⏱ {timeLeft}s</span>}
+              {mode === "sprint" && (
+                <span className={timeLeft <= 5 ? "text-red-400" : "text-muted-foreground"}>
+                  ⏱ {timeLeft}s
+                </span>
+              )}
               {mode === "practice" && <span className="text-muted-foreground">📚 no pressure</span>}
             </div>
 
             <div
               className={`grid h-36 place-items-center rounded-2xl border transition-colors duration-150 ${
-                flash === "ok" ? "border-emerald-500/60 bg-emerald-500/10" : flash === "no" ? "border-red-500/60 bg-red-500/10" : "border-border bg-surface"
+                flash === "ok"
+                  ? "border-emerald-500/60 bg-emerald-500/10"
+                  : flash === "no"
+                    ? "border-red-500/60 bg-red-500/10"
+                    : "border-border bg-surface"
               }`}
             >
-              <span className="text-5xl font-black tracking-wide" style={{ color: COLORS[round.ink]!.hex }}>
+              <span
+                className="text-5xl font-black tracking-wide"
+                style={{ color: COLORS[round.ink]!.hex }}
+              >
                 {COLORS[round.word]!.name}
               </span>
             </div>
@@ -225,19 +262,28 @@ function StroopTest() {
                     {result.correct}/20 correct · avg {fmtMs(avg)}
                   </p>
                   <div className="mt-3 text-[13px] font-semibold">
-                    {accuracy >= 95 && avg > 0 && avg < 900 && <p className="text-emerald-400">Elite - fast AND flawless 🏆</p>}
-                    {accuracy >= 95 && (avg === 0 || avg >= 900) && <p className="text-primary">Sharp - now push the speed ⚡</p>}
-                    {accuracy < 95 && <p className="text-amber-400">Solid - the effect is strong in you 😄</p>}
+                    {accuracy >= 95 && avg > 0 && avg < 900 && (
+                      <p className="text-emerald-400">Elite - fast AND flawless 🏆</p>
+                    )}
+                    {accuracy >= 95 && (avg === 0 || avg >= 900) && (
+                      <p className="text-primary">Sharp - now push the speed ⚡</p>
+                    )}
+                    {accuracy < 95 && (
+                      <p className="text-amber-400">Solid - the effect is strong in you 😄</p>
+                    )}
                   </div>
                 </>
               ) : (
                 <>
                   <p className="mt-2 text-5xl font-black text-foreground">{result.correct}</p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {result.wrong} misses · avg {fmtMs(avg)}{fastest > 0 && <> · fastest {fmtMs(fastest)}</>}
+                    {result.wrong} misses · avg {fmtMs(avg)}
+                    {fastest > 0 && <> · fastest {fmtMs(fastest)}</>}
                   </p>
                   {result.correct >= best && result.correct > 0 && (
-                    <p className="mt-2 text-[13px] font-semibold text-emerald-400">New personal best! 🎉</p>
+                    <p className="mt-2 text-[13px] font-semibold text-emerald-400">
+                      New personal best! 🎉
+                    </p>
                   )}
                   {best > 0 && result.correct < best && (
                     <p className="mt-2 text-sm text-muted-foreground">Best: {best}</p>
@@ -246,8 +292,16 @@ function StroopTest() {
               )}
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <button onClick={start} className="h-12 rounded-xl bg-primary text-sm font-bold text-primary-foreground">↻ Again</button>
-              <button onClick={() => setPhase("idle")} className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-muted-foreground">
+              <button
+                onClick={start}
+                className="h-12 rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+              >
+                ↻ Again
+              </button>
+              <button
+                onClick={() => setPhase("idle")}
+                className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-muted-foreground"
+              >
                 Modes
               </button>
             </div>

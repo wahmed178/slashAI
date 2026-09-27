@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/library/AppShell";
-import { saveGameBest } from "@/lib/ux";
+import { readStorage, saveGameBest } from "@/lib/ux";
 
 export const Route = createFileRoute("/play/n-back")({
   head: () => ({
@@ -105,7 +105,7 @@ function NBack() {
   const [letter, setLetter] = useState<string | null>(null);
   const [tally, setTally] = useState({ hits: 0, misses: 0, falseAlarms: 0, correctRejects: 0 });
   const [flash, setFlash] = useState<"hit" | "miss" | "fa" | null>(null);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.nback.best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("slashai.nback.best") ?? 0));
 
   const seq = useRef<string[]>([]);
   const answered = useRef(false);

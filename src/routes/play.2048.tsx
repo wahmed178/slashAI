@@ -63,12 +63,15 @@ function flatRows(rows: number[][]): Grid {
 const reverseRows = (rows: number[][]) => rows.map((r) => [...r].reverse());
 const transpose = (rows: number[][]) => rows[0]!.map((_, c) => rows.map((r) => r[c]!));
 
-function move(g: Grid, dir: "left" | "right" | "up" | "down"): { grid: Grid; gained: number; moved: boolean } {
+function move(
+  g: Grid,
+  dir: "left" | "right" | "up" | "down",
+): { grid: Grid; gained: number; moved: boolean } {
   let rows = rowsOf(g);
   // every direction is reduced to "slide each row left":
   // right flips rows, up transposes columns, down transposes + flips
   const useCols = dir === "up" || dir === "down";
-  let flip = dir === "right" || dir === "down";
+  const flip = dir === "right" || dir === "down";
   if (useCols) rows = transpose(rows);
   if (flip) rows = reverseRows(rows);
   let gained = 0;
@@ -90,7 +93,11 @@ function canMove(g: Grid): boolean {
 function Game2048() {
   const [grid, setGrid] = useState<Grid>(emptyGrid);
   const [score, setScore] = useState(0);
-  const [best, setBest] = useState<number>(() => Number(localStorage.getItem(BEST_KEY)) || 0);
+  // localStorage only exists in the browser; reading it during SSR throws and
+  // drops the whole page to client rendering
+  const [best, setBest] = useState<number>(() =>
+    typeof window === "undefined" ? 0 : Number(window.localStorage.getItem(BEST_KEY)) || 0,
+  );
   const [over, setOver] = useState(false);
   const [won, setWon] = useState(false);
   const [wonDismissed, setWonDismissed] = useState(false);
@@ -107,7 +114,11 @@ function Game2048() {
       setScore(ns);
       setBest((b) => {
         const nb = Math.max(b, ns);
-        localStorage.setItem(BEST_KEY, String(nb));
+        try {
+          localStorage.setItem(BEST_KEY, String(nb));
+        } catch {
+          /* private mode */
+        }
         return nb;
       });
       if (next.includes(2048) && !won) setWon(true);
@@ -119,8 +130,14 @@ function Game2048() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const map: Record<string, "left" | "right" | "up" | "down"> = {
-        ArrowLeft: "left", ArrowRight: "right", ArrowUp: "up", ArrowDown: "down",
-        a: "left", d: "right", w: "up", s: "down",
+        ArrowLeft: "left",
+        ArrowRight: "right",
+        ArrowUp: "up",
+        ArrowDown: "down",
+        a: "left",
+        d: "right",
+        w: "up",
+        s: "down",
       };
       const dir = map[e.key];
       if (!dir) return;
@@ -166,7 +183,9 @@ function Game2048() {
     <AppShell title="2048">
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🔢 2048</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Swipe or use arrow keys. Merge equal tiles - reach 2048!</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Swipe or use arrow keys. Merge equal tiles - reach 2048!
+        </p>
       </header>
 
       <div className="mx-auto max-w-md space-y-3">
@@ -196,19 +215,30 @@ function Game2048() {
           </div>
           {(over || (won && !wonDismissed)) && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-black/70 text-center">
-              <p className="text-[22px] font-black text-foreground">{won && !over ? "🎉 You made 2048!" : "Game over"}</p>
+              <p className="text-[22px] font-black text-foreground">
+                {won && !over ? "🎉 You made 2048!" : "Game over"}
+              </p>
               <p className="text-[13px] text-muted-foreground">Score: {score}</p>
               {won && !over ? (
                 <div className="flex gap-2">
-                  <button onClick={() => setWonDismissed(true)} className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
+                  <button
+                    onClick={() => setWonDismissed(true)}
+                    className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90"
+                  >
                     Keep going
                   </button>
-                  <button onClick={reset} className="rounded-xl border border-border bg-surface-elevated px-5 py-2.5 text-[13px] font-bold text-foreground hover:bg-primary/10">
+                  <button
+                    onClick={reset}
+                    className="rounded-xl border border-border bg-surface-elevated px-5 py-2.5 text-[13px] font-bold text-foreground hover:bg-primary/10"
+                  >
                     New game
                   </button>
                 </div>
               ) : (
-                <button onClick={reset} className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90">
+                <button
+                  onClick={reset}
+                  className="rounded-xl bg-primary px-5 py-2.5 text-[13px] font-bold text-background hover:bg-primary/90"
+                >
                   New game
                 </button>
               )}
@@ -216,7 +246,10 @@ function Game2048() {
           )}
         </div>
 
-        <button onClick={reset} className="mx-auto flex items-center gap-1.5 rounded-lg border border-border bg-surface px-4 py-2 text-[12px] font-medium text-foreground hover:bg-primary/10">
+        <button
+          onClick={reset}
+          className="mx-auto flex items-center gap-1.5 rounded-lg border border-border bg-surface px-4 py-2 text-[12px] font-medium text-foreground hover:bg-primary/10"
+        >
           <RotateCcw className="size-3.5" /> New game
         </button>
       </div>

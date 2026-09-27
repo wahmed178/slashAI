@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { RotateCcw } from "lucide-react";
@@ -12,7 +13,7 @@ function TenSeconds() {
   const [phase, setPhase] = useState<"idle" | "running" | "done">("idle");
   const [elapsed, setElapsed] = useState(0);
   const [best, setBest] = useState<number | null>(() => {
-    const v = localStorage.getItem(BEST_KEY);
+    const v = readStorage(BEST_KEY);
     return v ? Number(v) : null;
   });
   const startRef = useRef(0);
@@ -79,7 +80,8 @@ function TenSeconds() {
       <div className="mx-auto max-w-md space-y-4">
         <div className="rounded-2xl border border-border bg-surface p-6 text-center">
           <p className="text-5xl font-bold tabular-nums text-foreground">
-            {elapsed.toFixed(2)}<span className="text-2xl text-muted-foreground">s</span>
+            {elapsed.toFixed(2)}
+            <span className="text-2xl text-muted-foreground">s</span>
           </p>
           <p className="mt-1 text-xs text-muted-foreground">target: exactly 10.00s</p>
 
@@ -110,7 +112,8 @@ function TenSeconds() {
             <div className="mt-5 space-y-3">
               <p className="text-sm font-semibold text-foreground">{verdict}</p>
               <p className="text-xs text-muted-foreground">
-                You were <b className="text-primary">{diff.toFixed(2)}s</b> off. Best attempt: {best !== null && <span className="tabular-nums">{best.toFixed(2)}s</span>}
+                You were <b className="text-primary">{diff.toFixed(2)}s</b> off. Best attempt:{" "}
+                {best !== null && <span className="tabular-nums">{best.toFixed(2)}s</span>}
               </p>
               <button
                 onClick={reset}
@@ -124,7 +127,9 @@ function TenSeconds() {
 
         {best !== null && (
           <p className="text-center text-[11px] text-muted-foreground">
-            Your closest stop so far: <b className="text-primary tabular-nums">{best.toFixed(2)}s</b> ({Math.abs(best - TARGET).toFixed(2)}s off)
+            Your closest stop so far:{" "}
+            <b className="text-primary tabular-nums">{best.toFixed(2)}s</b> (
+            {Math.abs(best - TARGET).toFixed(2)}s off)
           </p>
         )}
       </div>

@@ -20,6 +20,8 @@ import { getGameBest, isNewItem } from "@/lib/ux";
 import { useUxTick } from "@/hooks/use-ux";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 import { playSectionColor } from "@/lib/category-colors";
+import { GameCover } from "@/components/library/GameCover";
+import { usesDevice } from "@/lib/gameboy";
 import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/play/")({
@@ -61,11 +63,16 @@ function GameCard({ game, color }: { game: PlayGame; color: string }) {
       className="cat cat-glow group flex flex-col rounded-xl border bg-surface p-3.5"
     >
       <div className="flex items-start justify-between gap-2">
-        <span className="cat-tile flex size-9 items-center justify-center rounded-lg text-[24px] leading-none">{game.icon}</span>
+        <span className="cat-tile block w-[76px] shrink-0 overflow-hidden rounded-lg">
+          <GameCover slug={game.slug} radius={8} />
+        </span>
         <div className="flex items-center gap-1">
           <button
             type="button"
-            onClick={(e) => { e.preventDefault(); toggleToolFavorite(game.slug); }}
+            onClick={(e) => {
+              e.preventDefault();
+              toggleToolFavorite(game.slug);
+            }}
             aria-label={saved ? `Remove ${game.name} from saved` : `Save ${game.name}`}
             className={`shrink-0 rounded-md p-1 transition-colors ${saved ? "text-amber-400" : "text-muted-foreground hover:text-amber-300"}`}
           >
@@ -84,18 +91,22 @@ function GameCard({ game, color }: { game: PlayGame; color: string }) {
           </span>
         )}
       </span>
-      <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{game.desc}</span>
+      <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">
+        {game.desc}
+      </span>
       <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-muted-foreground/90">
         <span>⏱ {meta.minutes} min</span>
         <span>🎯 {meta.level}</span>
-        {best !== null && <span className="font-semibold text-amber-400">🏆 Your best: {best}</span>}
+        {best !== null && (
+          <span className="font-semibold text-amber-400">🏆 Your best: {best}</span>
+        )}
       </span>
       <span className="cat-text mt-2.5 text-[11px] font-semibold opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-        Play now →
+        {usesDevice(game.slug) ? "Play in handheld →" : "Play now →"}
       </span>
     </Link>
   );
-}/** One-tap random game — no filters, no thinking. */
+} /** One-tap random game — no filters, no thinking. */
 function SurpriseMe() {
   const roll = () => {
     const slug = randomGameSlug();
@@ -111,7 +122,9 @@ function SurpriseMe() {
         background: "linear-gradient(135deg, rgba(168,85,247,0.10), rgba(251,113,133,0.07))",
       }}
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-[16px] transition-transform duration-150 group-hover:rotate-12">🎲</span>
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent text-[16px] transition-transform duration-150 group-hover:rotate-12">
+        🎲
+      </span>
       <span className="min-w-0 flex-1">
         <span className="block text-[13px] font-bold text-foreground">Surprise me</span>
         <span className="block text-[11px] text-muted-foreground">
@@ -133,12 +146,18 @@ function DailyGame() {
       to={`/play/${game.slug}` as string}
       className="group mt-3 flex items-center gap-3 rounded-xl border border-amber-500/25 bg-amber-500/5 px-4 py-3 transition-colors hover:border-amber-500/50"
     >
-      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-[16px] transition-transform duration-150 group-hover:scale-110">{game.icon}</span>
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-amber-500/15 text-[16px] transition-transform duration-150 group-hover:scale-110">
+        {game.icon}
+      </span>
       <span className="min-w-0">
-        <span className="block text-[13px] font-bold text-foreground">Today's game — {game.name}</span>
+        <span className="block text-[13px] font-bold text-foreground">
+          Today's game — {game.name}
+        </span>
         <span className="block text-[11px] text-muted-foreground">{game.desc}</span>
       </span>
-      <span className="ml-auto shrink-0 text-[11px] font-semibold text-amber-500">Play today's →</span>
+      <span className="ml-auto shrink-0 text-[11px] font-semibold text-amber-500">
+        Play today's →
+      </span>
     </Link>
   );
 }
@@ -172,7 +191,8 @@ function PlayIndex() {
         </h1>
         <p className="mt-1 text-[15px] text-muted-foreground">
           {TOTAL_GAMES} free browser games — classics, sports, board games, brain trainers and
-          puzzles. Solo, vs AI, and pass-and-play multiplayer. No downloads needed. <span className="text-[12px] font-semibold">Works offline</span>
+          puzzles. Solo, vs AI, and pass-and-play multiplayer. No downloads needed.{" "}
+          <span className="text-[12px] font-semibold">Works offline</span>
         </p>
       </header>
 
@@ -181,12 +201,18 @@ function PlayIndex() {
         search={{ go: true }}
         className="group mt-3 flex items-center gap-3 rounded-xl border border-primary/25 bg-primary/5 px-4 py-3 transition-colors hover:border-primary/50"
       >
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-[16px] transition-transform duration-150 group-hover:rotate-12">🎲</span>
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-[16px] transition-transform duration-150 group-hover:rotate-12">
+          🎲
+        </span>
         <span className="min-w-0">
           <span className="block text-[13px] font-bold text-foreground">Bored? Roll the dice</span>
-          <span className="block text-[11px] text-muted-foreground">Jump into a random tool or game - {RANDOM_POOL_SIZE} destinations in the pool</span>
+          <span className="block text-[11px] text-muted-foreground">
+            Jump into a random tool or game - {RANDOM_POOL_SIZE} destinations in the pool
+          </span>
         </span>
-        <span className="ml-auto shrink-0 text-[11px] font-semibold text-primary">Feeling lucky →</span>
+        <span className="ml-auto shrink-0 text-[11px] font-semibold text-primary">
+          Feeling lucky →
+        </span>
       </Link>
 
       <div className="mt-3">
@@ -208,7 +234,9 @@ function PlayIndex() {
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
             {PLAY_SECTIONS.flatMap((s) => s.games)
               .filter(
-                (g) => NEW_GAME_SLUGS.includes(g.slug as (typeof NEW_GAME_SLUGS)[number]) || isNewItem(g.added),
+                (g) =>
+                  NEW_GAME_SLUGS.includes(g.slug as (typeof NEW_GAME_SLUGS)[number]) ||
+                  isNewItem(g.added),
               )
               .slice(0, 3)
               .map((g) => (
@@ -228,7 +256,12 @@ function PlayIndex() {
       >
         <div className="flex items-center gap-2">
           <span className="text-[14px]">🎯</span>
-          <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "#fb7185" }}>Pass and Play</span>
+          <span
+            className="text-[11px] font-bold uppercase tracking-wider"
+            style={{ color: "#fb7185" }}
+          >
+            Pass and Play
+          </span>
           <span className="text-[10px] text-muted-foreground">· share one device, take turns</span>
         </div>
         <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-5">
@@ -239,7 +272,9 @@ function PlayIndex() {
               className="flex flex-col items-center rounded-lg bg-surface px-2 py-3 text-center transition-colors hover:bg-surface-elevated"
             >
               <span className="text-[24px]">{g.icon}</span>
-              <span className="mt-1 block text-[11px] font-semibold text-foreground leading-tight">{g.name}</span>
+              <span className="mt-1 block text-[11px] font-semibold text-foreground leading-tight">
+                {g.name}
+              </span>
             </Link>
           ))}
         </div>
@@ -252,7 +287,10 @@ function PlayIndex() {
           { label: "Multiplayer", value: MODES.multiplayer, icon: "👥" },
           { label: "Vs AI modes", value: MODES.vsAi, icon: "🤖" },
         ].map((s) => (
-          <div key={s.label} className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+          <div
+            key={s.label}
+            className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center"
+          >
             <p className="text-[17px] font-bold text-foreground">
               {s.icon} {s.value}
             </p>
@@ -263,7 +301,10 @@ function PlayIndex() {
 
       {/* Search */}
       <div className="relative mt-4">
-        <Search className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+        <Search
+          className="absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground"
+          aria-hidden
+        />
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -308,7 +349,9 @@ function PlayIndex() {
       </div>
 
       {foundCount === 0 ? (
-        <p className="mt-10 text-center text-sm text-muted-foreground">No games match "{search}".</p>
+        <p className="mt-10 text-center text-sm text-muted-foreground">
+          No games match "{search}".
+        </p>
       ) : (
         filtered.map((section) => {
           return (
@@ -318,7 +361,10 @@ function PlayIndex() {
               style={{ "--cat": playSectionColor(section.title).hex } as React.CSSProperties}
             >
               <>
-                <h2 className="mb-2.5 flex items-center gap-2 text-[15px] font-bold" style={{ color: playSectionColor(section.title).hex }}>
+                <h2
+                  className="mb-2.5 flex items-center gap-2 text-[15px] font-bold"
+                  style={{ color: playSectionColor(section.title).hex }}
+                >
                   <span>{section.icon}</span>
                   {section.title}
                   <span className="text-[11px] font-medium text-muted-foreground">
@@ -328,7 +374,11 @@ function PlayIndex() {
                 <div className="cat-rule -mt-1.5 mb-2.5 w-24" />
                 <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
                   {section.games.map((game) => (
-                    <GameCard key={game.slug} game={game as PlayGame} color={playSectionColor(section.title).hex} />
+                    <GameCard
+                      key={game.slug}
+                      game={game as PlayGame}
+                      color={playSectionColor(section.title).hex}
+                    />
                   ))}
                 </div>
               </>
@@ -340,7 +390,8 @@ function PlayIndex() {
       {filter === "All" && !q && <FieldTrip />}
 
       <p className="mt-8 text-center text-[11px] text-muted-foreground">
-        Multiplayer games are pass-and-play: share one device and take turns. Everything saves locally - your scores never leave your browser.
+        Multiplayer games are pass-and-play: share one device and take turns. Everything saves
+        locally - your scores never leave your browser.
       </p>
     </AppShell>
   );
@@ -354,7 +405,9 @@ function FieldTrip() {
     <section className="mt-8">
       <h2 className="flex items-center gap-2 text-[15px] font-bold text-sky-400">
         <span>🚌</span> Take a field trip
-        <span className="text-[11px] font-medium text-muted-foreground">the best of the useless web — explained before you click</span>
+        <span className="text-[11px] font-medium text-muted-foreground">
+          the best of the useless web — explained before you click
+        </span>
       </h2>
       <div className="cat-rule mt-1.5 mb-2.5 w-24" />
       <button
@@ -362,10 +415,14 @@ function FieldTrip() {
         onClick={roll}
         className="group flex w-full items-center gap-3 rounded-xl border border-sky-500/25 bg-sky-500/5 px-4 py-3 text-left transition-colors hover:border-sky-500/50"
       >
-        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sky-500/15 text-[16px] transition-transform duration-150 group-hover:-rotate-12">🎯</span>
+        <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-sky-500/15 text-[16px] transition-transform duration-150 group-hover:-rotate-12">
+          🎯
+        </span>
         <span className="min-w-0 flex-1">
           <span className="block text-[13px] font-bold text-foreground">Take me somewhere fun</span>
-          <span className="block text-[11px] text-muted-foreground">Random pick from {FIELD_TRIP_SITES.length} hand-picked internet oddities</span>
+          <span className="block text-[11px] text-muted-foreground">
+            Random pick from {FIELD_TRIP_SITES.length} hand-picked internet oddities
+          </span>
         </span>
         <span className="shrink-0 text-[11px] font-semibold text-sky-400">Go →</span>
       </button>
@@ -380,8 +437,13 @@ function FieldTrip() {
             <span className="block text-[13px] font-bold text-foreground">
               {site.name} <ExternalLink className="inline size-3 text-muted-foreground" />
             </span>
-            <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">{site.what}</span>
-            <span className="mt-1 block text-[10px] text-muted-foreground/80">{site.group}{site.kidsOk ? " · kid-friendly" : ""}</span>
+            <span className="mt-0.5 block text-[11px] leading-snug text-muted-foreground">
+              {site.what}
+            </span>
+            <span className="mt-1 block text-[10px] text-muted-foreground/80">
+              {site.group}
+              {site.kidsOk ? " · kid-friendly" : ""}
+            </span>
           </span>
         </a>
       )}
@@ -397,7 +459,9 @@ function FieldTrip() {
             <span className="block text-[12px] font-bold text-foreground">
               {s.name} <ExternalLink className="inline size-3 text-muted-foreground" />
             </span>
-            <span className="mt-0.5 block text-[10px] leading-snug text-muted-foreground">{s.what}</span>
+            <span className="mt-0.5 block text-[10px] leading-snug text-muted-foreground">
+              {s.what}
+            </span>
           </a>
         ))}
       </div>

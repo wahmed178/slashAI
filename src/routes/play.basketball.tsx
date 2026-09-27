@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -17,7 +18,13 @@ const BALL_R = 15;
 const RIM_R = 26;
 const ROUND_TIME = 60;
 
-interface Shot { x: number; y: number; vx: number; vy: number; live: boolean }
+interface Shot {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  live: boolean;
+}
 
 function Basketball() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -27,7 +34,7 @@ function Basketball() {
   const [streak, setStreak] = useState(0);
   const [timeLeft, setTimeLeft] = useState(ROUND_TIME);
   const [made, setMade] = useState(0);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.basketball.best")) || 0);
+  const [best, setBest] = useState(() => Number(readStorage("slashai.basketball.best")) || 0);
 
   const ball = useRef<Shot>({ x: 80, y: H - 60, vx: 0, vy: 0, live: false });
   const hoop = useRef({ x: 300, y: 150 });
@@ -257,7 +264,8 @@ function Basketball() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🏀 Basketball</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Sixty seconds of shooting. Tap the court (or hit space) when the power bar hits the sweet spot — the hoop keeps moving.
+          Sixty seconds of shooting. Tap the court (or hit space) when the power bar hits the sweet
+          spot — the hoop keeps moving.
         </p>
       </header>
 
@@ -300,7 +308,10 @@ function Basketball() {
                   {shots} shots taken · best {Math.max(best, score)}
                 </p>
               )}
-              <button onClick={start} className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background">
+              <button
+                onClick={start}
+                className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background"
+              >
                 {phase === "over" ? "↻ Play again" : "▶ Tip off"}
               </button>
             </div>

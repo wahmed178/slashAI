@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/library/AppShell";
-import { saveGameBest } from "@/lib/ux";
+import { readStorage, saveGameBest } from "@/lib/ux";
 
 export const Route = createFileRoute("/play/trail-making")({
   head: () => ({
@@ -96,8 +96,8 @@ function TrailMaking() {
   const [elapsed, setElapsed] = useState(0);
   const [wrongLabel, setWrongLabel] = useState<string | null>(null);
   const [bests, setBests] = useState<{ a: number | null; b: number | null }>(() => ({
-    a: Number(localStorage.getItem("slashai.trail.a") ?? 0) || null,
-    b: Number(localStorage.getItem("slashai.trail.b") ?? 0) || null,
+    a: Number(readStorage("slashai.trail.a") ?? 0) || null,
+    b: Number(readStorage("slashai.trail.b") ?? 0) || null,
   }));
 
   const startedAt = useRef(0);

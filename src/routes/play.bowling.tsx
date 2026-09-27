@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -21,7 +22,15 @@ const PIN_SPACING = 34;
 const ROW_SPACING = 32;
 const HEAD_Y = 104;
 
-interface Pin { x: number; y: number; hx: number; hy: number; vx: number; vy: number; down: boolean }
+interface Pin {
+  x: number;
+  y: number;
+  hx: number;
+  hy: number;
+  vx: number;
+  vy: number;
+  down: boolean;
+}
 
 function makePins(): Pin[] {
   const pins: Pin[] = [];
@@ -62,7 +71,9 @@ function Bowling() {
   const [frameIdx, setFrameIdx] = useState(0);
   const [ballNo, setBallNo] = useState(1);
   const [standing, setStanding] = useState(10);
-  const [message, setMessage] = useState("Aim with ← → or drag, tap to arm power, tap again to roll.");
+  const [message, setMessage] = useState(
+    "Aim with ← → or drag, tap to arm power, tap again to roll.",
+  );
   const [gutter, setGutter] = useState(false);
 
   const pins = useRef<Pin[]>(makePins());
@@ -104,52 +115,55 @@ function Bowling() {
   }, [placeBall]);
 
   /** called once the lane has settled after a ball */
-  const finishRoll = useCallback((knocked: number, foul: boolean) => {
-    const f = frameRef.current;
-    const n = ballNoRef.current;
-    const count = foul ? 0 : knocked;
+  const finishRoll = useCallback(
+    (knocked: number, foul: boolean) => {
+      const f = frameRef.current;
+      const n = ballNoRef.current;
+      const count = foul ? 0 : knocked;
 
-    setFrames((prev) => {
-      const next = prev.map((r) => [...r]);
-      const frame = next[Math.min(f, 9)]!;
-      if (n === 1) next[Math.min(f, 9)] = [count];
-      else next[Math.min(f, 9)] = [frame[0] ?? firstBallRef.current, count];
-      return next;
-    });
+      setFrames((prev) => {
+        const next = prev.map((r) => [...r]);
+        const frame = next[Math.min(f, 9)]!;
+        if (n === 1) next[Math.min(f, 9)] = [count];
+        else next[Math.min(f, 9)] = [frame[0] ?? firstBallRef.current, count];
+        return next;
+      });
 
-    if (n === 1) firstBallRef.current = count;
+      if (n === 1) firstBallRef.current = count;
 
-    const strike = n === 1 && count === 10;
-    const spare = n === 2 && firstBallRef.current + count === 10;
+      const strike = n === 1 && count === 10;
+      const spare = n === 2 && firstBallRef.current + count === 10;
 
-    if (foul) setMessage("Gutter ball — no pins.");
-    else if (strike) setMessage("STRIKE! 🎳");
-    else if (spare) setMessage("Spare! 🎳");
-    else setMessage(`${count} pin${count === 1 ? "" : "s"} down.`);
+      if (foul) setMessage("Gutter ball — no pins.");
+      else if (strike) setMessage("STRIKE! 🎳");
+      else if (spare) setMessage("Spare! 🎳");
+      else setMessage(`${count} pin${count === 1 ? "" : "s"} down.`);
 
-    const frameOver = strike || n === 2;
-    if (!frameOver) {
-      ballNoRef.current = 2;
-      setBallNo(2);
-      placeBall(false);
+      const frameOver = strike || n === 2;
+      if (!frameOver) {
+        ballNoRef.current = 2;
+        setBallNo(2);
+        placeBall(false);
+        window.setTimeout(() => setPhase("aim"), 450);
+        return;
+      }
+
+      const nf = f + 1;
+      if (nf >= 10) {
+        setPhase("over");
+        return;
+      }
+      frameRef.current = nf;
+      ballNoRef.current = 1;
+      firstBallRef.current = 0;
+      setFrameIdx(nf);
+      setBallNo(1);
+      setStanding(10);
+      placeBall(true);
       window.setTimeout(() => setPhase("aim"), 450);
-      return;
-    }
-
-    const nf = f + 1;
-    if (nf >= 10) {
-      setPhase("over");
-      return;
-    }
-    frameRef.current = nf;
-    ballNoRef.current = 1;
-    firstBallRef.current = 0;
-    setFrameIdx(nf);
-    setBallNo(1);
-    setStanding(10);
-    placeBall(true);
-    window.setTimeout(() => setPhase("aim"), 450);
-  }, [placeBall]);
+    },
+    [placeBall],
+  );
 
   const roll = useCallback(() => {
     const b = ballRef.current;
@@ -397,7 +411,7 @@ function Bowling() {
   };
 
   const total = scoreGame(frames);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.bowling.best")) || 0);
+  const [best, setBest] = useState(() => Number(readStorage("slashai.bowling.best")) || 0);
   useEffect(() => {
     if (phase === "over" && total > best) {
       localStorage.setItem("slashai.bowling.best", String(total));
@@ -421,7 +435,8 @@ function Bowling() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🎳 Bowling</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Ten frames, two balls each, real strike and spare scoring. Aim with ←/→ or drag, tap once to arm power, tap again to roll.
+          Ten frames, two balls each, real strike and spare scoring. Aim with ←/→ or drag, tap once
+          to arm power, tap again to roll.
         </p>
       </header>
 
@@ -432,7 +447,9 @@ function Bowling() {
               <div
                 key={i}
                 className={`flex-1 rounded border px-0.5 py-1 ${
-                  i === frameIdx && phase !== "over" ? "border-primary bg-primary/10" : "border-border bg-surface"
+                  i === frameIdx && phase !== "over"
+                    ? "border-primary bg-primary/10"
+                    : "border-border bg-surface"
                 }`}
               >
                 <div className="font-bold text-muted-foreground">{i + 1}</div>
@@ -444,7 +461,8 @@ function Bowling() {
 
         <div className="flex items-center justify-between rounded-xl border border-border bg-surface px-4 py-2 text-[12px]">
           <span className="text-muted-foreground">
-            Frame {Math.min(frameIdx + 1, 10)} · ball {ballNo} · <b className="text-foreground">{standing}</b> standing
+            Frame {Math.min(frameIdx + 1, 10)} · ball {ballNo} ·{" "}
+            <b className="text-foreground">{standing}</b> standing
           </span>
           <span className="font-black text-primary">Score {total}</span>
         </div>
@@ -467,8 +485,13 @@ function Bowling() {
               <p className="text-[22px] font-black text-foreground">
                 {phase === "over" ? `Final score ${total}` : "🎳 Bowling"}
               </p>
-              {phase === "over" && <p className="text-[13px] text-muted-foreground">Best {Math.max(best, total)}</p>}
-              <button onClick={start} className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background">
+              {phase === "over" && (
+                <p className="text-[13px] text-muted-foreground">Best {Math.max(best, total)}</p>
+              )}
+              <button
+                onClick={start}
+                className="rounded-xl bg-primary px-6 py-2.5 text-[13px] font-bold text-background"
+              >
                 {phase === "over" ? "↻ New game" : "▶ Start game"}
               </button>
             </div>
@@ -476,7 +499,11 @@ function Bowling() {
         </div>
 
         <p className="text-center text-[12px] font-semibold text-foreground">{message}</p>
-        {gutter && phase !== "idle" && <p className="text-center text-[11px] text-red-400">Watch the aim — that one went in the gutter.</p>}
+        {gutter && phase !== "idle" && (
+          <p className="text-center text-[11px] text-red-400">
+            Watch the aim — that one went in the gutter.
+          </p>
+        )}
       </div>
     </AppShell>
   );

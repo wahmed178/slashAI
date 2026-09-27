@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -19,8 +20,8 @@ function DigitSpan() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [length, setLength] = useState(3);
   const [best, setBest] = useState<{ forward: number; backward: number }>(() => ({
-    forward: Number(localStorage.getItem("slashai.digitspan.forward") ?? 0),
-    backward: Number(localStorage.getItem("slashai.digitspan.backward") ?? 0),
+    forward: Number(readStorage("slashai.digitspan.forward") ?? 0),
+    backward: Number(readStorage("slashai.digitspan.backward") ?? 0),
   }));
   const [digits, setDigits] = useState("");
   const [shown, setShown] = useState(""); // currently visible digit
@@ -83,7 +84,8 @@ function DigitSpan() {
         setFlash(null);
         setEntry("");
         if (remaining <= 0) {
-          const key = dir === "forward" ? "slashai.digitspan.forward" : "slashai.digitspan.backward";
+          const key =
+            dir === "forward" ? "slashai.digitspan.forward" : "slashai.digitspan.backward";
           if (length - 1 > best[dir]) {
             setBest((b) => ({ ...b, [dir]: length - 1 }));
             localStorage.setItem(key, String(length - 1));
@@ -101,7 +103,8 @@ function DigitSpan() {
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🔢 Digit Span</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Digits flash one by one - type them back. Backward mode asks for them reversed. Most people top out at 7.
+          Digits flash one by one - type them back. Backward mode asks for them reversed. Most
+          people top out at 7.
         </p>
       </header>
 
@@ -119,23 +122,33 @@ function DigitSpan() {
                   key={d}
                   onClick={() => setDir(d)}
                   className={`rounded-xl border p-3 text-center transition-colors ${
-                    dir === d ? "border-primary/60 bg-primary/10" : "border-border bg-surface hover:border-primary/30"
+                    dir === d
+                      ? "border-primary/60 bg-primary/10"
+                      : "border-border bg-surface hover:border-primary/30"
                   }`}
                 >
                   <span className="block text-[13px] font-bold text-foreground">{label}</span>
                   <span className="mt-0.5 block text-[10.5px] text-muted-foreground">{sub}</span>
-                  {b > 0 && <span className="mt-1 block text-[11px] font-semibold text-primary">Best: {b}</span>}
+                  {b > 0 && (
+                    <span className="mt-1 block text-[11px] font-semibold text-primary">
+                      Best: {b}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
             <div className="rounded-2xl border border-border bg-surface p-6 text-center">
               <p className="text-4xl">🔢</p>
               <p className="mt-3 text-sm text-muted-foreground">
-                3 digits to start, +1 every success.<br />
-                3 lives. Your <b className="text-foreground">digit span</b> is the longest run you cleared.
+                3 digits to start, +1 every success.
+                <br />3 lives. Your <b className="text-foreground">digit span</b> is the longest run
+                you cleared.
               </p>
             </div>
-            <button onClick={begin} className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground">
+            <button
+              onClick={begin}
+              className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+            >
               ▶ Begin the test
             </button>
           </div>
@@ -148,14 +161,27 @@ function DigitSpan() {
                 {dir === "backward" && <span className="text-amber-400">reverse it!</span>}
               </span>
               <span className="text-muted-foreground">
-                Digit <b className="text-foreground">{Math.min(entry.length + 1, digits.length) === 0 ? 1 : entry.length + 1 > digits.length ? digits.length : entry.length + 1}/{digits.length}</b> · ❤️ {lives}
+                Digit{" "}
+                <b className="text-foreground">
+                  {Math.min(entry.length + 1, digits.length) === 0
+                    ? 1
+                    : entry.length + 1 > digits.length
+                      ? digits.length
+                      : entry.length + 1}
+                  /{digits.length}
+                </b>{" "}
+                · ❤️ {lives}
               </span>
             </div>
             <div className="grid h-40 place-items-center rounded-2xl border border-border bg-surface">
-              <span className="text-7xl font-black tracking-widest text-foreground">{shown || "…"}</span>
+              <span className="text-7xl font-black tracking-widest text-foreground">
+                {shown || "…"}
+              </span>
             </div>
             <p className="text-center text-[12px] text-muted-foreground">
-              {dir === "forward" ? "Watch, then type it back in order" : "Watch, then type it back reversed"}
+              {dir === "forward"
+                ? "Watch, then type it back in order"
+                : "Watch, then type it back reversed"}
             </p>
           </div>
         )}
@@ -170,10 +196,16 @@ function DigitSpan() {
             </div>
             <div
               className={`grid h-24 place-items-center rounded-2xl border transition-colors ${
-                flash === "ok" ? "border-emerald-500/60 bg-emerald-500/10" : flash === "no" ? "border-red-500/60 bg-red-500/10" : "border-border bg-surface"
+                flash === "ok"
+                  ? "border-emerald-500/60 bg-emerald-500/10"
+                  : flash === "no"
+                    ? "border-red-500/60 bg-red-500/10"
+                    : "border-border bg-surface"
               }`}
             >
-              <span className="text-4xl font-black tracking-[0.3em] text-foreground">{entry || "…"}</span>
+              <span className="text-4xl font-black tracking-[0.3em] text-foreground">
+                {entry || "…"}
+              </span>
             </div>
             <div className="grid grid-cols-3 gap-2">
               {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((n) => (
@@ -211,18 +243,35 @@ function DigitSpan() {
         {phase === "over" && (
           <div className="space-y-4 text-center">
             <div className="rounded-2xl border border-border bg-surface p-8">
-              <p className="text-[13px] uppercase tracking-widest text-muted-foreground">Your digit span</p>
+              <p className="text-[13px] uppercase tracking-widest text-muted-foreground">
+                Your digit span
+              </p>
               <p className="mt-2 text-6xl font-black text-foreground">{length - 1}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                {dir === "forward" ? "forward" : "backward"} digits · {length - 1 >= 7 ? "that's exceptional" : length - 1 >= 5 ? "above the adult average" : "room to grow"}
+                {dir === "forward" ? "forward" : "backward"} digits ·{" "}
+                {length - 1 >= 7
+                  ? "that's exceptional"
+                  : length - 1 >= 5
+                    ? "above the adult average"
+                    : "room to grow"}
               </p>
               {length - 1 >= best[dir] && length - 1 > 0 && (
-                <p className="mt-2 text-[13px] font-semibold text-emerald-400">New personal best! 🎉</p>
+                <p className="mt-2 text-[13px] font-semibold text-emerald-400">
+                  New personal best! 🎉
+                </p>
               )}
             </div>
             <div className="grid grid-cols-2 gap-2">
-              <button onClick={begin} className="h-12 rounded-xl bg-primary text-sm font-bold text-primary-foreground">↻ Again</button>
-              <button onClick={() => setPhase("idle")} className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-muted-foreground">
+              <button
+                onClick={begin}
+                className="h-12 rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+              >
+                ↻ Again
+              </button>
+              <button
+                onClick={() => setPhase("idle")}
+                className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-muted-foreground"
+              >
                 Mode
               </button>
             </div>

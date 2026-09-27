@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -12,28 +13,54 @@ export const Route = createFileRoute("/play/word-scramble")({ component: WordScr
 
 const WORDS = {
   Easy: [
-    ["MANGO", "A sweet tropical fruit"], ["RIVER", "Water flowing to the sea"], ["CLOUD", "It floats and rains"],
-    ["PENCIL", "You write with it"], ["GARDEN", "Where flowers grow"], ["WINTER", "The coldest season"],
-    ["PIANO", "88 keys"], ["LADDER", "You climb it"], ["HONEY", "Bees make it"], ["ORANGE", "A fruit and a colour"],
-    ["CANDLE", "Wax and a wick"], ["FOREST", "Many trees together"], ["SILVER", "A precious metal"],
-    ["MARKET", "Where you shop"], ["ISLAND", "Land surrounded by water"],
+    ["MANGO", "A sweet tropical fruit"],
+    ["RIVER", "Water flowing to the sea"],
+    ["CLOUD", "It floats and rains"],
+    ["PENCIL", "You write with it"],
+    ["GARDEN", "Where flowers grow"],
+    ["WINTER", "The coldest season"],
+    ["PIANO", "88 keys"],
+    ["LADDER", "You climb it"],
+    ["HONEY", "Bees make it"],
+    ["ORANGE", "A fruit and a colour"],
+    ["CANDLE", "Wax and a wick"],
+    ["FOREST", "Many trees together"],
+    ["SILVER", "A precious metal"],
+    ["MARKET", "Where you shop"],
+    ["ISLAND", "Land surrounded by water"],
   ],
   Medium: [
-    ["BICYCLE", "Two wheels and pedals"], ["GRAVITY", "It keeps you on the ground"],
-    ["MONSOON", "The seasonal rain"], ["COMPASS", "It always points north"], ["LIBRARY", "Borrow books here"],
-    ["VOLCANO", "A mountain that erupts"], ["PENGUIN", "A bird that swims, not flies"],
-    ["LANTERN", "A portable light"], ["ORCHARD", "A field of fruit trees"], ["HARBOUR", "A safe place for boats"],
-    ["THUNDER", "You hear it after lightning"], ["MAGNET", "It attracts iron"], ["TELESCOPE", "Brings the stars closer"],
-    ["PARACHUTE", "Slows your fall"], ["MELODY", "A tune you can hum"],
+    ["BICYCLE", "Two wheels and pedals"],
+    ["GRAVITY", "It keeps you on the ground"],
+    ["MONSOON", "The seasonal rain"],
+    ["COMPASS", "It always points north"],
+    ["LIBRARY", "Borrow books here"],
+    ["VOLCANO", "A mountain that erupts"],
+    ["PENGUIN", "A bird that swims, not flies"],
+    ["LANTERN", "A portable light"],
+    ["ORCHARD", "A field of fruit trees"],
+    ["HARBOUR", "A safe place for boats"],
+    ["THUNDER", "You hear it after lightning"],
+    ["MAGNET", "It attracts iron"],
+    ["TELESCOPE", "Brings the stars closer"],
+    ["PARACHUTE", "Slows your fall"],
+    ["MELODY", "A tune you can hum"],
   ],
   Hard: [
-    ["KALEIDOSCOPE", "Turning patterns in a tube"], ["ARCHIPELAGO", "A chain of islands"],
-    ["PHOTOSYNTHESIS", "How plants make food"], ["ONOMATOPOEIA", "A word that sounds like its meaning"],
-    ["CONSTELLATION", "A pattern of stars"], ["BIBLIOGRAPHY", "A list of sources"],
-    ["ENTREPRENEUR", "Someone who starts a business"], ["PARALLELOGRAM", "A four-sided shape"],
-    ["QUINTESSENTIAL", "The most perfect example"], ["INCOMPREHENSIBLE", "Impossible to understand"],
-    ["THERMODYNAMICS", "Heat and energy physics"], ["EXTRAORDINARY", "Far beyond the ordinary"],
-    ["CIRCUMNAVIGATE", "To sail all the way around"], ["SERENDIPITY", "A happy accident"],
+    ["KALEIDOSCOPE", "Turning patterns in a tube"],
+    ["ARCHIPELAGO", "A chain of islands"],
+    ["PHOTOSYNTHESIS", "How plants make food"],
+    ["ONOMATOPOEIA", "A word that sounds like its meaning"],
+    ["CONSTELLATION", "A pattern of stars"],
+    ["BIBLIOGRAPHY", "A list of sources"],
+    ["ENTREPRENEUR", "Someone who starts a business"],
+    ["PARALLELOGRAM", "A four-sided shape"],
+    ["QUINTESSENTIAL", "The most perfect example"],
+    ["INCOMPREHENSIBLE", "Impossible to understand"],
+    ["THERMODYNAMICS", "Heat and energy physics"],
+    ["EXTRAORDINARY", "Far beyond the ordinary"],
+    ["CIRCUMNAVIGATE", "To sail all the way around"],
+    ["SERENDIPITY", "A happy accident"],
     ["METAMORPHOSIS", "A caterpillar's big change"],
   ],
 } as const;
@@ -77,7 +104,7 @@ function WordScramble() {
   const [hint, setHint] = useState(0);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.scramble.best")) || 0);
+  const [best, setBest] = useState(() => Number(readStorage("slashai.scramble.best")) || 0);
   const [feedback, setFeedback] = useState<"" | "right" | "wrong" | "revealed">("");
   const [seconds, setSeconds] = useState(0);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -153,7 +180,11 @@ function WordScramble() {
   };
 
   const masked = useMemo(
-    () => word.split("").map((c, i) => (i < hint ? c : "·")).join(" "),
+    () =>
+      word
+        .split("")
+        .map((c, i) => (i < hint ? c : "·"))
+        .join(" "),
     [word, hint],
   );
 
@@ -164,7 +195,8 @@ function WordScramble() {
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🔀 Word Scramble</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Unscramble the word from its clue. Hints cost points, and a wrong guess resets your streak.
+          Unscramble the word from its clue. Hints cost points, and a wrong guess resets your
+          streak.
         </p>
       </header>
 
@@ -179,7 +211,9 @@ function WordScramble() {
             <p className="text-[16px] font-black text-amber-400">{streak}</p>
           </div>
           <div className="rounded-xl border border-border bg-surface px-2 py-2 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Best streak</p>
+            <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+              Best streak
+            </p>
             <p className="text-[16px] font-black text-foreground">{best}</p>
           </div>
           <div className="rounded-xl border border-border bg-surface px-2 py-2 text-center">
@@ -191,8 +225,12 @@ function WordScramble() {
         <div className="rounded-xl border border-border bg-surface p-5 text-center">
           <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Clue</p>
           <p className="mt-1 text-[13.5px] text-muted-foreground">{clue}</p>
-          <p className="mt-4 font-mono text-[26px] font-black tracking-[0.18em] text-foreground sm:text-[32px]">{scrambled}</p>
-          {hint > 0 && <p className="mt-2 font-mono text-[14px] tracking-[0.3em] text-primary">{masked}</p>}
+          <p className="mt-4 font-mono text-[26px] font-black tracking-[0.18em] text-foreground sm:text-[32px]">
+            {scrambled}
+          </p>
+          {hint > 0 && (
+            <p className="mt-2 font-mono text-[14px] tracking-[0.3em] text-primary">{masked}</p>
+          )}
           <p className="mt-2 text-[11px] text-muted-foreground">
             {word.length} letters · {level}
           </p>
@@ -213,12 +251,19 @@ function WordScramble() {
           spellCheck={false}
           placeholder="Type your answer…"
           className={`w-full rounded-xl border bg-surface px-4 py-3 text-center font-mono text-[16px] font-bold uppercase tracking-widest text-foreground outline-none transition-colors ${
-            feedback === "wrong" ? "border-red-500/60" : feedback === "right" ? "border-emerald-500/60" : "border-border focus:border-primary/60"
+            feedback === "wrong"
+              ? "border-red-500/60"
+              : feedback === "right"
+                ? "border-emerald-500/60"
+                : "border-border focus:border-primary/60"
           }`}
         />
 
         <div className="flex gap-2">
-          <button onClick={submit} className="flex-1 rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background">
+          <button
+            onClick={submit}
+            className="flex-1 rounded-xl bg-primary py-2.5 text-[13px] font-bold text-background"
+          >
             Check
           </button>
           <button
@@ -235,12 +280,21 @@ function WordScramble() {
           </button>
         </div>
 
-        {feedback === "right" && <p className="text-center text-[13px] font-bold text-emerald-400">✅ Correct!</p>}
-        {feedback === "wrong" && <p className="text-center text-[13px] font-bold text-red-400">❌ Not quite — try again.</p>}
+        {feedback === "right" && (
+          <p className="text-center text-[13px] font-bold text-emerald-400">✅ Correct!</p>
+        )}
+        {feedback === "wrong" && (
+          <p className="text-center text-[13px] font-bold text-red-400">
+            ❌ Not quite — try again.
+          </p>
+        )}
         {feedback === "revealed" && (
           <p className="text-center text-[12.5px] text-muted-foreground">
             The answer is <b className="font-mono text-foreground">{word}</b>
-            <button onClick={() => next(true)} className="ml-2 font-semibold text-primary hover:underline">
+            <button
+              onClick={() => next(true)}
+              className="ml-2 font-semibold text-primary hover:underline"
+            >
               next →
             </button>
           </p>
@@ -252,7 +306,9 @@ function WordScramble() {
               key={l}
               onClick={() => startLevel(l)}
               className={`rounded-full px-3.5 py-1.5 text-[11px] font-semibold transition-colors ${
-                level === l ? "bg-primary text-background" : "border border-border bg-surface text-muted-foreground hover:text-foreground"
+                level === l
+                  ? "bg-primary text-background"
+                  : "border border-border bg-surface text-muted-foreground hover:text-foreground"
               }`}
             >
               {l}

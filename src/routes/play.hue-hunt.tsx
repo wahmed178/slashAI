@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/library/AppShell";
-import { saveGameBest } from "@/lib/ux";
+import { readStorage, saveGameBest } from "@/lib/ux";
 
 export const Route = createFileRoute("/play/hue-hunt")({
   head: () => ({
@@ -44,7 +44,7 @@ function HueHunt() {
   const [round, setRound] = useState(0);
   const [delta, setDelta] = useState(START_DELTA);
   const [score, setScore] = useState(0);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.huehunt.best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("slashai.huehunt.best") ?? 0));
   const [narrowest, setNarrowest] = useState<number | null>(null);
   const [flash, setFlash] = useState<"ok" | "no" | null>(null);
 

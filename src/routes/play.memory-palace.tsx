@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { readStorage } from "@/lib/ux";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 
@@ -12,11 +13,39 @@ export const Route = createFileRoute("/play/memory-palace")({ component: MemoryP
  */
 
 const ITEMS = [
-  "🍎", "🔑", "🕯️", "🎩", "🐙", "🎺", "🧊", "⏰", "🪑", "🌵",
-  "🧀", "🪁", "💎", "🎈", "🦊", "📚", "⚽", "🍉", "🔔", "🧦",
+  "🍎",
+  "🔑",
+  "🕯️",
+  "🎩",
+  "🐙",
+  "🎺",
+  "🧊",
+  "⏰",
+  "🪑",
+  "🌵",
+  "🧀",
+  "🪁",
+  "💎",
+  "🎈",
+  "🦊",
+  "📚",
+  "⚽",
+  "🍉",
+  "🔔",
+  "🧦",
 ];
 
-const ROOM_LABELS = ["Hall", "Kitchen", "Library", "Garden", "Attic", "Cellar", "Studio", "Porch", "Den"];
+const ROOM_LABELS = [
+  "Hall",
+  "Kitchen",
+  "Library",
+  "Garden",
+  "Attic",
+  "Cellar",
+  "Studio",
+  "Porch",
+  "Den",
+];
 
 interface Level {
   rooms: number; // grid size: rooms x rooms
@@ -36,7 +65,7 @@ type Phase = "idle" | "study" | "recall" | "result";
 function MemoryPalace() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [level, setLevel] = useState(1);
-  const [best, setBest] = useState(() => Number(localStorage.getItem("slashai.palace.best") ?? 0));
+  const [best, setBest] = useState(() => Number(readStorage("slashai.palace.best") ?? 0));
   const [placements, setPlacements] = useState<Map<number, string>>(new Map());
   const [answers, setAnswers] = useState<Map<number, string>>(new Map());
   const [reveal, setReveal] = useState<Map<number, boolean>>(new Map());
@@ -119,7 +148,8 @@ function MemoryPalace() {
       <header className="mb-5">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">🏛️ Memory Palace</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Items appear in rooms. Memorise where everything sits, then walk the palace and place each item back.
+          Items appear in rooms. Memorise where everything sits, then walk the palace and place each
+          item back.
         </p>
       </header>
 
@@ -129,13 +159,20 @@ function MemoryPalace() {
             <div className="rounded-2xl border border-border bg-surface p-8">
               <p className="text-5xl">🏛️</p>
               <p className="mt-3 text-sm text-muted-foreground">
-                Pros of ancient orators used places to remember speeches.<br />
-                Study each level's rooms, then recall every item's room.<br />
+                Pros of ancient orators used places to remember speeches.
+                <br />
+                Study each level's rooms, then recall every item's room.
+                <br />
                 Each level: more rooms, less time.
               </p>
-              {best > 0 && <p className="mt-2 text-[13px] font-semibold text-primary">Best: level {best}</p>}
+              {best > 0 && (
+                <p className="mt-2 text-[13px] font-semibold text-primary">Best: level {best}</p>
+              )}
             </div>
-            <button onClick={start} className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground">
+            <button
+              onClick={start}
+              className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+            >
               ▶ Enter the palace
             </button>
           </div>
@@ -168,7 +205,9 @@ function MemoryPalace() {
                   <button
                     key={cell}
                     onClick={() => tapRoom(cell)}
-                    disabled={phase === "study" || empty || (phase === "recall" && answers.has(cell))}
+                    disabled={
+                      phase === "study" || empty || (phase === "recall" && answers.has(cell))
+                    }
                     className={`flex aspect-square flex-col items-center justify-center gap-1 rounded-xl border text-center transition-all duration-150 ${
                       phase === "study" && placements.has(cell)
                         ? "border-primary/50 bg-primary/10"
@@ -185,7 +224,9 @@ function MemoryPalace() {
                       placements.has(cell) ? (
                         <>
                           <span className="text-[24px]">{placements.get(cell)}</span>
-                          <span className="text-[9px] text-muted-foreground">{ROOM_LABELS[cell % ROOM_LABELS.length]}</span>
+                          <span className="text-[9px] text-muted-foreground">
+                            {ROOM_LABELS[cell % ROOM_LABELS.length]}
+                          </span>
                         </>
                       ) : (
                         <span className="text-[18px] opacity-25">🚪</span>
@@ -193,14 +234,20 @@ function MemoryPalace() {
                     ) : revealed ? (
                       <>
                         <span className="text-[22px]">{answers.get(cell)}</span>
-                        <span className={`text-[9px] font-bold ${placements.get(cell) === answers.get(cell) ? "text-emerald-400" : "text-red-400"}`}>
-                          {placements.get(cell) === answers.get(cell) ? "✓" : `was ${placements.get(cell)}`}
+                        <span
+                          className={`text-[9px] font-bold ${placements.get(cell) === answers.get(cell) ? "text-emerald-400" : "text-red-400"}`}
+                        >
+                          {placements.get(cell) === answers.get(cell)
+                            ? "✓"
+                            : `was ${placements.get(cell)}`}
                         </span>
                       </>
                     ) : (
                       <>
                         <span className="text-[18px] opacity-40">🚪</span>
-                        <span className="text-[9px] text-muted-foreground">{ROOM_LABELS[cell % ROOM_LABELS.length]}</span>
+                        <span className="text-[9px] text-muted-foreground">
+                          {ROOM_LABELS[cell % ROOM_LABELS.length]}
+                        </span>
                       </>
                     )}
                   </button>
@@ -223,7 +270,9 @@ function MemoryPalace() {
                 <>
                   <p className="text-5xl">🏆</p>
                   <p className="mt-2 text-lg font-bold text-foreground">Perfect recall!</p>
-                  <p className="mt-1 text-sm text-muted-foreground">Level {level} cleared - the palace grows.</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Level {level} cleared - the palace grows.
+                  </p>
                 </>
               ) : (
                 <>
@@ -232,22 +281,35 @@ function MemoryPalace() {
                     {placements.size - wrongCount}/{placements.size} rooms right
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {wrongCount === 1 ? "One item slipped a room." : `${wrongCount} items slipped rooms.`}
+                    {wrongCount === 1
+                      ? "One item slipped a room."
+                      : `${wrongCount} items slipped rooms.`}
                   </p>
                 </>
               )}
-              {best > 0 && <p className="mt-2 text-[13px] font-semibold text-primary">Best: level {best}</p>}
+              {best > 0 && (
+                <p className="mt-2 text-[13px] font-semibold text-primary">Best: level {best}</p>
+              )}
             </div>
             {wrongCount === 0 ? (
-              <button onClick={() => startLevel(level + 1)} className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground">
+              <button
+                onClick={() => startLevel(level + 1)}
+                className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-primary-foreground"
+              >
                 ▶ Level {level + 1}
               </button>
             ) : (
               <div className="grid grid-cols-2 gap-2">
-                <button onClick={() => startLevel(level)} className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-foreground">
+                <button
+                  onClick={() => startLevel(level)}
+                  className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-foreground"
+                >
                   ↻ Retry level {level}
                 </button>
-                <button onClick={() => startLevel(Math.max(1, level - 1))} className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-muted-foreground">
+                <button
+                  onClick={() => startLevel(Math.max(1, level - 1))}
+                  className="h-12 rounded-xl border border-border bg-surface text-sm font-bold text-muted-foreground"
+                >
                   ↓ Easier
                 </button>
               </div>

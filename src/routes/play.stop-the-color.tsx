@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/library/AppShell";
-import { saveGameBest } from "@/lib/ux";
+import { readStorage, saveGameBest } from "@/lib/ux";
 
 export const Route = createFileRoute("/play/stop-the-color")({
   head: () => ({
@@ -107,9 +107,7 @@ function StopTheColor() {
   const [bestStreak, setBestStreak] = useState(0);
   const [timeLeft, setTimeLeft] = useState(LEVELS[1]!.seconds);
   const [flash, setFlash] = useState<"ok" | "no" | null>(null);
-  const [best, setBest] = useState(() =>
-    Number(localStorage.getItem("slashai.stopcolor.best") ?? 0),
-  );
+  const [best, setBest] = useState(() => Number(readStorage("slashai.stopcolor.best") ?? 0));
 
   /** reaction times split by condition — the interference index needs both */
   const rtAll = useRef<number[]>([]);
