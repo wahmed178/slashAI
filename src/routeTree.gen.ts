@@ -366,6 +366,7 @@ import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$cate
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 import { Route as LearnCourseIdLessonIdRouteImport } from './routes/learn.$courseId_.$lessonId'
 import { Route as StoresSlugIndexRouteImport } from './routes/stores.$slug.index'
+import { Route as ToolsBouquetCodeRouteImport } from './routes/tools.bouquet_.$code'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -2154,6 +2155,11 @@ const StoresSlugIndexRoute = StoresSlugIndexRouteImport.update({
   path: '/stores/$slug/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsBouquetCodeRoute = ToolsBouquetCodeRouteImport.update({
+  id: '/bouquet_/$code',
+  path: '/bouquet/$code',
+  getParentRoute: () => ToolsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -2511,6 +2517,7 @@ export interface FileRoutesByFullPath {
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
+  '/tools/bouquet/$code': typeof ToolsBouquetCodeRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
   '/stores/$slug/': typeof StoresSlugIndexRoute
 }
@@ -2868,6 +2875,7 @@ export interface FileRoutesByTo {
   '/tools': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
+  '/tools/bouquet/$code': typeof ToolsBouquetCodeRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
   '/stores/$slug': typeof StoresSlugIndexRoute
 }
@@ -3228,6 +3236,7 @@ export interface FileRoutesById {
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId_/$lessonId': typeof LearnCourseIdLessonIdRoute
+  '/tools/bouquet_/$code': typeof ToolsBouquetCodeRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
   '/stores/$slug/': typeof StoresSlugIndexRoute
 }
@@ -3589,6 +3598,7 @@ export interface FileRouteTypes {
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
+    | '/tools/bouquet/$code'
     | '/explore/$category/'
     | '/stores/$slug/'
   fileRoutesByTo: FileRoutesByTo
@@ -3946,6 +3956,7 @@ export interface FileRouteTypes {
     | '/tools'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
+    | '/tools/bouquet/$code'
     | '/explore/$category'
     | '/stores/$slug'
   id:
@@ -4305,6 +4316,7 @@ export interface FileRouteTypes {
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId_/$lessonId'
+    | '/tools/bouquet_/$code'
     | '/explore/$category/'
     | '/stores/$slug/'
   fileRoutesById: FileRoutesById
@@ -6887,6 +6899,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StoresSlugIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/bouquet_/$code': {
+      id: '/tools/bouquet_/$code'
+      path: '/bouquet/$code'
+      fullPath: '/tools/bouquet/$code'
+      preLoaderRoute: typeof ToolsBouquetCodeRouteImport
+      parentRoute: typeof ToolsRoute
+    }
   }
 }
 
@@ -7290,6 +7309,7 @@ interface ToolsRouteChildren {
   ToolsWorldClockRoute: typeof ToolsWorldClockRoute
   ToolsYtThumbnailRoute: typeof ToolsYtThumbnailRoute
   ToolsIndexRoute: typeof ToolsIndexRoute
+  ToolsBouquetCodeRoute: typeof ToolsBouquetCodeRoute
 }
 
 const ToolsRouteChildren: ToolsRouteChildren = {
@@ -7477,6 +7497,7 @@ const ToolsRouteChildren: ToolsRouteChildren = {
   ToolsWorldClockRoute: ToolsWorldClockRoute,
   ToolsYtThumbnailRoute: ToolsYtThumbnailRoute,
   ToolsIndexRoute: ToolsIndexRoute,
+  ToolsBouquetCodeRoute: ToolsBouquetCodeRoute,
 }
 
 const ToolsRouteWithChildren = ToolsRoute._addFileChildren(ToolsRouteChildren)

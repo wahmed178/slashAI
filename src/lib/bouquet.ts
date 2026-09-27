@@ -228,6 +228,11 @@ export function defaultBouquet(): Bouquet {
   };
 }
 
+/** an empty bunch, for "start fresh" — same style, no flowers at all */
+export function emptyBouquet(): Bouquet {
+  return { ...defaultBouquet(), stems: [], to: "", from: "", message: "" };
+}
+
 export function flowerById(id: string): Flower | undefined {
   return FLOWERS.find((x) => x.id === id);
 }
@@ -457,4 +462,84 @@ export function decodeBouquet(code: string): Bouquet | null {
 export function shareUrl(b: Bouquet): string {
   const origin = typeof window === "undefined" ? "" : window.location.origin;
   return `${origin}/tools/bouquet#${encodeBouquet(b)}`;
+}
+
+/* ── compact share code ─────────────────────────────────────────────────
+ * The share page lives at /tools/bouquet/$code, so the link a person sends is
+ * a clean, readable path instead of a hash full of punctuation. The payload is
+ * base64url-encoded JSON, which round-trips any message character safely.
+ */
+
+function toBase64Url(text: string): string {
+  const bytes = new TextEncoder().encode(text);
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function fromBase64Url(code: string): string | null {
+  try {
+    const padded = code.replace(/-/g, "+").replace(/_/g, "/");
+    const binary = atob(padded + "=".repeat((4 - (padded.length % 4)) % 4));
+    const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  } catch {
+    return null;
+  }
+}
+
+export function encodeShare(b: Bouquet): string {
+  return toBase64Url(JSON.stringify(b));
+}
+
+export function decodeShare(code: string): Bouquet | null {
+  const json = fromBase64Url(code.trim());
+  if (!json) return null;
+  try {
+    const raw: unknown = JSON.parse(json);
+    if (!raw || typeof raw !== "object") return null;
+    return sanitise(raw as Partial<Bouquet>);
+  } catch {
+    return null;
+  }
+}
+
+/** clamp an untrusted payload to the real catalogue, so a hand-edited link
+ *  can never inject an unknown flower, paper or 5,000 stems */
+function sanitise(raw: Partial<Bouquet>): Bouquet {
+  const base = defaultBouquet();
+  const stems = Array.isArray(raw.stems)
+    ? raw.stems
+        .map((s) => {
+          const flower = flowerById((s as Stem)?.flower ?? "");
+          if (!flower) return null;
+          const tone = Number((s as Stem)?.tone ?? 0);
+          return {
+            flower: flower.id,
+            tone: Number.isFinite(tone) ? Math.max(0, Math.floor(tone)) : 0,
+          };
+        })
+        .filter((s): s is Stem => Boolean(s))
+        .slice(0, MAX_STEMS)
+    : base.stems;
+  const str = (v: unknown) => (typeof v === "string" ? v.slice(0, 600) : "");
+  return {
+    stems,
+    paper: (PAPER_COLORS.some((p) => p.id === raw.paper) ? raw.paper : base.paper) as PaperId,
+    ribbon: (RIBBON_COLORS.some((r) => r.id === raw.ribbon) ? raw.ribbon : base.ribbon) as RibbonId,
+    wrap: (WRAP_STYLES.some((w) => w.id === raw.wrap) ? raw.wrap : base.wrap) as WrapId,
+    bow: (BOW_STYLES.some((w) => w.id === raw.bow) ? raw.bow : base.bow) as BowId,
+    greenery: raw.greenery !== false,
+    breath: raw.breath !== false,
+    mono: raw.mono === true,
+    from: str(raw.from),
+    to: str(raw.to),
+    message: str(raw.message),
+  };
+}
+
+/** the bouquet-only page, which is what a share link should open */
+export function sharePageUrl(b: Bouquet): string {
+  const origin = typeof window === "undefined" ? "" : window.location.origin;
+  return `${origin}/tools/bouquet/${encodeShare(b)}`;
 }
