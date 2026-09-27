@@ -34,6 +34,7 @@ async function main() {
     url("/generators", { changefreq: "weekly", priority: "0.8" }),
     url("/roadmaps", { changefreq: "weekly", priority: "0.8" }),
     url("/glossary", { changefreq: "weekly", priority: "0.7" }),
+    url("/blog", { changefreq: "weekly", priority: "0.8" }),
     url("/collections", { changefreq: "weekly", priority: "0.8" }),
     url("/hub", { changefreq: "weekly", priority: "0.8" }),
     url("/quiz", { changefreq: "daily", priority: "0.7" }),
@@ -123,6 +124,20 @@ async function main() {
     if (!/^\s{4}link: /m.test(block)) slashSlugs.push(m[1]);
   }
   for (const s of slashSlugs) urls.push(url(`/slash/${s}`, { changefreq: "monthly", priority: "0.6" }));
+
+  /* ── blog guides (/blog/<slug>) ──
+     The catalogue is split across two modules: `src/lib/blogs` holds the
+     original posts, `src/lib/blog-guides` the longer guides that import them.
+     Both declare `slug: "..."` inside a 4-space-indented object literal, and
+     the only other `slug:` in those files is the `slug: string;` interface
+     field, which the quoted-value pattern skips. */
+  const blogSlugs = [];
+  for (const file of ["src/lib/blogs.ts", "src/lib/blog-guides.ts"]) {
+    const src = readFileSync(file, "utf8");
+    for (const m of src.matchAll(/^ {4}slug: "([a-z0-9-]+)",$/gm)) blogSlugs.push(m[1]);
+  }
+  for (const slug of new Set(blogSlugs))
+    urls.push(url(`/blog/${slug}`, { changefreq: "monthly", priority: "0.7" }));
 
   /* ── free resources (/r/<id>) — verified indexable detail pages ── */
   const resources = await collectResourceIds();

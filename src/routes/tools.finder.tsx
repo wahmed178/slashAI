@@ -6,6 +6,8 @@ import { useLibrary } from "@/hooks/use-library";
 import { VERIFIED_TOTAL } from "@/lib/commands";
 import { ALL_SLASH_TOOLS } from "@/lib/slashkits";
 import { ALL_PLAY_GAMES } from "@/lib/slashplay";
+import { TOOLS as AI_TOOL_LIST } from "@/lib/tools";
+import { ALL_BLOG_POSTS } from "@/lib/blog-guides";
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/tools/finder")({
@@ -28,9 +30,13 @@ function ToolFinder() {
   return (
     <AppShell wide hideHeaderSearch title="Find Anything">
       <header className="page-enter pt-2">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">🔍 Find Anything</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+          🔍 Find Anything
+        </h1>
         <p className="mt-1 text-[13px] text-muted-foreground">
-          One search across {VERIFIED_TOTAL.toLocaleString()} commands, {ALL_SLASH_TOOLS.length} tools, {ALL_PLAY_GAMES.length} games - and the web.
+          One search across {VERIFIED_TOTAL.toLocaleString()} commands, {ALL_SLASH_TOOLS.length}{" "}
+          tools, {AI_TOOL_LIST.length} AI tools, {ALL_PLAY_GAMES.length} games,{" "}
+          {ALL_BLOG_POSTS.length} guides - and the web.
         </p>
       </header>
 
@@ -61,9 +67,24 @@ function ToolFinder() {
       {/* deep links */}
       <div className="mx-auto mt-10 grid max-w-2xl gap-2 sm:grid-cols-3">
         {[
-          { to: "/search", icon: "⌨️", title: "Command search", desc: "Filters, categories, 45 topics" },
-          { to: "/tools", icon: "🧰", title: "Browse all tools", desc: "The full SlashKits library" },
-          { to: "/web-search", icon: "🌐", title: "Web search", desc: "Free results, category pickers" },
+          {
+            to: "/search",
+            icon: "⌨️",
+            title: "Commands only",
+            desc: `Search just the ${VERIFIED_TOTAL.toLocaleString()} commands, with filters`,
+          },
+          {
+            to: "/blog",
+            icon: "📰",
+            title: "Slash Blogs",
+            desc: `${ALL_BLOG_POSTS.length} free guides on AI and skills`,
+          },
+          {
+            to: "/ai-tools",
+            icon: "🤖",
+            title: "AI Tools",
+            desc: "The curated AI tools directory",
+          },
         ].map((d) => (
           <Link
             key={d.to}
