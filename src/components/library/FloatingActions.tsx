@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, Check, Copy, X } from "lucide-react";
+import { ArrowUp, Check, Copy, Link2, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { useLastCopied } from "@/hooks/use-ux";
 import { getLastCopied, clearLastCopied } from "@/lib/ux";
+import { useShortenLink } from "./shorten-context";
 
 /** How long the re-copy pill lingers after a copy with no further activity. */
 const COPY_PILL_MS = 15_000;
@@ -16,6 +17,7 @@ const TOP_THRESHOLD = 400;
  */
 export function FloatingActions() {
   const last = useLastCopied();
+  const shorten = useShortenLink();
   const [showTop, setShowTop] = useState(false);
   const [showCopy, setShowCopy] = useState(false);
   const [recopied, setRecopied] = useState(false);
@@ -34,7 +36,10 @@ export function FloatingActions() {
       setShowCopy(false);
       return;
     }
-    if (typeof window !== "undefined" && window.localStorage.getItem("slashai.hideCopyPill") === "true") {
+    if (
+      typeof window !== "undefined" &&
+      window.localStorage.getItem("slashai.hideCopyPill") === "true"
+    ) {
       setShowCopy(false);
       return;
     }
@@ -72,6 +77,17 @@ export function FloatingActions() {
       className="pointer-events-none fixed right-4 z-20 flex flex-col items-end gap-2"
       style={{ bottom: "calc(74px + env(safe-area-inset-bottom))" }}
     >
+      {/* every page is a link worth sharing, so the shortener is always one tap away */}
+      <button
+        type="button"
+        onClick={() => shorten.open()}
+        aria-label="Shorten this page's link"
+        title="Shorten this page's link"
+        className="pointer-events-auto flex size-10 items-center justify-center rounded-full border border-border bg-surface/95 text-muted-foreground shadow-lg backdrop-blur transition-colors hover:border-primary/50 hover:text-foreground"
+      >
+        <Link2 className="size-4" aria-hidden />
+      </button>
+
       {showTop && (
         <button
           type="button"

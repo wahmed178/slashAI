@@ -4,6 +4,7 @@ import { AppShell } from "@/components/library/AppShell";
 import { BouquetArt } from "@/components/library/BouquetArt";
 import { FaqSection } from "@/components/library/FaqSection";
 import { playTone } from "@/lib/play-sound";
+import { useShortenLink } from "@/components/library/shorten-context";
 import { bumpToolClick } from "@/lib/ux";
 import {
   BOW_STYLES,
@@ -55,6 +56,7 @@ function DigitalBouquet() {
   /** which flower the colour swatches are editing */
   const [editing, setEditing] = useState<string>(FLOWERS[0]!.id);
   const artRef = useRef<HTMLDivElement>(null);
+  const shorten = useShortenLink();
 
   // an old share link may still carry the bouquet in the fragment
   useEffect(() => {
@@ -442,6 +444,12 @@ function DigitalBouquet() {
               className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
               {copied ? "Link copied ✓" : "Copy share link"}
+            </button>
+            <button
+              onClick={() => shorten.open(share)}
+              className="rounded-lg border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary/50"
+            >
+              Shorten link
             </button>
             <a
               href={whatsappHref}

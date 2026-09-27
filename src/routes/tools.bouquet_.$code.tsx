@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { BouquetArt } from "@/components/library/BouquetArt";
 import { playTone } from "@/lib/play-sound";
+import { useShortenLink } from "@/components/library/shorten-context";
 import { bumpToolClick } from "@/lib/ux";
 import { decodeShare, stemSummary, type Bouquet } from "@/lib/bouquet";
 
@@ -32,6 +33,7 @@ function SharedBouquet() {
   const { code } = Route.useParams();
   const [copied, setCopied] = useState(false);
   const artRef = useRef<HTMLDivElement>(null);
+  const shorten = useShortenLink();
 
   const bouquet = useMemo<Bouquet | null>(() => decodeShare(code), [code]);
 
@@ -133,6 +135,12 @@ function SharedBouquet() {
             className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           >
             {copied ? "Link copied ✓" : "Copy link"}
+          </button>
+          <button
+            onClick={() => shorten.open(window.location.href)}
+            className="rounded-lg border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary/50"
+          >
+            Shorten
           </button>
           <button
             onClick={downloadPng}
