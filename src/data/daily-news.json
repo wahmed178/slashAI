@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-27T12:41:37.498Z",
+  "updated": "2026-09-28T14:54:29.503Z",
   "articles": [
     {
-      "title": "PipePipe: NewPipe hard fork implementing SponsorBlock",
-      "url": "https://github.com/InfinityLoop1308/PipePipe",
+      "title": "Owed a billion dollars in Nvidia stock",
+      "url": "https://colo.to/nvidia-stock-narrative.html",
       "source": "HackerNews",
-      "score": 442,
-      "publishedAt": "2026-09-25"
+      "score": 900,
+      "publishedAt": "2026-09-28"
     },
     {
-      "title": "Does Georgism work? Five years later",
-      "url": "https://www.astralcodexten.com/p/does-georgism-work-five-years-later",
+      "title": "Ember-1",
+      "url": "https://fireworks.ai/blog/ember-1",
       "source": "HackerNews",
-      "score": 386,
-      "publishedAt": "2026-09-25"
-    },
-    {
-      "title": "Show HN: Reladraw – A diagram language where you decide where to place things",
-      "url": "https://github.com/reladraw/reladraw",
-      "source": "HackerNews",
-      "score": 332,
-      "publishedAt": "2026-09-26"
-    },
-    {
-      "title": "OpenAI Feared \"Optics\" of what might appear on Hacker News",
-      "url": "https://authorsguild.org/news/ag-v-openai-top-execs-knew-mass-book-piracy-was-illegal/",
-      "source": "HackerNews",
-      "score": 325,
+      "score": 536,
       "publishedAt": "2026-09-27"
     },
     {
-      "title": "DeepSeek Elastic Compute (DSec)",
-      "url": "https://arxiv.org/abs/2609.22978",
+      "title": "Parley: Federated, decentralised chat that speaks plain IRC",
+      "url": "https://git.mills.io/prologic/parley",
       "source": "HackerNews",
-      "score": 269,
-      "publishedAt": "2026-09-26"
+      "score": 169,
+      "publishedAt": "2026-09-28"
     },
     {
-      "title": "Go Concurrency Distilled",
-      "url": "https://antonz.org/go-concurrency-distilled/",
+      "title": "Footguns with Postgres \"at time zone 'UTC'\"",
+      "url": "https://bookofrevenue.com/blog/6ab81e9a97a13f0001f7e4e1/postgres-at-time-zone-u-does-not-do-what-you-think-it-does",
       "source": "HackerNews",
-      "score": 260,
-      "publishedAt": "2026-09-26"
-    },
-    {
-      "title": "Flip Fluid on Flip Dots",
-      "url": "https://mitxela.com/projects/flipflip",
-      "source": "HackerNews",
-      "score": 144,
-      "publishedAt": "2026-09-26"
-    },
-    {
-      "title": "\"As a Language Model\": Chat Template Switches LLM Self-Referential Voice",
-      "url": "https://arxiv.org/abs/2609.25021",
-      "source": "HackerNews",
-      "score": 55,
+      "score": 101,
       "publishedAt": "2026-09-27"
+    },
+    {
+      "title": "37,500 border drawings: a map of the world as people remember it",
+      "url": "https://www.habibicode.org/thedrawnworld",
+      "source": "HackerNews",
+      "score": 97,
+      "publishedAt": "2026-09-28"
+    },
+    {
+      "title": "Coding Is Not Solved – Alex Ewerlöf Notes",
+      "url": "https://blog.alexewerlof.com/p/coding-is-not-solved",
+      "source": "HackerNews",
+      "score": 86,
+      "publishedAt": "2026-09-28"
+    },
+    {
+      "title": "Has Violence Against Teachers Become Accepted by Society?",
+      "url": "https://theeducatorsroom.com/has-violence-against-teachers-become-accepted-by-society/",
+      "source": "HackerNews",
+      "score": 78,
+      "publishedAt": "2026-09-28"
+    },
+    {
+      "title": "Show HN: Hntui – A TUI for Hacker News",
+      "url": "https://github.com/ahmd-sh/hntui",
+      "source": "HackerNews",
+      "score": 69,
+      "publishedAt": "2026-09-28"
     }
   ]
 }
