@@ -24,6 +24,8 @@ export const UX_KEYS = {
   interactions: "slashai-ux-interactions",
   /** [{ id, name, category, text, timestamp }] — copy history */
   copyHistory: "slash_history",
+  /** [{ id, query, answer }] — the Slash Ask conversation thread */
+  askThread: "slashai-ask-thread",
 } as const;
 
 /** Fired on window whenever any UX helper changes stored state. */

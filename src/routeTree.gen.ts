@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AiToolsRouteImport } from './routes/ai-tools'
 import { Route as AlternativesRouteImport } from './routes/alternatives'
+import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CoffeeRouteImport } from './routes/coffee'
 import { Route as CompareRouteImport } from './routes/compare'
@@ -387,6 +388,11 @@ const AiToolsRoute = AiToolsRouteImport.update({
 const AlternativesRoute = AlternativesRouteImport.update({
   id: '/alternatives',
   path: '/alternatives',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChangelogRoute = ChangelogRouteImport.update({
@@ -2172,6 +2178,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
+  '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
   '/coffee': typeof CoffeeRoute
   '/compare': typeof CompareRoute
@@ -2533,6 +2540,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
+  '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
   '/coffee': typeof CoffeeRoute
   '/compare': typeof CompareRoute
@@ -2893,6 +2901,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/ai-tools': typeof AiToolsRoute
   '/alternatives': typeof AlternativesRoute
+  '/assistant': typeof AssistantRoute
   '/changelog': typeof ChangelogRoute
   '/coffee': typeof CoffeeRoute
   '/compare': typeof CompareRoute
@@ -3256,6 +3265,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/ai-tools'
     | '/alternatives'
+    | '/assistant'
     | '/changelog'
     | '/coffee'
     | '/compare'
@@ -3617,6 +3627,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/ai-tools'
     | '/alternatives'
+    | '/assistant'
     | '/changelog'
     | '/coffee'
     | '/compare'
@@ -3976,6 +3987,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/ai-tools'
     | '/alternatives'
+    | '/assistant'
     | '/changelog'
     | '/coffee'
     | '/compare'
@@ -4338,6 +4350,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AiToolsRoute: typeof AiToolsRoute
   AlternativesRoute: typeof AlternativesRoute
+  AssistantRoute: typeof AssistantRoute
   ChangelogRoute: typeof ChangelogRoute
   CoffeeRoute: typeof CoffeeRoute
   CompareRoute: typeof CompareRoute
@@ -4438,6 +4451,13 @@ declare module '@tanstack/react-router' {
       path: '/alternatives'
       fullPath: '/alternatives'
       preLoaderRoute: typeof AlternativesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/changelog': {
@@ -7528,6 +7548,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AiToolsRoute: AiToolsRoute,
   AlternativesRoute: AlternativesRoute,
+  AssistantRoute: AssistantRoute,
   ChangelogRoute: ChangelogRoute,
   CoffeeRoute: CoffeeRoute,
   CompareRoute: CompareRoute,

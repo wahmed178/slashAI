@@ -334,6 +334,14 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
     });
   };
 
+  // Third exit: hand the question to Slash Ask, which answers it with quoted
+  // passages and citations instead of a list of links.
+  const openAsk = () => {
+    if (!q.trim()) return;
+    recordSearch(q.trim());
+    void navigate({ to: "/assistant", search: { q: q.trim() } });
+  };
+
   const onKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -479,6 +487,15 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
               Commands only
             </button>
           </div>
+          <button
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={openAsk}
+            className="flex w-full items-center gap-1.5 border-t border-border px-3 py-2.5 text-left text-[12.5px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+          >
+            <Sparkles className="size-3.5" aria-hidden />
+            Ask SlashAI for a cited answer
+          </button>
           <a
             href={`/web-search?q=${encodeURIComponent(term)}`}
             onMouseDown={(e) => e.preventDefault()}
