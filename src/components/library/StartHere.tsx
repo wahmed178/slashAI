@@ -47,8 +47,8 @@ export function StartHere() {
         {PATHS.map((p) => (
           <Link
             key={p.id}
-            to="/hub/$audience"
-            params={{ audience: p.audience }}
+            to="/slashbar/$category"
+            params={{ category: p.audience }}
             onClick={() => updateSettings({ persona: p.id })}
             className="group flex items-center gap-3 rounded-xl border border-border bg-surface p-3.5 transition-all hover:-translate-y-0.5 hover:border-primary/50"
           >

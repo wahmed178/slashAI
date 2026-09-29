@@ -85,7 +85,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub</loc>
+    <loc>https://slashai.in/slash</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -217,88 +217,94 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/students</loc>
+    <loc>https://slashai.in/slash</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://slashai.in/slashbar/students</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/developers</loc>
+    <loc>https://slashai.in/slashbar/developers</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/creators</loc>
+    <loc>https://slashai.in/slashbar/creators</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/professionals</loc>
+    <loc>https://slashai.in/slashbar/professionals</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/founders</loc>
+    <loc>https://slashai.in/slashbar/founders</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/india</loc>
+    <loc>https://slashai.in/slashbar/india</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/finance</loc>
+    <loc>https://slashai.in/slashbar/islam</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/designers</loc>
+    <loc>https://slashai.in/slashbar/urdu</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/health</loc>
+    <loc>https://slashai.in/slashbar/arabic</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/islam</loc>
+    <loc>https://slashai.in/slashbar/designers</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/urdu</loc>
+    <loc>https://slashai.in/slashbar/fun</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/arabic</loc>
+    <loc>https://slashai.in/slashbar/finance</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/fun</loc>
+    <loc>https://slashai.in/slashbar/health</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://slashai.in/hub/quotes</loc>
+    <loc>https://slashai.in/slashbar/quotes</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://slashai.in/explore/image-and-vision</loc>

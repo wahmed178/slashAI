@@ -1271,14 +1271,14 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
         added: "2026-09-29",
       },
       {
-        slug: "/hub/urdu",
+        slug: "/slashbar/urdu",
         name: "Urdu Writers Hub",
         desc: "Poetry, resources, fonts for Urdu",
         icon: "🇵🇰",
         hub: true,
       },
       {
-        slug: "/hub/arabic",
+        slug: "/slashbar/arabic",
         name: "Arabic Learners Hub",
         desc: "Alphabet, courses, keyboard, phrases",
         icon: "🕌",

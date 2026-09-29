@@ -952,8 +952,8 @@ function HomePage() {
             <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {[
                 { emoji: "🎨", label: "Free Courses", to: "/discover/learn" },
-                { emoji: "💻", label: "Free Dev Courses", to: "/hub/developers" },
-                { emoji: "📈", label: "Free Business Courses", to: "/hub/founders" },
+                { emoji: "💻", label: "Free Dev Courses", to: "/slashbar/developers" },
+                { emoji: "📈", label: "Free Business Courses", to: "/slashbar/founders" },
                 { emoji: "✍️", label: "Free Writing Tools", to: "/search?q=write" },
                 { emoji: "🔍", label: `${VERIFIED_TOTAL.toLocaleString()} AI Commands`, to: "/explore" },
                 { emoji: "📦", label: `${RESOURCE_TOTAL}+ Free Resources`, to: "/discover" },
@@ -1053,12 +1053,12 @@ function HomePage() {
       <Section title="Hubs" hint="Everything gathered for one kind of person.">
         <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
           {([
-            { to: "/hub/students", emoji: "\u{1F393}", title: "Student Hub", desc: "Courses & tools" },
-            { to: "/hub/developers", emoji: "\u{1F4BB}", title: "Developer Hub", desc: "APIs & open-source" },
-            { to: "/hub/creators", emoji: "\u{1F3A8}", title: "Creator Hub", desc: "Design & content" },
-            { to: "/hub/professionals", emoji: "\u{1F4BC}", title: "Professional Hub", desc: "Productivity" },
-            { to: "/hub/founders", emoji: "\u{1F680}", title: "Founders Hub", desc: "Idea to first customer" },
-            { to: "/hub/islam", emoji: "☪", title: "Islam Hub", desc: "Quran, Hadith & learning" },
+            { to: "/slashbar/students", emoji: "\u{1F393}", title: "Students", desc: "Courses & tools" },
+            { to: "/slashbar/developers", emoji: "\u{1F4BB}", title: "Developers", desc: "APIs & open-source" },
+            { to: "/slashbar/creators", emoji: "\u{1F3A8}", title: "Creators", desc: "Design & content" },
+            { to: "/slashbar/professionals", emoji: "\u{1F4BC}", title: "Professionals", desc: "Productivity" },
+            { to: "/slashbar/founders", emoji: "\u{1F680}", title: "Founders", desc: "Idea to first customer" },
+            { to: "/slashbar/islam", emoji: "☪", title: "Islam", desc: "Quran, Hadith & learning" },
           ]).map((hub) => (
             <Link
               key={hub.to}
@@ -1075,10 +1075,10 @@ function HomePage() {
           ))}
         </div>
         <Link
-          to="/hub"
+          to="/slash"
           className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80"
         >
-          See all hubs <ArrowRight className="size-4" aria-hidden />
+          See all categories <ArrowRight className="size-4" aria-hidden />
         </Link>
       </Section>
 
@@ -1240,8 +1240,8 @@ function HomePage() {
               links: [
                 { label: "About", to: "/about" },
                 { label: "Changelog", to: "/changelog" },
-                { label: "Islam Hub", to: "/hub/islam" },
-                { label: "All Hubs", to: "/hub" },
+                { label: "Islam", to: "/slashbar/islam" },
+                { label: "All categories", to: "/slash" },
               ],
             },
           ].map((col) => (

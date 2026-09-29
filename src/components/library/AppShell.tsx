@@ -3,7 +3,6 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Home,
   Terminal,
-  LayoutGrid,
   Zap,
   Bookmark,
   Settings,
@@ -39,23 +38,22 @@ import { AmbientBackdrop } from "./AmbientBackdrop";
 import { bumpToolClick, recordUxInteraction } from "@/lib/ux";
 
 /**
- * Bottom dock: Home · Commands · 🎲 Random (elevated shiny centre, instant roll) ·
- * Hubs · ⚡ Slash (side tab, opens the full-screen SlashBar overlay).
+ * Bottom dock: Home · ⚡ Slash (side tab, opens the full-screen SlashBar) ·
+ * 🎲 Random (elevated shiny centre, instant roll) · Commands.
  *
- * "Commands" points at /explore, and stays lit for /explore, /search, /find
- * and /c/* — the whole command vault, not just the browse page.
+ * SlashBar is the site's single hub, so it sits second where the old Hubs tab
+ * used to be. "Commands" points at /explore, and stays lit for /explore,
+ * /search, /find and /c/* — the whole command vault, not just the browse page.
  */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/explore", label: "Commands", icon: Terminal, exact: false },
-  { to: "", label: "Random", icon: Dices, random: true },
-  { to: "/hub", label: "Hubs", icon: LayoutGrid, exact: false },
   { to: "", label: "Slash", icon: Zap, slash: true },
+  { to: "", label: "Random", icon: Dices, random: true },
+  { to: "/explore", label: "Commands", icon: Terminal, exact: false },
 ] as const;
 
 function isActive(pathname: string, to: string, exact?: boolean) {
   if (exact) return pathname === to;
-  if (to === "/hub") return pathname.startsWith("/hub");
   if (to === "/explore")
     return (
       pathname.startsWith("/explore") ||
@@ -166,12 +164,25 @@ function breadcrumbsFor(pathname: string): Crumb[] | null {
       { label: app?.name ?? humanize(segs[1]) },
     ];
   }
-  if (first === "hub") {
-    if (!segs[1]) return [{ label: "Home", to: "/" }, { label: "Hubs" }];
+  if (first === "slashbar") {
     return [
       { label: "Home", to: "/" },
-      { label: "Hubs", to: "/hub" },
-      { label: HUB_NAMES[segs[1]!] ?? humanize(segs[1]!) },
+      { label: "SlashBar", to: "/slash" },
+      { label: humanize(segs[1]!) },
+    ];
+  }
+  if (first === "hub") {
+    // Retired: /hub/* redirects to the matching SlashBar category, so all that
+    // can render here is the transient redirect target.
+    if (!segs[1])
+      return [
+        { label: "Home", to: "/" },
+        { label: "SlashBar", to: "/slash" },
+      ];
+    return [
+      { label: "Home", to: "/" },
+      { label: "SlashBar", to: "/slash" },
+      { label: humanize(segs[1]!) },
     ];
   }
   if (first === "c" && segs[1]) {
@@ -684,7 +695,6 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                 if (isRandom || isSlash) return false; // action buttons, never route-active
                 if ((item as { exact?: boolean }).exact) return pathname === item.to;
                 const p = item.to as string;
-                if (p === "/hub") return pathname.startsWith("/hub");
                 if (p === "/explore")
                   return (
                     pathname.startsWith("/explore") ||

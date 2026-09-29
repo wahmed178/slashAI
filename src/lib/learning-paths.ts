@@ -90,7 +90,12 @@ export const LEARNING_PATHS: LearningPath[] = [
         title: "Prompt Engineering: Zero to Reliable",
         courseId: "prompt-engineering",
       },
-      { id: "creators", title: "Browse the Creator Hub", to: "/hub/creators", minutes: 20 },
+      {
+        id: "creators",
+        title: "Browse the Creator category",
+        to: "/slashbar/creators",
+        minutes: 20,
+      },
       { id: "quote-maker", title: "Make a quote card", to: "/tools/quote-maker", minutes: 10 },
     ],
   },
@@ -103,8 +108,8 @@ export const LEARNING_PATHS: LearningPath[] = [
     steps: [
       {
         id: "professionals",
-        title: "Start in the Professional Hub",
-        to: "/hub/professionals",
+        title: "Start in the Professional category",
+        to: "/slashbar/professionals",
         minutes: 20,
       },
       { id: "cv", title: "Build an ATS-friendly resume", to: "/tools/cv", minutes: 20 },

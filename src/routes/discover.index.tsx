@@ -162,7 +162,7 @@ const STORIES = [
   { label: "SlashKits", emoji: "🧰", to: "/tools", tint: CAT_PALETTE.teal },
   { label: "SlashPlay", emoji: "🎮", to: "/play", tint: CAT_PALETTE.rose },
   { label: "SlashBar", emoji: "⚡", to: "/slash", tint: CAT_PALETTE.amber },
-  { label: "Fun Sites", emoji: "🎪", to: "/hub/fun", tint: CAT_PALETTE.orange },
+  { label: "Fun Sites", emoji: "🎪", to: "/slashbar/fun", tint: CAT_PALETTE.orange },
 ];
 
 /* ──────────── page ──────────── */

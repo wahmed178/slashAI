@@ -29,20 +29,20 @@ export const Route = createFileRoute("/everything")({
 });
 
 const HUBS = [
-  { to: "/hub/students", emoji: "🎓", label: "Student Hub" },
-  { to: "/hub/developers", emoji: "💻", label: "Developer Hub" },
-  { to: "/hub/creators", emoji: "🎨", label: "Creator Hub" },
-  { to: "/hub/professionals", emoji: "💼", label: "Professional Hub" },
-  { to: "/hub/founders", emoji: "🚀", label: "Founders Hub" },
-  { to: "/hub/india", emoji: "🇮🇳", label: "India Hub" },
-  { to: "/hub/designers", emoji: "🖌️", label: "Designers Hub" },
-  { to: "/hub/finance", emoji: "💰", label: "Finance Hub" },
-  { to: "/hub/health", emoji: "🏥", label: "Health Hub" },
-  { to: "/hub/fun", emoji: "🎉", label: "Fun Sites" },
-  { to: "/hub/islam", emoji: "☪️", label: "Islam Hub" },
-  { to: "/hub/urdu", emoji: "📖", label: "Urdu Hub" },
-  { to: "/hub/quotes", emoji: "❝", label: "Quotes Hub" },
-  { to: "/hub/arabic", emoji: "🕌", label: "Arabic Hub" },
+  { to: "/slashbar/students", emoji: "🎓", label: "Student Hub" },
+  { to: "/slashbar/developers", emoji: "💻", label: "Developer Hub" },
+  { to: "/slashbar/creators", emoji: "🎨", label: "Creator Hub" },
+  { to: "/slashbar/professionals", emoji: "💼", label: "Professional Hub" },
+  { to: "/slashbar/founders", emoji: "🚀", label: "Founders Hub" },
+  { to: "/slashbar/india", emoji: "🇮🇳", label: "India Hub" },
+  { to: "/slashbar/designers", emoji: "🖌️", label: "Designers Hub" },
+  { to: "/slashbar/finance", emoji: "💰", label: "Finance Hub" },
+  { to: "/slashbar/health", emoji: "🏥", label: "Health Hub" },
+  { to: "/slashbar/fun", emoji: "🎉", label: "Fun Sites" },
+  { to: "/slashbar/islam", emoji: "☪️", label: "Islam Hub" },
+  { to: "/slashbar/urdu", emoji: "📖", label: "Urdu Hub" },
+  { to: "/slashbar/quotes", emoji: "❝", label: "Quotes Hub" },
+  { to: "/slashbar/arabic", emoji: "🕌", label: "Arabic Hub" },
 ];
 
 const MORE = [
@@ -280,8 +280,8 @@ function ExploreEverything() {
             </Link>
           ))}
         </div>
-        <Link to="/hub" className="mt-3 inline-block text-[12.5px] font-semibold text-primary hover:underline">
-          Open Hubs →
+        <Link to="/slash" className="mt-3 inline-block text-[12.5px] font-semibold text-primary hover:underline">
+          Open SlashBar categories →
         </Link>
       </section>
 

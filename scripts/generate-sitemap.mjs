@@ -36,7 +36,7 @@ async function main() {
     url("/glossary", { changefreq: "weekly", priority: "0.7" }),
     url("/blog", { changefreq: "weekly", priority: "0.8" }),
     url("/collections", { changefreq: "weekly", priority: "0.8" }),
-    url("/hub", { changefreq: "weekly", priority: "0.8" }),
+    url("/slash", { changefreq: "weekly", priority: "0.8" }),
     url("/quiz", { changefreq: "daily", priority: "0.7" }),
     url("/journal", { changefreq: "weekly", priority: "0.6" }),
     url("/everything", { changefreq: "weekly", priority: "0.7" }),
@@ -60,24 +60,15 @@ async function main() {
     url("/keyboard", { changefreq: "monthly", priority: "0.3" }),
   ];
 
-  /* ── hubs ── */
-  const hubAudiences = [
-    "students",
-    "developers",
-    "creators",
-    "professionals",
-    "founders",
-    "india",
-    "finance",
-    "designers",
-    "health",
-    "islam",
-    "urdu",
-    "arabic",
-    "fun",
-  ];
-  for (const a of hubAudiences) urls.push(url(`/hub/${a}`, { priority: "0.7" }));
-  for (const extra of ["quotes"]) urls.push(url(`/hub/${extra}`, { priority: "0.5" }));
+  /* ── SlashBar categories (these replaced the /hub/* pages) ──
+   * The old hubs are redirects, so the canonical URL for each audience is now
+   * its SlashBar category. The list is read from the category module rather
+   * than hard-coded, so a new category cannot be forgotten here. */
+  const { SLASH_CATEGORIES } = await import("../src/lib/slashbar-categories.ts");
+  urls.push(url("/slash", { changefreq: "weekly", priority: "0.8" }));
+  for (const cat of SLASH_CATEGORIES) {
+    urls.push(url(`/slashbar/${cat.slug}`, { changefreq: "weekly", priority: "0.7" }));
+  }
 
   /* ── 45 explore categories (slugified) ── */
   const categories = JSON.parse(readFileSync("src/data/categories.json", "utf8"));

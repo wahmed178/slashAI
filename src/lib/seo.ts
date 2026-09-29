@@ -99,10 +99,10 @@ const STATIC_PAGES: Record<string, SeoPage> = {
     description:
       "SlashBar is the SlashAI app drawer: mini apps for learning, shopping, facts, romance, courses, jobs, nearby search and more - all free, all in one rail.",
   },
-  "/hub": {
-    title: "Hubs - Resources Curated for You - SlashAI",
+  "/slashbar": {
+    title: "SlashBar Categories - Commands, Tools, Guides and Resources | SlashAI",
     description:
-      "Hand-curated resource hubs for students, developers, creators, professionals, founders and more - plus India, Finance, Islam, Urdu and Arabic hubs.",
+      "Every part of SlashAI in one place. Pick a category - students, developers, creators, Islam, finance, health and more - and get the slash commands, tools, guides, games and hand-checked resources that belong to it.",
   },
   "/collections": {
     title: "Command Collections - SlashAI",

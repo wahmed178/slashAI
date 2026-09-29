@@ -66,11 +66,6 @@ import { Route as DiscoverReelsRouteImport } from './routes/discover.reels'
 import { Route as ExploreIndexRouteImport } from './routes/explore.index'
 import { Route as HubIndexRouteImport } from './routes/hub.index'
 import { Route as HubAudienceRouteImport } from './routes/hub.$audience'
-import { Route as HubArabicRouteImport } from './routes/hub.arabic'
-import { Route as HubFunRouteImport } from './routes/hub.fun'
-import { Route as HubIslamRouteImport } from './routes/hub.islam'
-import { Route as HubQuotesRouteImport } from './routes/hub.quotes'
-import { Route as HubUrduRouteImport } from './routes/hub.urdu'
 import { Route as LUsernameRouteImport } from './routes/l.$username'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
 import { Route as LearnCourseIdRouteImport } from './routes/learn.$courseId'
@@ -177,6 +172,7 @@ import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as SlashIndexRouteImport } from './routes/slash.index'
 import { Route as SlashAppRouteImport } from './routes/slash.$app'
 import { Route as SlashSlashgramRouteImport } from './routes/slash.slashgram'
+import { Route as SlashbarCategoryRouteImport } from './routes/slashbar.$category'
 import { Route as StoresIndexRouteImport } from './routes/stores.index'
 import { Route as StoresDashboardRouteImport } from './routes/stores.dashboard'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
@@ -653,31 +649,6 @@ const HubIndexRoute = HubIndexRouteImport.update({
 const HubAudienceRoute = HubAudienceRouteImport.update({
   id: '/hub/$audience',
   path: '/hub/$audience',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HubArabicRoute = HubArabicRouteImport.update({
-  id: '/hub/arabic',
-  path: '/hub/arabic',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HubFunRoute = HubFunRouteImport.update({
-  id: '/hub/fun',
-  path: '/hub/fun',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HubIslamRoute = HubIslamRouteImport.update({
-  id: '/hub/islam',
-  path: '/hub/islam',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HubQuotesRoute = HubQuotesRouteImport.update({
-  id: '/hub/quotes',
-  path: '/hub/quotes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HubUrduRoute = HubUrduRouteImport.update({
-  id: '/hub/urdu',
-  path: '/hub/urdu',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LUsernameRoute = LUsernameRouteImport.update({
@@ -1209,6 +1180,11 @@ const SlashAppRoute = SlashAppRouteImport.update({
 const SlashSlashgramRoute = SlashSlashgramRouteImport.update({
   id: '/slash/slashgram',
   path: '/slash/slashgram',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlashbarCategoryRoute = SlashbarCategoryRouteImport.update({
+  id: '/slashbar/$category',
+  path: '/slashbar/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StoresIndexRoute = StoresIndexRouteImport.update({
@@ -2225,11 +2201,6 @@ export interface FileRoutesByFullPath {
   '/discover/$section': typeof DiscoverSectionRoute
   '/discover/reels': typeof DiscoverReelsRoute
   '/hub/$audience': typeof HubAudienceRoute
-  '/hub/arabic': typeof HubArabicRoute
-  '/hub/fun': typeof HubFunRoute
-  '/hub/islam': typeof HubIslamRoute
-  '/hub/quotes': typeof HubQuotesRoute
-  '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
   '/play/2048': typeof Play2048Route
@@ -2333,6 +2304,7 @@ export interface FileRoutesByFullPath {
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
+  '/slashbar/$category': typeof SlashbarCategoryRoute
   '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
@@ -2585,11 +2557,6 @@ export interface FileRoutesByTo {
   '/discover/$section': typeof DiscoverSectionRoute
   '/discover/reels': typeof DiscoverReelsRoute
   '/hub/$audience': typeof HubAudienceRoute
-  '/hub/arabic': typeof HubArabicRoute
-  '/hub/fun': typeof HubFunRoute
-  '/hub/islam': typeof HubIslamRoute
-  '/hub/quotes': typeof HubQuotesRoute
-  '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
   '/play/2048': typeof Play2048Route
@@ -2693,6 +2660,7 @@ export interface FileRoutesByTo {
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
+  '/slashbar/$category': typeof SlashbarCategoryRoute
   '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
@@ -2948,11 +2916,6 @@ export interface FileRoutesById {
   '/discover/$section': typeof DiscoverSectionRoute
   '/discover/reels': typeof DiscoverReelsRoute
   '/hub/$audience': typeof HubAudienceRoute
-  '/hub/arabic': typeof HubArabicRoute
-  '/hub/fun': typeof HubFunRoute
-  '/hub/islam': typeof HubIslamRoute
-  '/hub/quotes': typeof HubQuotesRoute
-  '/hub/urdu': typeof HubUrduRoute
   '/l/$username': typeof LUsernameRoute
   '/learn/$courseId': typeof LearnCourseIdRoute
   '/play/2048': typeof Play2048Route
@@ -3056,6 +3019,7 @@ export interface FileRoutesById {
   '/r/$id': typeof RIdRoute
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
+  '/slashbar/$category': typeof SlashbarCategoryRoute
   '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
@@ -3312,11 +3276,6 @@ export interface FileRouteTypes {
     | '/discover/$section'
     | '/discover/reels'
     | '/hub/$audience'
-    | '/hub/arabic'
-    | '/hub/fun'
-    | '/hub/islam'
-    | '/hub/quotes'
-    | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
     | '/play/2048'
@@ -3420,6 +3379,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
+    | '/slashbar/$category'
     | '/stores/dashboard'
     | '/tools/$slug'
     | '/tools/age-calculator'
@@ -3672,11 +3632,6 @@ export interface FileRouteTypes {
     | '/discover/$section'
     | '/discover/reels'
     | '/hub/$audience'
-    | '/hub/arabic'
-    | '/hub/fun'
-    | '/hub/islam'
-    | '/hub/quotes'
-    | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
     | '/play/2048'
@@ -3780,6 +3735,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
+    | '/slashbar/$category'
     | '/stores/dashboard'
     | '/tools/$slug'
     | '/tools/age-calculator'
@@ -4034,11 +3990,6 @@ export interface FileRouteTypes {
     | '/discover/$section'
     | '/discover/reels'
     | '/hub/$audience'
-    | '/hub/arabic'
-    | '/hub/fun'
-    | '/hub/islam'
-    | '/hub/quotes'
-    | '/hub/urdu'
     | '/l/$username'
     | '/learn/$courseId'
     | '/play/2048'
@@ -4142,6 +4093,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/slash/$app'
     | '/slash/slashgram'
+    | '/slashbar/$category'
     | '/stores/dashboard'
     | '/tools/$slug'
     | '/tools/age-calculator'
@@ -4397,16 +4349,12 @@ export interface RootRouteChildren {
   DiscoverSectionRoute: typeof DiscoverSectionRoute
   DiscoverReelsRoute: typeof DiscoverReelsRoute
   HubAudienceRoute: typeof HubAudienceRoute
-  HubArabicRoute: typeof HubArabicRoute
-  HubFunRoute: typeof HubFunRoute
-  HubIslamRoute: typeof HubIslamRoute
-  HubQuotesRoute: typeof HubQuotesRoute
-  HubUrduRoute: typeof HubUrduRoute
   LUsernameRoute: typeof LUsernameRoute
   LearnCourseIdRoute: typeof LearnCourseIdRoute
   RIdRoute: typeof RIdRoute
   SlashAppRoute: typeof SlashAppRoute
   SlashSlashgramRoute: typeof SlashSlashgramRoute
+  SlashbarCategoryRoute: typeof SlashbarCategoryRoute
   StoresDashboardRoute: typeof StoresDashboardRoute
   BlogIndexRoute: typeof BlogIndexRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
@@ -4822,41 +4770,6 @@ declare module '@tanstack/react-router' {
       path: '/hub/$audience'
       fullPath: '/hub/$audience'
       preLoaderRoute: typeof HubAudienceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hub/arabic': {
-      id: '/hub/arabic'
-      path: '/hub/arabic'
-      fullPath: '/hub/arabic'
-      preLoaderRoute: typeof HubArabicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hub/fun': {
-      id: '/hub/fun'
-      path: '/hub/fun'
-      fullPath: '/hub/fun'
-      preLoaderRoute: typeof HubFunRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hub/islam': {
-      id: '/hub/islam'
-      path: '/hub/islam'
-      fullPath: '/hub/islam'
-      preLoaderRoute: typeof HubIslamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hub/quotes': {
-      id: '/hub/quotes'
-      path: '/hub/quotes'
-      fullPath: '/hub/quotes'
-      preLoaderRoute: typeof HubQuotesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hub/urdu': {
-      id: '/hub/urdu'
-      path: '/hub/urdu'
-      fullPath: '/hub/urdu'
-      preLoaderRoute: typeof HubUrduRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/l/$username': {
@@ -5599,6 +5512,13 @@ declare module '@tanstack/react-router' {
       path: '/slash/slashgram'
       fullPath: '/slash/slashgram'
       preLoaderRoute: typeof SlashSlashgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/slashbar/$category': {
+      id: '/slashbar/$category'
+      path: '/slashbar/$category'
+      fullPath: '/slashbar/$category'
+      preLoaderRoute: typeof SlashbarCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stores/': {
@@ -7595,16 +7515,12 @@ const rootRouteChildren: RootRouteChildren = {
   DiscoverSectionRoute: DiscoverSectionRoute,
   DiscoverReelsRoute: DiscoverReelsRoute,
   HubAudienceRoute: HubAudienceRoute,
-  HubArabicRoute: HubArabicRoute,
-  HubFunRoute: HubFunRoute,
-  HubIslamRoute: HubIslamRoute,
-  HubQuotesRoute: HubQuotesRoute,
-  HubUrduRoute: HubUrduRoute,
   LUsernameRoute: LUsernameRoute,
   LearnCourseIdRoute: LearnCourseIdRoute,
   RIdRoute: RIdRoute,
   SlashAppRoute: SlashAppRoute,
   SlashSlashgramRoute: SlashSlashgramRoute,
+  SlashbarCategoryRoute: SlashbarCategoryRoute,
   StoresDashboardRoute: StoresDashboardRoute,
   BlogIndexRoute: BlogIndexRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,

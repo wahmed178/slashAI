@@ -21,6 +21,8 @@
     "cricket:smoke": "bun scripts/smoke-cricket.mjs",
     "rag:smoke": "bun scripts/smoke-rag.mjs",
     "insights:smoke": "bun scripts/smoke-command-insights.mjs",
+    "categories:smoke": "bun scripts/smoke-slashbar-categories.mjs",
+    "hub:extract": "bun scripts/extract-hub-data.mjs",
     "design:check": "bun scripts/check-design-tokens.mjs",
     "links:smoke": "bun scripts/smoke-shorten.mjs",
     "android:build": "bash android/build-android.sh",
