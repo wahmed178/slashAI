@@ -65,6 +65,21 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --shadow-panel: var(--shadow-panel);
+  /* Elevation scale. Cards, popovers, sheets and overlays each pick a level
+     instead of hand-rolling a box-shadow, so depth reads as one system.
+     Exposed as shadow-depth-1..4; deliberately not named sm/md so they
+     cannot collide with Tailwind's own shadow scale. */
+  --shadow-depth-1: var(--shadow-depth-1);
+  --shadow-depth-2: var(--shadow-depth-2);
+  --shadow-depth-3: var(--shadow-depth-3);
+  --shadow-depth-4: var(--shadow-depth-4);
+  /* Translucency budget for frosted surfaces. Kept as tokens so the light
+     and dark themes can dial opacity independently - a fixed alpha that
+     reads as glass on black is unreadable on white. */
+  --color-glass: var(--glass);
+  --glass-blur: var(--glass-blur);
+  --glass-saturate: var(--glass-saturate);
+  --glass-sheen: var(--glass-sheen);
 }
 
 /* Dark-first: :root holds the dark palette, .light opts into the light theme. */
@@ -106,7 +121,26 @@
   --sidebar-accent-foreground: oklch(0.965 0.004 250);
   --sidebar-border: oklch(0.24 0.016 254);
   --sidebar-ring: oklch(0.82 0.14 178);
-  --shadow-panel: 0 1px 0 0 oklch(1 0 0 / 3%) inset, 0 8px 32px -12px oklch(0 0 0 / 65%);
+  /* Elevation ladder. Each step is a tighter ambient shadow plus a wider,
+     softer key light, and every level keeps the 1px top highlight that
+     separates a raised surface from the one behind it. Tuned so the steps
+     are distinguishable without turning the UI into a stack of floating
+     cards. */
+  --shadow-panel: var(--shadow-depth-2);
+  --shadow-depth-1: 0 1px 0 0 oklch(1 0 0 / 3%) inset, 0 1px 2px -1px oklch(0 0 0 / 40%);
+  --shadow-depth-2: 0 1px 0 0 oklch(1 0 0 / 4%) inset, 0 2px 6px -2px oklch(0 0 0 / 45%),
+    0 8px 20px -10px oklch(0 0 0 / 55%);
+  --shadow-depth-3: 0 1px 0 0 oklch(1 0 0 / 5%) inset, 0 4px 10px -4px oklch(0 0 0 / 50%),
+    0 18px 38px -14px oklch(0 0 0 / 62%);
+  --shadow-depth-4: 0 1px 0 0 oklch(1 0 0 / 6%) inset, 0 8px 18px -6px oklch(0 0 0 / 55%),
+    0 36px 72px -20px oklch(0 0 0 / 70%);
+  /* Frosted surfaces. On a near-black ground the pane needs a strong blur
+     and a hairline edge to read at all, so the alpha stays high and the
+     border carries most of the definition. */
+  --glass: color-mix(in oklab, var(--surface) 78%, transparent);
+  --glass-blur: 20px;
+  --glass-saturate: 170%;
+  --glass-sheen: inset 0 1px 0 0 oklch(1 0 0 / 8%);
 }
 
 /* True-black theme for OLED/AMOLED screens. */
@@ -132,7 +166,21 @@
   --sidebar-accent: oklch(0.13 0.008 253);
   --sidebar-accent-foreground: oklch(0.97 0.004 250);
   --sidebar-border: oklch(0.18 0.01 253);
-  --shadow-panel: 0 1px 0 0 oklch(1 0 0 / 5%) inset, 0 8px 24px -12px oklch(0 0 0 / 80%);
+  /* On true black a drop shadow has nothing left to darken, so depth has to
+     come from the surface step and the top highlight instead - the ambient
+     terms stay deliberately faint. */
+  --shadow-panel: var(--shadow-depth-2);
+  --shadow-depth-1: 0 1px 0 0 oklch(1 0 0 / 5%) inset, 0 1px 2px -1px oklch(0 0 0 / 60%);
+  --shadow-depth-2: 0 1px 0 0 oklch(1 0 0 / 6%) inset, 0 2px 6px -2px oklch(0 0 0 / 70%),
+    0 8px 20px -10px oklch(0 0 0 / 75%);
+  --shadow-depth-3: 0 1px 0 0 oklch(1 0 0 / 7%) inset, 0 4px 10px -4px oklch(0 0 0 / 75%),
+    0 18px 38px -14px oklch(0 0 0 / 85%);
+  --shadow-depth-4: 0 1px 0 0 oklch(1 0 0 / 8%) inset, 0 8px 18px -6px oklch(0 0 0 / 80%),
+    0 36px 72px -20px oklch(0 0 0 / 90%);
+  --glass: color-mix(in oklab, var(--surface) 70%, transparent);
+  --glass-blur: 20px;
+  --glass-saturate: 170%;
+  --glass-sheen: inset 0 1px 0 0 oklch(1 0 0 / 10%);
 }
 
 .light {
@@ -167,7 +215,20 @@
   --sidebar-accent-foreground: oklch(0.25 0.02 253);
   --sidebar-border: oklch(0.9 0.008 250);
   --sidebar-ring: oklch(0.55 0.11 183);
-  --shadow-panel: 0 1px 2px 0 oklch(0.2 0.02 253 / 8%), 0 12px 24px -16px oklch(0.2 0.02 253 / 18%);
+  /* Light mode inverts the recipe: the highlight becomes a soft inner
+     shadow and the drop shadow carries a hint of the ink colour, because a
+     pure black shadow on white reads as dirt rather than depth. */
+  --shadow-panel: var(--shadow-depth-2);
+  --shadow-depth-1: 0 1px 2px 0 oklch(0.2 0.02 253 / 6%);
+  --shadow-depth-2: 0 1px 2px 0 oklch(0.2 0.02 253 / 7%), 0 6px 16px -10px oklch(0.2 0.02 253 / 16%);
+  --shadow-depth-3: 0 1px 3px 0 oklch(0.2 0.02 253 / 8%), 0 14px 30px -14px oklch(0.2 0.02 253 / 20%);
+  --shadow-depth-4: 0 2px 6px 0 oklch(0.2 0.02 253 / 9%), 0 28px 56px -20px oklch(0.2 0.02 253 / 24%);
+  /* Frosting on white needs less blur and a much more opaque fill, or the
+     content behind it turns the text into mud. */
+  --glass: color-mix(in oklab, var(--surface) 88%, transparent);
+  --glass-blur: 16px;
+  --glass-saturate: 140%;
+  --glass-sheen: inset 0 1px 0 0 oklch(1 0 0 / 90%);
 }
 
 /* ---------------------------------- accents --------------------------------
@@ -289,10 +350,23 @@
   --sidebar-accent-foreground: oklch(0.96 0.012 265);
   --sidebar-border: oklch(0.9 0.02 270 / 10%);
   --sidebar-ring: oklch(0.68 0.15 262);
-  --shadow-panel:
-    0 1px 0 0 oklch(1 0 0 / 8%) inset,
-    0 18px 48px -20px oklch(0.32 0.09 268 / 55%),
-    0 4px 16px -8px oklch(0 0 0 / 55%);
+  /* The glass theme's signature: a tinted, coloured shadow rather than a
+     black one. Shadow picks up the indigo of the field behind it, which is
+     what makes a frosted pane look like it is sitting in light. */
+  --shadow-panel: var(--shadow-depth-2);
+  --shadow-depth-1: 0 1px 0 0 oklch(1 0 0 / 8%) inset, 0 1px 2px -1px oklch(0 0 0 / 35%);
+  --shadow-depth-2: 0 1px 0 0 oklch(1 0 0 / 9%) inset,
+    0 2px 8px -2px oklch(0.3 0.1 268 / 40%), 0 10px 26px -12px oklch(0.3 0.1 268 / 50%);
+  --shadow-depth-3: 0 1px 0 0 oklch(1 0 0 / 10%) inset,
+    0 4px 12px -4px oklch(0.3 0.1 268 / 45%), 0 20px 44px -16px oklch(0.3 0.1 268 / 55%);
+  --shadow-depth-4: 0 1px 0 0 oklch(1 0 0 / 12%) inset,
+    0 8px 20px -6px oklch(0.3 0.1 268 / 50%), 0 40px 80px -24px oklch(0.3 0.1 268 / 60%);
+  /* Frosting at its most literal: more transparent than the base theme, a
+     wider blur, and a brighter top edge to sell the pane. */
+  --glass: color-mix(in oklab, var(--surface) 58%, transparent);
+  --glass-blur: 28px;
+  --glass-saturate: 190%;
+  --glass-sheen: inset 0 1px 0 0 oklch(1 0 0 / 14%);
 }
 
 /* Liquid glass aurora: drifting blue/indigo/cyan light fields behind the app. */
@@ -370,6 +444,18 @@
   --sidebar-border: oklch(0.24 0.02 260);
   --sidebar-ring: oklch(0.68 0.19 300);
   --shadow-panel: 3px 3px 0 0 oklch(0.2 0.02 260);
+  /* Brutalism opts out of the elevation scale: hard ink offsets, no blur,
+     no translucency, no ambient falloff. A soft depth ladder would
+     contradict the premise of the theme, so every level collapses to a flat
+     stamp and the `panel`/`glass` overrides below keep it that way. */
+  --shadow-depth-1: 3px 3px 0 0 oklch(0.2 0.02 260);
+  --shadow-depth-2: 3px 3px 0 0 oklch(0.2 0.02 260);
+  --shadow-depth-3: 4px 4px 0 0 oklch(0.2 0.02 260);
+  --shadow-depth-4: 6px 6px 0 0 oklch(0.2 0.02 260);
+  --glass: oklch(0.988 0.006 95);
+  --glass-blur: 0px;
+  --glass-saturate: 100%;
+  --glass-sheen: none;
 }
 
 /* Brutalism kills the ambient glow, dotted textures and soft panel shadows:
@@ -383,11 +469,23 @@
 }
 
 :root.brutal .panel,
+:root.brutal .panel-float,
+:root.brutal .panel-sunken,
 :root.brutal .panel:hover {
   border-color: oklch(0.24 0.02 260) !important;
   border-width: 2px;
   border-radius: 6px;
   box-shadow: 3px 3px 0 0 oklch(0.2 0.02 260);
+}
+
+/* Brutalism has no "floating above the page" - every surface is a flat
+   paper tile, so the float and sunken variants collapse to the same stamp. */
+:root.brutal .panel-float {
+  background-color: oklch(0.988 0.006 95);
+}
+
+:root.brutal .panel-sunken {
+  background-color: oklch(0.93 0.012 95);
 }
 
 :root.brutal .lift {
@@ -441,6 +539,13 @@
   -webkit-backdrop-filter: none !important;
   box-shadow: 3px 3px 0 0 oklch(0.2 0.02 260);
   border: 2px solid oklch(0.24 0.02 260) !important;
+  /* solid paper, not a transparent hole - the @supports fallback covers
+     browsers without backdrop-filter, but brutal needs it unconditionally */
+  background-color: oklch(0.988 0.006 95) !important;
+}
+
+:root.brutal .sheen {
+  box-shadow: 3px 3px 0 0 oklch(0.2 0.02 260) !important;
 }
 
 :root.glass.light {
@@ -473,7 +578,15 @@
   --sidebar-accent-foreground: oklch(0.24 0.02 280);
   --sidebar-border: oklch(0.9 0.008 280);
   --sidebar-ring: oklch(0.55 0.13 183);
-  --shadow-panel: 0 1px 2px 0 oklch(0.2 0.02 280 / 6%), 0 12px 24px -16px oklch(0.2 0.02 280 / 15%);
+  --shadow-panel: var(--shadow-depth-2);
+  --shadow-depth-1: 0 1px 2px 0 oklch(0.2 0.02 280 / 6%);
+  --shadow-depth-2: 0 1px 2px 0 oklch(0.2 0.02 280 / 7%), 0 6px 16px -10px oklch(0.2 0.02 280 / 16%);
+  --shadow-depth-3: 0 1px 3px 0 oklch(0.2 0.02 280 / 8%), 0 14px 30px -14px oklch(0.2 0.02 280 / 20%);
+  --shadow-depth-4: 0 2px 6px 0 oklch(0.2 0.02 280 / 9%), 0 28px 56px -20px oklch(0.2 0.02 280 / 24%);
+  --glass: color-mix(in oklab, var(--surface) 82%, transparent);
+  --glass-blur: 20px;
+  --glass-saturate: 150%;
+  --glass-sheen: inset 0 1px 0 0 oklch(1 0 0 / 85%);
 }
 
 /* --------------------------------- motion ---------------------------------
@@ -529,19 +642,54 @@
   }
 }
 
+/* The workhorse surface: every card, dropdown and bordered block on the site.
+   It sits at depth-2 and carries a top highlight, so a stack of panels reads
+   as layered rather than as a grid of flat rectangles. */
 @utility panel {
   background-color: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-panel);
 }
 
-/* frosted premium surface — used for hero blocks and live widgets */
+/* A panel that should read as floating above the page - sheets, modals and
+   anything with a backdrop behind it. */
+@utility panel-float {
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-depth-4);
+}
+
+/* A panel that should recede: sidebars, wells, inactive regions. */
+@utility panel-sunken {
+  background-color: color-mix(in oklab, var(--background) 82%, var(--surface));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-depth-1);
+}
+
+/* Frosted surface. Reads as a physical pane because of three things working
+   together: translucency tuned per theme, a hairline that catches light
+   along the top edge, and a coloured key shadow rather than a black one.
+   Falls back to an opaque fill when the browser has no backdrop-filter. */
 @utility glass {
-  background: color-mix(in oklab, var(--surface) 72%, transparent);
-  border: 1px solid color-mix(in oklab, var(--border) 80%, var(--primary) 12%);
-  box-shadow: var(--shadow-panel);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background-color: var(--glass);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, var(--primary) 16%);
+  box-shadow: var(--glass-sheen), var(--shadow-depth-3);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
+/* @supports keeps the frosted look optional: without backdrop-filter the
+   pane would otherwise be a transparent hole with text on top of it. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background-color: var(--surface-elevated);
+  }
+}
+
+/* An inner highlight for any surface that needs the same top-edge sheen
+   without the translucency. */
+@utility sheen {
+  box-shadow: var(--glass-sheen), var(--shadow-depth-2);
 }
 
 /* soft primary halo behind a card, purely decorative */
@@ -555,9 +703,12 @@
       transparent 60%
     ),
     var(--surface);
+  box-shadow: var(--shadow-panel);
 }
 
-/* lift + glow on hover, disabled under reduced motion */
+/* lift + glow on hover, disabled under reduced motion.
+   The hover state promotes the card one step up the elevation ladder rather
+   than inventing a shadow, so hover depth is consistent with the scale. */
 @utility lift {
   transition:
     transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -567,11 +718,12 @@
   &:hover {
     transform: translateY(-2px);
     border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
-    box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--primary) 55%, transparent);
+    box-shadow: var(--shadow-depth-4);
   }
 
   &:active {
     transform: translateY(0) scale(0.985);
+    box-shadow: var(--shadow-depth-1);
   }
 }
 
