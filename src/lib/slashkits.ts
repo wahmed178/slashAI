@@ -1263,6 +1263,14 @@ export const TOOL_SECTIONS: SlashKitSection[] = [
     ],
     hubTools: [
       {
+        slug: "/assistant",
+        name: "Slash Ask",
+        desc: "Ask a question, get quoted passages with citations",
+        icon: "🔎",
+        hub: true,
+        added: "2026-09-29",
+      },
+      {
         slug: "/hub/urdu",
         name: "Urdu Writers Hub",
         desc: "Poetry, resources, fonts for Urdu",
