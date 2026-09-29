@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-28T14:54:29.503Z",
+  "updated": "2026-09-29T13:42:10.053Z",
   "articles": [
     {
-      "title": "Owed a billion dollars in Nvidia stock",
-      "url": "https://colo.to/nvidia-stock-narrative.html",
+      "title": "You Are No Longer Invited to Dinner",
+      "url": "https://www.derekthompson.org/p/the-death-of-the-american-host",
       "source": "HackerNews",
-      "score": 900,
+      "score": 284,
+      "publishedAt": "2026-09-29"
+    },
+    {
+      "title": "AI companies leak data to advertisers [pdf]",
+      "url": "https://jorgegarciaherrero.com/wp-content/interactivos/20260916-Prompt-like-a-butterfly-sting-like-a-tracker-(clean).pdf",
+      "source": "HackerNews",
+      "score": 243,
+      "publishedAt": "2026-09-29"
+    },
+    {
+      "title": "Phyllotaxis: An audio-reactive LED display",
+      "url": "https://jagi.studio/posts/phyllotaxis/",
+      "source": "HackerNews",
+      "score": 181,
       "publishedAt": "2026-09-28"
     },
     {
-      "title": "Ember-1",
-      "url": "https://fireworks.ai/blog/ember-1",
+      "title": "500k facial scans at UK stations yield no arrests, 1 false positive",
+      "url": "https://www.theguardian.com/technology/2026/sep/29/trial-live-facial-recognition-cameras-london-stations-false-positive",
       "source": "HackerNews",
-      "score": 536,
-      "publishedAt": "2026-09-27"
+      "score": 168,
+      "publishedAt": "2026-09-29"
     },
     {
-      "title": "Parley: Federated, decentralised chat that speaks plain IRC",
-      "url": "https://git.mills.io/prologic/parley",
+      "title": "US sanctions force The Netherlands off Microsoft and toward alternative NixOS",
+      "url": "https://www.tomshardware.com/software/the-netherlands-is-rolling-alternative-nixos-based-software-ecosystem-after-u-s-sanctions-on-icc-took-microsoft-off-the-table-trial-programs-running-now-first-release-expected-at-end-of-2027",
       "source": "HackerNews",
-      "score": 169,
-      "publishedAt": "2026-09-28"
+      "score": 149,
+      "publishedAt": "2026-09-29"
     },
     {
-      "title": "Footguns with Postgres \"at time zone 'UTC'\"",
-      "url": "https://bookofrevenue.com/blog/6ab81e9a97a13f0001f7e4e1/postgres-at-time-zone-u-does-not-do-what-you-think-it-does",
+      "title": "Jeeves. Reasoning improves Jev-like decision models",
+      "url": "https://github.com/PostHog/jeeves",
       "source": "HackerNews",
-      "score": 101,
-      "publishedAt": "2026-09-27"
+      "score": 91,
+      "publishedAt": "2026-09-29"
     },
     {
-      "title": "37,500 border drawings: a map of the world as people remember it",
-      "url": "https://www.habibicode.org/thedrawnworld",
+      "title": "Using any C++ library in Godot",
+      "url": "https://blog.conan.io/cpp/conan/gamedev/godot/cmake/2026/09/29/Using-Any-Cpp-Library-In-Godot.html",
       "source": "HackerNews",
-      "score": 97,
-      "publishedAt": "2026-09-28"
+      "score": 89,
+      "publishedAt": "2026-09-29"
     },
     {
-      "title": "Coding Is Not Solved – Alex Ewerlöf Notes",
-      "url": "https://blog.alexewerlof.com/p/coding-is-not-solved",
+      "title": "Delhi Cut Electricity Loss from 50 to 5 Percent",
+      "url": "https://spectrum.ieee.org/delhi-electricity-loss",
       "source": "HackerNews",
-      "score": 86,
-      "publishedAt": "2026-09-28"
-    },
-    {
-      "title": "Has Violence Against Teachers Become Accepted by Society?",
-      "url": "https://theeducatorsroom.com/has-violence-against-teachers-become-accepted-by-society/",
-      "source": "HackerNews",
-      "score": 78,
-      "publishedAt": "2026-09-28"
-    },
-    {
-      "title": "Show HN: Hntui – A TUI for Hacker News",
-      "url": "https://github.com/ahmd-sh/hntui",
-      "source": "HackerNews",
-      "score": 69,
-      "publishedAt": "2026-09-28"
+      "score": 74,
+      "publishedAt": "2026-09-29"
     }
   ]
 }
