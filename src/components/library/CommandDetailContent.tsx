@@ -7,7 +7,8 @@ import { HowToUse } from "./HowToUse";
 import { TryInRow } from "./TryInRow";
 import { ReportProblem } from "./ReportProblem";
 import { CommandVariableEditor } from "./CommandVariableEditor";
-import { CommandRating } from "./CommandRating";
+import { CommandOutcome } from "./CommandOutcome";
+import { CommandInsights } from "./CommandInsights";
 import { useCommandActions } from "@/hooks/use-command-actions";
 import {
   CATEGORY_ICONS,
@@ -129,6 +130,8 @@ export function CommandDetailContent({
         <TryInRow className="mt-2" prompt={template} compact />
       </section>
 
+      <CommandInsights command={command} />
+
       <section>
         <h4 className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
           What it does
@@ -222,9 +225,8 @@ export function CommandDetailContent({
           </span>
         ))}
       </section>
-
-      {/* Client-side 👍 👎 Rating System */}
-      <CommandRating slug={command.id} />
+      {/* Your own, on-device record of how this command went */}
+      <CommandOutcome commandId={command.id} />
 
       {/* Related Commands Section: 4 commands, same category, scroll on mobile, 2x2 on desktop */}
       {related.length > 0 && (

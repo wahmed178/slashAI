@@ -124,9 +124,10 @@ interface Settings {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  // first-run look: neo-brutalism (paper + ink). Returning users keep whatever
-  // they picked — their saved settings simply win over this default.
-  theme: "brutal",
+  // first-run look: liquid glass. Returning users keep whatever they picked —
+  // their saved settings simply win over this default, so this only ever
+  // decides what a brand-new visitor sees.
+  theme: "glass",
   density: "comfortable",
   accent: "teal",
   view: "grid",

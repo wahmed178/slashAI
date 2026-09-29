@@ -26,6 +26,8 @@ export const UX_KEYS = {
   copyHistory: "slash_history",
   /** [{ id, query, answer }] — the Slash Ask conversation thread */
   askThread: "slashai-ask-thread",
+  /** { [commandId]: CommandOutcome } — how each command actually went for YOU */
+  commandOutcomes: "slashai-command-outcomes",
 } as const;
 
 /** Fired on window whenever any UX helper changes stored state. */
@@ -371,4 +373,79 @@ export function timeAgo(timestamp: number): string {
   const days = Math.floor(hours / 24);
   if (days === 1) return "Yesterday";
   return `${days}d ago`;
+}
+
+/* ─────────────────── how a command actually went (local only) ───────────────────
+ *
+ * SlashAI is offline-first with no backend, so it has exactly one honest source
+ * of "what people felt": what the reader recorded on their own device. These
+ * helpers store that. There are deliberately no seeded or baseline counts —
+ * a number on this site should be a number someone can stand behind.
+ */
+
+export type CommandOutcome = "landed" | "partial" | "miss";
+
+export interface CommandOutcomeRecord {
+  outcome: CommandOutcome;
+  /** optional one-line note, kept on-device only */
+  note?: string;
+  at: number;
+}
+
+type OutcomeMap = Record<string, CommandOutcomeRecord>;
+
+export const COMMAND_OUTCOME_LABELS: Record<CommandOutcome, string> = {
+  landed: "Did what it said",
+  partial: "Close, needed edits",
+  miss: "Not for me",
+};
+
+export const COMMAND_OUTCOME_HINTS: Record<CommandOutcome, string> = {
+  landed: "You pasted it in and it worked first time.",
+  partial: "It got you most of the way and you had to finish it yourself.",
+  miss: "It did not fit what you were trying to do.",
+};
+
+export function getCommandOutcomes(): OutcomeMap {
+  return readJson<OutcomeMap>(UX_KEYS.commandOutcomes, {});
+}
+
+export function getCommandOutcome(id: string): CommandOutcomeRecord | null {
+  return getCommandOutcomes()[id] ?? null;
+}
+
+export function setCommandOutcome(
+  id: string,
+  outcome: CommandOutcome,
+  note?: string,
+): CommandOutcomeRecord {
+  const record: CommandOutcomeRecord = { outcome, at: Date.now() };
+  const trimmed = note?.trim();
+  if (trimmed) record.note = trimmed.slice(0, 180);
+  const next = { ...getCommandOutcomes(), [id]: record };
+  writeJson(UX_KEYS.commandOutcomes, next);
+  return record;
+}
+
+export function clearCommandOutcome(id: string): void {
+  const next = { ...getCommandOutcomes() };
+  delete next[id];
+  writeJson(UX_KEYS.commandOutcomes, next);
+}
+
+/** How many commands this visitor has rated, and the real split. */
+export function commandOutcomeSummary(): {
+  total: number;
+  landed: number;
+  partial: number;
+  miss: number;
+} {
+  const map = getCommandOutcomes();
+  const values = Object.values(map);
+  return {
+    total: values.length,
+    landed: values.filter((r) => r.outcome === "landed").length,
+    partial: values.filter((r) => r.outcome === "partial").length,
+    miss: values.filter((r) => r.outcome === "miss").length,
+  };
 }

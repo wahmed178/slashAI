@@ -16,9 +16,12 @@ import {
   Search as SearchIcon,
   X,
   Star,
+  Check,
 } from "lucide-react";
 
-import { useLibrary } from "@/hooks/use-library";
+import { useLibrary, ACCENTS, FIXED_ACCENT_THEMES, THEMES } from "@/hooks/use-library";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { getSlashTool, toolSection } from "@/lib/slashkits";
 import { gameSection, getPlayGame } from "@/lib/slashplay";
 import { appBySlug, ALL_SLASH_APPS } from "@/lib/slashbar";
@@ -244,39 +247,117 @@ function BackButton({ to, label }: { to: string; label: string }) {
   );
 }
 
+const THEME_ICONS: Record<string, ReactNode> = {
+  dark: <Moon className="size-[18px]" />,
+  light: <Sun className="size-[18px]" />,
+  amoled: <span className="text-[15px] leading-none">⬛</span>,
+  glass: (
+    <span className="text-[15px] font-black leading-none" style={{ color: "var(--primary)" }}>
+      ◈
+    </span>
+  ),
+  brutal: (
+    <span className="text-[15px] font-black leading-none" style={{ color: "var(--primary)" }}>
+      ◼
+    </span>
+  ),
+};
+
+/**
+ * Top-right appearance control. Opens a picker rather than cycling, because
+ * cycling hides the two most distinctive themes (glass and brutal) behind an
+ * arbitrary number of clicks — and glass is the default look, so it has to be
+ * one tap away in both directions.
+ */
 function ThemeToggleButton() {
   const { settings, updateSettings } = useLibrary();
-  // four-way cycle: dark → light → amoled → brutal → dark (glass stays a Designs pick)
-  const CYCLE = ["dark", "light", "amoled", "brutal"] as const;
-  const idx = CYCLE.indexOf(settings.theme as (typeof CYCLE)[number]);
-  const next = CYCLE[(idx + 1 + CYCLE.length) % CYCLE.length] ?? "dark";
-  const ICONS = {
-    dark: <Moon className="size-[18px]" />,
-    light: <Sun className="size-[18px]" />,
-    amoled: <span className="text-[15px] leading-none">⬛</span>,
-    brutal: (
-      <span className="text-[15px] font-black leading-none" style={{ color: "var(--primary)" }}>
-        ◼
-      </span>
-    ),
-  } as const;
-  const LABELS: Record<string, string> = {
-    dark: "Dark",
-    light: "Light",
-    amoled: "AMOLED",
-    brutal: "Brutal",
-  };
+  const [open, setOpen] = useState(false);
+  const accentLocked = FIXED_ACCENT_THEMES.includes(settings.theme);
+  const current = THEMES.find((t) => t.id === settings.theme);
 
   return (
-    <button
-      type="button"
-      onClick={() => updateSettings({ theme: next })}
-      aria-label={`Theme: ${LABELS[settings.theme] ?? settings.theme}. Switch to ${LABELS[next]}`}
-      title={`Theme: ${LABELS[settings.theme] ?? settings.theme} → ${LABELS[next]}`}
-      className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-    >
-      {ICONS[settings.theme as keyof typeof ICONS] ?? <Moon className="size-[18px]" />}
-    </button>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          aria-label={`Appearance: ${current?.label ?? settings.theme}. Change theme`}
+          title={`Appearance: ${current?.label ?? settings.theme}`}
+          className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        >
+          {THEME_ICONS[settings.theme] ?? <Moon className="size-[18px]" />}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="end" className="w-[264px] p-2">
+        <p className="px-1.5 pt-1 pb-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+          Theme
+        </p>
+        <div className="grid gap-0.5">
+          {THEMES.map((t) => {
+            const active = t.id === settings.theme;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => updateSettings({ theme: t.id })}
+                aria-pressed={active}
+                className={cn(
+                  "flex w-full items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-left transition-colors",
+                  active ? "bg-accent" : "hover:bg-surface-elevated",
+                )}
+              >
+                <span
+                  aria-hidden
+                  className="size-4 shrink-0 rounded-full border border-border"
+                  style={{ background: t.swatch }}
+                />
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] leading-tight font-semibold text-foreground">
+                    {t.label}
+                  </span>
+                  <span className="block truncate text-[11px] leading-tight text-muted-foreground">
+                    {t.hint}
+                  </span>
+                </span>
+                {active && <Check className="size-3.5 shrink-0 text-primary" aria-hidden />}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-2 border-t border-border pt-2">
+          <p className="px-1.5 pb-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+            Accent
+          </p>
+          {accentLocked ? (
+            <p className="px-1.5 pb-1 text-[11px] leading-snug text-muted-foreground">
+              {current?.label} sets its own colours, so accent is off here.
+            </p>
+          ) : null}
+          <div className="flex flex-wrap gap-1.5 px-1.5 pb-1">
+            {ACCENTS.map((a) => {
+              const active = a.id === settings.accent;
+              return (
+                <button
+                  key={a.id}
+                  type="button"
+                  disabled={accentLocked}
+                  onClick={() => updateSettings({ accent: a.id })}
+                  aria-pressed={active}
+                  aria-label={a.label}
+                  title={a.label}
+                  className={cn(
+                    "size-6 rounded-full border-2 transition-transform",
+                    active ? "scale-110 border-foreground" : "border-border",
+                    accentLocked ? "cursor-not-allowed opacity-40" : "hover:scale-110",
+                  )}
+                  style={{ background: a.swatch }}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 }
 
