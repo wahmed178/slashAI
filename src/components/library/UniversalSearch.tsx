@@ -423,7 +423,10 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
 
       {/* live results panel */}
       {open && term && (
-        <div className="panel absolute top-[calc(100%+6px)] left-0 z-40 w-full overflow-hidden rounded-xl py-1">
+        <div
+          key={term}
+          className="panel animate-fade-in-up absolute top-[calc(100%+6px)] left-0 z-40 w-full overflow-hidden rounded-xl py-1"
+        >
           {results.length === 0 && (
             <p className="px-4 py-3 text-center text-[12.5px] text-muted-foreground">
               Nothing in SlashAI matches “{short}”. Try a different word, or search the web.
@@ -439,9 +442,10 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
                 onClick={() => go(s)}
                 onMouseEnter={() => setActive(i)}
                 className={cn(
-                  "flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors",
+                  "animate-fade-in-up flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors",
                   i === active ? "bg-accent" : "",
                 )}
+                style={{ animationDelay: `${Math.min(i, 10) * 24}ms` }}
               >
                 <span className="grid size-7 shrink-0 place-items-center rounded-md bg-surface-elevated text-[13px]">
                   {s.icon}

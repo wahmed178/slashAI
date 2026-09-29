@@ -23,6 +23,15 @@ import { DailyTipCard } from "@/components/library/DailyTipCard";
 import { categoryIcon } from "@/components/library/icons";
 import { useLibrary } from "@/hooks/use-library";
 import {
+  motionDisabled,
+  revealDelay,
+  useCountUp,
+  useMagnet,
+  useReveal,
+  useRotatingWord,
+  useTilt,
+} from "@/hooks/use-motion";
+import {
   getCopyHistory,
   timeAgo,
   UX_CHANGE_EVENT,
@@ -56,6 +65,10 @@ const TOTAL_PLAY_COUNT = PLAY_GAME_COUNT;
 const TOTAL_TOOL_COUNT = SLASH_TOOL_COUNT + DECLARATIVE_TOOL_COUNT;
 
 const HERO_TOOL = heroToolOfTheDay();
+
+/** Rotated through in the hero headline. Kept to one short line each so the
+ *  heading never reflows as the words change. */
+const HERO_WORDS = ["in seconds", "in one tap", "in one copy"] as const;
 const GENERATOR_TOTAL = ALL_SLASH_TOOLS.filter((t) =>
   t.name.toLowerCase().includes("generator"),
 ).length;
@@ -63,6 +76,167 @@ const GENERATOR_TOTAL = ALL_SLASH_TOOLS.filter((t) =>
 /** Truncate at a word boundary so titles never cut mid-word */
 const truncateWords = (s: string, n: number) =>
   s.length > n ? s.slice(0, s.lastIndexOf(" ", n)).trimEnd() + "…" : s;
+
+/* ─────────────── Quick links marquee ───────────────
+   A single always-on band of real destinations. The track is rendered twice
+   and translated -50%, so the loop is seamless without measuring anything. */
+const QUICK_LINKS = [
+  { to: "/assistant", label: "Slash Ask", emoji: "💬" },
+  { to: "/tools/finder", label: "Tool Finder", emoji: "🧭" },
+  { to: "/play", label: `${PLAY_GAME_COUNT} games`, emoji: "🎮" },
+  { to: "/blog", label: `${ALL_BLOG_POSTS.length} guides`, emoji: "📚" },
+  { to: "/glossary", label: "Glossary", emoji: "📖" },
+  { to: "/build-ideas", label: "Build ideas", emoji: "💡" },
+  { to: "/roadmaps", label: "Roadmaps", emoji: "🗺️" },
+  { to: "/quiz", label: "Quiz", emoji: "✅" },
+  { to: "/ai-tools", label: "AI tools", emoji: "🤖" },
+  { to: "/learn", label: "Courses", emoji: "🎓" },
+  { to: "/compare", label: "Compare", emoji: "⚖️" },
+  { to: "/everything", label: "Everything", emoji: "🧿" },
+] as const;
+
+function QuickMarquee() {
+  const row = (
+    <div className="flex shrink-0 items-center gap-2 pr-3">
+      {QUICK_LINKS.map((l) => (
+        <Link
+          key={l.to}
+          to={l.to as string}
+          className="ripple-press flex items-center gap-1.5 rounded-full border border-sidebar-border bg-surface px-3 py-1.5 text-[12px] whitespace-nowrap text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+        >
+          <span aria-hidden>{l.emoji}</span>
+          {l.label}
+        </Link>
+      ))}
+    </div>
+  );
+  return (
+    <div className="marquee mt-3" aria-hidden="false">
+      <div className="marquee-track" style={{ ["--marquee-duration" as string]: "52s" }}>
+        {row}
+        {row}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── Hero cube ───────────────
+   A real 6-face CSS cube that turns toward the pointer. The rotation is
+   eased on rAF and the loop stops once it settles, so an idle hero is free. */
+const CUBE_FACES = ["/", "{}", "⚡", "▦", "✦", "⌘"];
+
+function HeroCube() {
+  const stageRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const cube = stage.querySelector<HTMLElement>(".cube");
+    if (!cube) return;
+    if (motionDisabled() || !window.matchMedia("(hover: hover)").matches) return;
+
+    const REST_X = -22;
+    const REST_Y = 32;
+    let targetX = REST_X;
+    let targetY = REST_Y;
+    let curX = REST_X;
+    let curY = REST_Y;
+    let raf = 0;
+    let running = false;
+
+    const tick = () => {
+      curX += (targetX - curX) * 0.08;
+      curY += (targetY - curY) * 0.08;
+      cube.style.setProperty("--cube-x", `${curX.toFixed(2)}deg`);
+      cube.style.setProperty("--cube-y", `${curY.toFixed(2)}deg`);
+      if (Math.abs(targetX - curX) < 0.1 && Math.abs(targetY - curY) < 0.1) {
+        running = false;
+        return;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    const start = () => {
+      if (running) return;
+      running = true;
+      raf = requestAnimationFrame(tick);
+    };
+
+    const onMove = (e: PointerEvent) => {
+      const r = stage.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      targetX = REST_X - py * 70;
+      targetY = REST_Y + px * 70;
+      cube.classList.add("is-tracking");
+      start();
+    };
+    const onLeave = () => {
+      targetX = REST_X;
+      targetY = REST_Y;
+      cube.classList.remove("is-tracking");
+      start();
+    };
+
+    stage.addEventListener("pointermove", onMove);
+    stage.addEventListener("pointerleave", onLeave);
+    return () => {
+      stage.removeEventListener("pointermove", onMove);
+      stage.removeEventListener("pointerleave", onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <div className="hidden items-center justify-center md:flex">
+      <div ref={stageRef} className="cube-stage" aria-hidden="true">
+        <div className="cube-halo" />
+        <div className="cube">
+          {CUBE_FACES.map((face) => (
+            <div className="cube-face" key={face}>
+              {face}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────── Stat tile that counts up when it scrolls into view ─────────────── */
+function StatTile({
+  value,
+  suffix,
+  label,
+  icon,
+  index,
+}: {
+  value: number;
+  suffix?: string;
+  label: string;
+  icon: string;
+  index: number;
+}) {
+  const { ref, revealed } = useReveal<HTMLDivElement>();
+  const shown = useCountUp(value, revealed, 1300 + index * 120);
+  return (
+    <div
+      ref={ref}
+      data-reveal
+      style={revealDelay(index, 70)}
+      className="stat-card spotlight lift rounded-xl border border-sidebar-border bg-surface px-3 py-2.5 text-center"
+      data-spotlight
+    >
+      <span className="count-up block text-[19px] leading-none font-black text-foreground tabular-nums">
+        {shown.toLocaleString()}
+        {suffix}
+      </span>
+      <span className="mt-1 block text-[11px] text-muted-foreground">
+        <span aria-hidden>{icon}</span> {label}
+      </span>
+    </div>
+  );
+}
 
 /* ─────────────── Journal hero card (upper page) ─────────────── */
 function JournalHeroCard() {
@@ -293,7 +467,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-12 animate-fade-in-up sm:mt-12">
+    <SectionShell>
       <div className="mb-3 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="inline-block h-[18px] w-[3px] shrink-0 rounded-[2px] bg-primary" />
@@ -304,6 +478,17 @@ function Section({
         </div>
         {action}
       </div>
+      {children}
+    </SectionShell>
+  );
+}
+
+/** Wraps a homepage section so it fades + lifts the first time it is scrolled
+ *  into view, instead of animating on mount while still off-screen. */
+function SectionShell({ children }: { children: React.ReactNode }) {
+  const { ref } = useReveal<HTMLElement>();
+  return (
+    <section ref={ref} data-reveal className="mt-12">
       {children}
     </section>
   );
@@ -394,6 +579,9 @@ function HomePage() {
   );
 
   const { streak } = useLibrary();
+  const heroWordIndex = useRotatingWord(HERO_WORDS, 2600);
+  const toolTiltRef = useTilt<HTMLDivElement>({ max: 10, step: 2 });
+  const toolMagnetRef = useMagnet<HTMLAnchorElement>(4);
 
   const weeklyFinds = useMemo(() => {
     const weekly = DROPS.find((d) => d.cadence === "Weekly");
@@ -428,7 +616,7 @@ function HomePage() {
       <LiveTicker />
 
       {/* ─── Hero Section ─── */}
-      <section className="relative rounded-2xl bg-surface border border-sidebar-border p-4 pt-6 sm:p-8">
+      <section className="animate-fade-in-up relative rounded-2xl bg-surface border border-sidebar-border p-4 pt-6 sm:p-8">
         <div className="flex flex-col gap-4 overflow-hidden md:flex-row md:items-center md:justify-between md:gap-6">
           {/* Left: text */}
           <div className="min-w-0 flex-1">
@@ -438,7 +626,18 @@ function HomePage() {
             <h1 className="mt-3 text-[26px] font-bold leading-[1.15] tracking-tight text-foreground sm:mt-4 sm:text-[36px]">
               Find the right AI command
               <br />
-              <span className="bg-gradient-to-r from-[#2dd4bf] via-[#38bdf8] to-[#a78bfa] bg-clip-text text-transparent">in seconds</span>
+              <span className="word-swap-shell inline-block align-bottom">
+                <span className="sr-only">{HERO_WORDS[0]}</span>
+                <span className="word-swap" aria-hidden="true">
+                  <span
+                    key={heroWordIndex}
+                    className="word-swap-word bg-gradient-to-r from-[#2dd4bf] via-[#38bdf8] to-[#a78bfa] bg-clip-text text-transparent"
+                  >
+                    {HERO_WORDS[heroWordIndex]}
+                  </span>
+                  <span className="word-swap-sizer">{HERO_WORDS[0]}</span>
+                </span>
+              </span>
             </h1>
             <p className="mt-2 text-[13px] text-muted-foreground sm:mt-3 sm:text-[14px]">
               {VERIFIED_TOTAL.toLocaleString()} commands · {RESOURCE_TOTAL} curated resources · Free forever
@@ -498,26 +697,9 @@ function HomePage() {
             </div>
           </div>
 
-          {/* Right: 3D CSS cube (desktop only) - own overflow clip keeps the glow inside */}
-          <div className="hidden overflow-hidden rounded-2xl md:flex items-center justify-center">
-            <div
-              className="flex items-center justify-center"
-              style={{
-                width: "180px",
-                height: "180px",
-                background: "radial-gradient(circle at 30% 30%, rgba(45,212,191,0.3) 0%, rgba(88,166,255,0.15) 40%, rgba(45,212,191,0.05) 70%, transparent 100%)",
-                border: "1px solid rgba(45,212,191,0.2)",
-                borderRadius: "24px",
-                transform: "rotate(15deg)",
-                boxShadow: "0 0 60px rgba(45,212,191,0.15), inset 0 0 40px rgba(45,212,191,0.05)",
-                animation: "float 4s ease-in-out infinite",
-              }}
-            >
-              <span style={{ fontSize: "64px", filter: "drop-shadow(0 0 20px #2dd4bf)" }}>⚡</span>
-            </div>
-          </div>
+          {/* Right: a real 6-face CSS cube that turns toward the pointer */}
+          <HeroCube />
         </div>
-        <style>{`@keyframes float { 0%, 100% { transform: rotate(15deg) translateY(0px); } 50% { transform: rotate(15deg) translateY(-10px); } }`}</style>
       </section>
 
       {/* ─── What is a slash command? (minimal explainer) ─── */}
@@ -534,23 +716,29 @@ function HomePage() {
       {/* ─── Library stats bar ─── */}
       <section
         aria-label="SlashAI library size"
-        className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-2xl border border-sidebar-border bg-surface px-4 py-3 text-[12px] text-muted-foreground"
+        className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4"
       >
-        <span>⚡ <b className="font-semibold text-foreground tabular-nums">{VERIFIED_TOTAL.toLocaleString()}</b> Commands</span>
-        <span>🧰 <b className="font-semibold text-foreground tabular-nums">{TOTAL_TOOL_COUNT.toLocaleString()}</b> Tools</span>
-        <span>🎮 <b className="font-semibold text-foreground tabular-nums">{TOTAL_PLAY_COUNT}</b> Games</span>
-        <span>📦 <b className="font-semibold text-foreground tabular-nums">{RESOURCE_TOTAL}+</b> Resources</span>
-        {hydrated && stats.copies > 0 && (
-          <span className="text-primary/90">📋 Copied {stats.copies.toLocaleString()} times</span>
-        )}
+        <StatTile value={VERIFIED_TOTAL} label="Commands" icon="⚡" index={0} />
+        <StatTile value={TOTAL_TOOL_COUNT} label="Tools" icon="🧰" index={1} />
+        <StatTile value={TOTAL_PLAY_COUNT} label="Games" icon="🎮" index={2} />
+        <StatTile value={RESOURCE_TOTAL} suffix="+" label="Resources" icon="📦" index={3} />
       </section>
+      {hydrated && stats.copies > 0 && (
+        <p className="mt-2 px-1 text-[12px] text-primary/90">
+          <span className="pulse-dot mr-1 inline-block size-1.5 rounded-full bg-primary align-middle" />
+          You have copied {stats.copies.toLocaleString()} commands from this device.
+        </p>
+      )}
 
       {/* ─── Journal hero card ─── */}
       <JournalHeroCard />
 
+      {/* ─── Quick links band ─── */}
+      <QuickMarquee />
+
       {/* ─── Tool of the Day (rotates daily via date seed) ─── */}
-      <section className="mt-10 overflow-hidden rounded-2xl border border-sidebar-border bg-surface">
-        <div className="flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
+      <section className="spotlight ring-rotate relative mt-10 overflow-hidden rounded-2xl border border-sidebar-border bg-surface" data-spotlight>
+        <div className="tilt-stage flex flex-col gap-4 p-6 sm:p-8 md:flex-row md:items-center md:justify-between">
           <div className="flex-1">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(45,212,191,0.2)] bg-[rgba(45,212,191,0.08)] px-2.5 py-1 text-[10px] uppercase tracking-[0.06em] text-primary">
               ⭐ Tool of the day
@@ -563,13 +751,19 @@ function HomePage() {
             </div>
             <Link
               to={`/tools/${HERO_TOOL.slug}` as string}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90"
+              className="magnet mt-4 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-[13px] font-bold text-background transition-colors hover:bg-primary/90"
+              ref={toolMagnetRef}
             >
               Try it now <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>
-          <div className="hidden md:flex size-32 items-center justify-center rounded-2xl bg-surface-elevated text-6xl">
-            {HERO_TOOL.icon}
+          <div className="tilt-stage hidden size-32 shrink-0 items-center justify-center md:flex">
+            <div
+              className="tilt flex size-32 items-center justify-center rounded-2xl border border-sidebar-border bg-surface-elevated text-6xl"
+              ref={toolTiltRef}
+            >
+              {HERO_TOOL.icon}
+            </div>
           </div>
         </div>
       </section>

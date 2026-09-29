@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Home,
@@ -32,6 +32,7 @@ import { GameBoyFrame } from "./GameBoyFrame";
 import { ShortenProvider } from "./ShortenProvider";
 import { usesDevice } from "@/lib/gameboy";
 import { FloatingActions } from "./FloatingActions";
+import { AmbientBackdrop } from "./AmbientBackdrop";
 import { bumpToolClick, recordUxInteraction } from "@/lib/ux";
 
 /**
@@ -376,6 +377,21 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
     toggleToolFavorite(screen.slug);
   };
 
+  // The dock's active pill is measured from the live DOM rather than guessed
+  // from the item list, so it stays correct as labels change width and the
+  // random button takes its slot in the middle.
+  const activeTabRef = useRef<HTMLAnchorElement | null>(null);
+  const [pill, setPill] = useState({ x: 0, w: 0, on: false });
+
+  useEffect(() => {
+    const el = activeTabRef.current;
+    if (!el || !el.offsetWidth) {
+      setPill((p) => (p.on ? { ...p, on: false } : p));
+      return;
+    }
+    setPill({ x: el.offsetLeft, w: el.offsetWidth, on: true });
+  }, [pathname]);
+
   // Fill the browser-tab title only when the route has no SEO head of its
   // own (a route-level head() always sets a description). Writing the title
   // unconditionally used to overwrite richer SSR titles like
@@ -395,6 +411,9 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
         className="flex min-h-screen w-full flex-col"
         style={{ background: "var(--background)" }}
       >
+        {/* one fixed, pointer-reactive layer behind every route */}
+        <AmbientBackdrop />
+
         <header className="sticky top-0 z-30 border-b border-sidebar-border bg-background/80 backdrop-blur-[10px]">
           <div
             className={`mx-auto flex h-[52px] w-full items-center gap-2 px-4 md:gap-3 md:px-6 ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
@@ -522,7 +541,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
         <CookieBanner />
 
         <main
-          className={`mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
+          className={`relative z-10 mx-auto w-full flex-1 animate-slide-in-up ${wide ? "max-w-[1700px]" : "max-w-[1500px]"}`}
         >
           <div
             className="w-full px-4 py-6 md:px-6 md:py-8"
@@ -563,7 +582,18 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
           className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
           style={{ height: "calc(62px + env(safe-area-inset-bottom))" }}
         >
-          <div className="mx-auto flex w-full max-w-[760px] items-stretch">
+          <div className="relative mx-auto flex w-full max-w-[760px] items-stretch">
+            {/* one pill that slides between dock tabs instead of five
+                independent indicators appearing and disappearing */}
+            <span
+              aria-hidden
+              className="dock-pill"
+              style={{
+                opacity: pill.on ? 1 : 0,
+                ["--pill-x" as string]: `${pill.x}px`,
+                ["--pill-w" as string]: `${pill.w}px`,
+              }}
+            />
             {PRIMARY.map((item) => {
               const isRandom = (item as { random?: boolean }).random === true;
               const isSlash = (item as { slash?: boolean }).slash === true;
@@ -596,11 +626,15 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                       const pick = pickRandom(pathname);
                       window.location.assign(pick.path);
                     }}
-                    className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-end pb-[8px] text-[10px] font-medium"
+                    className="dock-tab ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-end pb-[8px] text-[10px] font-medium"
                     style={{ color: "var(--muted-foreground)" }}
                   >
                     <span className="nav-random-btn mb-[3px] flex size-[46px] items-center justify-center rounded-full text-background">
-                      <item.icon className="size-[23px]" aria-hidden strokeWidth={2.2} />
+                      <item.icon
+                        className="dock-tab-icon size-[23px]"
+                        aria-hidden
+                        strokeWidth={2.2}
+                      />
                     </span>
                     {item.label}
                   </button>
@@ -642,7 +676,8 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                 <Link
                   key={item.to}
                   to={item.to as "/"}
-                  className="ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
+                  ref={active ? activeTabRef : undefined}
+                  className="dock-tab ripple-press relative flex min-h-[62px] flex-1 flex-col items-center justify-center gap-[2px] text-[10px] font-medium"
                   style={{ color: active ? "var(--primary)" : "var(--muted-foreground)" }}
                 >
                   {active && (
@@ -652,7 +687,11 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                       style={{ background: "var(--primary)" }}
                     />
                   )}
-                  <item.icon className="size-[22px]" aria-hidden strokeWidth={active ? 2.4 : 1.8} />
+                  <item.icon
+                    className="dock-tab-icon size-[22px]"
+                    aria-hidden
+                    strokeWidth={active ? 2.4 : 1.8}
+                  />
                   {item.label}
                 </Link>
               );

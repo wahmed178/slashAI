@@ -8,6 +8,17 @@ import { categoryIcon } from "@/components/library/icons";
 import { CATEGORY_TREE, SUBCATEGORY_TOTAL, VERIFIED_TOTAL } from "@/lib/commands";
 import { categoryHref } from "@/lib/explore-slugs";
 import { SUGGESTION_FORM_URL } from "@/lib/app-meta";
+import { useReveal } from "@/hooks/use-motion";
+
+/** Fades + lifts a block the first time it scrolls into view. */
+function RevealSection({ children }: { children: React.ReactNode }) {
+  const { ref } = useReveal<HTMLElement>();
+  return (
+    <section ref={ref} data-reveal>
+      {children}
+    </section>
+  );
+}
 
 export const Route = createFileRoute("/explore/")({
   head: () => ({
@@ -203,7 +214,7 @@ function ExplorePage() {
         <div className="my-8 border-t border-border" />
 
         {/* ── All categories grid ── */}
-        <section>
+        <RevealSection>
           <h2 className="mb-3 text-[15px] font-bold text-foreground">
             All Categories
           </h2>
@@ -217,9 +228,10 @@ function ExplorePage() {
                 <Link
                   key={c.category}
                   to={categoryHref(c.category)}
-                  className="group flex min-h-[72px] items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/50"
+                  data-spotlight
+                  className="group spotlight ring-rotate flex min-h-[72px] items-center gap-3 rounded-xl border border-border bg-surface p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/50"
                 >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-primary">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-primary transition-transform duration-200 group-hover:scale-110">
                     <Icon className="size-5" aria-hidden />
                   </span>
                   <span className="min-w-0 flex-1">
@@ -231,14 +243,14 @@ function ExplorePage() {
                     </span>
                   </span>
                   <ChevronRight
-                    className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+                    className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-1"
                     aria-hidden
                   />
                 </Link>
               );
             })}
           </div>
-        </section>
+        </RevealSection>
 
         {/* ── Suggest a command prompt ── */}
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-surface p-5 text-center sm:text-left">

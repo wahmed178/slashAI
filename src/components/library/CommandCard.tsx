@@ -49,11 +49,13 @@ export function CommandCard({
         }
       }}
       className={cn(
-        "group panel relative cursor-pointer rounded-xl outline-none transition-colors",
+        "group panel spotlight ring-rotate relative cursor-pointer rounded-xl outline-none",
+        "transition-colors",
         "hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring",
         compact ? "p-3" : "p-4",
         view === "list" && "flex items-start gap-4",
       )}
+      data-spotlight
     >
       <div className={cn("flex items-start gap-3", view === "list" ? "min-w-0 flex-1" : "")}>
         <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-primary">

@@ -1313,3 +1313,532 @@ a[id], section[id], [id^="section"] {
 .caret-blink {
   animation: caret-blink 1s step-end infinite;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   INTERACTION LAYER
+   Everything the pointer and the scrollbar can do to a surface. Two rules
+   hold the whole layer together:
+
+     1. Nothing here is load-bearing. No JS runs -> the server HTML is already
+        visible, because the hidden start-state is gated behind `.js-reveal`
+        which only ever gets added by a live hook.
+     2. Every transform/opacity loop is cancelled by both the OS setting and
+        the in-app `data-motion="reduced"` switch, so the site is fully usable
+        with motion off.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@property --spot-strength {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+/* Pointer position, published once per frame by AmbientBackdrop. */
+:root {
+  --pointer-x: 50vw;
+  --pointer-y: 34vh;
+  --pointer-nx: 0;
+  --pointer-ny: 0;
+}
+
+/* ──────────── scroll reveal ────────────
+   `.js-reveal` is added on mount by useReveal(), so server-rendered HTML is
+   never stuck at opacity 0 if the bundle fails. */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0) scale(0.985);
+  transition:
+    opacity 560ms var(--motion-ease),
+    transform 560ms var(--motion-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.js-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/* ──────────── cursor spotlight ────────────
+   Cards paint a soft highlight wherever the pointer is. Coordinates are
+   written by one delegated pointermove listener, never one per card. */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    260px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    color-mix(in oklab, var(--primary) 18%, transparent),
+    transparent 72%
+  );
+  opacity: var(--spot-strength, 0);
+  transition: opacity 320ms var(--motion-ease);
+}
+.spotlight:hover::before {
+  --spot-strength: 1;
+}
+:root[data-motion="reduced"] .spotlight::before {
+  display: none;
+}
+
+/* ──────────── pointer tilt ────────────
+   Driven by useTilt(); a real 3D rotation, capped small so text never
+   shears past legibility. */
+.tilt-stage {
+  perspective: 900px;
+}
+.tilt {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
+    translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  transition: transform 260ms var(--motion-ease);
+}
+.tilt.is-tilting {
+  transition-duration: 60ms;
+}
+.tilt-stage:hover .tilt {
+  box-shadow: var(--shadow-depth-4);
+}
+:root[data-motion="reduced"] .tilt,
+:root[data-motion="reduced"] .tilt.is-tilting {
+  transform: none !important;
+}
+
+/* ──────────── rotating conic ring ────────────
+   A gradient that travels around the border of highlighted cards. */
+.ring-rotate::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0deg,
+    var(--primary) 70deg,
+    var(--secondary, var(--primary)) 120deg,
+    transparent 200deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 320ms var(--motion-ease);
+}
+/* The spin only runs while the card is actually hovered. Animating a masked
+   conic gradient on every card in a 45-tile grid at once is not free. */
+.ring-rotate:hover::after,
+.ring-rotate:focus-within::after {
+  opacity: 1;
+  animation: ring-spin 5s linear infinite;
+}
+@keyframes ring-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+:root[data-motion="reduced"] .ring-rotate::after {
+  animation: none;
+  opacity: 0;
+}
+
+/* ──────────── gradient sweep across a surface ──────────── */
+.sheen-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.sheen-sweep::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in oklab, var(--primary) 22%, transparent),
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: left 720ms var(--motion-ease);
+}
+.sheen-sweep:hover::before {
+  left: 115%;
+}
+:root[data-motion="reduced"] .sheen-sweep::before {
+  display: none;
+}
+
+/* ──────────── link underline sweep ──────────── */
+.link-sweep {
+  position: relative;
+  text-decoration: none;
+}
+.link-sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary, var(--primary)));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms var(--motion-ease);
+}
+.link-sweep:hover::after,
+.link-sweep:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ──────────── magnet: a button drifts toward the pointer ──────────── */
+.magnet {
+  transform: translate3d(var(--magnet-x, 0px), var(--magnet-y, 0px), 0);
+  transition: transform 200ms var(--motion-spring);
+}
+.magnet.is-pulling {
+  transition-duration: 60ms;
+}
+:root[data-motion="reduced"] .magnet {
+  transform: none !important;
+}
+
+/* ──────────── ambient backdrop ────────────
+   One fixed layer for the whole app. Two soft light pools chase the pointer
+   and a faint grid keeps large empty areas from reading as dead space. */
+.ambient-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ambient-pool {
+  position: absolute;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: 50%;
+  /* No blur filter: the radial gradient already falls off to transparent, and
+     blurring a 46vmax layer every frame is the single most expensive thing
+     this layer could do. */
+  opacity: 0.5;
+  will-change: transform;
+}
+.ambient-pool-a {
+  top: 0;
+  left: 0;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--primary) 40%, transparent),
+    transparent 65%
+  );
+  transform: translate3d(calc(var(--pointer-x) - 23vmax), calc(var(--pointer-y) - 23vmax), 0);
+}
+.ambient-pool-b {
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--secondary, var(--primary)) 32%, transparent),
+    transparent 65%
+  );
+  transform: translate3d(
+    calc(var(--pointer-x) - 70vmax),
+    calc(var(--pointer-y) - 62vmax),
+    0
+  );
+}
+.ambient-grid {
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 10%, transparent 75%);
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 10%, transparent 75%);
+  opacity: 0.55;
+  transform: translate3d(calc(var(--pointer-nx) * -14px), calc(var(--pointer-ny) * -14px), 0);
+  transition: transform 700ms var(--motion-ease);
+}
+
+/* Motion off: freeze the backdrop in place, keep only the static wash. */
+:root[data-motion="reduced"] .ambient-pool,
+:root[data-motion="reduced"] .ambient-grid {
+  transform: none;
+  animation: none;
+}
+:root[data-motion="reduced"] .ambient-pool-b {
+  transform: translate3d(24vmax, 18vmax, 0);
+}
+:root[data-motion="reduced"] .ambient-grid {
+  transform: none;
+}
+
+/* brutal opts out of glow entirely - flat ink only. */
+:root.brutal .ambient-pool {
+  display: none;
+}
+:root.brutal .ambient-grid {
+  opacity: 0.18;
+}
+
+/* ──────────── hero 3D cube ──────────── */
+.cube-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  perspective: 720px;
+  width: 168px;
+  height: 168px;
+}
+.cube {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--cube-x, -22deg)) rotateY(var(--cube-y, 32deg))
+    translateZ(0);
+  transition: transform 420ms var(--motion-ease);
+}
+.cube.is-tracking {
+  transition-duration: 90ms;
+}
+.cube-face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  background: color-mix(in oklab, var(--primary) 12%, var(--surface));
+  border-radius: 10px;
+  backface-visibility: hidden;
+}
+.cube-face:nth-child(1) { transform: translateZ(42px); }
+.cube-face:nth-child(2) { transform: rotateY(90deg) translateZ(42px); }
+.cube-face:nth-child(3) { transform: rotateY(180deg) translateZ(42px); }
+.cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(42px); }
+.cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(42px); }
+.cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(42px); }
+.cube-halo {
+  position: absolute;
+  inset: -34px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--primary) 26%, transparent),
+    transparent 68%
+  );
+  filter: blur(14px);
+  animation: cube-breathe 5.5s ease-in-out infinite;
+}
+@keyframes cube-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  50% { transform: scale(1.16); opacity: 1; }
+}
+:root[data-motion="reduced"] .cube,
+:root[data-motion="reduced"] .cube.is-tracking {
+  transform: rotateX(-18deg) rotateY(28deg);
+}
+:root[data-motion="reduced"] .cube-halo {
+  animation: none;
+}
+:root.brutal .cube-halo {
+  display: none;
+}
+:root.brutal .cube-face {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+/* ──────────── rotating headline word ──────────── */
+.word-swap {
+  display: inline-grid;
+  vertical-align: bottom;
+  text-align: left;
+}
+.word-swap > span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+.word-swap > .word-swap-word {
+  animation: word-swap-in 520ms var(--motion-spring) both;
+}
+/* Invisible sibling that pins the grid to the widest word, so swapping the
+   headline never nudges the layout. */
+.word-swap-sizer {
+  visibility: hidden;
+  pointer-events: none;
+}
+@keyframes word-swap-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5em, 0) rotateX(-70deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.word-swap-shell {
+  perspective: 500px;
+}
+:root[data-motion="reduced"] .word-swap > .word-swap-word {
+  animation: none;
+}
+
+/* ──────────── count-up numerals ──────────── */
+.count-up {
+  font-variant-numeric: tabular-nums;
+  transition: opacity 220ms var(--motion-ease);
+}
+.count-up.is-counting {
+  opacity: 0.45;
+}
+
+/* ──────────── marquee ──────────── */
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  /* No gap here: the track is translated exactly -50%, so the two halves must
+     be butted together. Spacing between chips comes from each row's own
+     trailing padding instead. */
+  gap: 0;
+  animation: marquee-slide var(--marquee-duration, 38s) linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee-slide {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+:root[data-motion="reduced"] .marquee-track {
+  animation: none;
+}
+
+/* ──────────── dock tabs ──────────── */
+.dock-tab {
+  position: relative;
+  transition: color 200ms var(--motion-ease);
+}
+.dock-tab-icon {
+  transition: transform 320ms var(--motion-spring);
+}
+.dock-tab:hover .dock-tab-icon {
+  transform: translateY(-3px) scale(1.08);
+}
+.dock-tab:active .dock-tab-icon {
+  transform: translateY(-1px) scale(0.94);
+}
+/* The single sliding pill behind the active dock tab. */
+.dock-pill {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  height: calc(100% - 10px);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--primary) 28%, transparent);
+  transform: translate3d(var(--pill-x, 0px), 0, 0) scaleX(var(--pill-scale, 1));
+  width: var(--pill-w, 0px);
+  transition:
+    transform 420ms var(--motion-spring),
+    width 420ms var(--motion-spring),
+    opacity 200ms var(--motion-ease);
+  pointer-events: none;
+}
+:root[data-motion="reduced"] .dock-pill {
+  transition: none;
+}
+:root[data-motion="reduced"] .dock-tab-icon {
+  transform: none !important;
+}
+
+/* ──────────── accordion / expandable rows ──────────── */
+.expand-row {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 360ms var(--motion-ease);
+}
+.expand-row > * {
+  overflow: hidden;
+  min-height: 0;
+}
+.expand-row.is-open {
+  grid-template-rows: 1fr;
+}
+:root[data-motion="reduced"] .expand-row {
+  transition: none;
+}
+
+/* ──────────── live "pulse" dot ──────────── */
+.pulse-dot {
+  position: relative;
+}
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  animation: pulse-ring 2s ease-out infinite;
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+:root[data-motion="reduced"] .pulse-dot::after {
+  animation: none;
+  opacity: 0;
+}
+
+/* ──────────── keyboard shortcut hint ──────────── */
+.kbd-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--surface-elevated);
+  padding: 1px 6px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  color: var(--muted-foreground);
+  transition: transform 200ms var(--motion-spring), color 200ms var(--motion-ease);
+}
+a:hover > .kbd-hint,
+button:hover > .kbd-hint {
+  transform: translateY(-1px);
+  color: var(--foreground);
+}

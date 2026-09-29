@@ -44,7 +44,8 @@ export function ResourceCard({ resource }: { resource: Resource }) {
     <Link
       to="/r/$id"
       params={{ id: resource.id }}
-      className="panel group flex flex-col gap-2 rounded-xl p-3.5 transition-colors hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      className="panel spotlight ring-rotate group flex flex-col gap-2 rounded-xl p-3.5 transition-colors hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+      data-spotlight
     >
       <div className="flex items-start gap-2">
         <span className="min-w-0 flex-1">
