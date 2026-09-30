@@ -89,6 +89,14 @@ const BACKGROUNDS: Background[] = [
  * viewport is. The previous version used `clamp(px, 22vw, 220px)`,
  * which pushed 220px glyphs through a 320px card with no
  * `overflow: hidden` to stop them.
+ *
+ * The card *box* is the thing that has to grow. The old width was
+ * `clamp(56px, 15vw, 88px)` — capped at 88px on any monitor wider
+ * than ~590px, so the clock sat in the middle of a desktop screen as
+ * a thumbnail. The sizes are now derived from the viewport in CSS
+ * (see the `.fc-*` rules at the bottom of this file): the stacked
+ * layout is bound by the screen height (three rows have to fit) and
+ * the inline layout by the screen width (six cards in one row).
  */
 
 const CARD: CSSProperties = {
@@ -108,7 +116,9 @@ const CARD: CSSProperties = {
 
 const GLYPH: CSSProperties = {
   fontFamily: "var(--font-sans)",
-  fontSize: "min(66cqw, 46cqh)",
+  // The size itself comes from `.fc-glyph` in the stylesheet at the
+  // bottom: a container query (`cqh`) is the only unit that tracks the
+  // card box, and it needs a plain viewport fallback for older engines.
   fontWeight: 600,
   lineHeight: 1,
   letterSpacing: "-0.02em",
@@ -155,7 +165,9 @@ function Half({
   return (
     <div className="absolute inset-0" style={{ clipPath: clip(axis, half) }}>
       <div style={FILLER}>
-        <span style={GLYPH}>{value}</span>
+        <span className="fc-glyph" style={GLYPH}>
+          {value}
+        </span>
       </div>
       {shade && <div className="absolute inset-0" style={{ background: shade }} />}
     </div>
@@ -211,7 +223,9 @@ function FlipDigit({ char, axis }: { char: string; axis: Axis }) {
             }}
           >
             <div style={FILLER}>
-              <span style={GLYPH}>{from}</span>
+              <span className="fc-glyph" style={GLYPH}>
+                {from}
+              </span>
             </div>
             <div
               className="absolute inset-0"
@@ -233,7 +247,9 @@ function FlipDigit({ char, axis }: { char: string; axis: Axis }) {
             }}
           >
             <div style={FILLER}>
-              <span style={GLYPH}>{char}</span>
+              <span className="fc-glyph" style={GLYPH}>
+                {char}
+              </span>
             </div>
             <div
               className="absolute inset-0"
@@ -329,6 +345,18 @@ function FlipClock() {
   useEffect(() => {
     pausedRef.current = prefs.paused;
   }, [prefs.paused]);
+
+  /* The clock is a fixed full-bleed overlay now, so the page behind it
+     (header, breadcrumbs, the catalogue cross-links) must not scroll
+     underneath — a scrollbar would also make `100vw` wider than the
+     visible area and shrink the usable width. */
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
 
   const set = useCallback(<K extends keyof Prefs>(key: K, value: Prefs[K]) => {
     setPrefs((p) => ({ ...p, [key]: value }));
@@ -436,10 +464,15 @@ function FlipClock() {
     { label: "Seconds", pair: [digits[4], digits[5]] as const },
   ];
 
-  const cardBox = vertical ? "w-[clamp(56px,15vw,88px)]" : "w-[clamp(44px,11.5vw,72px)]";
+  /* Card geometry now lives in CSS (`.fc-stack` / `.fc-inline`) so it can
+     be driven straight off the viewport. Both branches only need the
+     layout class. */
+  const layoutClass = vertical ? "fc-stack" : "fc-inline";
 
   return (
-    <div className="relative flex h-[100dvh] w-full flex-col overflow-hidden select-none">
+    <div
+      className={`fc-root fixed inset-0 z-40 flex w-full flex-col overflow-hidden select-none ${layoutClass}`}
+    >
       {/* ── background: click anywhere on it to change the photo ── */}
       <div
         className="absolute inset-0 cursor-pointer"
@@ -467,7 +500,7 @@ function FlipClock() {
       <h1 className="sr-only">Flip Clock — split-flap clock by SlashAI</h1>
 
       {/* ── clock ── */}
-      <div className="relative z-10 flex flex-1 items-center justify-center px-4 py-6">
+      <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center overflow-hidden px-3 py-3 sm:px-6">
         {vertical ? (
           /* A 3-column grid, not three centred rows: the Hours row used to
              carry an extra AM/PM cell, so each row was a different width and
@@ -476,15 +509,15 @@ function FlipClock() {
              meridiem cell is always rendered (empty for the lower two rows)
              so the grid reserves it too. */
           <div
-            className="grid items-center gap-x-3 gap-y-4 sm:gap-x-5 sm:gap-y-6"
+            className="fc-grid grid items-center"
             style={{ gridTemplateColumns: "auto auto auto" }}
           >
             {units.map((u) => (
               <div key={u.label} className="contents">
-                <span className="text-right text-[9px] font-semibold tracking-[0.18em] text-white/35 uppercase sm:text-[10px]">
+                <span className="fc-label text-right font-semibold tracking-[0.18em] text-white/35 uppercase">
                   {u.label}
                 </span>
-                <div className={`flex gap-1.5 sm:gap-2 ${cardBox}`} style={{ aspectRatio: "1.44" }}>
+                <div className="fc-pair flex">
                   <div className="flex-1">
                     <FlipDigit char={u.pair[0]} axis={prefs.axis} />
                   </div>
@@ -492,26 +525,26 @@ function FlipClock() {
                     <FlipDigit char={u.pair[1]} axis={prefs.axis} />
                   </div>
                 </div>
-                <span className="text-[11px] font-bold tracking-wider text-white/45 sm:text-sm">
+                <span className="fc-meridiem font-bold tracking-wider text-white/45">
                   {u.label === "Hours" && !prefs.h24 ? (isPm ? "PM" : "AM") : ""}
                 </span>
               </div>
             ))}
           </div>
         ) : (
-          <div className="flex items-center gap-1 sm:gap-2.5">
+          <div className="fc-row flex items-center">
             {digits.map((d, i) => (
-              <div key={i} className="flex items-center gap-1 sm:gap-2.5">
-                <div className={cardBox} style={{ aspectRatio: vertical ? "1.52" : "0.8" }}>
+              <div key={i} className="fc-group flex items-center">
+                <div className="fc-card">
                   <FlipDigit char={d} axis={prefs.axis} />
                 </div>
                 {(i === 1 || i === 3) && (
-                  <span className="px-0.5 text-2xl font-semibold text-white/35 sm:text-4xl">:</span>
+                  <span className="fc-colon px-0.5 font-semibold text-white/35">:</span>
                 )}
               </div>
             ))}
             {!prefs.h24 && (
-              <span className="pl-1 text-[11px] font-bold tracking-wider text-white/45 sm:text-sm">
+              <span className="fc-meridiem pl-1 font-bold tracking-wider text-white/45">
                 {isPm ? "PM" : "AM"}
               </span>
             )}
@@ -604,6 +637,58 @@ function FlipClock() {
       </div>
 
       <style>{`
+        /* ── full-screen sizing ──────────────────────────────────
+           The clock is a fixed, full-bleed overlay, so the free space is
+           exactly the viewport minus the two floating chrome panels. The
+           old build sized cards with clamp(56px, 15vw, 88px), which
+           stopped growing at 88px and left the clock looking like a
+           thumbnail on a desktop monitor. These rules derive the card
+           box from the viewport instead, in both layouts:
+
+           - .fc-stack: three rows of two cards (1.44:1). Bound by
+             height, since 3 cards + gaps have to fit the screen.
+           - .fc-inline: six cards in one row (0.8:1). Bound by width,
+             since 6 cards + gaps + separators have to fit the screen.
+
+           150px is reserved for the auto-hiding control deck at the
+           bottom; the two floor values stop the cards collapsing on
+           very small windows. */
+        .fc-root { --fc-gap: clamp(4px, 1vmin, 20px); }
+
+        .fc-stack {
+          --fc-card-h: max(42px, min(calc((100dvh - 150px - 2 * var(--fc-gap)) / 3), calc((100vw - 170px) / 3.6)));
+          --fc-card-w: calc(var(--fc-card-h) * 1.44);
+        }
+        .fc-inline {
+          --fc-card-h: max(34px, min(100dvh - 150px, (100vw - 110px) / 5.7));
+          --fc-card-w: calc(var(--fc-card-h) * 0.8);
+        }
+
+        .fc-grid { gap: var(--fc-gap); }
+
+        .fc-pair {
+          gap: var(--fc-gap);
+          flex: none;
+          width: calc(var(--fc-card-w) * 2 + var(--fc-gap));
+          height: var(--fc-card-h);
+        }
+        .fc-row { gap: var(--fc-gap); }
+        .fc-group { gap: calc(var(--fc-gap) * 0.5); }
+        .fc-card { width: var(--fc-card-w); height: var(--fc-card-h); flex: none; }
+
+        /* The digit is sized off its own card (a container query), so it
+           can never overflow the card however big the screen is. A
+           split-flap glyph is ~0.72em of cap height, so 1.05cqh fills
+           roughly three quarters of the card. The vmin line is the
+           fallback for engines without container-query units. */
+        .fc-glyph { font-size: clamp(52px, 12vmin, 460px); font-size: 1.05cqh; }
+
+        /* the small type scales with the clock so it never looks lost
+           next to a 250px digit */
+        .fc-label { font-size: clamp(9px, 1.1vmin, 20px); }
+        .fc-meridiem { font-size: clamp(11px, 1.7vmin, 30px); }
+        .fc-colon { font-size: clamp(1.5rem, 9vmin, 12rem); line-height: 1; }
+
         @keyframes fcOutX { from { transform: rotateX(0deg); } to { transform: rotateX(-90deg); } }
         @keyframes fcInX  { from { transform: rotateX(90deg); } to { transform: rotateX(0deg); } }
         @keyframes fcOutY { from { transform: rotateY(0deg); } to { transform: rotateY(-90deg); } }

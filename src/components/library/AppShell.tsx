@@ -668,7 +668,8 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
         <FloatingActions />
 
         {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
-          Home · Commands · 🎲 Random (centre) · Hubs · ⚡ Slash (overlay) */}
+          Home · ⚡ Slash (overlay) · 🎲 Random · Commands. Hubs used to be a
+          fifth tab; it is now part of SlashBar, so /hub redirects. */}
         <nav
           aria-label="Primary"
           className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
