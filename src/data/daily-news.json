@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-29T13:42:10.053Z",
+  "updated": "2026-09-30T13:18:39.484Z",
   "articles": [
     {
-      "title": "You Are No Longer Invited to Dinner",
-      "url": "https://www.derekthompson.org/p/the-death-of-the-american-host",
+      "title": "Livenerf: Has Opus 5.5 been nerfed yet?",
+      "url": "https://github.com/ninjahawk/livenerf",
       "source": "HackerNews",
-      "score": 284,
+      "score": 727,
       "publishedAt": "2026-09-29"
     },
     {
-      "title": "AI companies leak data to advertisers [pdf]",
-      "url": "https://jorgegarciaherrero.com/wp-content/interactivos/20260916-Prompt-like-a-butterfly-sting-like-a-tracker-(clean).pdf",
+      "title": "Dots: Always-on agents",
+      "url": "https://openai.com/index/introducing-dots/",
       "source": "HackerNews",
-      "score": 243,
+      "score": 669,
       "publishedAt": "2026-09-29"
     },
     {
-      "title": "Phyllotaxis: An audio-reactive LED display",
-      "url": "https://jagi.studio/posts/phyllotaxis/",
+      "title": "America.gov",
+      "url": "https://america.gov/",
       "source": "HackerNews",
-      "score": 181,
-      "publishedAt": "2026-09-28"
-    },
-    {
-      "title": "500k facial scans at UK stations yield no arrests, 1 false positive",
-      "url": "https://www.theguardian.com/technology/2026/sep/29/trial-live-facial-recognition-cameras-london-stations-false-positive",
-      "source": "HackerNews",
-      "score": 168,
+      "score": 644,
       "publishedAt": "2026-09-29"
     },
     {
-      "title": "US sanctions force The Netherlands off Microsoft and toward alternative NixOS",
-      "url": "https://www.tomshardware.com/software/the-netherlands-is-rolling-alternative-nixos-based-software-ecosystem-after-u-s-sanctions-on-icc-took-microsoft-off-the-table-trial-programs-running-now-first-release-expected-at-end-of-2027",
+      "title": "September 2026: The world today, as seen by one Polish guy",
+      "url": "https://tomwojcik.com/posts/2026-09-21/september-2026-the-world-today/",
       "source": "HackerNews",
-      "score": 149,
+      "score": 369,
+      "publishedAt": "2026-09-30"
+    },
+    {
+      "title": "Vermont replacing power plants with home batteries",
+      "url": "https://www.bbc.com/future/article/20260928-a-virtual-power-plant-hidden-in-vermont-homes-is-keeping-the-lights-on-during-storms",
+      "source": "HackerNews",
+      "score": 254,
       "publishedAt": "2026-09-29"
     },
     {
-      "title": "Jeeves. Reasoning improves Jev-like decision models",
-      "url": "https://github.com/PostHog/jeeves",
+      "title": "Pi.dev: You Said No MCP",
+      "url": "https://earendil.com/posts/you-said-no-mcp/",
       "source": "HackerNews",
-      "score": 91,
+      "score": 226,
+      "publishedAt": "2026-09-30"
+    },
+    {
+      "title": "Solving Factorio Quality",
+      "url": "https://exyr.org/2026/solving-factorio-quality/",
+      "source": "HackerNews",
+      "score": 147,
       "publishedAt": "2026-09-29"
     },
     {
-      "title": "Using any C++ library in Godot",
-      "url": "https://blog.conan.io/cpp/conan/gamedev/godot/cmake/2026/09/29/Using-Any-Cpp-Library-In-Godot.html",
+      "title": "Most data centers refusing to say how much water, electricity they use",
+      "url": "https://nltimes.nl/2026/09/30/data-centers-refusing-say-much-water-electricity-use",
       "source": "HackerNews",
-      "score": 89,
-      "publishedAt": "2026-09-29"
-    },
-    {
-      "title": "Delhi Cut Electricity Loss from 50 to 5 Percent",
-      "url": "https://spectrum.ieee.org/delhi-electricity-loss",
-      "source": "HackerNews",
-      "score": 74,
-      "publishedAt": "2026-09-29"
+      "score": 95,
+      "publishedAt": "2026-09-30"
     }
   ]
 }
