@@ -500,7 +500,12 @@ function FlipClock() {
       <h1 className="sr-only">Flip Clock — split-flap clock by SlashAI</h1>
 
       {/* ── clock ── */}
-      <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center overflow-hidden px-3 py-3 sm:px-6">
+      {/* The clock is centred in this box, but the control deck is a fixed
+          overlay at the bottom of the viewport. Without the bottom padding
+          the centred clock sat on top of the deck's hint line - measured at
+          14px of overlap on a 1920x1080 screen - so the box reserves the
+          deck's height and centres in what is left. */}
+      <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center overflow-hidden px-3 pt-3 pb-[clamp(60px,9vh,132px)] sm:px-6">
         {vertical ? (
           /* A 3-column grid, not three centred rows: the Hours row used to
              carry an extra AM/PM cell, so each row was a different width and
@@ -678,10 +683,12 @@ function FlipClock() {
 
         /* The digit is sized off its own card (a container query), so it
            can never overflow the card however big the screen is. A
-           split-flap glyph is ~0.72em of cap height, so 1.05cqh fills
-           roughly three quarters of the card. The vmin line is the
-           fallback for engines without container-query units. */
-        .fc-glyph { font-size: clamp(52px, 12vmin, 460px); font-size: 1.05cqh; }
+           split-flap glyph is ~0.72em of cap height, so 105cqh fills
+           roughly three quarters of the card. Note that 1cqh is already
+           1% of the container height - it is not a fraction of 100%. The
+           vmin line is the fallback for engines without container-query
+           units. */
+        .fc-glyph { font-size: clamp(52px, 12vmin, 460px); font-size: 105cqh; }
 
         /* the small type scales with the clock so it never looks lost
            next to a 250px digit */
