@@ -21,7 +21,6 @@ import { useUxTick } from "@/hooks/use-ux";
 import { RANDOM_POOL_SIZE } from "@/lib/random-pick";
 import { playSectionColor } from "@/lib/category-colors";
 import { GameCover } from "@/components/library/GameCover";
-import { usesDevice } from "@/lib/gameboy";
 import { useLibrary } from "@/hooks/use-library";
 
 export const Route = createFileRoute("/play/")({
@@ -102,7 +101,7 @@ function GameCard({ game, color }: { game: PlayGame; color: string }) {
         )}
       </span>
       <span className="cat-text mt-2.5 text-[11px] font-semibold opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-        {usesDevice(game.slug) ? "Play in handheld →" : "Play now →"}
+        Play now →
       </span>
     </Link>
   );

@@ -30,25 +30,27 @@ import { InstallBanner } from "./InstallBanner";
 import { CookieBanner } from "./CookieBanner";
 import { SlashBarOverlay } from "./SlashBarOverlay";
 import { CatalogueExtras } from "./CatalogueExtras";
-import { GameBoyFrame } from "./GameBoyFrame";
 import { ShortenProvider } from "./ShortenProvider";
-import { usesDevice } from "@/lib/gameboy";
 import { FloatingActions } from "./FloatingActions";
 import { AmbientBackdrop } from "./AmbientBackdrop";
 import { bumpToolClick, recordUxInteraction } from "@/lib/ux";
 
 /**
- * Bottom dock: Home · ⚡ Slash (side tab, opens the full-screen SlashBar) ·
- * 🎲 Random (elevated shiny centre, instant roll) · Commands.
+ * Bottom dock: Home · ⚡ Slash (opens the full-screen SlashBar) · 🎲 Random
+ * (elevated shiny centre, instant roll) · Saved · Commands.
  *
- * SlashBar is the site's single hub, so it sits second where the old Hubs tab
- * used to be. "Commands" points at /explore, and stays lit for /explore,
- * /search, /find and /c/* — the whole command vault, not just the browse page.
+ * Five tabs, so the dock reads as one balanced row and Random sits in the
+ * middle instead of hanging off to one side. "Saved" is the /favorites list
+ * that used to live behind a bookmark icon in the header corner — one place
+ * for navigation, not two. "Commands" points at /explore, and stays lit for
+ * /explore, /search, /find and /c/* — the whole command vault, not just the
+ * browse page.
  */
 const PRIMARY = [
   { to: "/", label: "Home", icon: Home, exact: true },
   { to: "", label: "Slash", icon: Zap, slash: true },
   { to: "", label: "Random", icon: Dices, random: true },
+  { to: "/favorites", label: "Saved", icon: Bookmark, exact: false },
   { to: "/explore", label: "Commands", icon: Terminal, exact: false },
 ] as const;
 
@@ -61,14 +63,7 @@ function isActive(pathname: string, to: string, exact?: boolean) {
       pathname.startsWith("/find") ||
       pathname.startsWith("/c/")
     );
-  if (to === "/discover")
-    return (
-      pathname.startsWith("/discover") ||
-      pathname.startsWith("/r/") ||
-      pathname.startsWith("/whats-new") ||
-      pathname.startsWith("/radar") ||
-      pathname.startsWith("/trending")
-    );
+  if (to === "/favorites") return pathname.startsWith("/favorites");
   return pathname.startsWith(to);
 }
 
@@ -599,13 +594,6 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
                 <Info className="size-[19px]" />
               </Link>
               <Link
-                to="/favorites"
-                className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
-                aria-label="Saved items"
-              >
-                <Bookmark className="size-[19px]" />
-              </Link>
-              <Link
                 to="/me"
                 className="flex size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-surface-elevated hover:text-foreground"
                 aria-label="Settings"
@@ -649,14 +637,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
               }
             />
             {srH1 && <h1 className="sr-only">{srH1}</h1>}
-            {/* Games that suit the handheld play inside it; the rest, and every
-              tool, render on a normal page. Wrapping here means one change
-              covers the whole catalogue instead of 96 route files. */}
-            {screen && screen.kind === "game" && usesDevice(screen.slug) ? (
-              <GameBoyFrame slug={screen.slug}>{children}</GameBoyFrame>
-            ) : (
-              children
-            )}
+            {children}
             {/* consistent onboarding + cross-links on every tool & game page */}
             {screen && (screen.kind === "tool" || screen.kind === "game") && (
               <CatalogueExtras kind={screen.kind} slug={screen.slug} />
@@ -668,8 +649,7 @@ export function AppShell({ children, title, back, hideHeaderSearch, wide, srH1 }
         <FloatingActions />
 
         {/* bottom dock navigation - the ONLY navigation (no sidebar, no drawer):
-          Home · ⚡ Slash (overlay) · 🎲 Random · Commands. Hubs used to be a
-          fifth tab; it is now part of SlashBar, so /hub redirects. */}
+          Home · ⚡ Slash (overlay) · 🎲 Random · Saved · Commands. */}
         <nav
           aria-label="Primary"
           className="nav-float fixed inset-x-0 bottom-0 z-30 flex items-stretch border-t border-sidebar-border bg-background/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-[14px]"
