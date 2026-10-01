@@ -7,6 +7,7 @@ import {
   useRouterState,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
   type MetaDescriptor,
 } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type JSX, type ReactNode } from "react";
@@ -79,11 +80,15 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+// `error` is `unknown` in ErrorComponentProps as of @tanstack/react-router 1.170.x
+// (it changed from `Error`), so narrow it locally rather than asserting a type
+// the router no longer promises.
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
 
-  const stale = isChunkLoadError(error?.message ?? "");
+  const message = error instanceof Error ? error.message : typeof error === "string" ? error : "";
+  const stale = isChunkLoadError(message);
 
   useEffect(() => {
     if (!recoveredThisSession()) {
