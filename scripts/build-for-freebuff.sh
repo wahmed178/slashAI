@@ -14,7 +14,7 @@ cp -r .output/public/* dist/
 # Patch the entry JS for static SPA mode:
 # 1. hydrateRoot(document, ...) → createRoot(document.getElementById("root"), ...)
 # 2. Remove server adapter code that crashes without a backend
-python3 scripts/patch-entry.py
+node scripts/patch-entry.mjs
 
 # Find the entry JS for the HTML template
 ENTRY_JS=$(ls dist/assets/index-*.js 2>/dev/null | head -1)

@@ -7,6 +7,10 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    // Own the client entry too. The default one calls hydrateRoot(document, ...)
+    // because it expects server-rendered markup; Freebuff serves a static SPA
+    // shell with an empty #root, so the app must mount with createRoot instead.
+    client: { entry: "client" },
   },
   vite: {
     build: {
