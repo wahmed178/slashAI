@@ -102,14 +102,17 @@ const BACKGROUNDS: Background[] = [
 const CARD: CSSProperties = {
   background: "#101010",
   borderRadius: 10,
-  boxShadow: "0 1px 0 rgba(255,255,255,0.07) inset, 0 10px 26px rgba(0,0,0,0.45)",
+  // The hairline matters: the card is near-black, so over a dark photo
+  // background a large card is easy to miss and the clock reads as a
+  // row of small digits floating in space.
+  boxShadow:
+    "0 0 0 1px rgba(255,255,255,0.13) inset, 0 1px 0 rgba(255,255,255,0.07) inset, 0 10px 26px rgba(0,0,0,0.45)",
   // `perspective` must sit on the direct parent of the folding
   // leaves, otherwise they get no 3D projection at all.
   perspective: 1100,
   transformStyle: "preserve-3d",
   overflow: "hidden",
   position: "relative",
-  containerType: "size",
   width: "100%",
   height: "100%",
 };
@@ -117,8 +120,7 @@ const CARD: CSSProperties = {
 const GLYPH: CSSProperties = {
   fontFamily: "var(--font-sans)",
   // The size itself comes from `.fc-glyph` in the stylesheet at the
-  // bottom: a container query (`cqh`) is the only unit that tracks the
-  // card box, and it needs a plain viewport fallback for older engines.
+  // bottom, derived from --fc-card-h so it always tracks the card box.
   fontWeight: 600,
   lineHeight: 1,
   letterSpacing: "-0.02em",
@@ -657,16 +659,32 @@ function FlipClock() {
 
            150px is reserved for the auto-hiding control deck at the
            bottom; the two floor values stop the cards collapsing on
-           very small windows. */
+           very small windows.
+
+           Everything here sticks to vh/vw/clamp/min/max on purpose. The
+           previous build derived the box from 100dvh and sized the digit
+           from 105cqh, and an engine missing either unit invalidates the
+           whole declaration - the cards fell back to auto sizing and the
+           clock collapsed to a thumbnail on the user's monitor while
+           looking perfectly fine in Chrome. Plain vh is understood
+           everywhere, and the dvh upgrade below is opt-in. */
         .fc-root { --fc-gap: clamp(4px, 1vmin, 20px); }
 
         .fc-stack {
-          --fc-card-h: max(42px, min(calc((100dvh - 150px - 2 * var(--fc-gap)) / 3), calc((100vw - 170px) / 3.6)));
+          --fc-card-h: max(42px, min(calc((100vh - 150px - 2 * var(--fc-gap)) / 3), calc((100vw - 170px) / 3.6)));
           --fc-card-w: calc(var(--fc-card-h) * 1.44);
         }
         .fc-inline {
-          --fc-card-h: max(34px, min(100dvh - 150px, (100vw - 110px) / 5.7));
+          --fc-card-h: max(34px, min(calc(100vh - 150px), calc((100vw - 110px) / 5.7)));
           --fc-card-w: calc(var(--fc-card-h) * 0.8);
+        }
+        @supports (height: 100dvh) {
+          .fc-stack {
+            --fc-card-h: max(42px, min(calc((100dvh - 150px - 2 * var(--fc-gap)) / 3), calc((100vw - 170px) / 3.6)));
+          }
+          .fc-inline {
+            --fc-card-h: max(34px, min(calc(100dvh - 150px), calc((100vw - 110px) / 5.7)));
+          }
         }
 
         .fc-grid { gap: var(--fc-gap); }
@@ -681,14 +699,18 @@ function FlipClock() {
         .fc-group { gap: calc(var(--fc-gap) * 0.5); }
         .fc-card { width: var(--fc-card-w); height: var(--fc-card-h); flex: none; }
 
-        /* The digit is sized off its own card (a container query), so it
-           can never overflow the card however big the screen is. A
-           split-flap glyph is ~0.72em of cap height, so 105cqh fills
-           roughly three quarters of the card. Note that 1cqh is already
-           1% of the container height - it is not a fraction of 100%. The
-           vmin line is the fallback for engines without container-query
-           units. */
-        .fc-glyph { font-size: clamp(52px, 12vmin, 460px); font-size: 105cqh; }
+        /* The digit is sized off the card box itself, so it can never
+           overflow the card however big the screen is. A split-flap
+           glyph is ~0.72em of cap height, so 1.05x the card height
+           fills roughly three quarters of the card. This used to be
+           105cqh, which needs container-type:size on the card; if that
+           support is missing the digits collapse. --fc-card-h is a plain
+           inherited custom property, so this works in any engine that
+           understands calc. The clamp line stays as a last resort. */
+        .fc-glyph {
+          font-size: clamp(40px, 12vmin, 460px);
+          font-size: min(calc(var(--fc-card-h) * 1.05), 460px);
+        }
 
         /* the small type scales with the clock so it never looks lost
            next to a 250px digit */
