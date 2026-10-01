@@ -1,61 +1,61 @@
 {
-  "updated": "2026-09-30T13:18:39.484Z",
+  "updated": "2026-10-01T14:08:30.441Z",
   "articles": [
     {
-      "title": "Livenerf: Has Opus 5.5 been nerfed yet?",
-      "url": "https://github.com/ninjahawk/livenerf",
+      "title": "Gemini 4 Argon",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
       "source": "HackerNews",
-      "score": 727,
-      "publishedAt": "2026-09-29"
-    },
-    {
-      "title": "Dots: Always-on agents",
-      "url": "https://openai.com/index/introducing-dots/",
-      "source": "HackerNews",
-      "score": 669,
-      "publishedAt": "2026-09-29"
-    },
-    {
-      "title": "America.gov",
-      "url": "https://america.gov/",
-      "source": "HackerNews",
-      "score": 644,
-      "publishedAt": "2026-09-29"
-    },
-    {
-      "title": "September 2026: The world today, as seen by one Polish guy",
-      "url": "https://tomwojcik.com/posts/2026-09-21/september-2026-the-world-today/",
-      "source": "HackerNews",
-      "score": 369,
+      "score": 1508,
       "publishedAt": "2026-09-30"
     },
     {
-      "title": "Vermont replacing power plants with home batteries",
-      "url": "https://www.bbc.com/future/article/20260928-a-virtual-power-plant-hidden-in-vermont-homes-is-keeping-the-lights-on-during-storms",
+      "title": "The top secret URSALA, RAQUEL, and FARRAH satellites (2025)",
+      "url": "https://www.thespacereview.com/article/4951/1",
       "source": "HackerNews",
-      "score": 254,
-      "publishedAt": "2026-09-29"
-    },
-    {
-      "title": "Pi.dev: You Said No MCP",
-      "url": "https://earendil.com/posts/you-said-no-mcp/",
-      "source": "HackerNews",
-      "score": 226,
+      "score": 262,
       "publishedAt": "2026-09-30"
     },
     {
-      "title": "Solving Factorio Quality",
-      "url": "https://exyr.org/2026/solving-factorio-quality/",
+      "title": "StreetComplete on iOS is now in public beta",
+      "url": "https://github.com/streetcomplete/StreetComplete/issues/5421",
       "source": "HackerNews",
-      "score": 147,
+      "score": 207,
+      "publishedAt": "2026-10-01"
+    },
+    {
+      "title": "OpenDLSS: A Vulkan Reimplementation of Nvidia's DLSS 5 Neural Rendering Network",
+      "url": "https://github.com/maanHimself/OpenDLSS-NR",
+      "source": "HackerNews",
+      "score": 164,
+      "publishedAt": "2026-09-30"
+    },
+    {
+      "title": "Book of Shapes – Collection of minimal, generative and customizable SVG-patterns",
+      "url": "https://bookofshapes.com/",
+      "source": "HackerNews",
+      "score": 154,
       "publishedAt": "2026-09-29"
     },
     {
-      "title": "Most data centers refusing to say how much water, electricity they use",
-      "url": "https://nltimes.nl/2026/09/30/data-centers-refusing-say-much-water-electricity-use",
+      "title": "Google breaks promise to provide 10 years of updates to Chromebooks",
+      "url": "https://www.osnews.com/story/146052/google-breaks-promise-to-provide-10-years-of-updates-to-chromebooks/",
       "source": "HackerNews",
-      "score": 95,
-      "publishedAt": "2026-09-30"
+      "score": 109,
+      "publishedAt": "2026-10-01"
+    },
+    {
+      "title": "GPT-Synopsys: Frontier Intelligence to Revolutionize Chip Design",
+      "url": "https://news.synopsys.com/2026-09-30-OpenAI-and-Synopsys-Announce-GPT-Synopsys-Frontier-Intelligence-to-Revolutionize-Chip-Design",
+      "source": "HackerNews",
+      "score": 87,
+      "publishedAt": "2026-10-01"
+    },
+    {
+      "title": "Micron CEO Says Memory Supply Will Be Much Tighter in 2027 and 2028 Than in 2026",
+      "url": "https://www.techpowerup.com/353296/micron-ceo-says-memory-supply-will-be-much-tighter-in-2027-and-2028-than-in-2026",
+      "source": "HackerNews",
+      "score": 84,
+      "publishedAt": "2026-10-01"
     }
   ]
 }
