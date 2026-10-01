@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Search, X, Clock, Command as CommandIcon } from "lucide-react";
 
@@ -58,7 +58,10 @@ export function SearchBox({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const sugg = useMemo(() => (open ? suggestions(draft) : []), [draft, open]);
+  // Deferred: the catalogue scan runs at a lower priority than the keystroke,
+  // so the input stays responsive while results catch up.
+  const deferredDraft = useDeferredValue(draft);
+  const sugg = useMemo(() => (open ? suggestions(deferredDraft) : []), [deferredDraft, open]);
 
   const submit = (q: string) => {
     recordSearch(q);

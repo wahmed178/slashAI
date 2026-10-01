@@ -251,35 +251,11 @@ export function useMagnet<T extends HTMLElement = HTMLButtonElement>(
   return ref;
 }
 
-/* ──────────── delegated pointer tracking ──────────── */
-
-let spotlightBound = false;
-
-/**
- * One `pointermove` listener for the entire app, instead of one per card.
- * Any element carrying `data-spotlight` gets its cursor position written to
- * `--spot-x` / `--spot-y`; the CSS handles the fade in and out.
- */
-export function bindSpotlight(): () => void {
-  if (typeof window === "undefined") return () => {};
-  if (spotlightBound) return () => {};
-  spotlightBound = true;
-
-  const onMove = (e: PointerEvent) => {
-    const el = (e.target as Element | null)?.closest?.("[data-spotlight]");
-    if (!(el instanceof HTMLElement)) return;
-    const r = el.getBoundingClientRect();
-    if (!r.width || !r.height) return;
-    el.style.setProperty("--spot-x", `${((e.clientX - r.left) / r.width) * 100}%`);
-    el.style.setProperty("--spot-y", `${((e.clientY - r.top) / r.height) * 100}%`);
-  };
-
-  window.addEventListener("pointermove", onMove, { passive: true });
-  return () => {
-    window.removeEventListener("pointermove", onMove);
-    spotlightBound = false;
-  };
-}
+/* Deleted: bindSpotlight(). It ran a delegated `pointermove` that called
+   closest() + getBoundingClientRect() on every card under the cursor and wrote
+   two custom properties per move, which forced style and layout work on the
+   main thread for as long as the mouse was moving. The `.spotlight` hover
+   highlight in CSS is static and still works without it. */
 
 /* ──────────── key-hold hook ──────────── */
 

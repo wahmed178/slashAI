@@ -309,6 +309,27 @@ function candidateIndexes(tokens: string[]): number[] | null {
   return [...out];
 }
 
+/**
+ * Build the inverted index while the browser is idle.
+ *
+ * It used to be built lazily on the first `candidateIndexes()` call - i.e. on
+ * the very first keystroke into a search box - which stalled the input for the
+ * length of a full pass over 5,000+ commands. Warming it during idle means the
+ * first keystroke only ever does a Map lookup.
+ */
+function warmSearchIndex() {
+  const warm = () => {
+    PREFIX_INDEX ??= buildIndex();
+  };
+  if (typeof window.requestIdleCallback === "function") {
+    window.requestIdleCallback(warm, { timeout: 3000 });
+  } else {
+    window.setTimeout(warm, 1000);
+  }
+}
+
+if (typeof window !== "undefined") warmSearchIndex();
+
 function searchCandidates(q: string): SlashCommand[] {
   const tokens = q
     .trim()
