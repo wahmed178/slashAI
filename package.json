@@ -31,7 +31,8 @@
     "android:keystore": "bash android/generate-keystore.sh"
   },
   "overrides": {
-    "rolldown": "1.2.1"
+    "rolldown": "1.2.1",
+    "@tanstack/router-core": "1.171.34"
   },
   "dependencies": {
     "@capacitor/android": "^8.5.0",
