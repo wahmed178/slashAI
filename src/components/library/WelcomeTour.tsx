@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import {
-  Search,
-  Wrench,
-  Gamepad2,
-  Zap,
-  ShieldCheck,
-  WifiOff,
-} from "lucide-react";
+import { Search, Wrench, Gamepad2, Zap, ShieldCheck, WifiOff } from "lucide-react";
 
-import { VERIFIED_TOTAL } from "@/lib/commands";
+import { SEO_COUNTS } from "@/lib/seo-counts";
 import { ALL_SLASH_TOOLS } from "@/lib/slashkits";
 import { PLAY_GAME_COUNT } from "@/lib/slashplay";
 import { RESOURCE_TOTAL } from "@/lib/resources";
@@ -49,7 +42,7 @@ export function WelcomeTour() {
   const features = [
     {
       icon: Search,
-      title: `${VERIFIED_TOTAL.toLocaleString()} AI commands`,
+      title: `${SEO_COUNTS.commands.toLocaleString()} AI commands`,
       text: "Copy-ready prompts for writing, coding, design and more - with examples.",
       to: "/search",
       cta: "Search commands",
@@ -105,10 +98,13 @@ export function WelcomeTour() {
 
           {/* What is this site */}
           <p className="mt-4 text-[13px] leading-relaxed text-muted-foreground">
-            SlashAI gives you <b className="text-foreground">{VERIFIED_TOTAL.toLocaleString()}+ copy-ready AI
-            commands</b>, {RESOURCE_TOTAL} curated resources, {ALL_SLASH_TOOLS.length}+ browser tools
-            and {PLAY_GAME_COUNT} games. Everything works offline and stays free
-            - your data never leaves your device.
+            SlashAI gives you{" "}
+            <b className="text-foreground">
+              {SEO_COUNTS.commands.toLocaleString()}+ copy-ready AI commands
+            </b>
+            , {RESOURCE_TOTAL} curated resources, {ALL_SLASH_TOOLS.length}+ browser tools and{" "}
+            {PLAY_GAME_COUNT} games. Everything works offline and stays free - your data never
+            leaves your device.
           </p>
 
           {/* Three entry points */}
@@ -127,9 +123,7 @@ export function WelcomeTour() {
                   <f.icon className="size-4" aria-hidden />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-semibold text-foreground">
-                    {f.title}
-                  </span>
+                  <span className="block text-[13px] font-semibold text-foreground">{f.title}</span>
                   <span className="mt-0.5 block text-[12px] leading-snug text-muted-foreground">
                     {f.text}
                   </span>

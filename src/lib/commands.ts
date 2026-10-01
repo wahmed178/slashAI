@@ -2,6 +2,11 @@ import rawCommands from "@/data/commands.json";
 import rawCategories from "@/data/categories.json";
 import type { CatalogCategory, CatalogCommand } from "./catalog-validation";
 
+// Re-exported so existing imports keep working. The implementation lives in
+// a catalog-free module: importing it from here would tie every consumer of
+// a one-line date helper to the 5.4 MB catalog.
+export { todayKey } from "./today";
+
 export type CommandType =
   | "image"
   | "text"
@@ -120,8 +125,6 @@ export function getDailyCommand(dateKey: string): SlashCommand {
   }
   return COMMANDS[(hash >>> 0) % COMMANDS.length]!;
 }
-
-export const todayKey = () => new Date().toISOString().slice(0, 10);
 
 export function getRandomCommand(exceptId?: string): SlashCommand {
   if (COMMANDS.length === 1) return COMMANDS[0]!;

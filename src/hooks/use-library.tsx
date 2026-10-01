@@ -9,7 +9,7 @@ import {
 } from "react";
 
 import { APP_VERSION } from "@/lib/app-meta";
-import { todayKey } from "@/lib/commands";
+import { todayKey } from "@/lib/today";
 import { advanceStreak, EMPTY_STREAK, type Streak } from "@/lib/engagement";
 import { trackInteraction } from "@/lib/intelligence";
 
@@ -220,7 +220,10 @@ interface LibraryValue {
   stats: Stats;
   journal: JournalEntry[];
   addJournal: (draft: Omit<JournalEntry, "id" | "date">) => void;
-  updateJournal: (id: string, patch: Partial<Pick<JournalEntry, "title" | "body" | "mood">>) => void;
+  updateJournal: (
+    id: string,
+    patch: Partial<Pick<JournalEntry, "title" | "body" | "mood">>,
+  ) => void;
   deleteJournal: (id: string) => void;
   /** true when the app was updated since the user last saw the release notes */
   showWhatsNew: boolean;
@@ -475,12 +478,13 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       const nextSettings = { ...DEFAULT_SETTINGS, ...(data.settings ?? {}) };
       const nextStats = { ...DEFAULT_STATS, ...(data.stats ?? {}) };
       const nextStreak = { ...EMPTY_STREAK, ...(data.streak ?? {}) };
-      const nextJournal = readJournal().length === 0 && Array.isArray(data.journal)
-        ? data.journal.filter(
-            (e): e is JournalEntry =>
-              typeof e?.id === "string" && typeof e?.date === "string" && MOODS.includes(e?.mood),
-          )
-        : readJournal();
+      const nextJournal =
+        readJournal().length === 0 && Array.isArray(data.journal)
+          ? data.journal.filter(
+              (e): e is JournalEntry =>
+                typeof e?.id === "string" && typeof e?.date === "string" && MOODS.includes(e?.mood),
+            )
+          : readJournal();
 
       setFavorites(nextFav);
       setRecents(nextRec);
