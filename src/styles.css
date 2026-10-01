@@ -381,7 +381,10 @@
     radial-gradient(38% 30% at 88% 14%, oklch(0.5 0.15 300 / 13%), transparent 68%),
     radial-gradient(50% 40% at 78% 85%, oklch(0.55 0.13 205 / 10%), transparent 68%),
     radial-gradient(36% 30% at 18% 92%, oklch(0.5 0.14 285 / 9%), transparent 68%);
-  animation: glass-aurora 26s ease-in-out infinite alternate;
+  /* Static wash. The drift repainted this fixed full-viewport layer every
+     frame for as long as the tab was open, which was the single largest idle
+     cost in the glass theme. The gradient itself is unchanged. */
+  animation: none;
 }
 
 @keyframes glass-aurora {
@@ -891,7 +894,9 @@ mark {
   50% { box-shadow: 0 0 24px 4px oklch(0.79 0.15 178 / 18%); }
 }
 .search-glow:focus-within {
-  animation: glow-pulse 2s ease-in-out infinite;
+  /* An infinite box-shadow animation on the focused search input meant the
+     input repainted continuously while you typed. The focus ring is static. */
+  animation: none;
   border-color: oklch(0.79 0.15 178 / 50%) !important;
 }
 
@@ -970,7 +975,6 @@ mark {
 }
 .page-enter {
   animation: page-enter 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  will-change: transform, opacity;
 }
 :root[data-motion="reduced"] .page-enter {
   animation: none;
@@ -984,7 +988,7 @@ mark {
 .skeleton-block {
   background: linear-gradient(90deg, var(--surface-elevated) 25%, var(--border) 50%, var(--surface-elevated) 75%);
   background-size: 400px 100%;
-  animation: shimmer 1.4s ease infinite;
+  animation: none;
   border-radius: var(--radius-sm);
 }
 :root[data-motion="reduced"] .skeleton-block {
@@ -1049,7 +1053,6 @@ a[id], section[id], [id^="section"] {
 }
 .page-content {
   animation: pageEnter 260ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  will-change: transform, opacity;
 }
 
 /* ──────────── skeleton shimmer ──────────── */
@@ -1060,7 +1063,7 @@ a[id], section[id], [id^="section"] {
 .skeleton-block {
   background: linear-gradient(90deg, var(--surface-elevated) 25%, var(--border) 50%, var(--surface-elevated) 75%);
   background-size: 400px 100%;
-  animation: shimmer 1.4s ease infinite;
+  animation: none;
   border-radius: 8px;
 }
 
@@ -1089,7 +1092,7 @@ a[id], section[id], [id^="section"] {
 .ticker-track {
   display: flex;
   white-space: nowrap;
-  animation: ticker 40s linear infinite;
+  animation: none;
 }
 .ticker-track:hover {
   animation-play-state: paused;
@@ -1101,7 +1104,7 @@ a[id], section[id], [id^="section"] {
   50% { opacity: 0.4; }
 }
 .live-dot {
-  animation: livePulse 1.5s ease infinite;
+  animation: none;
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -1162,7 +1165,6 @@ a[id], section[id], [id^="section"] {
 @media (prefers-reduced-motion: no-preference) {
   .nav-float {
     animation: navFloat 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-    will-change: transform;
   }
   /* keep tab pill morphs off the main thread */
   .nav-float a,
@@ -1219,7 +1221,9 @@ a[id], section[id], [id^="section"] {
   border-radius: 9999px;
   overflow: hidden;
   background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
-  animation: random-shine 3.5s ease-in-out infinite;
+  /* The travelling sheen was an infinite animation on a button that is mounted
+     on every page, forever. The button already reads as shiny without it. */
+  display: none;
   pointer-events: none;
 }
 :root[data-motion="reduced"] .nav-random-btn::after {
@@ -1311,7 +1315,7 @@ a[id], section[id], [id^="section"] {
   }
 }
 .caret-blink {
-  animation: caret-blink 1s step-end infinite;
+  animation: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1356,7 +1360,6 @@ a[id], section[id], [id^="section"] {
     opacity 560ms var(--motion-ease),
     transform 560ms var(--motion-ease);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 .js-reveal [data-reveal].is-revealed {
   opacity: 1;
@@ -1449,7 +1452,7 @@ a[id], section[id], [id^="section"] {
 .ring-rotate:hover::after,
 .ring-rotate:focus-within::after {
   opacity: 1;
-  animation: ring-spin 5s linear infinite;
+  animation: none;
 }
 @keyframes ring-spin {
   to {
@@ -1544,7 +1547,6 @@ a[id], section[id], [id^="section"] {
      blurring a 46vmax layer every frame is the single most expensive thing
      this layer could do. */
   opacity: 0.5;
-  will-change: transform;
 }
 .ambient-pool-a {
   top: 0;
@@ -1554,7 +1556,7 @@ a[id], section[id], [id^="section"] {
     color-mix(in oklab, var(--primary) 40%, transparent),
     transparent 65%
   );
-  transform: translate3d(calc(var(--pointer-x) - 23vmax), calc(var(--pointer-y) - 23vmax), 0);
+  transform: translate3d(-4vmax, -2vmax, 0);
 }
 .ambient-pool-b {
   right: 0;
@@ -1564,11 +1566,7 @@ a[id], section[id], [id^="section"] {
     color-mix(in oklab, var(--secondary, var(--primary)) 32%, transparent),
     transparent 65%
   );
-  transform: translate3d(
-    calc(var(--pointer-x) - 70vmax),
-    calc(var(--pointer-y) - 62vmax),
-    0
-  );
+  transform: translate3d(4vmax, 6vmax, 0);
 }
 .ambient-grid {
   position: absolute;
@@ -1580,21 +1578,13 @@ a[id], section[id], [id^="section"] {
   mask-image: radial-gradient(120% 90% at 50% 0%, #000 10%, transparent 75%);
   -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 10%, transparent 75%);
   opacity: 0.55;
-  transform: translate3d(calc(var(--pointer-nx) * -14px), calc(var(--pointer-ny) * -14px), 0);
-  transition: transform 700ms var(--motion-ease);
 }
 
-/* Motion off: freeze the backdrop in place, keep only the static wash. */
+/* The backdrop is painted once and never moves for anyone now, so there is
+   nothing left for reduced motion to freeze. */
 :root[data-motion="reduced"] .ambient-pool,
 :root[data-motion="reduced"] .ambient-grid {
-  transform: none;
   animation: none;
-}
-:root[data-motion="reduced"] .ambient-pool-b {
-  transform: translate3d(24vmax, 18vmax, 0);
-}
-:root[data-motion="reduced"] .ambient-grid {
-  transform: none;
 }
 
 /* brutal opts out of glow entirely - flat ink only. */
@@ -1653,7 +1643,7 @@ a[id], section[id], [id^="section"] {
     transparent 68%
   );
   filter: blur(14px);
-  animation: cube-breathe 5.5s ease-in-out infinite;
+  animation: none;
 }
 @keyframes cube-breathe {
   0%, 100% { transform: scale(1); opacity: 0.75; }
@@ -1732,7 +1722,7 @@ a[id], section[id], [id^="section"] {
      be butted together. Spacing between chips comes from each row's own
      trailing padding instead. */
   gap: 0;
-  animation: marquee-slide var(--marquee-duration, 38s) linear infinite;
+  animation: none;
 }
 .marquee:hover .marquee-track {
   animation-play-state: paused;
@@ -1811,7 +1801,8 @@ a[id], section[id], [id^="section"] {
   inset: -4px;
   border-radius: 999px;
   border: 2px solid currentColor;
-  animation: pulse-ring 2s ease-out infinite;
+  animation: none;
+  opacity: 0;
 }
 @keyframes pulse-ring {
   0% { transform: scale(0.6); opacity: 0.9; }

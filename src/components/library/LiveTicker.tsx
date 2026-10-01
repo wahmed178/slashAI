@@ -22,7 +22,9 @@ function getCache<T>(key: string, ttlMs: number): T | null {
 function setCache<T>(key: string, data: T) {
   try {
     localStorage.setItem(key, JSON.stringify({ data, ts: Date.now() }));
-  } catch { /* quota */ }
+  } catch {
+    /* quota */
+  }
 }
 
 async function fetchStocks(): Promise<TickerItem[]> {
@@ -134,9 +136,7 @@ async function fetchForex(): Promise<TickerItem[]> {
     const json = (await res.json()) as { rates?: { INR?: number } };
     const rate = json.rates?.INR;
     if (!rate) return [];
-    const items: TickerItem[] = [
-      { label: "USD/INR", value: rate.toFixed(2) },
-    ];
+    const items: TickerItem[] = [{ label: "USD/INR", value: rate.toFixed(2) }];
     setCache("ticker-forex", items);
     return items;
   } catch {
@@ -217,10 +217,27 @@ async function fetchWeather(): Promise<TickerItem[]> {
     const temp = wJson.current?.temperature_2m;
     if (temp === undefined) return [];
     const WEATHER_EMOJI: Record<number, string> = {
-      0: "☀️", 1: "🌤", 2: "⛅", 3: "☁️",
-      45: "🌫", 48: "🌫", 51: "🌦", 53: "🌧", 55: "🌧",
-      61: "🌧", 63: "🌧", 65: "🌧", 71: "❄", 73: "❄", 75: "❄",
-      80: "🌦", 81: "🌧", 82: "⛈", 95: "⛈", 96: "⛈", 99: "⛈",
+      0: "☀️",
+      1: "🌤",
+      2: "⛅",
+      3: "☁️",
+      45: "🌫",
+      48: "🌫",
+      51: "🌦",
+      53: "🌧",
+      55: "🌧",
+      61: "🌧",
+      63: "🌧",
+      65: "🌧",
+      71: "❄",
+      73: "❄",
+      75: "❄",
+      80: "🌦",
+      81: "🌧",
+      82: "⛈",
+      95: "⛈",
+      96: "⛈",
+      99: "⛈",
     };
     const code = wJson.current?.weather_code ?? 0;
     const emoji = WEATHER_EMOJI[code] ?? "🌤";
@@ -276,43 +293,31 @@ export function LiveTicker() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="skeleton-block h-9 w-full" />
-    );
+    return <div className="skeleton-block h-9 w-full" />;
   }
 
   if (items.length === 0) return null;
 
-  // Duplicate items for seamless loop
-  const allItems = [...items, ...items];
-
+  // No scrolling marquee: the infinite translate repainted a full-width strip
+  // for as long as the tab was open. The row is now a static, clipped strip -
+  // one copy of the items, no loop, no hover pause bookkeeping.
   return (
     <div
       className="relative overflow-hidden border-b border-border bg-surface"
-      style={{ height: 36 }}
-      onMouseEnter={(e) => {
-        const track = e.currentTarget.querySelector("[data-ticker-track]");
-        if (track) (track as HTMLElement).style.animationPlayState = "paused";
-      }}
-      onMouseLeave={(e) => {
-        const track = e.currentTarget.querySelector("[data-ticker-track]");
-        if (track) (track as HTMLElement).style.animationPlayState = "running";
+      style={{
+        height: 36,
+        maskImage: "linear-gradient(90deg, #000 86%, transparent)",
+        WebkitMaskImage: "linear-gradient(90deg, #000 86%, transparent)",
       }}
     >
-      <div
-        data-ticker-track
-        className="flex h-full items-center whitespace-nowrap"
-        style={{
-          animation: `ticker ${Math.max(allItems.length * 6, 40)}s linear infinite`,
-        }}
-      >
+      <div data-ticker-track className="flex h-full items-center whitespace-nowrap">
         {/* LIVE dot */}
         <span className="mr-3 inline-flex items-center gap-1 px-3 text-[11px] font-semibold text-red-500">
-          <span className="inline-block size-1.5 animate-pulse rounded-full bg-[#f85149]" />
+          <span className="inline-block size-1.5 rounded-full bg-[#f85149]" />
           LIVE
         </span>
 
-        {allItems.map((item, i) => (
+        {items.map((item, i) => (
           <span key={`${item.label}-${i}`} className="inline-flex items-center gap-2 px-3">
             <span className="text-[11px] text-muted-foreground">{item.label}</span>
             <span className="text-[12px] font-semibold text-foreground">{item.value}</span>
@@ -321,9 +326,7 @@ export function LiveTicker() {
                 {item.change}
               </span>
             )}
-            {i < allItems.length - 1 && (
-              <span className="mx-2 text-border">·</span>
-            )}
+            {i < items.length - 1 && <span className="mx-2 text-border">·</span>}
           </span>
         ))}
       </div>
