@@ -8,6 +8,41 @@ import { cn } from "@/lib/utils";
 import { Highlight } from "./Highlight";
 import { VoiceSearchButton } from "./VoiceSearchButton";
 
+// Debounce the search so each keystroke doesn't re-run the matcher while the
+// deferred value is still catching up, and keep the memo deps in sync with the
+// deferred query so the panel doesn't re-scan on every keystroke.
+const DEBOUNCE_MS = 120;
+
+function useDeferredSearchValue<T>(value: T, delayMs = DEBOUNCE_MS): T {
+  const [deferred, setDeferred] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setDeferred(value), delayMs);
+    return () => window.clearTimeout(timer);
+  }, [value, delayMs]);
+
+  return deferred;
+}
+
+function useDeferredOpen(open: boolean, delayMs = 24): boolean {
+  const [deferred, setDeferred] = useState<boolean>(open);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setDeferred(open), delayMs);
+    return () => window.clearTimeout(timer);
+  }, [open, delayMs]);
+
+  return deferred;
+}
+
+const MEMO_DEPS: readonly unknown[] = [];
+
+function buildSuggestions(draft: string, open: boolean): import("@/lib/commands").SlashCommand[] {
+  if (!open) return [];
+  return suggestions(draft);
+}
+
+
 interface Props {
   /** current query when the box is rendered on the search page */
   value?: string;
@@ -58,10 +93,9 @@ export function SearchBox({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Deferred: the catalogue scan runs at a lower priority than the keystroke,
-  // so the input stays responsive while results catch up.
-  const deferredDraft = useDeferredValue(draft);
-  const sugg = useMemo(() => (open ? suggestions(deferredDraft) : []), [deferredDraft, open]);
+  const deferredDraft = useDeferredSearchValue(draft);
+  const openDeferred = useDeferredOpen(open);
+  const sugg = useMemo(() => buildSuggestions(deferredDraft, openDeferred), [deferredDraft, openDeferred, MEMO_DEPS]);
 
   const submit = (q: string) => {
     recordSearch(q);
