@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-01T14:08:30.441Z",
+  "updated": "2026-10-02T13:31:51.898Z",
   "articles": [
     {
-      "title": "Gemini 4 Argon",
-      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+      "title": "Pi 1.0",
+      "url": "https://earendil.com/posts/pi-1-0/",
       "source": "HackerNews",
-      "score": 1508,
-      "publishedAt": "2026-09-30"
-    },
-    {
-      "title": "The top secret URSALA, RAQUEL, and FARRAH satellites (2025)",
-      "url": "https://www.thespacereview.com/article/4951/1",
-      "source": "HackerNews",
-      "score": 262,
-      "publishedAt": "2026-09-30"
-    },
-    {
-      "title": "StreetComplete on iOS is now in public beta",
-      "url": "https://github.com/streetcomplete/StreetComplete/issues/5421",
-      "source": "HackerNews",
-      "score": 207,
+      "score": 1468,
       "publishedAt": "2026-10-01"
     },
     {
-      "title": "OpenDLSS: A Vulkan Reimplementation of Nvidia's DLSS 5 Neural Rendering Network",
-      "url": "https://github.com/maanHimself/OpenDLSS-NR",
+      "title": "Clef: Open-weight decision models, and new RL fine-tuning platform",
+      "url": "https://blog.cloudflare.com/clef-decision-models/",
       "source": "HackerNews",
-      "score": 164,
-      "publishedAt": "2026-09-30"
-    },
-    {
-      "title": "Book of Shapes – Collection of minimal, generative and customizable SVG-patterns",
-      "url": "https://bookofshapes.com/",
-      "source": "HackerNews",
-      "score": 154,
-      "publishedAt": "2026-09-29"
-    },
-    {
-      "title": "Google breaks promise to provide 10 years of updates to Chromebooks",
-      "url": "https://www.osnews.com/story/146052/google-breaks-promise-to-provide-10-years-of-updates-to-chromebooks/",
-      "source": "HackerNews",
-      "score": 109,
+      "score": 551,
       "publishedAt": "2026-10-01"
     },
     {
-      "title": "GPT-Synopsys: Frontier Intelligence to Revolutionize Chip Design",
-      "url": "https://news.synopsys.com/2026-09-30-OpenAI-and-Synopsys-Announce-GPT-Synopsys-Frontier-Intelligence-to-Revolutionize-Chip-Design",
+      "title": "Pi Durable",
+      "url": "https://earendil.com/posts/pi-durable/",
       "source": "HackerNews",
-      "score": 87,
+      "score": 427,
       "publishedAt": "2026-10-01"
     },
     {
-      "title": "Micron CEO Says Memory Supply Will Be Much Tighter in 2027 and 2028 Than in 2026",
-      "url": "https://www.techpowerup.com/353296/micron-ceo-says-memory-supply-will-be-much-tighter-in-2027-and-2028-than-in-2026",
+      "title": "Several vulnerabilities have been discovered in the Linux kernel",
+      "url": "https://lwn.net/Articles/1097401/",
       "source": "HackerNews",
-      "score": 84,
+      "score": 400,
       "publishedAt": "2026-10-01"
+    },
+    {
+      "title": "SvelteKit 3",
+      "url": "https://svelte.dev/blog/sveltekit-3-is-here",
+      "source": "HackerNews",
+      "score": 333,
+      "publishedAt": "2026-10-01"
+    },
+    {
+      "title": "DeepSeek Harness Desktop for macOS and Windows",
+      "url": "https://www.deepseek.com/en/harness/",
+      "source": "HackerNews",
+      "score": 291,
+      "publishedAt": "2026-10-02"
+    },
+    {
+      "title": "Shimano Bicycle Museum Review",
+      "url": "https://inrng.com/2026/10/shimano-bicycle-museum/",
+      "source": "HackerNews",
+      "score": 181,
+      "publishedAt": "2026-10-02"
+    },
+    {
+      "title": "Show HN: Audionaut – an open-source cross-platform multitrack audio editor",
+      "url": "https://github.com/kvoltmer/Audionaut",
+      "source": "HackerNews",
+      "score": 55,
+      "publishedAt": "2026-10-02"
     }
   ]
 }
