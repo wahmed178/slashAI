@@ -1,4 +1,9 @@
-import rawCommands from "@/data/commands.json";
+// `?raw` + JSON.parse instead of a plain JSON import: Vite's dev server serves a
+// plain JSON import as a JS module with a per-character inline sourcemap, which
+// turns this 5.4 MB catalogue into a ~30 MB response before the app can mount
+// (it was the main reason a browser ran out of memory against the dev preview).
+// The raw text is served as-is, with no sourcemap, and parses to the same data.
+import rawCommandsText from "@/data/commands.json?raw";
 import rawCategories from "@/data/categories.json";
 import type { CatalogCategory, CatalogCommand } from "./catalog-validation";
 
@@ -41,7 +46,9 @@ function dedupeCatalog(list: SlashCommand[]): SlashCommand[] {
   return out;
 }
 
-export const COMMANDS: SlashCommand[] = dedupeCatalog(rawCommands as SlashCommand[]);
+export const COMMANDS: SlashCommand[] = dedupeCatalog(
+  JSON.parse(rawCommandsText) as SlashCommand[],
+);
 
 /** Verified count - post-deduplication, safe to display. */
 export const VERIFIED_TOTAL = COMMANDS.length;

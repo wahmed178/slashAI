@@ -13,10 +13,14 @@
  * the normal app shell, so if the subdomain domain is not wired up in Vercel
  * yet, the worst case is a brief flash of the app before the store appears.
  */
-import { useState, type ReactNode } from "react";
+import { lazy, Suspense, useState, type ReactNode } from "react";
 
-import { Storefront } from "./Storefront";
-import { storeHostSlug } from "@/lib/stores";
+import { storeHostSlug } from "@/lib/store-host";
+
+// The storefront (and through it the Supabase client) is only ever rendered on
+// a store subdomain, so it is loaded on demand instead of shipping with the root
+// route's initial bundle.
+const Storefront = lazy(() => import("./Storefront").then((m) => ({ default: m.Storefront })));
 
 export function StoreHostGate({ children }: { children: ReactNode }) {
   // Resolved once per page load; the host never changes mid-session.
@@ -26,7 +30,9 @@ export function StoreHostGate({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <Storefront slug={slug} standalone />
+      <Suspense fallback={null}>
+        <Storefront slug={slug} standalone />
+      </Suspense>
     </div>
   );
 }

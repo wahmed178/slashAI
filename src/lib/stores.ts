@@ -14,6 +14,11 @@
  * rest of SlashAI keeps working with no backend at all.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { RESERVED_SLUGS, STORES_ROOT_DOMAIN, isValidSlug, storeHostSlug } from "./store-host";
+
+// Host routing lives in its own SDK-free module so the root-route store gate can
+// import it without dragging the Supabase client into the initial bundle.
+export { RESERVED_SLUGS, STORES_ROOT_DOMAIN, isValidSlug, storeHostSlug } from "./store-host";
 
 /* ─────────────────────────── configuration ─────────────────────────── */
 
@@ -34,10 +39,6 @@ export const SUPABASE_ANON_KEY = envString("VITE_SUPABASE_ANON_KEY");
 /** Traffic is disabled until both keys exist and look plausible. */
 export const SUPABASE_READY =
   /^https?:\/\//.test(SUPABASE_URL) && SUPABASE_ANON_KEY.length > 20;
-
-/** Root the store subdomains hang off: `<slug>.slashai.in`. */
-export const STORES_ROOT_DOMAIN =
-  envString("VITE_STORES_ROOT_DOMAIN").toLowerCase() || "slashai.in";
 
 /**
  * Google Form for listing an existing store website / storefront in the
@@ -162,17 +163,8 @@ export interface ProductDraft {
 
 /* ─────────────────────────── slugs & hosts ─────────────────────────── */
 
-/**
- * Slugs that must never belong to a store: they would shadow a real SlashAI
- * route (`/stores/dashboard`) or a host that matters (www, api, mail...).
- */
-export const RESERVED_SLUGS = new Set([
-  "www", "app", "api", "admin", "administrator", "dashboard", "stores", "store",
-  "mail", "email", "blog", "docs", "help", "support", "static", "assets", "cdn",
-  "dev", "staging", "test", "status", "new", "manage", "live", "hub", "tools",
-  "play", "learn", "slash", "me", "about", "signin", "login", "auth", "billing",
-  "pay", "checkout", "shop", "shops", "my", "shopify", "slashai",
-]);
+// STORES_ROOT_DOMAIN, RESERVED_SLUGS, isValidSlug and storeHostSlug now live in
+// ./store-host and are re-exported above.
 
 /** Lowercase, hyphenated, matched to the CHECK constraint in schema.sql. */
 export function slugify(input: string): string {
@@ -182,11 +174,6 @@ export function slugify(input: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 40);
-}
-
-/** Same rule as `stores.slug check (slug ~ '^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$')`. */
-export function isValidSlug(slug: string): boolean {
-  return /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/.test(slug) && !/--/.test(slug);
 }
 
 /** Human-readable reason a slug is unusable, or null when it is fine. */
@@ -208,29 +195,6 @@ export function storeHostUrl(slug: string): string {
 /** In-app path, always available even before the wildcard domain exists. */
 export function storePath(slug: string, sub = ""): string {
   return `/stores/${slug}${sub}`;
-}
-
-/**
- * The store slug when the current host is a store subdomain, else null.
- * `acme.slashai.in` → "acme"; `slashai.in` / `www.slashai.in` → null.
- * `acme.localhost` works too, so local development can fake subdomains.
- */
-export function storeHostSlug(hostname?: string | null): string | null {
-  const raw =
-    hostname ?? (typeof window === "undefined" ? "" : window.location.hostname);
-  const host = raw.toLowerCase().replace(/\.$/, "").split(":")[0] ?? "";
-  if (!host) return null;
-
-  const roots = [STORES_ROOT_DOMAIN, "localhost"];
-  for (const root of roots) {
-    const suffix = `.${root}`;
-    if (!host.endsWith(suffix)) continue;
-    const sub = host.slice(0, -suffix.length);
-    if (!sub || sub.includes(".")) continue; // one level only: acme.slashai.in
-    if (RESERVED_SLUGS.has(sub) || !isValidSlug(sub)) return null;
-    return sub;
-  }
-  return null;
 }
 
 /* ─────────────────────────── money ─────────────────────────── */

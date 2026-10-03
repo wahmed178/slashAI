@@ -13,6 +13,12 @@ export default defineConfig({
     client: { entry: "client" },
   },
   vite: {
+    // Dev-only: skip Vite's startup crawl. With 350+ routes the crawl pulls the
+    // whole module graph into the dev server before the first request, which is
+    // most of its idle footprint. Modules are still transformed on demand.
+    server: {
+      preTransformRequests: false,
+    },
     build: {
       chunkSizeWarningLimit: 1000,
     },

@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Search,
@@ -70,6 +70,24 @@ const PER_KIND: Record<UniversalKind, number> = {
 };
 
 const PANEL_MAX = 14;
+
+const UNIVERSAL_SEARCH_DEBOUNCE_MS = 120;
+
+// Debounce the homepage search so `universalResults()` — the full catalogue
+// scan across commands, tools, AI tools, games, apps, guides and web — only
+// runs after the user pauses typing, never on every keystroke release.
+function useDebouncedValue<T>(value: T, delayMs = UNIVERSAL_SEARCH_DEBOUNCE_MS): T {
+  const [deferred, setDeferred] = useState<T>(value);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setDeferred(value), delayMs);
+    return () => window.clearTimeout(timer);
+  }, [value, delayMs]);
+
+  return deferred;
+}
+
+const UNIVERSAL_SEARCH_MEMO_DEPS: readonly unknown[] = [];
 
 /**
  * Score one catalogue item against the query.
@@ -305,11 +323,8 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
     return () => window.removeEventListener("pointerdown", onDown);
   }, []);
 
-  // Deferred: the catalogue scan (commands, tools, games, guides) runs at a
-  // lower priority than the keystroke that triggered it, so the input never
-  // blocks on it while you type.
-  const deferredQ = useDeferredValue(q);
-  const results = useMemo(() => universalResults(deferredQ), [deferredQ]);
+  const deferredQ = useDebouncedValue(q);
+  const results = useMemo(() => universalResults(deferredQ), [deferredQ, UNIVERSAL_SEARCH_MEMO_DEPS]);
 
   useEffect(() => setActive(0), [q]);
 
