@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Search, X, Clock, Command as CommandIcon } from "lucide-react";
 
@@ -8,12 +8,11 @@ import { cn } from "@/lib/utils";
 import { Highlight } from "./Highlight";
 import { VoiceSearchButton } from "./VoiceSearchButton";
 
-// Debounce the search so each keystroke doesn't re-run the matcher while the
-// deferred value is still catching up, and keep the memo deps in sync with the
-// deferred query so the panel doesn't re-scan on every keystroke.
 const DEBOUNCE_MS = 120;
 
-function useDeferredSearchValue<T>(value: T, delayMs = DEBOUNCE_MS): T {
+// Debounce the search so the full catalogue matcher runs only after the
+// user pauses typing, never on every keystroke.
+function useDebouncedValue<T>(value: T, delayMs = DEBOUNCE_MS): T {
   const [deferred, setDeferred] = useState<T>(value);
 
   useEffect(() => {
@@ -24,24 +23,12 @@ function useDeferredSearchValue<T>(value: T, delayMs = DEBOUNCE_MS): T {
   return deferred;
 }
 
-function useDeferredOpen(open: boolean, delayMs = 24): boolean {
-  const [deferred, setDeferred] = useState<boolean>(open);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => setDeferred(open), delayMs);
-    return () => window.clearTimeout(timer);
-  }, [open, delayMs]);
-
-  return deferred;
-}
-
 const MEMO_DEPS: readonly unknown[] = [];
 
 function buildSuggestions(draft: string, open: boolean): import("@/lib/commands").SlashCommand[] {
   if (!open) return [];
   return suggestions(draft);
 }
-
 
 interface Props {
   /** current query when the box is rendered on the search page */
@@ -93,9 +80,8 @@ export function SearchBox({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const deferredDraft = useDeferredSearchValue(draft);
-  const openDeferred = useDeferredOpen(open);
-  const sugg = useMemo(() => buildSuggestions(deferredDraft, openDeferred), [deferredDraft, openDeferred, MEMO_DEPS]);
+  const deferredDraft = useDebouncedValue(draft);
+  const sugg = useMemo(() => buildSuggestions(deferredDraft, true), [deferredDraft, MEMO_DEPS]);
 
   const submit = (q: string) => {
     recordSearch(q);
