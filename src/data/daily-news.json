@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-03T12:11:40.688Z",
+  "updated": "2026-10-04T13:01:28.588Z",
   "articles": [
     {
-      "title": "Court agrees with EFF: Utah's VPN law demands a technical impossibility",
-      "url": "https://www.eff.org/deeplinks/2026/10/court-agrees-eff-utahs-vpn-law-demands-technical-impossibility",
+      "title": "We're going to need default hard budget caps on pretty much everything",
+      "url": "https://simonwillison.net/2026/Oct/3/default-hard-budget-caps/",
       "source": "HackerNews",
-      "score": 662,
-      "publishedAt": "2026-10-01"
+      "score": 491,
+      "publishedAt": "2026-10-04"
     },
     {
-      "title": "Mike Tomlin spent 12 years building a Minecraft city",
-      "url": "https://www.nytimes.com/athletic/7648198/2026/10/01/mike-tomlin-minecraft-nfl-coach/",
+      "title": "The work by Valve's Timur Kristóf on improving old AMD GPUs on Linux",
+      "url": "https://www.phoronix.com/news/XDC-2026-Valve-Timur-AMDGPU",
       "source": "HackerNews",
-      "score": 500,
-      "publishedAt": "2026-10-01"
-    },
-    {
-      "title": "Apple Pass Designer",
-      "url": "https://developer.apple.com/pass-designer/",
-      "source": "HackerNews",
-      "score": 452,
-      "publishedAt": "2026-10-02"
-    },
-    {
-      "title": "A 12-year sequence of telescope images of a star and four planets orbiting",
-      "url": "https://bsky.app/profile/theplanetaryguy.com/post/3mwucf5ert22f",
-      "source": "HackerNews",
-      "score": 307,
-      "publishedAt": "2026-10-02"
-    },
-    {
-      "title": "Newgrounds.com – A community of games, music, and art",
-      "url": "https://www.newgrounds.com/",
-      "source": "HackerNews",
-      "score": 268,
+      "score": 334,
       "publishedAt": "2026-10-03"
     },
     {
-      "title": "The Forgetful CPU (Linux on M4)",
-      "url": "https://yuka.dev/blog-2026-10-02-linux-m4.html",
+      "title": "So you think you could be an electrician?",
+      "url": "https://asteriskmag.com/issues/15/so-you-think-you-could-be-an-electrician",
       "source": "HackerNews",
-      "score": 235,
-      "publishedAt": "2026-10-02"
+      "score": 313,
+      "publishedAt": "2026-09-30"
     },
     {
-      "title": "Cloudflare OHTTP gateway",
-      "url": "https://blog.cloudflare.com/announcing-cloudflare-ohttp-gateway/",
+      "title": "Hole Punch: Sling your spaceship around gravitational fields",
+      "url": "https://notoriousbfg.com/hole-punch/",
+      "source": "HackerNews",
+      "score": 308,
+      "publishedAt": "2026-10-03"
+    },
+    {
+      "title": "Treachery in the Rodin Museum 3D scan verdict",
+      "url": "https://cosmowenman.substack.com/p/rodin-museum-3d-scan-verdict",
+      "source": "HackerNews",
+      "score": 233,
+      "publishedAt": "2026-10-03"
+    },
+    {
+      "title": "Agents don't need memory, they need documentation",
+      "url": "https://liao.gg/blog/agents-dont-need-memory",
+      "source": "HackerNews",
+      "score": 226,
+      "publishedAt": "2026-10-03"
+    },
+    {
+      "title": "Why don't more developers “use the platform”?",
+      "url": "https://nolanlawson.com/2026/10/03/why-dont-more-developers-use-the-platform/",
+      "source": "HackerNews",
+      "score": 177,
+      "publishedAt": "2026-10-04"
+    },
+    {
+      "title": "We're working on a new RuneScape MMO",
+      "url": "https://play.runescape.com/4",
       "source": "HackerNews",
       "score": 100,
-      "publishedAt": "2026-10-03"
-    },
-    {
-      "title": "An Update on Orion for Linux and Windows",
-      "url": "https://blog.kagi.com/update-orion-linux-windows",
-      "source": "HackerNews",
-      "score": 75,
-      "publishedAt": "2026-10-03"
+      "publishedAt": "2026-10-04"
     }
   ]
 }
