@@ -1,107 +1,91 @@
 {
-  "updated": "2026-09-28",
-  "week": "2026-W39",
+  "updated": "2026-10-05",
+  "week": "2026-W40",
   "items": [
     {
-      "name": "Shotcandy",
-      "url": "https://www.producthunt.com/products/shotcandy",
-      "description": "Make Your Screenshots Look Amazing Discussion | Link",
+      "name": "Netra",
+      "url": "https://www.producthunt.com/products/netra",
+      "description": "A watchful notch with tools to keep you focused Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Stash",
-      "url": "https://www.producthunt.com/products/stash-24",
-      "description": "Hidden controls for your Mac. Discussion | Link",
+      "name": "iLand",
+      "url": "https://www.producthunt.com/products/iland",
+      "description": "Turn your Mac's notch into an everyday workspace Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Statable Analytics",
-      "url": "https://www.producthunt.com/products/statable-analytics",
-      "description": "Web analytics built for you and your AI agents Discussion | Link",
+      "name": "HyperFrames Studio (Desktop)",
+      "url": "https://www.producthunt.com/products/heygen",
+      "description": "The First Video Editor built for Agents Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "FaveNest",
-      "url": "https://www.producthunt.com/products/favenest",
-      "description": "Bookmarks that organize themselves with Apple Intelligence Discussion | Link",
+      "name": "Xtracticle",
+      "url": "https://www.producthunt.com/products/xtracticle",
+      "description": "Save X Articles and threads as PDF, Markdown or EPUB Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Sayble",
-      "url": "https://www.producthunt.com/products/sayble",
-      "description": "AI copilot for calls that tells you what to say next Discussion | Link",
+      "name": "Bentomux",
+      "url": "https://www.producthunt.com/products/bentomux",
+      "description": "A bento box for your terminal workspace. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Zerg Router",
-      "url": "https://www.producthunt.com/products/zerg-router",
-      "description": "Run DeepSeek in Codex Discussion | Link",
+      "name": "Reason",
+      "url": "https://www.producthunt.com/products/dereference-the-100x-ide",
+      "description": "A coding workspace with context, plugins and skills Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Microsoft Copilot",
-      "url": "https://www.producthunt.com/products/microsoft-copilot-2",
-      "description": "The Al built for work Discussion | Link",
+      "name": "Invofox Self Serve",
+      "url": "https://www.producthunt.com/products/invofox",
+      "description": "99% accurate document extraction, SLA guaranteed Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "MuM",
-      "url": "https://www.producthunt.com/products/mum-multi-project-markdown",
-      "description": "A reading-first Markdown engine for macOS Discussion | Link",
+      "name": "devpit",
+      "url": "https://www.producthunt.com/products/devpit",
+      "description": "A native control room for your Claude Code agents Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "AI·rete·RAG – a Rete rule engine decides, RAG explains why",
-      "url": "https://ai-rete-rag.com/",
-      "description": "44 points on Hacker News",
+      "name": "Breadcrumb, record everything on your mac + context manager",
+      "url": "https://innerloop.works/breadcrumb",
+      "description": "49 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Training a model to identify AI web content from structure a",
-      "url": "https://arxiv.org/abs/2609.15369",
-      "description": "73 points on Hacker News",
+      "name": "Made an open-source Lego AI generator",
+      "url": "https://github.com/anteloc/ldraw-nova",
+      "description": "156 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Whiteboard (YC W26) – An open-source IDE for thoughtful soft",
-      "url": "https://github.com/devdotfast/whiteboard",
-      "description": "420 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "Launch HN: Coverage Cat (YC S22) – Umbrella insurance via yo",
-      "url": "https://www.coveragecat.com/",
-      "description": "54 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "AgentRun: DSL to turn agents into workflows",
-      "url": "https://github.com/Parcha-ai/agentrun",
-      "description": "51 points on Hacker News",
+      "name": "HN.watch – Videos of all Hacker News posts",
+      "url": "https://hn.watch/",
+      "description": "224 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
