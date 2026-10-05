@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-04T13:01:28.588Z",
+  "updated": "2026-10-05T15:30:55.766Z",
   "articles": [
     {
-      "title": "We're going to need default hard budget caps on pretty much everything",
-      "url": "https://simonwillison.net/2026/Oct/3/default-hard-budget-caps/",
+      "title": "Denmark Data Breach Exposes 8.8M People's Personal Data",
+      "url": "https://www.cpr.dk/cpr-nyt/nyhedsarkiv/2026/okt/omfattende-uautoriseret-adgang-til-borgeres-cpr-oplysninger",
       "source": "HackerNews",
-      "score": 491,
-      "publishedAt": "2026-10-04"
+      "score": 324,
+      "publishedAt": "2026-10-05"
     },
     {
-      "title": "The work by Valve's Timur Kristóf on improving old AMD GPUs on Linux",
-      "url": "https://www.phoronix.com/news/XDC-2026-Valve-Timur-AMDGPU",
+      "title": "Europe's new robotics unicorn: Germany's RobCo hits $1B valuation",
+      "url": "https://techfundingnews.com/europes-new-robotics-unicorn-germanys-robco-hits-1b-valuation/",
       "source": "HackerNews",
-      "score": 334,
+      "score": 257,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "title": "Pixel 11 doesn't yet meet the GrapheneOS security standards and may be skipped",
+      "url": "https://discuss.grapheneos.org/d/41564-pixel-11-doesnt-yet-meet-the-grapheneos-security-standards-and-may-be-skipped",
+      "source": "HackerNews",
+      "score": 182,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "title": "Web Search API",
+      "url": "https://developers.cloudflare.com/changelog/post/2026-10-02-introducing-web-search-api/",
+      "source": "HackerNews",
+      "score": 182,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "title": "Huawei and Qualcomm Announce Broad Patent License Agreement",
+      "url": "https://www.huawei.com/en/news/2026/10/qualcomm-broad-patent-agreement",
+      "source": "HackerNews",
+      "score": 114,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "title": "Press Release: Nobel Prize in Physiology or Medicine 2026",
+      "url": "https://www.nobelprize.org/prizes/medicine/2026/press-release/",
+      "source": "HackerNews",
+      "score": 97,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "title": "Type Safe Generic Data Structures in C",
+      "url": "https://danielchasehooper.com/posts/typechecked-generic-c-data-structures/",
+      "source": "HackerNews",
+      "score": 77,
       "publishedAt": "2026-10-03"
     },
     {
-      "title": "So you think you could be an electrician?",
-      "url": "https://asteriskmag.com/issues/15/so-you-think-you-could-be-an-electrician",
+      "title": "Differences Between `Foldl` and `Foldr`",
+      "url": "https://blog.haskell.org/foldl-and-foldr/",
       "source": "HackerNews",
-      "score": 313,
-      "publishedAt": "2026-09-30"
-    },
-    {
-      "title": "Hole Punch: Sling your spaceship around gravitational fields",
-      "url": "https://notoriousbfg.com/hole-punch/",
-      "source": "HackerNews",
-      "score": 308,
-      "publishedAt": "2026-10-03"
-    },
-    {
-      "title": "Treachery in the Rodin Museum 3D scan verdict",
-      "url": "https://cosmowenman.substack.com/p/rodin-museum-3d-scan-verdict",
-      "source": "HackerNews",
-      "score": 233,
-      "publishedAt": "2026-10-03"
-    },
-    {
-      "title": "Agents don't need memory, they need documentation",
-      "url": "https://liao.gg/blog/agents-dont-need-memory",
-      "source": "HackerNews",
-      "score": 226,
-      "publishedAt": "2026-10-03"
-    },
-    {
-      "title": "Why don't more developers “use the platform”?",
-      "url": "https://nolanlawson.com/2026/10/03/why-dont-more-developers-use-the-platform/",
-      "source": "HackerNews",
-      "score": 177,
-      "publishedAt": "2026-10-04"
-    },
-    {
-      "title": "We're working on a new RuneScape MMO",
-      "url": "https://play.runescape.com/4",
-      "source": "HackerNews",
-      "score": 100,
-      "publishedAt": "2026-10-04"
+      "score": 60,
+      "publishedAt": "2026-10-01"
     }
   ]
 }
