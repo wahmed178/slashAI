@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-05T15:30:55.766Z",
+  "updated": "2026-10-06T13:53:43.031Z",
   "articles": [
     {
-      "title": "Denmark Data Breach Exposes 8.8M People's Personal Data",
-      "url": "https://www.cpr.dk/cpr-nyt/nyhedsarkiv/2026/okt/omfattende-uautoriseret-adgang-til-borgeres-cpr-oplysninger",
+      "title": "Mistral Large 4",
+      "url": "https://docs.mistral.ai/models/mistral-large-4-0",
       "source": "HackerNews",
-      "score": 324,
-      "publishedAt": "2026-10-05"
+      "score": 262,
+      "publishedAt": "2026-10-06"
     },
     {
-      "title": "Europe's new robotics unicorn: Germany's RobCo hits $1B valuation",
-      "url": "https://techfundingnews.com/europes-new-robotics-unicorn-germanys-robco-hits-1b-valuation/",
+      "title": "Nobel Prize in Physics goes to Francis Halzen",
+      "url": "https://www.nobelprize.org/prizes/physics/2026/",
       "source": "HackerNews",
-      "score": 257,
-      "publishedAt": "2026-10-05"
+      "score": 242,
+      "publishedAt": "2026-10-06"
     },
     {
-      "title": "Pixel 11 doesn't yet meet the GrapheneOS security standards and may be skipped",
-      "url": "https://discuss.grapheneos.org/d/41564-pixel-11-doesnt-yet-meet-the-grapheneos-security-standards-and-may-be-skipped",
+      "title": "JetBrains reported a net financial loss first time in its tracked history",
+      "url": "https://www.helgilibrary.com/companies/jetbrains",
       "source": "HackerNews",
-      "score": 182,
-      "publishedAt": "2026-10-05"
+      "score": 201,
+      "publishedAt": "2026-10-06"
     },
     {
-      "title": "Web Search API",
-      "url": "https://developers.cloudflare.com/changelog/post/2026-10-02-introducing-web-search-api/",
+      "title": "Gleam doesn't compile to Erlang source anymore",
+      "url": "https://gleam.run/news/gleam-doesnt-compile-to-erlang-source-anymore/",
       "source": "HackerNews",
-      "score": 182,
-      "publishedAt": "2026-10-05"
+      "score": 117,
+      "publishedAt": "2026-10-06"
     },
     {
-      "title": "Huawei and Qualcomm Announce Broad Patent License Agreement",
-      "url": "https://www.huawei.com/en/news/2026/10/qualcomm-broad-patent-agreement",
+      "title": "Release of Polars 2.0",
+      "url": "https://pola.rs/posts/release-polars-2/",
       "source": "HackerNews",
-      "score": 114,
-      "publishedAt": "2026-10-05"
+      "score": 101,
+      "publishedAt": "2026-10-06"
     },
     {
-      "title": "Press Release: Nobel Prize in Physiology or Medicine 2026",
-      "url": "https://www.nobelprize.org/prizes/medicine/2026/press-release/",
+      "title": "Nature's capacity to 'bounce back' when species are lost is vastly overestimated",
+      "url": "https://phys.org/news/2026-10-nature-capacity-species-lost-vastly.html",
       "source": "HackerNews",
-      "score": 97,
-      "publishedAt": "2026-10-05"
+      "score": 82,
+      "publishedAt": "2026-10-06"
     },
     {
-      "title": "Type Safe Generic Data Structures in C",
-      "url": "https://danielchasehooper.com/posts/typechecked-generic-c-data-structures/",
+      "title": "Meta's Muse Is an Adorable Privacy and Security Dumpster Fire",
+      "url": "https://www.techdirt.com/2026/10/06/metas-muse-is-an-adorable-privacy-and-security-dumpster-fire/",
       "source": "HackerNews",
-      "score": 77,
-      "publishedAt": "2026-10-03"
+      "score": 56,
+      "publishedAt": "2026-10-06"
     },
     {
-      "title": "Differences Between `Foldl` and `Foldr`",
-      "url": "https://blog.haskell.org/foldl-and-foldr/",
+      "title": "Mistral Large 4: \"Le Chonk\"",
+      "url": "https://mistral.ai/news/mistral-large-4/",
       "source": "HackerNews",
-      "score": 60,
-      "publishedAt": "2026-10-01"
+      "score": 51,
+      "publishedAt": "2026-10-06"
     }
   ]
 }
