@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-06T13:53:43.031Z",
+  "updated": "2026-10-07T14:10:40.253Z",
   "articles": [
     {
-      "title": "Mistral Large 4",
-      "url": "https://docs.mistral.ai/models/mistral-large-4-0",
+      "title": "Sharing AI progress in mathematics",
+      "url": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
       "source": "HackerNews",
-      "score": 262,
+      "score": 1064,
       "publishedAt": "2026-10-06"
     },
     {
-      "title": "Nobel Prize in Physics goes to Francis Halzen",
-      "url": "https://www.nobelprize.org/prizes/physics/2026/",
+      "title": "Decisions API is in public beta",
+      "url": "https://developers.openai.com/api/docs/guides/decisions",
       "source": "HackerNews",
-      "score": 242,
+      "score": 358,
       "publishedAt": "2026-10-06"
     },
     {
-      "title": "JetBrains reported a net financial loss first time in its tracked history",
-      "url": "https://www.helgilibrary.com/companies/jetbrains",
+      "title": "Strands Decider 2B: a small, open-source, decision model",
+      "url": "https://strandsagents.com/blog/introducing-strands-decider/",
       "source": "HackerNews",
-      "score": 201,
-      "publishedAt": "2026-10-06"
+      "score": 231,
+      "publishedAt": "2026-10-07"
     },
     {
-      "title": "Gleam doesn't compile to Erlang source anymore",
-      "url": "https://gleam.run/news/gleam-doesnt-compile-to-erlang-source-anymore/",
+      "title": "A font recreated from photographs of classic Commodore 64 keycaps",
+      "url": "https://github.com/szabadkai/c64-keyboard-font/",
       "source": "HackerNews",
-      "score": 117,
-      "publishedAt": "2026-10-06"
+      "score": 205,
+      "publishedAt": "2026-10-07"
     },
     {
-      "title": "Release of Polars 2.0",
-      "url": "https://pola.rs/posts/release-polars-2/",
+      "title": "Shipping JPEG XL in Chrome",
+      "url": "https://developer.chrome.com/blog/jpeg-xl-in-chrome",
       "source": "HackerNews",
-      "score": 101,
-      "publishedAt": "2026-10-06"
+      "score": 197,
+      "publishedAt": "2026-10-07"
     },
     {
-      "title": "Nature's capacity to 'bounce back' when species are lost is vastly overestimated",
-      "url": "https://phys.org/news/2026-10-nature-capacity-species-lost-vastly.html",
+      "title": "Nobel Prize in Chemistry 2026 to Henri B. Kagan and Kenso Soai",
+      "url": "https://www.nobelprize.org/prizes/chemistry/2026/press-release/",
       "source": "HackerNews",
-      "score": 82,
-      "publishedAt": "2026-10-06"
+      "score": 135,
+      "publishedAt": "2026-10-07"
     },
     {
-      "title": "Meta's Muse Is an Adorable Privacy and Security Dumpster Fire",
-      "url": "https://www.techdirt.com/2026/10/06/metas-muse-is-an-adorable-privacy-and-security-dumpster-fire/",
+      "title": "House with 15m underground tunnels for sale for 300k",
+      "url": "https://www.readingchronicle.co.uk/news/26612080.house-15m-underground-tunnels-sale-300k/",
       "source": "HackerNews",
       "score": 56,
-      "publishedAt": "2026-10-06"
+      "publishedAt": "2026-10-07"
     },
     {
-      "title": "Mistral Large 4: \"Le Chonk\"",
-      "url": "https://mistral.ai/news/mistral-large-4/",
+      "title": "Rust's derive often implies inline",
+      "url": "https://yossarian.net/til/post/rust-s-derive-often-implies-inline/",
       "source": "HackerNews",
       "score": 51,
-      "publishedAt": "2026-10-06"
+      "publishedAt": "2026-10-04"
     }
   ]
 }
