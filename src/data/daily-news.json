@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-07T14:10:40.253Z",
+  "updated": "2026-10-08T14:20:38.811Z",
   "articles": [
     {
-      "title": "Sharing AI progress in mathematics",
-      "url": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
+      "title": "Margaret Hamilton has died",
+      "url": "https://news.mit.edu/2026/margaret-hamilton-computing-pioneer-dies-1007",
       "source": "HackerNews",
-      "score": 1064,
+      "score": 1858,
+      "publishedAt": "2026-10-07"
+    },
+    {
+      "title": "Claude Haiku 5.5",
+      "url": "https://www.anthropic.com/claude-haiku-5-5",
+      "source": "HackerNews",
+      "score": 958,
+      "publishedAt": "2026-10-07"
+    },
+    {
+      "title": "“Math 2.0” will need to value mathematical progress more holistically",
+      "url": "https://mathstodon.xyz/@tao/117395269325940185",
+      "source": "HackerNews",
+      "score": 445,
+      "publishedAt": "2026-10-08"
+    },
+    {
+      "title": "Living off-grid: Hundred Rabbits",
+      "url": "https://100r.ca/site/home.html",
+      "source": "HackerNews",
+      "score": 293,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "title": "The 15-year search for a band that charted once and vanished",
+      "url": "https://shahidhussain.com/writing/search-for-salvage/",
+      "source": "HackerNews",
+      "score": 238,
+      "publishedAt": "2026-10-05"
+    },
+    {
+      "title": "OpenAI Withdraws 3 Math Papers",
+      "url": "https://github.com/openai/math/blob/main/history.md",
+      "source": "HackerNews",
+      "score": 211,
+      "publishedAt": "2026-10-08"
+    },
+    {
+      "title": "I gave Opus 5.5 one prompt and six hours to visualize Invisible Cities",
+      "url": "https://quesma.com/blog/invisible-cities-one-shot/",
+      "source": "HackerNews",
+      "score": 141,
+      "publishedAt": "2026-10-08"
+    },
+    {
+      "title": "The Slow Formation of Durable Software",
+      "url": "https://newsletter.dancohen.org/archive/the-slow-formation-of-durable-software/",
+      "source": "HackerNews",
+      "score": 95,
       "publishedAt": "2026-10-06"
-    },
-    {
-      "title": "Decisions API is in public beta",
-      "url": "https://developers.openai.com/api/docs/guides/decisions",
-      "source": "HackerNews",
-      "score": 358,
-      "publishedAt": "2026-10-06"
-    },
-    {
-      "title": "Strands Decider 2B: a small, open-source, decision model",
-      "url": "https://strandsagents.com/blog/introducing-strands-decider/",
-      "source": "HackerNews",
-      "score": 231,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "A font recreated from photographs of classic Commodore 64 keycaps",
-      "url": "https://github.com/szabadkai/c64-keyboard-font/",
-      "source": "HackerNews",
-      "score": 205,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "Shipping JPEG XL in Chrome",
-      "url": "https://developer.chrome.com/blog/jpeg-xl-in-chrome",
-      "source": "HackerNews",
-      "score": 197,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "Nobel Prize in Chemistry 2026 to Henri B. Kagan and Kenso Soai",
-      "url": "https://www.nobelprize.org/prizes/chemistry/2026/press-release/",
-      "source": "HackerNews",
-      "score": 135,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "House with 15m underground tunnels for sale for 300k",
-      "url": "https://www.readingchronicle.co.uk/news/26612080.house-15m-underground-tunnels-sale-300k/",
-      "source": "HackerNews",
-      "score": 56,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "Rust's derive often implies inline",
-      "url": "https://yossarian.net/til/post/rust-s-derive-often-implies-inline/",
-      "source": "HackerNews",
-      "score": 51,
-      "publishedAt": "2026-10-04"
     }
   ]
 }
