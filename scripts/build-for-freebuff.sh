@@ -16,6 +16,12 @@ cp -r .output/public/* dist/
 # 2. Remove server adapter code that crashes without a backend
 node scripts/patch-entry.mjs
 
+# For builds where TanStack Start freshens the entry artifact, make the static
+#-build rewrite durable for that run too (idempotent/no-op if already patched).
+if [ -n "$ENTRY_PATH" ]; then
+  node scripts/strip-ssr-entry.mjs "$ENTRY_PATH" || true
+fi
+
 # Find the entry JS for the HTML template
 ENTRY_JS=$(ls dist/assets/index-*.js 2>/dev/null | head -1)
 ENTRY_PATH="${ENTRY_JS#dist/}"
@@ -41,7 +47,7 @@ cat > dist/index.html << HTMLEOF
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/${ENTRY_PATH}"></script>
+    ${ENTRY_PATH_CLIENT:+<script type="module" src="/${ENTRY_PATH_CLIENT}"></script>}
   </body>
 </html>
 HTMLEOF
