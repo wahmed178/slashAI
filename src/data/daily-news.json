@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-08T14:20:38.811Z",
+  "updated": "2026-10-09T14:05:41.371Z",
   "articles": [
     {
-      "title": "Margaret Hamilton has died",
-      "url": "https://news.mit.edu/2026/margaret-hamilton-computing-pioneer-dies-1007",
+      "title": "Why isn't the industry freaking out about DeepSeek 4.1 Flash?",
+      "url": "https://www.dgt.is/blog/2026-10-07-deepseek-freek-out/",
       "source": "HackerNews",
-      "score": 1858,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "Claude Haiku 5.5",
-      "url": "https://www.anthropic.com/claude-haiku-5-5",
-      "source": "HackerNews",
-      "score": 958,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "“Math 2.0” will need to value mathematical progress more holistically",
-      "url": "https://mathstodon.xyz/@tao/117395269325940185",
-      "source": "HackerNews",
-      "score": 445,
+      "score": 896,
       "publishedAt": "2026-10-08"
     },
     {
-      "title": "Living off-grid: Hundred Rabbits",
-      "url": "https://100r.ca/site/home.html",
+      "title": "Whistle: Speech to Text in 16.9 MB",
+      "url": "https://cactuscompute.com/blog/whistle",
       "source": "HackerNews",
-      "score": 293,
-      "publishedAt": "2026-10-05"
-    },
-    {
-      "title": "The 15-year search for a band that charted once and vanished",
-      "url": "https://shahidhussain.com/writing/search-for-salvage/",
-      "source": "HackerNews",
-      "score": 238,
-      "publishedAt": "2026-10-05"
-    },
-    {
-      "title": "OpenAI Withdraws 3 Math Papers",
-      "url": "https://github.com/openai/math/blob/main/history.md",
-      "source": "HackerNews",
-      "score": 211,
+      "score": 826,
       "publishedAt": "2026-10-08"
     },
     {
-      "title": "I gave Opus 5.5 one prompt and six hours to visualize Invisible Cities",
-      "url": "https://quesma.com/blog/invisible-cities-one-shot/",
+      "title": "Deno Is Joining Cloudflare",
+      "url": "https://deno.com/blog/cloudflare",
       "source": "HackerNews",
-      "score": 141,
-      "publishedAt": "2026-10-08"
+      "score": 223,
+      "publishedAt": "2026-10-09"
     },
     {
-      "title": "The Slow Formation of Durable Software",
-      "url": "https://newsletter.dancohen.org/archive/the-slow-formation-of-durable-software/",
+      "title": "Nobel Peace Prize for 2026 to Navanethem \"NAVI\" Pillay",
+      "url": "https://www.nobelprize.org/prizes/peace/2026/press-release/",
       "source": "HackerNews",
-      "score": 95,
-      "publishedAt": "2026-10-06"
+      "score": 195,
+      "publishedAt": "2026-10-09"
+    },
+    {
+      "title": "I'm in a Meeting",
+      "url": "https://iminafleeting.com/",
+      "source": "HackerNews",
+      "score": 193,
+      "publishedAt": "2026-10-09"
+    },
+    {
+      "title": "Let your AI agents paint big arrows, boxes and text on your screen",
+      "url": "https://github.com/franzenzenhofer/big-arrow-on-the-screen",
+      "source": "HackerNews",
+      "score": 173,
+      "publishedAt": "2026-10-09"
+    },
+    {
+      "title": "Our $445M Series D",
+      "url": "https://oxide.computer/blog/our-445m-series-d",
+      "source": "HackerNews",
+      "score": 104,
+      "publishedAt": "2026-10-09"
+    },
+    {
+      "title": "MXC - a sandboxed code execution system",
+      "url": "https://github.com/microsoft/mxc",
+      "source": "HackerNews",
+      "score": 87,
+      "publishedAt": "2026-10-09"
     }
   ]
 }
