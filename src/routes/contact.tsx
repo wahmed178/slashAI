@@ -2,7 +2,6 @@ import { useState, useCallback } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/library/AppShell";
 import { SUGGESTION_FORM_URL } from "@/lib/app-meta";
-import { STORE_SIGNUP_FORM_URL } from "@/lib/stores";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -229,20 +228,6 @@ function ContactPage() {
                 <p className="font-medium">Suggest a software, website or tool</p>
                 <p className="text-xs text-muted-foreground">
                   Found a free tool the catalogue is missing? Tell us with the short form.
-                </p>
-              </div>
-            </a>
-            <a
-              href={STORE_SIGNUP_FORM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-lg border border-border bg-surface p-3 text-sm text-foreground transition-colors hover:border-primary/40"
-            >
-              <span className="text-lg">🏪</span>
-              <div>
-                <p className="font-medium">List your store website or storefront</p>
-                <p className="text-xs text-muted-foreground">
-                  Already selling online? Get your shop added to SlashAI Stores.
                 </p>
               </div>
             </a>

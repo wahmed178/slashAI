@@ -1146,12 +1146,6 @@ function HomePage() {
               desc: "Free lessons with graded tests",
             },
             {
-              to: "/stores",
-              emoji: "🏪",
-              label: "SlashAI Stores",
-              desc: "Free storefronts for small businesses",
-            },
-            {
               to: "/blog",
               emoji: "📰",
               label: "Slash Blogs",
@@ -1229,7 +1223,6 @@ function HomePage() {
                 { label: "SlashKits", to: "/tools" },
                 { label: "SlashPlay", to: "/play" },
                 { label: "SlashBar", to: "/slash" },
-                { label: "Stores", to: "/stores" },
                 { label: "Journal", to: "/journal" },
                 { label: "Copy History", to: "/history" },
                 { label: "Settings", to: "/me" },

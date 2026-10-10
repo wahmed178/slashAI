@@ -16,15 +16,19 @@ cp -r .output/public/* dist/
 # 2. Remove server adapter code that crashes without a backend
 node scripts/patch-entry.mjs
 
-# For builds where TanStack Start freshens the entry artifact, make the static
-#-build rewrite durable for that run too (idempotent/no-op if already patched).
-if [ -n "$ENTRY_PATH" ]; then
-  node scripts/strip-ssr-entry.mjs "$ENTRY_PATH" || true
-fi
-
-# Find the entry JS for the HTML template
+# Find the entry JS for the HTML template FIRST: the strip step below and the
+# generated index.html both need it, and computing it later emitted an HTML
+# template with no <script> tag (a blank page).
 ENTRY_JS=$(ls dist/assets/index-*.js 2>/dev/null | head -1)
 ENTRY_PATH="${ENTRY_JS#dist/}"
+if [ -z "$ENTRY_PATH" ]; then
+  echo "ERROR: no entry bundle (dist/assets/index-*.js) — the SPA cannot mount." >&2
+  exit 1
+fi
+
+# For builds where TanStack Start freshens the entry artifact, make the static
+# build rewrite durable for that run too (idempotent/no-op if already patched).
+node scripts/strip-ssr-entry.mjs "$ENTRY_PATH" || true
 
 # Find the CSS file
 CSS_FILE=$(ls dist/assets/styles-*.css 2>/dev/null | head -1)
@@ -47,7 +51,7 @@ cat > dist/index.html << HTMLEOF
   </head>
   <body>
     <div id="root"></div>
-    ${ENTRY_PATH_CLIENT:+<script type="module" src="/${ENTRY_PATH_CLIENT}"></script>}
+    <script type="module" src="/${ENTRY_PATH}"></script>
   </body>
 </html>
 HTMLEOF

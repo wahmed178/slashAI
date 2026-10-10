@@ -53,15 +53,8 @@ A searchable library of copy-ready slash commands for writing, research, coding,
 | **Offline** | Static catalog + PWA shell designed for offline use |
 | **Android** | Signed APK built with Capacitor and a native WebView |
 | **Account** | None required — favorites, progress and settings persist locally |
-| **Stores** | Free multi-tenant storefronts on their own subdomains (`/stores`, Supabase) |
 
-**New in v2.31 (Sep 2026):** **SlashAI Stores** — anyone can sign in, create a
-store, add products and take orders on their own address (`yourshop.slashai.in`
-or `/stores/<slug>`). Shoppers buy without an account, orders land in the owner's
-dashboard and hand off to WhatsApp in one tap. Postgres + Auth + Storage from
-Supabase, with Row Level Security and server-side price verification.
-
-Previous highlight (v2.28): difficulty badges and a first-run command guide,
+**Highlight (v2.28):** difficulty badges and a first-run command guide,
 "Try in ChatGPT / Gemini / Claude" quick-launch buttons, 🆕/🔥 badges across
 SlashKits and SlashPlay, learning paths with progress tracking, a floating
 re-copy pill, and 14 ready-made HTML Compiler starter projects.
@@ -357,16 +350,11 @@ Validation enforces unique stable IDs, no duplicate command names, and complete 
 
 ## 🧩 Tech stack
 
-**React 19** · **TypeScript** · **Vite** · **TanStack Start / Router** · **Tailwind CSS 4** · **Radix UI** · **Capacitor** · **vite-plugin-pwa** · **Supabase** (SlashAI Stores only)
+**React 19** · **TypeScript** · **Vite** · **TanStack Start / Router** · **Tailwind CSS 4** · **Radix UI** · **Capacitor** · **vite-plugin-pwa**
 
 ---
 
 ## 🗺 Roadmap
-
-Shipped in v2.31:
-
-- [x] SlashAI Stores — free multi-tenant storefronts with subdomains, a
-      no-account checkout and WhatsApp order hand-off
 
 Shipped in v2.28:
 
@@ -392,32 +380,12 @@ The project reflects a clear point of view: that the hard part of working with A
 
 ---
 
-## 🏪 SlashAI Stores
+## 🔒 Offline, no backend
 
-SlashAI Stores is the one part of the site that talks to a server: a free
-multi-tenant storefront host for small businesses, creators and local shops.
-
-- **Owners** sign in (Supabase Auth), create a store in a minute, add products
-  with photos, prices and stock, and manage orders from `/stores/dashboard`.
-- **Every store gets an address** — `yourshop.slashai.in` once the wildcard
-domain resolves, and `slashai.in/stores/yourshop` in the meantime.
-- **Shoppers need no account.** Cart, checkout with just a name and phone, a
-  real order code on success, and a one-tap "send the order on WhatsApp" button
-  — which is how most small shops in India actually take orders.
-- **No fees and no commission.** SlashAI never touches the money.
-- **Safe to hand over.** Row Level Security means a store account can only read
-  and write its own store, products and orders.
-
-Setup (Supabase project, `supabase/schema.sql`, the Vercel wildcard domain and
-the one CNAME record) is documented in **[supabase/README.md](supabase/README.md)**,
-along with two checks:
-
-```sh
-bun run stores:validate   # schema, RLS and checkout — no Supabase project needed
-bun run stores:e2e        # live: creates a demo store and opens its storefront
-```
-With no Supabase keys the store pages show a setup notice and every other part of
-SlashAI keeps working exactly as before — no backend required.
+SlashAI has no backend, no database and no accounts. Everything personal
+(favorites, recents, theme, accent and progress) stays in this browser's
+`localStorage`, and the whole catalogue ships as static data — so browsing and
+searching never depend on a network round-trip.
 
 ---
 

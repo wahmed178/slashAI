@@ -6,9 +6,8 @@
 ## What This Is
 SlashAI (https://slashai.in) — a free, offline-first, no-account AI command and
 resource library. React + TanStack Start (SSR), hosted on Vercel, real Android
-wrapper via Capacitor. Everything personal lives in localStorage, with one
-deliberate exception: **SlashAI Stores** (`/stores`), a multi-tenant storefront
-host on Supabase (Postgres + Auth + Storage).
+wrapper via Capacitor. Everything personal lives in localStorage — there is no
+backend, no database and no accounts.
 
 ## Stack (do not add to it casually)
 - React 19 + TanStack Start 1.168 / TanStack Router 1.170 (file-based routes in `src/routes/`)
@@ -16,32 +15,7 @@ host on Supabase (Postgres + Auth + Storage).
 - shadcn/ui (Radix primitives) in `src/components/ui/`
 - lucide-react icons; sonner for toasts; framer-motion-style CSS animations
 - vite-plugin-pwa (precache + offline), Capacitor for the Android build
-- @supabase/supabase-js — **only** for SlashAI Stores
 - Package manager: **bun**. Typecheck: `bun tsc -b --noEmit`
-
-## SlashAI Stores (v2.31)
-- Routes: `/stores` (directory) · `/stores/<slug>` (storefront) ·
-  `/stores/dashboard` (owner). Static `stores.dashboard.tsx` intentionally wins
-  over `stores.$slug.index.tsx`.
-- Subdirectory files each own a piece: `src/lib/stores.ts` (client + queries +
-  slug/host helpers + tenant themes), `src/hooks/use-stores.ts`,
-  `src/components/stores/{Storefront,StoreManager,StoreHostGate,StoreBits}.tsx`.
-- `StoreHostGate` in `__root.tsx` serves a store standalone when the host is
-  `<slug>.<VITE_STORES_ROOT_DOMAIN>`; reserved slugs live in `RESERVED_SLUGS`.
-- Database: `supabase/schema.sql` (idempotent, RLS, `place_order` RPC that
-  recomputes prices server-side). Setup + wildcard DNS walkthrough:
-  `supabase/README.md`.
-- Env: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, optional
-  `VITE_STORES_ROOT_DOMAIN`. Anon key only; RLS is the protection.
-- Without those keys everything must keep working — show `SetupNotice`, never
-  throw. Test by deleting the keys locally.
-- Verification: `bun run stores:validate` (schema + RLS + checkout in PGlite,
-  no keys needed) and `bun run stores:e2e` (live project, creates a demo store
-  and loads its storefront). `supabase/README.md` explains both.
-- Schema rules that bite: helper functions go **after** the tables (SQL function
-  bodies are validated at creation), `place_order` counts matched items rather
-  than a non-zero subtotal (free items must be orderable), and a published
-  store's catalogue is deliberately public.
 
 ## Route Map (current)
 - `/` homepage — live ticker, hero + UniversalSearch, library stats, SlashKits

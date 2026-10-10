@@ -72,20 +72,6 @@ export const CHANGELOG: ReleaseNote[] = [
     ],
   },
   {
-    version: "2.31.0",
-    date: "2026-09-20",
-    title: "SlashAI Stores — free storefronts for small businesses",
-    changes: [
-      "New at /stores: a multi-tenant store platform. Anybody can sign in, create a store, add products and take orders — free, with no platform fees and no commission",
-      "Each store gets its own web address: yourstore.slashai.in once the wildcard domain is live, and /stores/<slug> today. Both point at the same live shop",
-      "Shoppers buy without an account — cart, checkout with just a name and phone, a real order code, and a one-tap WhatsApp hand-off for the order",
-      "Store owner dashboard: products with photo upload, prices, stock and 'was' prices; orders with customer details, address and notes, moving through New → Confirmed → Shipped → Delivered",
-      "Built on Supabase (Postgres + Auth + Storage) with Row Level Security, so a store account can only ever see its own store — safe to hand a subdomain to a friend or client",
-      "Checkout runs through a server-side place_order function that re-reads every price from the database, so client prices can never be trusted",
-      "Every existing feature keeps working with no backend at all until the Supabase keys are added — the store screens show a setup notice until then",
-    ],
-  },
-  {
     version: "2.30.0",
     date: "2026-09-18",
     title: "Two new courses, a regex trainer and smarter everyday tools",
@@ -381,8 +367,6 @@ export const APP_DETAILS = {
 /**
  * Google Form for suggesting a software, tool or website to the SlashAI
  * catalogue. Used everywhere the site asks "found something we should add?".
- * Store/website *listings* use their own form — see STORE_SIGNUP_FORM_URL in
- * src/lib/stores.ts.
  */
 export const SUGGESTION_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSe_op-GPK9klYwmpRyJP3Wi2FUyVZG8M0Nfyr3_tQwjNz7TkQ/viewform";

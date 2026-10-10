@@ -173,8 +173,6 @@ import { Route as SlashIndexRouteImport } from './routes/slash.index'
 import { Route as SlashAppRouteImport } from './routes/slash.$app'
 import { Route as SlashSlashgramRouteImport } from './routes/slash.slashgram'
 import { Route as SlashbarCategoryRouteImport } from './routes/slashbar.$category'
-import { Route as StoresIndexRouteImport } from './routes/stores.index'
-import { Route as StoresDashboardRouteImport } from './routes/stores.dashboard'
 import { Route as ToolsIndexRouteImport } from './routes/tools.index'
 import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
 import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
@@ -363,7 +361,6 @@ import { Route as ToolsYtThumbnailRouteImport } from './routes/tools.yt-thumbnai
 import { Route as ExploreCategoryIndexRouteImport } from './routes/explore.$category.index'
 import { Route as ExploreCategorySubcategoryRouteImport } from './routes/explore.$category.$subcategory'
 import { Route as LearnCourseIdLessonIdRouteImport } from './routes/learn.$courseId_.$lessonId'
-import { Route as StoresSlugIndexRouteImport } from './routes/stores.$slug.index'
 import { Route as ToolsBouquetCodeRouteImport } from './routes/tools.bouquet_.$code'
 
 const IndexRoute = IndexRouteImport.update({
@@ -1185,16 +1182,6 @@ const SlashSlashgramRoute = SlashSlashgramRouteImport.update({
 const SlashbarCategoryRoute = SlashbarCategoryRouteImport.update({
   id: '/slashbar/$category',
   path: '/slashbar/$category',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StoresIndexRoute = StoresIndexRouteImport.update({
-  id: '/stores/',
-  path: '/stores/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StoresDashboardRoute = StoresDashboardRouteImport.update({
-  id: '/stores/dashboard',
-  path: '/stores/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsIndexRoute = ToolsIndexRouteImport.update({
@@ -2138,11 +2125,6 @@ const LearnCourseIdLessonIdRoute = LearnCourseIdLessonIdRouteImport.update({
   path: '/learn/$courseId/$lessonId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StoresSlugIndexRoute = StoresSlugIndexRouteImport.update({
-  id: '/stores/$slug/',
-  path: '/stores/$slug/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ToolsBouquetCodeRoute = ToolsBouquetCodeRouteImport.update({
   id: '/bouquet_/$code',
   path: '/bouquet/$code',
@@ -2305,7 +2287,6 @@ export interface FileRoutesByFullPath {
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
   '/slashbar/$category': typeof SlashbarCategoryRoute
-  '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -2499,13 +2480,11 @@ export interface FileRoutesByFullPath {
   '/learn/': typeof LearnIndexRoute
   '/play/': typeof PlayIndexRoute
   '/slash/': typeof SlashIndexRoute
-  '/stores/': typeof StoresIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
   '/tools/bouquet/$code': typeof ToolsBouquetCodeRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
-  '/stores/$slug/': typeof StoresSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -2661,7 +2640,6 @@ export interface FileRoutesByTo {
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
   '/slashbar/$category': typeof SlashbarCategoryRoute
-  '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -2855,13 +2833,11 @@ export interface FileRoutesByTo {
   '/learn': typeof LearnIndexRoute
   '/play': typeof PlayIndexRoute
   '/slash': typeof SlashIndexRoute
-  '/stores': typeof StoresIndexRoute
   '/tools': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId/$lessonId': typeof LearnCourseIdLessonIdRoute
   '/tools/bouquet/$code': typeof ToolsBouquetCodeRoute
   '/explore/$category': typeof ExploreCategoryIndexRoute
-  '/stores/$slug': typeof StoresSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -3020,7 +2996,6 @@ export interface FileRoutesById {
   '/slash/$app': typeof SlashAppRoute
   '/slash/slashgram': typeof SlashSlashgramRoute
   '/slashbar/$category': typeof SlashbarCategoryRoute
-  '/stores/dashboard': typeof StoresDashboardRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
   '/tools/age-of-things': typeof ToolsAgeOfThingsRoute
@@ -3214,13 +3189,11 @@ export interface FileRoutesById {
   '/learn/': typeof LearnIndexRoute
   '/play/': typeof PlayIndexRoute
   '/slash/': typeof SlashIndexRoute
-  '/stores/': typeof StoresIndexRoute
   '/tools/': typeof ToolsIndexRoute
   '/explore/$category/$subcategory': typeof ExploreCategorySubcategoryRoute
   '/learn/$courseId_/$lessonId': typeof LearnCourseIdLessonIdRoute
   '/tools/bouquet_/$code': typeof ToolsBouquetCodeRoute
   '/explore/$category/': typeof ExploreCategoryIndexRoute
-  '/stores/$slug/': typeof StoresSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -3380,7 +3353,6 @@ export interface FileRouteTypes {
     | '/slash/$app'
     | '/slash/slashgram'
     | '/slashbar/$category'
-    | '/stores/dashboard'
     | '/tools/$slug'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -3574,13 +3546,11 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/play/'
     | '/slash/'
-    | '/stores/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
     | '/tools/bouquet/$code'
     | '/explore/$category/'
-    | '/stores/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -3736,7 +3706,6 @@ export interface FileRouteTypes {
     | '/slash/$app'
     | '/slash/slashgram'
     | '/slashbar/$category'
-    | '/stores/dashboard'
     | '/tools/$slug'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -3930,13 +3899,11 @@ export interface FileRouteTypes {
     | '/learn'
     | '/play'
     | '/slash'
-    | '/stores'
     | '/tools'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId/$lessonId'
     | '/tools/bouquet/$code'
     | '/explore/$category'
-    | '/stores/$slug'
   id:
     | '__root__'
     | '/'
@@ -4094,7 +4061,6 @@ export interface FileRouteTypes {
     | '/slash/$app'
     | '/slash/slashgram'
     | '/slashbar/$category'
-    | '/stores/dashboard'
     | '/tools/$slug'
     | '/tools/age-calculator'
     | '/tools/age-of-things'
@@ -4288,13 +4254,11 @@ export interface FileRouteTypes {
     | '/learn/'
     | '/play/'
     | '/slash/'
-    | '/stores/'
     | '/tools/'
     | '/explore/$category/$subcategory'
     | '/learn/$courseId_/$lessonId'
     | '/tools/bouquet_/$code'
     | '/explore/$category/'
-    | '/stores/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -4355,7 +4319,6 @@ export interface RootRouteChildren {
   SlashAppRoute: typeof SlashAppRoute
   SlashSlashgramRoute: typeof SlashSlashgramRoute
   SlashbarCategoryRoute: typeof SlashbarCategoryRoute
-  StoresDashboardRoute: typeof StoresDashboardRoute
   BlogIndexRoute: typeof BlogIndexRoute
   BuildIdeasIndexRoute: typeof BuildIdeasIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
@@ -4364,11 +4327,9 @@ export interface RootRouteChildren {
   HubIndexRoute: typeof HubIndexRoute
   LearnIndexRoute: typeof LearnIndexRoute
   SlashIndexRoute: typeof SlashIndexRoute
-  StoresIndexRoute: typeof StoresIndexRoute
   ExploreCategorySubcategoryRoute: typeof ExploreCategorySubcategoryRoute
   LearnCourseIdLessonIdRoute: typeof LearnCourseIdLessonIdRoute
   ExploreCategoryIndexRoute: typeof ExploreCategoryIndexRoute
-  StoresSlugIndexRoute: typeof StoresSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -5519,20 +5480,6 @@ declare module '@tanstack/react-router' {
       path: '/slashbar/$category'
       fullPath: '/slashbar/$category'
       preLoaderRoute: typeof SlashbarCategoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/stores/': {
-      id: '/stores/'
-      path: '/stores'
-      fullPath: '/stores/'
-      preLoaderRoute: typeof StoresIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/stores/dashboard': {
-      id: '/stores/dashboard'
-      path: '/stores/dashboard'
-      fullPath: '/stores/dashboard'
-      preLoaderRoute: typeof StoresDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/': {
@@ -6851,13 +6798,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearnCourseIdLessonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/stores/$slug/': {
-      id: '/stores/$slug/'
-      path: '/stores/$slug'
-      fullPath: '/stores/$slug/'
-      preLoaderRoute: typeof StoresSlugIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/tools/bouquet_/$code': {
       id: '/tools/bouquet_/$code'
       path: '/bouquet/$code'
@@ -7521,7 +7461,6 @@ const rootRouteChildren: RootRouteChildren = {
   SlashAppRoute: SlashAppRoute,
   SlashSlashgramRoute: SlashSlashgramRoute,
   SlashbarCategoryRoute: SlashbarCategoryRoute,
-  StoresDashboardRoute: StoresDashboardRoute,
   BlogIndexRoute: BlogIndexRoute,
   BuildIdeasIndexRoute: BuildIdeasIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
@@ -7530,11 +7469,9 @@ const rootRouteChildren: RootRouteChildren = {
   HubIndexRoute: HubIndexRoute,
   LearnIndexRoute: LearnIndexRoute,
   SlashIndexRoute: SlashIndexRoute,
-  StoresIndexRoute: StoresIndexRoute,
   ExploreCategorySubcategoryRoute: ExploreCategorySubcategoryRoute,
   LearnCourseIdLessonIdRoute: LearnCourseIdLessonIdRoute,
   ExploreCategoryIndexRoute: ExploreCategoryIndexRoute,
-  StoresSlugIndexRoute: StoresSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

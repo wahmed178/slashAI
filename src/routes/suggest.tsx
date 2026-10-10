@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ExternalLink, Send, Sparkles, Check, ArrowLeft, Globe, Store } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { ExternalLink, Send, Sparkles, Check, ArrowLeft, Globe } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/library/AppShell";
@@ -206,13 +206,6 @@ function SuggestCommandPage() {
               <ExternalLink className="size-4" aria-hidden />
               Suggest a software / website
             </a>
-            <Link
-              to="/stores"
-              className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 text-[13px] font-bold text-foreground transition-colors hover:border-primary/40"
-            >
-              <Store className="size-4" aria-hidden />
-              Free store for your shop
-            </Link>
           </div>
           <p className="mt-3 flex items-start gap-1.5 text-[11.5px] text-muted-foreground">
             <Globe className="mt-0.5 size-3.5 shrink-0" aria-hidden />
