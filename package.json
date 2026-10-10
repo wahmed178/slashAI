@@ -16,6 +16,7 @@
     "seo:generate": "bun scripts/generate-seo-counts.mjs && bun scripts/generate-sitemap.mjs",
     "prebuild": "bun run seo:generate",
     "games:smoke": "bun scripts/smoke-brain-games.mjs",
+    "search:smoke": "bun scripts/smoke-search-focus.mjs",
     "cricket:smoke": "bun scripts/smoke-cricket.mjs",
     "rag:smoke": "bun scripts/smoke-rag.mjs",
     "insights:smoke": "bun scripts/smoke-command-insights.mjs",

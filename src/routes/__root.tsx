@@ -258,16 +258,44 @@ if (typeof window !== "undefined") {
   installBfcacheRecovery();
 }
 
+/**
+ * Pre-paint theme bootstrap. Lives in public/theme-init.js so the SSR shell and
+ * the static SPA shell (scripts/build-for-freebuff.sh) load the exact same script
+ * before the first paint.
+ */
+const THEME_INIT_SRC = "/theme-init.js";
+
+/**
+ * Document shell.
+ *
+ * Server-rendered pages need a whole document, so SSR gets `<html>`/​`<head>`/​`<body>`.
+ *
+ * The browser root must NOT render those tags: it mounts into `#root` (an
+ * element), while React attaches its document-level listeners (such as
+ * `selectionchange`, which fires the moment a search input takes focus) to the
+ * document. With `<html>`/​`<body>` in the tree, React marks the real `documentElement`
+ * and `document.body` with fibers, and its listener walk then walks from `#root`
+ * straight back to the same host fiber forever - one focus in any search box
+ * froze the page at 100% CPU on /search, /find and /tools/finder.
+ *
+ * React 19 hoists `<title>`/​`<meta>`/​`<link>` rendered anywhere in the tree into
+ * `<head>`, so `<HeadContent />` still manages per-route metadata here, and the
+ * static HTML shell (scripts/build-for-freebuff.sh) supplies the theme script.
+ */
 function RootShell({ children }: { children: ReactNode }) {
+  if (typeof document !== "undefined") {
+    return (
+      <>
+        <HeadContent />
+        {children}
+      </>
+    );
+  }
+
   return (
     <html lang="en">
       <head>
-        {/* FOUC prevention: apply theme before any paint */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{var t='brutal';try{var s=JSON.parse(localStorage.getItem('slashai.settings')||'{}');if(s&&typeof s.theme==='string')t=s.theme}catch(e){}if(t==='light'){document.documentElement.classList.add('light')}else if(t==='amoled'){document.documentElement.classList.add('amoled')}else if(t==='glass'){document.documentElement.classList.add('glass')}else if(t==='brutal'){document.documentElement.classList.add('brutal')}}catch(e){}`,
-          }}
-        />
+        <script src={THEME_INIT_SRC} />
         <HeadContent />
       </head>
       <body>

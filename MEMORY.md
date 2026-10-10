@@ -108,6 +108,19 @@ database and no accounts anywhere in the app.
 | `slashai-ux-interactions` | rolling log (kind, id, tag) → "You might like" |
 | `slashai.cart.<store-slug>` | the one server-backed feature's shopper cart |
 
+### Client root: never render the document shell in the browser
+`RootShell` in `src/routes/__root.tsx` renders `<html>/<head>/<body>` **only when
+`document` is undefined** (SSR). The browser root mounts into `#root`, so a
+`<html>`/`<body>` subtree there makes React mark the real `documentElement` and
+`document.body` with fibers, while its document-level listeners (notably
+`selectionchange`, which fires the moment a search input takes focus) keep
+testing against `#root`. React's listener walk then restarts from the same host
+fiber forever: focusing any search box froze the page at 100% CPU on `/search`,
+`/find` and `/tools/finder`. React 19 hoists `<title>`/`<meta>`/`<link>`
+rendered anywhere in the tree into `<head>`, so `<HeadContent />` still works
+inside the page body, and the pre-paint theme script lives in
+`public/theme-init.js` (loaded by both shells).
+
 ## Navigation
 **No sidebar, no drawer.** One bottom dock on every screen:
 `Home · Discovery · 🎲 Random (elevated centre) · Hubs · ⚡ Slash`

@@ -2,6 +2,24 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { VitePWA } from "vite-plugin-pwa";
 
+// `vite dev` must run as a pure SPA: no SSR, no server module graph.
+//
+// Why: the dev server kept two full module graphs alive at once (client + SSR)
+// across ~550 modules, which ran the 2 GB sandbox container into its cgroup
+// ceiling. SSR also fought the client entry - src/client.tsx mounts with
+// createRoot on document.body because Freebuff serves a static shell with an
+// empty #root, so server-rendering produced a second, competing React tree in
+// the same document (the `<html> cannot be a child of <body>` error).
+//
+// Production is untouched: `vite build` still SSRs through Nitro.
+//
+// `installDevServerMiddleware` is only read inside TanStack Start's
+// `configureServer` hook, so setting it unconditionally only affects `vite dev`.
+// `appType` is what must be dev-gated, and the config wrapper only accepts an
+// options object here (its function form returns a plain Vite config and would
+// drop the TanStack options), so the dev check runs at config-load time.
+const isDev = process.argv.includes("dev");
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
@@ -11,8 +29,16 @@ export default defineConfig({
     // because it expects server-rendered markup; Freebuff serves a static SPA
     // shell with an empty #root, so the app must mount with createRoot instead.
     client: { entry: "client" },
+    // In dev there is no server entry to run: stop TanStack Start from
+    // installing the SSR request middleware that imports the server graph.
+    vite: { installDevServerMiddleware: false },
   },
   vite: {
+    // Dev only: serve the static shell from index.html instead of SSR.
+    // (Vite 8 types the root `ssr` option as `SSROptions`, an object, so a
+    // literal `ssr: false` is rejected by tsc; `appType: "spa"` is Vite's
+    // supported switch for "no SSR, serve the SPA shell".)
+    ...(isDev ? { appType: "spa" as const } : {}),
     // Dev-only: skip Vite's startup crawl. With 350+ routes the crawl pulls the
     // whole module graph into the dev server before the first request, which is
     // most of its idle footprint. Modules are still transformed on demand.

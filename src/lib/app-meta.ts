@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.36.0";
+export const APP_VERSION = "2.36.1";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,17 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.36.1",
+    date: "2026-10-10",
+    title: "Search pages stopped freezing",
+    changes: [
+      "Fixed the freeze that made /search, /find and /tools/finder unusable. The client rendered a whole second document - <html>, <head> and <body> - inside its own #root container, so the browser's selectionchange event (fired the instant a search box takes focus) sent React's event system into an endless walk at 100% CPU. The browser now renders only the page content, and React 19 keeps hoisting each page's title and meta tags into <head> as before",
+      "Every search box is focused again on arrival, and typing, suggestions and the results grid all respond immediately",
+      "The pre-paint theme script moved to /theme-init.js, loaded by both the server-rendered shell and the static shell, so the saved theme is applied before the first paint",
+      "Unrelated network failures - a blocked quote feed, a web font, a missing image - are no longer mistaken for a stale app bundle, so the site no longer wipes its caches and reloads over them",
+    ],
+  },
   {
     version: "2.36.0",
     date: "2026-09-24",

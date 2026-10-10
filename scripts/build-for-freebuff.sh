@@ -45,6 +45,10 @@ cat > dist/index.html << HTMLEOF
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0a0a0a" />
     <title>SlashAI</title>
+    <!-- Pre-paint theme bootstrap (same file the SSR shell loads). The client
+         tree no longer renders <html>/<head>/<body>, so this has to come from
+         the static shell. -->
+    <script src="/theme-init.js"></script>
     <link rel="icon" href="/favicon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     ${CSS_PATH:+<link rel="stylesheet" href="${CSS_PATH}" />}
