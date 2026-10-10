@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-09T14:05:41.371Z",
+  "updated": "2026-10-10T13:15:44.225Z",
   "articles": [
     {
-      "title": "Why isn't the industry freaking out about DeepSeek 4.1 Flash?",
-      "url": "https://www.dgt.is/blog/2026-10-07-deepseek-freek-out/",
-      "source": "HackerNews",
-      "score": 896,
-      "publishedAt": "2026-10-08"
-    },
-    {
-      "title": "Whistle: Speech to Text in 16.9 MB",
-      "url": "https://cactuscompute.com/blog/whistle",
-      "source": "HackerNews",
-      "score": 826,
-      "publishedAt": "2026-10-08"
-    },
-    {
-      "title": "Deno Is Joining Cloudflare",
+      "title": "Cloudflare acquires Deno",
       "url": "https://deno.com/blog/cloudflare",
       "source": "HackerNews",
-      "score": 223,
+      "score": 1270,
       "publishedAt": "2026-10-09"
     },
     {
-      "title": "Nobel Peace Prize for 2026 to Navanethem \"NAVI\" Pillay",
-      "url": "https://www.nobelprize.org/prizes/peace/2026/press-release/",
+      "title": "Triple-A Minesweeper",
+      "url": "https://minesweeper.mikelacher.com/",
       "source": "HackerNews",
-      "score": 195,
+      "score": 1088,
       "publishedAt": "2026-10-09"
     },
     {
-      "title": "I'm in a Meeting",
-      "url": "https://iminafleeting.com/",
+      "title": "REA Reverse – Engineer Anything",
+      "url": "https://rea.tools/",
       "source": "HackerNews",
-      "score": 193,
-      "publishedAt": "2026-10-09"
+      "score": 502,
+      "publishedAt": "2026-10-10"
     },
     {
-      "title": "Let your AI agents paint big arrows, boxes and text on your screen",
-      "url": "https://github.com/franzenzenhofer/big-arrow-on-the-screen",
+      "title": "Telegram Desktop vulnerability allowed any user's file to be stolen",
+      "url": "https://beaksec.github.io/posts/telegram-desktop-one-click-account-takeover/",
       "source": "HackerNews",
-      "score": 173,
-      "publishedAt": "2026-10-09"
+      "score": 229,
+      "publishedAt": "2026-10-10"
     },
     {
-      "title": "Our $445M Series D",
-      "url": "https://oxide.computer/blog/our-445m-series-d",
+      "title": "Eye of Sauron: Long-Range Hidden Spy Camera Detection (2024)",
+      "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/zhang-qibo",
       "source": "HackerNews",
-      "score": 104,
-      "publishedAt": "2026-10-09"
+      "score": 198,
+      "publishedAt": "2026-10-07"
     },
     {
-      "title": "MXC - a sandboxed code execution system",
-      "url": "https://github.com/microsoft/mxc",
+      "title": "`123456' password used in Danish CPR data breach",
+      "url": "https://cphpost.dk/2026-10-10/news/round-up/123456-password-used-in-massive-danish-cpr-data-breach/",
       "source": "HackerNews",
-      "score": 87,
-      "publishedAt": "2026-10-09"
+      "score": 189,
+      "publishedAt": "2026-10-10"
+    },
+    {
+      "title": "Apple/macOS silently removed from official Unix registry",
+      "url": "https://www.opengroup.org//openbrand/register/",
+      "source": "HackerNews",
+      "score": 69,
+      "publishedAt": "2026-10-10"
+    },
+    {
+      "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
+      "url": "https://github.com/rociiu/talorys",
+      "source": "HackerNews",
+      "score": 59,
+      "publishedAt": "2026-10-10"
     }
   ]
 }
