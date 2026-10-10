@@ -25,21 +25,38 @@ const SW_UPDATED_KEY = "slashai-sw-updated";
 /** Broader set of failure signals that suggest a stale bundle / resource load. */
 export function isChunkLoadError(message: string): boolean {
   const m = message.toLowerCase();
-  return (
-    /dynamically imported module/i.test(message) ||
-    /failed to fetch dynamically/i.test(message) ||
-    /error loading dynamically/i.test(message) ||
-    /importing a module script failed/i.test(message) ||
-    /vite:preloadError/i.test(message) ||
-    /loading chunk/i.test(message) ||
-    /preload.*failed/i.test(message) ||
-    /failed to load resource/i.test(m) ||
-    /net::err/i.test(m) ||
-    /failed to fetch/i.test(m) ||
-    /networkerror when attempting to fetch/i.test(m) ||
-    /unable to fetch resource/i.test(m) ||
-    /not found/i.test(m) && /chunk|assets|js\/|\.js/i.test(m)
-  );
+  // Explicit signals: a module script or a lazy route chunk failed to load.
+  if (
+    /dynamically imported module/i.test(m) ||
+    /failed to fetch dynamically/i.test(m) ||
+    /error loading dynamically/i.test(m) ||
+    /importing a module script failed/i.test(m) ||
+    /vite:preloaderror/i.test(m) ||
+    /loading chunk/i.test(m) ||
+    /unable to load chunk/i.test(m) ||
+    /preload.*failed/i.test(m)
+  ) {
+    return true;
+  }
+
+  // A generic ErrorEvent with no message (capture-phase resource failure) only
+  // counts when the failing resource was actually a script or stylesheet.
+  // Browsers report *every* failed subresource - third-party images, API
+  // calls, trackers, CORS-blocked fetches - through this same channel with an
+  // empty message. Treating those as a stale bundle made hardReloadFresh()
+  // wipe every cache and reload the page on any unrelated network error (a
+  // blocked cross-origin request was enough), which tore down the running app.
+  const target = extractResourceUrl(message);
+  if (!target) return false;
+  return /\.(?:m?[jt]sx?|css)(?:\?|#|$)/i.test(target) || target.includes("/assets/");
+}
+
+/** Pull a resource URL out of an error message, if it names one. */
+function extractResourceUrl(message: string): string | null {
+  const m =
+    /https?:\/\/\S+/.exec(message) ??
+    /(?:src|href)\s*=\s*["']?([^"'\s>]+)/i.exec(message);
+  return m ? (m[1] ?? m[0]) : null;
 }
 
 export function recoveredThisSession(): boolean {
@@ -98,7 +115,14 @@ export function installChunkErrorRecovery(): void {
   window.addEventListener(
     "error",
     (e) => {
-      const msg = e instanceof ErrorEvent ? e.message : "resource load failed";
+      // Use the real resource URL when the browser gives us one; an empty
+      // message means a bare resource-load failure with no identifying detail.
+      const resource = e.target as Partial<HTMLScriptElement & HTMLLinkElement> | null;
+      const href =
+        resource && typeof resource === "object"
+          ? (resource.src || resource.href || "")
+          : "";
+      const msg = e instanceof ErrorEvent && e.message ? e.message : href;
       recover(msg);
     },
     { capture: true },

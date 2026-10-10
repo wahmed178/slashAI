@@ -115,8 +115,8 @@ function DiscoverCard({
 
 /** The calm, finite discovery pair: one deterministic daily pick + one reroll. */
 export function Discover() {
-  const [daily, setDaily] = useState<SlashCommand>(() => getDailyCommand("2026-01-01"));
-  const [random, setRandom] = useState<SlashCommand>(() => getDailyCommand("random-seed"));
+  const [daily, setDaily] = useState<SlashCommand>(() => getDailyCommand(todayKey()));
+  const [random, setRandom] = useState<SlashCommand>(() => getRandomCommand());
 
   // resolve the real date and a real random pick after hydration to keep SSR stable
   useEffect(() => {

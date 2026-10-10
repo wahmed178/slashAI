@@ -87,7 +87,28 @@ function useDebouncedValue<T>(value: T, delayMs = UNIVERSAL_SEARCH_DEBOUNCE_MS):
   return deferred;
 }
 
-const UNIVERSAL_SEARCH_MEMO_DEPS: readonly unknown[] = [];
+/**
+ * Memoize `universalResults` across renders so a given query string is scored
+ * exactly once, even though the debounced value changes on every keystroke.
+ *
+ * The cache is bounded to the most recent 30 queries because the panel only
+ * ever shows the top 14 rows and intermediate queries during a burst are the
+ * ones that matter. Older entries fall out automatically.
+ */
+const UNIVERSAL_RESULTS_CACHE = new Map<string, UniversalSugg[]>();
+const UNIVERSAL_CACHE_MAX = 30;
+
+function cachedUniversalResults(q: string, compute: () => UniversalSugg[]): UniversalSugg[] {
+  const hit = UNIVERSAL_RESULTS_CACHE.get(q);
+  if (hit) return hit;
+  const value = compute();
+  if (UNIVERSAL_RESULTS_CACHE.size >= UNIVERSAL_CACHE_MAX) {
+    const oldest = UNIVERSAL_RESULTS_CACHE.keys().next().value;
+    if (oldest) UNIVERSAL_RESULTS_CACHE.delete(oldest);
+  }
+  UNIVERSAL_RESULTS_CACHE.set(q, value);
+  return value;
+}
 
 /**
  * Score one catalogue item against the query.
@@ -95,31 +116,36 @@ const UNIVERSAL_SEARCH_MEMO_DEPS: readonly unknown[] = [];
  * Name matches dominate; description/category/tag hits only break ties between
  * items that already matched on the query somewhere. Returns 0 for "no match",
  * so callers can just filter on truthiness.
+ *
+ * Performance: the `extras` are pre-lowercased by callers so we never allocate
+ * on the hot path. `tokens` are already lowercased by the caller.
  */
 function scoreItem(name: string, tokens: string[], whole: string, extras: string[]): number {
-  const n = name.toLowerCase();
-  const e = extras.map((x) => x.toLowerCase());
   let score = 0;
   let matched = 0;
 
   for (const t of tokens) {
-    if (n === t) score += 100;
-    else if (n.startsWith(t)) score += 70;
-    else if (n.includes(t)) score += 45;
-    else if (e.some((x) => x.includes(t))) score += 16;
-    else continue;
-    matched += 1;
+    if (name === t) { score += 100; matched += 1; }
+    else if (name.startsWith(t)) { score += 70; matched += 1; }
+    else if (name.includes(t)) { score += 45; matched += 1; }
+    else {
+      for (let i = 0; i < extras.length; i++) {
+        if (extras[i]!.includes(t)) { score += 16; matched += 1; break; }
+      }
+    }
   }
 
   if (matched === 0) return 0;
 
   // The full multi-word query landing inside the name is the strongest signal.
-  if (tokens.length > 1 && n.includes(whole)) score += 60;
+  if (tokens.length > 1 && name.includes(whole)) score += 60;
   // Reward matching more of what the user actually typed.
   score += matched * 10;
 
   return score;
 }
+
+const _emptyExtras: string[] = [];
 
 /**
  * Build the unified result list for a query: commands, SlashKits and
@@ -148,11 +174,11 @@ export function universalResults(q: string): UniversalSugg[] {
   const commandHits = suggestions(q, PER_KIND.command);
   for (const c of commandHits) {
     const base = scoreItem(c.command, tokens, whole, [
-      c.title,
-      c.description,
-      c.category,
-      c.subcategory ?? "",
-      ...(c.tags ?? []),
+      c.title.toLowerCase(),
+      c.description.toLowerCase(),
+      c.category.toLowerCase(),
+      (c.subcategory ?? "").toLowerCase(),
+      ...(c.tags ?? []).map((t) => t.toLowerCase()),
     ]);
     // A fuzzy match that never appears in the text still deserves to show,
     // but must sit below anything that matched by name.
@@ -173,7 +199,8 @@ export function universalResults(q: string): UniversalSugg[] {
 
   // ── SlashKits tools ─────────────────────────────────────────────────────
   for (const t of ALL_SLASH_TOOLS) {
-    const s = scoreItem(t.name, tokens, whole, [t.desc, t.slug]);
+    const s = scoreItem(t.name, tokens, whole, [t.desc.toLowerCase(), t.slug.toLowerCase()]);
+
     push(
       "tool",
       {
@@ -190,7 +217,7 @@ export function universalResults(q: string): UniversalSugg[] {
 
   // ── Declarative tools (the other half of the /tools catalogue) ──────────
   for (const t of DECLARATIVE_TOOLS) {
-    const s = scoreItem(t.name, tokens, whole, [t.desc, t.slug, t.section]);
+    const s = scoreItem(t.name, tokens, whole, [t.desc.toLowerCase(), t.slug.toLowerCase(), t.section.toLowerCase()]);
     push(
       "tool",
       {
@@ -207,7 +234,12 @@ export function universalResults(q: string): UniversalSugg[] {
 
   // ── AI tools directory ──────────────────────────────────────────────────
   for (const t of AI_TOOLS) {
-    const s = scoreItem(t.name, tokens, whole, [t.vendor, t.bestFor, t.category, ...t.tags]);
+    const s = scoreItem(t.name, tokens, whole, [
+      t.vendor.toLowerCase(),
+      t.bestFor.toLowerCase(),
+      t.category.toLowerCase(),
+      ...t.tags.map((tg) => tg.toLowerCase()),
+    ]);
     push(
       "aitool",
       {
@@ -225,7 +257,7 @@ export function universalResults(q: string): UniversalSugg[] {
 
   // ── Games ───────────────────────────────────────────────────────────────
   for (const g of ALL_PLAY_GAMES) {
-    const s = scoreItem(g.name, tokens, whole, [g.desc, g.slug]);
+    const s = scoreItem(g.name, tokens, whole, [g.desc.toLowerCase(), g.slug.toLowerCase()]);
     push(
       "game",
       {
@@ -242,7 +274,7 @@ export function universalResults(q: string): UniversalSugg[] {
 
   // ── Slash apps ──────────────────────────────────────────────────────────
   for (const a of ALL_SLASH_APPS) {
-    const s = scoreItem(a.name, tokens, whole, [a.desc, a.slug]);
+    const s = scoreItem(a.name, tokens, whole, [a.desc.toLowerCase(), a.slug.toLowerCase()]);
     push(
       "app",
       {
@@ -259,7 +291,7 @@ export function universalResults(q: string): UniversalSugg[] {
 
   // ── Blog guides ─────────────────────────────────────────────────────────
   for (const b of ALL_BLOG_POSTS) {
-    const s = scoreItem(b.title, tokens, whole, [b.desc, b.tag, b.summary]);
+    const s = scoreItem(b.title, tokens, whole, [b.desc.toLowerCase(), b.tag.toLowerCase(), b.summary.toLowerCase()]);
     push(
       "blog",
       {
@@ -324,7 +356,10 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
   }, []);
 
   const deferredQ = useDebouncedValue(q);
-  const results = useMemo(() => universalResults(deferredQ), [deferredQ, UNIVERSAL_SEARCH_MEMO_DEPS]);
+  const results = useMemo(
+    () => cachedUniversalResults(deferredQ, () => universalResults(deferredQ)),
+    [deferredQ],
+  );
 
   useEffect(() => setActive(0), [q]);
 
@@ -555,3 +590,4 @@ export function UniversalSearch({ size = "md", initialQuery, autoFocus, classNam
     </div>
   );
 }
+

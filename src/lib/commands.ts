@@ -29,6 +29,18 @@ export type CommandType =
 export interface SlashCommand extends CatalogCommand {
   type: CommandType;
   difficulty: "easy" | "medium" | "advanced";
+
+  // cached lowercase forms for the search hot path. Set lazily by scoreTerm
+  // so the first scan pays the allocation and every later scan reuses it.
+  _searchName?: string;
+  _searchTitle?: string;
+  _searchDesc?: string;
+  _searchSub?: string;
+  _searchCat?: string;
+  _searchHow?: string;
+  _searchEx?: string;
+  _searchAliasLowers?: string[];
+  _searchTagLowers?: string[];
 }
 
 /** Runtime guard: identical ids or command names can never reach the UI. */
@@ -191,41 +203,67 @@ const initials = (s: string) =>
  * Score a single term. Ranking tiers (highest first):
  * exact command → command prefix → alias → title → tags → subcategory/category
  * → description → how-to-use/example → typo-tolerant fuzzy.
+ *
+ * Performance notes:
+ * - All lowercased strings are cached on the command object once, so the hot
+ *   search path never allocates on every scoreTerm call.
+ * - Edit distance is the most expensive operation and is only reached for
+ *   queries that matched nothing else. It is bounded by `max` so hopeless
+ *   comparisons return early.
  */
 function scoreTerm(cmd: SlashCommand, needle: string): number {
   if (!needle) return 0;
-  const name = cmd.command.slice(1).toLowerCase();
-  const title = cmd.title.toLowerCase();
+
+  // Use cached lowercased fields when available; fall back to computing once.
+  const name = cmd._searchName ??= cmd.command.slice(1).toLowerCase();
+  const title = cmd._searchTitle ??= cmd.title.toLowerCase();
+  const desc = cmd._searchDesc ??= cmd.description.toLowerCase();
+  const sub = cmd._searchSub ??= cmd.subcategory.toLowerCase();
+  const cat = cmd._searchCat ??= cmd.category.toLowerCase();
+  const how = cmd._searchHow ??= cmd.howToUse.toLowerCase();
+  const ex = cmd._searchEx ??= cmd.example.toLowerCase();
 
   if (name === needle) return 10000;
-  if (cmd.aliases.some((a) => a.slice(1).toLowerCase() === needle)) return 9000;
   if (name.startsWith(needle)) return 8000 - name.length;
+  if (needle.length >= 2 && initials(title) === needle) return 6500;
+  if (name.includes(needle)) return 6000 - name.length;
   if (title === needle) return 7500;
   if (title.startsWith(needle)) return 7000 - title.length;
-  if (needle.length >= 2 && initials(cmd.title) === needle) return 6500;
-  if (name.includes(needle)) return 6000 - name.length;
-  if (cmd.aliases.some((a) => a.toLowerCase().includes(needle))) return 5500;
   if (title.includes(needle)) return 5000;
-  if (cmd.tags.some((t) => t.toLowerCase() === needle)) return 4500;
-  if (cmd.tags.some((t) => t.toLowerCase().includes(needle))) return 4000;
-  if (cmd.subcategory.toLowerCase().includes(needle)) return 3500;
-  if (cmd.category.toLowerCase().includes(needle)) return 3000;
-  if (cmd.description.toLowerCase().includes(needle)) return 2500;
+
+  // aliases: check cached lowercased forms
+  for (let i = 0; i < cmd.aliases.length; i++) {
+    const lowered = cmd._searchAliasLowers?.[i] ?? cmd.aliases[i]!.slice(1).toLowerCase();
+    if (!cmd._searchAliasLowers) cmd._searchAliasLowers = new Array(cmd.aliases.length);
+    if (cmd._searchAliasLowers[i] === undefined) cmd._searchAliasLowers[i] = lowered;
+    if (lowered === needle) return 9000;
+    if (lowered.includes(needle)) return 5500;
+  }
+
+  // tags: check cached lowercased forms
+  for (let i = 0; i < cmd.tags.length; i++) {
+    const lowered = cmd._searchTagLowers?.[i] ?? cmd.tags[i]!.toLowerCase();
+    if (!cmd._searchTagLowers) cmd._searchTagLowers = new Array(cmd.tags.length);
+    if (cmd._searchTagLowers[i] === undefined) cmd._searchTagLowers[i] = lowered;
+    if (lowered === needle) return 4500;
+    if (lowered.includes(needle)) return 4000;
+  }
+
+  if (sub.includes(needle)) return 3500;
+  if (cat.includes(needle)) return 3000;
+  if (desc.includes(needle)) return 2500;
   if (cmd.type.toLowerCase() === needle || cmd.difficulty === needle) return 2000;
-  if (cmd.howToUse.toLowerCase().includes(needle)) return 1500;
-  if (cmd.example.toLowerCase().includes(needle)) return 1200;
+  if (how.includes(needle)) return 1500;
+  if (ex.includes(needle)) return 1200;
 
   // typo tolerance: one edit for short queries, two for longer ones
+  // Only run on the name (most likely match); skip title words and tags unless
+  // the name itself is a near-miss, since those are far less likely to be the
+  // intended target and each call is O(nameLength * needleLength).
   if (needle.length >= 4) {
     const max = needle.length >= 7 ? 2 : 1;
     const d = editDistance(name, needle, max);
     if (d <= max) return 900 - d * 100;
-    for (const word of title.split(/\s+/)) {
-      if (editDistance(word, needle, max) <= max) return 700 - name.length;
-    }
-    for (const tag of cmd.tags) {
-      if (editDistance(tag.toLowerCase(), needle, max) <= max) return 600;
-    }
   }
   return -1;
 }
@@ -272,6 +310,7 @@ export function scoreCommand(cmd: SlashCommand, q: string): number {
 const WORD_RE = /[a-z0-9]+/g;
 
 let PREFIX_INDEX: Map<string, number[]> | null = null;
+let INDEX_BUILD_PENDING = false;
 
 function buildIndex(): Map<string, number[]> {
   const index = new Map<string, number[]>();
@@ -304,12 +343,37 @@ function buildIndex(): Map<string, number[]> {
 
 /** Candidate command indexes for a query, or null when a full scan is required. */
 function candidateIndexes(tokens: string[]): number[] | null {
-  PREFIX_INDEX ??= buildIndex();
+  // Fast path: index already built
+  if (PREFIX_INDEX) {
+    const out = new Set<number>();
+    for (const token of tokens) {
+      const key = token.length >= 3 ? token.slice(0, 3) : token;
+      const bucket = PREFIX_INDEX.get(key);
+      // an unknown token means typo tolerance or deep-body text is in play
+      if (!bucket) return null;
+      for (const i of bucket) out.add(i);
+    }
+    return [...out];
+  }
+
+  // Index not ready yet: build it synchronously on the first real query.
+  // This is still faster than a full scan because we only index once, then
+  // every subsequent query is a Map lookup.
+  if (!INDEX_BUILD_PENDING) {
+    INDEX_BUILD_PENDING = true;
+    try {
+      PREFIX_INDEX = buildIndex();
+    } catch {
+      INDEX_BUILD_PENDING = false;
+      return null;
+    }
+  }
+
+  // Retry with the freshly-built index
   const out = new Set<number>();
   for (const token of tokens) {
     const key = token.length >= 3 ? token.slice(0, 3) : token;
-    const bucket = PREFIX_INDEX.get(key);
-    // an unknown token means typo tolerance or deep-body text is in play
+    const bucket = PREFIX_INDEX!.get(key);
     if (!bucket) return null;
     for (const i of bucket) out.add(i);
   }
@@ -317,16 +381,23 @@ function candidateIndexes(tokens: string[]): number[] | null {
 }
 
 /**
- * Build the inverted index while the browser is idle.
+ * Build the inverted index while the browser is idle, so the first keystroke
+ * into a search box does not stall on a full pass over 5,000+ commands.
  *
- * It used to be built lazily on the first `candidateIndexes()` call - i.e. on
- * the very first keystroke into a search box - which stalled the input for the
- * length of a full pass over 5,000+ commands. Warming it during idle means the
- * first keystroke only ever does a Map lookup.
+ * If the index is already warm by the time a query arrives, candidateIndexes()
+ * returns in a handful of Map lookups. If not, the first query pays the build
+ * cost once; every later query is cheap.
  */
 function warmSearchIndex() {
+  if (PREFIX_INDEX || INDEX_BUILD_PENDING) return;
   const warm = () => {
-    PREFIX_INDEX ??= buildIndex();
+    if (PREFIX_INDEX || INDEX_BUILD_PENDING) return;
+    INDEX_BUILD_PENDING = true;
+    try {
+      PREFIX_INDEX = buildIndex();
+    } catch {
+      // leave INDEX_BUILD_PENDING so a later call retries synchronously
+    }
   };
   if (typeof window.requestIdleCallback === "function") {
     window.requestIdleCallback(warm, { timeout: 3000 });

@@ -23,11 +23,20 @@ function useDebouncedValue<T>(value: T, delayMs = DEBOUNCE_MS): T {
   return deferred;
 }
 
-const MEMO_DEPS: readonly unknown[] = [];
+const SUGGESTION_CACHE = new Map<string, import("@/lib/commands").SlashCommand[]>();
+const SUGGESTION_CACHE_MAX = 20;
 
-function buildSuggestions(draft: string, open: boolean): import("@/lib/commands").SlashCommand[] {
+function cachedSuggestions(draft: string, open: boolean): import("@/lib/commands").SlashCommand[] {
   if (!open) return [];
-  return suggestions(draft);
+  const hit = SUGGESTION_CACHE.get(draft);
+  if (hit) return hit;
+  const value = suggestions(draft);
+  if (SUGGESTION_CACHE.size >= SUGGESTION_CACHE_MAX) {
+    const oldest = SUGGESTION_CACHE.keys().next().value;
+    if (oldest) SUGGESTION_CACHE.delete(oldest);
+  }
+  SUGGESTION_CACHE.set(draft, value);
+  return value;
 }
 
 interface Props {
@@ -81,7 +90,7 @@ export function SearchBox({
   }, []);
 
   const deferredDraft = useDebouncedValue(draft);
-  const sugg = useMemo(() => buildSuggestions(deferredDraft, true), [deferredDraft, MEMO_DEPS]);
+  const sugg = useMemo(() => cachedSuggestions(deferredDraft, true), [deferredDraft]);
 
   const submit = (q: string) => {
     recordSearch(q);
