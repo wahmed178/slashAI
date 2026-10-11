@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-10T13:15:44.225Z",
+  "updated": "2026-10-11T13:44:30.762Z",
   "articles": [
     {
-      "title": "Cloudflare acquires Deno",
-      "url": "https://deno.com/blog/cloudflare",
+      "title": "2D Vehicles",
+      "url": "https://patkerr.co.uk/2d-vehicles/",
       "source": "HackerNews",
-      "score": 1270,
-      "publishedAt": "2026-10-09"
-    },
-    {
-      "title": "Triple-A Minesweeper",
-      "url": "https://minesweeper.mikelacher.com/",
-      "source": "HackerNews",
-      "score": 1088,
-      "publishedAt": "2026-10-09"
-    },
-    {
-      "title": "REA Reverse – Engineer Anything",
-      "url": "https://rea.tools/",
-      "source": "HackerNews",
-      "score": 502,
-      "publishedAt": "2026-10-10"
-    },
-    {
-      "title": "Telegram Desktop vulnerability allowed any user's file to be stolen",
-      "url": "https://beaksec.github.io/posts/telegram-desktop-one-click-account-takeover/",
-      "source": "HackerNews",
-      "score": 229,
-      "publishedAt": "2026-10-10"
-    },
-    {
-      "title": "Eye of Sauron: Long-Range Hidden Spy Camera Detection (2024)",
-      "url": "https://www.usenix.org/conference/usenixsecurity24/presentation/zhang-qibo",
-      "source": "HackerNews",
-      "score": 198,
+      "score": 527,
       "publishedAt": "2026-10-07"
     },
     {
-      "title": "`123456' password used in Danish CPR data breach",
-      "url": "https://cphpost.dk/2026-10-10/news/round-up/123456-password-used-in-massive-danish-cpr-data-breach/",
+      "title": "A city-building game in which the city would prefer you didn't",
+      "url": "https://housing.over.pizza/",
       "source": "HackerNews",
-      "score": 189,
+      "score": 410,
       "publishedAt": "2026-10-10"
     },
     {
-      "title": "Apple/macOS silently removed from official Unix registry",
-      "url": "https://www.opengroup.org//openbrand/register/",
+      "title": "Build your own decision model",
+      "url": "https://nishtahir.com/build-your-own-decision-model/",
       "source": "HackerNews",
-      "score": 69,
+      "score": 376,
       "publishedAt": "2026-10-10"
     },
     {
-      "title": "Talorys – A self-hosted personal AI agent on Cloudflare's free tier",
-      "url": "https://github.com/rociiu/talorys",
+      "title": "Sudden drop in Cloudflare bot traffic after strike on Yandex datacenter",
+      "url": "https://radar.cloudflare.com/bots/as13238?dateRange=7d",
       "source": "HackerNews",
-      "score": 59,
-      "publishedAt": "2026-10-10"
+      "score": 333,
+      "publishedAt": "2026-10-11"
+    },
+    {
+      "title": "LineageOS 24.0",
+      "url": "https://lineageos.org/Changelog-32/",
+      "source": "HackerNews",
+      "score": 207,
+      "publishedAt": "2026-10-11"
+    },
+    {
+      "title": "Nitter: Update Oct 10th seeking funding and legal help",
+      "url": "https://nitter.net",
+      "source": "HackerNews",
+      "score": 194,
+      "publishedAt": "2026-10-11"
+    },
+    {
+      "title": "IRCv3",
+      "url": "https://ircv3.net/",
+      "source": "HackerNews",
+      "score": 145,
+      "publishedAt": "2026-10-11"
+    },
+    {
+      "title": "I paid people to try and follow my README",
+      "url": "https://shkspr.mobi/blog/2026/10/i-paid-people-to-try-and-follow-my-readme/",
+      "source": "HackerNews",
+      "score": 94,
+      "publishedAt": "2026-10-11"
     }
   ]
 }
