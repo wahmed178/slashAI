@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-11T13:44:30.762Z",
+  "updated": "2026-10-12T16:27:09.289Z",
   "articles": [
     {
-      "title": "2D Vehicles",
-      "url": "https://patkerr.co.uk/2d-vehicles/",
+      "title": "Total Annihilation, rebuilt for modern computers",
+      "url": "https://nanolathe.gg",
       "source": "HackerNews",
-      "score": 527,
-      "publishedAt": "2026-10-07"
-    },
-    {
-      "title": "A city-building game in which the city would prefer you didn't",
-      "url": "https://housing.over.pizza/",
-      "source": "HackerNews",
-      "score": 410,
-      "publishedAt": "2026-10-10"
-    },
-    {
-      "title": "Build your own decision model",
-      "url": "https://nishtahir.com/build-your-own-decision-model/",
-      "source": "HackerNews",
-      "score": 376,
-      "publishedAt": "2026-10-10"
-    },
-    {
-      "title": "Sudden drop in Cloudflare bot traffic after strike on Yandex datacenter",
-      "url": "https://radar.cloudflare.com/bots/as13238?dateRange=7d",
-      "source": "HackerNews",
-      "score": 333,
+      "score": 617,
       "publishedAt": "2026-10-11"
     },
     {
-      "title": "LineageOS 24.0",
-      "url": "https://lineageos.org/Changelog-32/",
+      "title": "Fingerprints are the new cookies",
+      "url": "https://royfish.dev/fingerprints-are-the-new-cookies",
       "source": "HackerNews",
-      "score": 207,
+      "score": 588,
       "publishedAt": "2026-10-11"
     },
     {
-      "title": "Nitter: Update Oct 10th seeking funding and legal help",
-      "url": "https://nitter.net",
+      "title": "QGIS bans AI assisted contributions",
+      "url": "https://github.com/qgis/QGIS-Enhancement-Proposals/pull/387",
+      "source": "HackerNews",
+      "score": 307,
+      "publishedAt": "2026-10-12"
+    },
+    {
+      "title": "Type-safe HTML templating in Zig",
+      "url": "https://lalinsky.com/2026/10/11/type-safe-html-templating-in-zig.html",
       "source": "HackerNews",
       "score": 194,
-      "publishedAt": "2026-10-11"
+      "publishedAt": "2026-10-12"
     },
     {
-      "title": "IRCv3",
-      "url": "https://ircv3.net/",
+      "title": "Show HN: PS2 games statically recompiled to WebAssembly",
+      "url": "https://github.com/snuri00/ps2-web-recomp",
       "source": "HackerNews",
-      "score": 145,
-      "publishedAt": "2026-10-11"
+      "score": 175,
+      "publishedAt": "2026-10-12"
     },
     {
-      "title": "I paid people to try and follow my README",
-      "url": "https://shkspr.mobi/blog/2026/10/i-paid-people-to-try-and-follow-my-readme/",
+      "title": "The Making Of Super Mario 64 – full Giles Goddard interview (2001)",
+      "url": "https://pixelatron.com/blog/the-making-of-super-mario-64-full-giles-goddard-interview-ngc/",
       "source": "HackerNews",
-      "score": 94,
-      "publishedAt": "2026-10-11"
+      "score": 137,
+      "publishedAt": "2026-10-10"
+    },
+    {
+      "title": "Secret of Orange Cats Revealed After 60-Year Search",
+      "url": "https://www.sciencealert.com/secret-of-orange-cats-finally-revealed-after-60-year-search",
+      "source": "HackerNews",
+      "score": 137,
+      "publishedAt": "2026-10-10"
+    },
+    {
+      "title": "Incident with Actions, Pull Requests and Issues",
+      "url": "https://www.githubstatus.com/incidents/93njd414rpbx",
+      "source": "HackerNews",
+      "score": 111,
+      "publishedAt": "2026-10-12"
     }
   ]
 }
