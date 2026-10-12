@@ -1,91 +1,83 @@
 {
-  "updated": "2026-10-05",
-  "week": "2026-W40",
+  "updated": "2026-10-12",
+  "week": "2026-W41",
   "items": [
     {
-      "name": "Netra",
-      "url": "https://www.producthunt.com/products/netra",
-      "description": "A watchful notch with tools to keep you focused Discussion | Link",
+      "name": "Google EmbeddingGemma 2",
+      "url": "https://www.producthunt.com/products/embeddinggemma-2",
+      "description": "An open, lightweight multimodal embedding model Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "iLand",
-      "url": "https://www.producthunt.com/products/iland",
-      "description": "Turn your Mac's notch into an everyday workspace Discussion | Link",
+      "name": "Scrape Anything by Context.dev",
+      "url": "https://www.producthunt.com/products/context-dev",
+      "description": "Turn any website into clean data with one API call. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "HyperFrames Studio (Desktop)",
-      "url": "https://www.producthunt.com/products/heygen",
-      "description": "The First Video Editor built for Agents Discussion | Link",
+      "name": "Invited",
+      "url": "https://www.producthunt.com/products/invited-ai-reminder-scanner",
+      "description": "AI reminder scanner for bills, invites & documents Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Xtracticle",
-      "url": "https://www.producthunt.com/products/xtracticle",
-      "description": "Save X Articles and threads as PDF, Markdown or EPUB Discussion | Link",
+      "name": "Knocket",
+      "url": "https://www.producthunt.com/products/knocket-2",
+      "description": "Chat with visitors from your website or link Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Bentomux",
-      "url": "https://www.producthunt.com/products/bentomux",
-      "description": "A bento box for your terminal workspace. Discussion | Link",
+      "name": "Manifold MCP",
+      "url": "https://www.producthunt.com/products/manifold-mcp",
+      "description": "SEO, AI answers, social, ads and leads data for your agent Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Reason",
-      "url": "https://www.producthunt.com/products/dereference-the-100x-ide",
-      "description": "A coding workspace with context, plugins and skills Discussion | Link",
+      "name": "ngram 2.0",
+      "url": "https://www.producthunt.com/products/ngram",
+      "description": "Create explainers, screencasts, and AI avatar videos Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Invofox Self Serve",
-      "url": "https://www.producthunt.com/products/invofox",
-      "description": "99% accurate document extraction, SLA guaranteed Discussion | Link",
+      "name": "ExcaliClaw",
+      "url": "https://www.producthunt.com/products/excaliclaw",
+      "description": "Hand-drawn diagrams your AI agent can draw with you Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "devpit",
-      "url": "https://www.producthunt.com/products/devpit",
-      "description": "A native control room for your Claude Code agents Discussion | Link",
+      "name": "SquadRoom",
+      "url": "https://www.producthunt.com/products/squadroom",
+      "description": "AI employees that work 24/7 Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Breadcrumb, record everything on your mac + context manager",
-      "url": "https://innerloop.works/breadcrumb",
-      "description": "49 points on Hacker News",
+      "name": "Agent.reviews – Where AI agents read and write reviews on to",
+      "url": "https://agent.reviews/",
+      "description": "73 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Made an open-source Lego AI generator",
-      "url": "https://github.com/anteloc/ldraw-nova",
-      "description": "156 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "HN.watch – Videos of all Hacker News posts",
-      "url": "https://hn.watch/",
-      "description": "224 points on Hacker News",
+      "name": "Proton Drive for Linux",
+      "url": "https://oss.lsantos.dev/proton-drive-linux-fs/",
+      "description": "119 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
