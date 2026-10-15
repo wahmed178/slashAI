@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-14T12:37:18.609Z",
+  "updated": "2026-10-15T12:25:42.284Z",
   "articles": [
     {
-      "title": "Gemini 4 Argon",
-      "url": "https://deepmind.google/models/gemini/",
+      "title": "Things to know when you get cancer",
+      "url": "https://jjmaxwell4.com/writing/things-to-know-when-you-get-cancer/",
       "source": "HackerNews",
-      "score": 1350,
-      "publishedAt": "2026-10-13"
-    },
-    {
-      "title": "Show HN: Guitoro, a virtual guitar you strum with your keyboard",
-      "url": "https://guitoro.com/",
-      "source": "HackerNews",
-      "score": 472,
-      "publishedAt": "2026-10-13"
-    },
-    {
-      "title": "AOSP Source Releases Are So Late Developers Disassemble Libraries to Report Bugs",
-      "url": "https://github.com/android/ndk/issues/2260",
-      "source": "HackerNews",
-      "score": 330,
+      "score": 1534,
       "publishedAt": "2026-10-14"
     },
     {
-      "title": "Iosevka is an open-source, sans-serif and slab-serif, monospace font",
-      "url": "https://typeof.net/Iosevka/",
+      "title": "Do dentists know what they're doing?",
+      "url": "https://mapwriting.substack.com/p/dentists",
+      "source": "HackerNews",
+      "score": 773,
+      "publishedAt": "2026-10-12"
+    },
+    {
+      "title": "OpenCode 2.0",
+      "url": "https://anoma.ly/notes/opencode-2-0/",
+      "source": "HackerNews",
+      "score": 686,
+      "publishedAt": "2026-10-14"
+    },
+    {
+      "title": "Tiny Little Office",
+      "url": "https://tinylittleoffice.com/",
+      "source": "HackerNews",
+      "score": 494,
+      "publishedAt": "2026-10-14"
+    },
+    {
+      "title": "Americans' social activity has steeply declined in the past 30 years",
+      "url": "https://www.dataforprogress.org/blog/2026/9/29/americans-social-activity-has-steeply-declined-in-the-past-30-years",
+      "source": "HackerNews",
+      "score": 453,
+      "publishedAt": "2026-10-14"
+    },
+    {
+      "title": "LFM2.5-24B-A2B: Built for fast on-device agents",
+      "url": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
       "source": "HackerNews",
       "score": 241,
       "publishedAt": "2026-10-14"
     },
     {
-      "title": "Felix Rieseberg Homepage",
-      "url": "https://felixrieseberg.com/",
+      "title": "Catch a Bird – I made it for my own sanity",
+      "url": "https://catchabird.com",
       "source": "HackerNews",
-      "score": 217,
-      "publishedAt": "2026-10-14"
-    },
-    {
-      "title": "900-Page Pre-Pantone Guide to Color from 1692 (With Complete High-Res Scan)",
-      "url": "https://www.openculture.com/2026/10/a-900-page-pre-pantone-guide-to-color-from-1692.html",
-      "source": "HackerNews",
-      "score": 191,
+      "score": 234,
       "publishedAt": "2026-10-12"
     },
     {
-      "title": "Sound – Bartosz Ciechanowski (2022)",
-      "url": "https://ciechanow.ski/sound/",
+      "title": "Wanted to download an ISO, ended up writing a kernel exploit",
+      "url": "https://blog.dfb.sh/blog/eap770-root-for-two-zeros/",
       "source": "HackerNews",
-      "score": 152,
-      "publishedAt": "2026-10-11"
-    },
-    {
-      "title": "Amazon pushes up prices across the Internet",
-      "url": "https://www.not-ship.com/how-amazon-pushes-up-prices-all-across-the-internet/",
-      "source": "HackerNews",
-      "score": 111,
-      "publishedAt": "2026-10-14"
+      "score": 173,
+      "publishedAt": "2026-10-13"
     }
   ]
 }
