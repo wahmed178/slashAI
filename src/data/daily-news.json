@@ -1,60 +1,60 @@
 {
-  "updated": "2026-10-15T12:25:42.284Z",
+  "updated": "2026-10-16T12:04:37.028Z",
   "articles": [
     {
-      "title": "Things to know when you get cancer",
-      "url": "https://jjmaxwell4.com/writing/things-to-know-when-you-get-cancer/",
+      "title": "Muse Spark Open",
+      "url": "https://research.meta.ai/blog/muse-spark-open",
       "source": "HackerNews",
-      "score": 1534,
-      "publishedAt": "2026-10-14"
+      "score": 843,
+      "publishedAt": "2026-10-15"
     },
     {
-      "title": "Do dentists know what they're doing?",
-      "url": "https://mapwriting.substack.com/p/dentists",
+      "title": "Neural networks are clean",
+      "url": "https://already-clean.goodfire.com/",
       "source": "HackerNews",
-      "score": 773,
-      "publishedAt": "2026-10-12"
+      "score": 721,
+      "publishedAt": "2026-10-15"
     },
     {
-      "title": "OpenCode 2.0",
-      "url": "https://anoma.ly/notes/opencode-2-0/",
+      "title": "Woman who rescued injured crow keeps getting 'thank-you gifts' from birds [video]",
+      "url": "https://www.youtube.com/watch?v=sjNpfz4UzqU",
       "source": "HackerNews",
-      "score": 686,
-      "publishedAt": "2026-10-14"
+      "score": 422,
+      "publishedAt": "2026-10-13"
     },
     {
-      "title": "Tiny Little Office",
-      "url": "https://tinylittleoffice.com/",
+      "title": "Meta’s new commercial terms will allow the scraping of news sites: experts",
+      "url": "https://www.niemanlab.org/2026/10/metas-new-commercial-terms-will-allow-the-scraping-of-news-sites-legal-experts-say/",
       "source": "HackerNews",
-      "score": 494,
-      "publishedAt": "2026-10-14"
+      "score": 345,
+      "publishedAt": "2026-10-15"
     },
     {
-      "title": "Americans' social activity has steeply declined in the past 30 years",
-      "url": "https://www.dataforprogress.org/blog/2026/9/29/americans-social-activity-has-steeply-declined-in-the-past-30-years",
+      "title": "New Withings Users Must Pay $99/Year for Apple Health Syncing",
+      "url": "https://support.withings.com/hc/en-us/community/posts/51887047154577-Unacceptable-Apple-Health-Sync-is-now-behind-a-99-year-paywall-for-new-accounts",
       "source": "HackerNews",
-      "score": 453,
-      "publishedAt": "2026-10-14"
+      "score": 325,
+      "publishedAt": "2026-10-15"
     },
     {
-      "title": "LFM2.5-24B-A2B: Built for fast on-device agents",
-      "url": "https://www.liquid.ai/blog/lfm2-5-24b-a2b",
+      "title": "RPKI now protects 70% of internet routes",
+      "url": "https://ipinfo.io/blog/rpki-protects-70-internet-routes",
       "source": "HackerNews",
-      "score": 241,
-      "publishedAt": "2026-10-14"
+      "score": 176,
+      "publishedAt": "2026-10-16"
     },
     {
-      "title": "Catch a Bird – I made it for my own sanity",
-      "url": "https://catchabird.com",
+      "title": "The Folders Programming Language",
+      "url": "https://danieltemkin.com/esolangs/folders",
       "source": "HackerNews",
-      "score": 234,
-      "publishedAt": "2026-10-12"
+      "score": 100,
+      "publishedAt": "2026-10-16"
     },
     {
-      "title": "Wanted to download an ISO, ended up writing a kernel exploit",
-      "url": "https://blog.dfb.sh/blog/eap770-root-for-two-zeros/",
+      "title": "Yet another way to invoke functions without parentheses",
+      "url": "https://blog.ikaes.de/yet-another-way-to-invoke-functions-without-parentheses/",
       "source": "HackerNews",
-      "score": 173,
+      "score": 85,
       "publishedAt": "2026-10-13"
     }
   ]
