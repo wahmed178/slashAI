@@ -120,7 +120,11 @@ async function main() {
     if (m && m[1] !== "index") toolSlugs.add(m[1]);
   }
   const catalogSrc = readFileSync("src/lib/toolkit/catalog.ts", "utf8");
-  for (const m of catalogSrc.matchAll(/\{\s*slug: "([a-z0-9-]+)", name:/g)) toolSlugs.add(m[1]);
+  // `\s*` rather than a single space between the two keys: this file is read as
+  // text, so a formatter that wrapped a row onto its own lines silently dropped
+  // every declarative tool from the sitemap (153 URLs, caught by the
+  // drift check in scripts/smoke-declarative-tools.mjs). Tolerate both layouts.
+  for (const m of catalogSrc.matchAll(/\{\s*slug:\s*"([a-z0-9-]+)",\s*name:/g)) toolSlugs.add(m[1]);
   for (const slug of toolSlugs)
     urls.push(url(`/tools/${slug}`, { changefreq: "monthly", priority: "0.6" }));
 

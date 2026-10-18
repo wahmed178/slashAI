@@ -1,7 +1,7 @@
 # claude.md — SlashAI Agent Continuity File
 
 ## Last Updated
-20 September 2026 · APP_VERSION 2.31.0
+18 October 2026 · APP_VERSION 2.37.0
 
 ## What This Is
 SlashAI (https://slashai.in) — a free, offline-first, no-account AI command and
@@ -23,8 +23,8 @@ backend, no database and no accounts.
 - `/search` · `/find` · `/explore` (+ `/$category` / `/$category/$subcategory`)
 - `/c/$slug` command detail · `/collections` · `/trending` · `/favorites` · `/recent`
 - `/discover` feed (+ `/discover/reels`) — opens with **Start Here**
-- `/tools` SlashKits index · `/tools/<slug>` 159 authored interactive tools (each its own
-  route file) · the same URL pattern also serves the 130 declarative toolkit tools from
+- `/tools` SlashKits index · `/tools/<slug>` 182 authored interactive tools (each its own
+  route file) · the same URL pattern also serves the 153 declarative toolkit tools from
   `src/lib/toolkit/catalog.ts` (ops in `src/lib/toolkit/ops.ts`, UI in
   `src/components/tools/ToolRunner.tsx`, dynamic route `src/routes/tools.$slug.tsx`).
   Authored routes always win over the dynamic one.
@@ -82,11 +82,24 @@ Several thin tools were upgraded from one-shot calculators into teaching tools:
 (worked answer line + quick chips). When you touch one of these, keep the
 existing one-shot behaviour working — the interactive part is additive.
 
+## Generated count files (never hand-edit)
+- `src/lib/seo-counts.ts` (`bun run seo:counts`) — catalogue totals for titles and meta.
+- `src/lib/slashbar-counts.ts` (`bun run slashbar:counts`) — per-category row counts for the
+  SlashBar launcher grid. This exists so the launcher never imports the 5.4 MB command
+  catalogue: it used to, which is why tapping ⚡ Slash showed a "Loading SlashBar…" screen.
+  Both run from `bun run seo:generate`, which is wired as `prebuild`.
+
 ## Catalogues — single sources of truth
 - Commands: `src/lib/commands.ts` over `src/data/commands.json`; helpers
   `relatedCommands`, `commandTemplate`, `getRandomCommand`, `filterCommands`
 - SlashKits: `src/lib/slashkits.ts` (`TOOL_SECTIONS`, `similarTools`, `newTools`,
   `toolOfTheDay`). `added` dates drive the 🆕 badge — no duplicates allowed.
+- Declarative toolkit tools: `src/lib/toolkit/catalog.ts` (rows) + `ops.ts` (pure
+  functions, keyed by `op`). Add a tool by adding a row and an op — never by
+  duplicating an op under a new name. `bun run tools:smoke` runs every row's op
+  against its own sample and fails on a missing op, a throw or an empty result;
+  run it after touching either file. A new option key must also be declared on
+  `OpOptions`, or `noPropertyAccessFromIndexSignature` rejects the dot access.
 - SlashPlay: `src/lib/slashplay.ts` (`PLAY_SECTIONS`, `GAME_META`/`gameMeta`,
   `SCORING_GAMES`, `NEW_GAME_SLUGS`, `newGames`, `gameSection`). 70 games, all hand-built.
 - Slash Courses: `src/lib/courses.ts` + `src/lib/learning-paths.ts`
@@ -125,6 +138,13 @@ table; the two rules that bite most often:
 8. Freebuff builds: `dist/` output, entry JS patched via `scripts/patch-entry.py`,
    build command `sh scripts/build-for-freebuff.sh`.
 9. Run `bun tsc -b --noEmit` before finishing; never hand-edit `src/convex/_generated`.
+10. Nothing in the dock may show a loading screen. SlashBar mounts synchronously
+    (`SlashBarOverlay` imports the launcher directly, counts come from
+    `src/lib/slashbar-counts.ts`), and tool routes preload on link intent, so a tap
+    opens the destination instead of a spinner. Do not put the launcher back behind
+    a `lazy()` boundary.
+11. Catalogue counts change with every tool you add: run `bun run seo:generate`
+    afterwards so `seo-counts.ts`, `slashbar-counts.ts` and the sitemap match.
 
 ## Owner
 Waseem Ahmed — Hyderabad, India · GitHub: [wahmed178]

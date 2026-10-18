@@ -1,6 +1,17 @@
 {
-  "version": "2.36.1",
+  "version": "2.37.0",
   "entries": [
+    {
+      "version": "2.37.0",
+      "date": "2026-10-18",
+      "changes": [
+        "Tapping ⚡ Slash no longer shows a loading screen. The launcher used to count every category by walking the 5.4 MB command catalogue, so it had to be loaded on demand and you saw 'Loading SlashBar…' while your phone parsed it. Those counts are now generated ahead of time (bun run slashbar:counts → src/lib/slashbar-counts.ts) and the launcher ships with the shell, so the overlay appears in the same frame as the tap",
+        "Links preload on intent — pointing at or touching a SlashKit fetches that page's code before you let go, so opening a tool lands on the tool instead of a pause",
+        "SlashKits grows from 312 to 335 tools: Curly Quotes, Markdown to Plain Text, Split Into Chunks, Repeat Text, JSON Path Explorer, JSON Schema Generator, curl to fetch, .env to JSON, Number Base Converter (exact BigInt maths, so long IDs keep every digit), Markdown Table to CSV, HMAC Signature, Basic Auth Header, Data URI Encoder, Password Strength (entropy plus a real brute-force time), px to rem, Colour Mixer, CSS Specificity, UTM Campaign Builder, SEO Title Audit, HTTP Status Codes, Date in Every Timezone, Duration Formatter and the ULID Generator",
+        "Every new tool runs entirely in your browser with nothing uploaded, and each carries a real sample that runs the moment the page opens",
+        "A new check (bun run tools:smoke) runs all 153 declarative tools against their own samples and fails if any is missing an implementation or returns nothing"
+      ]
+    },
     {
       "version": "2.36.1",
       "date": "2026-10-10",

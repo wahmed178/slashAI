@@ -14,8 +14,8 @@ favourites/progress/settings live in localStorage. There is no backend, no
 database and no accounts anywhere in the app.
 
 - **5,704 AI slash commands** across 45 categories / 381 subcategories
-- **289 browser tools** on `/tools` — 159 authored interactive tools (each its own route file)
-  plus 130 declarative toolkit utilities in `src/lib/toolkit` (ops in `ops.ts`, catalogue in
+- **335 browser tools** on `/tools` — 182 authored interactive tools (each its own route file)
+  plus 153 declarative toolkit utilities in `src/lib/toolkit` (ops in `ops.ts`, catalogue in
   `catalog.ts`, rendered by `src/components/tools/ToolRunner.tsx` and served by the dynamic
   route `src/routes/tools.$slug.tsx`), covering text, data/code, encoding, colour/CSS, dates,
   SEO and generators
@@ -132,8 +132,12 @@ exists for `bun run dev` and never reaches a production build.
 
 ## Navigation
 **No sidebar, no drawer.** One bottom dock on every screen:
-`Home · Discovery · 🎲 Random (elevated centre) · Hubs · ⚡ Slash`
-The ⚡ tab opens the full-screen **SlashBar** launcher overlay. The header holds
+`Home · ⚡ Slash · 🎲 Random (elevated centre) · Saved · Commands`
+The ⚡ tab opens the full-screen **SlashBar** launcher overlay — the site's only
+hub, with 14 categories that each index every content type. It mounts
+synchronously: the launcher is no longer behind a `lazy()` boundary and its
+per-category counts come from `src/lib/slashbar-counts.ts`
+(`bun run slashbar:counts`), so tapping it never shows a loading screen. The header holds
 the logo, Live Dashboard pill, command search (`/` shortcut), theme cycle,
 About, Saved and Settings. Breadcrumbs render automatically for `/tools/*`,
 `/hub/*`, `/c/*`, `/r/*`, `/learn`, `/play` and other sections, with a Save pill
@@ -152,6 +156,9 @@ for the item currently open.
   in · **You might also like** · "Something wrong? Report it" (mailto)
 
 ### SlashKits (`/tools`)
+- 335 tools: 182 authored route files plus 153 declarative tools from
+  `src/lib/toolkit/catalog.ts` + `ops.ts`. `bun run tools:smoke` runs every
+  declarative tool's op against its own sample
 - 16 sections, live search, "Just added" shelf, 🆕 New / 🔥 Popular badges
 - Every card carries "🔒 Runs in your browser · Nothing uploaded"
 - Every tool page gets a shared **How to use (3 steps) + Similar tools** block

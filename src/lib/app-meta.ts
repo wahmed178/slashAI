@@ -1,7 +1,7 @@
 import { VERIFIED_TOTAL, CATEGORY_TREE } from "./commands";
 
 /** Bump this whenever you ship something users should be told about. */
-export const APP_VERSION = "2.36.1";
+export const APP_VERSION = "2.37.0";
 
 export interface ReleaseNote {
   version: string;
@@ -12,6 +12,19 @@ export interface ReleaseNote {
 
 /** Newest first. The top entry drives the "What's new" popup. */
 export const CHANGELOG: ReleaseNote[] = [
+  {
+    version: "2.37.0",
+    date: "2026-10-18",
+    title: "SlashBar opens instantly, and 23 more tools",
+    changes: [
+      "Tapping ⚡ Slash no longer shows a loading screen. The launcher used to count every category by walking the 5.4 MB command catalogue, so it had to be loaded on demand and you saw 'Loading SlashBar…' while your phone parsed it. Those counts are now generated ahead of time (script: generate-slashbar-counts, file: slashbar-counts.ts) and the launcher ships with the shell, so the overlay appears in the same frame as the tap",
+      "Links preload on intent — pointing at or touching a SlashKit now fetches that page's code before you let go, so opening a tool lands on the tool instead of a pause",
+      "SlashKits grows from 312 to 335 tools. New in the browser toolkit: Curly Quotes, Markdown to Plain Text, Split Into Chunks, Repeat Text, JSON Path Explorer, JSON Schema Generator, curl to fetch, .env to JSON, Number Base Converter (exact BigInt maths, so long IDs keep every digit), Markdown Table to CSV, HMAC Signature, Basic Auth Header, Data URI Encoder, Password Strength (entropy plus a real brute-force time), px to rem, Colour Mixer, CSS Specificity, UTM Campaign Builder, SEO Title Audit, HTTP Status Codes, Date in Every Timezone, Duration Formatter and the ULID Generator",
+      "Every one of them runs entirely in your browser with nothing uploaded, and each has a real sample that runs the moment the page opens",
+      "A new check (`bun run tools:smoke`) runs all 153 declarative tools against their own samples and fails if any of them is missing an implementation or returns nothing — the whole family is verified in one command",
+      "The retired loading-screen and finder components are gone, and the SlashBar launcher header now reports the real number of indexed rows",
+    ],
+  },
   {
     version: "2.36.1",
     date: "2026-10-10",
