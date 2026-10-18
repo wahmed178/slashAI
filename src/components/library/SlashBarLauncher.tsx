@@ -3,18 +3,22 @@ import { Link } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
 
 import { SLASH_APPS, type SlashApp } from "@/lib/slashbar";
-import { categorySummaries } from "@/lib/slashbar-categories";
+import {
+  SLASHBAR_CATEGORY_COUNT,
+  SLASHBAR_CATEGORY_COUNTS,
+  SLASHBAR_INDEXED_ROWS,
+} from "@/lib/slashbar-counts";
 
 /**
  * The full-screen SlashBar launcher.
  *
- * This is the heavy half of the overlay and is loaded on demand (see
- * SlashBarOverlay). It reaches the 5,704-command catalog through
- * `categorySummaries`, because every category tile shows its real row
- * count. Loading it eagerly put the whole catalog in the shell bundle that
- * every page downloads, which left the site blank for ~9s while the main
- * thread parsed it. Nothing here should ever be imported statically from
- * the app shell.
+ * This used to be the heavy half of the overlay: it counted each category's
+ * real rows through `categorySummaries()`, which walks the 5.4 MB command
+ * catalogue, so the overlay needed a lazy boundary and a "Loading SlashBar…"
+ * screen while a phone parsed several megabytes on tap. Every count now comes
+ * from `src/lib/slashbar-counts.ts` (generated from those same tables by
+ * `bun run slashbar:counts`), so the launcher is a couple of KB of UI and the
+ * overlay mounts in the same frame as the tap — no loader at all.
  */
 
 interface AppButton {
@@ -106,18 +110,12 @@ function buildSections(): LauncherSection[] {
 const SECTIONS: LauncherSection[] = buildSections();
 const ALL_ITEMS: AppButton[] = SECTIONS.flatMap((s) => s.items);
 
-const CATEGORIES: CategoryButton[] = categorySummaries().map(({ def, total, counts }) => ({
-  name: def.name,
-  emoji: def.emoji,
-  desc: [
-    counts.commands ? `${counts.commands} cmds` : null,
-    counts.tools ? `${counts.tools} tools` : null,
-    counts.resources ? `${counts.resources} links` : null,
-  ]
-    .filter(Boolean)
-    .join(" · "),
-  to: `/slashbar/${def.slug}`,
-  count: total,
+const CATEGORIES: CategoryButton[] = SLASHBAR_CATEGORY_COUNTS.map((c) => ({
+  name: c.name,
+  emoji: c.emoji,
+  desc: c.summary,
+  to: `/slashbar/${c.slug}`,
+  count: c.total,
 }));
 
 /** Everything searchable in the launcher, apps and categories together. */
@@ -179,7 +177,8 @@ export default function SlashBarLauncher({ onClose }: { onClose: () => void }) {
           <div className="min-w-0">
             <h2 className="text-2xl font-bold tracking-tight text-foreground">⚡ SlashBar</h2>
             <p className="mt-0.5 text-[13px] text-muted-foreground">
-              {ALL_ITEMS.length} apps · {CATEGORIES.length} categories covering the whole library
+              {ALL_ITEMS.length} apps · {SLASHBAR_CATEGORY_COUNT} categories ·{" "}
+              {SLASHBAR_INDEXED_ROWS.toLocaleString()} rows indexed
             </p>
           </div>
           <button

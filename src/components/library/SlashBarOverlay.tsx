@@ -1,18 +1,19 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import SlashBarLauncher from "./SlashBarLauncher";
 
 /**
  * SlashBar launcher — a full-screen overlay opened from the bottom dock, and
  * the site's single hub.
  *
- * The UI lives in ./SlashBarLauncher and is loaded on demand. It needs the
- * full 5,704-command catalog to show real per-category counts, and the app
- * shell is downloaded on every page, so importing it from here put ~6 MB of
- * catalog in the initial bundle and left the site blank for about nine
- * seconds while the main thread parsed it. The shell now stays small and the
- * catalog arrives only if the overlay is actually opened.
+ * The UI used to sit behind `lazy(() => import("./SlashBarLauncher"))` because
+ * the launcher counted every category's rows by walking the 5.4 MB command
+ * catalogue. That meant a tap on ⚡ Slash showed a "Loading SlashBar…" panel
+ * while the phone fetched and parsed several megabytes. The counts are now
+ * generated literals (`src/lib/slashbar-counts.ts`), so the launcher is small
+ * enough to ship with the shell and the overlay opens instantly — there is no
+ * suspense boundary and therefore no loading screen to see.
  */
-const SlashBarLauncher = lazy(() => import("./SlashBarLauncher"));
-
 export function SlashBarOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   // lock body scroll + close on Escape while open
   useEffect(() => {
@@ -31,20 +32,5 @@ export function SlashBarOverlay({ open, onClose }: { open: boolean; onClose: () 
 
   if (!open) return null;
 
-  return (
-    <Suspense
-      fallback={
-        <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-background"
-          role="dialog"
-          aria-modal="true"
-          aria-label="SlashBar launcher"
-        >
-          <p className="text-sm text-muted-foreground">Loading SlashBar…</p>
-        </div>
-      }
-    >
-      <SlashBarLauncher onClose={onClose} />
-    </Suspense>
-  );
+  return <SlashBarLauncher onClose={onClose} />;
 }

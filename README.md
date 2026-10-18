@@ -46,7 +46,7 @@ A searchable library of copy-ready slash commands for writing, research, coding,
 | --- | --- |
 | **Commands** | 5,704 curated, de-duplicated slash commands |
 | **Categories** | 45 categories across 381 subcategories |
-| **SlashKits** | 289 free tools — 159 interactive browser tools plus 130 declarative toolkit utilities (text, data, encoding, colour, dates, SEO, generators) served from `src/lib/toolkit` |
+| **SlashKits** | 335 free tools — 182 interactive browser tools plus 153 declarative toolkit utilities (text, data, encoding, colour, dates, SEO, generators) served from `src/lib/toolkit` |
 | **SlashPlay** | 91 browser games — hand-built classics plus a Sports wing (table tennis, air hockey, penalty shootout, darts, basketball, bowling, cricket bowling, volleyball, archery, mini golf, carrom), board games (ludo, 8-ball pool, hand cricket, tambola), arcade (bird hunter, bubbles shooter, stack, paper toss) and brain boosters (sudoku, nonogram, sokoban, eight queens, knight's tour, takuzu) |
 | **Slash Courses** | 5 courses with real lessons and graded module tests, plus 4 learning paths |
 | **Search** | Instant fuzzy search with typo tolerance and highlighted matches |

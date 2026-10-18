@@ -334,6 +334,71 @@ export const DECLARATIVE_TOOLS: DeclarativeTool[] = [
     slug: "random-colour-list", name: "Random Colour List", desc: "A handful of usable random colours", icon: "🎨", section: "Generators", op: "randomColor", noInput: true,
     options: [{ key: "count", label: "Colours", values: [["6", "6"], ["10", "10"], ["3", "3"]] }],
   },
+
+  /* ───────────────────────────────────────────────────────────────
+     Added as one batch. `section` on each row decides where a tool
+     renders, so these appear at the end of their own section on
+     /tools without being spliced into the groups above. Keep each
+     row on one line: scripts/generate-sitemap.mjs reads this file as
+     text to list the /tools/<slug> pages.
+     ─────────────────────────────────────────────────────────────── */
+
+  /* Text & Writing */
+  { slug: "smart-quotes", name: "Curly Quotes", desc: "Turn straight quotes into typographic ones, the way a word processor does", icon: "❝", section: "Text & Writing", op: "smartQuotes", sample: "He said \"it's fine\" and left." },
+  { slug: "strip-markdown", name: "Markdown to Plain Text", desc: "Remove Markdown syntax and keep the prose, with each link's URL", icon: "📄", section: "Text & Writing", op: "stripMarkdown", sample: "# SlashAI\n\n**Free** forever — see the [tools](/tools) and the `docs`." },
+  { slug: "split-chunks", name: "Split Into Chunks", desc: "Break long copy into posting-sized pieces without cutting words in half", icon: "✂️", section: "Text & Writing", op: "splitChunks", sample: SAMPLE_TEXT, options: [{ key: "length", label: "Chunk size", values: [["160", "160 (SMS)"], ["280", "280 (post)"], ["500", "500"]] }] },
+  { slug: "repeat-text", name: "Repeat Text", desc: "Repeat a string as many times as you need", icon: "🔁", section: "Text & Writing", op: "repeatText", sample: "row-1",
+    options: [
+      { key: "count", label: "Times", values: [["3", "3"], ["10", "10"], ["100", "100"]] },
+      { key: "separator", label: "Separator", values: [["space", "space"], ["newline", "new line"], ["comma", "comma"]] },
+    ],
+  },
+
+  /* Data & Code */
+  { slug: "json-paths", name: "JSON Path Explorer", desc: "List every path in a JSON document with the type found there", icon: "🧭", section: "Data & Code", op: "jsonPaths", sample: '{"name":"SlashAI","free":true,"tools":[{"slug":"json-paths","inputs":2}],"meta":{"tags":["browser","offline"],"version":null}}' },
+  { slug: "json-schema", name: "JSON Schema Generator", desc: "Infer a draft-07 JSON Schema from a real sample document", icon: "🧬", section: "Data & Code", op: "jsonSchema", sample: '{"id":1,"name":"Ayesha","active":true,"score":9.5,"tags":["a","b"],"address":{"city":"Hyderabad","zip":500001}}' },
+  { slug: "curl-to-fetch", name: "curl to fetch", desc: "Convert a curl command into the fetch() call that does the same thing", icon: "🌀", section: "Data & Code", op: "curlToFetch", sample: "curl -X POST https://api.example.com/users -H \"Content-Type: application/json\" -H \"Authorization: Bearer tok_123\" -d '{\"name\":\"Ayesha\"}'" },
+  { slug: "dotenv-to-json", name: ".env to JSON", desc: "Parse a .env file into JSON, with optional type coercion", icon: "🔧", section: "Data & Code", op: "dotenvToJson", sample: "# local config\nAPI_URL=https://api.example.com\nDEBUG=true\nRETRIES=3\nGREETING=\"hello world\"", options: [{ key: "coerce", label: "Values", values: [["strings", "keep every value as text"], ["typed", "convert true/false and numbers"]] }] },
+  { slug: "number-base", name: "Number Base Converter", desc: "Convert an integer between bases 2 and 36 with exact BigInt maths", icon: "🔢", section: "Data & Code", op: "numberBase", sample: "255",
+    options: [
+      { key: "from", label: "From base", values: [["auto", "auto (0x / 0b / 0o prefixes)"], ["10", "decimal"], ["16", "hexadecimal"], ["2", "binary"], ["8", "octal"]] },
+      { key: "to", label: "Show base", values: [["16", "hexadecimal"], ["2", "binary"], ["8", "octal"], ["36", "base 36"]] },
+    ],
+  },
+  { slug: "markdown-table-to-csv", name: "Markdown Table to CSV", desc: "Turn a markdown table into CSV, quoting the cells that need it", icon: "📊", section: "Data & Code", op: "markdownTableToCsv", sample: "| Tool | Free |\n| --- | --- |\n| JSON Formatter | yes |\n| CSV Tools | yes, always |" },
+
+  /* Encoding & Security */
+  { slug: "hmac", name: "HMAC Signature", desc: "HMAC signature of a message, keyed by the secret on the first line", icon: "🔏", section: "Encoding & Security", op: "hmac", placeholder: "first line: secret key\nremaining lines: the message", sample: "super-secret-key\norder=1042&amount=2499", options: [{ key: "algo", label: "Hash", values: [["SHA-256", "SHA-256"], ["SHA-512", "SHA-512"], ["SHA-1", "SHA-1 (legacy)"]] }] },
+  { slug: "basic-auth", name: "Basic Auth Header", desc: "The exact Authorization: Basic header for a user:password pair", icon: "🪪", section: "Encoding & Security", op: "basicAuth", sample: "waseem:s3cret-pass" },
+  { slug: "data-uri", name: "Data URI Encoder", desc: "Embed text, HTML or SVG as a data: URI", icon: "🧷", section: "Encoding & Security", op: "dataUri", sample: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\"><circle cx=\"12\" cy=\"12\" r=\"10\" fill=\"#2dd4bf\"/></svg>",
+    options: [
+      { key: "mime", label: "Media type", values: [["text/plain", "text/plain"], ["image/svg+xml", "image/svg+xml"], ["text/html", "text/html"], ["application/json", "application/json"], ["text/css", "text/css"]] },
+      { key: "encoding", label: "Encoding", values: [["base64", "base64"], ["percent", "percent-encoded"]] },
+    ],
+  },
+  { slug: "password-strength", name: "Password Strength", desc: "Entropy estimate plus a real brute-force time — nothing leaves your browser", icon: "🛡️", section: "Encoding & Security", op: "passwordStrength", sample: "Tr0ub4dor&3" },
+
+  /* Colour & Design */
+  { slug: "px-rem", name: "px to rem Converter", desc: "Convert pixel values to rem, or rem back to pixels", icon: "📐", section: "Colour & Design", op: "pxRem", sample: "12 16 24 32",
+    options: [
+      { key: "base", label: "Root font size", values: [["16", "16px (browser default)"], ["14", "14px"], ["10", "10px"]] },
+      { key: "direction", label: "Direction", values: [["px2rem", "px → rem"], ["rem2px", "rem → px"]] },
+    ],
+  },
+  { slug: "colour-mix", name: "Colour Mixer", desc: "Mix two hex colours at any ratio, with the ramp between them", icon: "🎛️", section: "Colour & Design", op: "colourMix", sample: "#2dd4bf #818cf8", options: [{ key: "ratio", label: "Mix", values: [["50", "50 / 50"], ["25", "25 / 75"], ["75", "75 / 25"]] }] },
+  { slug: "css-specificity", name: "CSS Specificity", desc: "Score your selectors and rank them from strongest to weakest", icon: "⚖️", section: "Colour & Design", op: "cssSpecificity", sample: ".card > a:hover, #app .nav a, section article p" },
+
+  /* Web & SEO */
+  { slug: "utm-builder", name: "UTM Campaign Builder", desc: "Destination URL plus source/medium/campaign lines, tagged correctly", icon: "📈", section: "Web & SEO", op: "utmBuilder", placeholder: "destination URL, then one key=value per line", sample: "https://slashai.in/tools\nsource=newsletter\nmedium=email\ncampaign=october-launch" },
+  { slug: "seo-title-audit", name: "SEO Title Audit", desc: "Check a set of titles for length, duplicates and missing hooks", icon: "🔎", section: "Web & SEO", op: "seoTitleAudit", sample: "Free AI Tools for Students | SlashAI\nFree AI Tools for Students | SlashAI\n10 Best Free JSON Formatters in 2026\nTools" },
+  { slug: "http-status", name: "HTTP Status Codes", desc: "Look up status codes by class or by their leading digits", icon: "🚦", section: "Web & SEO", op: "httpStatus", placeholder: "leave blank for every code, or type 4 for the 4xx family", sample: "4", options: [{ key: "class", label: "Class", values: [["all", "all classes"], ["4xx", "4xx client errors"], ["5xx", "5xx server errors"], ["2xx", "2xx success"], ["3xx", "3xx redirects"]] }] },
+
+  /* Dates & Time */
+  { slug: "date-in-zones", name: "Date in Every Timezone", desc: "One instant shown in nine timezones, with each real offset", icon: "🌍", section: "Dates & Time", op: "dateInZones", placeholder: "2026-10-18T09:00, 1760000000, or leave blank for now", sample: "2026-10-18T09:00:00Z" },
+  { slug: "duration-format", name: "Duration Formatter", desc: "Seconds as a clock, in words, and as a total", icon: "⏳", section: "Dates & Time", op: "durationFormat", sample: "3725", options: [{ key: "unit", label: "Input unit", values: [["seconds", "seconds"], ["minutes", "minutes"], ["hours", "hours"], ["milliseconds", "milliseconds"]] }] },
+
+  /* Generators */
+  { slug: "ulid-generator", name: "ULID Generator", desc: "Time-sortable 26-character IDs, generated in your browser", icon: "🆔", section: "Generators", op: "ulid", noInput: true, options: [{ key: "count", label: "How many", values: [["5", "5"], ["1", "1"], ["20", "20"]] }] },
 ];
 
 /** a map for O(1) lookups by slug */

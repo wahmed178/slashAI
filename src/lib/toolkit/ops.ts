@@ -43,6 +43,16 @@ export interface OpOptions {
   image?: string;
   priority?: string;
   changefreq?: string;
+  separator?: string;
+  mime?: string;
+  encoding?: string;
+  base?: string;
+  direction?: string;
+  ratio?: string;
+  coerce?: string;
+  class?: string;
+  from?: string;
+  unit?: string;
 }
 
 export type OpFn = (input: string, opts: OpOptions) => string | Promise<string>;
@@ -56,7 +66,12 @@ const unique = <T>(arr: T[]) => [...new Set(arr)];
 const stripTags = (s: string) => s.replace(/<[^>]*>/g, "");
 
 const escapeHtml = (s: string) =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 
 const unescapeHtml = (s: string) =>
   s
@@ -131,11 +146,42 @@ const fromBase64 = (s: string) => {
 };
 
 const MORSE: Record<string, string> = {
-  a: ".-", b: "-...", c: "-.-.", d: "-..", e: ".", f: "..-.", g: "--.", h: "....", i: "..", j: ".---",
-  k: "-.-", l: ".-..", m: "--", n: "-.", o: "---", p: ".--.", q: "--.-", r: ".-.", s: "...", t: "-",
-  u: "..-", v: "...-", w: ".--", x: "-..-", y: "-.--", z: "--..",
-  "0": "-----", "1": ".----", "2": "..---", "3": "...--", "4": "....-",
-  "5": ".....", "6": "-....", "7": "--...", "8": "---..", "9": "----.",
+  a: ".-",
+  b: "-...",
+  c: "-.-.",
+  d: "-..",
+  e: ".",
+  f: "..-.",
+  g: "--.",
+  h: "....",
+  i: "..",
+  j: ".---",
+  k: "-.-",
+  l: ".-..",
+  m: "--",
+  n: "-.",
+  o: "---",
+  p: ".--.",
+  q: "--.-",
+  r: ".-.",
+  s: "...",
+  t: "-",
+  u: "..-",
+  v: "...-",
+  w: ".--",
+  x: "-..-",
+  y: "-.--",
+  z: "--..",
+  "0": "-----",
+  "1": ".----",
+  "2": "..---",
+  "3": "...--",
+  "4": "....-",
+  "5": ".....",
+  "6": "-....",
+  "7": "--...",
+  "8": "---..",
+  "9": "----.",
 };
 const MORSE_REV = Object.fromEntries(Object.entries(MORSE).map(([k, v]) => [v, k]));
 
@@ -143,13 +189,23 @@ const toMorse = (s: string) =>
   s
     .toLowerCase()
     .split(/\s+/)
-    .map((word) => [...word].map((c) => MORSE[c] ?? "").filter(Boolean).join(" "))
+    .map((word) =>
+      [...word]
+        .map((c) => MORSE[c] ?? "")
+        .filter(Boolean)
+        .join(" "),
+    )
     .join(" / ");
 const fromMorse = (s: string) =>
   s
     .trim()
     .split(/\s*\/\s*/)
-    .map((word) => word.split(/\s+/).map((code) => MORSE_REV[code] ?? "").join(""))
+    .map((word) =>
+      word
+        .split(/\s+/)
+        .map((code) => MORSE_REV[code] ?? "")
+        .join(""),
+    )
     .join(" ");
 
 const hexToRgb = (hex: string) => {
@@ -163,7 +219,14 @@ const hexToRgb = (hex: string) => {
   };
 };
 const rgbToHex = (r: number, g: number, b: number) =>
-  "#" + [r, g, b].map((v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0")).join("");
+  "#" +
+  [r, g, b]
+    .map((v) =>
+      Math.max(0, Math.min(255, Math.round(v)))
+        .toString(16)
+        .padStart(2, "0"),
+    )
+    .join("");
 
 function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   const rr = r / 255;
@@ -179,7 +242,7 @@ function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   if (max === rr) h = ((gg - bb) / d) % 6;
   else if (max === gg) h = (bb - rr) / d + 2;
   else h = (rr - gg) / d + 4;
-  return [Math.round(((h * 60) + 360) % 360), Math.round(s * 100), Math.round(l * 100)];
+  return [Math.round((h * 60 + 360) % 360), Math.round(s * 100), Math.round(l * 100)];
 }
 
 function hslToRgb(h: number, s: number, l: number): [number, number, number] {
@@ -195,7 +258,11 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   else if (h < 240) rgb = [0, x, c];
   else if (h < 300) rgb = [x, 0, c];
   else rgb = [c, 0, x];
-  return [Math.round((rgb[0] + m) * 255), Math.round((rgb[1] + m) * 255), Math.round((rgb[2] + m) * 255)];
+  return [
+    Math.round((rgb[0] + m) * 255),
+    Math.round((rgb[1] + m) * 255),
+    Math.round((rgb[2] + m) * 255),
+  ];
 }
 
 const luminance = (r: number, g: number, b: number) => {
@@ -206,7 +273,10 @@ const luminance = (r: number, g: number, b: number) => {
   return 0.2126 * chan(r) + 0.7152 * chan(g) + 0.0722 * chan(b);
 };
 
-const contrast = (a: { r: number; g: number; b: number }, b: { r: number; g: number; b: number }) => {
+const contrast = (
+  a: { r: number; g: number; b: number },
+  b: { r: number; g: number; b: number },
+) => {
   const la = luminance(a.r, a.g, a.b);
   const lb = luminance(b.r, b.g, b.b);
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
@@ -254,7 +324,9 @@ const uuidV4 = () =>
   `${randomHex(8)}-${randomHex(4)}-4${randomHex(3)}-${"89ab"[Math.floor(Math.random() * 4)]}${randomHex(3)}-${randomHex(12)}`;
 
 const WORDS_POOL =
-  "the quick brown fox jumps over lazy dog river stone bright quiet mountain forest candle window silver garden meadow lantern harbour compass orchard velvet marble thistle whisper coral anchor north current ripple".split(" ");
+  "the quick brown fox jumps over lazy dog river stone bright quiet mountain forest candle window silver garden meadow lantern harbour compass orchard velvet marble thistle whisper coral anchor north current ripple".split(
+    " ",
+  );
 
 const lorem = (count: number, unit: "words" | "sentences" | "paragraphs") => {
   const word = () => WORDS_POOL[Math.floor(Math.random() * WORDS_POOL.length)]!;
@@ -265,17 +337,22 @@ const lorem = (count: number, unit: "words" | "sentences" | "paragraphs") => {
   };
   if (unit === "words") return Array.from({ length: count }, word).join(" ");
   if (unit === "sentences") return Array.from({ length: count }, sentence).join(" ");
-  return Array.from({ length: count }, () => Array.from({ length: 4 + Math.floor(Math.random() * 3) }, sentence).join(" ")).join("\n\n");
+  return Array.from({ length: count }, () =>
+    Array.from({ length: 4 + Math.floor(Math.random() * 3) }, sentence).join(" "),
+  ).join("\n\n");
 };
 
 const titles = {
   upper: (s: string) => s.toUpperCase(),
   lower: (s: string) => s.toLowerCase(),
-  title: (s: string) => s.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()),
+  title: (s: string) =>
+    s.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()),
   sentence: (s: string) => s.toLowerCase().replace(/(^\s*\w|[.!?]\s+\w)/g, (c) => c.toUpperCase()),
   camel: (s: string) =>
     words(s.replace(/[_-]+/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2"))
-      .map((w, i) => (i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()))
+      .map((w, i) =>
+        i === 0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(),
+      )
       .join(""),
   pascal: (s: string) =>
     words(s.replace(/[_-]+/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2"))
@@ -287,9 +364,150 @@ const titles = {
   dot: (s: string) => slugify(s).replace(/-/g, "."),
   alternating: (s: string) =>
     [...s].map((c, i) => (i % 2 === 0 ? c.toLowerCase() : c.toUpperCase())).join(""),
-  inverse: (s: string) => [...s].map((c) => (c === c.toLowerCase() ? c.toUpperCase() : c.toLowerCase())).join(""),
+  inverse: (s: string) =>
+    [...s].map((c) => (c === c.toLowerCase() ? c.toUpperCase() : c.toLowerCase())).join(""),
   slug: slugify,
 };
+
+/* ── helpers for the newer tool batch ─────────────────────────────── */
+
+/** Crockford base32 — the alphabet ULID is defined in. */
+const CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+
+/**
+ * A real ULID: a 48-bit millisecond timestamp followed by 80 random bits,
+ * Crockford-base32 encoded. Because the timestamp comes first, ULIDs sort in
+ * creation order — which is the whole reason to choose one over a UUID.
+ */
+const ulid = () => {
+  const time = Date.now();
+  const timePart = Array.from(
+    { length: 10 },
+    (_, i) => CROCKFORD[Math.floor(time / 2 ** (45 - i * 5)) % 32]!,
+  ).join("");
+  // 80 random bits, re-grouped into sixteen 5-bit characters.
+  const bytes = new Uint8Array(10);
+  if (globalThis.crypto?.getRandomValues) globalThis.crypto.getRandomValues(bytes);
+  else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+  const bits = Array.from(bytes, (b) => b.toString(2).padStart(8, "0")).join("");
+  const randPart = Array.from(
+    { length: 16 },
+    (_, i) => CROCKFORD[Number.parseInt(bits.slice(i * 5, i * 5 + 5), 2)]!,
+  ).join("");
+  return timePart + randPart;
+};
+
+/**
+ * Parse an integer in any base 2–36 exactly. `parseInt` gives up after 2^53;
+ * these conversions run on BigInt so a 30-digit hex value keeps every digit.
+ */
+const parseInBase = (digits: string, base: number): bigint | null => {
+  let out = 0n;
+  const b = BigInt(base);
+  for (const ch of digits.toLowerCase()) {
+    const d = "0123456789abcdefghijklmnopqrstuvwxyz".indexOf(ch);
+    if (d < 0 || d >= base) return null;
+    out = out * b + BigInt(d);
+  }
+  return out;
+};
+
+const toBaseN = (value: bigint, base: number): string => {
+  const abs = value < 0n ? -value : value;
+  const digits = abs === 0n ? "0" : abs.toString(base).toUpperCase();
+  return value < 0n ? `-${digits}` : digits;
+};
+
+/* ── JSON Schema inference (draft-07 subset) ──────────────────────── */
+
+interface JsonSchema {
+  type?: string;
+  properties?: Record<string, JsonSchema>;
+  required?: string[];
+  items?: JsonSchema | Record<string, never>;
+  anyOf?: JsonSchema[];
+}
+
+function inferSchema(value: unknown): JsonSchema {
+  if (value === null) return { type: "null" };
+  if (Array.isArray(value))
+    return { type: "array", items: value.length ? value.map(inferSchema).reduce(mergeSchema) : {} };
+  if (typeof value === "object") {
+    const properties: Record<string, JsonSchema> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>))
+      properties[k] = inferSchema(v);
+    const required = Object.keys(properties);
+    return { type: "object", properties, ...(required.length ? { required } : {}) };
+  }
+  if (typeof value === "number")
+    return Number.isInteger(value) ? { type: "integer" } : { type: "number" };
+  if (typeof value === "boolean") return { type: "boolean" };
+  return { type: "string" };
+}
+
+/** Merge two schemas inferred from siblings in the same array. */
+function mergeSchema(a: JsonSchema, b: JsonSchema): JsonSchema {
+  const numeric = (t?: string) => t === "integer" || t === "number";
+  if (numeric(a.type) && numeric(b.type)) {
+    return a.type === "integer" && b.type === "integer" ? { type: "integer" } : { type: "number" };
+  }
+  if (a.type === "object" && b.type === "object") {
+    const properties: Record<string, JsonSchema> = { ...(a.properties ?? {}) };
+    for (const [k, v] of Object.entries(b.properties ?? {})) {
+      const existing = properties[k];
+      properties[k] = existing ? mergeSchema(existing, v) : v;
+    }
+    const required = (a.required ?? []).filter((k) => (b.required ?? []).includes(k));
+    return { type: "object", properties, ...(required.length ? { required } : {}) };
+  }
+  if (JSON.stringify(a) === JSON.stringify(b)) return a;
+  return { anyOf: [a, b] };
+}
+
+/** The status codes worth knowing, each with what it actually means. */
+const HTTP_STATUS: [number, string][] = [
+  [100, "Continue — headers accepted, send the body"],
+  [101, "Switching Protocols — the server is changing protocol (WebSocket upgrade)"],
+  [200, "OK — the request succeeded"],
+  [201, "Created — a new resource now exists at the returned location"],
+  [202, "Accepted — queued for processing, the work is not finished yet"],
+  [204, "No Content — succeeded, nothing to return"],
+  [206, "Partial Content — a byte range was returned"],
+  [301, "Moved Permanently — the new URL is the one to keep"],
+  [302, "Found — temporary redirect, keep using the original URL"],
+  [303, "See Other — fetch the result from another URL with GET"],
+  [304, "Not Modified — the cached copy is still current"],
+  [307, "Temporary Redirect — retry the same method at the new URL"],
+  [308, "Permanent Redirect — permanent, and the method stays the same"],
+  [400, "Bad Request — the request itself is malformed"],
+  [401, "Unauthorized — you are not authenticated (send credentials)"],
+  [402, "Payment Required — reserved for paid access"],
+  [403, "Forbidden — authenticated but not allowed"],
+  [404, "Not Found — no resource at that URL"],
+  [405, "Method Not Allowed — wrong verb for this endpoint"],
+  [406, "Not Acceptable — cannot satisfy the Accept header"],
+  [408, "Request Timeout — the client took too long to finish sending"],
+  [409, "Conflict — the request clashes with the current state (usually a version)"],
+  [410, "Gone — it existed here and was deliberately removed"],
+  [413, "Payload Too Large — the body is over the server's limit"],
+  [414, "URI Too Long — the URL is over the limit"],
+  [415, "Unsupported Media Type — the Content-Type is not accepted"],
+  [418, "I'm a Teapot — an April Fools' joke that is in the spec"],
+  [422, "Unprocessable Content — the JSON parsed but failed validation"],
+  [425, "Too Early — the server will not risk a replay"],
+  [429, "Too Many Requests — rate limited, back off and retry"],
+  [431, "Request Header Fields Too Large"],
+  [451, "Unavailable For Legal Reasons — blocked by law"],
+  [500, "Internal Server Error — the server hit an unexpected condition"],
+  [501, "Not Implemented — the server does not support this method"],
+  [502, "Bad Gateway — an upstream server sent an unusable reply"],
+  [503, "Service Unavailable — overloaded or down for maintenance"],
+  [504, "Gateway Timeout — an upstream server did not answer in time"],
+  [505, "HTTP Version Not Supported"],
+  [507, "Insufficient Storage — the server is out of space"],
+  [508, "Loop Detected — the server found an infinite loop"],
+  [511, "Network Authentication Required — sign in to the network first"],
+];
 
 /* ── the operation table ──────────────────────────────────────────── */
 
@@ -310,14 +528,16 @@ export const OPS: Record<string, OpFn> = {
       `Avg word length: ${w.length ? (w.join("").length / w.length).toFixed(1) : 0}`,
     ].join("\n");
   },
-  charCount: (s) => `${s.length} characters · ${s.replace(/\s/g, "").length} excluding spaces · ${lines(s).length} lines`,
+  charCount: (s) =>
+    `${s.length} characters · ${s.replace(/\s/g, "").length} excluding spaces · ${lines(s).length} lines`,
   readingTime: (s) => {
     const w = words(s).length;
     return `${w} words\n≈ ${Math.ceil(w / 220)} min reading (220 wpm)\n≈ ${Math.ceil(w / 130)} min reading aloud (130 wpm)`;
   },
   wordFrequency: (s) => {
     const map = new Map<string, number>();
-    for (const w of words(s.toLowerCase().replace(/[^a-z0-9\s'-]/gi, ""))) map.set(w, (map.get(w) ?? 0) + 1);
+    for (const w of words(s.toLowerCase().replace(/[^a-z0-9\s'-]/gi, "")))
+      map.set(w, (map.get(w) ?? 0) + 1);
     return [...map.entries()]
       .sort((a, b) => b[1] - a[1])
       .slice(0, 40)
@@ -335,18 +555,28 @@ export const OPS: Record<string, OpFn> = {
   readability: (s) => {
     const w = words(s);
     const sentences = s.split(/[.!?]+/).filter((x) => x.trim()).length || 1;
-    const syllables = w.reduce((acc, word) => acc + Math.max(1, (word.toLowerCase().match(/[aeiouy]+/g) ?? []).length), 0);
+    const syllables = w.reduce(
+      (acc, word) => acc + Math.max(1, (word.toLowerCase().match(/[aeiouy]+/g) ?? []).length),
+      0,
+    );
     const asl = w.length / sentences;
     const asw = syllables / (w.length || 1);
     const flesch = 206.835 - 1.015 * asl - 84.6 * asw;
     const grade = 0.39 * asl + 11.8 * asw - 15.59;
     const band =
-      flesch >= 90 ? "Very easy (5th grade)" :
-      flesch >= 80 ? "Easy (6th grade)" :
-      flesch >= 70 ? "Fairly easy (7th grade)" :
-      flesch >= 60 ? "Plain English (8th-9th)" :
-      flesch >= 50 ? "Fairly difficult (10th-12th)" :
-      flesch >= 30 ? "Difficult (college)" : "Very difficult (graduate)";
+      flesch >= 90
+        ? "Very easy (5th grade)"
+        : flesch >= 80
+          ? "Easy (6th grade)"
+          : flesch >= 70
+            ? "Fairly easy (7th grade)"
+            : flesch >= 60
+              ? "Plain English (8th-9th)"
+              : flesch >= 50
+                ? "Fairly difficult (10th-12th)"
+                : flesch >= 30
+                  ? "Difficult (college)"
+                  : "Very difficult (graduate)";
     return `Flesch Reading Ease: ${flesch.toFixed(1)} — ${band}\nFlesch-Kincaid Grade: ${grade.toFixed(1)}\nWords ${w.length} · sentences ${sentences} · syllables ${syllables}`;
   },
   longestWords: (s) =>
@@ -372,16 +602,43 @@ export const OPS: Record<string, OpFn> = {
   slugify: (s) => slugify(s),
 
   /* cleaning */
-  collapseSpaces: (s) => s.replace(/[ \t]+/g, " ").replace(/ ?\n ?/g, "\n").trim(),
+  collapseSpaces: (s) =>
+    s
+      .replace(/[ \t]+/g, " ")
+      .replace(/ ?\n ?/g, "\n")
+      .trim(),
   removeLineBreaks: (s) => s.replace(/\s*\n\s*/g, " ").trim(),
-  removeEmptyLines: (s) => lines(s).filter((l) => l.trim()).join("\n"),
-  trimLines: (s) => lines(s).map((l) => l.trim()).join("\n"),
-  dedupeLines: (s) => unique(lines(s).map((l) => l.trim()).filter(Boolean)).join("\n"),
+  removeEmptyLines: (s) =>
+    lines(s)
+      .filter((l) => l.trim())
+      .join("\n"),
+  trimLines: (s) =>
+    lines(s)
+      .map((l) => l.trim())
+      .join("\n"),
+  dedupeLines: (s) =>
+    unique(
+      lines(s)
+        .map((l) => l.trim())
+        .filter(Boolean),
+    ).join("\n"),
   dedupeWords: (s) => unique(words(s)).join(" "),
-  stripPunctuation: (s) => s.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").trim(),
-  stripNumbers: (s) => s.replace(/\d+/g, "").replace(/[ \t]+/g, " ").trim(),
+  stripPunctuation: (s) =>
+    s
+      .replace(/[^\w\s]|_/g, "")
+      .replace(/\s+/g, " ")
+      .trim(),
+  stripNumbers: (s) =>
+    s
+      .replace(/\d+/g, "")
+      .replace(/[ \t]+/g, " ")
+      .trim(),
   stripHtml: (s) => unescapeHtml(stripTags(s)).replace(/\s+/g, " ").trim(),
-  stripUrls: (s) => s.replace(/https?:\/\/\S+/g, "").replace(/[ \t]{2,}/g, " ").trim(),
+  stripUrls: (s) =>
+    s
+      .replace(/https?:\/\/\S+/g, "")
+      .replace(/[ \t]{2,}/g, " ")
+      .trim(),
   stripEmoji: (s) => s.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, "").trim(),
   removeAccents: (s) => s.normalize("NFKD").replace(/[\u0300-\u036f]/g, ""),
 
@@ -399,12 +656,34 @@ export const OPS: Record<string, OpFn> = {
     }
     return l.join("\n");
   },
-  sortLinesAsc: (s) => lines(s).slice().sort((a, b) => a.localeCompare(b)).join("\n"),
-  sortLinesDesc: (s) => lines(s).slice().sort((a, b) => b.localeCompare(a)).join("\n"),
-  sortByLength: (s) => lines(s).slice().sort((a, b) => a.length - b.length).join("\n"),
-  numberLines: (s) => lines(s).map((l, i) => `${String(i + 1).padStart(3)}. ${l}`).join("\n"),
-  bulletLines: (s) => lines(s).filter((l) => l.trim()).map((l) => `• ${l.trim()}`).join("\n"),
-  indentLines: (s) => lines(s).map((l) => `    ${l}`).join("\n"),
+  sortLinesAsc: (s) =>
+    lines(s)
+      .slice()
+      .sort((a, b) => a.localeCompare(b))
+      .join("\n"),
+  sortLinesDesc: (s) =>
+    lines(s)
+      .slice()
+      .sort((a, b) => b.localeCompare(a))
+      .join("\n"),
+  sortByLength: (s) =>
+    lines(s)
+      .slice()
+      .sort((a, b) => a.length - b.length)
+      .join("\n"),
+  numberLines: (s) =>
+    lines(s)
+      .map((l, i) => `${String(i + 1).padStart(3)}. ${l}`)
+      .join("\n"),
+  bulletLines: (s) =>
+    lines(s)
+      .filter((l) => l.trim())
+      .map((l) => `• ${l.trim()}`)
+      .join("\n"),
+  indentLines: (s) =>
+    lines(s)
+      .map((l) => `    ${l}`)
+      .join("\n"),
   wrapText: (s, o) => {
     const width = Math.max(20, Number(o.width ?? 80));
     return lines(s)
@@ -442,7 +721,10 @@ export const OPS: Record<string, OpFn> = {
         })
         .filter(Boolean),
     ).join("\n"),
-  extractPhones: (s) => unique(s.match(/(?:\+\d{1,3}[\s-]?)?(?:\(?\d{3,5}\)?[\s-]?)\d{3}[\s-]?\d{3,4}/g) ?? []).join("\n"),
+  extractPhones: (s) =>
+    unique(s.match(/(?:\+\d{1,3}[\s-]?)?(?:\(?\d{3,5}\)?[\s-]?)\d{3}[\s-]?\d{3,4}/g) ?? []).join(
+      "\n",
+    ),
   extractNumbers: (s) => (s.match(/-?\d+(?:\.\d+)?/g) ?? []).join("\n"),
   extractHashtags: (s) => unique(s.match(/#[\w]+/g) ?? []).join("\n"),
   extractMentions: (s) => unique(s.match(/@[\w.]+/g) ?? []).join("\n"),
@@ -450,7 +732,9 @@ export const OPS: Record<string, OpFn> = {
   extractIps: (s) => unique(s.match(/\b\d{1,3}(?:\.\d{1,3}){3}\b/g) ?? []).join("\n"),
   extractDates: (s) =>
     unique(
-      s.match(/\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2},? \d{4})\b/g) ?? [],
+      s.match(
+        /\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2},? \d{4})\b/g,
+      ) ?? [],
     ).join("\n"),
 
   /* encoding */
@@ -466,24 +750,41 @@ export const OPS: Record<string, OpFn> = {
   },
   htmlEscape: (s) => escapeHtml(s),
   htmlUnescape: (s) => unescapeHtml(s),
-  hexEncode: (s) => [...new TextEncoder().encode(s)].map((b) => b.toString(16).padStart(2, "0")).join(" "),
+  hexEncode: (s) =>
+    [...new TextEncoder().encode(s)].map((b) => b.toString(16).padStart(2, "0")).join(" "),
   hexDecode: (s) => {
-    const parts = s.trim().split(/\s+|(?<=..)(?=..)/).filter(Boolean);
+    const parts = s
+      .trim()
+      .split(/\s+|(?<=..)(?=..)/)
+      .filter(Boolean);
     try {
       return new TextDecoder().decode(Uint8Array.from(parts.map((p) => parseInt(p, 16))));
     } catch {
       return "⚠ Not valid hex.";
     }
   },
-  binaryEncode: (s) => [...new TextEncoder().encode(s)].map((b) => b.toString(2).padStart(8, "0")).join(" "),
+  binaryEncode: (s) =>
+    [...new TextEncoder().encode(s)].map((b) => b.toString(2).padStart(8, "0")).join(" "),
   binaryDecode: (s) => {
     try {
-      return new TextDecoder().decode(Uint8Array.from(s.trim().split(/\s+/).map((b) => parseInt(b, 2))));
+      return new TextDecoder().decode(
+        Uint8Array.from(
+          s
+            .trim()
+            .split(/\s+/)
+            .map((b) => parseInt(b, 2)),
+        ),
+      );
     } catch {
       return "⚠ Not valid binary.";
     }
   },
-  rot13: (s) => s.replace(/[a-z]/gi, (c) => String.fromCharCode(((c.charCodeAt(0) - (c <= "Z" ? 65 : 97) + 13) % 26) + (c <= "Z" ? 65 : 97))),
+  rot13: (s) =>
+    s.replace(/[a-z]/gi, (c) =>
+      String.fromCharCode(
+        ((c.charCodeAt(0) - (c <= "Z" ? 65 : 97) + 13) % 26) + (c <= "Z" ? 65 : 97),
+      ),
+    ),
   caesar: (s, o) => {
     const shift = ((Number(o.shift ?? 3) % 26) + 26) % 26;
     return s.replace(/[a-z]/gi, (c) => {
@@ -493,15 +794,25 @@ export const OPS: Record<string, OpFn> = {
   },
   morseEncode: (s) => toMorse(s),
   morseDecode: (s) => fromMorse(s),
-  unicodeEscape: (s) => [...s].map((c) => (c.charCodeAt(0) > 126 ? `\\u${c.charCodeAt(0).toString(16).padStart(4, "0")}` : c)).join(""),
-  unicodeUnescape: (s) => s.replace(/\\u([0-9a-f]{4})/gi, (_, h) => String.fromCharCode(parseInt(h, 16))),
+  unicodeEscape: (s) =>
+    [...s]
+      .map((c) =>
+        c.charCodeAt(0) > 126 ? `\\u${c.charCodeAt(0).toString(16).padStart(4, "0")}` : c,
+      )
+      .join(""),
+  unicodeUnescape: (s) =>
+    s.replace(/\\u([0-9a-f]{4})/gi, (_, h) => String.fromCharCode(parseInt(h, 16))),
   asciiCodes: (s) => [...s].map((c) => c.charCodeAt(0)).join(" "),
   jwtDecode: (s) => {
     const parts = s.trim().split(".");
     if (parts.length < 2) return "⚠ A JWT has three dot-separated parts.";
     const dec = (p: string) => {
       try {
-        return JSON.stringify(JSON.parse(fromBase64(p.replace(/-/g, "+").replace(/_/g, "/"))), null, 2);
+        return JSON.stringify(
+          JSON.parse(fromBase64(p.replace(/-/g, "+").replace(/_/g, "/"))),
+          null,
+          2,
+        );
       } catch {
         return "⚠ Could not decode this part.";
       }
@@ -510,26 +821,39 @@ export const OPS: Record<string, OpFn> = {
   },
 
   /* generators */
-  uuid: (s, o) => Array.from({ length: Math.max(1, Math.min(50, Number(o.count ?? 1))) }, uuidV4).join("\n"),
+  uuid: (s, o) =>
+    Array.from({ length: Math.max(1, Math.min(50, Number(o.count ?? 1))) }, uuidV4).join("\n"),
   nanoid: (s, o) => {
     const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     const len = Math.max(4, Math.min(64, Number(o.length ?? 21)));
     return Array.from({ length: Math.max(1, Math.min(50, Number(o.count ?? 1))) }, () =>
-      Array.from({ length: len }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join(""),
+      Array.from({ length: len }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join(
+        "",
+      ),
     ).join("\n");
   },
   password: (s, o) => {
     const len = Math.max(8, Math.min(128, Number(o.length ?? 20)));
-    const sets = ["abcdefghijkmnopqrstuvwxyz", "ABCDEFGHJKLMNPQRSTUVWXYZ", "23456789", "!@#$%^&*()-_=+[]{}?"];
+    const sets = [
+      "abcdefghijkmnopqrstuvwxyz",
+      "ABCDEFGHJKLMNPQRSTUVWXYZ",
+      "23456789",
+      "!@#$%^&*()-_=+[]{}?",
+    ];
     const pool = sets.join("");
     return Array.from({ length: Math.max(1, Math.min(20, Number(o.count ?? 1))) }, () => {
-      const chars = [sets[0]!, sets[1]!, sets[2]!, sets[3]!].map((set) => set[Math.floor(Math.random() * set.length)]!);
+      const chars = [sets[0]!, sets[1]!, sets[2]!, sets[3]!].map(
+        (set) => set[Math.floor(Math.random() * set.length)]!,
+      );
       while (chars.length < len) chars.push(pool[Math.floor(Math.random() * pool.length)]!);
       return chars.sort(() => Math.random() - 0.5).join("");
     }).join("\n");
   },
   passphrase: (s, o) => {
-    const list = "amber anchor atlas beacon bison blaze canyon cedar cinder citrus clover cobalt comet copper coral cosmos crimson dawn delta drift ember falcon fern flint forge garnet glacier granite harbour hazel indigo ivory jade juniper kestrel lagoon lantern larch lilac linen lotus maple marble meadow mint nimbus noble oasis onyx opal orchid osprey pebble pine quartz quill raven reef ripple rowan saffron sage sable sienna slate sorrel spruce summit thistle timber topaz umber velvet violet walnut willow yarrow zephyr".split(" ");
+    const list =
+      "amber anchor atlas beacon bison blaze canyon cedar cinder citrus clover cobalt comet copper coral cosmos crimson dawn delta drift ember falcon fern flint forge garnet glacier granite harbour hazel indigo ivory jade juniper kestrel lagoon lantern larch lilac linen lotus maple marble meadow mint nimbus noble oasis onyx opal orchid osprey pebble pine quartz quill raven reef ripple rowan saffron sage sable sienna slate sorrel spruce summit thistle timber topaz umber velvet violet walnut willow yarrow zephyr".split(
+        " ",
+      );
     const count = Math.max(3, Math.min(8, Number(o.words ?? 4)));
     return Array.from({ length: Math.max(1, Math.min(10, Number(o.count ?? 1))) }, () =>
       Array.from({ length: count }, () => list[Math.floor(Math.random() * list.length)]!).join("-"),
@@ -537,8 +861,18 @@ export const OPS: Record<string, OpFn> = {
   },
   randomString: (s, o) => {
     const len = Math.max(1, Math.min(256, Number(o.length ?? 32)));
-    const charset = o.charset === "hex" ? "0123456789abcdef" : o.charset === "numeric" ? "0123456789" : o.charset === "alnum" ? "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    return Array.from({ length: len }, () => charset[Math.floor(Math.random() * charset.length)]).join("");
+    const charset =
+      o.charset === "hex"
+        ? "0123456789abcdef"
+        : o.charset === "numeric"
+          ? "0123456789"
+          : o.charset === "alnum"
+            ? "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    return Array.from(
+      { length: len },
+      () => charset[Math.floor(Math.random() * charset.length)],
+    ).join("");
   },
   loremWords: (s, o) => lorem(Math.max(1, Math.min(500, Number(o.count ?? 50))), "words"),
   loremSentences: (s, o) => lorem(Math.max(1, Math.min(50, Number(o.count ?? 5))), "sentences"),
@@ -547,7 +881,10 @@ export const OPS: Record<string, OpFn> = {
     const min = Number(o.min ?? 1);
     const max = Number(o.max ?? 100);
     const count = Math.max(1, Math.min(100, Number(o.count ?? 10)));
-    return Array.from({ length: count }, () => Math.floor(Math.random() * (max - min + 1)) + min).join(", ");
+    return Array.from(
+      { length: count },
+      () => Math.floor(Math.random() * (max - min + 1)) + min,
+    ).join(", ");
   },
 
   /* hashing (Web Crypto) */
@@ -609,7 +946,8 @@ export const OPS: Record<string, OpFn> = {
       const out: Record<string, unknown> = {};
       const walk = (v: unknown, prefix: string) => {
         if (v && typeof v === "object" && !Array.isArray(v)) {
-          for (const [k, val] of Object.entries(v as Record<string, unknown>)) walk(val, prefix ? `${prefix}.${k}` : k);
+          for (const [k, val] of Object.entries(v as Record<string, unknown>))
+            walk(val, prefix ? `${prefix}.${k}` : k);
         } else out[prefix] = v;
       };
       walk(JSON.parse(s), "");
@@ -629,13 +967,22 @@ export const OPS: Record<string, OpFn> = {
   jsonToCsv: (s) => {
     try {
       const data = JSON.parse(s);
-      if (!Array.isArray(data) || data.length === 0) return "⚠ Expected a non-empty array of objects.";
+      if (!Array.isArray(data) || data.length === 0)
+        return "⚠ Expected a non-empty array of objects.";
       const cols = unique(data.flatMap((row) => Object.keys(row as object)));
       const cell = (v: unknown) => {
-        const str = v === null || v === undefined ? "" : typeof v === "object" ? JSON.stringify(v) : String(v);
+        const str =
+          v === null || v === undefined
+            ? ""
+            : typeof v === "object"
+              ? JSON.stringify(v)
+              : String(v);
         return /[",\n]/.test(str) ? `"${str.replace(/"/g, '""')}"` : str;
       };
-      return [cols.join(","), ...data.map((row) => cols.map((c) => cell((row as Record<string, unknown>)[c])).join(","))].join("\n");
+      return [
+        cols.join(","),
+        ...data.map((row) => cols.map((c) => cell((row as Record<string, unknown>)[c])).join(",")),
+      ].join("\n");
     } catch {
       return "⚠ Invalid JSON.";
     }
@@ -650,7 +997,12 @@ export const OPS: Record<string, OpFn> = {
         if (typeof v === "object") return "Record<string, unknown>";
         return typeof v;
       };
-      if (Array.isArray(data)) return `export type ${name} = ${typeOf(data)};\n\nexport type ${name}Item = {\n${Object.entries((data[0] ?? {}) as Record<string, unknown>).map(([k, v]) => `  ${k}: ${typeOf(v)};`).join("\n")}\n};`;
+      if (Array.isArray(data))
+        return `export type ${name} = ${typeOf(data)};\n\nexport type ${name}Item = {\n${Object.entries(
+          (data[0] ?? {}) as Record<string, unknown>,
+        )
+          .map(([k, v]) => `  ${k}: ${typeOf(v)};`)
+          .join("\n")}\n};`;
       return `export interface ${name} {\n${Object.entries(data as Record<string, unknown>)
         .map(([k, v]) => `  ${k}: ${typeOf(v)};`)
         .join("\n")}\n}`;
@@ -665,9 +1017,20 @@ export const OPS: Record<string, OpFn> = {
       const rows = Array.isArray(data) ? data : [data];
       const cols = unique(rows.flatMap((r) => Object.keys(r as object)));
       const val = (v: unknown) =>
-        v === null || v === undefined ? "NULL" : typeof v === "number" ? String(v) : typeof v === "boolean" ? (v ? "TRUE" : "FALSE") : `'${String(v).replace(/'/g, "''")}'`;
+        v === null || v === undefined
+          ? "NULL"
+          : typeof v === "number"
+            ? String(v)
+            : typeof v === "boolean"
+              ? v
+                ? "TRUE"
+                : "FALSE"
+              : `'${String(v).replace(/'/g, "''")}'`;
       return rows
-        .map((r) => `INSERT INTO ${table} (${cols.join(", ")}) VALUES (${cols.map((c) => val((r as Record<string, unknown>)[c])).join(", ")});`)
+        .map(
+          (r) =>
+            `INSERT INTO ${table} (${cols.join(", ")}) VALUES (${cols.map((c) => val((r as Record<string, unknown>)[c])).join(", ")});`,
+        )
         .join("\n");
     } catch {
       return "⚠ Invalid JSON.";
@@ -705,15 +1068,23 @@ export const OPS: Record<string, OpFn> = {
     return JSON.stringify(data, null, 2);
   },
   csvToMarkdown: (s) => {
-    const rows = lines(s.trim()).filter(Boolean).map((l) => l.split(",").map((c) => c.trim().replace(/^"|"$/g, "")));
+    const rows = lines(s.trim())
+      .filter(Boolean)
+      .map((l) => l.split(",").map((c) => c.trim().replace(/^"|"$/g, "")));
     if (rows.length === 0) return "⚠ Paste CSV first.";
     const head = rows[0]!;
-    return [head, head.map(() => "---"), ...rows.slice(1)].map((r) => `| ${r.join(" | ")} |`).join("\n");
+    return [head, head.map(() => "---"), ...rows.slice(1)]
+      .map((r) => `| ${r.join(" | ")} |`)
+      .join("\n");
   },
   csvTranspose: (s) => {
-    const rows = lines(s.trim()).filter(Boolean).map((l) => l.split(",").map((c) => c.trim()));
+    const rows = lines(s.trim())
+      .filter(Boolean)
+      .map((l) => l.split(",").map((c) => c.trim()));
     const width = Math.max(...rows.map((r) => r.length));
-    return Array.from({ length: width }, (_, c) => rows.map((r) => r[c] ?? "").join(",")).join("\n");
+    return Array.from({ length: width }, (_, c) => rows.map((r) => r[c] ?? "").join(",")).join(
+      "\n",
+    );
   },
 
   /* regex */
@@ -727,7 +1098,17 @@ export const OPS: Record<string, OpFn> = {
       if (matches.length === 0) return "No matches.";
       const list = matches
         .slice(0, 100)
-        .map((m, i) => `${i + 1}. "${m[0]}" at index ${m.index}${m.length > 1 ? `  groups: ${m.slice(1).map((g) => g ?? "—").join(" | ")}` : ""}`)
+        .map(
+          (m, i) =>
+            `${i + 1}. "${m[0]}" at index ${m.index}${
+              m.length > 1
+                ? `  groups: ${m
+                    .slice(1)
+                    .map((g) => g ?? "—")
+                    .join(" | ")}`
+                : ""
+            }`,
+        )
         .join("\n");
       return `${matches.length} match${matches.length === 1 ? "" : "es"}\n\n${list}`;
     } catch (e) {
@@ -748,12 +1129,14 @@ export const OPS: Record<string, OpFn> = {
   /* diff + comparison */
   diffLines: (s) => {
     const [a, b] = s.split(/^---+\s*$/m);
-    if (a === undefined || b === undefined) return "⚠ Separate the two versions with a line containing only ---";
+    if (a === undefined || b === undefined)
+      return "⚠ Separate the two versions with a line containing only ---";
     return lineDiff(a.trim(), b.trim());
   },
   levenshtein: (s) => {
     const [a, b] = s.split(/^---+\s*$/m);
-    if (a === undefined || b === undefined) return "⚠ Separate the two strings with a line containing only ---";
+    if (a === undefined || b === undefined)
+      return "⚠ Separate the two strings with a line containing only ---";
     const dist = levenshtein(a.trim(), b.trim());
     const max = Math.max(a.trim().length, b.trim().length) || 1;
     return `Edit distance: ${dist}\nSimilarity: ${(100 - (dist / max) * 100).toFixed(1)}%`;
@@ -761,11 +1144,14 @@ export const OPS: Record<string, OpFn> = {
   palindromeCheck: (s) => {
     const clean = s.toLowerCase().replace(/[^a-z0-9]/g, "");
     const ok = clean === [...clean].reverse().join("");
-    return ok ? `✅ Yes — "${clean}" reads the same both ways.` : `❌ No — reversed it reads "${[...clean].reverse().join("")}".`;
+    return ok
+      ? `✅ Yes — "${clean}" reads the same both ways.`
+      : `❌ No — reversed it reads "${[...clean].reverse().join("")}".`;
   },
   anagramCheck: (s) => {
     const [a, b] = s.split(/^---+\s*$/m);
-    if (a === undefined || b === undefined) return "⚠ Separate the two words with a line containing only ---";
+    if (a === undefined || b === undefined)
+      return "⚠ Separate the two words with a line containing only ---";
     const key = (x: string) => [...x.toLowerCase().replace(/[^a-z]/g, "")].sort().join("");
     return key(a) === key(b) ? "✅ Yes — those are anagrams." : "❌ No — the letters do not match.";
   },
@@ -842,7 +1228,11 @@ export const OPS: Record<string, OpFn> = {
   randomColor: (s, o) => {
     const count = Math.max(1, Math.min(20, Number(o.count ?? 6)));
     return Array.from({ length: count }, () => {
-      const [r, g, b] = hslToRgb(Math.floor(Math.random() * 360), 60 + Math.floor(Math.random() * 30), 42 + Math.floor(Math.random() * 20));
+      const [r, g, b] = hslToRgb(
+        Math.floor(Math.random() * 360),
+        60 + Math.floor(Math.random() * 30),
+        42 + Math.floor(Math.random() * 20),
+      );
       return rgbToHex(r, g, b);
     }).join("\n");
   },
@@ -863,7 +1253,8 @@ export const OPS: Record<string, OpFn> = {
   },
   dateToTimestamp: (s) => {
     const d = new Date(s.trim());
-    if (Number.isNaN(d.getTime())) return "⚠ Could not read that date. Try 2026-09-21 or 21 Sep 2026.";
+    if (Number.isNaN(d.getTime()))
+      return "⚠ Could not read that date. Try 2026-09-21 or 21 Sep 2026.";
     return `Seconds: ${Math.floor(d.getTime() / 1000)}\nMilliseconds: ${d.getTime()}\nISO: ${d.toISOString()}`;
   },
   daysBetween: (s) => {
@@ -948,12 +1339,21 @@ export const OPS: Record<string, OpFn> = {
     return `<title>${title}</title>\n<meta name="description" content="${desc}" />\n<link rel="canonical" href="${url}" />\n\n<meta property="og:type" content="website" />\n<meta property="og:title" content="${title}" />\n<meta property="og:description" content="${desc}" />\n<meta property="og:url" content="${url}" />\n<meta property="og:image" content="${image}" />\n\n<meta name="twitter:card" content="summary_large_image" />\n<meta name="twitter:title" content="${title}" />\n<meta name="twitter:description" content="${desc}" />\n<meta name="twitter:image" content="${image}" />`;
   },
   robotsTxt: (s) => {
-    const paths = lines(s).map((l) => l.trim()).filter(Boolean);
+    const paths = lines(s)
+      .map((l) => l.trim())
+      .filter(Boolean);
     const disallow = paths.length ? paths : ["/admin", "/api/", "/private"];
-    return ["User-agent: *", ...disallow.map((p) => `Disallow: ${p}`), "", "Sitemap: https://example.com/sitemap.xml"].join("\n");
+    return [
+      "User-agent: *",
+      ...disallow.map((p) => `Disallow: ${p}`),
+      "",
+      "Sitemap: https://example.com/sitemap.xml",
+    ].join("\n");
   },
   sitemapEntry: (s, o) => {
-    const urls = lines(s).map((l) => l.trim()).filter(Boolean);
+    const urls = lines(s)
+      .map((l) => l.trim())
+      .filter(Boolean);
     const priority = o.priority ?? "0.8";
     const freq = o.changefreq ?? "weekly";
     return urls
@@ -979,7 +1379,7 @@ export const OPS: Record<string, OpFn> = {
       .filter(([, n]) => n > 1)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 30)
-      .map(([k, n]) => `${(n / total * 100).toFixed(2)}%  ${k} (${n})`)
+      .map(([k, n]) => `${((n / total) * 100).toFixed(2)}%  ${k} (${n})`)
       .join("\n");
   },
   urlParse: (s) => {
@@ -1005,7 +1405,10 @@ export const OPS: Record<string, OpFn> = {
     const q = s.includes("?") ? s.split("?")[1]!.split("#")[0]! : s.trim();
     try {
       const params = new URLSearchParams(q);
-      return [...params.entries()].map(([k, v]) => `${k} = ${decodeURIComponent(v)}`).join("\n") || "No parameters found.";
+      return (
+        [...params.entries()].map(([k, v]) => `${k} = ${decodeURIComponent(v)}`).join("\n") ||
+        "No parameters found."
+      );
     } catch {
       return "⚠ Could not parse those parameters.";
     }
@@ -1014,20 +1417,35 @@ export const OPS: Record<string, OpFn> = {
     const pairs = lines(s)
       .map((l) => l.split("="))
       .filter((p) => p[0]?.trim());
-    return "?" + pairs.map(([k, ...rest]) => `${encodeURIComponent(k!.trim())}=${encodeURIComponent(rest.join("=").trim())}`).join("&");
+    return (
+      "?" +
+      pairs
+        .map(
+          ([k, ...rest]) =>
+            `${encodeURIComponent(k!.trim())}=${encodeURIComponent(rest.join("=").trim())}`,
+        )
+        .join("&")
+    );
   },
   markdownTable: (s) => {
-    const rows = lines(s).filter(Boolean).map((l) => l.split(/\t|,(?![^\[]*\])/).map((c) => c.trim()));
+    const rows = lines(s)
+      .filter(Boolean)
+      .map((l) => l.split(/\t|,(?![^\[]*\])/).map((c) => c.trim()));
     if (!rows.length) return "⚠ Paste tab- or comma-separated rows.";
     const width = Math.max(...rows.map((r) => r.length));
     const norm = rows.map((r) => Array.from({ length: width }, (_, i) => r[i] ?? ""));
     const head = norm[0]!;
-    return [head, head.map(() => "---"), ...norm.slice(1)].map((r) => `| ${r.join(" | ")} |`).join("\n");
+    return [head, head.map(() => "---"), ...norm.slice(1)]
+      .map((r) => `| ${r.join(" | ")} |`)
+      .join("\n");
   },
 
   /* misc transforms */
   swapCase: (s) => titles.inverse(s),
-  initials: (s) => words(s).map((w) => w.charAt(0).toUpperCase()).join(""),
+  initials: (s) =>
+    words(s)
+      .map((w) => w.charAt(0).toUpperCase())
+      .join(""),
   acronym: (s) =>
     words(s)
       .filter((w) => w.length > 2 && !["the", "and", "of", "for", "with"].includes(w.toLowerCase()))
@@ -1038,12 +1456,721 @@ export const OPS: Record<string, OpFn> = {
     const from = Number(s.trim()) || n;
     return Array.from({ length: n }, (_, i) => from - i).join(" → ");
   },
+
+  /* ── writing & text shaping ─────────────────────────────────────── */
+
+  /** Straight quotes → typographic ones, the way a word processor does it. */
+  smartQuotes: (s) => {
+    let out = "";
+    let prev = "";
+    for (const ch of s) {
+      const opening = prev === "" || /[\s([{—–-]/.test(prev);
+      if (ch === '"') out += opening ? "\u201C" : "\u201D";
+      else if (ch === "'") out += opening ? "\u2018" : "\u2019";
+      else out += ch;
+      prev = ch;
+    }
+    return out;
+  },
+
+  /** Strip Markdown syntax and leave clean prose (links keep their URL). */
+  stripMarkdown: (s) =>
+    s
+      .replace(/^\s{0,3}```[^\n]*$/gm, "")
+      .replace(/`([^`]+)`/g, "$1")
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, "$1")
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)")
+      .replace(/^\s{0,3}>+\s?/gm, "")
+      .replace(/\*\*([^*]+)\*\*/g, "$1")
+      .replace(/__([^_]+)__/g, "$1")
+      .replace(/(^|\W)\*([^*\n]+)\*/g, "$1$2")
+      .replace(/(^|\W)_([^_\n]+)_/g, "$1$2")
+      .replace(/~~([^~]+)~~/g, "$1")
+      .replace(/^#{1,6}\s+/gm, "")
+      .replace(/^\s{0,3}[-*+]\s+/gm, "")
+      .replace(/^\s{0,3}\d+\.\s+/gm, "")
+      .replace(/^\s{0,3}([-*_]\s*){3,}$/gm, "")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim(),
+
+  /** Split long copy into posting-sized chunks without cutting words in half. */
+  splitChunks: (s, o) => {
+    const limit = Math.max(20, Number(o.length ?? 160));
+    const text = s.trim();
+    if (!text) return "⚠ Paste the text you want to split.";
+    const chunks: string[] = [];
+    let rest = text;
+    while (rest.length > limit) {
+      const window = rest.slice(0, limit);
+      const breakAt = Math.max(window.lastIndexOf(" "), window.lastIndexOf("\n"));
+      const cut = breakAt > limit * 0.5 ? breakAt : limit;
+      chunks.push(rest.slice(0, cut).trim());
+      rest = rest.slice(cut).trim();
+    }
+    if (rest) chunks.push(rest);
+    return chunks
+      .map((c, i) => `— ${i + 1}/${chunks.length} · ${c.length} chars —\n${c}`)
+      .join("\n\n");
+  },
+
+  /** Repeat a string N times — handy for test rows and padding. */
+  repeatText: (s, o) => {
+    const n = Math.max(1, Math.min(500, Number(o.count ?? 3)));
+    const joiner = o.separator === "newline" ? "\n" : o.separator === "comma" ? ", " : " ";
+    if (!s.trim()) return "⚠ Type something to repeat.";
+    return Array.from({ length: n }, () => s.trim()).join(joiner);
+  },
+
+  /* ── encoding & security ────────────────────────────────────────── */
+
+  /** HMAC signature over the message, keyed by the secret on line 1. */
+  hmac: async (s, o) => {
+    const [keyLine, ...rest] = lines(s);
+    const key = (keyLine ?? "").trim();
+    const message = rest.join("\n");
+    if (!key || !message) return "⚠ Line 1 is the secret key, every line after it is the message.";
+    const algo = o.algo === "SHA-512" ? "SHA-512" : o.algo === "SHA-1" ? "SHA-1" : "SHA-256";
+    if (!globalThis.crypto?.subtle) return "⚠ HMAC needs a secure context (https or localhost).";
+    try {
+      const encoder = new TextEncoder();
+      const cryptoKey = await crypto.subtle.importKey(
+        "raw",
+        encoder.encode(key),
+        { name: "HMAC", hash: algo },
+        false,
+        ["sign"],
+      );
+      const signature = new Uint8Array(
+        await crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(message)),
+      );
+      const hex = [...signature].map((b) => b.toString(16).padStart(2, "0")).join("");
+      // Base64 of the raw digest bytes — toBase64() would UTF-8 encode them first.
+      const base64 = btoa(Array.from(signature, (b) => String.fromCharCode(b)).join(""));
+      return [
+        `HMAC-${algo}`,
+        `hex     ${hex}`,
+        `base64  ${base64}`,
+        ``,
+        `key: ${key.length} characters · message: ${message.length} characters`,
+      ].join("\n");
+    } catch {
+      return "⚠ Web Crypto refused those inputs.";
+    }
+  },
+
+  /** The exact Authorization: Basic header for a user:password pair. */
+  basicAuth: (s) => {
+    const raw = s
+      .trim()
+      .replace(/^authorization:\s*/i, "")
+      .replace(/^basic\s+/i, "");
+    const at = raw.indexOf(":");
+    if (at < 0) return "⚠ Use user:password — the colon is what Basic auth splits on.";
+    const credentials = `${raw.slice(0, at).trim()}:${raw.slice(at + 1)}`;
+    const encoded = toBase64(credentials);
+    return [
+      `Authorization: Basic ${encoded}`,
+      ``,
+      `Header value only:  Basic ${encoded}`,
+      `curl -H "Authorization: Basic ${encoded}" https://example.com/api`,
+      ``,
+      `Reminder: Basic auth is plain base64, not encryption — only send it over https.`,
+    ].join("\n");
+  },
+
+  /** Embed any text, markup or SVG in a data: URI. */
+  dataUri: (s, o) => {
+    const mime = o.mime ?? "text/plain";
+    const content = s.trim();
+    if (!content) return "⚠ Paste the content you want to embed.";
+    const percent = o.encoding === "percent";
+    const encoded = percent ? encodeURIComponent(content).replace(/'/g, "%27") : toBase64(content);
+    const uri = `data:${mime}${percent ? "" : ";base64"},${encoded}`;
+    return [
+      `${mime} · ${content.length} characters in · ${uri.length} characters out`,
+      percent
+        ? "percent-encoded (readable, lowercase-safe)"
+        : "base64 (compact for binary-ish content)",
+      ``,
+      uri,
+      ``,
+      `Use it directly:  <img src="…" /> · url("…") · fetch("…")`,
+    ].join("\n");
+  },
+
+  /** Honest entropy estimate with a real brute-force time. */
+  passwordStrength: (s) => {
+    const pw = s.trim();
+    if (!pw) return "⚠ Type or paste a password to score it.";
+    let pool = 0;
+    if (/[a-z]/.test(pw)) pool += 26;
+    if (/[A-Z]/.test(pw)) pool += 26;
+    if (/\d/.test(pw)) pool += 10;
+    if (/[^A-Za-z0-9]/.test(pw)) pool += 33;
+    const entropy = pw.length * Math.log2(pool || 1);
+    const band =
+      entropy < 30
+        ? "very weak"
+        : entropy < 45
+          ? "weak"
+          : entropy < 60
+            ? "reasonable"
+            : entropy < 80
+              ? "strong"
+              : "very strong";
+    const seconds = 2 ** (entropy - 1) / 1e10;
+    const human =
+      !Number.isFinite(seconds) || seconds > 3.15e16
+        ? "longer than the age of the universe"
+        : seconds < 1
+          ? "under a second"
+          : seconds < 60
+            ? `${Math.round(seconds)} seconds`
+            : seconds < 3600
+              ? `${Math.round(seconds / 60)} minutes`
+              : seconds < 86400
+                ? `${Math.round(seconds / 3600)} hours`
+                : seconds < 31557600
+                  ? `${Math.round(seconds / 86400)} days`
+                  : `${Math.round(seconds / 31557600).toLocaleString("en-US")} years`;
+    const notes: string[] = [];
+    if (/^\d+$/.test(pw)) notes.push("digits only — a very small alphabet");
+    if (/(.)\1{2,}/.test(pw)) notes.push("contains a run of the same character");
+    if (/^(123456|password|qwerty|letmein|admin|welcome|iloveyou)/i.test(pw))
+      notes.push("starts with one of the most-used passwords");
+    if (new Set([...pw]).size < pw.length / 2)
+      notes.push("repeats characters heavily for its length");
+    return [
+      `length      ${pw.length} characters (${new Set([...pw]).size} distinct)`,
+      `alphabet    ${pool} possible characters`,
+      `entropy     ~${entropy.toFixed(1)} bits — ${band}`,
+      `brute force ~${human} at 10 billion guesses/second (offline GPU attack)`,
+      ...notes.map((n) => `note        ${n}`),
+      ``,
+      `This measures the guess space, not whether the password has appeared in a leak.`,
+    ].join("\n");
+  },
+
+  /* ── colour & design ────────────────────────────────────────────── */
+
+  /** px ⇄ rem at any root size. */
+  pxRem: (s, o) => {
+    const base = Math.max(1, Number(o.base ?? 16));
+    const toRem = o.direction !== "rem2px";
+    const numbers = (s.match(/-?\d*\.?\d+/g) ?? []).map(Number).filter((n) => Number.isFinite(n));
+    if (!numbers.length) return "⚠ Paste at least one value, e.g. 16 24 32.";
+    const round = (n: number) => String(Number(n.toFixed(4)));
+    return (
+      numbers
+        .map((n) =>
+          toRem ? `${n}px  →  ${round(n / base)}rem` : `${n}rem  →  ${round(n * base)}px`,
+        )
+        .join("\n") + `\n\nroot font-size assumed to be ${base}px`
+    );
+  },
+
+  /** Mix two colours at a chosen ratio, plus the ramp between them. */
+  colourMix: (s, o) => {
+    const found = s.match(/#[0-9a-f]{6}\b|#[0-9a-f]{3}\b/gi) ?? [];
+    const a = found[0] ? hexToRgb(found[0]) : null;
+    const b = found[1] ? hexToRgb(found[1]) : null;
+    if (!a || !b) return "⚠ Paste two hex colours, e.g. #2dd4bf and #818cf8.";
+    const ratio = Math.max(0, Math.min(100, Number(o.ratio ?? 50)));
+    const mix = (t: number) =>
+      rgbToHex(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t);
+    const glow = mix(ratio / 100);
+    const ramp = [0, 0.25, 0.5, 0.75, 1]
+      .map((t) => `${String(Math.round(t * 100)).padStart(3)}%  ${mix(t)}`)
+      .join("\n");
+    return [
+      `${glow}  —  ${ratio}% of the way from ${found[0]!.toLowerCase()} to ${found[1]!.toLowerCase()}`,
+      ``,
+      ramp,
+      ``,
+      `rgb(${hexToRgb(glow)!.r}, ${hexToRgb(glow)!.g}, ${hexToRgb(glow)!.b})`,
+    ].join("\n");
+  },
+
+  /** Specificity of each selector, ranked (class-style: id, class, element). */
+  cssSpecificity: (s) => {
+    const selectors = s
+      .split(",")
+      .map((x) => x.trim())
+      .filter(Boolean);
+    if (!selectors.length) return "⚠ Paste one or more CSS selectors, e.g. #app .card > a:hover.";
+    const rows = selectors.map((selector) => {
+      // Everything inside :is()/:not()/:where() is ignored here, which is how
+      // those functions are usually simplified by hand — say so in the output.
+      const flat = selector.replace(/:[a-z-]+\([^)]*\)/gi, "").replace(/\([^)]*\)/g, "");
+      const ids = (flat.match(/#[\w-]+/g) ?? []).length;
+      const classes = (flat.match(/\.[\w-]+|\[[^\]]*\]|:(?!:)[a-z-]+/gi) ?? []).length;
+      const elements =
+        (flat.match(/(^|[\s>+~])[a-z][a-z0-9-]*/gi) ?? []).length +
+        (flat.match(/::[a-z-]+/gi) ?? []).length;
+      return {
+        selector,
+        ids,
+        classes,
+        elements,
+        score: [ids, classes, elements] as [number, number, number],
+        value: ids * 100 + classes * 10 + elements,
+      };
+    });
+    rows.sort((x, y) => y.value - x.value);
+    return [
+      ...rows.map((r) => `(${r.score.join(",")})  ${r.selector}   → ${r.value}`),
+      ``,
+      `id ${rows[0]!.ids} · class-style ${rows[0]!.classes} · element ${rows[0]!.elements} for the strongest selector`,
+      `!important is not counted: it always wins, and inline styles beat everything but !important.`,
+      `Selectors inside :is()/:not()/:where() are not counted — those pick the specific argument's specificity.`,
+    ].join("\n");
+  },
+
+  /* ── data & code ────────────────────────────────────────────────── */
+
+  /** Every path inside a JSON document, with the type found at each one. */
+  jsonPaths: (s) => {
+    let data: unknown;
+    try {
+      data = JSON.parse(s);
+    } catch (e) {
+      return `⚠ ${(e as Error).message}`;
+    }
+    const out: string[] = [];
+    const walk = (value: unknown, path: string) => {
+      if (Array.isArray(value)) {
+        if (!value.length) out.push(`${path || "$"}  []  array (empty)`);
+        else value.forEach((item, i) => walk(item, `${path}[${i}]`));
+        return;
+      }
+      if (value && typeof value === "object") {
+        const entries = Object.entries(value as Record<string, unknown>);
+        if (!entries.length) out.push(`${path || "$"}  {}  object (empty)`);
+        else for (const [key, child] of entries) walk(child, path ? `${path}.${key}` : key);
+        return;
+      }
+      const type = value === null ? "null" : typeof value;
+      const preview =
+        typeof value === "string"
+          ? `  "${value.length > 40 ? `${value.slice(0, 40)}…` : value}"`
+          : value === null
+            ? ""
+            : `  ${String(value)}`;
+      out.push(`${path || "$"}  ${type}${preview}`);
+    };
+    walk(data, "");
+    const shown = out.slice(0, 400).join("\n");
+    return out.length > 400 ? `${shown}\n… ${out.length - 400} more paths` : shown;
+  },
+
+  /** Infer a JSON Schema (draft-07 subset) from a real sample document. */
+  jsonSchema: (s) => {
+    try {
+      const data = JSON.parse(s);
+      return JSON.stringify(inferSchema(data), null, 2);
+    } catch (e) {
+      return `⚠ ${(e as Error).message}`;
+    }
+  },
+
+  /** Turn a curl command into the fetch() call that does the same thing. */
+  curlToFetch: (s) => {
+    const flat = s.replace(/\\\r?\n/g, " ").trim();
+    if (!/^\s*(\$\s*)?curl\b/i.test(flat))
+      return "⚠ Paste a curl command (it has to start with `curl`).";
+    const tokens = (flat.match(/'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\S+/g) ?? []).map((t) => {
+      const quoted = /^(['"])([\s\S]*)\1$/.exec(t);
+      if (!quoted) return t;
+      const inner = quoted[2] ?? "";
+      // Inside double quotes a shell drops the backslash before a special
+      // character, so -d "{\"name\":1}" arrives as {"name":1}.
+      return quoted[1] === '"' ? inner.replace(/\\(["'\\`$])/g, "$1") : inner;
+    });
+    tokens.shift(); // the `curl` word itself
+
+    const headers: [string, string][] = [];
+    const data: string[] = [];
+    const form: [string, string][] = [];
+    const ignored: string[] = [];
+    let url = "";
+    let method = "";
+
+    const takesValue = new Set([
+      "-o",
+      "--output",
+      "-w",
+      "--write-out",
+      "-m",
+      "--max-time",
+      "--connect-timeout",
+      "--retry",
+      "--cacert",
+      "--cert",
+      "--key",
+    ]);
+
+    for (let i = 0; i < tokens.length; i++) {
+      const t = tokens[i]!;
+      if (t === "-X" || t === "--request") method = tokens[++i] ?? "GET";
+      else if (t === "-H" || t === "--header") {
+        const raw = tokens[++i] ?? "";
+        const at = raw.indexOf(":");
+        if (at > 0) headers.push([raw.slice(0, at).trim(), raw.slice(at + 1).trim()]);
+      } else if (["-d", "--data", "--data-raw", "--data-binary", "--data-urlencode"].includes(t)) {
+        data.push(tokens[++i] ?? "");
+      } else if (t === "-F" || t === "--form") {
+        const raw = tokens[++i] ?? "";
+        const at = raw.indexOf("=");
+        if (at > 0) form.push([raw.slice(0, at), raw.slice(at + 1).replace(/^@/, "")]);
+      } else if (t === "-u" || t === "--user") {
+        headers.push(["Authorization", `Basic ${toBase64(tokens[++i] ?? "")}`]);
+      } else if (t === "-b" || t === "--cookie") {
+        headers.push(["Cookie", tokens[++i] ?? ""]);
+      } else if (t === "-A" || t === "--user-agent") {
+        headers.push(["User-Agent", tokens[++i] ?? ""]);
+      } else if (t === "-e" || t === "--referer") {
+        headers.push(["Referer", tokens[++i] ?? ""]);
+      } else if (takesValue.has(t)) {
+        ignored.push(t);
+        i++;
+      } else if (t.startsWith("-")) {
+        ignored.push(t);
+      } else if (!url) {
+        url = t;
+      }
+    }
+
+    if (!url) return "⚠ No URL found in that curl command.";
+
+    const verb = (method || (data.length || form.length ? "POST" : "GET")).toUpperCase();
+    const lines: string[] = [
+      `const res = await fetch(${JSON.stringify(url)}, {`,
+      `  method: ${JSON.stringify(verb)},`,
+    ];
+    if (headers.length) {
+      lines.push("  headers: {");
+      for (const [key, value] of headers)
+        lines.push(`    ${JSON.stringify(key)}: ${JSON.stringify(value)},`);
+      lines.push("  },");
+    }
+    if (form.length) {
+      lines.push("  body: (() => {", "    const fd = new FormData();");
+      for (const [key, value] of form)
+        lines.push(`    fd.append(${JSON.stringify(key)}, ${JSON.stringify(value)});`);
+      lines.push("    return fd;", "  })(),");
+    } else if (data.length) {
+      const joined = data.join("&");
+      let body: string;
+      try {
+        body = JSON.stringify(JSON.parse(joined));
+      } catch {
+        body = JSON.stringify(joined);
+      }
+      lines.push(`  body: ${body},`);
+    }
+    lines.push("});", "", "const data = await res.json();", "console.log(data);");
+    if (ignored.length) lines.push("", `// ignored curl flags: ${ignored.join(" ")}`);
+    return lines.join("\n");
+  },
+
+  /** Parse a .env / properties file into JSON, with optional type coercion. */
+  dotenvToJson: (s, o) => {
+    const coerce = o.coerce === "typed";
+    const out: Record<string, string | number | boolean> = {};
+    let parsed = 0;
+    for (const line of lines(s)) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith(";")) continue;
+      const at = trimmed.indexOf("=");
+      if (at < 0) continue;
+      const key = trimmed
+        .slice(0, at)
+        .trim()
+        .replace(/^export\s+/, "");
+      if (!key) continue;
+      let value = trimmed.slice(at + 1).trim();
+      const quoted = /^(['"])([\s\S]*)\1$/.exec(value);
+      if (quoted) value = quoted[2] ?? "";
+      if (coerce && !quoted) {
+        if (/^(true|false)$/i.test(value)) out[key] = value.toLowerCase() === "true";
+        else if (/^-?\d+(\.\d+)?$/.test(value)) out[key] = Number(value);
+        else out[key] = value;
+      } else out[key] = value;
+      parsed++;
+    }
+    if (!parsed) return "⚠ No KEY=value lines found in that text.";
+    return JSON.stringify(out, null, 2);
+  },
+
+  /** Convert an integer between bases 2–36, exactly, without float rounding. */
+  numberBase: (s, o) => {
+    const source = s.trim().replace(/[\s,_]/g, "");
+    if (!source) return "⚠ Type a number to convert (e.g. 255, 0xff, 0b1010).";
+    const negative = source.startsWith("-");
+    const digits = negative ? source.slice(1) : source;
+    const from = o.from ?? "auto";
+    let base = Number(from);
+    let body = digits;
+    if (from === "auto") {
+      if (/^0x/i.test(digits)) {
+        base = 16;
+        body = digits.slice(2);
+      } else if (/^0b/i.test(digits)) {
+        base = 2;
+        body = digits.slice(2);
+      } else if (/^0o/i.test(digits)) {
+        base = 8;
+        body = digits.slice(2);
+      } else base = 10;
+    }
+    const value = parseInBase(body, base);
+    if (value === null) return `⚠ "${s.trim()}" is not a valid base-${base} number.`;
+    const signed = negative ? -value : value;
+    const target = Number(o.to ?? 16);
+    return [
+      `decimal   ${signed.toString(10)}`,
+      `hex       0x${toBaseN(signed, 16)}`,
+      `binary    0b${toBaseN(signed, 2)}`,
+      `octal     0o${toBaseN(signed, 8)}`,
+      `base ${String(target).padEnd(3)}  ${toBaseN(signed, target)}`,
+      ``,
+      `32-bit    ${toBaseN(BigInt.asUintN(32, signed), 10)} unsigned · ${toBaseN(BigInt.asIntN(32, signed), 10)} signed`,
+    ].join("\n");
+  },
+
+  /** Markdown table → CSV, respecting quoted cells. */
+  markdownTableToCsv: (s) => {
+    const rows = lines(s)
+      .map((l) => l.trim())
+      .filter((l) => l.startsWith("|") && l.endsWith("|"))
+      .map((l) =>
+        l
+          .slice(1, -1)
+          .split("|")
+          .map((c) => c.trim()),
+      );
+    if (!rows.length) return "⚠ Paste a markdown table — rows that start and end with |.";
+    const body = rows.filter((r) => !r.every((c) => /^:?-{2,}:?$/.test(c)));
+    return body
+      .map((r) => r.map((c) => (/[",\n]/.test(c) ? `"${c.replace(/"/g, '""')}"` : c)).join(","))
+      .join("\n");
+  },
+
+  /* ── web & SEO ──────────────────────────────────────────────────── */
+
+  /** Build a campaign URL from a destination plus source/medium/campaign lines. */
+  utmBuilder: (s) => {
+    const rows = lines(s)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    const destination = rows.find((l) => /^https?:\/\//i.test(l));
+    if (!destination) return "⚠ Put the destination URL on its own line (https://…).";
+    const aliases: Record<string, string> = {
+      source: "utm_source",
+      medium: "utm_medium",
+      campaign: "utm_campaign",
+      term: "utm_term",
+      content: "utm_content",
+      id: "utm_id",
+    };
+    const pairs: [string, string][] = [];
+    for (const row of rows) {
+      if (row === destination) continue;
+      const at = row.indexOf("=");
+      if (at < 0) continue;
+      const rawKey = row
+        .slice(0, at)
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9_]/g, "");
+      const value = row.slice(at + 1).trim();
+      if (!rawKey || !value) continue;
+      pairs.push([
+        aliases[rawKey] ?? (rawKey.startsWith("utm_") ? rawKey : `utm_${rawKey}`),
+        value,
+      ]);
+    }
+    if (!pairs.length)
+      return "⚠ Add at least one key=value line — source=newsletter, medium=email…";
+    try {
+      const url = new URL(destination);
+      for (const [key, value] of pairs) url.searchParams.set(key, value);
+      return [
+        url.toString(),
+        ``,
+        `tracking: source=${url.searchParams.get("utm_source") ?? "(none)"} · medium=${url.searchParams.get("utm_medium") ?? "(none)"} · campaign=${url.searchParams.get("utm_campaign") ?? "(none)"}`,
+        `${url.searchParams.size} query parameters in total`,
+      ].join("\n");
+    } catch {
+      return "⚠ That destination is not a parseable URL.";
+    }
+  },
+
+  /** Audit a set of page titles against what search results actually show. */
+  seoTitleAudit: (s) => {
+    const titles = lines(s)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    if (!titles.length) return "⚠ Paste one page title per line.";
+    const counts = new Map<string, number>();
+    for (const title of titles)
+      counts.set(title.toLowerCase(), (counts.get(title.toLowerCase()) ?? 0) + 1);
+    const hook = /\b(\d{4}|\d+|best|free|guide|how to|checklist|template|examples?|vs)\b/i;
+    const report = titles.map((title) => {
+      const length = [...title].length;
+      const flags: string[] = [];
+      if (length < 30) flags.push("short for a search result (under 30)");
+      if (length > 60) flags.push("may truncate in Google (over 60)");
+      if ((counts.get(title.toLowerCase()) ?? 0) > 1) flags.push("duplicate of another line");
+      if (!hook.test(title)) flags.push("no number, year or hook word");
+      if (title === title.toLowerCase() && length > 12)
+        flags.push("all lower case — reads like a slug");
+      return `${String(length).padStart(3)} chars  ${title}${
+        flags.length ? `\n      → ${flags.join(" · ")}` : "\n      → within the usual limits"
+      }`;
+    });
+    const average = Math.round(titles.reduce((n, t) => n + [...t].length, 0) / titles.length);
+    const duplicates = titles.length - counts.size;
+    return [
+      ...report,
+      ``,
+      `${titles.length} titles · average ${average} characters · ${duplicates} duplicate${duplicates === 1 ? "" : "s"}`,
+      `Google shows roughly 50-60 characters of a title on desktop.`,
+      `This audits titles only — keyword matching needs a real query, so nothing here pretends to rank.`,
+    ].join("\n");
+  },
+
+  /** Look up HTTP status codes by class or by leading digit. */
+  httpStatus: (s, o) => {
+    const digits = s.replace(/[^\d]/g, "");
+    const cls = o.class ?? "all";
+    const rows = HTTP_STATUS.filter(([code]) => {
+      if (digits && !String(code).startsWith(digits)) return false;
+      if (cls === "2xx") return code >= 200 && code < 300;
+      if (cls === "3xx") return code >= 300 && code < 400;
+      if (cls === "4xx") return code >= 400 && code < 500;
+      if (cls === "5xx") return code >= 500 && code < 600;
+      return true;
+    });
+    if (!rows.length) return `⚠ Nothing matched${digits ? ` "${digits}"` : ""} in that class.`;
+    return [
+      ...rows.map(([code, meaning]) => `${code}  ${meaning}`),
+      ``,
+      `${rows.length} of ${HTTP_STATUS.length} codes listed.`,
+    ].join("\n");
+  },
+
+  /* ── dates & time ───────────────────────────────────────────────── */
+
+  /** Read one instant in every timezone that matters, with its real offset. */
+  dateInZones: (s) => {
+    const raw = s.trim();
+    let when = new Date();
+    if (raw) {
+      if (/^\d{9,13}$/.test(raw))
+        when = new Date(raw.length >= 12 ? Number(raw) : Number(raw) * 1000);
+      else when = new Date(raw);
+    }
+    if (Number.isNaN(when.getTime()))
+      return "⚠ I could not read that. Try 2026-10-18T09:00, 18 Oct 2026 09:00 UTC or an epoch like 1760000000.";
+    const zones = [
+      "UTC",
+      "Asia/Kolkata",
+      "Asia/Dubai",
+      "Europe/London",
+      "Europe/Berlin",
+      "America/New_York",
+      "America/Los_Angeles",
+      "Asia/Tokyo",
+      "Australia/Sydney",
+    ];
+    const offset = (zone: string) =>
+      new Intl.DateTimeFormat("en-GB", { timeZone: zone, timeZoneName: "shortOffset" })
+        .formatToParts(when)
+        .find((p) => p.type === "timeZoneName")?.value ?? "GMT";
+    return [
+      `ISO    ${when.toISOString()}`,
+      `unix   ${Math.floor(when.getTime() / 1000)}`,
+      ``,
+      ...zones.map((zone) => {
+        const stamp = new Intl.DateTimeFormat("en-GB", {
+          timeZone: zone,
+          dateStyle: "medium",
+          timeStyle: "short",
+        }).format(when);
+        return `${zone.padEnd(20)} ${stamp}  (${offset(zone)})`;
+      }),
+    ].join("\n");
+  },
+
+  /** Seconds (or whatever unit you pick) as a clock, in words, and in total. */
+  durationFormat: (s, o) => {
+    const raw = s.trim().replace(/[^\d.-]/g, "");
+    const value = Number(raw);
+    if (!raw || !Number.isFinite(value)) return "⚠ Enter a duration — 3725 means 3725 seconds.";
+    const unitKey = o.unit ?? "seconds";
+    const unitSeconds =
+      unitKey === "minutes"
+        ? 60
+        : unitKey === "hours"
+          ? 3600
+          : unitKey === "milliseconds"
+            ? 0.001
+            : 1;
+    const total = value * unitSeconds;
+    const sign = total < 0 ? "-" : "";
+    const abs = Math.abs(total);
+    const days = Math.floor(abs / 86400);
+    const hours = Math.floor((abs % 86400) / 3600);
+    const minutes = Math.floor((abs % 3600) / 60);
+    const seconds = Math.floor(abs % 60);
+    const clock = `${days ? `${days}:` : ""}${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    const words =
+      [
+        days ? `${days} day${days === 1 ? "" : "s"}` : null,
+        hours ? `${hours} hour${hours === 1 ? "" : "s"}` : null,
+        minutes ? `${minutes} minute${minutes === 1 ? "" : "s"}` : null,
+        seconds || (!days && !hours && !minutes)
+          ? `${seconds} second${seconds === 1 ? "" : "s"}`
+          : null,
+      ]
+        .filter(Boolean)
+        .join(", ") || "0 seconds";
+    return [
+      `${sign}${clock}`,
+      `words   ${sign}${words}`,
+      `total   ${sign}${Number(abs.toFixed(3))} ${unitKey}`,
+      ``,
+      `1 day = 86,400s · 1 week = 604,800s · 1 month ≈ 2,629,800s · 1 year ≈ 31,557,600s`,
+    ].join("\n");
+  },
+
+  /* ── generators ─────────────────────────────────────────────────── */
+
+  /** Time-sortable 26-character IDs (ULIDs), generated locally. */
+  ulid: (_s, o) => {
+    const count = Math.max(1, Math.min(50, Number(o.count ?? 5)));
+    return [
+      ...Array.from({ length: count }, () => ulid()),
+      ``,
+      `${count} ULID${count === 1 ? "" : "s"} · timestamp first, so they sort in creation order`,
+    ].join("\n");
+  },
 };
 
 /** every op except the ones needing an input box */
 export const NO_INPUT_OPS = new Set([
-  "uuid", "nanoid", "password", "passphrase", "randomString",
-  "loremWords", "loremSentences", "loremParagraphs", "randomNumbers", "randomColor",
+  "uuid",
+  "nanoid",
+  "password",
+  "passphrase",
+  "randomString",
+  "ulid",
+  "loremWords",
+  "loremSentences",
+  "loremParagraphs",
+  "randomNumbers",
+  "randomColor",
 ]);
 
 function relative(d: Date): string {
