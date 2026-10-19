@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-18T11:55:16.421Z",
+  "updated": "2026-10-19T14:18:01.979Z",
   "articles": [
     {
-      "title": "DeepSeek-v4.1-Flash-1017",
-      "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
-      "source": "HackerNews",
-      "score": 880,
-      "publishedAt": "2026-10-17"
-    },
-    {
-      "title": "Bleached corals thrive within days when touching healthy neighbour",
-      "url": "https://www.nature.com/articles/d41586-026-03266-x",
-      "source": "HackerNews",
-      "score": 475,
-      "publishedAt": "2026-10-16"
-    },
-    {
-      "title": "Pele – Mermaid diagrams as themeable SVG",
-      "url": "https://pele.run/",
+      "title": "Documents: Police officer gave her Flock login to her ICE agent husband",
+      "url": "https://www.wjcl.com/article/savannah-police-officer-ice-agent-flock-access/74135816",
       "source": "HackerNews",
       "score": 458,
-      "publishedAt": "2026-10-17"
+      "publishedAt": "2026-10-19"
     },
     {
-      "title": "Dam removals are bringing fish back across the northeastern United States",
-      "url": "https://www.smithsonianmag.com/science-nature/dam-removals-are-bringing-fish-back-across-the-northeastern-united-states-striking-down-one-tiny-barrier-at-a-time-180989679/",
+      "title": "Linux 7.3 Released",
+      "url": "https://lwn.net/Articles/1101143/",
       "source": "HackerNews",
-      "score": 289,
+      "score": 402,
+      "publishedAt": "2026-10-19"
+    },
+    {
+      "title": "Timestral: Mistral release time-series foundation models",
+      "url": "https://mistral.ai/news/timestral/",
+      "source": "HackerNews",
+      "score": 208,
+      "publishedAt": "2026-10-19"
+    },
+    {
+      "title": "Let's Encrypt is adding two additional remote perspectives for domain validation",
+      "url": "https://community.letsencrypt.org/t/lets-encrypt-is-adding-two-additional-remote-perspectives-for-domain-validation/252166",
+      "source": "HackerNews",
+      "score": 91,
+      "publishedAt": "2026-10-19"
+    },
+    {
+      "title": "Alternatives to Animal Testing Are Finally Taking Off",
+      "url": "https://spectrum.ieee.org/alternatives-to-animal-testing",
+      "source": "HackerNews",
+      "score": 90,
+      "publishedAt": "2026-10-19"
+    },
+    {
+      "title": "Harness Engineering 101: The LLM is the brain, the harness is the body",
+      "url": "https://github.com/IsuruMaduranga/harness-engineering-101",
+      "source": "HackerNews",
+      "score": 88,
+      "publishedAt": "2026-10-19"
+    },
+    {
+      "title": "Show HN: Qwen3-4B with the AI writing tics trained out",
+      "url": "https://100toolkit.com/blog/deslop-model/",
+      "source": "HackerNews",
+      "score": 58,
+      "publishedAt": "2026-10-19"
+    },
+    {
+      "title": "Gdynia and the Dream of a Maritime Poland",
+      "url": "https://engelsbergideas.com/notebook/gdynia-and-the-dream-of-a-maritime-poland/",
+      "source": "HackerNews",
+      "score": 55,
       "publishedAt": "2026-10-16"
-    },
-    {
-      "title": "DeepSeek search and fetch – $0.75 per 1000 successful requests",
-      "url": "https://api-docs.deepseek.com/guides/search/",
-      "source": "HackerNews",
-      "score": 253,
-      "publishedAt": "2026-10-18"
-    },
-    {
-      "title": "How the Elizabeth Holmes documentary “You Can See Everything” is deceiving",
-      "url": "https://www.readtheprofile.com/p/elizabeth-holmes-documentary-you-can-see-everything",
-      "source": "HackerNews",
-      "score": 164,
-      "publishedAt": "2026-10-18"
-    },
-    {
-      "title": "Lean now ships with verified kernels",
-      "url": "https://leodemoura.github.io/blog/2026-10-15-lean-now-ships-with-verified-kernels/",
-      "source": "HackerNews",
-      "score": 153,
-      "publishedAt": "2026-10-16"
-    },
-    {
-      "title": "Show HN: Sphinx – A hook that quizzes you on your AI's code before shipping",
-      "url": "https://sphinx-six-theta.vercel.app/",
-      "source": "HackerNews",
-      "score": 149,
-      "publishedAt": "2026-10-18"
     }
   ]
 }
