@@ -1,83 +1,115 @@
 {
-  "updated": "2026-10-12",
-  "week": "2026-W41",
+  "updated": "2026-10-19",
+  "week": "2026-W42",
   "items": [
     {
-      "name": "Google EmbeddingGemma 2",
-      "url": "https://www.producthunt.com/products/embeddinggemma-2",
-      "description": "An open, lightweight multimodal embedding model Discussion | Link",
-      "source": "ProductHunt",
-      "category": "AI Tools",
-      "badge": "Free Tier"
-    },
-    {
-      "name": "Scrape Anything by Context.dev",
+      "name": "Rusteerio by Context.dev",
       "url": "https://www.producthunt.com/products/context-dev",
-      "description": "Turn any website into clean data with one API call. Discussion | Link",
+      "description": "Keep your Cheerio code. Make it faster. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Invited",
-      "url": "https://www.producthunt.com/products/invited-ai-reminder-scanner",
-      "description": "AI reminder scanner for bills, invites & documents Discussion | Link",
+      "name": "Lookout (for Slack)",
+      "url": "https://www.producthunt.com/products/lookout-for-slack",
+      "description": "Urgent Slack messages, handled instantly. Powered by Jev. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Knocket",
-      "url": "https://www.producthunt.com/products/knocket-2",
-      "description": "Chat with visitors from your website or link Discussion | Link",
+      "name": "Beam.win",
+      "url": "https://www.producthunt.com/products/beam-win",
+      "description": "Run AI agents on one Mac and use its windows on another Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Manifold MCP",
-      "url": "https://www.producthunt.com/products/manifold-mcp",
-      "description": "SEO, AI answers, social, ads and leads data for your agent Discussion | Link",
+      "name": "Triwarden",
+      "url": "https://www.producthunt.com/products/triwarden",
+      "description": "Native Mac password manager for Vaultwarden & Bitwarden Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "ngram 2.0",
-      "url": "https://www.producthunt.com/products/ngram",
-      "description": "Create explainers, screencasts, and AI avatar videos Discussion | Link",
+      "name": "readywhen",
+      "url": "https://www.producthunt.com/products/readywhen",
+      "description": "The senior personal assistant that works inside WhatsApp Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "ExcaliClaw",
-      "url": "https://www.producthunt.com/products/excaliclaw",
-      "description": "Hand-drawn diagrams your AI agent can draw with you Discussion | Link",
+      "name": "DoOne",
+      "url": "https://www.producthunt.com/products/doone-focus-tasks-with-integration",
+      "description": "Focus timer with integrations with GitHub, Gitlab & More Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "SquadRoom",
-      "url": "https://www.producthunt.com/products/squadroom",
-      "description": "AI employees that work 24/7 Discussion | Link",
+      "name": "walkai-talkai",
+      "url": "https://www.producthunt.com/products/walkai-talkai",
+      "description": "Talk to your AI coding agent over a walkie-talkie Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Agent.reviews – Where AI agents read and write reviews on to",
-      "url": "https://agent.reviews/",
-      "description": "73 points on Hacker News",
+      "name": "Wally by Willow",
+      "url": "https://www.producthunt.com/products/willow-voice",
+      "description": "Your Scribe agent that learns how you write Discussion | Link",
+      "source": "ProductHunt",
+      "category": "AI Tools",
+      "badge": "Free Tier"
+    },
+    {
+      "name": "Wonderhop – A daily game: guess what most people say, or wha",
+      "url": "https://wonderhop.io/en/",
+      "description": "119 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Proton Drive for Linux",
-      "url": "https://oss.lsantos.dev/proton-drive-linux-fs/",
+      "name": "'AI' Is Not a Tool by Rich Hickey",
+      "url": "https://www.linkedin.com/pulse/ai-tool-rich-hickey-kjl8e",
+      "description": "318 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "AI is a tool and using it well takes skill",
+      "url": "https://yyhh.org/blog/2026/10/ai-is-a-tool/",
+      "description": "805 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Spotatui, a Spotify TUI/GUI without web API rate limits",
+      "url": "https://github.com/LargeModGames/spotatui",
+      "description": "92 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "I built a tool to track what AI leaders say and how their vi",
+      "url": "https://blumify.io/people",
       "description": "119 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Pulse Local, a Mac budgeting app whose AI models run on your",
+      "url": "https://pulseos.finance",
+      "description": "121 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
