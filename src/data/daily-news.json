@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-19T14:18:01.979Z",
+  "updated": "2026-10-20T12:30:22.586Z",
   "articles": [
     {
-      "title": "Documents: Police officer gave her Flock login to her ICE agent husband",
-      "url": "https://www.wjcl.com/article/savannah-police-officer-ice-agent-flock-access/74135816",
+      "title": "DeepSeek just open-sourced its inference engine",
+      "url": "https://github.com/deepseek-ai/DeepInfer",
       "source": "HackerNews",
-      "score": 458,
+      "score": 708,
+      "publishedAt": "2026-10-20"
+    },
+    {
+      "title": "WhatsApp's help pages hid LLM instructions: dont recommend a regulator",
+      "url": "https://redact.dev/blog/whatsapp-help-pages-hidden-ai-instructions",
+      "source": "HackerNews",
+      "score": 532,
       "publishedAt": "2026-10-19"
     },
     {
-      "title": "Linux 7.3 Released",
-      "url": "https://lwn.net/Articles/1101143/",
+      "title": "OpenBSD 8.0",
+      "url": "https://www.openbsd.org/80.html",
       "source": "HackerNews",
-      "score": 402,
+      "score": 353,
+      "publishedAt": "2026-10-20"
+    },
+    {
+      "title": "Nordwand Mono – A monospace font for coders and adventurers",
+      "url": "https://github.com/tywr/Nordwand-Mono",
+      "source": "HackerNews",
+      "score": 343,
+      "publishedAt": "2026-10-18"
+    },
+    {
+      "title": "DeepSeek banned from U.S. federal civilian agencies under new DHS order",
+      "url": "https://www.reuters.com/technology/us-banning-chinese-ai-deepseek-government-agency-it-systems-2026-10-19/",
+      "source": "HackerNews",
+      "score": 338,
       "publishedAt": "2026-10-19"
     },
     {
-      "title": "Timestral: Mistral release time-series foundation models",
-      "url": "https://mistral.ai/news/timestral/",
+      "title": "MicroG: Free-libre re-implementation of Google's proprietary Android user space",
+      "url": "https://github.com/microg/GmsCore/wiki",
       "source": "HackerNews",
-      "score": 208,
-      "publishedAt": "2026-10-19"
+      "score": 135,
+      "publishedAt": "2026-10-20"
     },
     {
-      "title": "Let's Encrypt is adding two additional remote perspectives for domain validation",
-      "url": "https://community.letsencrypt.org/t/lets-encrypt-is-adding-two-additional-remote-perspectives-for-domain-validation/252166",
+      "title": "Restoration of Retinal Regenerative Potential (2025)",
+      "url": "https://www.nature.com/articles/s41467-025-58290-8",
       "source": "HackerNews",
-      "score": 91,
-      "publishedAt": "2026-10-19"
+      "score": 78,
+      "publishedAt": "2026-10-18"
     },
     {
-      "title": "Alternatives to Animal Testing Are Finally Taking Off",
-      "url": "https://spectrum.ieee.org/alternatives-to-animal-testing",
+      "title": "Making a 88x31 button book using ImageMagick",
+      "url": "https://k.sosnierz.me/08-11-24/",
       "source": "HackerNews",
-      "score": 90,
-      "publishedAt": "2026-10-19"
-    },
-    {
-      "title": "Harness Engineering 101: The LLM is the brain, the harness is the body",
-      "url": "https://github.com/IsuruMaduranga/harness-engineering-101",
-      "source": "HackerNews",
-      "score": 88,
-      "publishedAt": "2026-10-19"
-    },
-    {
-      "title": "Show HN: Qwen3-4B with the AI writing tics trained out",
-      "url": "https://100toolkit.com/blog/deslop-model/",
-      "source": "HackerNews",
-      "score": 58,
-      "publishedAt": "2026-10-19"
-    },
-    {
-      "title": "Gdynia and the Dream of a Maritime Poland",
-      "url": "https://engelsbergideas.com/notebook/gdynia-and-the-dream-of-a-maritime-poland/",
-      "source": "HackerNews",
-      "score": 55,
-      "publishedAt": "2026-10-16"
+      "score": 64,
+      "publishedAt": "2026-10-17"
     }
   ]
 }
