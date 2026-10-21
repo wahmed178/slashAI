@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-20T12:30:22.586Z",
+  "updated": "2026-10-21T12:40:59.629Z",
   "articles": [
     {
-      "title": "DeepSeek just open-sourced its inference engine",
-      "url": "https://github.com/deepseek-ai/DeepInfer",
+      "title": "Upcoming critical PHP security release (CVE-2026-109618 / -109619)",
+      "url": "https://news-web.php.net/php.announce/509",
       "source": "HackerNews",
-      "score": 708,
+      "score": 1178,
       "publishedAt": "2026-10-20"
     },
     {
-      "title": "WhatsApp's help pages hid LLM instructions: dont recommend a regulator",
-      "url": "https://redact.dev/blog/whatsapp-help-pages-hidden-ai-instructions",
+      "title": "Show HN: SimCity, but with Permits",
+      "url": "https://permit.petercai.com/",
       "source": "HackerNews",
-      "score": 532,
+      "score": 836,
+      "publishedAt": "2026-10-20"
+    },
+    {
+      "title": "The Future of CSS",
+      "url": "https://www.joshwcomeau.com/css/interop-2027/",
+      "source": "HackerNews",
+      "score": 434,
+      "publishedAt": "2026-10-21"
+    },
+    {
+      "title": "The 1.5°C goal of the Paris Agreement is no longer viable",
+      "url": "https://unric.org/en/unep-emissions-gap-report-2026-1-5-degree-overshoot/",
+      "source": "HackerNews",
+      "score": 433,
+      "publishedAt": "2026-10-21"
+    },
+    {
+      "title": "Eight Bits of Trust; eMudhra's CA keys cracked in milliseconds",
+      "url": "https://scotthelme.co.uk/eight-bits-of-trust-emudhras-ca-keys-cracked-in-milliseconds/",
+      "source": "HackerNews",
+      "score": 309,
+      "publishedAt": "2026-10-21"
+    },
+    {
+      "title": "Muse exposes users' personal and business secrets when they share conversations",
+      "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/",
+      "source": "HackerNews",
+      "score": 224,
+      "publishedAt": "2026-10-21"
+    },
+    {
+      "title": "Whatever Happened to Fire Escapes",
+      "url": "https://practical.engineering/blog/2026/10/20/whatever-happened-to-fire-escapes",
+      "source": "HackerNews",
+      "score": 55,
+      "publishedAt": "2026-10-21"
+    },
+    {
+      "title": "Way to Play Super Mario 64: On Apple Vision Pro",
+      "url": "https://www.pagetable.com/303",
+      "source": "HackerNews",
+      "score": 52,
       "publishedAt": "2026-10-19"
-    },
-    {
-      "title": "OpenBSD 8.0",
-      "url": "https://www.openbsd.org/80.html",
-      "source": "HackerNews",
-      "score": 353,
-      "publishedAt": "2026-10-20"
-    },
-    {
-      "title": "Nordwand Mono – A monospace font for coders and adventurers",
-      "url": "https://github.com/tywr/Nordwand-Mono",
-      "source": "HackerNews",
-      "score": 343,
-      "publishedAt": "2026-10-18"
-    },
-    {
-      "title": "DeepSeek banned from U.S. federal civilian agencies under new DHS order",
-      "url": "https://www.reuters.com/technology/us-banning-chinese-ai-deepseek-government-agency-it-systems-2026-10-19/",
-      "source": "HackerNews",
-      "score": 338,
-      "publishedAt": "2026-10-19"
-    },
-    {
-      "title": "MicroG: Free-libre re-implementation of Google's proprietary Android user space",
-      "url": "https://github.com/microg/GmsCore/wiki",
-      "source": "HackerNews",
-      "score": 135,
-      "publishedAt": "2026-10-20"
-    },
-    {
-      "title": "Restoration of Retinal Regenerative Potential (2025)",
-      "url": "https://www.nature.com/articles/s41467-025-58290-8",
-      "source": "HackerNews",
-      "score": 78,
-      "publishedAt": "2026-10-18"
-    },
-    {
-      "title": "Making a 88x31 button book using ImageMagick",
-      "url": "https://k.sosnierz.me/08-11-24/",
-      "source": "HackerNews",
-      "score": 64,
-      "publishedAt": "2026-10-17"
     }
   ]
 }
