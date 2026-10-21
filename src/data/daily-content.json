@@ -1,13 +1,13 @@
 {
-  "updated": "2026-10-20",
+  "updated": "2026-10-21",
   "quote": {
-    "text": "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
-    "author": "Colin Powell"
+    "text": "If you do not change direction, you may end up where you are heading.",
+    "author": "Lao Tzu"
   },
-  "advice": "The person who never made a mistake never made anything.",
+  "advice": "The number of vampires in the average home, is directly proportional to the amount of garlic bread in the fridge.",
   "artwork": {
-    "title": "Scene on Sand Dunes, S.F.",
-    "artist": "Jennie Lewis (American, 1892-1944)\npublished by the Works Progress Administration",
-    "imageId": "3042f5fe-6d6e-e39b-6f9e-12790d020e04"
+    "title": "La septième face du dé: poëmes-découpages (The Seventh Side of the Die)",
+    "artist": "Marcel Duchamp (American, born France, 1887-1968)\nWritten by Georges Hugnet (French, 1906-1974)",
+    "imageId": "828adf7c-804a-ec9a-c77b-d6b29b479e88"
   }
 }
