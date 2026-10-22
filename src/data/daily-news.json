@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-21T12:40:59.629Z",
+  "updated": "2026-10-22T12:44:49.282Z",
   "articles": [
     {
-      "title": "Upcoming critical PHP security release (CVE-2026-109618 / -109619)",
-      "url": "https://news-web.php.net/php.announce/509",
+      "title": "Security Disclosure",
+      "url": "https://blog.railway.com/p/security-disclosure-wednesday-october-21st",
       "source": "HackerNews",
-      "score": 1178,
-      "publishedAt": "2026-10-20"
-    },
-    {
-      "title": "Show HN: SimCity, but with Permits",
-      "url": "https://permit.petercai.com/",
-      "source": "HackerNews",
-      "score": 836,
-      "publishedAt": "2026-10-20"
-    },
-    {
-      "title": "The Future of CSS",
-      "url": "https://www.joshwcomeau.com/css/interop-2027/",
-      "source": "HackerNews",
-      "score": 434,
+      "score": 504,
       "publishedAt": "2026-10-21"
     },
     {
-      "title": "The 1.5°C goal of the Paris Agreement is no longer viable",
-      "url": "https://unric.org/en/unep-emissions-gap-report-2026-1-5-degree-overshoot/",
+      "title": "Claude Duet",
+      "url": "https://claude.com/product/claude-duet",
       "source": "HackerNews",
-      "score": 433,
+      "score": 442,
       "publishedAt": "2026-10-21"
     },
     {
-      "title": "Eight Bits of Trust; eMudhra's CA keys cracked in milliseconds",
-      "url": "https://scotthelme.co.uk/eight-bits-of-trust-emudhras-ca-keys-cracked-in-milliseconds/",
+      "title": "WorldTUI: I trained a 360M model to pretend to be a terminal",
+      "url": "https://simedw.com/2026/10/21/world-model-terminal/",
       "source": "HackerNews",
-      "score": 309,
-      "publishedAt": "2026-10-21"
+      "score": 315,
+      "publishedAt": "2026-10-22"
     },
     {
-      "title": "Muse exposes users' personal and business secrets when they share conversations",
-      "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/",
+      "title": "The recently proposed o(n log n) integer multiplication algorithm [pdf]",
+      "url": "https://web.maths.unsw.edu.au/~davidharvey/research/subnlogn.pdf",
       "source": "HackerNews",
-      "score": 224,
-      "publishedAt": "2026-10-21"
+      "score": 231,
+      "publishedAt": "2026-10-22"
     },
     {
-      "title": "Whatever Happened to Fire Escapes",
-      "url": "https://practical.engineering/blog/2026/10/20/whatever-happened-to-fire-escapes",
+      "title": "CVE-2026-111943: Compromised Intermediate Certificate Authority",
+      "url": "https://nvd.nist.gov/vuln/detail/cve-2026-111943",
       "source": "HackerNews",
-      "score": 55,
-      "publishedAt": "2026-10-21"
+      "score": 208,
+      "publishedAt": "2026-10-22"
     },
     {
-      "title": "Way to Play Super Mario 64: On Apple Vision Pro",
-      "url": "https://www.pagetable.com/303",
+      "title": "Jailbreaking the Switch 2",
+      "url": "https://pepsipu.com/blog/2026-10-switch2-jailbreak-ns2jb/",
       "source": "HackerNews",
-      "score": 52,
-      "publishedAt": "2026-10-19"
+      "score": 168,
+      "publishedAt": "2026-10-22"
+    },
+    {
+      "title": "Several Linux kernel vulnerabilities accidentally posted to public mailing list",
+      "url": "https://www.phoronix.com/news/LKML-New-Trend-Vulnerabilities",
+      "source": "HackerNews",
+      "score": 80,
+      "publishedAt": "2026-10-22"
+    },
+    {
+      "title": "Faster than earcut: triangulating 3.7M map polygons in 489 ms",
+      "url": "https://globus.software/blog/2026/10/16/cutting-map-polygons/",
+      "source": "HackerNews",
+      "score": 78,
+      "publishedAt": "2026-10-22"
     }
   ]
 }
