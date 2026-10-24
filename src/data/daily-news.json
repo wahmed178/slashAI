@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-23T12:22:43.112Z",
+  "updated": "2026-10-24T11:49:38.383Z",
   "articles": [
     {
-      "title": "Docker is weird",
-      "url": "https://codeandcake.dev/posts/2026-10-22-docker-is-weird",
+      "title": "Kimi K3.1 Pro and K3.1 Pro Highspeed",
+      "url": "https://www.kimi.ai/blog/kimi-k3-1-pro",
       "source": "HackerNews",
-      "score": 574,
-      "publishedAt": "2026-10-22"
-    },
-    {
-      "title": "Local Wikipedia: Wikipedia, but only for things a half hour walk from you",
-      "url": "https://edjefferson.com/localwiki/",
-      "source": "HackerNews",
-      "score": 553,
-      "publishedAt": "2026-10-22"
-    },
-    {
-      "title": "Every AI model has the same \"controversial\" take on humans",
-      "url": "https://www.modelcompare.ai/blog/ai-models-controversial-take-on-humans",
-      "source": "HackerNews",
-      "score": 474,
-      "publishedAt": "2026-10-22"
-    },
-    {
-      "title": "OpenShell – A safe, private runtime for fleets of autonomous AI agents",
-      "url": "https://github.com/NVIDIA/OpenShell",
-      "source": "HackerNews",
-      "score": 424,
-      "publishedAt": "2026-10-22"
-    },
-    {
-      "title": "The foolishness of \"natural language programming\" (1978)",
-      "url": "https://www.cs.utexas.edu/~EWD/transcriptions/EWD06xx/EWD667.html",
-      "source": "HackerNews",
-      "score": 223,
+      "score": 939,
       "publishedAt": "2026-10-23"
     },
     {
-      "title": "How does Fable 5.1 hide messages in images?",
-      "url": "https://www.lesswrong.com/posts/WHEQps5PK8LrrcTAb/how-does-fable-5-1-hide-messages-in-images",
+      "title": "Today, we hacked what we'd set out to hack: the iPhone",
+      "url": "https://blog.calif.io/p/iphone",
       "source": "HackerNews",
-      "score": 118,
-      "publishedAt": "2026-10-22"
-    },
-    {
-      "title": "The alien space of science: Coherent but cognitively unavailable directions",
-      "url": "https://arxiv.org/abs/2603.01092",
-      "source": "HackerNews",
-      "score": 100,
-      "publishedAt": "2026-10-22"
-    },
-    {
-      "title": "Is this the new cyber normal?",
-      "url": "https://drew.silcock.dev/blog/is-this-the-new-cyber-normal/",
-      "source": "HackerNews",
-      "score": 57,
+      "score": 913,
       "publishedAt": "2026-10-23"
+    },
+    {
+      "title": "Twelve years of distributed SQLite",
+      "url": "https://philipotoole.com/twelve-years-of-distributed-sqlite/",
+      "source": "HackerNews",
+      "score": 225,
+      "publishedAt": "2026-10-24"
+    },
+    {
+      "title": "OBS Studio 33",
+      "url": "https://github.com/obsproject/obs-studio/releases/tag/33.0.0",
+      "source": "HackerNews",
+      "score": 192,
+      "publishedAt": "2026-10-24"
+    },
+    {
+      "title": "Around a dozen banking apps began specifically permitting GrapheneOS",
+      "url": "https://grapheneos.social/@GrapheneOS/117492375462459244",
+      "source": "HackerNews",
+      "score": 166,
+      "publishedAt": "2026-10-24"
+    },
+    {
+      "title": "How close can pure functional programming get to C?",
+      "url": "https://rtfeldman.com/fp-vs-c",
+      "source": "HackerNews",
+      "score": 139,
+      "publishedAt": "2026-10-24"
+    },
+    {
+      "title": "I Don't Understand Quantum Physics (2018)",
+      "url": "https://www.southampton.ac.uk/~doug/quantum_physics/index.html",
+      "source": "HackerNews",
+      "score": 90,
+      "publishedAt": "2026-10-24"
+    },
+    {
+      "title": "Physicists trap a single antimatter particle for a month",
+      "url": "https://www.scientificamerican.com/article/physicists-trap-a-single-antimatter-particle-for-a-month/",
+      "source": "HackerNews",
+      "score": 80,
+      "publishedAt": "2026-10-21"
     }
   ]
 }
