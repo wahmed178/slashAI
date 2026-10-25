@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-24T11:49:38.383Z",
+  "updated": "2026-10-25T12:18:49.009Z",
   "articles": [
     {
-      "title": "Kimi K3.1 Pro and K3.1 Pro Highspeed",
-      "url": "https://www.kimi.ai/blog/kimi-k3-1-pro",
+      "title": "We should be more ambitious with the software we build",
+      "url": "https://danluu.com/ambitious/",
       "source": "HackerNews",
-      "score": 939,
-      "publishedAt": "2026-10-23"
-    },
-    {
-      "title": "Today, we hacked what we'd set out to hack: the iPhone",
-      "url": "https://blog.calif.io/p/iphone",
-      "source": "HackerNews",
-      "score": 913,
-      "publishedAt": "2026-10-23"
-    },
-    {
-      "title": "Twelve years of distributed SQLite",
-      "url": "https://philipotoole.com/twelve-years-of-distributed-sqlite/",
-      "source": "HackerNews",
-      "score": 225,
+      "score": 485,
       "publishedAt": "2026-10-24"
     },
     {
-      "title": "OBS Studio 33",
-      "url": "https://github.com/obsproject/obs-studio/releases/tag/33.0.0",
+      "title": "The Goose Programming Language",
+      "url": "https://aardappel.github.io/goose/",
       "source": "HackerNews",
-      "score": 192,
+      "score": 438,
       "publishedAt": "2026-10-24"
     },
     {
-      "title": "Around a dozen banking apps began specifically permitting GrapheneOS",
-      "url": "https://grapheneos.social/@GrapheneOS/117492375462459244",
+      "title": "Meta Ignores Brazilian Court Order to End Bolsonaro Favoritism",
+      "url": "https://www.panamericandispatch.org/p/meta-ignores-brazilian-court-order",
       "source": "HackerNews",
-      "score": 166,
+      "score": 273,
+      "publishedAt": "2026-10-25"
+    },
+    {
+      "title": "Cerebras Deploys Trillion-Parameter AI Models",
+      "url": "https://www.cerebras.ai/blog/how-we-deploy-trillion-parameter-frontier-models-on-cerebras",
+      "source": "HackerNews",
+      "score": 213,
+      "publishedAt": "2026-10-25"
+    },
+    {
+      "title": "SpeedCrunch 1.1",
+      "url": "https://www.speedcrunch.org/",
+      "source": "HackerNews",
+      "score": 167,
       "publishedAt": "2026-10-24"
     },
     {
-      "title": "How close can pure functional programming get to C?",
-      "url": "https://rtfeldman.com/fp-vs-c",
+      "title": "Small Programs and Languages",
+      "url": "https://ratfactor.com/cards/pl-small",
       "source": "HackerNews",
-      "score": 139,
+      "score": 130,
       "publishedAt": "2026-10-24"
     },
     {
-      "title": "I Don't Understand Quantum Physics (2018)",
-      "url": "https://www.southampton.ac.uk/~doug/quantum_physics/index.html",
+      "title": "How Japanese Dried Bonito Is Made",
+      "url": "https://kottke.org/26/10/how-japanese-dried-bonito-is-made",
       "source": "HackerNews",
-      "score": 90,
-      "publishedAt": "2026-10-24"
+      "score": 64,
+      "publishedAt": "2026-10-22"
     },
     {
-      "title": "Physicists trap a single antimatter particle for a month",
-      "url": "https://www.scientificamerican.com/article/physicists-trap-a-single-antimatter-particle-for-a-month/",
+      "title": "Samsung running a TensorFlow lite model on 960x540 image to track you",
+      "url": "https://twitter.com/mike64_t/status/2114150399406202896",
       "source": "HackerNews",
-      "score": 80,
-      "publishedAt": "2026-10-21"
+      "score": 63,
+      "publishedAt": "2026-10-25"
     }
   ]
 }
