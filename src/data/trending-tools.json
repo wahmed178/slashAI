@@ -1,115 +1,99 @@
 {
-  "updated": "2026-10-19",
-  "week": "2026-W42",
+  "updated": "2026-10-26",
+  "week": "2026-W43",
   "items": [
     {
-      "name": "Rusteerio by Context.dev",
-      "url": "https://www.producthunt.com/products/context-dev",
-      "description": "Keep your Cheerio code. Make it faster. Discussion | Link",
+      "name": "SurgePix",
+      "url": "https://www.producthunt.com/products/surgepix",
+      "description": "AI visuals. Edit every layer. Agent-callable. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Lookout (for Slack)",
-      "url": "https://www.producthunt.com/products/lookout-for-slack",
-      "description": "Urgent Slack messages, handled instantly. Powered by Jev. Discussion | Link",
+      "name": "Strawberry 1.0",
+      "url": "https://www.producthunt.com/products/strawberry",
+      "description": "AI Browser that saves your team >100h/week Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Beam.win",
-      "url": "https://www.producthunt.com/products/beam-win",
-      "description": "Run AI agents on one Mac and use its windows on another Discussion | Link",
+      "name": "PDF Accessibility Checker by WebYes",
+      "url": "https://www.producthunt.com/products/pdf-accessibility-checker",
+      "description": "Find PDF accessibility issues for free, with fix guidance Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Triwarden",
-      "url": "https://www.producthunt.com/products/triwarden",
-      "description": "Native Mac password manager for Vaultwarden & Bitwarden Discussion | Link",
+      "name": "2G",
+      "url": "https://www.producthunt.com/products/2g",
+      "description": "Sampler to create early 2000 Neural Synthesis Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "readywhen",
-      "url": "https://www.producthunt.com/products/readywhen",
-      "description": "The senior personal assistant that works inside WhatsApp Discussion | Link",
+      "name": "Kiwi",
+      "url": "https://www.producthunt.com/products/kiwi-7",
+      "description": "A proactive AI assistant that texts you before you ask Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "DoOne",
-      "url": "https://www.producthunt.com/products/doone-focus-tasks-with-integration",
-      "description": "Focus timer with integrations with GitHub, Gitlab & More Discussion | Link",
+      "name": "MiniMax M3.1 Flash",
+      "url": "https://www.producthunt.com/products/minimax-4",
+      "description": "MiniMax’s Flash model, 3x faster and 70% cheaper for agents Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "walkai-talkai",
-      "url": "https://www.producthunt.com/products/walkai-talkai",
-      "description": "Talk to your AI coding agent over a walkie-talkie Discussion | Link",
+      "name": "omerta",
+      "url": "https://www.producthunt.com/products/omerta",
+      "description": "Catch .env secrets leaking into git Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Wally by Willow",
-      "url": "https://www.producthunt.com/products/willow-voice",
-      "description": "Your Scribe agent that learns how you write Discussion | Link",
+      "name": "Flipcorder",
+      "url": "https://www.producthunt.com/products/flipcorder",
+      "description": "A 1991 camcorder for your iPhone, one tape a day Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Wonderhop – A daily game: guess what most people say, or wha",
-      "url": "https://wonderhop.io/en/",
-      "description": "119 points on Hacker News",
+      "name": "VoidAccess – open-source dark web OSINT, from query to a gra",
+      "url": "https://github.com/KatrielMoses/voidaccess",
+      "description": "188 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "'AI' Is Not a Tool by Rich Hickey",
-      "url": "https://www.linkedin.com/pulse/ai-tool-rich-hickey-kjl8e",
-      "description": "318 points on Hacker News",
+      "name": "Omnara – Open-source alternative to Claude Managed Agents",
+      "url": "https://github.com/omnara-ai/omnara",
+      "description": "114 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "AI is a tool and using it well takes skill",
-      "url": "https://yyhh.org/blog/2026/10/ai-is-a-tool/",
-      "description": "805 points on Hacker News",
+      "name": "KiviDB, a faster Redis-compatible memory database and vector",
+      "url": "https://github.com/kividbio/kividb",
+      "description": "69 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Spotatui, a Spotify TUI/GUI without web API rate limits",
-      "url": "https://github.com/LargeModGames/spotatui",
-      "description": "92 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "I built a tool to track what AI leaders say and how their vi",
-      "url": "https://blumify.io/people",
-      "description": "119 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "Pulse Local, a Mac budgeting app whose AI models run on your",
-      "url": "https://pulseos.finance",
-      "description": "121 points on Hacker News",
+      "name": "I built a task system to handle the drudgery so I could focu",
+      "url": "https://3anddoneapp.com/try",
+      "description": "61 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
