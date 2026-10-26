@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-25T12:18:49.009Z",
+  "updated": "2026-10-26T13:49:49.675Z",
   "articles": [
     {
-      "title": "We should be more ambitious with the software we build",
-      "url": "https://danluu.com/ambitious/",
+      "title": "Dolly Parton's Imagination Library",
+      "url": "https://imaginationlibrary.com/",
       "source": "HackerNews",
-      "score": 485,
-      "publishedAt": "2026-10-24"
-    },
-    {
-      "title": "The Goose Programming Language",
-      "url": "https://aardappel.github.io/goose/",
-      "source": "HackerNews",
-      "score": 438,
-      "publishedAt": "2026-10-24"
-    },
-    {
-      "title": "Meta Ignores Brazilian Court Order to End Bolsonaro Favoritism",
-      "url": "https://www.panamericandispatch.org/p/meta-ignores-brazilian-court-order",
-      "source": "HackerNews",
-      "score": 273,
+      "score": 591,
       "publishedAt": "2026-10-25"
     },
     {
-      "title": "Cerebras Deploys Trillion-Parameter AI Models",
-      "url": "https://www.cerebras.ai/blog/how-we-deploy-trillion-parameter-frontier-models-on-cerebras",
+      "title": "Show HN: TitleArt – Make text like it's 1997",
+      "url": "https://titleart.dvy.io/",
       "source": "HackerNews",
-      "score": 213,
-      "publishedAt": "2026-10-25"
+      "score": 302,
+      "publishedAt": "2026-10-26"
     },
     {
-      "title": "SpeedCrunch 1.1",
-      "url": "https://www.speedcrunch.org/",
+      "title": "Anthropic S-1",
+      "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
       "source": "HackerNews",
-      "score": 167,
-      "publishedAt": "2026-10-24"
+      "score": 294,
+      "publishedAt": "2026-10-26"
     },
     {
-      "title": "Small Programs and Languages",
-      "url": "https://ratfactor.com/cards/pl-small",
+      "title": "Switzerland. Block by block. At 1:1 scale",
+      "url": "https://blocks.manifold3d.ch/",
       "source": "HackerNews",
-      "score": 130,
-      "publishedAt": "2026-10-24"
+      "score": 292,
+      "publishedAt": "2026-10-26"
     },
     {
-      "title": "How Japanese Dried Bonito Is Made",
-      "url": "https://kottke.org/26/10/how-japanese-dried-bonito-is-made",
+      "title": "Birdwatching rewires the brain and slows cognitive decline",
+      "url": "https://www.bbc.com/future/article/20261019-birdwatching-rewires-the-brain-and-slows-cognitive-decline",
       "source": "HackerNews",
-      "score": 64,
-      "publishedAt": "2026-10-22"
+      "score": 199,
+      "publishedAt": "2026-10-23"
     },
     {
-      "title": "Samsung running a TensorFlow lite model on 960x540 image to track you",
-      "url": "https://twitter.com/mike64_t/status/2114150399406202896",
+      "title": "PaperPilot – Zero-Cloud, Pure-Rust PDF Engine with WASM and MCP",
+      "url": "https://github.com/KrushnaVardhanReddy/PaperPilot",
       "source": "HackerNews",
-      "score": 63,
-      "publishedAt": "2026-10-25"
+      "score": 187,
+      "publishedAt": "2026-10-26"
+    },
+    {
+      "title": "Behind the scenes at the NeXT Computer office",
+      "url": "https://exhibits.stanford.edu/menuez/browse/next-computer-inc?per_page=96&sort=pub_year_isi+asc%2C+title_sort+asc&view=masonry",
+      "source": "HackerNews",
+      "score": 170,
+      "publishedAt": "2026-10-26"
+    },
+    {
+      "title": "Websites Should Be Printable",
+      "url": "https://brennenputh.me/blog/printable-websites/",
+      "source": "HackerNews",
+      "score": 95,
+      "publishedAt": "2026-10-26"
     }
   ]
 }
