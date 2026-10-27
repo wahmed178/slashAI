@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-26T13:49:49.675Z",
+  "updated": "2026-10-27T12:56:40.761Z",
   "articles": [
     {
-      "title": "Dolly Parton's Imagination Library",
-      "url": "https://imaginationlibrary.com/",
+      "title": "Three new discoveries in mathematics, computer science, and physics",
+      "url": "https://openai.com/index/building-scientific-understanding-with-academic-communities/",
       "source": "HackerNews",
-      "score": 591,
-      "publishedAt": "2026-10-25"
-    },
-    {
-      "title": "Show HN: TitleArt – Make text like it's 1997",
-      "url": "https://titleart.dvy.io/",
-      "source": "HackerNews",
-      "score": 302,
+      "score": 983,
       "publishedAt": "2026-10-26"
     },
     {
-      "title": "Anthropic S-1",
-      "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+      "title": "The Exponential Time Hypothesis Is False [pdf]",
+      "url": "https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf",
       "source": "HackerNews",
-      "score": 294,
+      "score": 676,
       "publishedAt": "2026-10-26"
     },
     {
-      "title": "Switzerland. Block by block. At 1:1 scale",
-      "url": "https://blocks.manifold3d.ch/",
+      "title": "The Mythical Man-Month in the Age of AI",
+      "url": "https://j11g.com/the-mythical-man-month-in-the-age-of-ai",
       "source": "HackerNews",
-      "score": 292,
-      "publishedAt": "2026-10-26"
+      "score": 245,
+      "publishedAt": "2026-10-27"
     },
     {
-      "title": "Birdwatching rewires the brain and slows cognitive decline",
-      "url": "https://www.bbc.com/future/article/20261019-birdwatching-rewires-the-brain-and-slows-cognitive-decline",
+      "title": "Roblox downloaded 145GB models from us (including adult content) without asking",
+      "url": "https://open3dlab.com/news/roblox-downloaded-145-gb-of-models-from-our-sites/",
       "source": "HackerNews",
-      "score": 199,
-      "publishedAt": "2026-10-23"
+      "score": 201,
+      "publishedAt": "2026-10-27"
     },
     {
-      "title": "PaperPilot – Zero-Cloud, Pure-Rust PDF Engine with WASM and MCP",
-      "url": "https://github.com/KrushnaVardhanReddy/PaperPilot",
+      "title": "Software may be getting worse, but it used to be horrible",
+      "url": "https://www.bitlog.com/2026/10/27/software-may-be-getting-worse-but-it-used-to-be-horrible/",
       "source": "HackerNews",
-      "score": 187,
-      "publishedAt": "2026-10-26"
+      "score": 101,
+      "publishedAt": "2026-10-27"
     },
     {
-      "title": "Behind the scenes at the NeXT Computer office",
-      "url": "https://exhibits.stanford.edu/menuez/browse/next-computer-inc?per_page=96&sort=pub_year_isi+asc%2C+title_sort+asc&view=masonry",
+      "title": "Python's experimental JIT to be removed",
+      "url": "https://lwn.net/SubscriberLink/1102102/0c00e4d550f25f8c/",
       "source": "HackerNews",
-      "score": 170,
-      "publishedAt": "2026-10-26"
+      "score": 81,
+      "publishedAt": "2026-10-27"
     },
     {
-      "title": "Websites Should Be Printable",
-      "url": "https://brennenputh.me/blog/printable-websites/",
+      "title": "Wikipedia's Cleanup of AI-Generated Content",
+      "url": "https://spectrum.ieee.org/wikipedia-wikiproject-ai-writing-cleanup",
       "source": "HackerNews",
-      "score": 95,
-      "publishedAt": "2026-10-26"
+      "score": 70,
+      "publishedAt": "2026-10-27"
+    },
+    {
+      "title": "AI promised less work. I've never worked more",
+      "url": "https://oioannou.com/blog/ai-promised-less-work/",
+      "source": "HackerNews",
+      "score": 55,
+      "publishedAt": "2026-10-27"
     }
   ]
 }
