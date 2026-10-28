@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-27T12:56:40.761Z",
+  "updated": "2026-10-28T13:47:44.630Z",
   "articles": [
     {
-      "title": "Three new discoveries in mathematics, computer science, and physics",
-      "url": "https://openai.com/index/building-scientific-understanding-with-academic-communities/",
+      "title": "Ghostty 1.4",
+      "url": "https://ghostty.org/docs/install/release-notes/1-4-0",
       "source": "HackerNews",
-      "score": 983,
+      "score": 1142,
+      "publishedAt": "2026-10-27"
+    },
+    {
+      "title": "Genie 4",
+      "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "source": "HackerNews",
+      "score": 951,
+      "publishedAt": "2026-10-27"
+    },
+    {
+      "title": "Git for the US Code",
+      "url": "https://lexifina.com/blog/git-for-the-us-code",
+      "source": "HackerNews",
+      "score": 336,
+      "publishedAt": "2026-10-28"
+    },
+    {
+      "title": "Ten days later, Git on macOS still trusts the compromised eMudhra certificates",
+      "url": "https://emudhra.we-have-a-problem.com/apple.html",
+      "source": "HackerNews",
+      "score": 316,
+      "publishedAt": "2026-10-28"
+    },
+    {
+      "title": "Start Doing Graph Theory",
+      "url": "https://vertex.degree/",
+      "source": "HackerNews",
+      "score": 233,
+      "publishedAt": "2026-10-23"
+    },
+    {
+      "title": "ICE Is Running One of the Largest Anti-Left Surveillance Ops in US History",
+      "url": "https://www.wired.com/story/ice-is-running-one-of-the-largest-anti-left-surveillance-operations-in-us-history/",
+      "source": "HackerNews",
+      "score": 200,
+      "publishedAt": "2026-10-28"
+    },
+    {
+      "title": "Amazon to buy satellite firm Globalstar in $11.57B deal",
+      "url": "https://www.reuters.com/business/media-telecom/amazon-signs-1157-billion-deal-satellite-firm-globalstar-challenge-starlink-2026-04-14/1157-billion-deal-satellite-firm-globalstar-challenge-starlink-2026-04-14/",
+      "source": "HackerNews",
+      "score": 87,
+      "publishedAt": "2026-10-28"
+    },
+    {
+      "title": "Unveiling The Grid: PCBs made in America, twice as fast as Shenzhen",
+      "url": "https://www.circuithub.com/post/unveiling-the-grid",
+      "source": "HackerNews",
+      "score": 72,
       "publishedAt": "2026-10-26"
-    },
-    {
-      "title": "The Exponential Time Hypothesis Is False [pdf]",
-      "url": "https://github.com/openai/math/blob/main/preprints/The-Exponential-Time-Hypothesis-is-False-October-25-2026/paper.pdf",
-      "source": "HackerNews",
-      "score": 676,
-      "publishedAt": "2026-10-26"
-    },
-    {
-      "title": "The Mythical Man-Month in the Age of AI",
-      "url": "https://j11g.com/the-mythical-man-month-in-the-age-of-ai",
-      "source": "HackerNews",
-      "score": 245,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "Roblox downloaded 145GB models from us (including adult content) without asking",
-      "url": "https://open3dlab.com/news/roblox-downloaded-145-gb-of-models-from-our-sites/",
-      "source": "HackerNews",
-      "score": 201,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "Software may be getting worse, but it used to be horrible",
-      "url": "https://www.bitlog.com/2026/10/27/software-may-be-getting-worse-but-it-used-to-be-horrible/",
-      "source": "HackerNews",
-      "score": 101,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "Python's experimental JIT to be removed",
-      "url": "https://lwn.net/SubscriberLink/1102102/0c00e4d550f25f8c/",
-      "source": "HackerNews",
-      "score": 81,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "Wikipedia's Cleanup of AI-Generated Content",
-      "url": "https://spectrum.ieee.org/wikipedia-wikiproject-ai-writing-cleanup",
-      "source": "HackerNews",
-      "score": 70,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "AI promised less work. I've never worked more",
-      "url": "https://oioannou.com/blog/ai-promised-less-work/",
-      "source": "HackerNews",
-      "score": 55,
-      "publishedAt": "2026-10-27"
     }
   ]
 }
