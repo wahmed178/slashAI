@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-28T13:47:44.630Z",
+  "updated": "2026-10-29T13:54:50.403Z",
   "articles": [
     {
-      "title": "Ghostty 1.4",
-      "url": "https://ghostty.org/docs/install/release-notes/1-4-0",
+      "title": "Why is this fingerprinting script creating bioweapons?",
+      "url": "https://nullpt.rs/fingerprinting-bioweapons",
       "source": "HackerNews",
-      "score": 1142,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "Genie 4",
-      "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
-      "source": "HackerNews",
-      "score": 951,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "Git for the US Code",
-      "url": "https://lexifina.com/blog/git-for-the-us-code",
-      "source": "HackerNews",
-      "score": 336,
+      "score": 1403,
       "publishedAt": "2026-10-28"
     },
     {
-      "title": "Ten days later, Git on macOS still trusts the compromised eMudhra certificates",
-      "url": "https://emudhra.we-have-a-problem.com/apple.html",
+      "title": "Qwenputer: A functioning, deterministic RISC-V CPU inside Qwen3.5",
+      "url": "https://divagr.com/blog/qwenputer",
       "source": "HackerNews",
-      "score": 316,
-      "publishedAt": "2026-10-28"
+      "score": 594,
+      "publishedAt": "2026-10-29"
     },
     {
-      "title": "Start Doing Graph Theory",
-      "url": "https://vertex.degree/",
+      "title": "Zero click, silent, remote Android DoS",
+      "url": "https://smsofdeath.com/",
       "source": "HackerNews",
-      "score": 233,
-      "publishedAt": "2026-10-23"
+      "score": 195,
+      "publishedAt": "2026-10-29"
     },
     {
-      "title": "ICE Is Running One of the Largest Anti-Left Surveillance Ops in US History",
-      "url": "https://www.wired.com/story/ice-is-running-one-of-the-largest-anti-left-surveillance-operations-in-us-history/",
+      "title": "The US added a record 20.2 GWh of battery storage in just 3 months",
+      "url": "https://electrek.co/2026/08/31/the-us-added-a-record-20-2-gwh-of-battery-storage-in-just-3-months/",
       "source": "HackerNews",
-      "score": 200,
-      "publishedAt": "2026-10-28"
+      "score": 131,
+      "publishedAt": "2026-10-29"
     },
     {
-      "title": "Amazon to buy satellite firm Globalstar in $11.57B deal",
-      "url": "https://www.reuters.com/business/media-telecom/amazon-signs-1157-billion-deal-satellite-firm-globalstar-challenge-starlink-2026-04-14/1157-billion-deal-satellite-firm-globalstar-challenge-starlink-2026-04-14/",
+      "title": "Getting debug access on a Brother printer over Telnet",
+      "url": "https://inventor7777.github.io/blog/2026/10/22/debug-access-on-brother/",
       "source": "HackerNews",
-      "score": 87,
-      "publishedAt": "2026-10-28"
-    },
-    {
-      "title": "Unveiling The Grid: PCBs made in America, twice as fast as Shenzhen",
-      "url": "https://www.circuithub.com/post/unveiling-the-grid",
-      "source": "HackerNews",
-      "score": 72,
+      "score": 108,
       "publishedAt": "2026-10-26"
+    },
+    {
+      "title": "Gemini 4 Carbon is the new #1 on the Artificial Analysis Intelligence Index v5",
+      "url": "https://artificialanalysis.ai/articles/gemini-4-carbon-new-number-1",
+      "source": "HackerNews",
+      "score": 106,
+      "publishedAt": "2026-10-29"
+    },
+    {
+      "title": "DoorDash to Acquire Instacart",
+      "url": "https://ir.doordash.com/news/news-details/2026/DoorDash-to-Acquire-Instacart-to-Help-Local-Stores-Win/default.aspx",
+      "source": "HackerNews",
+      "score": 86,
+      "publishedAt": "2026-10-29"
+    },
+    {
+      "title": "Google determines the names for bodies of water in Google Earth (2008)",
+      "url": "https://publicpolicy.googleblog.com/2008/04/how-google-determines-names-for-bodies.html",
+      "source": "HackerNews",
+      "score": 80,
+      "publishedAt": "2026-10-29"
     }
   ]
 }
