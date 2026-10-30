@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-29T13:54:50.403Z",
+  "updated": "2026-10-30T13:47:43.254Z",
   "articles": [
     {
-      "title": "Why is this fingerprinting script creating bioweapons?",
-      "url": "https://nullpt.rs/fingerprinting-bioweapons",
+      "title": "We're releasing the weights of Mistral Large 4",
+      "url": "https://mistral.ai/news/mistral-large-4-oss/",
       "source": "HackerNews",
-      "score": 1403,
-      "publishedAt": "2026-10-28"
-    },
-    {
-      "title": "Qwenputer: A functioning, deterministic RISC-V CPU inside Qwen3.5",
-      "url": "https://divagr.com/blog/qwenputer",
-      "source": "HackerNews",
-      "score": 594,
+      "score": 1578,
       "publishedAt": "2026-10-29"
     },
     {
-      "title": "Zero click, silent, remote Android DoS",
-      "url": "https://smsofdeath.com/",
+      "title": "Binance-hacker-1029 – $5.6B stolen from Binance",
+      "url": "https://arkm.com/explorer/entity/21a94755-f604-45e5-9501-6542e23005e8",
       "source": "HackerNews",
-      "score": 195,
+      "score": 1564,
       "publishedAt": "2026-10-29"
     },
     {
-      "title": "The US added a record 20.2 GWh of battery storage in just 3 months",
-      "url": "https://electrek.co/2026/08/31/the-us-added-a-record-20-2-gwh-of-battery-storage-in-just-3-months/",
+      "title": "Backdoors in official Claude Code extensions",
+      "url": "https://cyberplace.social/@GossiTheDog/117528831681803563",
       "source": "HackerNews",
-      "score": 131,
-      "publishedAt": "2026-10-29"
+      "score": 508,
+      "publishedAt": "2026-10-30"
     },
     {
-      "title": "Getting debug access on a Brother printer over Telnet",
-      "url": "https://inventor7777.github.io/blog/2026/10/22/debug-access-on-brother/",
+      "title": "Anthropic hacked to deliver remote access trojan",
+      "url": "https://doublepulsar.com/anthropic-hacked-to-deliver-remote-access-trojan-to-claude-developer-laptops-worldwide-1148a92baae2",
       "source": "HackerNews",
-      "score": 108,
-      "publishedAt": "2026-10-26"
+      "score": 301,
+      "publishedAt": "2026-10-30"
     },
     {
-      "title": "Gemini 4 Carbon is the new #1 on the Artificial Analysis Intelligence Index v5",
-      "url": "https://artificialanalysis.ai/articles/gemini-4-carbon-new-number-1",
+      "title": "elect.horse",
+      "url": "https://elect.horse/",
       "source": "HackerNews",
-      "score": 106,
-      "publishedAt": "2026-10-29"
+      "score": 281,
+      "publishedAt": "2026-10-30"
     },
     {
-      "title": "DoorDash to Acquire Instacart",
-      "url": "https://ir.doordash.com/news/news-details/2026/DoorDash-to-Acquire-Instacart-to-Help-Local-Stores-Win/default.aspx",
+      "title": "US Reps Lead Democratic Resolution Opposing A.I. Bubble Bailout for Big Tech",
+      "url": "https://progressives.house.gov/2026/10/reps-casar-waters-lead-democratic-resolution-opposing-a-i-bubble-bailout-for-big-tech-commit-to-protecting-american-people-instead",
       "source": "HackerNews",
-      "score": 86,
-      "publishedAt": "2026-10-29"
+      "score": 111,
+      "publishedAt": "2026-10-30"
     },
     {
-      "title": "Google determines the names for bodies of water in Google Earth (2008)",
-      "url": "https://publicpolicy.googleblog.com/2008/04/how-google-determines-names-for-bodies.html",
+      "title": "Gilgamesh by Simon Armitage review – an ancient epic is brilliantly translated",
+      "url": "https://www.theguardian.com/books/2026/oct/20/gilgamesh-by-simon-armitage-review-an-ancient-epic-is-brilliantly-translated-for-our-times",
       "source": "HackerNews",
-      "score": 80,
-      "publishedAt": "2026-10-29"
+      "score": 99,
+      "publishedAt": "2026-10-27"
+    },
+    {
+      "title": "Azure's Weakest Link – Five Full Cross-Tenant Compromises",
+      "url": "https://www.binarysecurity.no/posts/2026/10/one-root-case",
+      "source": "HackerNews",
+      "score": 94,
+      "publishedAt": "2026-10-30"
     }
   ]
 }
