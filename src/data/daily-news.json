@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-30T13:47:43.254Z",
+  "updated": "2026-10-31T13:16:03.038Z",
   "articles": [
     {
-      "title": "We're releasing the weights of Mistral Large 4",
-      "url": "https://mistral.ai/news/mistral-large-4-oss/",
+      "title": "Serbia just elected the world's brainiest parliament",
+      "url": "https://www.science.org/content/article/serbia-just-elected-world-s-brainiest-parliament",
       "source": "HackerNews",
-      "score": 1578,
-      "publishedAt": "2026-10-29"
+      "score": 351,
+      "publishedAt": "2026-10-31"
     },
     {
-      "title": "Binance-hacker-1029 – $5.6B stolen from Binance",
-      "url": "https://arkm.com/explorer/entity/21a94755-f604-45e5-9501-6542e23005e8",
+      "title": "My favourite PowerMac is a Nintendo Wii",
+      "url": "https://virtuallyfun.com/2026/10/29/my-favourite-powermac-is-a-nintendo-wii/",
       "source": "HackerNews",
-      "score": 1564,
-      "publishedAt": "2026-10-29"
-    },
-    {
-      "title": "Backdoors in official Claude Code extensions",
-      "url": "https://cyberplace.social/@GossiTheDog/117528831681803563",
-      "source": "HackerNews",
-      "score": 508,
+      "score": 330,
       "publishedAt": "2026-10-30"
     },
     {
-      "title": "Anthropic hacked to deliver remote access trojan",
-      "url": "https://doublepulsar.com/anthropic-hacked-to-deliver-remote-access-trojan-to-claude-developer-laptops-worldwide-1148a92baae2",
+      "title": "Digital Minimalism",
+      "url": "https://vitalik.eth.limo/general/2026/10/31/digital_minimalism.html",
       "source": "HackerNews",
-      "score": 301,
-      "publishedAt": "2026-10-30"
+      "score": 110,
+      "publishedAt": "2026-10-31"
     },
     {
-      "title": "elect.horse",
-      "url": "https://elect.horse/",
+      "title": "Show HN: Marelleo, an open-source story box I built for my kids using ESP32",
+      "url": "https://zebra.rodeo/en/blog/marelleo/",
       "source": "HackerNews",
-      "score": 281,
-      "publishedAt": "2026-10-30"
-    },
-    {
-      "title": "US Reps Lead Democratic Resolution Opposing A.I. Bubble Bailout for Big Tech",
-      "url": "https://progressives.house.gov/2026/10/reps-casar-waters-lead-democratic-resolution-opposing-a-i-bubble-bailout-for-big-tech-commit-to-protecting-american-people-instead",
-      "source": "HackerNews",
-      "score": 111,
-      "publishedAt": "2026-10-30"
-    },
-    {
-      "title": "Gilgamesh by Simon Armitage review – an ancient epic is brilliantly translated",
-      "url": "https://www.theguardian.com/books/2026/oct/20/gilgamesh-by-simon-armitage-review-an-ancient-epic-is-brilliantly-translated-for-our-times",
-      "source": "HackerNews",
-      "score": 99,
+      "score": 101,
       "publishedAt": "2026-10-27"
     },
     {
-      "title": "Azure's Weakest Link – Five Full Cross-Tenant Compromises",
-      "url": "https://www.binarysecurity.no/posts/2026/10/one-root-case",
+      "title": "Switch Lowering in GCC",
+      "url": "https://xoranth.net/gcc-switch/",
       "source": "HackerNews",
-      "score": 94,
-      "publishedAt": "2026-10-30"
+      "score": 99,
+      "publishedAt": "2026-10-31"
+    },
+    {
+      "title": "AI, Lean, and the Future of Formal Verification, with Lean Creator Leo de Moura",
+      "url": "https://thedataexchange.media/leo-de-moura-lean-aws/",
+      "source": "HackerNews",
+      "score": 75,
+      "publishedAt": "2026-10-29"
+    },
+    {
+      "title": "Molly(Signal fork) has not been updated since 3 months and is vulnerable",
+      "url": "https://piefed.world/post/1503394",
+      "source": "HackerNews",
+      "score": 71,
+      "publishedAt": "2026-10-31"
+    },
+    {
+      "title": "We Took over ChatGPT Accounts",
+      "url": "https://www.parameter.ai/labs/we-found-a-gap-at-openai",
+      "source": "HackerNews",
+      "score": 66,
+      "publishedAt": "2026-10-31"
     }
   ]
 }
