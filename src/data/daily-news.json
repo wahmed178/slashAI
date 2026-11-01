@@ -1,61 +1,61 @@
 {
-  "updated": "2026-10-31T13:16:03.038Z",
+  "updated": "2026-11-01T14:00:02.443Z",
   "articles": [
     {
-      "title": "Serbia just elected the world's brainiest parliament",
-      "url": "https://www.science.org/content/article/serbia-just-elected-world-s-brainiest-parliament",
+      "title": "HackerTube: YouTube built from videos recommended by HN",
+      "url": "https://karpathy.bearblog.dev/hacker-tube/",
       "source": "HackerNews",
-      "score": 351,
+      "score": 1554,
       "publishedAt": "2026-10-31"
     },
     {
-      "title": "My favourite PowerMac is a Nintendo Wii",
-      "url": "https://virtuallyfun.com/2026/10/29/my-favourite-powermac-is-a-nintendo-wii/",
+      "title": "TCP Use-After-Free: CVE-2026-98432 / CVSS 9.8",
+      "url": "https://atlasum.net/blog/cve-2026-98432-linux-ipv4-tcp-uaf",
       "source": "HackerNews",
-      "score": 330,
+      "score": 568,
+      "publishedAt": "2026-10-31"
+    },
+    {
+      "title": "An Italian farmer found some unknown seeds in his attic and planted them",
+      "url": "https://www.smithsonianmag.com/science-nature/italian-farmer-found-unknown-seeds-attic-with-nothing-lose-planted-them-result-biblical-180989644/",
+      "source": "HackerNews",
+      "score": 553,
+      "publishedAt": "2026-10-31"
+    },
+    {
+      "title": "Norway makes shithouses great again",
+      "url": "https://www.visitnorway.com/plan-your-trip/travel-tips-a-z/norwegian-scenic-routes/worlds-best-toilets/",
+      "source": "HackerNews",
+      "score": 414,
+      "publishedAt": "2026-11-01"
+    },
+    {
+      "title": "Memdoor: A team of 5 Qwen3.8-27B models beats Fable 5 on LiveCodeBench Hard",
+      "url": "https://github.com/guregodevo/memdoor/tree/main/examples/workflows/team-solve",
+      "source": "HackerNews",
+      "score": 306,
+      "publishedAt": "2026-10-31"
+    },
+    {
+      "title": "Brazilian Court Sanctions Lawyers for Prompt Injection in Court Filing",
+      "url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
+      "source": "HackerNews",
+      "score": 184,
+      "publishedAt": "2026-11-01"
+    },
+    {
+      "title": "The AI cost of JavaScript frameworks",
+      "url": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
+      "source": "HackerNews",
+      "score": 154,
+      "publishedAt": "2026-11-01"
+    },
+    {
+      "title": "Running a bootstrapped SaaS for 20 years with my brother",
+      "url": "https://blog.zamzar.com/2026/10/30/20-years-766-million-files-two-chameleons/",
+      "source": "HackerNews",
+      "score": 152,
       "publishedAt": "2026-10-30"
-    },
-    {
-      "title": "Digital Minimalism",
-      "url": "https://vitalik.eth.limo/general/2026/10/31/digital_minimalism.html",
-      "source": "HackerNews",
-      "score": 110,
-      "publishedAt": "2026-10-31"
-    },
-    {
-      "title": "Show HN: Marelleo, an open-source story box I built for my kids using ESP32",
-      "url": "https://zebra.rodeo/en/blog/marelleo/",
-      "source": "HackerNews",
-      "score": 101,
-      "publishedAt": "2026-10-27"
-    },
-    {
-      "title": "Switch Lowering in GCC",
-      "url": "https://xoranth.net/gcc-switch/",
-      "source": "HackerNews",
-      "score": 99,
-      "publishedAt": "2026-10-31"
-    },
-    {
-      "title": "AI, Lean, and the Future of Formal Verification, with Lean Creator Leo de Moura",
-      "url": "https://thedataexchange.media/leo-de-moura-lean-aws/",
-      "source": "HackerNews",
-      "score": 75,
-      "publishedAt": "2026-10-29"
-    },
-    {
-      "title": "Molly(Signal fork) has not been updated since 3 months and is vulnerable",
-      "url": "https://piefed.world/post/1503394",
-      "source": "HackerNews",
-      "score": 71,
-      "publishedAt": "2026-10-31"
-    },
-    {
-      "title": "We Took over ChatGPT Accounts",
-      "url": "https://www.parameter.ai/labs/we-found-a-gap-at-openai",
-      "source": "HackerNews",
-      "score": 66,
-      "publishedAt": "2026-10-31"
     }
   ]
 }
