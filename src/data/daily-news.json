@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-01T14:00:02.443Z",
+  "updated": "2026-11-02T16:47:24.633Z",
   "articles": [
     {
-      "title": "HackerTube: YouTube built from videos recommended by HN",
-      "url": "https://karpathy.bearblog.dev/hacker-tube/",
+      "title": "Postgres 19 is late because so many more bugs are being found now",
+      "url": "http://rhaas.blogspot.com/2026/10/postgres-19-is-late-and-its-ais-fault.html",
       "source": "HackerNews",
-      "score": 1554,
+      "score": 745,
       "publishedAt": "2026-10-31"
     },
     {
-      "title": "TCP Use-After-Free: CVE-2026-98432 / CVSS 9.8",
-      "url": "https://atlasum.net/blog/cve-2026-98432-linux-ipv4-tcp-uaf",
+      "title": "WTF Ubuntu?",
+      "url": "https://chalmovsky.com/posts/wtf-ubuntu",
       "source": "HackerNews",
-      "score": 568,
-      "publishedAt": "2026-10-31"
+      "score": 613,
+      "publishedAt": "2026-11-02"
     },
     {
-      "title": "An Italian farmer found some unknown seeds in his attic and planted them",
-      "url": "https://www.smithsonianmag.com/science-nature/italian-farmer-found-unknown-seeds-attic-with-nothing-lose-planted-them-result-biblical-180989644/",
+      "title": "Bones may release proteins that slow aging and extend life span",
+      "url": "https://www.science.org/content/article/bones-may-release-proteins-slow-aging-and-extend-life-span",
       "source": "HackerNews",
-      "score": 553,
-      "publishedAt": "2026-10-31"
+      "score": 251,
+      "publishedAt": "2026-11-02"
     },
     {
-      "title": "Norway makes shithouses great again",
-      "url": "https://www.visitnorway.com/plan-your-trip/travel-tips-a-z/norwegian-scenic-routes/worlds-best-toilets/",
+      "title": "F/OSS Comics #13: BSD Unix, Part 3 – The Beginning of BSD Unix",
+      "url": "https://fosscomics.com/posts/13.%20BSD%20Unix%20Part%203%20-%20The%20Beginning%20of%20BSD%20Unix/",
       "source": "HackerNews",
-      "score": 414,
-      "publishedAt": "2026-11-01"
+      "score": 189,
+      "publishedAt": "2026-11-02"
     },
     {
-      "title": "Memdoor: A team of 5 Qwen3.8-27B models beats Fable 5 on LiveCodeBench Hard",
-      "url": "https://github.com/guregodevo/memdoor/tree/main/examples/workflows/team-solve",
+      "title": "Supermarket freezers across Europe hit by second suspected cyber-attack",
+      "url": "https://www.theguardian.com/world/2026/nov/02/supermarket-freezers-across-europe-hit-by-second-suspected-cyber-attack",
       "source": "HackerNews",
-      "score": 306,
-      "publishedAt": "2026-10-31"
+      "score": 185,
+      "publishedAt": "2026-11-02"
     },
     {
-      "title": "Brazilian Court Sanctions Lawyers for Prompt Injection in Court Filing",
-      "url": "https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/",
+      "title": "Show HN: I've updated my Linux System Call website and API",
+      "url": "https://syscall.sh/",
       "source": "HackerNews",
-      "score": 184,
-      "publishedAt": "2026-11-01"
+      "score": 156,
+      "publishedAt": "2026-11-02"
     },
     {
-      "title": "The AI cost of JavaScript frameworks",
-      "url": "https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/",
+      "title": "Why are Soviet math textbooks so hardcore in comparison to US textbooks? (2017)",
+      "url": "https://www.quora.com/Why-are-Soviet-mathematics-physics-textbooks-so-insanely-hardcore-in-comparison-to-US-textbooks/answer/Scott-Miller-307?share=1",
       "source": "HackerNews",
-      "score": 154,
-      "publishedAt": "2026-11-01"
+      "score": 85,
+      "publishedAt": "2026-11-02"
     },
     {
-      "title": "Running a bootstrapped SaaS for 20 years with my brother",
-      "url": "https://blog.zamzar.com/2026/10/30/20-years-766-million-files-two-chameleons/",
+      "title": "If you love a website, back it up",
+      "url": "https://blog.mistys-internet.website/post/2026/10/29/if-you-love-a-website-back-it-up/",
       "source": "HackerNews",
-      "score": 152,
-      "publishedAt": "2026-10-30"
+      "score": 74,
+      "publishedAt": "2026-11-02"
     }
   ]
 }
