@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-02T16:47:24.633Z",
+  "updated": "2026-11-03T14:49:28.143Z",
   "articles": [
     {
-      "title": "Postgres 19 is late because so many more bugs are being found now",
-      "url": "http://rhaas.blogspot.com/2026/10/postgres-19-is-late-and-its-ais-fault.html",
+      "title": "Astra can read and write weights to improve Qwen",
+      "url": "https://rikiyat.github.io/blog/weight-space-programming/",
       "source": "HackerNews",
-      "score": 745,
-      "publishedAt": "2026-10-31"
-    },
-    {
-      "title": "WTF Ubuntu?",
-      "url": "https://chalmovsky.com/posts/wtf-ubuntu",
-      "source": "HackerNews",
-      "score": 613,
+      "score": 2874,
       "publishedAt": "2026-11-02"
     },
     {
-      "title": "Bones may release proteins that slow aging and extend life span",
-      "url": "https://www.science.org/content/article/bones-may-release-proteins-slow-aging-and-extend-life-span",
+      "title": "The 'Astra can read and write weights to improve Qwen' post is misleading",
+      "url": "https://honnibal.dev/blog/astra-read-write-misleading",
       "source": "HackerNews",
-      "score": 251,
+      "score": 372,
+      "publishedAt": "2026-11-03"
+    },
+    {
+      "title": "DiscImageStudio: burn visible artwork onto CDs, DVDs and Blu-ray discs",
+      "url": "https://github.com/JiaFeiMiao-K-Cat/DiscImageStudio",
+      "source": "HackerNews",
+      "score": 303,
+      "publishedAt": "2026-11-03"
+    },
+    {
+      "title": "Nvidia – open-source auto-ontology",
+      "url": "https://github.com/NVIDIA/auto-ontology",
+      "source": "HackerNews",
+      "score": 201,
+      "publishedAt": "2026-11-03"
+    },
+    {
+      "title": "Could a modern chess engine on a Pentium have defeated Kasparov in 1996?",
+      "url": "https://nicholas.carlini.com/writing/2026/algorithmic-improvements-chess.html",
+      "source": "HackerNews",
+      "score": 177,
+      "publishedAt": "2026-11-03"
+    },
+    {
+      "title": "Toit v2.0.0",
+      "url": "https://toit.io/blog/toit-v2-0-0/",
+      "source": "HackerNews",
+      "score": 168,
+      "publishedAt": "2026-11-01"
+    },
+    {
+      "title": "Katamari Damacy but it's The Met collection",
+      "url": "https://katamari.vaguespac.es/",
+      "source": "HackerNews",
+      "score": 88,
       "publishedAt": "2026-11-02"
     },
     {
-      "title": "F/OSS Comics #13: BSD Unix, Part 3 – The Beginning of BSD Unix",
-      "url": "https://fosscomics.com/posts/13.%20BSD%20Unix%20Part%203%20-%20The%20Beginning%20of%20BSD%20Unix/",
+      "title": "Life with Down Syndrome",
+      "url": "https://www.esquire.com/news-politics/a74031571/life-with-down-syndrome/",
       "source": "HackerNews",
-      "score": 189,
-      "publishedAt": "2026-11-02"
-    },
-    {
-      "title": "Supermarket freezers across Europe hit by second suspected cyber-attack",
-      "url": "https://www.theguardian.com/world/2026/nov/02/supermarket-freezers-across-europe-hit-by-second-suspected-cyber-attack",
-      "source": "HackerNews",
-      "score": 185,
-      "publishedAt": "2026-11-02"
-    },
-    {
-      "title": "Show HN: I've updated my Linux System Call website and API",
-      "url": "https://syscall.sh/",
-      "source": "HackerNews",
-      "score": 156,
-      "publishedAt": "2026-11-02"
-    },
-    {
-      "title": "Why are Soviet math textbooks so hardcore in comparison to US textbooks? (2017)",
-      "url": "https://www.quora.com/Why-are-Soviet-mathematics-physics-textbooks-so-insanely-hardcore-in-comparison-to-US-textbooks/answer/Scott-Miller-307?share=1",
-      "source": "HackerNews",
-      "score": 85,
-      "publishedAt": "2026-11-02"
-    },
-    {
-      "title": "If you love a website, back it up",
-      "url": "https://blog.mistys-internet.website/post/2026/10/29/if-you-love-a-website-back-it-up/",
-      "source": "HackerNews",
-      "score": 74,
-      "publishedAt": "2026-11-02"
+      "score": 81,
+      "publishedAt": "2026-11-01"
     }
   ]
 }
