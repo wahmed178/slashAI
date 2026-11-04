@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-03T14:49:28.143Z",
+  "updated": "2026-11-04T15:02:22.154Z",
   "articles": [
     {
-      "title": "Astra can read and write weights to improve Qwen",
-      "url": "https://rikiyat.github.io/blog/weight-space-programming/",
+      "title": "AI is forcing us to pay off 40 years of technical debt",
+      "url": "https://spectrum.ieee.org/ai-in-cybersecurity-php2shell-vulnerability",
       "source": "HackerNews",
-      "score": 2874,
-      "publishedAt": "2026-11-02"
+      "score": 363,
+      "publishedAt": "2026-11-04"
     },
     {
-      "title": "The 'Astra can read and write weights to improve Qwen' post is misleading",
-      "url": "https://honnibal.dev/blog/astra-read-write-misleading",
+      "title": "Jelly Sheet",
+      "url": "https://mrdoob.github.io/codevember-2026/01/",
       "source": "HackerNews",
-      "score": 372,
-      "publishedAt": "2026-11-03"
+      "score": 343,
+      "publishedAt": "2026-11-04"
     },
     {
-      "title": "DiscImageStudio: burn visible artwork onto CDs, DVDs and Blu-ray discs",
-      "url": "https://github.com/JiaFeiMiao-K-Cat/DiscImageStudio",
+      "title": "Nvidia RTX Spark encrypted firmware slows inference speed to 35% on Linux",
+      "url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
       "source": "HackerNews",
-      "score": 303,
-      "publishedAt": "2026-11-03"
+      "score": 307,
+      "publishedAt": "2026-11-04"
     },
     {
-      "title": "Nvidia – open-source auto-ontology",
-      "url": "https://github.com/NVIDIA/auto-ontology",
+      "title": "Kitty 0.50",
+      "url": "https://sw.kovidgoyal.net/kitty/changelog/#",
       "source": "HackerNews",
-      "score": 201,
-      "publishedAt": "2026-11-03"
+      "score": 265,
+      "publishedAt": "2026-11-04"
     },
     {
-      "title": "Could a modern chess engine on a Pentium have defeated Kasparov in 1996?",
-      "url": "https://nicholas.carlini.com/writing/2026/algorithmic-improvements-chess.html",
+      "title": "Incident with Pull Requests, Git Operations and Issues",
+      "url": "https://www.githubstatus.com/incidents/smtdswd1h2w4",
       "source": "HackerNews",
-      "score": 177,
-      "publishedAt": "2026-11-03"
+      "score": 165,
+      "publishedAt": "2026-11-04"
     },
     {
-      "title": "Toit v2.0.0",
-      "url": "https://toit.io/blog/toit-v2-0-0/",
+      "title": "Verification Is Not Knowledge: Science needs more than answers",
+      "url": "https://blog.cosmos-institute.org/p/verification-is-not-knowledge",
       "source": "HackerNews",
-      "score": 168,
-      "publishedAt": "2026-11-01"
+      "score": 129,
+      "publishedAt": "2026-11-04"
     },
     {
-      "title": "Katamari Damacy but it's The Met collection",
-      "url": "https://katamari.vaguespac.es/",
+      "title": "US voters roundly reject data centers in ballot measures",
+      "url": "https://www.semafor.com/article/11/04/2026/us-voters-roundly-reject-data-centers-in-ballot-measures",
       "source": "HackerNews",
-      "score": 88,
-      "publishedAt": "2026-11-02"
+      "score": 82,
+      "publishedAt": "2026-11-04"
     },
     {
-      "title": "Life with Down Syndrome",
-      "url": "https://www.esquire.com/news-politics/a74031571/life-with-down-syndrome/",
+      "title": "North Korean fake job interview led to $6.3B Binance heist",
+      "url": "https://www.theregister.com/security/2026/11/03/north-korean-fake-job-interview-led-to-63b-binance-heist/5307398",
       "source": "HackerNews",
-      "score": 81,
-      "publishedAt": "2026-11-01"
+      "score": 70,
+      "publishedAt": "2026-11-04"
     }
   ]
 }
