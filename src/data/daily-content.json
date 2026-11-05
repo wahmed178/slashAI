@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-04",
+  "updated": "2026-11-05",
   "quote": {
-    "text": "Do what you can, with what you have, where you are.",
-    "author": "Theodore Roosevelt"
+    "text": "Reading should be a pleasure, not a chore.",
+    "author": "Joan Rivers"
   },
-  "advice": "Rule number 1: Try not to die. Rule number 2: Don't be a dick.",
+  "advice": "The best nights out are when people around you are simply having fun.",
   "artwork": {
-    "title": "Flowers",
-    "artist": "Sato Suiseki\nJapanese, 19th century",
-    "imageId": "ef8c97a5-b0ca-9d2b-fd09-7463d1201567"
+    "title": "Citizen: An American Lyric, from Human_3.0 Reading List",
+    "artist": "Cauleen Smith\nAmerican, born 1967",
+    "imageId": "ecfa6e04-e8de-8ab0-e4a0-f9fa2e39a5c2"
   }
 }
