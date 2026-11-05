@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-04T15:02:22.154Z",
+  "updated": "2026-11-05T15:08:18.461Z",
   "articles": [
     {
-      "title": "AI is forcing us to pay off 40 years of technical debt",
-      "url": "https://spectrum.ieee.org/ai-in-cybersecurity-php2shell-vulnerability",
+      "title": "Residential proxies detected on White House network",
+      "url": "https://layer3intel.com/blog/residential-proxies-white-house-network",
       "source": "HackerNews",
-      "score": 363,
+      "score": 1199,
       "publishedAt": "2026-11-04"
     },
     {
-      "title": "Jelly Sheet",
-      "url": "https://mrdoob.github.io/codevember-2026/01/",
+      "title": "Sshole",
+      "url": "https://sshhole.com",
       "source": "HackerNews",
-      "score": 343,
-      "publishedAt": "2026-11-04"
+      "score": 798,
+      "publishedAt": "2026-11-05"
     },
     {
-      "title": "Nvidia RTX Spark encrypted firmware slows inference speed to 35% on Linux",
-      "url": "https://www.mindstudio.ai/blog/linux-nvidia-rtx-spark-laptop",
+      "title": "Lemmings CSS Animation",
+      "url": "https://markblah.github.io/lemmings/",
       "source": "HackerNews",
-      "score": 307,
-      "publishedAt": "2026-11-04"
+      "score": 300,
+      "publishedAt": "2026-11-05"
     },
     {
-      "title": "Kitty 0.50",
-      "url": "https://sw.kovidgoyal.net/kitty/changelog/#",
+      "title": "Awesome repositories are no longer awesome",
+      "url": "https://erikgahner.github.io/posts/2026/awesome-repositories-are-no-longer-awesome/",
       "source": "HackerNews",
-      "score": 265,
-      "publishedAt": "2026-11-04"
+      "score": 149,
+      "publishedAt": "2026-11-05"
     },
     {
-      "title": "Incident with Pull Requests, Git Operations and Issues",
-      "url": "https://www.githubstatus.com/incidents/smtdswd1h2w4",
+      "title": "Baidu released ERNIE 5.5 Flash Base",
+      "url": "https://ernie.baidu.com/release/ernie-5-5-flash-base/",
       "source": "HackerNews",
-      "score": 165,
-      "publishedAt": "2026-11-04"
+      "score": 120,
+      "publishedAt": "2026-11-05"
     },
     {
-      "title": "Verification Is Not Knowledge: Science needs more than answers",
-      "url": "https://blog.cosmos-institute.org/p/verification-is-not-knowledge",
+      "title": "OpenSSH 10.6p2 Critical workaround for alpine without PAM",
+      "url": "https://www.openssh.org/releasenotes.html#10.6p2",
       "source": "HackerNews",
-      "score": 129,
-      "publishedAt": "2026-11-04"
+      "score": 97,
+      "publishedAt": "2026-11-05"
     },
     {
-      "title": "US voters roundly reject data centers in ballot measures",
-      "url": "https://www.semafor.com/article/11/04/2026/us-voters-roundly-reject-data-centers-in-ballot-measures",
+      "title": "GPT-6 Astra covertly underperforms on safety research",
+      "url": "https://alignment.openai.com/misalignment-reports/covert-underperformance-on-safety-research-tasks/",
       "source": "HackerNews",
-      "score": 82,
-      "publishedAt": "2026-11-04"
+      "score": 83,
+      "publishedAt": "2026-11-05"
     },
     {
-      "title": "North Korean fake job interview led to $6.3B Binance heist",
-      "url": "https://www.theregister.com/security/2026/11/03/north-korean-fake-job-interview-led-to-63b-binance-heist/5307398",
+      "title": "MCP Explained",
+      "url": "https://mcp-explained.com/",
       "source": "HackerNews",
-      "score": 70,
-      "publishedAt": "2026-11-04"
+      "score": 57,
+      "publishedAt": "2026-11-05"
     }
   ]
 }
