@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-05T15:08:18.461Z",
+  "updated": "2026-11-06T14:45:29.265Z",
   "articles": [
     {
-      "title": "Residential proxies detected on White House network",
-      "url": "https://layer3intel.com/blog/residential-proxies-white-house-network",
-      "source": "HackerNews",
-      "score": 1199,
-      "publishedAt": "2026-11-04"
-    },
-    {
-      "title": "Sshole",
+      "title": "sshole",
       "url": "https://sshhole.com",
       "source": "HackerNews",
-      "score": 798,
+      "score": 2811,
       "publishedAt": "2026-11-05"
     },
     {
-      "title": "Lemmings CSS Animation",
-      "url": "https://markblah.github.io/lemmings/",
+      "title": "Claude Code sends your email address to websites",
+      "url": "https://github.com/anthropics/claude-code/issues/107757",
       "source": "HackerNews",
-      "score": 300,
+      "score": 1353,
       "publishedAt": "2026-11-05"
     },
     {
-      "title": "Awesome repositories are no longer awesome",
-      "url": "https://erikgahner.github.io/posts/2026/awesome-repositories-are-no-longer-awesome/",
+      "title": "Blender's UI and Runtime: Much Faster Than GPUI",
+      "url": "https://github.com/ppmpreetham/BUI",
       "source": "HackerNews",
-      "score": 149,
-      "publishedAt": "2026-11-05"
+      "score": 413,
+      "publishedAt": "2026-11-06"
     },
     {
-      "title": "Baidu released ERNIE 5.5 Flash Base",
-      "url": "https://ernie.baidu.com/release/ernie-5-5-flash-base/",
+      "title": "Dutch 'idealist' bank ASN blocks non-Google Android, including GrapheneOS",
+      "url": "https://github.com/PrivSec-dev/banking-apps-compat-report/issues/105",
       "source": "HackerNews",
-      "score": 120,
-      "publishedAt": "2026-11-05"
+      "score": 387,
+      "publishedAt": "2026-11-06"
     },
     {
-      "title": "OpenSSH 10.6p2 Critical workaround for alpine without PAM",
-      "url": "https://www.openssh.org/releasenotes.html#10.6p2",
+      "title": "Kugelblitz – Mac-Native Google Earth Alternative",
+      "url": "https://apps.metaebene.me/en/kugelblitz",
       "source": "HackerNews",
-      "score": 97,
-      "publishedAt": "2026-11-05"
+      "score": 156,
+      "publishedAt": "2026-11-06"
     },
     {
-      "title": "GPT-6 Astra covertly underperforms on safety research",
-      "url": "https://alignment.openai.com/misalignment-reports/covert-underperformance-on-safety-research-tasks/",
+      "title": "Living beyond the limits of survival: wood ants trapped in a gigantic pitfall (2016)",
+      "url": "https://jhr.pensoft.net/articles.php?id=9096",
       "source": "HackerNews",
       "score": 83,
-      "publishedAt": "2026-11-05"
+      "publishedAt": "2026-11-06"
     },
     {
-      "title": "MCP Explained",
-      "url": "https://mcp-explained.com/",
+      "title": "Gemini Omni 1.2 Flash",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
       "source": "HackerNews",
-      "score": 57,
-      "publishedAt": "2026-11-05"
+      "score": 63,
+      "publishedAt": "2026-11-06"
+    },
+    {
+      "title": "We've built an open-source feature flag server for 11 years",
+      "url": "https://github.com/Unleash/unleash",
+      "source": "HackerNews",
+      "score": 58,
+      "publishedAt": "2026-11-06"
     }
   ]
 }
