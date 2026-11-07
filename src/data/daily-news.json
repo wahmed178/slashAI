@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-06T14:45:29.265Z",
+  "updated": "2026-11-07T13:43:36.716Z",
   "articles": [
     {
-      "title": "sshole",
-      "url": "https://sshhole.com",
+      "title": "Tesla to wind down Cybertruck production",
+      "url": "https://www.nbcnews.com/tech/tech-news/tesla-wind-cybertruck-production-years-poor-sales-markets-rcna607817",
       "source": "HackerNews",
-      "score": 2811,
-      "publishedAt": "2026-11-05"
-    },
-    {
-      "title": "Claude Code sends your email address to websites",
-      "url": "https://github.com/anthropics/claude-code/issues/107757",
-      "source": "HackerNews",
-      "score": 1353,
-      "publishedAt": "2026-11-05"
-    },
-    {
-      "title": "Blender's UI and Runtime: Much Faster Than GPUI",
-      "url": "https://github.com/ppmpreetham/BUI",
-      "source": "HackerNews",
-      "score": 413,
+      "score": 1058,
       "publishedAt": "2026-11-06"
     },
     {
-      "title": "Dutch 'idealist' bank ASN blocks non-Google Android, including GrapheneOS",
-      "url": "https://github.com/PrivSec-dev/banking-apps-compat-report/issues/105",
+      "title": "Libghostty 1.0",
+      "url": "https://mitchellh.com/writing/libghostty-1-0",
       "source": "HackerNews",
-      "score": 387,
+      "score": 774,
       "publishedAt": "2026-11-06"
     },
     {
-      "title": "Kugelblitz – Mac-Native Google Earth Alternative",
-      "url": "https://apps.metaebene.me/en/kugelblitz",
+      "title": "A Jev that can ask Opus for help gives Opus accuracy at 4x lower cost",
+      "url": "https://hightouch.com/blog/llm-judges-identity-resolution",
       "source": "HackerNews",
-      "score": 156,
+      "score": 513,
       "publishedAt": "2026-11-06"
     },
     {
-      "title": "Living beyond the limits of survival: wood ants trapped in a gigantic pitfall (2016)",
-      "url": "https://jhr.pensoft.net/articles.php?id=9096",
+      "title": "Every Mac comes with an (undocumented) family member classifier",
+      "url": "https://8rank.ai/game/apple-intelligence-personal-knowledge-graph",
       "source": "HackerNews",
-      "score": 83,
-      "publishedAt": "2026-11-06"
+      "score": 227,
+      "publishedAt": "2026-11-07"
     },
     {
-      "title": "Gemini Omni 1.2 Flash",
-      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/",
+      "title": "Upload Your RAM",
+      "url": "https://uploadyourram.org",
       "source": "HackerNews",
-      "score": 63,
-      "publishedAt": "2026-11-06"
+      "score": 183,
+      "publishedAt": "2026-11-07"
     },
     {
-      "title": "We've built an open-source feature flag server for 11 years",
-      "url": "https://github.com/Unleash/unleash",
+      "title": "Need for Speed Underground 2 online in the browser",
+      "url": "https://nfsu2.xyz/",
       "source": "HackerNews",
-      "score": 58,
-      "publishedAt": "2026-11-06"
+      "score": 161,
+      "publishedAt": "2026-11-07"
+    },
+    {
+      "title": "Greece has its own Pompeii: Thera buried Akrotiri in ash 17th-16th century BCE",
+      "url": "https://www.smithsonianmag.com/history/greece-has-its-own-pompeii-and-the-ruins-tell-a-captivating-story-of-a-sophisticated-seafaring-bronze-age-society-180989747/",
+      "source": "HackerNews",
+      "score": 140,
+      "publishedAt": "2026-11-04"
+    },
+    {
+      "title": "The Components of Agent Memory",
+      "url": "https://www.anthropic.com/research/components-of-agent-memory",
+      "source": "HackerNews",
+      "score": 77,
+      "publishedAt": "2026-11-07"
     }
   ]
 }
