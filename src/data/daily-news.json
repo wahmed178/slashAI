@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-07T13:43:36.716Z",
+  "updated": "2026-11-08T14:02:00.218Z",
   "articles": [
     {
-      "title": "Tesla to wind down Cybertruck production",
-      "url": "https://www.nbcnews.com/tech/tech-news/tesla-wind-cybertruck-production-years-poor-sales-markets-rcna607817",
+      "title": "What I run on my $10 USD OpenStick homelab",
+      "url": "https://blog.bosscher.ch/posts/openstick/",
       "source": "HackerNews",
-      "score": 1058,
-      "publishedAt": "2026-11-06"
-    },
-    {
-      "title": "Libghostty 1.0",
-      "url": "https://mitchellh.com/writing/libghostty-1-0",
-      "source": "HackerNews",
-      "score": 774,
-      "publishedAt": "2026-11-06"
-    },
-    {
-      "title": "A Jev that can ask Opus for help gives Opus accuracy at 4x lower cost",
-      "url": "https://hightouch.com/blog/llm-judges-identity-resolution",
-      "source": "HackerNews",
-      "score": 513,
-      "publishedAt": "2026-11-06"
-    },
-    {
-      "title": "Every Mac comes with an (undocumented) family member classifier",
-      "url": "https://8rank.ai/game/apple-intelligence-personal-knowledge-graph",
-      "source": "HackerNews",
-      "score": 227,
+      "score": 651,
       "publishedAt": "2026-11-07"
     },
     {
-      "title": "Upload Your RAM",
-      "url": "https://uploadyourram.org",
+      "title": "Claude Code's \"Don't Ask Again\" exposes passwords in 1,122 public GitHub files",
+      "url": "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
       "source": "HackerNews",
-      "score": 183,
+      "score": 459,
       "publishedAt": "2026-11-07"
     },
     {
-      "title": "Need for Speed Underground 2 online in the browser",
-      "url": "https://nfsu2.xyz/",
+      "title": "Goodbye Claude, Hello Pi",
+      "url": "https://caleb.software/posts/claude-to-pi.html",
       "source": "HackerNews",
-      "score": 161,
-      "publishedAt": "2026-11-07"
+      "score": 436,
+      "publishedAt": "2026-11-08"
     },
     {
-      "title": "Greece has its own Pompeii: Thera buried Akrotiri in ash 17th-16th century BCE",
-      "url": "https://www.smithsonianmag.com/history/greece-has-its-own-pompeii-and-the-ruins-tell-a-captivating-story-of-a-sophisticated-seafaring-bronze-age-society-180989747/",
+      "title": "Person of Interest",
+      "url": "https://krthr.co/person-of-interest/",
       "source": "HackerNews",
-      "score": 140,
+      "score": 132,
+      "publishedAt": "2026-11-08"
+    },
+    {
+      "title": "Clj.rs – a Clojure dialect implemented in Rust",
+      "url": "https://clj.rs/",
+      "source": "HackerNews",
+      "score": 93,
       "publishedAt": "2026-11-04"
     },
     {
-      "title": "The Components of Agent Memory",
-      "url": "https://www.anthropic.com/research/components-of-agent-memory",
+      "title": "Agent memory needs its OpenTelemetry moment",
+      "url": "https://www.lorekit.io/blog/open-agent-memory-format",
       "source": "HackerNews",
-      "score": 77,
-      "publishedAt": "2026-11-07"
+      "score": 81,
+      "publishedAt": "2026-11-08"
+    },
+    {
+      "title": "Petered (what happens after the Peter Principle)",
+      "url": "https://aworkinglibrary.com/writing/petered",
+      "source": "HackerNews",
+      "score": 75,
+      "publishedAt": "2026-11-08"
+    },
+    {
+      "title": "Llama-modchip: 284B DeepSeek on 64GB RAM, no GPU",
+      "url": "https://github.com/synchopate/llama-modchip",
+      "source": "HackerNews",
+      "score": 59,
+      "publishedAt": "2026-11-08"
     }
   ]
 }
