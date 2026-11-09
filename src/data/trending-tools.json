@@ -1,91 +1,115 @@
 {
-  "updated": "2026-11-02",
-  "week": "2026-W44",
+  "updated": "2026-11-09",
+  "week": "2026-W45",
   "items": [
     {
-      "name": "redu.cloud",
-      "url": "https://www.producthunt.com/products/redu-cloud",
-      "description": "Run machines at agent speed, not human speed. Discussion | Link",
+      "name": "Jotform App for Shopify",
+      "url": "https://www.producthunt.com/products/jotform",
+      "description": "Build powerful forms for your Shopify store Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "CuriousLM",
-      "url": "https://www.producthunt.com/products/curiouslm",
-      "description": "Private AI that runs on your device. No account. Discussion | Link",
+      "name": "Higgsfield Miracle",
+      "url": "https://www.producthunt.com/products/higgsfield",
+      "description": "Edit any part of a video without changing the rest Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Linkly AI Clipper",
-      "url": "https://www.producthunt.com/products/linkly-ai-clipper",
-      "description": "Save web as an Agent-friendly Markdown browser extension Discussion | Link",
+      "name": "Egoist AI Passport",
+      "url": "https://www.producthunt.com/products/egoist-ai-passport",
+      "description": "Secure and share your personal data with AI tools. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Clayzo",
-      "url": "https://www.producthunt.com/products/clayzo",
-      "description": "Create animations and motion design with your coding agent Discussion | Link",
+      "name": "skuttr",
+      "url": "https://www.producthunt.com/products/skuttr",
+      "description": "Type one sentence, get a Reel from your camera roll Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Agent Inbox",
-      "url": "https://www.producthunt.com/products/agent-inbox",
-      "description": "Give your agent an email address, Slack and Telegram handle Discussion | Link",
+      "name": "MCP1",
+      "url": "https://www.producthunt.com/products/appwrite",
+      "description": "One URL for every MCP server. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Hyperresearch",
-      "url": "https://www.producthunt.com/products/hyperresearch",
-      "description": "Durable, verified agentic search Discussion | Link",
+      "name": "Cardboard AI",
+      "url": "https://www.producthunt.com/products/cardboard-3",
+      "description": "Best way to edit videos with AI Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Self-Growing Websites by Greta.sh",
-      "url": "https://www.producthunt.com/products/gretabyquestera",
-      "description": "Build a website that can do its own SEO & AEO automatically Discussion | Link",
+      "name": "Dageno AI 2.0",
+      "url": "https://www.producthunt.com/products/agent-powered-geo-by-dageno",
+      "description": "See why AI recommends your competitors instead of you Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Looper",
-      "url": "https://www.producthunt.com/products/looper-3",
-      "description": "If Grok Bot supported team collaboration and was Open Source Discussion | Link",
+      "name": "ProtoMap",
+      "url": "https://www.producthunt.com/products/hounddog-ai-static-code-scanner-2",
+      "description": "Stop wasting AI tokens rediscovering dependencies Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "OmniDiff – Opensource, super fast, content aware Git difftoo",
-      "url": "https://github.com/ivankovic/omnidiff",
-      "description": "277 points on Hacker News",
+      "name": "I built a tool that prices a pre-built PC part by part",
+      "url": "https://pcdealcheck.com/",
+      "description": "120 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Hob - Open-source, on device alternative to Claude Cowork an",
-      "url": "https://github.com/FrigadeHQ/hob",
-      "description": "177 points on Hacker News",
+      "name": "A decent text-to-image model trained for ~$20K (Apache 2.0 W",
+      "url": "https://www.linum.ai/field-notes/pjit-21k",
+      "description": "285 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "BBRouter – Ben Eater's 8-bit computer, simulated on 3D bread",
-      "url": "https://bbrouter.com/bbrouter/ben-eater-sap-1",
-      "description": "54 points on Hacker News",
+      "name": "Launch HN: Momentic (YC W24) – Agents that catch bugs by usi",
+      "url": "https://momentic.ai/",
+      "description": "167 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on",
+      "url": "https://github.com/rivet-dev/rivet",
+      "description": "120 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Kairos – Open-source risk and fraud decisioning platform",
+      "url": "https://github.com/finic-ai/kairos",
+      "description": "106 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "Gauge – Open-Source CLI to recursively improve your docs",
+      "url": "https://github.com/gauge-sh/gauge-cli",
+      "description": "43 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
