@@ -287,7 +287,7 @@ export const SECTIONS: SectionDef[] = [
 
 const D = "2026-08-22";
 /** "Last checked" date - bumped automatically every week by scripts/refresh-resource-dates.cjs (GitHub Action) */
-const V = "2026-11-02";
+const V = "2026-11-09";
 
 /** helper keeps the list readable; every record still carries explicit dates */
 const r = (
