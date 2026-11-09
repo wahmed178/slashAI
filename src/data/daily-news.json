@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-08T14:02:00.218Z",
+  "updated": "2026-11-09T17:06:34.375Z",
   "articles": [
     {
-      "title": "What I run on my $10 USD OpenStick homelab",
-      "url": "https://blog.bosscher.ch/posts/openstick/",
+      "title": "Fold Epic Paper Airplanes",
+      "url": "https://www.foldableflight.com",
       "source": "HackerNews",
-      "score": 651,
-      "publishedAt": "2026-11-07"
+      "score": 474,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Claude Code's \"Don't Ask Again\" exposes passwords in 1,122 public GitHub files",
-      "url": "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
+      "title": "Humans will never again create a project like Wikipedia",
+      "url": "https://www.economist.com/culture/2026/10/29/humans-will-never-again-create-a-project-quite-like-wikipedia",
       "source": "HackerNews",
-      "score": 459,
-      "publishedAt": "2026-11-07"
+      "score": 404,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Goodbye Claude, Hello Pi",
-      "url": "https://caleb.software/posts/claude-to-pi.html",
+      "title": "I Saw Your HN Comment",
+      "url": "https://joshstrange.com/2026/11/09/i-saw-your-hn-comment/",
       "source": "HackerNews",
-      "score": 436,
-      "publishedAt": "2026-11-08"
+      "score": 228,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Person of Interest",
-      "url": "https://krthr.co/person-of-interest/",
+      "title": "What is malloc doing, anyway?",
+      "url": "https://benmandrew.com/articles/what-is-malloc-doing-anyway",
       "source": "HackerNews",
-      "score": 132,
-      "publishedAt": "2026-11-08"
+      "score": 126,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Clj.rs – a Clojure dialect implemented in Rust",
-      "url": "https://clj.rs/",
+      "title": "Fun things to do with your VM/370 CE machine – Fun with big computers",
+      "url": "https://rbanffy.github.io/fun-with-big-computers/fun-with-vm370/",
       "source": "HackerNews",
-      "score": 93,
-      "publishedAt": "2026-11-04"
+      "score": 83,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Agent memory needs its OpenTelemetry moment",
-      "url": "https://www.lorekit.io/blog/open-agent-memory-format",
+      "title": "Payments Canada announces launch of Canada's Real-Time Rail (RTR) payment system",
+      "url": "https://www.payments.ca/canada-launches-real-time-rail-bringing-247-payment-infrastructure-national-economy",
       "source": "HackerNews",
-      "score": 81,
-      "publishedAt": "2026-11-08"
+      "score": 70,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Petered (what happens after the Peter Principle)",
-      "url": "https://aworkinglibrary.com/writing/petered",
+      "title": "Zebkit – Chromium as an embeddable library",
+      "url": "https://github.com/ikey4u/zebkit",
       "source": "HackerNews",
-      "score": 75,
-      "publishedAt": "2026-11-08"
+      "score": 60,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Llama-modchip: 284B DeepSeek on 64GB RAM, no GPU",
-      "url": "https://github.com/synchopate/llama-modchip",
+      "title": "The same H100 costs $2.69 or $12.29 an hour depending where you rent it",
+      "url": "https://github.com/datareceipts/data-receipts/tree/main/109-gpu-pricing",
       "source": "HackerNews",
-      "score": 59,
-      "publishedAt": "2026-11-08"
+      "score": 56,
+      "publishedAt": "2026-11-09"
     }
   ]
 }
