@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-09T17:06:34.375Z",
+  "updated": "2026-11-10T15:23:15.982Z",
   "articles": [
     {
-      "title": "Fold Epic Paper Airplanes",
-      "url": "https://www.foldableflight.com",
+      "title": "Claude Fable 5.2 and Mythos 5.2",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
       "source": "HackerNews",
-      "score": 474,
+      "score": 762,
       "publishedAt": "2026-11-09"
     },
     {
-      "title": "Humans will never again create a project like Wikipedia",
-      "url": "https://www.economist.com/culture/2026/10/29/humans-will-never-again-create-a-project-quite-like-wikipedia",
+      "title": "USPS now offers official ZIP Code boundary polygons",
+      "url": "https://postalpro.usps.com/zcb",
       "source": "HackerNews",
-      "score": 404,
+      "score": 687,
       "publishedAt": "2026-11-09"
     },
     {
-      "title": "I Saw Your HN Comment",
-      "url": "https://joshstrange.com/2026/11/09/i-saw-your-hn-comment/",
+      "title": "Amazon saves millions by replacing Sonnet 4.6 with Strands Decider",
+      "url": "https://strandsagents.com/blog/amazon-saves-millions-replacing-sonnet-with-strands-decider/",
       "source": "HackerNews",
-      "score": 228,
-      "publishedAt": "2026-11-09"
+      "score": 502,
+      "publishedAt": "2026-11-10"
     },
     {
-      "title": "What is malloc doing, anyway?",
-      "url": "https://benmandrew.com/articles/what-is-malloc-doing-anyway",
+      "title": "AlphaProof Code",
+      "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
       "source": "HackerNews",
-      "score": 126,
-      "publishedAt": "2026-11-09"
+      "score": 297,
+      "publishedAt": "2026-11-10"
     },
     {
-      "title": "Fun things to do with your VM/370 CE machine – Fun with big computers",
-      "url": "https://rbanffy.github.io/fun-with-big-computers/fun-with-vm370/",
+      "title": "Your TV can see through walls",
+      "url": "https://maurycyz.com/projects/fading/",
       "source": "HackerNews",
-      "score": 83,
-      "publishedAt": "2026-11-09"
+      "score": 217,
+      "publishedAt": "2026-11-10"
     },
     {
-      "title": "Payments Canada announces launch of Canada's Real-Time Rail (RTR) payment system",
-      "url": "https://www.payments.ca/canada-launches-real-time-rail-bringing-247-payment-infrastructure-national-economy",
+      "title": "Queens Public library under ransomware attack e-borrowing suspended",
+      "url": "https://connect.queenslibrary.org/",
       "source": "HackerNews",
-      "score": 70,
-      "publishedAt": "2026-11-09"
+      "score": 107,
+      "publishedAt": "2026-11-10"
     },
     {
-      "title": "Zebkit – Chromium as an embeddable library",
-      "url": "https://github.com/ikey4u/zebkit",
+      "title": "Show HN: A 15 MB self-hosted Netflix and Spotify for your media server",
+      "url": "https://github.com/HolyArrs/HolyArrs",
       "source": "HackerNews",
-      "score": 60,
-      "publishedAt": "2026-11-09"
+      "score": 107,
+      "publishedAt": "2026-11-10"
     },
     {
-      "title": "The same H100 costs $2.69 or $12.29 an hour depending where you rent it",
-      "url": "https://github.com/datareceipts/data-receipts/tree/main/109-gpu-pricing",
+      "title": "Show HN: Ghanaian street games you can play in the browser",
+      "url": "https://www.ghanastreetgames.com/",
       "source": "HackerNews",
-      "score": 56,
-      "publishedAt": "2026-11-09"
+      "score": 55,
+      "publishedAt": "2026-11-08"
     }
   ]
 }
