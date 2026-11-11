@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-10T15:23:15.982Z",
+  "updated": "2026-11-11T14:53:18.763Z",
   "articles": [
     {
-      "title": "Claude Fable 5.2 and Mythos 5.2",
-      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+      "title": "Scion is back and is going to sell a kei truck in America",
+      "url": "https://www.theautopian.com/scion-is-back-and-its-going-to-sell-a-freaking-kei-truck-in-america/",
       "source": "HackerNews",
-      "score": 762,
-      "publishedAt": "2026-11-09"
-    },
-    {
-      "title": "USPS now offers official ZIP Code boundary polygons",
-      "url": "https://postalpro.usps.com/zcb",
-      "source": "HackerNews",
-      "score": 687,
-      "publishedAt": "2026-11-09"
-    },
-    {
-      "title": "Amazon saves millions by replacing Sonnet 4.6 with Strands Decider",
-      "url": "https://strandsagents.com/blog/amazon-saves-millions-replacing-sonnet-with-strands-decider/",
-      "source": "HackerNews",
-      "score": 502,
+      "score": 518,
       "publishedAt": "2026-11-10"
     },
     {
-      "title": "AlphaProof Code",
-      "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+      "title": "Apple has new Mac app coming to make running local AI models easy",
+      "url": "https://9to5mac.com/2026/11/10/apple-has-new-mac-app-coming-to-make-running-local-ai-models-easy/",
       "source": "HackerNews",
-      "score": 297,
+      "score": 392,
       "publishedAt": "2026-11-10"
     },
     {
-      "title": "Your TV can see through walls",
-      "url": "https://maurycyz.com/projects/fading/",
+      "title": "Google SWE points 48 AI agents at NASA Lidar, finds unmapped Maya pyramid in 72h",
+      "url": "https://pietromiotti.com/latest/maya-site/?maya",
       "source": "HackerNews",
-      "score": 217,
-      "publishedAt": "2026-11-10"
+      "score": 390,
+      "publishedAt": "2026-11-11"
     },
     {
-      "title": "Queens Public library under ransomware attack e-borrowing suspended",
-      "url": "https://connect.queenslibrary.org/",
+      "title": "Protecting SSH Keys with macOS Secure Enclave",
+      "url": "https://gatezh.com/posts/macos-secure-enclave-ssh-keys/",
       "source": "HackerNews",
-      "score": 107,
-      "publishedAt": "2026-11-10"
+      "score": 299,
+      "publishedAt": "2026-11-11"
     },
     {
-      "title": "Show HN: A 15 MB self-hosted Netflix and Spotify for your media server",
-      "url": "https://github.com/HolyArrs/HolyArrs",
+      "title": "Greg Kurtzer's Ginux is now a userspace kernel",
+      "url": "https://github.com/gmkurtzer/ginux",
       "source": "HackerNews",
-      "score": 107,
-      "publishedAt": "2026-11-10"
+      "score": 98,
+      "publishedAt": "2026-11-11"
     },
     {
-      "title": "Show HN: Ghanaian street games you can play in the browser",
-      "url": "https://www.ghanastreetgames.com/",
+      "title": "Using voltage glitching to unleash the A100 in my mining card",
+      "url": "https://blog.kate.land/posts/using-voltage-glitching-to-unlock-the-a100/",
+      "source": "HackerNews",
+      "score": 94,
+      "publishedAt": "2026-11-11"
+    },
+    {
+      "title": "Can a Linear Program Do Weight-Space Programming?",
+      "url": "https://nathan.rs/posts/weight-space-lp/",
+      "source": "HackerNews",
+      "score": 91,
+      "publishedAt": "2026-11-11"
+    },
+    {
+      "title": "I asked every TV manufacturer 17 questions about how they spy on you",
+      "url": "https://www.theverge.com/tech/1012372/tv-privacy-acr-questions",
       "source": "HackerNews",
       "score": 55,
-      "publishedAt": "2026-11-08"
+      "publishedAt": "2026-11-11"
     }
   ]
 }
