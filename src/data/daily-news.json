@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-11T14:53:18.763Z",
+  "updated": "2026-11-12T15:44:45.353Z",
   "articles": [
     {
-      "title": "Scion is back and is going to sell a kei truck in America",
-      "url": "https://www.theautopian.com/scion-is-back-and-its-going-to-sell-a-freaking-kei-truck-in-america/",
+      "title": "NVIDIA Announces CEO Transition",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
       "source": "HackerNews",
-      "score": 518,
+      "score": 985,
+      "publishedAt": "2026-11-12"
+    },
+    {
+      "title": "Jane Street: Socratic Tutor",
+      "url": "https://github.com/janestreet/agent_skills/blob/master/socratic-tutor/SKILL.md",
+      "source": "HackerNews",
+      "score": 496,
       "publishedAt": "2026-11-10"
     },
     {
-      "title": "Apple has new Mac app coming to make running local AI models easy",
-      "url": "https://9to5mac.com/2026/11/10/apple-has-new-mac-app-coming-to-make-running-local-ai-models-easy/",
+      "title": "Jensen Huang resigns as Nvidia CEO immediately",
+      "url": "https://www.reuters.com/live/nvidia-live-board-meets-fate-ceo-jensen-huang-after-affair-reports-2026-11-12/",
       "source": "HackerNews",
-      "score": 392,
-      "publishedAt": "2026-11-10"
+      "score": 343,
+      "publishedAt": "2026-11-12"
     },
     {
-      "title": "Google SWE points 48 AI agents at NASA Lidar, finds unmapped Maya pyramid in 72h",
-      "url": "https://pietromiotti.com/latest/maya-site/?maya",
+      "title": "A live tree of systemd jobs on the boot console",
+      "url": "https://codeberg.org/wvhulle/bootvine",
       "source": "HackerNews",
-      "score": 390,
-      "publishedAt": "2026-11-11"
+      "score": 238,
+      "publishedAt": "2026-11-09"
     },
     {
-      "title": "Protecting SSH Keys with macOS Secure Enclave",
-      "url": "https://gatezh.com/posts/macos-secure-enclave-ssh-keys/",
+      "title": "Why Writing Correct Software Is Hard",
+      "url": "https://pron.github.io/posts/correctness-and-complexity",
       "source": "HackerNews",
-      "score": 299,
-      "publishedAt": "2026-11-11"
+      "score": 217,
+      "publishedAt": "2026-11-12"
     },
     {
-      "title": "Greg Kurtzer's Ginux is now a userspace kernel",
-      "url": "https://github.com/gmkurtzer/ginux",
+      "title": "Nvidia CEO Jensen Huang resigns after reports of second affair deepened scandal",
+      "url": "https://www.bbc.co.uk/news/live/c6zjry11v8w1t",
       "source": "HackerNews",
-      "score": 98,
-      "publishedAt": "2026-11-11"
+      "score": 159,
+      "publishedAt": "2026-11-12"
     },
     {
-      "title": "Using voltage glitching to unleash the A100 in my mining card",
-      "url": "https://blog.kate.land/posts/using-voltage-glitching-to-unlock-the-a100/",
+      "title": "Abandoned Quake 4 expansion finished by modders and now playable",
+      "url": "https://www.moddb.com/mods/openq4/downloads/openq4-0141-windows-x64",
       "source": "HackerNews",
-      "score": 94,
-      "publishedAt": "2026-11-11"
+      "score": 57,
+      "publishedAt": "2026-11-12"
     },
     {
-      "title": "Can a Linear Program Do Weight-Space Programming?",
-      "url": "https://nathan.rs/posts/weight-space-lp/",
+      "title": "Talking Zen 6 with Mike Clark at AMD In-Depth",
+      "url": "https://chipsandcheese.com/p/talking-zen-6-with-mike-clark-at",
       "source": "HackerNews",
-      "score": 91,
-      "publishedAt": "2026-11-11"
-    },
-    {
-      "title": "I asked every TV manufacturer 17 questions about how they spy on you",
-      "url": "https://www.theverge.com/tech/1012372/tv-privacy-acr-questions",
-      "source": "HackerNews",
-      "score": 55,
-      "publishedAt": "2026-11-11"
+      "score": 56,
+      "publishedAt": "2026-11-12"
     }
   ]
 }
