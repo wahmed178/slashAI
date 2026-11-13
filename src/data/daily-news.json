@@ -1,60 +1,60 @@
 {
-  "updated": "2026-11-12T15:44:45.353Z",
+  "updated": "2026-11-13T15:04:09.951Z",
   "articles": [
     {
-      "title": "NVIDIA Announces CEO Transition",
-      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
+      "title": "Jensen Huang resigns",
+      "url": "https://apnews.com/article/nvidia-megaspeed-china-singapore-huang-5403f152a601cf82ce939f1d24fffa0f",
       "source": "HackerNews",
-      "score": 985,
+      "score": 3786,
       "publishedAt": "2026-11-12"
     },
     {
-      "title": "Jane Street: Socratic Tutor",
-      "url": "https://github.com/janestreet/agent_skills/blob/master/socratic-tutor/SKILL.md",
+      "title": "Rust 1.100",
+      "url": "https://blog.rust-lang.org/2026/11/12/Rust-1.100.0/",
       "source": "HackerNews",
-      "score": 496,
-      "publishedAt": "2026-11-10"
-    },
-    {
-      "title": "Jensen Huang resigns as Nvidia CEO immediately",
-      "url": "https://www.reuters.com/live/nvidia-live-board-meets-fate-ceo-jensen-huang-after-affair-reports-2026-11-12/",
-      "source": "HackerNews",
-      "score": 343,
+      "score": 789,
       "publishedAt": "2026-11-12"
     },
     {
-      "title": "A live tree of systemd jobs on the boot console",
-      "url": "https://codeberg.org/wvhulle/bootvine",
+      "title": "Elevated errors on claude.ai, Claude Code, and platform.claude.com",
+      "url": "https://status.claude.com/incidents/nn11wk485zfn",
       "source": "HackerNews",
-      "score": 238,
-      "publishedAt": "2026-11-09"
+      "score": 361,
+      "publishedAt": "2026-11-13"
     },
     {
-      "title": "Why Writing Correct Software Is Hard",
-      "url": "https://pron.github.io/posts/correctness-and-complexity",
+      "title": "IceWM",
+      "url": "https://ice-wm.org/",
       "source": "HackerNews",
-      "score": 217,
-      "publishedAt": "2026-11-12"
+      "score": 285,
+      "publishedAt": "2026-11-13"
     },
     {
-      "title": "Nvidia CEO Jensen Huang resigns after reports of second affair deepened scandal",
-      "url": "https://www.bbc.co.uk/news/live/c6zjry11v8w1t",
+      "title": "Doomsday: Friday, 13 November, A.D. 2026 (1960)",
+      "url": "https://www.science.org/doi/10.1126/science.132.3436.1291",
       "source": "HackerNews",
-      "score": 159,
-      "publishedAt": "2026-11-12"
+      "score": 249,
+      "publishedAt": "2026-11-13"
     },
     {
-      "title": "Abandoned Quake 4 expansion finished by modders and now playable",
-      "url": "https://www.moddb.com/mods/openq4/downloads/openq4-0141-windows-x64",
+      "title": "Brave Search API now accepts agentic payments via the x402 protocol",
+      "url": "https://brave.com/blog/search-api-agentic-payments/",
       "source": "HackerNews",
-      "score": 57,
-      "publishedAt": "2026-11-12"
+      "score": 192,
+      "publishedAt": "2026-11-13"
     },
     {
-      "title": "Talking Zen 6 with Mike Clark at AMD In-Depth",
-      "url": "https://chipsandcheese.com/p/talking-zen-6-with-mike-clark-at",
+      "title": "Eli Lilly CEO pushes back on Dario Amodei's ludicrous medical claims",
+      "url": "https://garymarcus.substack.com/p/breaking-eli-lilly-ceo-becomes-latest",
       "source": "HackerNews",
-      "score": 56,
+      "score": 185,
+      "publishedAt": "2026-11-13"
+    },
+    {
+      "title": "Reverse Engineering My Coway Air Purifier to Ditch the Cloud",
+      "url": "https://scottjg.com/posts/2026-11-11-reverse-engineering-my-coway-air-purifier-to-ditch-the-cloud/",
+      "source": "HackerNews",
+      "score": 82,
       "publishedAt": "2026-11-12"
     }
   ]
