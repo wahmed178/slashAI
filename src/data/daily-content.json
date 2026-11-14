@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-14",
   "quote": {
-    "text": "Numbing the pain for a while will make it worse when you finally feel it.",
-    "author": "Albus Dumbledore"
+    "text": "Sometimes you have to lose all you have to find out who you truly are.",
+    "author": "Roy T. Bennett"
   },
-  "advice": "Don't judge a book by its cover, unless it has a synopsis on the back.",
+  "advice": "It's always the quiet ones.",
   "artwork": {
-    "title": "Soga monogatari",
-    "artist": "Artist unknown (Japanese)",
-    "imageId": "5a86efcd-5d73-643b-c96a-e326174e6bf6"
+    "title": "Ehon Fukujin takara-fukuro",
+    "artist": "Suzuki Harunobu 鈴木春信　\nJapanese, 1724-1770",
+    "imageId": "fffe3c45-1bca-c5dc-7dad-27fc3e4c4aa5"
   }
 }
