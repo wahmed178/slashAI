@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-13T15:04:09.951Z",
+  "updated": "2026-11-14T13:55:30.382Z",
   "articles": [
     {
-      "title": "Jensen Huang resigns",
-      "url": "https://apnews.com/article/nvidia-megaspeed-china-singapore-huang-5403f152a601cf82ce939f1d24fffa0f",
+      "title": "FAA issues national ground stop – lifted 4.5 hours later",
+      "url": "https://www.nbcnews.com/news/us-news/faa-orders-nationwide-ground-stop-departing-flights-reasons-safety-rcna609247",
       "source": "HackerNews",
-      "score": 3786,
-      "publishedAt": "2026-11-12"
-    },
-    {
-      "title": "Rust 1.100",
-      "url": "https://blog.rust-lang.org/2026/11/12/Rust-1.100.0/",
-      "source": "HackerNews",
-      "score": 789,
-      "publishedAt": "2026-11-12"
-    },
-    {
-      "title": "Elevated errors on claude.ai, Claude Code, and platform.claude.com",
-      "url": "https://status.claude.com/incidents/nn11wk485zfn",
-      "source": "HackerNews",
-      "score": 361,
+      "score": 1585,
       "publishedAt": "2026-11-13"
     },
     {
-      "title": "IceWM",
-      "url": "https://ice-wm.org/",
+      "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
+      "url": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
       "source": "HackerNews",
-      "score": 285,
+      "score": 782,
+      "publishedAt": "2026-11-14"
+    },
+    {
+      "title": "Terminal borders that don't cost a cell",
+      "url": "https://www.joshka.net/cell-borders/",
+      "source": "HackerNews",
+      "score": 324,
       "publishedAt": "2026-11-13"
     },
     {
-      "title": "Doomsday: Friday, 13 November, A.D. 2026 (1960)",
-      "url": "https://www.science.org/doi/10.1126/science.132.3436.1291",
+      "title": "Ggml v1.0.0",
+      "url": "https://github.com/ggml-org/ggml/releases/tag/v1.0.0",
       "source": "HackerNews",
-      "score": 249,
-      "publishedAt": "2026-11-13"
+      "score": 317,
+      "publishedAt": "2026-11-14"
     },
     {
-      "title": "Brave Search API now accepts agentic payments via the x402 protocol",
-      "url": "https://brave.com/blog/search-api-agentic-payments/",
+      "title": "Monkey Island: all 13 versions side by side",
+      "url": "https://monkeyisland.pages.dev/",
       "source": "HackerNews",
-      "score": 192,
-      "publishedAt": "2026-11-13"
+      "score": 256,
+      "publishedAt": "2026-11-14"
     },
     {
-      "title": "Eli Lilly CEO pushes back on Dario Amodei's ludicrous medical claims",
-      "url": "https://garymarcus.substack.com/p/breaking-eli-lilly-ceo-becomes-latest",
+      "title": "Why get an expensive Pi when I have an old phone?",
+      "url": "https://so.long.thanks.fish/why-pi-when-i-have-an-old-phone/",
       "source": "HackerNews",
-      "score": 185,
-      "publishedAt": "2026-11-13"
+      "score": 208,
+      "publishedAt": "2026-11-10"
     },
     {
-      "title": "Reverse Engineering My Coway Air Purifier to Ditch the Cloud",
-      "url": "https://scottjg.com/posts/2026-11-11-reverse-engineering-my-coway-air-purifier-to-ditch-the-cloud/",
+      "title": "Unsloth Qwen3.8-27B Quantizations – Dynamic v3.1 Update",
+      "url": "https://unsloth.ai/docs/models/qwen3.8",
       "source": "HackerNews",
-      "score": 82,
-      "publishedAt": "2026-11-12"
+      "score": 191,
+      "publishedAt": "2026-11-14"
+    },
+    {
+      "title": "What happened to 3Com?",
+      "url": "https://dfarq.homeip.net/what-happened-to-3com/",
+      "source": "HackerNews",
+      "score": 170,
+      "publishedAt": "2026-11-13"
     }
   ]
 }
