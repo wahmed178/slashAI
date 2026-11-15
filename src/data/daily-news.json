@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-14T13:55:30.382Z",
+  "updated": "2026-11-15T14:29:26.420Z",
   "articles": [
     {
-      "title": "FAA issues national ground stop – lifted 4.5 hours later",
-      "url": "https://www.nbcnews.com/news/us-news/faa-orders-nationwide-ground-stop-departing-flights-reasons-safety-rcna609247",
+      "title": "SpaceX catches the Starship to end Flight 15",
+      "url": "https://www.spacex.com/launches/starship-flight-15",
       "source": "HackerNews",
-      "score": 1585,
-      "publishedAt": "2026-11-13"
-    },
-    {
-      "title": "Nvidia allegedly engineered scarcity by funding AI startups to buy its GPUs",
-      "url": "https://www.techpowerup.com/354814/nvidia-allegedly-engineered-scarcity-by-funding-ai-startups-to-buy-its-gpus",
-      "source": "HackerNews",
-      "score": 782,
+      "score": 1397,
       "publishedAt": "2026-11-14"
     },
     {
-      "title": "Terminal borders that don't cost a cell",
-      "url": "https://www.joshka.net/cell-borders/",
+      "title": "Lovable apps expose passport details and more than 200K private messages",
+      "url": "https://www.crissyfield.de/research/lovable-en/",
       "source": "HackerNews",
-      "score": 324,
-      "publishedAt": "2026-11-13"
-    },
-    {
-      "title": "Ggml v1.0.0",
-      "url": "https://github.com/ggml-org/ggml/releases/tag/v1.0.0",
-      "source": "HackerNews",
-      "score": 317,
+      "score": 906,
       "publishedAt": "2026-11-14"
     },
     {
-      "title": "Monkey Island: all 13 versions side by side",
-      "url": "https://monkeyisland.pages.dev/",
+      "title": "Court denies motion to dismiss DRAM price fixing case",
+      "url": "https://litnews.ai/articles/garciaguirre-samsung-sk-hynix-micron-dram-conspiracy-suit-survives-dismissal",
       "source": "HackerNews",
-      "score": 256,
+      "score": 304,
+      "publishedAt": "2026-11-15"
+    },
+    {
+      "title": "How did Woz write the Apple 1 BASIC before building the computer?",
+      "url": "https://retrocomputing.stackexchange.com/questions/17957",
+      "source": "HackerNews",
+      "score": 255,
       "publishedAt": "2026-11-14"
     },
     {
-      "title": "Why get an expensive Pi when I have an old phone?",
-      "url": "https://so.long.thanks.fish/why-pi-when-i-have-an-old-phone/",
+      "title": "Why did some Apollo missions carry a grenade launcher?",
+      "url": "https://space.stackexchange.com/questions/37775",
       "source": "HackerNews",
-      "score": 208,
-      "publishedAt": "2026-11-10"
+      "score": 109,
+      "publishedAt": "2026-11-15"
     },
     {
-      "title": "Unsloth Qwen3.8-27B Quantizations – Dynamic v3.1 Update",
-      "url": "https://unsloth.ai/docs/models/qwen3.8",
+      "title": "Lutnick Pushed to Weaken Chip Rules That Overlap with His Family Business",
+      "url": "https://www.nytimes.com/2026/11/15/us/politics/lutnick-pushed-to-weaken-chip-rules-that-overlap-with-his-family-business.html",
       "source": "HackerNews",
-      "score": 191,
-      "publishedAt": "2026-11-14"
+      "score": 76,
+      "publishedAt": "2026-11-15"
     },
     {
-      "title": "What happened to 3Com?",
-      "url": "https://dfarq.homeip.net/what-happened-to-3com/",
+      "title": "Disk encryption on NetBSD – achieving secrecy",
+      "url": "https://netbsd.org/~nia/disk-encrypt/",
       "source": "HackerNews",
-      "score": 170,
-      "publishedAt": "2026-11-13"
+      "score": 62,
+      "publishedAt": "2026-11-15"
+    },
+    {
+      "title": "The MacBook Pro's OLED PWM Problem: When a 'Better' Display Becomes Worse to Use",
+      "url": "https://macanorak.com/the-macbook-pros-oled-pwm-problem-when-a-better-display-becomes-worse-to-use/",
+      "source": "HackerNews",
+      "score": 52,
+      "publishedAt": "2026-11-15"
     }
   ]
 }
