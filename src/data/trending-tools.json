@@ -1,115 +1,123 @@
 {
-  "updated": "2026-11-09",
-  "week": "2026-W45",
+  "updated": "2026-11-16",
+  "week": "2026-W46",
   "items": [
     {
-      "name": "Jotform App for Shopify",
-      "url": "https://www.producthunt.com/products/jotform",
-      "description": "Build powerful forms for your Shopify store Discussion | Link",
+      "name": "Boost.space AgentOS",
+      "url": "https://www.producthunt.com/products/boost-space",
+      "description": "One operating system for all your AI agents Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Higgsfield Miracle",
-      "url": "https://www.producthunt.com/products/higgsfield",
-      "description": "Edit any part of a video without changing the rest Discussion | Link",
+      "name": "UI SDK by Vercel",
+      "url": "https://www.producthunt.com/products/ui-sdk",
+      "description": "Give AI agents the building blocks to create UI Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Egoist AI Passport",
-      "url": "https://www.producthunt.com/products/egoist-ai-passport",
-      "description": "Secure and share your personal data with AI tools. Discussion | Link",
+      "name": "Cookie Away",
+      "url": "https://www.producthunt.com/products/cookie-away",
+      "description": "Rejects cookie banners for you, even the sneaky ones Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "skuttr",
-      "url": "https://www.producthunt.com/products/skuttr",
-      "description": "Type one sentence, get a Reel from your camera roll Discussion | Link",
+      "name": "OpenFrame",
+      "url": "https://www.producthunt.com/products/openframe-3",
+      "description": "AI agents that run your IT. You approve every fix. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "MCP1",
-      "url": "https://www.producthunt.com/products/appwrite",
-      "description": "One URL for every MCP server. Discussion | Link",
+      "name": "Zoom Slides",
+      "url": "https://www.producthunt.com/products/zoom",
+      "description": "Turn your Zoom meetings into ready-to-present slides Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Cardboard AI",
-      "url": "https://www.producthunt.com/products/cardboard-3",
-      "description": "Best way to edit videos with AI Discussion | Link",
+      "name": "OpenBot",
+      "url": "https://www.producthunt.com/products/copilotkit",
+      "description": "Grok Bot alternative: self-host, fully customize, any stack Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Dageno AI 2.0",
-      "url": "https://www.producthunt.com/products/agent-powered-geo-by-dageno",
-      "description": "See why AI recommends your competitors instead of you Discussion | Link",
+      "name": "Cal.com v7",
+      "url": "https://www.producthunt.com/products/cal",
+      "description": "Cal.com now has events, discover, an assistant + more Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "ProtoMap",
-      "url": "https://www.producthunt.com/products/hounddog-ai-static-code-scanner-2",
-      "description": "Stop wasting AI tokens rediscovering dependencies Discussion | Link",
+      "name": "Newsology",
+      "url": "https://www.producthunt.com/products/newsology",
+      "description": "Follow news as it develops and see how every side tells it. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "I built a tool that prices a pre-built PC part by part",
-      "url": "https://pcdealcheck.com/",
-      "description": "120 points on Hacker News",
+      "name": "Yogurt – Free, private, open-source alternative to Granola",
+      "url": "https://github.com/FrigadeHQ/yogurt",
+      "description": "305 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "A decent text-to-image model trained for ~$20K (Apache 2.0 W",
-      "url": "https://www.linum.ai/field-notes/pjit-21k",
-      "description": "285 points on Hacker News",
+      "name": "Gemini Decisions API",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+      "description": "569 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Launch HN: Momentic (YC W24) – Agents that catch bugs by usi",
-      "url": "https://momentic.ai/",
-      "description": "167 points on Hacker News",
+      "name": "Aircad – Professional drafting and 3D modeling in the browse",
+      "url": "https://aircad.com",
+      "description": "95 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Launch HN: Rivet (YC W23) – Scale and Orchestrate Agents on",
-      "url": "https://github.com/rivet-dev/rivet",
-      "description": "120 points on Hacker News",
+      "name": "Carton Clock – A working pendulum clock made from empty drin",
+      "url": "https://www.niklasroy.com/carton-clock/",
+      "description": "85 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Kairos – Open-source risk and fraud decisioning platform",
-      "url": "https://github.com/finic-ai/kairos",
-      "description": "106 points on Hacker News",
+      "name": "Get your coding agent off ~2019 JavaScript, onto modern web",
+      "url": "https://github.com/GoogleChrome/modern-web-guidance",
+      "description": "447 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Gauge – Open-Source CLI to recursively improve your docs",
-      "url": "https://github.com/gauge-sh/gauge-cli",
-      "description": "43 points on Hacker News",
+      "name": "A terminal-native idle factory game, written in Rust with ra",
+      "url": "https://gitlab.com/snipedbywifi/terminactory",
+      "description": "169 points on Hacker News",
+      "source": "HackerNews",
+      "category": "AI Tools",
+      "badge": "Free"
+    },
+    {
+      "name": "AgentRun – open-source, Self-improving Managed Agents",
+      "url": "https://github.com/Parcha-ai/agentrun/blob/main/README.md",
+      "description": "138 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
