@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-17T16:39:12.299Z",
+  "updated": "2026-11-18T16:08:42.336Z",
   "articles": [
     {
-      "title": "Carnegie Mellon is putting computer science courses on YouTube for free",
-      "url": "https://www.cs.cmu.edu/learn/",
+      "title": "Google's AI answers reducing search traffic by 40%",
+      "url": "https://revscope.co/blog/search-seo-geo-2026/",
       "source": "HackerNews",
-      "score": 2043,
-      "publishedAt": "2026-11-16"
+      "score": 625,
+      "publishedAt": "2026-11-18"
     },
     {
-      "title": "New Evidence Shows School Phone Bans Are Gradually Improving Test Scores",
-      "url": "https://www.nytimes.com/2026/11/17/upshot/school-phone-bans-study-scores.html",
+      "title": "Quad9 Is Leaving France: Why DNS Resolvers Are the Wrong Place to Fight Piracy",
+      "url": "https://techstackups.com/articles/quad9-leaves-france-dns-blocking/",
       "source": "HackerNews",
-      "score": 693,
-      "publishedAt": "2026-11-17"
+      "score": 276,
+      "publishedAt": "2026-11-18"
     },
     {
-      "title": "We don't need more apps. We need better open source",
-      "url": "https://jordankrueger.com/blog/better-open-source-not-more-apps/",
+      "title": "Energy-Based Reasoners: 385x more efficient inference",
+      "url": "https://energy-based-reasoners.github.io/",
       "source": "HackerNews",
-      "score": 235,
-      "publishedAt": "2026-11-17"
+      "score": 227,
+      "publishedAt": "2026-11-18"
     },
     {
-      "title": "VisualBasic.World: A gallery of Planet Source Code programs from 1997 to 2012",
-      "url": "https://visualbasic.world/",
+      "title": "A Perfect SimCity",
+      "url": "https://www.jeffquast.com/post/a-perfect-simcity/",
       "source": "HackerNews",
-      "score": 163,
+      "score": 165,
       "publishedAt": "2026-11-15"
     },
     {
-      "title": "Loopholes Are for Assholes",
-      "url": "https://actsofvolition.com/2026/11/loopholes-are-for-assholes/",
+      "title": "Pre-auth RCE in Nginx HTTP/2 handling",
+      "url": "https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities",
       "source": "HackerNews",
-      "score": 133,
-      "publishedAt": "2026-11-17"
+      "score": 83,
+      "publishedAt": "2026-11-18"
     },
     {
-      "title": "Highly classified US national security communications network goes down",
-      "url": "https://www.cnn.com/2026/11/17/politics/highly-classified-national-security-communications-network-goes-down",
+      "title": "Energy drinks linked to 11 times more reports of cardiac arrest",
+      "url": "https://www.sciencedaily.com/releases/2026/11/261110042543.htm",
       "source": "HackerNews",
-      "score": 101,
-      "publishedAt": "2026-11-17"
+      "score": 80,
+      "publishedAt": "2026-11-18"
     },
     {
-      "title": "In 27,280 coding agent runs, 64% of inference spend went to runs that failed",
-      "url": "https://runta.com/blog/introducing-frontierharness-eval-v1-1/",
+      "title": "'Human' Is Cambridge Dictionary's Word of the Year 2026",
+      "url": "https://www.cam.ac.uk/news/cambridge-dictionary-reveals-word-of-the-year-2026",
       "source": "HackerNews",
-      "score": 71,
-      "publishedAt": "2026-11-17"
+      "score": 73,
+      "publishedAt": "2026-11-18"
     },
     {
-      "title": "First Photos of the Poles of a Rod-Shaped Bacterium",
-      "url": "https://nautil.us/check-out-the-first-photos-of-the-poles-of-a-rod-shaped-bacterium-1286664",
+      "title": "Show HN: Type Fighter 2",
+      "url": "https://typefighter2.com/",
       "source": "HackerNews",
-      "score": 60,
-      "publishedAt": "2026-11-16"
+      "score": 68,
+      "publishedAt": "2026-11-18"
     }
   ]
 }
