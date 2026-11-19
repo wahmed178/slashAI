@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-18T16:08:42.336Z",
+  "updated": "2026-11-19T16:15:53.788Z",
   "articles": [
     {
-      "title": "Google's AI answers reducing search traffic by 40%",
-      "url": "https://revscope.co/blog/search-seo-geo-2026/",
+      "title": "How the European Commission rolled out Matrix to more than 40k staff",
+      "url": "https://element.io/blog/how-the-european-commission-rolled-out-matrix-to-more-than-40-000-staff/",
       "source": "HackerNews",
-      "score": 625,
+      "score": 456,
+      "publishedAt": "2026-11-19"
+    },
+    {
+      "title": "Garage Door Spam",
+      "url": "https://blog.harrison.page/garage-door-spam/",
+      "source": "HackerNews",
+      "score": 383,
+      "publishedAt": "2026-11-16"
+    },
+    {
+      "title": "Ruby2ßhell: Pre-authentication RCE on stock Rails",
+      "url": "https://verialabs.com/ruby2shell/",
+      "source": "HackerNews",
+      "score": 286,
+      "publishedAt": "2026-11-19"
+    },
+    {
+      "title": "Nintendo takes Picofly firmware down from GitHub [video]",
+      "url": "https://www.youtube.com/watch?v=-TLCGUpoD6c",
+      "source": "HackerNews",
+      "score": 143,
       "publishedAt": "2026-11-18"
     },
     {
-      "title": "Quad9 Is Leaving France: Why DNS Resolvers Are the Wrong Place to Fight Piracy",
-      "url": "https://techstackups.com/articles/quad9-leaves-france-dns-blocking/",
+      "title": "Someone reported java4shell bug in September 2026",
+      "url": "https://github.com/openjdk/jdk/pull/32781",
       "source": "HackerNews",
-      "score": 276,
-      "publishedAt": "2026-11-18"
+      "score": 115,
+      "publishedAt": "2026-11-19"
     },
     {
-      "title": "Energy-Based Reasoners: 385x more efficient inference",
-      "url": "https://energy-based-reasoners.github.io/",
+      "title": "Making 8-page foldable zines from a single A4 sheet in the browser",
+      "url": "https://krthr.co/paper-folds-and-whats-new-in-fanzines-app/",
       "source": "HackerNews",
-      "score": 227,
-      "publishedAt": "2026-11-18"
+      "score": 91,
+      "publishedAt": "2026-11-19"
     },
     {
-      "title": "A Perfect SimCity",
-      "url": "https://www.jeffquast.com/post/a-perfect-simcity/",
-      "source": "HackerNews",
-      "score": 165,
-      "publishedAt": "2026-11-15"
-    },
-    {
-      "title": "Pre-auth RCE in Nginx HTTP/2 handling",
-      "url": "https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities",
-      "source": "HackerNews",
-      "score": 83,
-      "publishedAt": "2026-11-18"
-    },
-    {
-      "title": "Energy drinks linked to 11 times more reports of cardiac arrest",
-      "url": "https://www.sciencedaily.com/releases/2026/11/261110042543.htm",
+      "title": "Show HN: Foolscap – a writing app that reads your book and never writes for you",
+      "url": "https://foolscap.works/",
       "source": "HackerNews",
       "score": 80,
-      "publishedAt": "2026-11-18"
+      "publishedAt": "2026-11-19"
     },
     {
-      "title": "'Human' Is Cambridge Dictionary's Word of the Year 2026",
-      "url": "https://www.cam.ac.uk/news/cambridge-dictionary-reveals-word-of-the-year-2026",
+      "title": "Everything you need to survive and rebuild society",
+      "url": "https://lastbook.org/",
       "source": "HackerNews",
       "score": 73,
-      "publishedAt": "2026-11-18"
-    },
-    {
-      "title": "Show HN: Type Fighter 2",
-      "url": "https://typefighter2.com/",
-      "source": "HackerNews",
-      "score": 68,
-      "publishedAt": "2026-11-18"
+      "publishedAt": "2026-11-19"
     }
   ]
 }
