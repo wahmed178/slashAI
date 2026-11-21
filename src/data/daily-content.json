@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-20",
+  "updated": "2026-11-21",
   "quote": {
-    "text": "It's the unknown we fear when we look upon death and darkness, nothing more.",
-    "author": "Albus Dumbledore"
+    "text": "It is in the darkness that one finds the light.",
+    "author": "Meister Eckhart"
   },
-  "advice": "It's wrong to be right.",
+  "advice": "When in doubt, just take the next small step.",
   "artwork": {
-    "title": "East River",
-    "artist": "Ellsworth Kelly\nAmerican, 1923-2015",
-    "imageId": "2d98899d-b5c8-7e1a-260d-6e084f664863"
+    "title": "Act IV: \"The Value of Education\", from Pirates!",
+    "artist": "Gustave Baumann\nAmerican, 1881–1971",
+    "imageId": "ed0c2f34-3262-0a10-d9be-75e99cff704a"
   }
 }
