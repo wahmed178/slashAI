@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-20T15:53:44.611Z",
+  "updated": "2026-11-21T15:03:45.747Z",
   "articles": [
     {
-      "title": "Anthropic employee claims general proof of the Riemann Hypothesis [pdf]",
+      "title": "Levent Alpöge claims proof of the Generalized Riemann Hypothesis [pdf]",
       "url": "https://alpo.ge/remark.pdf",
       "source": "HackerNews",
-      "score": 730,
+      "score": 2758,
       "publishedAt": "2026-11-20"
     },
     {
-      "title": "Frostbite: A new CPU architecture discovered, designed and verified by AI",
-      "url": "https://architectlabs.com/blog/frostbite",
+      "title": "Hurried Announcement: Alessandro Masullo GRH",
+      "url": "https://math216.wordpress.com/2026/11/20/hurried-announcement-alessandro-masullo-grh/",
       "source": "HackerNews",
-      "score": 392,
+      "score": 2257,
       "publishedAt": "2026-11-20"
     },
     {
-      "title": "If you can't explain something in simple terms, you don't understand it (2017)",
-      "url": "https://kottke.org/17/06/if-you-cant-explain-something-in-simple-terms-you-dont-understand-it",
+      "title": "Inkling 2 Mini",
+      "url": "https://thinkingmachines.ai/news/inkling-2-mini/",
       "source": "HackerNews",
-      "score": 323,
+      "score": 1148,
       "publishedAt": "2026-11-20"
     },
     {
-      "title": "Signal Is Serious About Protecting Your Privacy",
-      "url": "https://signal.org/blog/protecting-your-privacy/",
+      "title": "We promoted developers into architects without informing them",
+      "url": "https://manidoraisamy.com/developer-to-architect.html",
       "source": "HackerNews",
-      "score": 158,
+      "score": 507,
       "publishedAt": "2026-11-20"
     },
     {
-      "title": "The Making of Oxygene",
-      "url": "https://jeanmicheljarre.com/aaa/the-making-of-oxygene",
+      "title": "Brazil's tax authority open-sources its tax calculator on GitHub under MIT",
+      "url": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2026/novembro/receita-federal-publica-primeiro-codigo-fonte-aberto-no-github-e-amplia-transparencia-da-reforma-tributaria",
       "source": "HackerNews",
-      "score": 125,
-      "publishedAt": "2026-11-20"
-    },
-    {
-      "title": "Show HN: I made an audio-to-MIDI model 60x more efficient",
-      "url": "https://kobi.music/research/dettato",
-      "source": "HackerNews",
-      "score": 84,
+      "score": 294,
       "publishedAt": "2026-11-17"
     },
     {
-      "title": "Show HN: Fast deterministic natural language search for OpenStreetMap data",
-      "url": "https://hippomaps.ch/?q=cafes+by+the+Limmat+100+m+from+the+lake+in+zurich#map=15.02/47.36708/8.54935",
+      "title": "My Monitor Was Cutting My Download Speed by 75%",
+      "url": "https://blog.tymscar.com/posts/studiodisplayethernet/",
       "source": "HackerNews",
-      "score": 80,
-      "publishedAt": "2026-11-19"
+      "score": 141,
+      "publishedAt": "2026-11-21"
     },
     {
-      "title": "Floppy3.5: A portable 3.5-inch floppy WiFi NAS",
-      "url": "https://github.com/bigcrimping/floppy3.5",
+      "title": "RCE in Gnupg",
+      "url": "https://lists.gnupg.org/pipermail/gnupg-announce/2026q4/000517.html",
       "source": "HackerNews",
-      "score": 67,
-      "publishedAt": "2026-11-19"
+      "score": 120,
+      "publishedAt": "2026-11-21"
+    },
+    {
+      "title": "Derek Lowe: Detonating a Pile of Lead Azide",
+      "url": "https://www.science.org/content/blog-post/detonating-huge-pile-lead-azide-really",
+      "source": "HackerNews",
+      "score": 106,
+      "publishedAt": "2026-11-21"
     }
   ]
 }
