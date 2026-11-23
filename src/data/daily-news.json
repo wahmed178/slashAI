@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-22T15:01:17.666Z",
+  "updated": "2026-11-23T18:56:42.447Z",
   "articles": [
     {
-      "title": "Pill to treat pancreatic cancer hailed as 'biggest breakthrough in decades'",
-      "url": "https://www.theguardian.com/society/2026/nov/20/pill-pancreatic-cancer-breakthrough-daraxonrasib",
+      "title": "Nvidia Reinstates Jensen Huang as CEO",
+      "url": "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html",
       "source": "HackerNews",
-      "score": 1173,
-      "publishedAt": "2026-11-20"
+      "score": 1146,
+      "publishedAt": "2026-11-23"
     },
     {
-      "title": "Lean verification of the Riemann Hypothesis",
-      "url": "https://leanprover-community.github.io/blog/posts/riemann-hypothesis/",
+      "title": "GLM-5.4: Toward generalized coding with our first loop transformer",
+      "url": "https://z.ai/blog/glm-5.4",
       "source": "HackerNews",
-      "score": 1124,
-      "publishedAt": "2026-11-21"
+      "score": 858,
+      "publishedAt": "2026-11-23"
     },
     {
-      "title": "Toyota, Nissan, and Honda to standardize parts to lower costs",
-      "url": "https://www.caranddriver.com/news/a74490092/toyota-nissan-honda-standardize-parts-lower-costs/",
+      "title": "Ladybird is now in alpha",
+      "url": "https://ladybird.org/posts/alpha/",
       "source": "HackerNews",
-      "score": 799,
-      "publishedAt": "2026-11-22"
+      "score": 683,
+      "publishedAt": "2026-11-23"
     },
     {
-      "title": "Inkling-2-Mini in 5.4 GB Memory",
-      "url": "https://github.com/ShinMegamiBoson/lookatmyquant",
+      "title": "Nospeaker ─ Make your MacBook's trackpad talk using its haptic motor",
+      "url": "https://github.com/os6/nospeaker",
       "source": "HackerNews",
-      "score": 507,
-      "publishedAt": "2026-11-21"
+      "score": 190,
+      "publishedAt": "2026-11-23"
     },
     {
-      "title": "Sandwich Simulator",
-      "url": "https://stulle.app/",
-      "source": "HackerNews",
-      "score": 387,
-      "publishedAt": "2026-11-22"
-    },
-    {
-      "title": "Data Processing Incidents on Inference Providers",
-      "url": "https://openrouter.ai/blog/announcements/data-processing-incidents-on-inference-providers/",
-      "source": "HackerNews",
-      "score": 224,
-      "publishedAt": "2026-11-22"
-    },
-    {
-      "title": "A real Linux kernel, compiled to WebAssembly",
-      "url": "https://github.com/pithings/unkernel",
+      "title": "Spacecraft reaches Mercury on second-ever mission to enter its orbit",
+      "url": "https://www.theguardian.com/science/2026/nov/20/spacecraft-mercury-second-ever-mission-orbit-bepicolombo",
       "source": "HackerNews",
       "score": 170,
-      "publishedAt": "2026-11-17"
+      "publishedAt": "2026-11-21"
     },
     {
-      "title": "Self-hosted library branch over public web OPDS",
-      "url": "https://joinmayberry.com/",
+      "title": "Win4wine – Run Windows Shell as the Linux Desktop on Wine",
+      "url": "https://github.com/mikuta0407/win4wine",
       "source": "HackerNews",
-      "score": 53,
-      "publishedAt": "2026-11-19"
+      "score": 156,
+      "publishedAt": "2026-11-23"
+    },
+    {
+      "title": "Kagi Mail (public beta)",
+      "url": "https://blog.kagi.com/kagi-mail-public-beta",
+      "source": "HackerNews",
+      "score": 118,
+      "publishedAt": "2026-11-23"
+    },
+    {
+      "title": "What's the difference between an integer and a pointer? (2018)",
+      "url": "https://blog.regehr.org/archives/1621",
+      "source": "HackerNews",
+      "score": 85,
+      "publishedAt": "2026-11-21"
     }
   ]
 }
