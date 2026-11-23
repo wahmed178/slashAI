@@ -1,123 +1,83 @@
 {
-  "updated": "2026-11-16",
-  "week": "2026-W46",
+  "updated": "2026-11-23",
+  "week": "2026-W47",
   "items": [
     {
-      "name": "Boost.space AgentOS",
-      "url": "https://www.producthunt.com/products/boost-space",
-      "description": "One operating system for all your AI agents Discussion | Link",
+      "name": "Open Source Solana Wallet",
+      "url": "https://www.producthunt.com/products/open-source-solana-wallet",
+      "description": "Your own keys, your very own network Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "UI SDK by Vercel",
-      "url": "https://www.producthunt.com/products/ui-sdk",
-      "description": "Give AI agents the building blocks to create UI Discussion | Link",
+      "name": "Modem",
+      "url": "https://www.producthunt.com/products/modem",
+      "description": "Find, fix, and follow up on every customer concern Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Cookie Away",
-      "url": "https://www.producthunt.com/products/cookie-away",
-      "description": "Rejects cookie banners for you, even the sneaky ones Discussion | Link",
+      "name": "Strict",
+      "url": "https://www.producthunt.com/products/strict",
+      "description": "Run GitHub Actions on any spare Mac or Linux machine Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "OpenFrame",
-      "url": "https://www.producthunt.com/products/openframe-3",
-      "description": "AI agents that run your IT. You approve every fix. Discussion | Link",
+      "name": "naturefunding.org",
+      "url": "https://www.producthunt.com/products/naturefunding-org",
+      "description": "Grants for nature projects, checked against funder pages Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Zoom Slides",
-      "url": "https://www.producthunt.com/products/zoom",
-      "description": "Turn your Zoom meetings into ready-to-present slides Discussion | Link",
+      "name": "Chat with Work",
+      "url": "https://www.producthunt.com/products/chat-with-work",
+      "description": "AI bots in Europe. They work. You decide. Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "OpenBot",
-      "url": "https://www.producthunt.com/products/copilotkit",
-      "description": "Grok Bot alternative: self-host, fully customize, any stack Discussion | Link",
+      "name": "Omi Work",
+      "url": "https://www.producthunt.com/products/omi-work",
+      "description": "Omi can build anything. Now it finds your next 100 customers Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Cal.com v7",
-      "url": "https://www.producthunt.com/products/cal",
-      "description": "Cal.com now has events, discover, an assistant + more Discussion | Link",
+      "name": "Dog Translator SuperTranslator",
+      "url": "https://www.producthunt.com/products/dog-translator-supertranslator",
+      "description": "Dogs talking in English (real) Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Newsology",
-      "url": "https://www.producthunt.com/products/newsology",
-      "description": "Follow news as it develops and see how every side tells it. Discussion | Link",
+      "name": "Plango",
+      "url": "https://www.producthunt.com/products/plango",
+      "description": "Plango lets your AI agents work all night - safely Discussion | Link",
       "source": "ProductHunt",
       "category": "AI Tools",
       "badge": "Free Tier"
     },
     {
-      "name": "Yogurt – Free, private, open-source alternative to Granola",
-      "url": "https://github.com/FrigadeHQ/yogurt",
-      "description": "305 points on Hacker News",
+      "name": "FBI says Artex AI open-source hacking tool used to breach ne",
+      "url": "https://techcrunch.com/2026/11/16/fbi-says-artex-ai-open-source-hacking-tool-used-to-breach-networks-in-under-three-hours/",
+      "description": "50 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
     },
     {
-      "name": "Gemini Decisions API",
-      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
-      "description": "569 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "Aircad – Professional drafting and 3D modeling in the browse",
-      "url": "https://aircad.com",
-      "description": "95 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "Carton Clock – A working pendulum clock made from empty drin",
-      "url": "https://www.niklasroy.com/carton-clock/",
-      "description": "85 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "Get your coding agent off ~2019 JavaScript, onto modern web",
-      "url": "https://github.com/GoogleChrome/modern-web-guidance",
-      "description": "447 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "A terminal-native idle factory game, written in Rust with ra",
-      "url": "https://gitlab.com/snipedbywifi/terminactory",
-      "description": "169 points on Hacker News",
-      "source": "HackerNews",
-      "category": "AI Tools",
-      "badge": "Free"
-    },
-    {
-      "name": "AgentRun – open-source, Self-improving Managed Agents",
-      "url": "https://github.com/Parcha-ai/agentrun/blob/main/README.md",
-      "description": "138 points on Hacker News",
+      "name": "Foolscap – a writing app that reads your book and never writ",
+      "url": "https://foolscap.works/",
+      "description": "132 points on Hacker News",
       "source": "HackerNews",
       "category": "AI Tools",
       "badge": "Free"
