@@ -72,10 +72,15 @@ export default defineConfig({
         manifest: false,
         workbox: {
           globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
+          // public/waseemwedsuzma.html is a standalone 2 MB invitation page with
+          // its own inlined audio. It is not part of the app shell, so it must
+          // never enter the precache (every visitor would download it offline)
+          // and must never be answered with the app shell from the fallback.
+          globIgnores: ["**/waseemwedsuzma.html"],
           // the command catalog chunk is large; keep it precached for offline use
           maximumFileSizeToCacheInBytes: 12 * 1024 * 1024,
           navigateFallback: "/",
-          navigateFallbackDenylist: [/^\/~oauth/, /^\/api\//],
+          navigateFallbackDenylist: [/^\/~oauth/, /^\/api\//, /^\/waseemwedsuzma/],
           cleanupOutdatedCaches: true,
           // never seize control of a live page; explicit for clarity
           skipWaiting: false,

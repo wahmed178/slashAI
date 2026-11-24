@@ -48,6 +48,7 @@ import { Route as SuggestRouteImport } from './routes/suggest'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as TrendingRouteImport } from './routes/trending'
+import { Route as WaseemwedsuzmaRouteImport } from './routes/waseemwedsuzma'
 import { Route as WebSearchRouteImport } from './routes/web-search'
 import { Route as WhatsNewRouteImport } from './routes/whats-new'
 import { Route as WorkflowRouteImport } from './routes/workflow'
@@ -556,6 +557,11 @@ const ToolsRoute = ToolsRouteImport.update({
 const TrendingRoute = TrendingRouteImport.update({
   id: '/trending',
   path: '/trending',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WaseemwedsuzmaRoute = WaseemwedsuzmaRouteImport.update({
+  id: '/waseemwedsuzma',
+  path: '/waseemwedsuzma',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WebSearchRoute = WebSearchRouteImport.update({
@@ -2171,6 +2177,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
+  '/waseemwedsuzma': typeof WaseemwedsuzmaRoute
   '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
@@ -2524,6 +2531,7 @@ export interface FileRoutesByTo {
   '/suggest': typeof SuggestRoute
   '/terms': typeof TermsRoute
   '/trending': typeof TrendingRoute
+  '/waseemwedsuzma': typeof WaseemwedsuzmaRoute
   '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
@@ -2880,6 +2888,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/tools': typeof ToolsRouteWithChildren
   '/trending': typeof TrendingRoute
+  '/waseemwedsuzma': typeof WaseemwedsuzmaRoute
   '/web-search': typeof WebSearchRoute
   '/whats-new': typeof WhatsNewRoute
   '/workflow': typeof WorkflowRoute
@@ -3237,6 +3246,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/trending'
+    | '/waseemwedsuzma'
     | '/web-search'
     | '/whats-new'
     | '/workflow'
@@ -3590,6 +3600,7 @@ export interface FileRouteTypes {
     | '/suggest'
     | '/terms'
     | '/trending'
+    | '/waseemwedsuzma'
     | '/web-search'
     | '/whats-new'
     | '/workflow'
@@ -3945,6 +3956,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/tools'
     | '/trending'
+    | '/waseemwedsuzma'
     | '/web-search'
     | '/whats-new'
     | '/workflow'
@@ -4301,6 +4313,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ToolsRoute: typeof ToolsRouteWithChildren
   TrendingRoute: typeof TrendingRoute
+  WaseemwedsuzmaRoute: typeof WaseemwedsuzmaRoute
   WebSearchRoute: typeof WebSearchRoute
   WhatsNewRoute: typeof WhatsNewRoute
   WorkflowRoute: typeof WorkflowRoute
@@ -4605,6 +4618,13 @@ declare module '@tanstack/react-router' {
       path: '/trending'
       fullPath: '/trending'
       preLoaderRoute: typeof TrendingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waseemwedsuzma': {
+      id: '/waseemwedsuzma'
+      path: '/waseemwedsuzma'
+      fullPath: '/waseemwedsuzma'
+      preLoaderRoute: typeof WaseemwedsuzmaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/web-search': {
@@ -7443,6 +7463,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ToolsRoute: ToolsRouteWithChildren,
   TrendingRoute: TrendingRoute,
+  WaseemwedsuzmaRoute: WaseemwedsuzmaRoute,
   WebSearchRoute: WebSearchRoute,
   WhatsNewRoute: WhatsNewRoute,
   WorkflowRoute: WorkflowRoute,
