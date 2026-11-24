@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-23T18:56:42.447Z",
+  "updated": "2026-11-24T18:36:05.017Z",
   "articles": [
     {
-      "title": "Nvidia Reinstates Jensen Huang as CEO",
-      "url": "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html",
+      "title": "2035 came early",
+      "url": "https://fzakaria.com/2026/11/23/2035-came-early",
       "source": "HackerNews",
-      "score": 1146,
-      "publishedAt": "2026-11-23"
+      "score": 819,
+      "publishedAt": "2026-11-24"
     },
     {
-      "title": "GLM-5.4: Toward generalized coding with our first loop transformer",
-      "url": "https://z.ai/blog/glm-5.4",
+      "title": "LLM agents work for their parent companies, not for you",
+      "url": "https://michaelharley.net/posts/2026/11/01/llm-agents-work-for-their-parent-companies-not-for-you/",
       "source": "HackerNews",
-      "score": 858,
-      "publishedAt": "2026-11-23"
+      "score": 691,
+      "publishedAt": "2026-11-24"
     },
     {
-      "title": "Ladybird is now in alpha",
-      "url": "https://ladybird.org/posts/alpha/",
+      "title": "Cyberattack campaign compromising Check Point servers across 22 organizations",
+      "url": "https://www.greynoise.io/blog/check-point-security-management-servers-intrusion-campaign",
       "source": "HackerNews",
-      "score": 683,
-      "publishedAt": "2026-11-23"
+      "score": 155,
+      "publishedAt": "2026-11-24"
     },
     {
-      "title": "Nospeaker ─ Make your MacBook's trackpad talk using its haptic motor",
-      "url": "https://github.com/os6/nospeaker",
+      "title": "Mechanical Pencil: Spray Bottle",
+      "url": "https://mechanical-pencil.com/products/spray-bottle",
       "source": "HackerNews",
-      "score": 190,
-      "publishedAt": "2026-11-23"
+      "score": 133,
+      "publishedAt": "2026-11-22"
     },
     {
-      "title": "Spacecraft reaches Mercury on second-ever mission to enter its orbit",
-      "url": "https://www.theguardian.com/science/2026/nov/20/spacecraft-mercury-second-ever-mission-orbit-bepicolombo",
+      "title": "Jetty Pro",
+      "url": "http://hypercritical.co/2026/11/23/jetty-pro",
       "source": "HackerNews",
-      "score": 170,
-      "publishedAt": "2026-11-21"
+      "score": 127,
+      "publishedAt": "2026-11-24"
     },
     {
-      "title": "Win4wine – Run Windows Shell as the Linux Desktop on Wine",
-      "url": "https://github.com/mikuta0407/win4wine",
+      "title": "Top MIT Physicist: Anthropic Staff Openly Talk About 'Taking over the World'",
+      "url": "https://novaramedia.com/2026/11/24/anthropic-staff-openly-talk-about-taking-over-the-world-claims-top-mit-physicist/",
       "source": "HackerNews",
-      "score": 156,
-      "publishedAt": "2026-11-23"
+      "score": 104,
+      "publishedAt": "2026-11-24"
     },
     {
-      "title": "Kagi Mail (public beta)",
-      "url": "https://blog.kagi.com/kagi-mail-public-beta",
+      "title": "A training engine for your local model, using your idle compute",
+      "url": "https://github.com/sous-labs/songe",
       "source": "HackerNews",
-      "score": 118,
-      "publishedAt": "2026-11-23"
+      "score": 78,
+      "publishedAt": "2026-11-24"
     },
     {
-      "title": "What's the difference between an integer and a pointer? (2018)",
-      "url": "https://blog.regehr.org/archives/1621",
+      "title": "How to Make a Lovable City",
+      "url": "https://www.worksinprogress.news/p/how-to-make-a-lovable-city",
       "source": "HackerNews",
-      "score": 85,
-      "publishedAt": "2026-11-21"
+      "score": 65,
+      "publishedAt": "2026-11-24"
     }
   ]
 }
