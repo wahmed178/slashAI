@@ -1,11 +1,11 @@
 {
-  "updated": "2026-11-18",
+  "updated": "2026-11-25",
   "prompts": [
     {
       "title": "f/prompts.chat",
       "url": "https://github.com/f/prompts.chat",
       "source": "GitHub",
-      "score": 177793,
+      "score": 178502,
       "category": "Libraries",
       "description": "f.k.a. Awesome ChatGPT Prompts. Share, discover, and collect prompts from the community. Free and open source — self-host for your organization with complete privacy."
     },
@@ -13,7 +13,7 @@
       "title": "dair-ai/Prompt-Engineering-Guide",
       "url": "https://github.com/dair-ai/Prompt-Engineering-Guide",
       "source": "GitHub",
-      "score": 80183,
+      "score": 80364,
       "category": "Engineering",
       "description": "🐙 Guides, papers, lessons, notebooks and resources for prompt engineering, context engineering, RAG, and AI Agents."
     },
@@ -21,7 +21,7 @@
       "title": "asgeirtj/system_prompts_leaks",
       "url": "https://github.com/asgeirtj/system_prompts_leaks",
       "source": "GitHub",
-      "score": 71685,
+      "score": 72634,
       "category": "Writing & Chat",
       "description": "Leaked system prompts of ChatGPT, Claude, Gemini and more. The hidden system prompt of every popular chatbot, in full, every version since May 2025. Also Anthropic Claude Code, Ope"
     },
@@ -29,7 +29,7 @@
       "title": "code-yeongyu/oh-my-openagent",
       "url": "https://github.com/code-yeongyu/oh-my-openagent",
       "source": "GitHub",
-      "score": 70988,
+      "score": 71109,
       "category": "Engineering",
       "description": "OmO: Just type \"mass ulw\" keyword with your prompt. Now you are the master of graph engineering."
     },
@@ -37,7 +37,7 @@
       "title": "gsd-build/get-shit-done",
       "url": "https://github.com/gsd-build/get-shit-done",
       "source": "GitHub",
-      "score": 64128,
+      "score": 64113,
       "category": "Engineering",
       "description": "A light-weight and powerful meta-prompting, context engineering and spec-driven development system for Claude Code by TÂCHES."
     },
@@ -45,7 +45,7 @@
       "title": "elder-plinius/CL4R1T4S",
       "url": "https://github.com/elder-plinius/CL4R1T4S",
       "source": "GitHub",
-      "score": 53666,
+      "score": 53815,
       "category": "Writing & Chat",
       "description": "LEAKED SYSTEM PROMPTS FOR CHATGPT, CLAUDE, GEMINI, GROK, PERPLEXITY, CURSOR, LOVABLE, REPLIT, AND MORE! - AI SYSTEMS TRANSPARENCY FOR ALL! 👐"
     },
@@ -53,7 +53,7 @@
       "title": "anthropics/prompt-eng-interactive-tutorial",
       "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
       "source": "GitHub",
-      "score": 39527,
+      "score": 39735,
       "category": "Engineering",
       "description": "Anthropic's Interactive Prompt Engineering Tutorial"
     },
@@ -61,7 +61,7 @@
       "title": "langfuse/langfuse",
       "url": "https://github.com/langfuse/langfuse",
       "source": "GitHub",
-      "score": 37594,
+      "score": 37840,
       "category": "Engineering",
       "description": "🪢 Open source AI engineering platform: AI Gateway, agent observability, evals, and prompt/skill management, built on OpenTelemetry. One open platform for every AI call and every a"
     },
@@ -69,7 +69,7 @@
       "title": "freestylefly/awesome-gpt-image-2",
       "url": "https://github.com/freestylefly/awesome-gpt-image-2",
       "source": "GitHub",
-      "score": 35936,
+      "score": 36132,
       "category": "Libraries",
       "description": "Prompt as Code | GPT Image 2 / 2.5 提示词与案例库，530+ 个案例、20+ 套工业级模板与可复用 Skills，新增 2.5 同提示词对比专区，附完整提示词与生成记录，持续更新。"
     },
@@ -77,7 +77,7 @@
       "title": "liyupi/ai-guide",
       "url": "https://github.com/liyupi/ai-guide",
       "source": "GitHub",
-      "score": 22203,
+      "score": 22390,
       "category": "Engineering",
       "description": "程序员鱼皮的 AI 资源大全 + Vibe Coding 零基础教程，分享 OpenClaw 保姆级教程、大模型玩法（DeepSeek / GPT / Gemini / Claude / GLM）、最新 AI 资讯、Prompt 提示词大全、AI 知识百科（Agent Skills / RAG / MCP / A2A）、AI 编程教程（Harness Eng"
     },
@@ -85,7 +85,7 @@
       "title": "Evolink-AI/awesome-gpt-image-2-API-Prompts",
       "url": "https://github.com/Evolink-AI/awesome-gpt-image-2-API-Prompts",
       "source": "GitHub",
-      "score": 17423,
+      "score": 17433,
       "category": "Libraries",
       "description": "GPT-Image-2 API and Prompts"
     },
@@ -93,7 +93,7 @@
       "title": "yihui-dev/awesome-opus5-5-videos",
       "url": "https://github.com/yihui-dev/awesome-opus5-5-videos",
       "source": "GitHub",
-      "score": 15794,
+      "score": 16484,
       "category": "Libraries",
       "description": "A growing collection of viral videos made with Claude Opus 5.5 and the prompts behind them. Watch each original next to a live remake on Skillry. Updated regularly."
     },
@@ -101,7 +101,7 @@
       "title": "powerline/powerline",
       "url": "https://github.com/powerline/powerline",
       "source": "GitHub",
-      "score": 14849,
+      "score": 14856,
       "category": "Libraries",
       "description": "Powerline is a statusline plugin for vim, and provides statuslines and prompts for several other applications, including zsh, bash, tmux, IPython, Awesome and Qtile."
     },
@@ -109,7 +109,7 @@
       "title": "YouMind-OpenLab/awesome-nano-banana-pro-prompts",
       "url": "https://github.com/YouMind-OpenLab/awesome-nano-banana-pro-prompts",
       "source": "GitHub",
-      "score": 13819,
+      "score": 13868,
       "category": "Libraries",
       "description": "🍌 World's largest Nano Banana Pro prompt library — 10,000+ curated prompts with preview images, 16 languages. Google Gemini AI image generation. Free & open source."
     },
@@ -117,7 +117,7 @@
       "title": "thinkingjimmy/Learning-Prompt",
       "url": "https://github.com/thinkingjimmy/Learning-Prompt",
       "source": "GitHub",
-      "score": 5299,
+      "score": 5301,
       "category": "Image Prompts",
       "description": "Free prompt engineering online course. ChatGPT and Midjourney tutorials are now included!"
     },
@@ -125,7 +125,7 @@
       "title": "jina-ai/discoart",
       "url": "https://github.com/jina-ai/discoart",
       "source": "GitHub",
-      "score": 3812,
+      "score": 3811,
       "category": "Image Prompts",
       "description": "🪩 Create Disco Diffusion artworks in one line"
     },
@@ -133,7 +133,7 @@
       "title": "LearnPrompt/LearnPrompt",
       "url": "https://github.com/LearnPrompt/LearnPrompt",
       "source": "GitHub",
-      "score": 2752,
+      "score": 2761,
       "category": "Image Prompts",
       "description": "永久免费开源的 AIGC 课程, 目前已支持Claude Code，Codex，Hermes，OpenClaw，Obsidian，Prompt Engineering, ChatGPT, Midjourney, Runway, Stable Diffusion, AI数字人，AI声音&音乐，开源大模型"
     },
@@ -149,7 +149,7 @@
       "title": "TanShilongMario/PromptFill",
       "url": "https://github.com/TanShilongMario/PromptFill",
       "source": "GitHub",
-      "score": 1953,
+      "score": 1958,
       "category": "Image Prompts",
       "description": "designed specifically for AI painting (GPT, Midjourney, Nano Banana, etc.). Help users quickly build, manage, and iterate complex prompts through a visual \"fill-in-the-blank\" inter"
     },
@@ -157,7 +157,7 @@
       "title": "altryne/awesome-ai-art-image-synthesis",
       "url": "https://github.com/altryne/awesome-ai-art-image-synthesis",
       "source": "GitHub",
-      "score": 1822,
+      "score": 1821,
       "category": "Image Prompts",
       "description": "A list of awesome tools, ideas, prompt engineering tools, colabs, models, and helpers for the prompt designer playing with aiArt and image synthesis. Covers Dalle2, MidJourney, Sta"
     }
