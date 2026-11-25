@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-24T18:36:05.017Z",
+  "updated": "2026-11-25T17:46:10.180Z",
   "articles": [
     {
-      "title": "2035 came early",
-      "url": "https://fzakaria.com/2026/11/23/2035-came-early",
+      "title": "Matrix Multiplication is Θ(n^2.25) [pdf]",
+      "url": "https://github.com/openai/math/blob/main/preprints/The-matrix-multiplication-exponent-is-nine-fourths-November-24-2026/paper.pdf",
       "source": "HackerNews",
-      "score": 819,
+      "score": 896,
+      "publishedAt": "2026-11-25"
+    },
+    {
+      "title": "Button Sounds – collection of professionally-recorded button clicks and presses",
+      "url": "https://buttons.joshwcomeau.com/",
+      "source": "HackerNews",
+      "score": 718,
+      "publishedAt": "2026-11-25"
+    },
+    {
+      "title": "Google Releases Cogentic Papers on Integer Factorization, Discrete Logs and More",
+      "url": "https://github.com/google-research/google-research/tree/master/cogentic_research_papers",
+      "source": "HackerNews",
+      "score": 280,
+      "publishedAt": "2026-11-25"
+    },
+    {
+      "title": "A few questions for the guy who went snorkeling in a Home Depot retention pond",
+      "url": "https://www.vox.com/down-to-earth/511999/home-depot-retention-pond-snorkel-joseph-ricketts",
+      "source": "HackerNews",
+      "score": 249,
+      "publishedAt": "2026-11-25"
+    },
+    {
+      "title": "Windows Loudness Equalization, reverse-engineered and ported to PipeWire",
+      "url": "https://github.com/xoxorwr/pw-loudness-eq",
+      "source": "HackerNews",
+      "score": 242,
+      "publishedAt": "2026-11-25"
+    },
+    {
+      "title": "Investigating degraded experiences across GitHub products",
+      "url": "https://www.githubstatus.com/incidents/qn8mfv6q5hlx",
+      "source": "HackerNews",
+      "score": 117,
+      "publishedAt": "2026-11-25"
+    },
+    {
+      "title": "Porting Rockbox to an Undocumented $9 Aliexpress 'YP3' MP3 Player with LLMs",
+      "url": "https://jayd.ml/2026/11/14/rockbox-on-yp3.html",
+      "source": "HackerNews",
+      "score": 74,
       "publishedAt": "2026-11-24"
     },
     {
-      "title": "LLM agents work for their parent companies, not for you",
-      "url": "https://michaelharley.net/posts/2026/11/01/llm-agents-work-for-their-parent-companies-not-for-you/",
-      "source": "HackerNews",
-      "score": 691,
-      "publishedAt": "2026-11-24"
-    },
-    {
-      "title": "Cyberattack campaign compromising Check Point servers across 22 organizations",
-      "url": "https://www.greynoise.io/blog/check-point-security-management-servers-intrusion-campaign",
-      "source": "HackerNews",
-      "score": 155,
-      "publishedAt": "2026-11-24"
-    },
-    {
-      "title": "Mechanical Pencil: Spray Bottle",
-      "url": "https://mechanical-pencil.com/products/spray-bottle",
-      "source": "HackerNews",
-      "score": 133,
-      "publishedAt": "2026-11-22"
-    },
-    {
-      "title": "Jetty Pro",
-      "url": "http://hypercritical.co/2026/11/23/jetty-pro",
-      "source": "HackerNews",
-      "score": 127,
-      "publishedAt": "2026-11-24"
-    },
-    {
-      "title": "Top MIT Physicist: Anthropic Staff Openly Talk About 'Taking over the World'",
-      "url": "https://novaramedia.com/2026/11/24/anthropic-staff-openly-talk-about-taking-over-the-world-claims-top-mit-physicist/",
-      "source": "HackerNews",
-      "score": 104,
-      "publishedAt": "2026-11-24"
-    },
-    {
-      "title": "A training engine for your local model, using your idle compute",
-      "url": "https://github.com/sous-labs/songe",
-      "source": "HackerNews",
-      "score": 78,
-      "publishedAt": "2026-11-24"
-    },
-    {
-      "title": "How to Make a Lovable City",
-      "url": "https://www.worksinprogress.news/p/how-to-make-a-lovable-city",
+      "title": "1Password Security Incident",
+      "url": "https://1password.com/blog/update-on-nov-2026-security-incident",
       "source": "HackerNews",
       "score": 65,
-      "publishedAt": "2026-11-24"
+      "publishedAt": "2026-11-25"
     }
   ]
 }
