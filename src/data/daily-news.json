@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-26T17:30:07.301Z",
+  "updated": "2026-11-27T17:11:11.374Z",
   "articles": [
     {
-      "title": "Holy shit holy shit holy shit holy shit: The magnitude of what’s now happening",
-      "url": "https://scottaaronson.blog/?p=10379",
+      "title": "AI made self-hosting fun again",
+      "url": "https://janlukas.blog/posts/ai-self-hosting",
       "source": "HackerNews",
-      "score": 1862,
-      "publishedAt": "2026-11-25"
-    },
-    {
-      "title": "The New York Times warns photographers not to update Photoshop over AI features",
-      "url": "https://www.theverge.com/ai-artificial-intelligence/1041227/the-new-york-times-warns-photographers-not-to-update-photoshop-over-ai-features",
-      "source": "HackerNews",
-      "score": 554,
-      "publishedAt": "2026-11-25"
-    },
-    {
-      "title": "Intel One Mono font",
-      "url": "https://github.com/intel/intel-one-mono",
-      "source": "HackerNews",
-      "score": 338,
+      "score": 959,
       "publishedAt": "2026-11-26"
     },
     {
-      "title": "Nextcloud Office Desktop app",
-      "url": "https://nextcloud.com/blog/euro-office-comes-to-your-desktop-with-the-nextcloud-office-desktop-app/",
+      "title": "Group chat where your AI talks behind your back",
+      "url": "https://construct22.com/",
       "source": "HackerNews",
-      "score": 335,
+      "score": 546,
+      "publishedAt": "2026-11-27"
+    },
+    {
+      "title": "US Air Force's cloud computing platform hacked",
+      "url": "https://news.sky.com/story/us-air-forces-cloud-computing-platform-hacked-13617163",
+      "source": "HackerNews",
+      "score": 181,
+      "publishedAt": "2026-11-27"
+    },
+    {
+      "title": "A Deterministic Subexponential-Time Algorithm for the Discrete Logarithm Problem [pdf]",
+      "url": "https://eprint.iacr.org/2026/3020.pdf",
+      "source": "HackerNews",
+      "score": 170,
+      "publishedAt": "2026-11-27"
+    },
+    {
+      "title": "Show HN: bouncemarket – a live prediction market game for a bouncing ball",
+      "url": "https://bouncemarket.minhanhday.com/",
+      "source": "HackerNews",
+      "score": 169,
+      "publishedAt": "2026-11-27"
+    },
+    {
+      "title": "Kimi for Science: More scientific ideas, made possible",
+      "url": "https://www.kimi.ai/news/kimi-for-science-program",
+      "source": "HackerNews",
+      "score": 139,
+      "publishedAt": "2026-11-27"
+    },
+    {
+      "title": "First images of the impact of DART asteroid deflection experiment",
+      "url": "https://arstechnica.com/space/2026/11/europes-hera-mission-returns-to-the-chaotic-scene-of-a-cosmic-smashup/",
+      "source": "HackerNews",
+      "score": 105,
       "publishedAt": "2026-11-26"
     },
     {
-      "title": "Lions' Commentary on Unix: Why It Was Secretly Copied for 20 Years",
-      "url": "https://fosscomics.com/posts/17.%20Lions%27%20Commentary%20on%20Unix/",
+      "title": "Credit card skimming scripts using WebRTC found on popular shopping sites",
+      "url": "https://www.infohawk.com/news/2026-11-27-black-friday-webrtc-skimmer",
       "source": "HackerNews",
-      "score": 208,
-      "publishedAt": "2026-11-26"
-    },
-    {
-      "title": "45°C inlets just killed the chiller. Most people haven't noticed yet",
-      "url": "https://www.theregister.com/hpc/2026/11/26/45c-inlets-just-killed-the-chiller-most-people-havent-noticed-yet/5311831",
-      "source": "HackerNews",
-      "score": 152,
-      "publishedAt": "2026-11-26"
-    },
-    {
-      "title": "Curiosity Is No Solo Act",
-      "url": "https://thereader.mitpress.mit.edu/curiosity-is-no-solo-act/",
-      "source": "HackerNews",
-      "score": 66,
-      "publishedAt": "2026-11-25"
-    },
-    {
-      "title": "Discovery of curse ritual in trash dump surprises Egyptologist",
-      "url": "https://phys.org/news/2026-11-discovery-curse-ritual-trash-dump.html",
-      "source": "HackerNews",
-      "score": 62,
-      "publishedAt": "2026-11-23"
+      "score": 69,
+      "publishedAt": "2026-11-27"
     }
   ]
 }
