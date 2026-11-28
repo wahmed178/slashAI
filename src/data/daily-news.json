@@ -1,61 +1,61 @@
 {
-  "updated": "2026-11-27T17:11:11.374Z",
+  "updated": "2026-11-28T15:56:33.701Z",
   "articles": [
     {
-      "title": "AI made self-hosting fun again",
-      "url": "https://janlukas.blog/posts/ai-self-hosting",
+      "title": "Farewell",
+      "url": "https://github.com/p-e-w/heretic/issues/601",
       "source": "HackerNews",
-      "score": 959,
-      "publishedAt": "2026-11-26"
+      "score": 606,
+      "publishedAt": "2026-11-28"
     },
     {
-      "title": "Group chat where your AI talks behind your back",
-      "url": "https://construct22.com/",
+      "title": "Unkernel: Real Linux kernel, compiled to WebAssembly",
+      "url": "https://unkernel.dev",
       "source": "HackerNews",
-      "score": 546,
-      "publishedAt": "2026-11-27"
+      "score": 473,
+      "publishedAt": "2026-11-28"
     },
     {
-      "title": "US Air Force's cloud computing platform hacked",
-      "url": "https://news.sky.com/story/us-air-forces-cloud-computing-platform-hacked-13617163",
+      "title": "Claude Code sabotage: preliminary benchmarking",
+      "url": "https://xinyadu.github.io/blog/claude-code-sabotage.html",
       "source": "HackerNews",
-      "score": 181,
-      "publishedAt": "2026-11-27"
+      "score": 339,
+      "publishedAt": "2026-11-28"
     },
     {
-      "title": "A Deterministic Subexponential-Time Algorithm for the Discrete Logarithm Problem [pdf]",
-      "url": "https://eprint.iacr.org/2026/3020.pdf",
+      "title": "Audible removes download option for purchased audiobooks",
+      "url": "https://consumerrights.wiki/w/Audible_removes_download_option_for_purchased_audiobooks",
       "source": "HackerNews",
-      "score": 170,
-      "publishedAt": "2026-11-27"
+      "score": 266,
+      "publishedAt": "2026-11-28"
     },
     {
-      "title": "Show HN: bouncemarket – a live prediction market game for a bouncing ball",
-      "url": "https://bouncemarket.minhanhday.com/",
+      "title": "Loom seamlessly combines weaving, knitting and braiding",
+      "url": "https://news.cornell.edu/stories/2026/11/loom-seamlessly-combines-weaving-knitting-and-braiding",
       "source": "HackerNews",
-      "score": 169,
-      "publishedAt": "2026-11-27"
+      "score": 225,
+      "publishedAt": "2026-11-24"
     },
     {
-      "title": "Kimi for Science: More scientific ideas, made possible",
-      "url": "https://www.kimi.ai/news/kimi-for-science-program",
-      "source": "HackerNews",
-      "score": 139,
-      "publishedAt": "2026-11-27"
-    },
-    {
-      "title": "First images of the impact of DART asteroid deflection experiment",
-      "url": "https://arstechnica.com/space/2026/11/europes-hera-mission-returns-to-the-chaotic-scene-of-a-cosmic-smashup/",
+      "title": "Diablo II",
+      "url": "https://www.filfre.net/2026/11/diablo-ii/",
       "source": "HackerNews",
       "score": 105,
-      "publishedAt": "2026-11-26"
+      "publishedAt": "2026-11-28"
     },
     {
-      "title": "Credit card skimming scripts using WebRTC found on popular shopping sites",
-      "url": "https://www.infohawk.com/news/2026-11-27-black-friday-webrtc-skimmer",
+      "title": "GGUF LLM Models with Hidden Malware on Hugging Face Reached 2400 Victims",
+      "url": "https://malspark.com/blog/malicious-gguf-models-hugging-face/",
       "source": "HackerNews",
-      "score": 69,
-      "publishedAt": "2026-11-27"
+      "score": 92,
+      "publishedAt": "2026-11-28"
+    },
+    {
+      "title": "Show HN: Luciole Mono – terminal font designed for legibility",
+      "url": "https://scriptor-pro.github.io/luciole-mono/",
+      "source": "HackerNews",
+      "score": 74,
+      "publishedAt": "2026-11-28"
     }
   ]
 }
